@@ -66,10 +66,10 @@ export const projects = [
   },
   {
     number: "06",
-    category: "Datos",
-    title: "Dashboards",
+    category: "Gastronomía",
+    title: "Restaurantes y menús",
     description:
-      "Paneles que convierten la operación en decisiones: indicadores claros, reportes y visualización en tiempo real.",
+      "Cartas digitales, catálogo de productos y pedidos en línea para restaurantes, cafeterías y marcas de bebidas.",
     mockup: "dashboard",
     href: "demos/verbena.html",
     size: "half",
