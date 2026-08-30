@@ -1,0 +1,301 @@
+/* =============================================================================
+   Alliances — las instituciones cuya plataforma construimos y sostenemos
+
+   Un panel por relación, no uno por entregable: la zona es una lista corta de
+   bloques con peso. La composición conserva la memoria de la fila que sustituye
+   —un nombre grande a la izquierda, la descripción sostenida a la derecha.
+   ========================================================================== */
+
+.alliances {
+  position: relative;
+}
+
+.alliances__head {
+  margin-bottom: var(--space-xl);
+}
+
+.alliances__title {
+  font-size: var(--text-4xl);
+  text-transform: uppercase;
+  max-width: 14ch;
+}
+
+.alliances__title em {
+  font-style: normal;
+  color: var(--brand-secondary);
+}
+
+.alliances__lede {
+  max-width: 40ch;
+  margin-top: var(--space-md);
+  font-size: var(--text-lg);
+  color: var(--text-muted);
+  line-height: var(--leading-relaxed);
+  letter-spacing: var(--tracking-snug);
+}
+
+/* En pantallas anchas la entradilla se apoya junto al título, el mismo
+   emparejamiento que usa el bloque "statement" más arriba en la página. */
+@media (min-width: 60rem) {
+  .alliances__head {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--space-lg);
+    align-items: end;
+  }
+
+  .alliances__head .eyebrow {
+    grid-column: 1 / -1;
+  }
+
+  .alliances__title {
+    grid-column: 1 / span 7;
+  }
+
+  .alliances__lede {
+    grid-column: 9 / -1;
+    margin-top: 0;
+    padding-bottom: 0.4rem;
+    font-size: var(--text-base);
+  }
+}
+
+.alliances__list {
+  display: grid;
+  gap: clamp(1rem, 2.2vw, 2rem);
+}
+
+/* --- Panel ------------------------------------------------------------------
+   El mismo material que una tarjeta de proyecto —línea de un píxel, superficie
+   suave, luz del cursor— pero maquetado como doble página en vez de tarjeta,
+   para que se lea como un capítulo y no como un elemento más de la rejilla.
+   -------------------------------------------------------------------------- */
+
+.alliance__panel {
+  --panel-border: var(--border);
+  position: relative;
+  display: grid;
+  gap: clamp(1.75rem, 3.4vw, 3rem);
+  padding: clamp(1.5rem, 3.2vw, 3rem);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(72% 90% at 0% 0%, rgb(var(--brand-primary-rgb) / 0.32), transparent 64%),
+    linear-gradient(180deg, rgb(255 255 255 / 0.035), transparent 42%),
+    rgb(13 18 32 / 0.55);
+  transition: border-color var(--duration-base) var(--ease-out-quart);
+}
+
+/* Luz del cursor, pintada con las dos custom properties que escribe
+   pointer-glow.js. Nada de esto provoca layout. */
+.alliance__panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    22rem 22rem at var(--pointer-x, 50%) var(--pointer-y, 0%),
+    rgb(var(--brand-secondary-rgb) / 0.1),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity var(--duration-base) var(--ease-out-quart);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .alliance__panel:hover {
+    --panel-border: rgb(var(--brand-secondary-rgb) / 0.32);
+  }
+
+  .alliance__panel:hover::before {
+    opacity: 1;
+  }
+}
+
+/* --- Placa de marca ---------------------------------------------------------
+   El logotipo de un aliado es obra de otro: se muestra sobre el fondo claro
+   para el que fue dibujado, en vez de teñirlo para que encaje con la página.
+   El halo detrás es lo que devuelve ese rectángulo blanco a la composición.
+   -------------------------------------------------------------------------- */
+
+.alliance__brand {
+  position: relative;
+  display: grid;
+  justify-items: start;
+}
+
+.alliance__brand::before {
+  content: "";
+  position: absolute;
+  inset-block-start: -14%;
+  inset-inline-start: -12%;
+  width: min(124%, 22rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgb(var(--brand-secondary-rgb) / 0.18),
+    transparent 68%
+  );
+  pointer-events: none;
+}
+
+.alliance__plate {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(100%, 15rem);
+  aspect-ratio: 1;
+  padding: clamp(1.25rem, 2.6vw, 2rem);
+  border-radius: calc(var(--radius-lg) - 4px);
+  background: linear-gradient(165deg, #ffffff, #e7ecf5);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.8),
+    0 22px 45px -26px rgb(0 0 0 / 0.9);
+}
+
+.alliance__logo {
+  width: clamp(6rem, 8.5vw, 7.5rem);
+  height: auto;
+}
+
+/* --- Costura ----------------------------------------------------------------
+   La línea que separa la marca del aliado de nuestro relato del trabajo.
+   Horizontal mientras el panel está apilado, vertical cuando se parte en dos.
+   -------------------------------------------------------------------------- */
+
+.alliance__seam {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: var(--gradient-edge);
+  opacity: 0.6;
+}
+
+/* --- Cuerpo ----------------------------------------------------------------- */
+
+.alliance__meta {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+}
+
+.alliance__index {
+  font-size: var(--text-xs);
+  font-weight: 800;
+  letter-spacing: var(--tracking-wide);
+  color: var(--brand-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.alliance__kind {
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.alliance__name {
+  margin-top: var(--space-2xs);
+  font-size: var(--text-3xl);
+  text-transform: uppercase;
+}
+
+.alliance__detail {
+  display: grid;
+  gap: var(--space-lg);
+  margin-top: var(--space-md);
+}
+
+.alliance__text {
+  max-width: 54ch;
+  font-size: var(--text-base);
+  color: var(--text-muted);
+  line-height: var(--leading-relaxed);
+}
+
+/* La frase sobre la que gira la alianza, levantada del gris del párrafo. */
+.alliance__lift {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.alliance__aside-label {
+  margin-bottom: var(--space-2xs);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.alliance__scope-item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding-block: 0.55rem;
+  border-top: 1px solid var(--border-soft);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.alliance__scope-item:last-child {
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.alliance__scope-item::before {
+  content: "";
+  flex: none;
+  width: 0.9rem;
+  height: 1px;
+  background: var(--brand-secondary);
+  opacity: 0.75;
+}
+
+.alliance__cta {
+  margin-top: var(--space-lg);
+}
+
+/* --- Composición partida ----------------------------------------------------- */
+
+@media (min-width: 64rem) {
+  .alliance__panel {
+    grid-template-columns: minmax(0, 15rem) 1px minmax(0, 1fr);
+    align-items: start;
+    gap: clamp(2rem, 4vw, 3.75rem);
+  }
+
+  .alliance__seam {
+    width: 1px;
+    height: 100%;
+    align-self: stretch;
+    background: linear-gradient(
+      180deg,
+      transparent,
+      rgb(var(--brand-secondary-rgb) / 0.3) 22%,
+      var(--border) 55%,
+      transparent
+    );
+    opacity: 1;
+  }
+
+  .alliance__name {
+    font-size: var(--text-4xl);
+  }
+
+  /* Prosa a la izquierda, el índice legible del trabajo a la derecha: el mismo
+     orden de lectura que tenían las filas de capacidades, para que la zona
+     siga sintiéndose parte de la página. */
+  .alliance__detail {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 15rem);
+    gap: clamp(2rem, 3.4vw, 3.5rem);
+    align-items: start;
+    margin-top: var(--space-lg);
+  }
+}

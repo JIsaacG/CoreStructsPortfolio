@@ -140,7 +140,7 @@
         <nav class="header__nav" aria-label="Principal">
           <ul class="nav__list">
             <li><a class="nav__link" href="#proyectos" data-nav-link>Proyectos</a></li>
-            <li><a class="nav__link" href="#capacidades" data-nav-link>Capacidades</a></li>
+            <li><a class="nav__link" href="#alianzas" data-nav-link>Alianzas</a></li>
             <li><a class="nav__link" href="#contacto" data-nav-link>Contacto</a></li>
           </ul>
         </nav>
@@ -169,8 +169,8 @@
         <a class="mobile-nav__link" href="#proyectos">
           <span class="mobile-nav__index">01</span> Proyectos
         </a>
-        <a class="mobile-nav__link" href="#capacidades">
-          <span class="mobile-nav__index">02</span> Capacidades
+        <a class="mobile-nav__link" href="#alianzas">
+          <span class="mobile-nav__index">02</span> Alianzas
         </a>
         <a class="mobile-nav__link" href="#contacto">
           <span class="mobile-nav__index">03</span> Contacto
@@ -187,7 +187,10 @@
       <section class="hero" id="inicio" data-hero>
         <div class="hero__stage">
           <div class="hero__content shell">
-            <div class="hero__mark">
+            <!-- Pressing the mark throws off a burst of brand-blue sparks,
+                 painted on the canvas below it by logo-burst.js. Decorative:
+                 without JavaScript the canvas simply stays empty. -->
+            <div class="hero__mark" data-logo>
               <!-- build:hero-mark -->
               <svg
                 class="hero__mark-svg"
@@ -196,6 +199,7 @@
                 focusable="false"
               ><path class="cs-face cs-face--top" fill="url(#cs-face-top)" d="M10 98L17 92L181 1L188 3L354 96L353 99L200 186L185 179L173 181L166 186L11 98Z"/><path class="cs-face cs-face--right" fill="#3898d4" d="M188 421L188 373L190 371L320 295L320 248L318 248L188 324L188 217L198 211L202 203L202 197L358 111L361 109L361 165L233 234L233 275L361 200L361 321L189 421Z"/><path class="cs-face cs-face--left" fill="#253880" d="M1 107L160 195L166 210L176 216L176 252L174 252L42 176L42 294L114 336L154 359L154 297L176 309L176 422L2 321L1 108Z"/></svg>
 <!-- /build:hero-mark -->
+              <canvas class="hero__mark-burst" data-logo-burst aria-hidden="true"></canvas>
             </div>
 
             <p class="hero__wordmark wordmark">CoreStruct</p>
@@ -518,64 +522,65 @@
 
       <span class="connector" aria-hidden="true"></span>
 
-      <!-- ============================================ 04 · Capabilities -->
-      <section class="section capabilities" id="capacidades" aria-labelledby="capabilities-title">
+      <!-- =============================================== 04 · Alliances -->
+      <section class="section alliances" id="alianzas" aria-labelledby="alliances-title">
         <div class="shell">
-          <header class="capabilities__head">
+          <header class="alliances__head">
             <p class="eyebrow" data-reveal="fade">
-              Capacidades <span class="eyebrow__index">/ 03</span>
+              Alianzas <span class="eyebrow__index">/ 03</span>
             </p>
-            <h2 class="capabilities__title" id="capabilities-title" data-reveal="far">
+            <h2 class="alliances__title" id="alliances-title" data-reveal="far">
               No solo hacemos <em>páginas web.</em>
             </h2>
+            <p class="alliances__lede" data-reveal="far">
+              Trabajamos con instituciones que necesitan una plataforma, no una página:
+              proyectos que se mantienen, crecen y se administran desde adentro.
+            </p>
           </header>
 
-          <!-- build:capabilities -->
-          <ul class="capabilities__list">
-            <li class="capability" data-reveal="left">
-              <div class="capability__row">
-                <span class="capability__name">Diseño</span>
-                <span class="capability__index">01</span>
-                <p class="capability__detail">Dirección de arte, sistemas de diseño e interfaces que se entienden sin manual.</p>
-              </div>
-            </li>
-            <li class="capability" data-reveal="right">
-              <div class="capability__row">
-                <span class="capability__name">Desarrollo</span>
-                <span class="capability__index">02</span>
-                <p class="capability__detail">Front-end y back-end a medida, con código mantenible y rendimiento medido.</p>
-              </div>
-            </li>
-            <li class="capability" data-reveal="left">
-              <div class="capability__row">
-                <span class="capability__name">Automatización</span>
-                <span class="capability__index">03</span>
-                <p class="capability__detail">Procesos, documentos y notificaciones que dejan de depender de trabajo manual.</p>
-              </div>
-            </li>
-            <li class="capability" data-reveal="right">
-              <div class="capability__row">
-                <span class="capability__name">Infraestructura</span>
-                <span class="capability__index">04</span>
-                <p class="capability__detail">Despliegue, dominios, correo, respaldos y monitoreo listos desde el primer día.</p>
-              </div>
-            </li>
-            <li class="capability" data-reveal="left">
-              <div class="capability__row">
-                <span class="capability__name">Integración</span>
-                <span class="capability__index">05</span>
-                <p class="capability__detail">APIs, pasarelas y sistemas existentes conectados sin romper lo que ya funciona.</p>
-              </div>
-            </li>
-            <li class="capability" data-reveal="right">
-              <div class="capability__row">
-                <span class="capability__name">Experiencia</span>
-                <span class="capability__index">06</span>
-                <p class="capability__detail">Accesibilidad, velocidad y claridad como requisitos, no como ajustes finales.</p>
-              </div>
+          <!-- build:alliances -->
+          <ul class="alliances__list">
+            <li class="alliance" data-reveal="far">
+              <article class="alliance__panel" data-pointer-glow>
+                <div class="alliance__brand">
+                  <div class="alliance__plate">
+                    <img
+                      class="alliance__logo"
+                      src="assets/alianzas/virginia-sapp.png"
+                      width="202"
+                      height="280"
+                      alt="Logotipo institucional de Virginia Sapp"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                </div>
+
+                <span class="alliance__seam" aria-hidden="true"></span>
+
+                <div class="alliance__body">
+                  <p class="alliance__meta">
+                    <span class="alliance__index">01</span>
+                    <span class="alliance__kind">Institución educativa</span>
+                  </p>
+                  <h3 class="alliance__name">Virginia Sapp</h3>
+                  <div class="alliance__detail">
+                    <p class="alliance__text">Creamos para Virginia Sapp una <strong class="alliance__lift">plataforma educativa digital que va más allá de una página web</strong>: centraliza su presencia institucional, admisiones, contenidos, recursos académicos y herramientas interactivas en una experiencia moderna, administrable y preparada para crecer junto con la institución.</p>
+                    <div class="alliance__aside">
+                      <p class="alliance__aside-label">Alcance</p>
+                      <ul class="alliance__scope">
+                        <li class="alliance__scope-item">Presencia institucional</li>
+                        <li class="alliance__scope-item">Admisiones</li>
+                        <li class="alliance__scope-item">Contenidos y recursos</li>
+                        <li class="alliance__scope-item">Herramientas interactivas</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </article>
             </li>
           </ul>
-<!-- /build:capabilities -->
+<!-- /build:alliances -->
         </div>
       </section>
 
@@ -645,7 +650,7 @@
         <!-- build:footer-meta -->
         <div class="footer__meta">
           <a class="footer__link" href="#proyectos">Proyectos</a>
-          <a class="footer__link" href="#capacidades">Capacidades</a>
+          <a class="footer__link" href="#alianzas">Alianzas</a>
           <a class="footer__link" href="#contacto">Contacto</a>
           <span class="footer__note">
             &copy; <span data-current-year>2026</span>

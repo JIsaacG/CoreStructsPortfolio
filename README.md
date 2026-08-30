@@ -90,6 +90,10 @@ src/
       pointer-glow.js      el realce cian dentro de una tarjeta al pasar por ella
       pointer-spotlight.js la luz de la página: sigue al cursor con retardo
                            y se deforma según la velocidad
+      starfield.js         el campo ambiental de motas de marca que sube
+                           detrás de toda la página
+      logo-burst.js        las chispas azules que suelta el isotipo del hero
+                           al hacer clic o tocarlo
 
 tools/                     scripts de compilación (Node, sin dependencias)
   lib/png.mjs              códec PNG mínimo (decodificar, codificar, escalar)

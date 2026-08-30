@@ -33,6 +33,6 @@ export const site = {
 /** Primary navigation. `id` must match a section id in the page. */
 export const navigation = [
   { id: "proyectos", label: "Proyectos" },
-  { id: "capacidades", label: "Capacidades" },
+  { id: "alianzas", label: "Alianzas" },
   { id: "contacto", label: "Contacto" },
 ];

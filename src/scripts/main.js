@@ -7,6 +7,7 @@
  */
 
 import { initHeader } from "./modules/header.js";
+import { initLogoBurst } from "./modules/logo-burst.js";
 import { initPointerGlow } from "./modules/pointer-glow.js";
 import { initPointerSpotlight } from "./modules/pointer-spotlight.js";
 import { initScrollMetrics } from "./modules/scroll-metrics.js";
@@ -19,6 +20,7 @@ initScrollMetrics();
 initScrollReveal();
 initPointerSpotlight();
 initPointerGlow();
+initLogoBurst();
 
 // The footer year is the one piece of copy that should never go stale.
 const year = document.querySelector("[data-current-year]");

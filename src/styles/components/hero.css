@@ -81,6 +81,10 @@
   filter: blur(1.5rem);
   opacity: 0;
   will-change: opacity;
+  /* The pool is three times the width of the mark, and a pseudo-element is hit
+     tested as part of its owner: without this it would hand the mark a click
+     target reaching most of the way across the hero. */
+  pointer-events: none;
   animation: hero-glow-in 1.6s var(--ease-out-quart) 0.35s forwards,
     hero-glow-breathe 9s var(--ease-in-out) 2s infinite;
 }
@@ -98,6 +102,39 @@
   }
   50% {
     opacity: 0.62;
+  }
+}
+
+/* --- The burst ------------------------------------------------------------- */
+
+/* Pressing the mark scatters brand-blue sparks out of the point that was
+   touched. The canvas is far larger than the mark so the sparks have somewhere
+   to fly, sits above the cube, and never takes a pointer event: the press is
+   read on .hero__mark itself. It is painted by logo-burst.js and stays empty
+   until then, so nothing here shows without JavaScript. */
+.hero__mark-burst {
+  position: absolute;
+  inset-block-start: -80%;
+  inset-inline-start: -80%;
+  z-index: 2;
+  width: 260%;
+  height: 260%;
+  pointer-events: none;
+}
+
+/* Only offered when the burst can actually happen. */
+.js .hero__mark {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .hero__mark-svg {
+    transition: scale var(--duration-fast) var(--ease-out-quart);
+  }
+
+  .js .hero__mark:active .hero__mark-svg {
+    scale: 0.96;
   }
 }
 

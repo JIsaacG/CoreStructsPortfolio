@@ -14,7 +14,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { capabilities } from "../src/data/capabilities.js";
+import { alliances } from "../src/data/alliances.js";
 import { mockups } from "../src/data/mockups.js";
 import { projects } from "../src/data/projects.js";
 import { navigation, site } from "../src/data/site.js";
@@ -33,6 +33,13 @@ const escape = (value) =>
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
+
+/**
+ * `**text**` becomes the lifted phrase inside an alliance paragraph. Applied
+ * after escaping, so the data file can never inject markup of its own.
+ */
+const emphasise = (value) =>
+  escape(value).replace(/\*\*(.+?)\*\*/g, '<strong class="alliance__lift">$1</strong>');
 
 /** Read a custom property out of the token sheet, so colours are declared once. */
 function token(name) {
@@ -149,22 +156,80 @@ function renderProject(project) {
 const renderProjects = () =>
   `          <div class="projects__grid">\n${projects.map(renderProject).join("\n")}\n          </div>`;
 
-/* ------------------------------------------------------------ capabilities */
+/* --------------------------------------------------------------- alliances */
 
-const renderCapabilities = () =>
-  `          <ul class="capabilities__list">
-${capabilities
-  .map(
-    (capability, index) => `            <li class="capability" data-reveal="${index % 2 ? "right" : "left"}">
-              <div class="capability__row">
-                <span class="capability__name">${escape(capability.name)}</span>
-                <span class="capability__index">${escape(capability.number)}</span>
-                <p class="capability__detail">${escape(capability.detail)}</p>
-              </div>
-            </li>`,
-  )
+/** The scannable index of what the platform covers, held beside the prose. */
+const renderScope = (scope = []) =>
+  !scope.length
+    ? ""
+    : `                    <div class="alliance__aside">
+                      <p class="alliance__aside-label">Alcance</p>
+                      <ul class="alliance__scope">
+${scope
+  .map((item) => `                        <li class="alliance__scope-item">${escape(item)}</li>`)
   .join("\n")}
-          </ul>`;
+                      </ul>
+                    </div>`;
+
+/** Only rendered once an alliance has a public URL to point at. */
+const renderAllianceLink = (alliance) =>
+  !alliance.href
+    ? ""
+    : `                  <p class="alliance__cta">
+                    <a class="arrow-link" href="${escape(alliance.href)}" target="_blank" rel="noopener">
+                      <span class="arrow-link__line" aria-hidden="true"></span>
+                      Ver la plataforma
+                      <span class="arrow-link__arrow" aria-hidden="true">&rarr;</span>
+                    </a>
+                  </p>`;
+
+function renderAlliance(alliance) {
+  const { logo } = alliance;
+
+  const detail = [
+    `                    <p class="alliance__text">${emphasise(alliance.description)}</p>`,
+    renderScope(alliance.scope),
+  ].filter(Boolean);
+
+  const body = [
+    `                  <p class="alliance__meta">
+                    <span class="alliance__index">${escape(alliance.number)}</span>
+                    <span class="alliance__kind">${escape(alliance.kind)}</span>
+                  </p>
+                  <h3 class="alliance__name">${escape(alliance.name)}</h3>
+                  <div class="alliance__detail">
+${detail.join("\n")}
+                  </div>`,
+    renderAllianceLink(alliance),
+  ].filter(Boolean);
+
+  return `            <li class="alliance" data-reveal="${escape(alliance.reveal ?? "far")}">
+              <article class="alliance__panel" data-pointer-glow>
+                <div class="alliance__brand">
+                  <div class="alliance__plate">
+                    <img
+                      class="alliance__logo"
+                      src="${escape(logo.src)}"
+                      width="${escape(logo.width)}"
+                      height="${escape(logo.height)}"
+                      alt="${escape(logo.alt)}"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                </div>
+
+                <span class="alliance__seam" aria-hidden="true"></span>
+
+                <div class="alliance__body">
+${body.join("\n")}
+                </div>
+              </article>
+            </li>`;
+}
+
+const renderAlliances = () =>
+  `          <ul class="alliances__list">\n${alliances.map(renderAlliance).join("\n")}\n          </ul>`;
 
 /* ----------------------------------------------------------------- contact */
 
@@ -258,7 +323,7 @@ let html = readFileSync(PAGE, "utf8");
 html = fill(html, "sprite", renderSprite(isotype));
 html = fill(html, "hero-mark", renderHeroMark(isotype));
 html = fill(html, "projects", renderProjects());
-html = fill(html, "capabilities", renderCapabilities());
+html = fill(html, "alliances", renderAlliances());
 html = fill(html, "cta", renderCta());
 html = fill(html, "channels", renderChannels());
 html = fill(html, "footer-meta", renderFooterMeta());
@@ -266,6 +331,6 @@ html = fill(html, "footer-meta", renderFooterMeta());
 writeFileSync(PAGE, html);
 
 console.log(
-  `index.html  ${projects.length} projects · ${capabilities.length} capabilities · ` +
+  `index.html  ${projects.length} projects · ${alliances.length} alliances · ` +
     `${(Buffer.byteLength(html) / 1024).toFixed(1)} KB`,
 );
