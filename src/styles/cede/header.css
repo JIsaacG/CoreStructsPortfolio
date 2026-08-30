@@ -536,17 +536,21 @@
 
 /* --- The narrow-viewport menu --------------------------------------------- */
 
+/* The menu button is labelled, not only drawn. Three lines and no word is the
+   single most reliably misunderstood control on a public site, and this one has
+   the room. */
 .cd-burger {
   display: inline-flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 4px;
-  width: 2.75rem;
-  height: 2.5rem;
-  padding: 0 0.6rem;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 2.5rem;
+  padding: 0 0.75rem;
   border: 1px solid rgb(255 255 255 / 0.35);
   border-radius: var(--r-xs);
   background: none;
+  color: #ffffff;
+  font-size: var(--t-sm);
+  font-weight: 600;
   cursor: pointer;
 }
 
@@ -554,6 +558,14 @@
   .cd-burger {
     display: none;
   }
+}
+
+.cd-burger__bars {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  width: 1rem;
 }
 
 .cd-burger__bar {
@@ -569,6 +581,28 @@
 
 .cd-burger[aria-expanded="true"] .cd-burger__bar:last-child {
   transform: translateY(-3px) rotate(-45deg);
+}
+
+/* With the navigation itself hidden, the row would otherwise strand the button
+   on the far left of an empty bar. */
+@media (max-width: 63.99rem) {
+  .cd-navband__inner {
+    justify-content: flex-end;
+  }
+
+  .cd-navband__end {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .cd-navband__end::before {
+    content: "Navegación";
+    font-size: var(--t-2xs);
+    font-weight: 600;
+    letter-spacing: var(--track-label);
+    text-transform: uppercase;
+    color: rgb(255 255 255 / 0.72);
+  }
 }
 
 .cd-panel {

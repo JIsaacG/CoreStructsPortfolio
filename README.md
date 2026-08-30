@@ -230,6 +230,14 @@ el navegador lo vuelve a llamar —con el ancho real del contenedor— cuando ca
 un filtro o el tamaño de la ventana. No hay una segunda implementación que se
 pueda desincronizar.
 
+**Lo pesado se carga cuando hace falta.** El observatorio arrastra los
+renderizadores, todo el modelo estadístico y la geometría de los 18
+departamentos; el buscador arrastra todas las colecciones de contenido para
+armar su índice. Ninguno de los dos se carga por defecto: el observatorio entra
+con un `import()` solo si la página tiene un gráfico o un mapa, y el índice del
+buscador se construye al enfocar la caja. Una página como `/institucion` baja
+58 KB de JavaScript en vez de 269 KB.
+
 **Las descargas son reales.** CSV, XLSX y JSON se generan serializando la tabla
 que acompaña a cada gráfico, así que el archivo contiene exactamente las cifras
 que se estaban viendo, filtros incluidos. El XLSX lo escribe

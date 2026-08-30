@@ -11,14 +11,6 @@
  * before they read a single title.
  */
 
-import { indicators, boards } from "../../data/cede/indicators.js";
-import { library, normative, resolutions, themeName, typeName, kindName } from "../../data/cede/documents.js";
-import { articles, knowledge } from "../../data/cede/newsroom.js";
-import { agenda } from "../../data/cede/policy.js";
-import { datasets } from "../../data/cede/transparency.js";
-import { consultations } from "../../data/cede/participation.js";
-import { routes } from "../../data/cede/institution.js";
-import { longDate } from "../../data/cede/format.js";
 
 /**
  * Where the portal root is, relative to the page asking.
@@ -39,10 +31,82 @@ const normalise = (value) =>
     .replace(/[̀-ͯ]/g, "");
 
 let index = null;
+let building = null;
 
-/** Build the index once, on first use. */
-function buildIndex() {
+/**
+ * Build the index once, on first use.
+ *
+ * The collections are imported here rather than at the top of the file: the
+ * index needs every content module in the portal, and loading a hundred
+ * kilobytes of normative, library and newsroom data on a page where nobody has
+ * typed anything is a cost paid by every visitor for a feature most of them
+ * will not touch. The first keystroke pays it instead.
+ */
+async function buildIndex() {
   if (index) return index;
+  if (building) return building;
+
+  building = (async () => {
+    const [
+      { indicators, boards },
+      { library, normative, resolutions, themeName, typeName, kindName },
+      { articles, knowledge },
+      { agenda },
+      { datasets },
+      { consultations },
+      { routes },
+      { longDate },
+    ] = await Promise.all([
+      import("../../data/cede/indicators.js"),
+      import("../../data/cede/documents.js"),
+      import("../../data/cede/newsroom.js"),
+      import("../../data/cede/policy.js"),
+      import("../../data/cede/transparency.js"),
+      import("../../data/cede/participation.js"),
+      import("../../data/cede/institution.js"),
+      import("../../data/cede/format.js"),
+    ]);
+
+    index = collect({
+      indicators,
+      boards,
+      library,
+      normative,
+      resolutions,
+      themeName,
+      typeName,
+      kindName,
+      articles,
+      knowledge,
+      agenda,
+      datasets,
+      consultations,
+      routes,
+      longDate,
+    });
+    return index;
+  })();
+
+  return building;
+}
+
+function collect({
+  indicators,
+  boards,
+  library,
+  normative,
+  resolutions,
+  themeName,
+  typeName,
+  kindName,
+  articles,
+  knowledge,
+  agenda,
+  datasets,
+  consultations,
+  routes,
+  longDate,
+}) {
   const root = base();
   const entries = [];
 
@@ -149,18 +213,18 @@ function buildIndex() {
     add("Secciones", title, meta, `${root}${routes[route]}`);
   }
 
-  index = entries;
-  return index;
+  return entries;
 }
 
 /** Rank: a hit in the title beats a hit in the body, and earlier beats later. */
-function search(query, limit = 40) {
+async function search(query, limit = 40) {
   const needle = normalise(query).trim();
   if (needle.length < 2) return [];
 
   const words = needle.split(/\s+/);
+  const entries = await buildIndex();
 
-  return buildIndex()
+  return entries
     .map((entry) => {
       let score = 0;
       const title = normalise(entry.title);
@@ -249,13 +313,19 @@ function initSuggestions(root) {
     active = -1;
   };
 
-  input.addEventListener("input", () => {
+  /* The index starts loading on focus, so by the time the second character is
+     typed it is usually already there. */
+  input.addEventListener("focus", () => buildIndex(), { once: true });
+
+  input.addEventListener("input", async () => {
     const value = input.value.trim();
     if (value.length < 2) {
       close();
       return;
     }
-    open(search(value, 12));
+    const results = await search(value, 12);
+    /* The reader may have kept typing while the index loaded. */
+    if (input.value.trim() === value) open(results);
   });
 
   input.addEventListener("keydown", (event) => {
@@ -293,8 +363,8 @@ function initResultsPage() {
   const counter = form.querySelector("[data-search-count]");
   const fallback = document.querySelector("[data-search-empty]");
 
-  const render = (query) => {
-    const results = query.trim().length >= 2 ? search(query, 60) : [];
+  const render = async (query) => {
+    const results = query.trim().length >= 2 ? await search(query, 60) : [];
 
     if (!query.trim()) {
       output.innerHTML = "";
