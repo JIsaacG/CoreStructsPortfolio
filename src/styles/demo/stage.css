@@ -47,7 +47,16 @@
   }
 
   .dm-track.is-pinned .dm-bottle {
-    opacity: calc(var(--mark-fade, 1) * 0.3);
+    /* With no second column to move into, sideways travel would only park the
+       bottle under one text column or another, so the horizontal keyframe is
+       dropped and it holds the centre. It still turns, shrinks, drains and
+       changes flavour — the whole story survives, minus the one move that has
+       nowhere to go. */
+    transform:
+      translate3d(0, calc(var(--mark-y, 0) * 1vh), 0)
+      rotate(var(--mark-rot, 0deg))
+      scale(var(--mark-scale, 1));
+    opacity: calc(var(--mark-fade, 1) * 0.24);
   }
 }
 

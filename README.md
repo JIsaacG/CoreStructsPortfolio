@@ -139,8 +139,18 @@ cruzando el centro de la pantalla.
 Los keyframes no son porcentajes escritos a mano: cada sección declara en
 `data-stage-frame` el estado que debe alcanzar la botella cuando llega arriba, y
 `stage.js` mide esas posiciones del layout real. Reescribir un texto vuelve a
-sincronizar la animación sola. En móvil y con `prefers-reduced-motion` no se fija
-nada: la botella se queda quieta en el hero.
+sincronizar la animación sola.
+
+La animación corre **en todos los dispositivos y con cualquier ajuste de
+movimiento del sistema**: es el tema de la página, no un adorno encima, así que
+`demo.css` levanta a propósito el recorte que `motion.css` aplica bajo
+`prefers-reduced-motion` (el portfolio sí lo respeta). En móvil no hay una
+segunda columna a la que mover la botella, así que se queda centrada detrás del
+texto, atenuada, y conserva el giro, la escala, el vaciado y el cambio de sabor.
+
+La única condición para fijarla es que `stage.js` esté vivo: el módulo añade
+`is-pinned` al arrancar y el CSS solo fija el escenario con esa clase. Si el
+script no cargara, una botella quieta a tamaño completo taparía el texto.
 
 Las marcas son **inventadas**. Cada página lo dice en la chapa fija de la esquina,
 en el pie y en el cierre, y va marcada `noindex` para que ninguna empresa ficticia
