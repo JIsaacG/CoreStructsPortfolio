@@ -209,7 +209,11 @@ export function logo(ctx, { inFooter = false } = {}) {
     `${inFooter ? "" : ` aria-label="${escape(institution.full)}, inicio"`}>` +
     mark +
     `<span class="cd-logo__type">` +
-    `<span class="cd-logo__name">${escape(institution.name)}<br />${escape(institution.suffix)}</span>` +
+    /* Two elements rather than a line break: on a phone the second line is set
+       smaller so the whole name still fits in two lines beside the buttons,
+       instead of wrapping into three. */
+    `<span class="cd-logo__name"><b class="cd-logo__lead">${escape(institution.name)}</b>` +
+    `<span class="cd-logo__tail">${escape(institution.suffix)}</span></span>` +
     `<span class="cd-logo__sub">${escape(institution.descriptor)}</span></span></a>`
   );
 }
@@ -249,7 +253,7 @@ function identity(ctx) {
         <div class="cd-shell cd-identity__inner">
 ${logo(ctx)}
           <search class="cd-search" data-search>
-            <form class="cd-search__form" action="${page(ctx, "buscar")}" method="get" role="search">
+            <form class="cd-search__form" id="cd-search-form" action="${page(ctx, "buscar")}" method="get" role="search">
               <label class="cd-sr" for="cd-q">Buscar en el portal</label>
               <div class="cd-search__field">
                 ${icon("search", "cd-search__icon")}
@@ -273,7 +277,40 @@ ${logo(ctx)}
             <div class="cd-suggest" id="cd-suggest" role="listbox" aria-label="Sugerencias" hidden></div>
           </search>
           <div class="cd-identity__end">
-            <a class="cd-btn cd-btn--solid" href="${page(ctx, "participacion")}">Participación ciudadana</a>
+            <a class="cd-btn cd-btn--solid cd-identity__cta" href="${page(ctx, "participacion")}">
+              Participación ciudadana
+            </a>
+
+            <!-- On a phone the identity band IS the header: the search folds
+                 into a button and the menu sits beside it, so the page starts
+                 within the first screen instead of two scrolls down. Both
+                 controls are hidden from a wide viewport, where the search box
+                 and the navigation are already on show. -->
+            <button
+              class="cd-iconbtn"
+              type="button"
+              data-search-toggle
+              aria-expanded="false"
+              aria-controls="cd-search-form"
+              aria-label="Buscar en el portal"
+            >
+              ${icon("search")}
+            </button>
+
+            <button
+              class="cd-burger"
+              type="button"
+              aria-expanded="false"
+              aria-controls="cd-panel"
+              aria-label="Abrir el menú"
+              data-panel-toggle
+            >
+              <span class="cd-burger__bars" aria-hidden="true">
+                <span class="cd-burger__bar"></span>
+                <span class="cd-burger__bar"></span>
+              </span>
+              <span class="cd-burger__label">Menú</span>
+            </button>
           </div>
         </div>
       </div>`;
@@ -344,20 +381,6 @@ ${items}
           </nav>
           <div class="cd-navband__end">
             <a class="cd-navband__link" href="${page(ctx, "contacto")}">Contacto</a>
-            <button
-              class="cd-burger"
-              type="button"
-              aria-expanded="false"
-              aria-controls="cd-panel"
-              aria-label="Abrir el menú"
-              data-panel-toggle
-            >
-              <span class="cd-burger__bars" aria-hidden="true">
-                <span class="cd-burger__bar"></span>
-                <span class="cd-burger__bar"></span>
-              </span>
-              <span class="cd-burger__label">Menú</span>
-            </button>
           </div>
         </div>
 ${panels}
@@ -376,15 +399,33 @@ ${mobilePanel(ctx)}`;
 
 /** The narrow-viewport menu: the whole site map, one level deep. */
 function mobilePanel(ctx) {
+  /**
+   * Nine sections, each with up to six sub-pages.
+   *
+   * Opened flat that is four screens of scrolling, which pushes the last
+   * sections — and the accessibility controls, which on a phone live only here
+   * — somewhere nobody goes. So the section is a link and its contents are
+   * behind their own disclosure: the whole map of the portal fits in a screen
+   * and a half, and any section is one tap from being expanded.
+   */
   const groups = navigation
     .map((item, index) => {
       const subLinks = (item.columns ?? []).flatMap((column) => column.links).slice(0, 6);
+      const id = `cd-panel-${item.route}`;
+
       return (
         `        <div class="cd-panel__group">` +
+        `<div class="cd-panel__row">` +
         `<a class="cd-panel__link" href="${page(ctx, item.route)}">${escape(item.label)}` +
         `<b>${String(index + 1).padStart(2, "0")}</b></a>` +
         (subLinks.length
-          ? `<div class="cd-panel__sub">${subLinks
+          ? `<button class="cd-panel__disc" type="button" aria-expanded="false" ` +
+            `aria-controls="${id}" aria-label="Ver el contenido de ${escape(item.label)}" ` +
+            `data-panel-disc>${CARET}</button>`
+          : "") +
+        `</div>` +
+        (subLinks.length
+          ? `<div class="cd-panel__sub" id="${id}" hidden>${subLinks
               .map((link) => `<a href="${page(ctx, link.route, link.hash)}">${escape(link.label)}</a>`)
               .join("")}</div>`
           : "") +

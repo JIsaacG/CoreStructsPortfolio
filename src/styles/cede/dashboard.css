@@ -27,7 +27,10 @@
    -------------------------------------------------------------------------- */
 
 :root {
-  --stuck-top: 3.25rem;
+  /* The height of whatever the header keeps when it collapses: the identity
+     band on a phone, the institutional bar plus the navigation on a wide
+     screen. Both sticky bars below measure themselves from it. */
+  --stuck-top: 3.6rem;
   --filters-compact: 3.25rem;
 }
 

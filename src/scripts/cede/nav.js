@@ -145,6 +145,19 @@ function initPanel(header) {
   toggle.addEventListener("click", () => setOpen(toggle.getAttribute("aria-expanded") !== "true"));
   panel.querySelector("[data-panel-close]")?.addEventListener("click", () => close({ restoreFocus: true }));
 
+  /* The sections open one at a time. The sub-lists ship `hidden`, so without
+     this module the panel is nine links to nine real pages rather than a menu
+     that cannot be opened. */
+  for (const disclosure of panel.querySelectorAll("[data-panel-disc]")) {
+    disclosure.addEventListener("click", () => {
+      const list = document.getElementById(disclosure.getAttribute("aria-controls"));
+      if (!list) return;
+      const open = disclosure.getAttribute("aria-expanded") === "true";
+      disclosure.setAttribute("aria-expanded", String(!open));
+      list.hidden = open;
+    });
+  }
+
   panel.addEventListener("click", (event) => {
     if (event.target.closest("a")) close();
   });
@@ -160,6 +173,38 @@ function initPanel(header) {
   });
 }
 
+/**
+ * The search, folded into a button on a narrow viewport.
+ *
+ * The field is in the markup and works without this — on a wide screen it is
+ * simply always open. Here the button reveals it, moves focus into it, and
+ * closes it again on Escape, which is the behaviour a search toggle has to have
+ * for anyone who is not using a mouse.
+ */
+function initSearchToggle(header) {
+  const toggle = header.querySelector("[data-search-toggle]");
+  const search = header.querySelector("[data-search]");
+  const input = search?.querySelector("input[type='search']");
+  if (!toggle || !search || !input) return;
+
+  const setOpen = (open) => {
+    search.classList.toggle("is-open", open);
+    toggle.setAttribute("aria-expanded", String(open));
+    if (open) input.focus();
+  };
+
+  toggle.addEventListener("click", () => setOpen(!search.classList.contains("is-open")));
+
+  input.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape" || !search.classList.contains("is-open")) return;
+    /* The suggestions panel closes on Escape first; a second press folds the
+       field away and returns focus to the button that opened it. */
+    if (!search.querySelector(".cd-suggest")?.hidden) return;
+    setOpen(false);
+    toggle.focus();
+  });
+}
+
 export function initNav() {
   const header = document.querySelector("[data-header]");
   if (!header) return;
@@ -167,4 +212,5 @@ export function initNav() {
   initStuck(header);
   initMega(header);
   initPanel(header);
+  initSearchToggle(header);
 }

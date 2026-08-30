@@ -71,6 +71,9 @@ export function initReveal() {
 
   window.addEventListener("scroll", schedule, { passive: true });
   window.addEventListener("resize", schedule, { passive: true });
+  /* A momentum fling on a phone can end between two scroll frames; this is the
+     event that guarantees one last sweep once it settles. */
+  window.addEventListener("scrollend", schedule, { passive: true });
 
   /* Two sweeps at the start: one now, one after the fonts and the charts have
      settled the layout, because an element's position can move between them. */

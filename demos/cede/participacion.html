@@ -120,9 +120,9 @@
       </div>
       <div class="cd-identity">
         <div class="cd-shell cd-identity__inner">
-<a class="cd-logo" href="index.html" aria-label="Consejo Estratégico para el Desarrollo Educativo, inicio"><svg class="cd-logo__mark" viewBox="0 0 44 44" aria-hidden="true" focusable="false"><rect x="1" y="1" width="42" height="42" rx="3" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.35"/><path d="M22 8 34 15v3H10v-3z" fill="currentColor"/><rect x="13" y="21" width="4" height="11" fill="currentColor"/><rect x="20" y="21" width="4" height="11" fill="currentColor"/><rect x="27" y="21" width="4" height="11" fill="currentColor"/><rect x="10" y="34" width="24" height="3" fill="currentColor"/></svg><span class="cd-logo__type"><span class="cd-logo__name">Consejo Estratégico<br />para el Desarrollo Educativo</span><span class="cd-logo__sub">Sistema Nacional de Información y Política Educativa</span></span></a>
+<a class="cd-logo" href="index.html" aria-label="Consejo Estratégico para el Desarrollo Educativo, inicio"><svg class="cd-logo__mark" viewBox="0 0 44 44" aria-hidden="true" focusable="false"><rect x="1" y="1" width="42" height="42" rx="3" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.35"/><path d="M22 8 34 15v3H10v-3z" fill="currentColor"/><rect x="13" y="21" width="4" height="11" fill="currentColor"/><rect x="20" y="21" width="4" height="11" fill="currentColor"/><rect x="27" y="21" width="4" height="11" fill="currentColor"/><rect x="10" y="34" width="24" height="3" fill="currentColor"/></svg><span class="cd-logo__type"><span class="cd-logo__name"><b class="cd-logo__lead">Consejo Estratégico</b><span class="cd-logo__tail">para el Desarrollo Educativo</span></span><span class="cd-logo__sub">Sistema Nacional de Información y Política Educativa</span></span></a>
           <search class="cd-search" data-search>
-            <form class="cd-search__form" action="buscar.html" method="get" role="search">
+            <form class="cd-search__form" id="cd-search-form" action="buscar.html" method="get" role="search">
               <label class="cd-sr" for="cd-q">Buscar en el portal</label>
               <div class="cd-search__field">
                 <svg class="cd-icon cd-search__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.2" cy="7.2" r="4.4"/><path d="m10.6 10.6 3 3"/></svg>
@@ -146,7 +146,40 @@
             <div class="cd-suggest" id="cd-suggest" role="listbox" aria-label="Sugerencias" hidden></div>
           </search>
           <div class="cd-identity__end">
-            <a class="cd-btn cd-btn--solid" href="participacion.html">Participación ciudadana</a>
+            <a class="cd-btn cd-btn--solid cd-identity__cta" href="participacion.html">
+              Participación ciudadana
+            </a>
+
+            <!-- On a phone the identity band IS the header: the search folds
+                 into a button and the menu sits beside it, so the page starts
+                 within the first screen instead of two scrolls down. Both
+                 controls are hidden from a wide viewport, where the search box
+                 and the navigation are already on show. -->
+            <button
+              class="cd-iconbtn"
+              type="button"
+              data-search-toggle
+              aria-expanded="false"
+              aria-controls="cd-search-form"
+              aria-label="Buscar en el portal"
+            >
+              <svg class="cd-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.2" cy="7.2" r="4.4"/><path d="m10.6 10.6 3 3"/></svg>
+            </button>
+
+            <button
+              class="cd-burger"
+              type="button"
+              aria-expanded="false"
+              aria-controls="cd-panel"
+              aria-label="Abrir el menú"
+              data-panel-toggle
+            >
+              <span class="cd-burger__bars" aria-hidden="true">
+                <span class="cd-burger__bar"></span>
+                <span class="cd-burger__bar"></span>
+              </span>
+              <span class="cd-burger__label">Menú</span>
+            </button>
           </div>
         </div>
       </div>
@@ -167,20 +200,6 @@
           </nav>
           <div class="cd-navband__end">
             <a class="cd-navband__link" href="contacto.html">Contacto</a>
-            <button
-              class="cd-burger"
-              type="button"
-              aria-expanded="false"
-              aria-controls="cd-panel"
-              aria-label="Abrir el menú"
-              data-panel-toggle
-            >
-              <span class="cd-burger__bars" aria-hidden="true">
-                <span class="cd-burger__bar"></span>
-                <span class="cd-burger__bar"></span>
-              </span>
-              <span class="cd-burger__label">Menú</span>
-            </button>
           </div>
         </div>
         <div class="cd-mega" id="cd-mega-institucion" data-mega-panel="institucion" hidden>
@@ -236,15 +255,15 @@
         <p class="cd-label"><span>Menú</span></p>
         <button class="cd-panel__close" type="button" data-panel-close>Cerrar</button>
       </div>
-        <div class="cd-panel__group"><a class="cd-panel__link" href="institucion.html">Institución<b>01</b></a><div class="cd-panel__sub"><a href="institucion.html#mandato">Mandato y funciones</a><a href="institucion.html#mision">Misión y visión</a><a href="institucion.html#principios">Principios</a><a href="institucion.html#historia">Historia institucional</a><a href="institucion.html#estructura">Estructura</a><a href="institucion.html#directorio">Directorio institucional</a></div></div>
-        <div class="cd-panel__group"><a class="cd-panel__link" href="politica-educativa.html">Política Educativa<b>02</b></a><div class="cd-panel__sub"><a href="politica-educativa.html#que-es">Qué es una política educativa</a><a href="politica-educativa.html#objetivos">Objetivos y principios</a><a href="politica-educativa.html#lineas">Líneas estratégicas</a><a href="politica-educativa.html#seguimiento">Mecanismos de seguimiento</a><a href="politica-educativa.html#agenda">Políticas vigentes</a><a href="politica-educativa.html#agenda">En formulación</a></div></div>
-        <div class="cd-panel__group"><a class="cd-panel__link" href="planificacion.html">Planificación<b>03</b></a></div>
-        <div class="cd-panel__group"><a class="cd-panel__link" href="datos.html">Datos e Indicadores<b>04</b></a><div class="cd-panel__sub"><a href="datos.html#panorama">Panorama nacional</a><a href="datos.html#matricula">Matrícula</a><a href="datos.html#cobertura">Cobertura y acceso</a><a href="datos.html#permanencia">Permanencia</a><a href="datos.html#docentes">Docentes</a><a href="datos.html#infraestructura">Infraestructura</a></div></div>
-        <div class="cd-panel__group"><a class="cd-panel__link" href="normativa.html">Normativa<b>05</b></a><div class="cd-panel__sub"><a href="normativa.html#ley">Leyes</a><a href="normativa.html#reglamento">Reglamentos</a><a href="normativa.html#acuerdo">Acuerdos</a><a href="normativa.html#politica">Políticas</a><a href="normativa.html#lineamiento">Lineamientos</a><a href="resoluciones.html">Resoluciones</a></div></div>
-        <div class="cd-panel__group"><a class="cd-panel__link" href="programas.html">Programas<b>06</b></a></div>
-        <div class="cd-panel__group"><a class="cd-panel__link" href="participacion.html">Participación<b>07</b></a><div class="cd-panel__sub"><a href="participacion.html#consultas">Consultas públicas</a><a href="participacion.html#foros">Foros y mesas de diálogo</a><a href="participacion.html#encuestas">Encuestas</a><a href="participacion.html#audiencias">Audiencias</a><a href="actualidad.html#agenda">Calendario institucional</a><a href="participacion.html#como">Cómo participar</a></div></div>
-        <div class="cd-panel__group"><a class="cd-panel__link" href="transparencia.html">Transparencia<b>08</b></a></div>
-        <div class="cd-panel__group"><a class="cd-panel__link" href="actualidad.html">Actualidad<b>09</b></a></div>
+        <div class="cd-panel__group"><div class="cd-panel__row"><a class="cd-panel__link" href="institucion.html">Institución<b>01</b></a><button class="cd-panel__disc" type="button" aria-expanded="false" aria-controls="cd-panel-institucion" aria-label="Ver el contenido de Institución" data-panel-disc><svg class="cd-nav__caret" viewBox="0 0 12 8" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m1 2 5 5 5-5"/></svg></button></div><div class="cd-panel__sub" id="cd-panel-institucion" hidden><a href="institucion.html#mandato">Mandato y funciones</a><a href="institucion.html#mision">Misión y visión</a><a href="institucion.html#principios">Principios</a><a href="institucion.html#historia">Historia institucional</a><a href="institucion.html#estructura">Estructura</a><a href="institucion.html#directorio">Directorio institucional</a></div></div>
+        <div class="cd-panel__group"><div class="cd-panel__row"><a class="cd-panel__link" href="politica-educativa.html">Política Educativa<b>02</b></a><button class="cd-panel__disc" type="button" aria-expanded="false" aria-controls="cd-panel-politica" aria-label="Ver el contenido de Política Educativa" data-panel-disc><svg class="cd-nav__caret" viewBox="0 0 12 8" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m1 2 5 5 5-5"/></svg></button></div><div class="cd-panel__sub" id="cd-panel-politica" hidden><a href="politica-educativa.html#que-es">Qué es una política educativa</a><a href="politica-educativa.html#objetivos">Objetivos y principios</a><a href="politica-educativa.html#lineas">Líneas estratégicas</a><a href="politica-educativa.html#seguimiento">Mecanismos de seguimiento</a><a href="politica-educativa.html#agenda">Políticas vigentes</a><a href="politica-educativa.html#agenda">En formulación</a></div></div>
+        <div class="cd-panel__group"><div class="cd-panel__row"><a class="cd-panel__link" href="planificacion.html">Planificación<b>03</b></a></div></div>
+        <div class="cd-panel__group"><div class="cd-panel__row"><a class="cd-panel__link" href="datos.html">Datos e Indicadores<b>04</b></a><button class="cd-panel__disc" type="button" aria-expanded="false" aria-controls="cd-panel-datos" aria-label="Ver el contenido de Datos e Indicadores" data-panel-disc><svg class="cd-nav__caret" viewBox="0 0 12 8" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m1 2 5 5 5-5"/></svg></button></div><div class="cd-panel__sub" id="cd-panel-datos" hidden><a href="datos.html#panorama">Panorama nacional</a><a href="datos.html#matricula">Matrícula</a><a href="datos.html#cobertura">Cobertura y acceso</a><a href="datos.html#permanencia">Permanencia</a><a href="datos.html#docentes">Docentes</a><a href="datos.html#infraestructura">Infraestructura</a></div></div>
+        <div class="cd-panel__group"><div class="cd-panel__row"><a class="cd-panel__link" href="normativa.html">Normativa<b>05</b></a><button class="cd-panel__disc" type="button" aria-expanded="false" aria-controls="cd-panel-normativa" aria-label="Ver el contenido de Normativa" data-panel-disc><svg class="cd-nav__caret" viewBox="0 0 12 8" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m1 2 5 5 5-5"/></svg></button></div><div class="cd-panel__sub" id="cd-panel-normativa" hidden><a href="normativa.html#ley">Leyes</a><a href="normativa.html#reglamento">Reglamentos</a><a href="normativa.html#acuerdo">Acuerdos</a><a href="normativa.html#politica">Políticas</a><a href="normativa.html#lineamiento">Lineamientos</a><a href="resoluciones.html">Resoluciones</a></div></div>
+        <div class="cd-panel__group"><div class="cd-panel__row"><a class="cd-panel__link" href="programas.html">Programas<b>06</b></a></div></div>
+        <div class="cd-panel__group"><div class="cd-panel__row"><a class="cd-panel__link" href="participacion.html">Participación<b>07</b></a><button class="cd-panel__disc" type="button" aria-expanded="false" aria-controls="cd-panel-participacion" aria-label="Ver el contenido de Participación" data-panel-disc><svg class="cd-nav__caret" viewBox="0 0 12 8" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m1 2 5 5 5-5"/></svg></button></div><div class="cd-panel__sub" id="cd-panel-participacion" hidden><a href="participacion.html#consultas">Consultas públicas</a><a href="participacion.html#foros">Foros y mesas de diálogo</a><a href="participacion.html#encuestas">Encuestas</a><a href="participacion.html#audiencias">Audiencias</a><a href="actualidad.html#agenda">Calendario institucional</a><a href="participacion.html#como">Cómo participar</a></div></div>
+        <div class="cd-panel__group"><div class="cd-panel__row"><a class="cd-panel__link" href="transparencia.html">Transparencia<b>08</b></a></div></div>
+        <div class="cd-panel__group"><div class="cd-panel__row"><a class="cd-panel__link" href="actualidad.html">Actualidad<b>09</b></a></div></div>
       <div class="cd-panel__actions">
         <a class="cd-btn cd-btn--solid" href="participacion.html">Participación ciudadana</a>
         <a class="cd-btn cd-btn--ghost" href="buscar.html">Buscar en el portal</a>
@@ -314,7 +333,7 @@
         <div class="cd-shell">
           <div class="cd-footer__top">
             <div class="cd-footer__brand">
-<a class="cd-logo" href="index.html"><svg class="cd-logo__mark" viewBox="0 0 44 44" aria-hidden="true" focusable="false"><rect x="1" y="1" width="42" height="42" rx="3" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.35"/><path d="M22 8 34 15v3H10v-3z" fill="currentColor"/><rect x="13" y="21" width="4" height="11" fill="currentColor"/><rect x="20" y="21" width="4" height="11" fill="currentColor"/><rect x="27" y="21" width="4" height="11" fill="currentColor"/><rect x="10" y="34" width="24" height="3" fill="currentColor"/></svg><span class="cd-logo__type"><span class="cd-logo__name">Consejo Estratégico<br />para el Desarrollo Educativo</span><span class="cd-logo__sub">Sistema Nacional de Información y Política Educativa</span></span></a>
+<a class="cd-logo" href="index.html"><svg class="cd-logo__mark" viewBox="0 0 44 44" aria-hidden="true" focusable="false"><rect x="1" y="1" width="42" height="42" rx="3" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.35"/><path d="M22 8 34 15v3H10v-3z" fill="currentColor"/><rect x="13" y="21" width="4" height="11" fill="currentColor"/><rect x="20" y="21" width="4" height="11" fill="currentColor"/><rect x="27" y="21" width="4" height="11" fill="currentColor"/><rect x="10" y="34" width="24" height="3" fill="currentColor"/></svg><span class="cd-logo__type"><span class="cd-logo__name"><b class="cd-logo__lead">Consejo Estratégico</b><span class="cd-logo__tail">para el Desarrollo Educativo</span></span><span class="cd-logo__sub">Sistema Nacional de Información y Política Educativa</span></span></a>
               <p class="cd-footer__pitch">Información pública, política educativa y planificación nacional en un solo sistema. Portal demostrativo de una entidad ficticia.</p>
               <p class="cd-footer__pitch">Avenida de la República 1200, Tegucigalpa, M.D.C. · Dirección demostrativa<br />
               contacto@cede.example · Correo demostrativo</p>

@@ -19,19 +19,33 @@
   border-bottom: 1px solid var(--border);
 }
 
-/* The emblem and the search fold away on scroll; the institutional bar does
-   not. It carries the reader's own accessibility controls and the notice that
-   this is a demonstration, and both of those have to survive scrolling — a
-   text-size control you can only reach at the top of the page is a control for
-   people who do not need it. On a phone there is no room for that, so the bar
-   folds too and the same controls live in the menu panel instead. */
-.cd-header.is-stuck .cd-identity {
-  display: none;
+/* --- What survives a scroll ------------------------------------------------
+   The two viewports keep different bands, because on each one a different band
+   is the header.
+
+   Wide: the institutional bar stays (it carries the reader's text-size and
+   contrast controls, and a control you can only reach at the top of a long page
+   is a control for people who do not need it) together with the navigation. The
+   emblem and the search fold away.
+
+   Narrow: there is no navigation band to keep and no room for the tools, so the
+   identity band is the header — emblem, search button, menu — and it is the one
+   that stays. The accessibility controls move into the menu panel.
+   -------------------------------------------------------------------------- */
+
+@media (min-width: 64rem) {
+  .cd-header.is-stuck .cd-identity {
+    display: none;
+  }
 }
 
-@media (max-width: 64rem) {
+@media (max-width: 63.99rem) {
   .cd-header.is-stuck .cd-topbar {
     display: none;
+  }
+
+  .cd-header.is-stuck .cd-identity__inner {
+    padding-block: 0.35rem;
   }
 }
 
@@ -73,6 +87,23 @@
   display: flex;
   align-items: center;
   gap: var(--s-2xs);
+}
+
+/* A second row of six controls above the emblem is the wrong first thing to
+   show on a 390px screen. The same buttons open the menu panel, one tap away,
+   under a heading that names them. */
+@media (max-width: 63.99rem) {
+  .cd-tools {
+    display: none;
+  }
+
+  .cd-topbar__inner {
+    min-height: 1.9rem;
+  }
+
+  .cd-topbar__notice {
+    font-size: 0.625rem;
+  }
 }
 
 .cd-tools__group {
@@ -132,18 +163,25 @@
 
 /* --- 2. Identity band ----------------------------------------------------- */
 
+/* --- The identity band -----------------------------------------------------
+   On a phone it is one row — emblem on the left, search and menu buttons on the
+   right — with the search field appearing underneath only when asked for. On a
+   wide screen it opens out into the familiar three columns.
+   -------------------------------------------------------------------------- */
+
 .cd-identity__inner {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--s-sm);
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--s-2xs) var(--s-sm);
   align-items: center;
-  padding-block: var(--s-sm);
+  padding-block: var(--s-2xs);
 }
 
 @media (min-width: 64rem) {
   .cd-identity__inner {
     grid-template-columns: auto minmax(0, 1fr) auto;
     gap: var(--s-lg);
+    padding-block: var(--s-sm);
   }
 }
 
@@ -168,6 +206,7 @@
 }
 
 .cd-logo__name {
+  display: grid;
   font-family: var(--font-serif);
   font-size: var(--t-md);
   font-weight: 600;
@@ -176,7 +215,8 @@
   letter-spacing: -0.005em;
 }
 
-.cd-logo__name b {
+.cd-logo__lead,
+.cd-logo__tail {
   font-weight: 600;
 }
 
@@ -187,12 +227,69 @@
   color: var(--ink-muted);
 }
 
+/* On a phone the descriptor is four words that wrap to two lines under a name
+   that already wraps to two. The name identifies the institution; the
+   descriptor is on the home page, in the footer and in the menu. */
+@media (max-width: 63.99rem) {
+  .cd-logo {
+    gap: 0.55rem;
+  }
+
+  .cd-logo__mark {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .cd-logo__name {
+    font-size: var(--t-sm);
+    line-height: 1.1;
+  }
+
+  /* The second half of the name a step down, which is what keeps the lockup to
+     two lines in the width the buttons leave. */
+  .cd-logo__tail {
+    font-size: 0.6875rem;
+    letter-spacing: 0;
+  }
+
+  .cd-logo__sub {
+    display: none;
+  }
+}
+
 /* --- Global search -------------------------------------------------------- */
 
 .cd-search {
   position: relative;
   max-width: 34rem;
   width: 100%;
+}
+
+/* Folded away until the button asks for it. The three items are placed
+   explicitly so that opening the field drops it onto its own row underneath
+   without displacing the buttons that opened it. */
+@media (max-width: 63.99rem) {
+  .cd-logo {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .cd-identity__end {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .cd-search {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    max-width: none;
+    display: none;
+  }
+
+  .cd-search.is-open {
+    display: block;
+    padding-bottom: var(--s-2xs);
+  }
 }
 
 .cd-search__field {
@@ -319,11 +416,67 @@
   gap: var(--s-2xs);
 }
 
+/* The square controls that replace the search box and the navigation band on a
+   narrow viewport. 44px, which is the smallest target a thumb should be asked
+   to hit. */
+.cd-iconbtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-xs);
+  background: var(--surface);
+  color: var(--navy);
+  cursor: pointer;
+}
+
+.cd-iconbtn:hover {
+  border-color: var(--navy);
+  background: var(--navy-100);
+}
+
+.cd-iconbtn[aria-expanded="true"] {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: #ffffff;
+}
+
+.cd-iconbtn .cd-icon {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+@media (min-width: 64rem) {
+  .cd-iconbtn {
+    display: none;
+  }
+}
+
+/* The participation call to action is a full-width block on a phone and would
+   push the page down another 60px. It is the first action in the menu panel
+   instead. */
+@media (max-width: 63.99rem) {
+  .cd-identity__cta {
+    display: none;
+  }
+}
+
 /* --- 3. Navigation band --------------------------------------------------- */
 
 .cd-navband {
   background: var(--navy);
   color: #ffffff;
+}
+
+/* Below the breakpoint the band held nothing but a lone button on an empty
+   blue field. The button now lives in the identity band and this whole strip
+   disappears, which is 56px of the first screen given back to the page. */
+@media (max-width: 63.99rem) {
+  .cd-navband {
+    display: none;
+  }
 }
 
 .cd-navband__inner {
@@ -538,20 +691,25 @@
 
 /* The menu button is labelled, not only drawn. Three lines and no word is the
    single most reliably misunderstood control on a public site, and this one has
-   the room. */
+   the room. It sits in the identity band, on paper, so it is drawn in ink. */
 .cd-burger {
   display: inline-flex;
   align-items: center;
-  gap: 0.55rem;
-  min-height: 2.5rem;
-  padding: 0 0.75rem;
-  border: 1px solid rgb(255 255 255 / 0.35);
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0 0.8rem;
+  border: 1px solid var(--navy);
   border-radius: var(--r-xs);
-  background: none;
+  background: var(--navy);
   color: #ffffff;
   font-size: var(--t-sm);
   font-weight: 600;
   cursor: pointer;
+}
+
+.cd-burger:hover {
+  background: var(--navy-800);
+  border-color: var(--navy-800);
 }
 
 @media (min-width: 64rem) {
@@ -583,25 +741,17 @@
   transform: translateY(-3px) rotate(-45deg);
 }
 
-/* With the navigation itself hidden, the row would otherwise strand the button
-   on the far left of an empty bar. */
-@media (max-width: 63.99rem) {
-  .cd-navband__inner {
-    justify-content: flex-end;
+/* The label is what makes it a menu button rather than three lines; on the
+   narrowest phones it gives way to the icon and the accessible name carries it. */
+@media (max-width: 22rem) {
+  .cd-burger__label {
+    display: none;
   }
 
-  .cd-navband__end {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .cd-navband__end::before {
-    content: "Navegación";
-    font-size: var(--t-2xs);
-    font-weight: 600;
-    letter-spacing: var(--track-label);
-    text-transform: uppercase;
-    color: rgb(255 255 255 / 0.72);
+  .cd-burger {
+    width: 2.75rem;
+    padding: 0;
+    justify-content: center;
   }
 }
 
@@ -658,8 +808,17 @@
   border-bottom: 1px solid var(--border);
 }
 
+/* The section is a link and the disclosure is its own control, exactly as in
+   the desktop mega menus: one tap goes to the section, the other opens it. */
+.cd-panel__row {
+  display: flex;
+  align-items: stretch;
+  gap: var(--s-2xs);
+}
+
 .cd-panel__link {
   display: flex;
+  flex: 1;
   align-items: center;
   justify-content: space-between;
   gap: var(--s-sm);
@@ -675,6 +834,27 @@
   font-weight: 600;
   color: var(--ink-muted);
   font-variant-numeric: tabular-nums;
+}
+
+.cd-panel__disc {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  border: 0;
+  border-left: 1px solid var(--border);
+  background: none;
+  color: var(--navy);
+  cursor: pointer;
+}
+
+.cd-panel__disc .cd-nav__caret {
+  width: 12px;
+  height: 8px;
+}
+
+.cd-panel__disc[aria-expanded="true"] .cd-nav__caret {
+  transform: rotate(180deg);
 }
 
 .cd-panel__sub {

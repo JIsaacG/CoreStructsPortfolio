@@ -128,6 +128,44 @@ function initFilters() {
   }
 
   /**
+   * Publish the real heights of the two bars that stack above the boards.
+   *
+   * The CSS carries sensible defaults in `rem`, but `rem` is exactly what the
+   * reader's text-size control changes: at A+ the collapsed header and the
+   * compact filter bar are both taller than the stylesheet assumed, and the
+   * board rail would overlap the filters. Measuring the elements and writing
+   * the pixels back is the only version of this that survives the settings the
+   * portal itself offers.
+   */
+  const measure = () => {
+    const header = document.querySelector("[data-header]");
+    const root = document.documentElement;
+
+    if (header?.classList.contains("is-stuck")) {
+      root.style.setProperty("--stuck-top", `${Math.round(header.getBoundingClientRect().height)}px`);
+    }
+    if (bar.classList.contains("is-compact") && !bar.classList.contains("is-open")) {
+      root.style.setProperty("--filters-compact", `${Math.round(bar.getBoundingClientRect().height)}px`);
+    }
+  };
+
+  let measuring = 0;
+  const scheduleMeasure = () => {
+    if (measuring) return;
+    measuring = requestAnimationFrame(() => {
+      measuring = 0;
+      measure();
+    });
+  };
+
+  window.addEventListener("scroll", scheduleMeasure, { passive: true });
+  window.addEventListener("resize", scheduleMeasure, { passive: true });
+  /* The text-size and contrast controls change both heights. */
+  for (const control of document.querySelectorAll("[data-scale], [data-contrast]")) {
+    control.addEventListener("click", () => setTimeout(scheduleMeasure, 60));
+  }
+
+  /**
    * The bar folds itself away once it reaches the header.
    *
    * A sentinel placed where the bar starts tells us when it has been pinned;
@@ -162,6 +200,7 @@ function initFilters() {
         const compact = !entry.isIntersecting;
         bar.classList.toggle("is-compact", compact);
         if (!compact) setOpen(false);
+        scheduleMeasure();
       },
       { rootMargin: "-140px 0px 0px 0px", threshold: 0 },
     ).observe(sentinel);
