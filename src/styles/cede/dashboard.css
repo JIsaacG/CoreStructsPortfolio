@@ -14,17 +14,98 @@
 }
 
 /* --- Filter bar ------------------------------------------------------------
-   Sticky under the header on desktop; on a phone it collapses into a summary
-   that says how many filters are active, because eight selects stacked above a
-   chart is not a dashboard, it is a form.
+   Two sticky bars share the top of this page, so they have to agree about how
+   much room there is. `--stuck-top` is the height of the header once it has
+   collapsed (institutional bar + navigation on a wide screen, navigation alone
+   on a phone); the filter bar sits directly under it and the board rail sits
+   under the filter bar's compact height.
+
+   And the filter bar does compact itself: eight selects are the right control
+   at the top of the page and the wrong one pinned over a chart, so once it
+   reaches the header it folds down to the slice it is describing plus a button
+   that opens it again.
    -------------------------------------------------------------------------- */
+
+:root {
+  --stuck-top: 3.25rem;
+  --filters-compact: 3.25rem;
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --stuck-top: 5.5rem;
+  }
+}
 
 .cd-filters {
   position: sticky;
-  top: 3.25rem;
-  z-index: 40;
+  top: var(--stuck-top);
+  z-index: 42;
   background: var(--surface);
   border-bottom: 1px solid var(--border);
+}
+
+/* Open on top of the rail rather than pushing it: the reader asked for the
+   filters, so the filters win the space until they are closed again. */
+.cd-filters.is-open {
+  z-index: 46;
+  box-shadow: var(--shadow-menu);
+}
+
+.cd-filters.is-compact .cd-filters__grid,
+.cd-filters.is-compact .cd-filters__hint {
+  display: none;
+}
+
+.cd-filters.is-compact.is-open .cd-filters__grid {
+  display: grid;
+}
+
+/* Compact is a single row: what you are looking at on the left, the way back
+   into the controls on the right. */
+.cd-filters.is-compact .cd-filters__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-sm);
+  padding-block: 0.4rem;
+}
+
+.cd-filters.is-compact.is-open .cd-filters__inner {
+  display: grid;
+  padding-block: var(--s-sm);
+}
+
+.cd-filters.is-compact .cd-filters__title,
+.cd-filters.is-compact .cd-demo {
+  display: none;
+}
+
+.cd-filters.is-compact.is-open .cd-filters__title {
+  display: flex;
+}
+
+.cd-filters.is-compact .cd-filters__state {
+  border-top: 0;
+  padding-top: 0;
+  flex: 1;
+  min-width: 0;
+}
+
+.cd-filters.is-compact [data-slice-detail] {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* The button that reopens it exists only while the bar is compact — at the top
+   of the page the controls are right there and a toggle would be noise. */
+.cd-filters__toggle {
+  display: none;
+}
+
+.cd-filters.is-compact .cd-filters__toggle {
+  display: inline-flex;
 }
 
 .cd-filters__inner {
@@ -167,7 +248,7 @@
 
 .cd-boards {
   position: sticky;
-  top: 3.25rem;
+  top: calc(var(--stuck-top) + var(--filters-compact));
   z-index: 41;
   background: var(--navy-900);
   border-bottom: 1px solid var(--navy-800);
@@ -223,7 +304,7 @@
 .cd-board {
   padding-block: var(--s-xl);
   border-bottom: 1px solid var(--border);
-  scroll-margin-top: 8rem;
+  scroll-margin-top: calc(var(--stuck-top) + var(--filters-compact) + 3.5rem);
 }
 
 .cd-board__head {
@@ -466,11 +547,6 @@ a.cd-tile:hover {
    -------------------------------------------------------------------------- */
 
 @media (max-width: 52rem) {
-  .cd-filters,
-  .cd-boards {
-    top: 2.9rem;
-  }
-
   .cd-tiles {
     display: flex;
     overflow-x: auto;

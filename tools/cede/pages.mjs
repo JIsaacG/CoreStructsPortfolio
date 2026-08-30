@@ -703,7 +703,7 @@ export function normativePage(ctx) {
               </div>
             </div>
             <div class="cd-toolbar__foot">
-              <span data-doc-count>${normative.length} instrumentos</span>
+              <span data-doc-count data-one="instrumento" data-many="instrumentos">${normative.length} instrumentos</span>
               <button class="cd-btn cd-btn--small cd-btn--ghost" type="button" data-doc-reset>Limpiar filtros</button>
             </div>
           </div>
@@ -797,7 +797,7 @@ export function resolutionsPage(ctx) {
               </div>
             </div>
             <div class="cd-toolbar__foot">
-              <span data-table-count>${resolutions.length} resoluciones</span>
+              <span data-table-count data-one="resolución" data-many="resoluciones">${resolutions.length} resoluciones</span>
               <span>${escape(notice.short)}</span>
             </div>
           </div>
@@ -903,7 +903,7 @@ export function libraryPage(ctx) {
               </div>
             </div>
             <div class="cd-toolbar__foot">
-              <span data-doc-count>${library.length} publicaciones</span>
+              <span data-doc-count data-one="publicación" data-many="publicaciones">${library.length} publicaciones</span>
               <span class="cd-switch" role="group" aria-label="Vista">
                 <button type="button" data-view="grid" aria-pressed="true">Cuadrícula</button>
                 <button type="button" data-view="list" aria-pressed="false">Lista</button>

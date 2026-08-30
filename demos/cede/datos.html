@@ -277,13 +277,22 @@
             <div class="cd-filters__top">
               <p class="cd-filters__title"><svg class="cd-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.8 3.6h10.4l-4 4.8v4l-2.4 1.2v-5.2z"/></svg>Filtros del observatorio</p>
               <div class="cd-actions">
+                <button
+                  class="cd-btn cd-btn--small cd-btn--ghost cd-filters__toggle"
+                  type="button"
+                  data-filters-toggle
+                  aria-expanded="false"
+                  aria-controls="cd-filtros"
+                >
+                  <svg class="cd-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.8 3.6h10.4l-4 4.8v4l-2.4 1.2v-5.2z"/></svg>Filtros
+                </button>
                 <button class="cd-btn cd-btn--small cd-btn--ghost" type="button" data-filters-reset>
                   Restablecer
                 </button>
               </div>
             </div>
 
-            <div class="cd-filters__grid">
+            <div class="cd-filters__grid" id="cd-filtros">
               <div class="cd-field"><label class="cd-field__label" for="f-anio">Año</label><span class="cd-select"><select id="f-anio" data-filter="anio"><option value="2026">2026</option><option value="2025">2025</option><option value="2024">2024</option><option value="2023">2023</option><option value="2022">2022</option><option value="2021">2021</option><option value="2020">2020</option><option value="2019">2019</option></select></span></div>
               <div class="cd-field"><label class="cd-field__label" for="f-departamento">Departamento</label><span class="cd-select"><select id="f-departamento" data-filter="departamento"><option value="all">Todos los departamentos</option><option value="at">Atlántida</option><option value="ch">Choluteca</option><option value="cl">Colón</option><option value="cm">Comayagua</option><option value="cp">Copán</option><option value="cr">Cortés</option><option value="ep">El Paraíso</option><option value="fm">Francisco Morazán</option><option value="gd">Gracias a Dios</option><option value="in">Intibucá</option><option value="ib">Islas de la Bahía</option><option value="lp">La Paz</option><option value="le">Lempira</option><option value="oc">Ocotepeque</option><option value="ol">Olancho</option><option value="sb">Santa Bárbara</option><option value="va">Valle</option><option value="yo">Yoro</option></select></span></div>
               <div class="cd-field"><label class="cd-field__label" for="f-municipio">Municipio</label><span class="cd-select"><select id="f-municipio" data-filter="municipio" disabled><option value="all">Todos los municipios</option></select></span><span class="cd-field__hint cd-note">Se habilita al conectar el registro municipal de centros.</span></div>
@@ -565,6 +574,7 @@
             <div><dt>Última actualización</dt><dd>26 de agosto de 2026</dd></div>
             <div><dt>Versión</dt><dd>Versión del portal 1.0.0 · demostración</dd></div>
             <div><dt>Licencia de datos</dt><dd>Datos abiertos con atribución</dd></div>
+            <div><dt>Cartografía</dt><dd>Límites administrativos: geoBoundaries, CC BY 4.0</dd></div>
           </dl>
         </div>
 

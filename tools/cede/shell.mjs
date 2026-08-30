@@ -465,6 +465,7 @@ ${columns}
             <div><dt>Última actualización</dt><dd>${escape(footer.updated)}</dd></div>
             <div><dt>Versión</dt><dd>${escape(footer.version)}</dd></div>
             <div><dt>Licencia de datos</dt><dd>Datos abiertos con atribución</dd></div>
+            <div><dt>Cartografía</dt><dd>Límites administrativos: geoBoundaries, CC BY 4.0</dd></div>
           </dl>
         </div>
 

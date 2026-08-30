@@ -1,11 +1,12 @@
 /* =============================================================================
    CEDE — stylesheet entry point
 
-   The government portal ships its own bundle. It shares the scroll-reveal
-   system with the rest of the site and nothing else: it is light where the
-   portfolio is dark, square where the portfolio is round, serif where the
-   portfolio is not, and it carries a whole statistics interface the portfolio
-   has no use for.
+   The government portal ships its own bundle and shares nothing with the rest
+   of the site: it is light where the portfolio is dark, square where it is
+   round, serif where it is not, and it carries a statistics interface the
+   portfolio has no use for. Even the entrance animations are its own — see
+   `cede/reveal.css` for why a portal of public data cannot afford the
+   portfolio's hide-until-observed approach.
 
    `npm run build:css` flattens this into `dist/cede.css`.
    ========================================================================== */
@@ -13,7 +14,7 @@
 @import "./cede/tokens.css";
 @import "./cede/fonts.css";
 @import "./cede/base.css";
-@import "./motion.css";
+@import "./cede/reveal.css";
 
 @import "./cede/header.css";
 @import "./cede/hero.css";
@@ -26,10 +27,9 @@
 /* -----------------------------------------------------------------------------
    Reduced motion
 
-   The portfolio's `motion.css` already removes the reveal transforms. A public
-   administration portal goes further: the map's line-drawing entrance, the
-   counters and every transition are gone too, and nothing is left hidden
-   waiting for an animation that will never run.
+   `cede/reveal.css` already stops hiding anything under this preference. This
+   block removes what is left: the map's line-drawing entrance, the counters and
+   every transition in the interface.
    -------------------------------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {

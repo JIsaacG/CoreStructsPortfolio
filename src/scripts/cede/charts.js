@@ -588,16 +588,47 @@ export function networkDiagram({ center, nodes, width = 720, height = 520 }) {
     )
     .join("");
 
+  /* The hub's name is set on two balanced lines. A single line of a real
+     institution's name does not fit inside a circle, and text that spills past
+     its own disc reads as a rendering bug rather than as a diagram. */
+  const words = center.label.split(" ");
+  const split = words.length < 2 ? [center.label] : balance(words);
+  const lines = split
+    .map(
+      (line, index) =>
+        `<text class="cd-net__hub-label" x="${n(cx)}" y="${n(cy - 10 + index * 19)}" ` +
+        `text-anchor="middle">${esc(line)}</text>`,
+    )
+    .join("");
+
   return (
     `<svg class="cd-net" viewBox="0 0 ${width} ${height}" role="group" ` +
     `aria-label="Diagrama del sistema educativo como una red de actores">` +
     links +
-    `<g class="cd-net__center"><circle class="cd-net__hub" cx="${n(cx)}" cy="${n(cy)}" r="64"/>` +
-    `<text class="cd-net__hub-label" x="${n(cx)}" y="${n(cy - 6)}" text-anchor="middle">${esc(center.label)}</text>` +
-    `<text class="cd-net__hub-sub" x="${n(cx)}" y="${n(cy + 14)}" text-anchor="middle">${esc(center.sub)}</text></g>` +
+    `<g class="cd-net__center"><circle class="cd-net__hub" cx="${n(cx)}" cy="${n(cy)}" r="72"/>` +
+    lines +
+    `<text class="cd-net__hub-sub" x="${n(cx)}" y="${n(cy + 34)}" text-anchor="middle">${esc(center.sub)}</text></g>` +
     marks +
     `</svg>`
   );
+}
+
+/** Break a list of words into the two most even lines. */
+function balance(words) {
+  const total = words.join(" ").length;
+  let best = 1;
+  let bestGap = Infinity;
+
+  for (let i = 1; i < words.length; i++) {
+    const left = words.slice(0, i).join(" ").length;
+    const gap = Math.abs(total - left - left);
+    if (gap < bestGap) {
+      bestGap = gap;
+      best = i;
+    }
+  }
+
+  return [words.slice(0, best).join(" "), words.slice(best).join(" ")];
 }
 
 /* -------------------------------------------------------------- dot field */

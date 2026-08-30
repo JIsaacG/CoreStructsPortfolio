@@ -47,13 +47,19 @@ y `assets/brand/` ya vienen generados y versionados.
 Node 18+ solo hace falta para **regenerar** cosas, no para servir el sitio.
 
 ```bash
-npm run build          # los cuatro pasos de abajo
+npm run build          # los pasos de abajo, en orden
 npm run build:brand    # assets/source/*.png  ->  assets/brand/*
-npm run build:css      # src/styles/*.css     ->  dist/corestruct.css + dist/demo.css
+npm run build:css      # src/styles/*.css     ->  dist/*.css
 npm run build:content  # src/data/*.js        ->  index.html
-npm run build:demos    # src/data/demos.js    ->  demos/*.html
+npm run build:demos    # src/data/demos.js    ->  demos/verbena.html
+npm run build:aurelis  # src/data/aurelis/*   ->  demos/aurelis/*.html
+npm run build:cede     # src/data/cede/*      ->  demos/cede/*.html
 npm run check          # validación previa a publicar
 ```
+
+`npm run build:map` no forma parte de `npm run build`: reconstruye
+`src/data/cede/geography.js` desde el GeoJSON de límites administrativos y solo
+hace falta si se sustituye esa fuente.
 
 `npm run check` falla si hay un asset roto, un ancla sin destino, más de un `<h1>`,
 un salto de nivel de encabezado, una imagen sin `alt`, una variable CSS inexistente
@@ -110,16 +116,38 @@ tools/                     scripts de compilación (Node, sin dependencias)
   lib/png.mjs              códec PNG mínimo (decodificar, codificar, escalar)
   lib/trace.mjs            trazado raster -> vector del isotipo
   build-brand.mjs  build-css.mjs  build-content.mjs  build-demos.mjs
+  build-aurelis.mjs  aurelis/    el portal corporativo
+  build-cede.mjs     cede/       el portal gubernamental
+  build-map.mjs              GeoJSON -> src/data/cede/geography.js
   check.mjs  serve.mjs
 
 assets/
   alianzas/                logotipos de los aliados (original + recorte que usa la web)
   source/                  exportaciones originales de marca (no se tocan)
+                           + hnd-adm1.geojson (límites administrativos, CC BY 4.0)
   brand/                   assets generados que usa el sitio
-  fonts/                   Manrope (OFL) y Quantify (marca) + sus licencias
+  fonts/                   Manrope, IBM Plex Sans y Source Serif 4 (OFL),
+                           Quantify (marca) + sus licencias
 demos/                     los sitios de ejemplo generados (marcas ficticias)
 dist/corestruct.css        hoja de estilos compilada del portfolio
 dist/demo.css              hoja de estilos compilada de los sitios de ejemplo
+dist/aurelis.css           la del portal corporativo
+dist/cede.css              la del portal gubernamental
+```
+
+El portal gubernamental sigue la misma división, en su propio espacio de nombres:
+
+```
+src/data/cede/       institution.js  statistics.js  indicators.js  plan.js
+                     policy.js  documents.js  newsroom.js  participation.js
+                     transparency.js  format.js  geography.js (GENERADO)
+src/styles/cede/     tokens, fonts, base, reveal, header, hero, sections,
+                     charts, dashboard, tables, footer
+src/scripts/cede/    main, nav, a11y, observatory, render, search, forms,
+                     download, xlsx, datasets, reveal, ui
+                     charts.js y table-render.js son PUROS: los usan la
+                     compilación y el navegador
+tools/cede/          blocks, shell, home, observatory, pages
 ```
 
 ---
@@ -159,6 +187,72 @@ aparezca en un buscador como si existiera.
 ```bash
 npm run build:demos    # regenera demos/*.html desde src/data/demos.js
 ```
+
+### CEDE — el portal gubernamental
+
+La tarjeta **02 · Sitios gubernamentales** abre `demos/cede/`: 43 páginas de un
+portal público completo para el **Consejo Estratégico para el Desarrollo
+Educativo**, una entidad **ficticia**. Es el demo más grande del repositorio y el
+que enseña la parte del trabajo que no se ve en una landing: información pública,
+estadística, normativa y participación.
+
+Lo que trae:
+
+- **Observatorio** (`/datos`) con diez tableros, ocho dimensiones de filtrado y
+  series 2019–2026. Una sola barra de filtros gobierna la página entera: al
+  cambiarla se redibujan todos los gráficos, el mapa y la línea que dice qué
+  porción se está mirando.
+- **Mapa real de Honduras** con sus 18 departamentos. Es geometría de verdad
+  —proyectada, simplificada y convertida a SVG por `tools/build-map.mjs`— y
+  funciona como un filtro más: se puede recorrer con el teclado y al elegir un
+  departamento le sigue todo el observatorio.
+- **Fichas de indicador** con definición, fórmula, periodicidad, desagregaciones
+  y —lo que casi nunca se publica— las limitaciones de cada uno.
+- **Comparador territorial**, **datos abiertos**, **normativa** con buscador,
+  **resoluciones**, **biblioteca**, **transparencia**, **participación** con
+  consultas públicas, **actualidad** y un **backoffice** demostrativo en
+  `/gestion-demo` que no está enlazado desde la navegación pública.
+
+Tres decisiones que conviene conocer antes de tocarlo:
+
+**Todas las cifras son inventadas y ninguna es aleatoria.** `statistics.js` no
+usa un generador de números: las series nacionales están escritas a mano y el
+resto se deriva de ellas con fórmulas documentadas, repartiendo los totales por
+el método del mayor resto. Por eso los 18 departamentos suman exactamente el
+total nacional, las desagregaciones suman su propio total, y el portal muestra
+las mismas cifras en cada compilación. Un tablero cuyos números cambian al
+recargar no lo puede revisar nadie.
+
+**Los gráficos se dibujan con el mismo código en Node y en el navegador.**
+`src/scripts/cede/charts.js` es puro: recibe datos y devuelve SVG. La
+compilación lo llama para meter gráficos de verdad en el HTML que se descarga, y
+el navegador lo vuelve a llamar —con el ancho real del contenedor— cuando cambia
+un filtro o el tamaño de la ventana. No hay una segunda implementación que se
+pueda desincronizar.
+
+**Las descargas son reales.** CSV, XLSX y JSON se generan serializando la tabla
+que acompaña a cada gráfico, así que el archivo contiene exactamente las cifras
+que se estaban viendo, filtros incluidos. El XLSX lo escribe
+`src/scripts/cede/xlsx.js`, unas cien líneas sin dependencias: un `.xlsx` es un
+ZIP de XML y ZIP admite entradas sin comprimir, que es lo único que hacía falta.
+
+La ficción se declara en la barra institucional, en la chapa de la esquina, en el
+pie de cada página y junto a cada bloque de cifras. Las páginas son `noindex` y
+el `schema.org` es `Organization`, nunca `GovernmentOrganization`: el tipo de
+esquema es una afirmación de hecho, y esta entidad no existe.
+
+```bash
+npm run build:cede     # regenera demos/cede/*.html
+npm run build:map      # solo si se sustituye el GeoJSON de límites
+```
+
+**Cartografía.** Los límites administrativos vienen de
+[geoBoundaries](https://www.geoboundaries.org) (gbOpen, ADM1), bajo licencia
+**CC BY 4.0**; el original está en `assets/source/hnd-adm1.geojson`. La
+atribución aparece en el pie de todas las páginas del portal y en su página de
+metodología. El encuadre es continental: Islas del Cisne quedaría a 250 km de la
+costa y añadiría un tercio de océano vacío a la página, así que se omite del
+dibujo (en un despliegue real iría en un recuadro).
 
 ---
 
@@ -245,6 +339,13 @@ Ningún componente escribe un color de marca a mano.
   para el castellano —no trae ñ, ni raya ni semirraya—, así que no sale del
   lettering de marca: el resto de la página es Manrope.
   **Licencia: gratis solo para uso personal** (`assets/fonts/Quantify-EULA.txt`).
+- **IBM Plex Sans** y **Source Serif 4** son del portal gubernamental y solo se
+  cargan ahí: la serif para lo que la institución *dice* (titulares, mandato,
+  aperturas) y Plex para lo que la institución *hace* (navegación, tablas,
+  tableros, formularios y cada cifra). Ambas son variables, subconjunto latino,
+  servidas desde el propio dominio y bajo SIL OFL 1.1 — un portal público que
+  pide su tipografía a un tercero le entrega a ese tercero el registro de quién
+  leyó qué.
 
 ### Assets de marca
 

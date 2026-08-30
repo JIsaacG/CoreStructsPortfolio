@@ -190,6 +190,27 @@
   fill: rgb(255 255 255 / 0.28);
 }
 
+/* Under high contrast the panel is black, so the wash that keeps it from
+   reading flat is exactly the thing to remove, and the map is redrawn in plain
+   white rather than in a tint of the ground. */
+[data-contrast="high"] .cd-hero::before {
+  display: none;
+}
+
+[data-contrast="high"] .cd-hero__fill {
+  fill: #11224a;
+  stroke: #ffffff;
+  stroke-width: 1;
+}
+
+[data-contrast="high"] .cd-hero__outline {
+  stroke: #ffffff;
+}
+
+[data-contrast="high"] .cd-hero__dots {
+  fill: rgb(255 255 255 / 0.5);
+}
+
 .cd-hero__plate-caption {
   display: flex;
   flex-wrap: wrap;

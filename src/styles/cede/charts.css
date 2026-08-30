@@ -512,8 +512,9 @@
 .cd-net__hub-sub {
   fill: rgb(255 255 255 / 0.7);
   font-family: var(--font-sans);
-  font-size: 10px;
-  letter-spacing: 0.08em;
+  /* Sized to fit inside the disc: letterspaced caps grow fast. */
+  font-size: 9px;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 

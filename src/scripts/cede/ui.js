@@ -218,6 +218,19 @@ export function initSortableTables() {
 /* ------------------------------------------------------- listing filters */
 
 /**
+ * The noun a result counter uses, in the right number.
+ *
+ * Spanish plurals do not come off with a trailing "s" — «publicaciones» is not
+ * «publicación» minus one letter — so the markup declares both forms and this
+ * only picks between them.
+ */
+function counted(element, fallback) {
+  const one = element?.dataset.one;
+  const many = element?.dataset.many ?? element?.textContent.split(" ").slice(1).join(" ") ?? fallback;
+  return (n) => (n === 1 && one ? one : many);
+}
+
+/**
  * The filters over a listing of documents, publications or resolutions.
  *
  * Everything is already in the page, so filtering is a matter of hiding rows —
@@ -234,7 +247,7 @@ export function initListingFilters() {
     const empty = scope.querySelector("[data-doc-empty]");
     const search = panel.querySelector("[data-doc-search]");
     const selects = [...panel.querySelectorAll("[data-doc-filter]")];
-    const noun = counter?.textContent.split(" ").slice(1).join(" ") ?? "resultados";
+    const noun = counted(counter, "resultados");
 
     const apply = () => {
       const query = (search?.value ?? "").trim().toLowerCase();
@@ -251,7 +264,7 @@ export function initListingFilters() {
         if (visible) shown++;
       }
 
-      if (counter) counter.textContent = `${shown} ${noun}`;
+      if (counter) counter.textContent = `${shown} ${noun(shown)}`;
       if (empty) empty.hidden = shown !== 0;
     };
 
@@ -272,7 +285,7 @@ export function initListingFilters() {
     const counter = panel.querySelector("[data-table-count]");
     const search = panel.querySelector("[data-table-search]");
     const selects = [...panel.querySelectorAll("[data-table-filter]")];
-    const noun = counter?.textContent.split(" ").slice(1).join(" ") ?? "registros";
+    const noun = counted(counter, "registros");
 
     const apply = () => {
       const query = (search?.value ?? "").trim().toLowerCase();
@@ -292,7 +305,7 @@ export function initListingFilters() {
         if (visible) shown++;
       }
 
-      if (counter) counter.textContent = `${shown} ${noun}`;
+      if (counter) counter.textContent = `${shown} ${noun(shown)}`;
     };
 
     search?.addEventListener("input", apply);

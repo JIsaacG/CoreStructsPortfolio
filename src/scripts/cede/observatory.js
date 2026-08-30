@@ -127,6 +127,46 @@ function initFilters() {
     });
   }
 
+  /**
+   * The bar folds itself away once it reaches the header.
+   *
+   * A sentinel placed where the bar starts tells us when it has been pinned;
+   * eight selects are the right control at the top of the page and the wrong
+   * one hovering over a chart, so pinned means compact until the reader asks
+   * for the controls back.
+   */
+  const toggle = bar.querySelector("[data-filters-toggle]");
+
+  const setOpen = (open) => {
+    bar.classList.toggle("is-open", open);
+    toggle?.setAttribute("aria-expanded", String(open));
+  };
+
+  toggle?.addEventListener("click", () => setOpen(!bar.classList.contains("is-open")));
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && bar.classList.contains("is-open")) {
+      setOpen(false);
+      toggle?.focus();
+    }
+  });
+
+  if ("IntersectionObserver" in window) {
+    const sentinel = document.createElement("div");
+    sentinel.setAttribute("aria-hidden", "true");
+    sentinel.style.cssText = "height:1px;margin-bottom:-1px;";
+    bar.parentElement.insertBefore(sentinel, bar);
+
+    new IntersectionObserver(
+      ([entry]) => {
+        const compact = !entry.isIntersecting;
+        bar.classList.toggle("is-compact", compact);
+        if (!compact) setOpen(false);
+      },
+      { rootMargin: "-140px 0px 0px 0px", threshold: 0 },
+    ).observe(sentinel);
+  }
+
   bar.querySelector("[data-filters-reset]")?.addEventListener("click", () => {
     Object.assign(state, defaultState());
     for (const control of bar.querySelectorAll("[data-filter]")) {

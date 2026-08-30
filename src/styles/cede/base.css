@@ -22,7 +22,7 @@ html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
   /* Room for the sticky header when a hash link lands mid-page. */
-  scroll-padding-top: 7.5rem;
+  scroll-padding-top: calc(var(--stuck-top, 3.25rem) + 1rem);
 }
 
 body {

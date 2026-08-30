@@ -1,0 +1,46 @@
+/* =============================================================================
+   CEDE — entrances
+
+   The portal does NOT use the portfolio's reveal system. That one is tuned for
+   a marketing page with a dozen zones; this is a statistics portal where a
+   single page carries sixty of them, and where content hidden until a script
+   decides otherwise is a failure mode rather than a flourish.
+
+   So the rules here are deliberately timid: a short fade and a small rise, no
+   scale, no long distances, and a companion module that reveals anything in
+   view on every scroll frame rather than trusting a single observer callback.
+   Under `prefers-reduced-motion` nothing is ever hidden at all — the rule below
+   is not an override of the animation, it is the removal of the hiding.
+   ========================================================================== */
+
+.js [data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, var(--reveal-y, 1.25rem), 0);
+  transition:
+    opacity var(--duration-reveal) var(--ease-out) var(--reveal-delay, 0ms),
+    transform var(--duration-reveal) var(--ease-out) var(--reveal-delay, 0ms);
+}
+
+.js [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+[data-reveal="rise"] {
+  --reveal-y: 1.75rem;
+}
+
+[data-reveal="fade"] {
+  --reveal-y: 0.5rem;
+}
+
+/* A public portal is read by people who have asked their system for stillness.
+   For them there is no entrance at all, and — more importantly — no moment at
+   which the content is invisible. */
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

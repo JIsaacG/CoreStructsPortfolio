@@ -127,12 +127,6 @@
   --duration-reveal: 620ms;
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-out: cubic-bezier(0.33, 1, 0.68, 1);
-  /* The shared `motion.css` is the portfolio's, and it reads these three by
-     name. They are declared here rather than forked so the reveal system stays
-     one implementation across every site in the repository. */
-  --duration-base: 240ms;
-  --duration-slow: 520ms;
-  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
 
   --layer-header: 60;
   --layer-menu: 70;
@@ -157,6 +151,12 @@
   --ink: #000000;
   --ink-soft: #000000;
   --ink-muted: #1f2937;
+  /* The dark grounds go to black, not to a darker navy: the hero, the footer,
+     the institutional bar and the board rail are all painted with this one, and
+     under this setting they should be as far from their text as the screen
+     allows. */
+  --navy-900: #000000;
+  --navy-800: #000000;
   --navy: #00297a;
   --navy-600: #00297a;
   --navy-100: #ffffff;

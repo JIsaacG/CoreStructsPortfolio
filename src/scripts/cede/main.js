@@ -10,7 +10,7 @@
  * top of a page that already works without them.
  */
 
-import { initScrollReveal } from "../modules/scroll-reveal.js";
+import { initReveal } from "./reveal.js";
 import { initAccessibility } from "./a11y.js";
 import { initCatalogueDownloads, initDownloads } from "./download.js";
 import { initForms } from "./forms.js";
@@ -39,7 +39,7 @@ initDownloads();
 initCatalogueDownloads();
 initForms();
 initCounters();
-initScrollReveal();
+initReveal();
 
 /* One value that would be wrong the moment the year turned. */
 for (const year of document.querySelectorAll("[data-current-year]")) {

@@ -13,6 +13,7 @@
  */
 
 import { SILHOUETTE } from "./bottle.js";
+import { CARD_MAP } from "./cede/geography.js";
 
 /** Repeat a row of placeholder text bars. */
 const textLines = (x, y, widths, { gap = 11, height = 5, className = "mk-text" } = {}) =>
@@ -94,7 +95,10 @@ export const mockups = {
     `).join("")}
   `,
 
-  /* 02 — Platform: an app shell with a second window layered behind it. */
+  /* Platform: an app shell with a second window layered behind it. Kept and
+     unused — card 02 became the government portal, which previews its own demo
+     the way cards 01 and 06 do. It is here for the next card that needs a
+     generic product interface. */
   platform: `
     <g class="mk-float mk-float--delayed" opacity="0.45">
       <rect class="mk-window" x="96" y="18" width="272" height="160" rx="9"/>
@@ -150,6 +154,58 @@ export const mockups = {
           <rect class="${i === 1 ? "mk-accent" : "mk-surface-strong"}" x="310" y="${y + 1}" width="30" height="9" rx="4.5"/>
         `).join("")}
         <path class="mk-line" d="M92 108h258M92 142h258M92 170h258"/>
+      `,
+      )}
+    </g>
+  `,
+
+  /* 02 — Government portal: the CEDE demo, previewed the way the corporate and
+     menu cards preview theirs. The real map of Honduras — the same geometry the
+     observatory colours in, simplified for this size — with the figures and the
+     register that sit beside it in the portal. */
+  government: `
+    <g class="mk-float">
+      ${window_(
+        22, 24, 356, 202,
+        `
+        <!-- The institutional bar and the navigation band the portal opens with. -->
+        <rect class="mk-navy" x="22" y="48" width="356" height="15"/>
+        <g opacity="0.55">
+          ${[36, 74, 116, 152, 196, 238].map((x) => `<rect class="mk-text" x="${x}" y="53" width="${x === 116 ? 28 : 22}" height="5" rx="2.5"/>`).join("")}
+        </g>
+        <rect class="mk-accent" x="116" y="61" width="28" height="2"/>
+
+        <!-- The country, filled and bordered: a choropleth at card size. -->
+        <g transform="translate(36 76) scale(0.74)">
+          <path class="mk-surface-strong" d="${CARD_MAP.path}"/>
+          <path class="mk-line" style="fill:none" d="${CARD_MAP.path}"/>
+        </g>
+
+        <!-- Three figures and the eight-year series they come from. -->
+        ${[
+          ["2,381,500", 96],
+          ["23,410", 122],
+          ["78,240", 148],
+        ]
+          .map(
+            ([value, y]) => `
+          <text class="mk-figure" x="360" y="${y}" text-anchor="end" style="font-size:15px">${value}</text>
+          <rect class="mk-text" x="212" y="${y - 10}" width="${y === 96 ? 54 : 42}" height="5" rx="2.5"/>
+          <path class="mk-line-soft" d="M212 ${y + 6}h148"/>
+        `,
+          )
+          .join("")}
+
+        <path class="mk-line-accent" d="M214 196l20-9 18 5 20-14 18 7 22-18 20 6 22-15"/>
+        <circle class="mk-accent" cx="356" cy="158" r="0"/>
+        <circle class="mk-accent" cx="354" cy="158" r="0"/>
+        <rect class="mk-accent-soft" x="212" y="206" width="148" height="1"/>
+
+        <!-- The register underneath: a public portal is mostly a list. -->
+        ${[0, 1, 2].map((i) => `
+          <rect class="mk-text" x="36" y="${186 + i * 13}" width="${52 - i * 6}" height="5" rx="2.5"/>
+          <rect class="mk-surface" x="98" y="${184 + i * 13}" width="86" height="8" rx="2"/>
+        `).join("")}
       `,
       )}
     </g>

@@ -245,6 +245,34 @@ const departments = features
   })
   .sort((a, b) => a.name.localeCompare(b.name, "es"));
 
+/**
+ * A second, much coarser cut of the same geometry.
+ *
+ * The portfolio card that opens this demo needs the country at 200 units wide
+ * inside a 400×250 canvas. The full outline would be 19 KB of path data in a
+ * page that is 47 KB in total — so the card gets its own simplification, ten
+ * times looser and rounded to whole units, which at that size is
+ * indistinguishable from the real thing.
+ */
+const CARD_WIDTH = 200;
+const cardScale = CARD_WIDTH / WIDTH;
+const cardTolerance = 12;
+
+const cardPath = features
+  .map(({ rings }) => {
+    const paged = rings.map((ring) => ring.map(toPage));
+    const largest = paged.reduce((best, ring) =>
+      Math.abs(area2(ring)) > Math.abs(area2(best)) ? ring : best,
+    );
+    const simplified = simplify(largest, cardTolerance);
+    const [start, ...rest] = simplified.map(([x, y]) => [
+      Math.round(x * cardScale),
+      Math.round(y * cardScale),
+    ]);
+    return `M${start[0]} ${start[1]}${rest.map(([x, y]) => `L${x} ${y}`).join("")}Z`;
+  })
+  .join("");
+
 const body = departments
   .map(
     (d) =>
@@ -281,6 +309,18 @@ const file = `/**
  */
 
 export const MAP = { width: ${WIDTH}, height: ${HEIGHT} };
+
+/**
+ * The same country at card size, simplified ten times harder.
+ *
+ * Used by the portfolio card that opens this demo, where the full outline would
+ * cost more bytes than the rest of the page.
+ */
+export const CARD_MAP = {
+  width: ${CARD_WIDTH},
+  height: ${Math.round(HEIGHT * cardScale)},
+  path: "${cardPath}",
+};
 
 /** Grouping used by the portal's territorial filters. Demonstration grouping. */
 export const regions = [

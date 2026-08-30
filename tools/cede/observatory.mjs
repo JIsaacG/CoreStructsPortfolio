@@ -102,13 +102,22 @@ function filterBar() {
             <div class="cd-filters__top">
               <p class="cd-filters__title">${icon("filter")}Filtros del observatorio</p>
               <div class="cd-actions">
+                <button
+                  class="cd-btn cd-btn--small cd-btn--ghost cd-filters__toggle"
+                  type="button"
+                  data-filters-toggle
+                  aria-expanded="false"
+                  aria-controls="cd-filtros"
+                >
+                  ${icon("filter")}Filtros
+                </button>
                 <button class="cd-btn cd-btn--small cd-btn--ghost" type="button" data-filters-reset>
                   Restablecer
                 </button>
               </div>
             </div>
 
-            <div class="cd-filters__grid">
+            <div class="cd-filters__grid" id="cd-filtros">
               ${select("anio", "Año", [...YEARS].reverse().map((year) => ({ id: String(year), name: String(year) })))}
               ${select("departamento", "Departamento", [
                 { id: "all", name: "Todos los departamentos" },

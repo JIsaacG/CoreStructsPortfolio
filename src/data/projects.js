@@ -26,11 +26,12 @@ export const projects = [
   },
   {
     number: "02",
-    category: "Producto digital",
-    title: "Plataformas web",
+    category: "Sector público",
+    title: "Sitios gubernamentales",
     description:
-      "Portales, áreas privadas y herramientas internas donde cada perfil encuentra exactamente lo que necesita.",
-    mockup: "platform",
+      "Portales institucionales con observatorio de indicadores, normativa, transparencia y participación ciudadana.",
+    mockup: "government",
+    href: "demos/cede/index.html",
     size: "minor",
     offset: true,
     reveal: "rise",

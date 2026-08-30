@@ -283,7 +283,11 @@ export const methodology = [
       "indicador declara de cuál de las tres proviene.\n\n" +
       "En esta demostración las tres son simuladas. En un despliegue real, cada una " +
       "corresponde a un sistema institucional distinto, con su propio responsable y su propio " +
-      "calendario de cierre.",
+      "calendario de cierre.\n\n" +
+      "La cartografía es la excepción: los límites de los dieciocho departamentos son reales y " +
+      "provienen de geoBoundaries (gbOpen, ADM1), publicados bajo licencia CC BY 4.0. Se usan tal " +
+      "cual, proyectados y simplificados para pantalla; todo lo que se pinta sobre ellos es " +
+      "demostrativo.",
   },
   {
     index: "02",
