@@ -11,14 +11,21 @@
    ========================================================================== */
 
 .spotlight {
-  /* Generous, because the falloff has to be gradual enough to read as light
-     rather than as a shape with an edge. */
-  --spotlight-size: clamp(26rem, 48vw, 48rem);
+  /* One dial for the whole effect: raise it for a stronger light. */
+  --spotlight-strength: 1;
+  /* Tight enough to read as a light carried by the cursor rather than as a
+     page-wide wash that happens to drift. */
+  --spotlight-size: clamp(20rem, 36vw, 38rem);
 
   position: fixed;
   inset-block-start: 0;
   inset-inline-start: 0;
-  z-index: var(--layer-backdrop);
+  /* Above the content rather than behind it. The cards are translucent, so at
+     the backdrop layer the light was strained through them until almost nothing
+     came out the other side. `screen` only ever adds light, so text underneath
+     keeps its contrast — white stays white — and nothing is hidden. */
+  z-index: var(--layer-spotlight);
+  mix-blend-mode: screen;
   width: var(--spotlight-size);
   height: var(--spotlight-size);
   /* Centre the circle on the origin so JS can translate to raw cursor coords. */
@@ -31,14 +38,14 @@
      stretched, so the smear deforms the light instead of clipping it. */
   background: radial-gradient(
     circle closest-side,
-    rgb(var(--brand-secondary-rgb) / 0.19),
-    rgb(var(--brand-secondary-rgb) / 0.1) 36%,
-    rgb(var(--brand-primary-rgb) / 0.08) 60%,
+    rgb(var(--brand-secondary-rgb) / calc(0.34 * var(--spotlight-strength))),
+    rgb(var(--brand-secondary-rgb) / calc(0.2 * var(--spotlight-strength))) 34%,
+    rgb(var(--brand-primary-rgb) / calc(0.12 * var(--spotlight-strength))) 60%,
     transparent 78%
   );
 
   opacity: 0;
-  transition: opacity 700ms var(--ease-out-quart);
+  transition: opacity 500ms var(--ease-out-quart);
   will-change: transform;
 }
 
@@ -46,9 +53,17 @@
   opacity: 1;
 }
 
-/* Without a fine pointer — or with reduced motion — the light never runs, so
-   the ambient wash in base.css carries the atmosphere on its own. */
-@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+/* Reduced motion keeps the light but loses the trail: `pointer-spotlight.js`
+   pins it to the cursor, so it never moves on its own accord. */
+@media (prefers-reduced-motion: reduce) {
+  .spotlight {
+    transition: none;
+  }
+}
+
+/* Without a mouse there is no cursor to carry the light, so the ambient wash in
+   base.css carries the atmosphere on its own. */
+@media (hover: none), (pointer: coarse) {
   .spotlight {
     display: none;
   }

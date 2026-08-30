@@ -23,7 +23,13 @@ export function initPointerSpotlight() {
 
   const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-  if (!finePointer.matches || reducedMotion.matches) return;
+  if (!finePointer.matches) return;
+
+  // Reduced motion keeps the light — what it drops is the movement the light
+  // makes on its own: it is pinned to the cursor and never smears, so it only
+  // ever goes where the pointer has already gone.
+  let follow = reducedMotion.matches ? 1 : FOLLOW;
+  let smears = !reducedMotion.matches;
 
   let targetX = window.innerWidth / 2;
   let targetY = window.innerHeight * 0.4;
@@ -36,11 +42,11 @@ export function initPointerSpotlight() {
   const render = () => {
     const dx = targetX - x;
     const dy = targetY - y;
-    x += dx * FOLLOW;
-    y += dy * FOLLOW;
+    x += dx * follow;
+    y += dy * follow;
 
     const speed = Math.hypot(dx, dy);
-    const smear = Math.min(MAX_SMEAR, speed / FULL_SMEAR_SPEED);
+    const smear = smears ? Math.min(MAX_SMEAR, speed / FULL_SMEAR_SPEED) : 0;
     // Hold the last heading while nearly still, so the shape does not spin
     // around on sub-pixel jitter.
     if (speed > 0.6) angle = (Math.atan2(dy, dx) * 180) / Math.PI;
@@ -86,11 +92,9 @@ export function initPointerSpotlight() {
   document.addEventListener("pointerleave", dim);
   window.addEventListener("blur", dim);
 
-  // Honour the preference being turned on mid-session.
+  // Honour the preference being changed mid-session, in either direction.
   reducedMotion.addEventListener("change", (event) => {
-    if (!event.matches) return;
-    if (frame) cancelAnimationFrame(frame);
-    frame = 0;
-    dim();
+    follow = event.matches ? 1 : FOLLOW;
+    smears = !event.matches;
   });
 }

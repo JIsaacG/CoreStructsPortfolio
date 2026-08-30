@@ -102,6 +102,9 @@
   /* --- Layers ------------------------------------------------------------ */
   --layer-backdrop: 0;
   --layer-content: 1;
+  /* The cursor light sits above the content it washes over, but under the
+     header: it blends additively, so it brightens without hiding anything. */
+  --layer-spotlight: 5;
   --layer-header: 50;
   --layer-skip: 100;
 

@@ -56,8 +56,8 @@ body::after {
    which is what makes the background feel like it evolves with the story.
 
    The cyan here is deliberately faint: on a device with a mouse, the cyan light
-   belongs to the cursor spotlight. Where that light never runs, the fallback
-   below raises the wash so the page keeps its atmosphere. */
+   belongs to the cursor spotlight. Where there is no cursor to carry it, the
+   fallback below raises the wash so the page keeps its atmosphere. */
 body::before {
   --wash-cyan: 0.05;
   --wash-navy: 0.16;
@@ -80,7 +80,7 @@ body::before {
     );
 }
 
-@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+@media (hover: none), (pointer: coarse) {
   body::before {
     --wash-cyan: 0.14;
     --wash-navy: 0.2;
