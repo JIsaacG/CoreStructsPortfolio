@@ -122,53 +122,71 @@
 
 /* --- Heartbeat pulse -------------------------------------------------------
    Reserved for the "Hablemos" CTAs: a double blue beat ("lub-dub") followed by
-   a long rest, so the call to action breathes without turning into a strobe.
-   Two rings ripple out of the border box — `overflow: hidden` clips children,
-   not `box-shadow`, so the effect survives the button's own clipping. The
-   animation is dropped on hover/focus so each variant's own glow takes over.
+   a rest, so the call to action reads as a pulse and not as a strobe.
+
+   Each beat has to be visible at its peak, so the rings hold a real spread
+   while they still have alpha and only fade once they are wide — a ring that
+   starts at `spread: 0` with full opacity is a zero-size ring, i.e. nothing.
+   `overflow: hidden` clips children, not `box-shadow`, so the rings survive
+   the button's own clipping.
+
+   The resting glow lives on the rule itself rather than inside the keyframes:
+   it is what the button falls back to when the animation is suppressed under
+   reduced motion, so the CTA still stands out without moving.
    -------------------------------------------------------------------------- */
 
 .button--pulse {
-  animation: button-heartbeat 2.4s var(--ease-out-quart) infinite;
+  box-shadow:
+    0 0 0 0 rgb(var(--brand-secondary-rgb) / 0),
+    0 0 22px 2px rgb(var(--brand-secondary-rgb) / 0.35);
+  animation: button-heartbeat 2s var(--ease-out-quart) infinite;
 }
 
+/* The pulse hands the button back to its own hover glow: once the pointer is
+   on it, the CTA no longer needs to ask for attention. */
 .button--pulse:hover,
 .button--pulse:focus-visible {
   animation: none;
 }
 
 @keyframes button-heartbeat {
-  /* lub */
   0% {
+    transform: scale(1);
     box-shadow:
-      0 0 0 0 rgb(var(--brand-secondary-rgb) / 0.55),
-      0 0 0 0 rgb(var(--brand-secondary-rgb) / 0),
-      0 0 18px 0 rgb(var(--brand-secondary-rgb) / 0.45);
+      0 0 0 0 rgb(var(--brand-secondary-rgb) / 0.5),
+      0 0 20px 1px rgb(var(--brand-secondary-rgb) / 0.3);
   }
-  14% {
+  /* lub */
+  9% {
+    transform: scale(1.045);
     box-shadow:
-      0 0 0 12px rgb(var(--brand-secondary-rgb) / 0),
-      0 0 0 0 rgb(var(--brand-secondary-rgb) / 0),
-      0 0 22px 2px rgb(var(--brand-secondary-rgb) / 0.16);
+      0 0 0 9px rgb(var(--brand-secondary-rgb) / 0.32),
+      0 0 42px 8px rgb(var(--brand-secondary-rgb) / 0.65);
+  }
+  22% {
+    transform: scale(1);
+    box-shadow:
+      0 0 0 20px rgb(var(--brand-secondary-rgb) / 0),
+      0 0 22px 2px rgb(var(--brand-secondary-rgb) / 0.3);
   }
   /* dub */
-  15% {
+  31% {
+    transform: scale(1.03);
     box-shadow:
-      0 0 0 12px rgb(var(--brand-secondary-rgb) / 0),
-      0 0 0 0 rgb(var(--brand-secondary-rgb) / 0.45),
-      0 0 20px 1px rgb(var(--brand-secondary-rgb) / 0.4);
+      0 0 0 7px rgb(var(--brand-secondary-rgb) / 0.26),
+      0 0 34px 6px rgb(var(--brand-secondary-rgb) / 0.5);
   }
-  34% {
+  46% {
+    transform: scale(1);
     box-shadow:
-      0 0 0 12px rgb(var(--brand-secondary-rgb) / 0),
       0 0 0 18px rgb(var(--brand-secondary-rgb) / 0),
-      0 0 26px 3px rgb(var(--brand-secondary-rgb) / 0);
+      0 0 22px 2px rgb(var(--brand-secondary-rgb) / 0.35);
   }
   /* rest */
   100% {
+    transform: scale(1);
     box-shadow:
-      0 0 0 12px rgb(var(--brand-secondary-rgb) / 0),
-      0 0 0 18px rgb(var(--brand-secondary-rgb) / 0),
-      0 0 26px 3px rgb(var(--brand-secondary-rgb) / 0);
+      0 0 0 0 rgb(var(--brand-secondary-rgb) / 0),
+      0 0 22px 2px rgb(var(--brand-secondary-rgb) / 0.35);
   }
 }

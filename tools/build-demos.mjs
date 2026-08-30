@@ -97,10 +97,10 @@ function renderHead(demo) {
          repoints --brand-secondary again while the visitor scrolls. -->
     <style>
       :root {
-        --brand-primary: ${accent.primary};
-        --brand-secondary: ${accent.secondary};
-        --brand-primary-rgb: ${rgbTriple(accent.primary)};
-        --brand-secondary-rgb: ${rgbTriple(accent.secondary)};
+        --brand-primary: ${demo.flavours[0].deep};
+        --brand-secondary: ${demo.flavours[0].tint};
+        --brand-primary-rgb: ${rgbTriple(demo.flavours[0].deep)};
+        --brand-secondary-rgb: ${rgbTriple(demo.flavours[0].tint)};
         --flavour-tint: ${demo.flavours[0].tint};
         --flavour-deep: ${demo.flavours[0].deep};
       }
@@ -240,19 +240,38 @@ ${actions}
         </section>`;
 }
 
+/**
+ * Where the bottle stands while a flavour is being read.
+ *
+ * Without a frame per beat the whole flavour section would be one long slide
+ * from the section's frame to the recipe's, and the bottle would drift straight
+ * across the text on its way. These keep it parked on the right, swaying just
+ * enough that flicking through the recipes turns it in the hand.
+ */
+const FLAVOUR_FRAMES = [
+  { x: 21, scale: 0.86, rot: 5 },
+  { x: 24, scale: 0.82, rot: -4 },
+  { x: 20, scale: 0.88, rot: 7 },
+  { x: 24, scale: 0.83, rot: -3 },
+  { x: 21, scale: 0.86, rot: 6 },
+];
+
 function renderFlavours(demo) {
   const total = String(demo.flavours.length).padStart(2, "0");
 
   const beats = demo.flavours
     .map((flavour, index) => {
       const position = String(index + 1).padStart(2, "0");
+      const frame = FLAVOUR_FRAMES[index % FLAVOUR_FRAMES.length];
       return `              <article
                 class="dm-flavour"
                 id="sabor-${escape(flavour.id)}"
+                data-stage-frame='${JSON.stringify(frame)}'
                 data-flavour
                 data-tint="${escape(flavour.tint)}"
                 data-deep="${escape(flavour.deep)}"
                 data-tint-rgb="${rgbTriple(flavour.tint)}"
+                data-deep-rgb="${rgbTriple(flavour.deep)}"
                 data-flavour-name="${escape(flavour.name)}"
                 data-flavour-note="${escape(flavour.note)}"
               >

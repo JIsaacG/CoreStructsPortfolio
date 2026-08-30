@@ -151,6 +151,54 @@ for (const file of walk(join(ROOT, "src")).filter((f) => f.endsWith(".js"))) {
   }
 }
 
+/* ----------------------------------------------------------- demo pages */
+
+/* The demo sites are generated the same way index.html is, so they get the same
+   scrutiny: a dead asset path, or a nav link pointing at a section that was
+   renamed, is invisible until someone opens the page. Their references are
+   relative to `demos/` rather than to the project root, so each one is resolved
+   against the page's own directory. */
+
+const DEMO_DIR = join(ROOT, "demos");
+
+if (existsSync(DEMO_DIR)) {
+  for (const name of readdirSync(DEMO_DIR).filter((f) => f.endsWith(".html"))) {
+    const page = readFileSync(join(DEMO_DIR, name), "utf8");
+    const where = `demos/${name}`;
+
+    for (const [, , value] of page.matchAll(/\s(href|src)="([^"]+)"/g)) {
+      if (/^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(value) || value.startsWith("#")) continue;
+      const target = value.split(/[?#]/)[0];
+      if (target && !existsSync(resolve(DEMO_DIR, target))) {
+        fail(`missing file referenced from ${where}: ${value}`);
+      }
+    }
+
+    const pageIds = new Set([...page.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]));
+    for (const [, anchor] of page.matchAll(/href="#([^"]+)"/g)) {
+      if (!pageIds.has(anchor)) fail(`${where}: anchor #${anchor} has no matching id`);
+    }
+    for (const [, controls] of page.matchAll(/aria-controls="([^"]+)"/g)) {
+      if (!pageIds.has(controls)) fail(`${where}: aria-controls="${controls}" has no matching id`);
+    }
+
+    const levels = [...page.matchAll(/<h([1-6])[\s>]/g)].map((m) => Number(m[1]));
+    const h1s = levels.filter((level) => level === 1).length;
+    if (h1s !== 1) fail(`${where}: expected exactly one <h1>, found ${h1s}`);
+    levels.reduce((previous, level) => {
+      if (level > previous + 1) fail(`${where}: heading level jumps from h${previous} to h${level}`);
+      return level;
+    }, levels[0] ?? 1);
+
+    if (!/<html lang="[a-z-]+"/i.test(page)) fail(`${where}: <html> is missing a lang attribute`);
+
+    // A demo invents a company; it must never reach a crawler as a real one.
+    if (!/name="robots"[^>]*content="[^"]*noindex/i.test(page)) {
+      fail(`${where}: a demo page must be noindex`);
+    }
+  }
+}
+
 /* ---------------------------------------------------------------- report */
 
 for (const message of warnings) console.warn(`warn   ${message}`);

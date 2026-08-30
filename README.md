@@ -47,16 +47,18 @@ y `assets/brand/` ya vienen generados y versionados.
 Node 18+ solo hace falta para **regenerar** cosas, no para servir el sitio.
 
 ```bash
-npm run build          # los tres pasos de abajo
+npm run build          # los cuatro pasos de abajo
 npm run build:brand    # assets/source/*.png  ->  assets/brand/*
-npm run build:css      # src/styles/*.css     ->  dist/corestruct.css
+npm run build:css      # src/styles/*.css     ->  dist/corestruct.css + dist/demo.css
 npm run build:content  # src/data/*.js        ->  index.html
+npm run build:demos    # src/data/demos.js    ->  demos/*.html
 npm run check          # validación previa a publicar
 ```
 
 `npm run check` falla si hay un asset roto, un ancla sin destino, más de un `<h1>`,
 un salto de nivel de encabezado, una imagen sin `alt`, una variable CSS inexistente
-o un `calc()` con los espacios rotos.
+o un `calc()` con los espacios rotos. Las páginas de `demos/` pasan las mismas
+comprobaciones, más una propia: tienen que ser `noindex`.
 
 ---
 
@@ -72,8 +74,11 @@ src/
     projects.js            las 8 tarjetas del portfolio
     alliances.js           los paneles de alianzas (logo + relato)
     mockups.js             los visuales SVG de cada tarjeta
+    demos.js               el contenido de cada sitio de ejemplo
+    bottle.js              la botella SVG que protagoniza el demo Verbena
   styles/
-    main.css               punto de entrada (define el orden de la cascada)
+    main.css               punto de entrada del portfolio (orden de la cascada)
+    demo.css               punto de entrada de los sitios de ejemplo
     tokens.css             color, tipografía, espacio, motion — fuente única
     fonts.css              @font-face de Manrope y de Quantify (la de marca)
     base.css               reset, fondo ambiental, foco, helpers
@@ -81,6 +86,8 @@ src/
     motion.css             sistema de scroll-reveal + prefers-reduced-motion
     components/            header, button, hero, wordmark, spotlight, projects,
                            mockup, alliances, manifesto, contact
+    demo/                  shell, header, stage (la botella), hero, sections,
+                           shop, footer — solo para las páginas de demos/
   scripts/
     main.js                arranque
     modules/
@@ -94,18 +101,53 @@ src/
                            detrás de toda la página
       logo-burst.js        las chispas azules que suelta el isotipo del hero
                            al hacer clic o tocarlo
+    demo/
+      main.js              arranque de un sitio de ejemplo
+      stage.js             la botella pineada: keyframes medidos del layout
+      flavours.js          el sabor en pantalla retiñe la botella y la página
 
 tools/                     scripts de compilación (Node, sin dependencias)
   lib/png.mjs              códec PNG mínimo (decodificar, codificar, escalar)
   lib/trace.mjs            trazado raster -> vector del isotipo
-  build-brand.mjs  build-css.mjs  build-content.mjs  check.mjs  serve.mjs
+  build-brand.mjs  build-css.mjs  build-content.mjs  build-demos.mjs
+  check.mjs  serve.mjs
 
 assets/
   alianzas/                logotipos de los aliados (original + recorte que usa la web)
   source/                  exportaciones originales de marca (no se tocan)
   brand/                   assets generados que usa el sitio
   fonts/                   Manrope (OFL) y Quantify (marca) + sus licencias
-dist/corestruct.css        hoja de estilos compilada (es la que enlaza la página)
+demos/                     los sitios de ejemplo generados (marcas ficticias)
+dist/corestruct.css        hoja de estilos compilada del portfolio
+dist/demo.css              hoja de estilos compilada de los sitios de ejemplo
+```
+
+---
+
+## Los sitios de ejemplo
+
+`Explorar` en una tarjeta del portfolio abre un sitio completo en `demos/`, no una
+imagen: header, hero, secciones, tienda y pie, con HTML real y sin dependencias.
+Sirven para enseñar el trabajo en lugar de describirlo.
+
+El primero es **Verbena**, una tienda de bebidas artesanales con cinco sabores. Su
+mecánica es la del scroll animado: una botella queda fijada con `position: sticky`
+mientras las secciones pasan a su alrededor, y gira, se aleja, se vacía y **cambia
+de sabor** — color, etiqueta y el acento de toda la página — según qué receta esté
+cruzando el centro de la pantalla.
+
+Los keyframes no son porcentajes escritos a mano: cada sección declara en
+`data-stage-frame` el estado que debe alcanzar la botella cuando llega arriba, y
+`stage.js` mide esas posiciones del layout real. Reescribir un texto vuelve a
+sincronizar la animación sola. En móvil y con `prefers-reduced-motion` no se fija
+nada: la botella se queda quieta en el hero.
+
+Las marcas son **inventadas**. Cada página lo dice en la chapa fija de la esquina,
+en el pie y en el cierre, y va marcada `noindex` para que ninguna empresa ficticia
+aparezca en un buscador como si existiera.
+
+```bash
+npm run build:demos    # regenera demos/*.html desde src/data/demos.js
 ```
 
 ---

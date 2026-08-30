@@ -24,13 +24,16 @@ export function initFlavours() {
   const note = document.querySelector("[data-bottle-note]");
 
   const apply = (beat) => {
-    const { tint, deep, tintRgb, flavourName, flavourNote } = beat.dataset;
+    const { tint, deep, tintRgb, deepRgb, flavourName, flavourNote } = beat.dataset;
     root.style.setProperty("--flavour-tint", tint);
     root.style.setProperty("--flavour-deep", deep);
-    // Buttons, focus rings and the ambient wash all read the brand accent, so
-    // repointing it is what makes the whole page move with the flavour.
+    // Buttons, focus rings and the ambient wash all read the brand pair, so
+    // repointing both halves is what makes the whole room take the flavour's
+    // light — not just the accents sitting on top of it.
     root.style.setProperty("--brand-secondary", tint);
     root.style.setProperty("--brand-secondary-rgb", tintRgb);
+    root.style.setProperty("--brand-primary", deep);
+    root.style.setProperty("--brand-primary-rgb", deepRgb);
 
     if (name) name.textContent = flavourName;
     if (note) note.textContent = flavourNote;
