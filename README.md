@@ -70,7 +70,7 @@ src/
   data/                    CONTENIDO — es lo que se edita a diario
     site.js                nombre, textos meta, correo, teléfono, redes
     projects.js            las 8 tarjetas del portfolio
-    capabilities.js        las filas de capacidades
+    alliances.js           los paneles de alianzas (logo + relato)
     mockups.js             los visuales SVG de cada tarjeta
   styles/
     main.css               punto de entrada (define el orden de la cascada)
@@ -80,7 +80,7 @@ src/
     layout.css             ritmo de secciones, conectores, bloque "statement"
     motion.css             sistema de scroll-reveal + prefers-reduced-motion
     components/            header, button, hero, wordmark, spotlight, projects,
-                           mockup, capabilities, manifesto, contact
+                           mockup, alliances, manifesto, contact
   scripts/
     main.js                arranque
     modules/
@@ -101,6 +101,7 @@ tools/                     scripts de compilación (Node, sin dependencias)
   build-brand.mjs  build-css.mjs  build-content.mjs  check.mjs  serve.mjs
 
 assets/
+  alianzas/                logotipos de los aliados (original + recorte que usa la web)
   source/                  exportaciones originales de marca (no se tocan)
   brand/                   assets generados que usa el sitio
   fonts/                   Manrope (OFL) y Quantify (marca) + sus licencias
@@ -134,6 +135,31 @@ El ritmo de la rejilla lo marca la secuencia de `size`. Ahora es
 
 **Cuando haya proyectos reales:** cambia `title`, `description` y `href`, y sustituye
 `mockup` por una captura real. La maquetación no necesita tocarse.
+
+**Añadir una alianza** — `src/data/alliances.js`:
+
+```js
+{
+  number: "01",
+  name: "Virginia Sapp",
+  kind: "Institución educativa",   // etiqueta pequeña sobre el nombre
+  logo: {
+    src: "assets/alianzas/virginia-sapp.png",
+    width: 202, height: 280,       // medidas reales: evitan el salto de layout
+    alt: "Logotipo institucional de Virginia Sapp",
+  },
+  description: "Creamos … una **plataforma que va más allá**: …",
+  scope: ["Presencia institucional", "Admisiones"],  // el índice "Alcance"
+  href: null,                      // con URL aparece el enlace "Ver la plataforma"
+  reveal: "far",
+}
+```
+
+En `description`, lo que va entre `**dobles asteriscos**` se levanta del gris del
+párrafo; el resto es texto plano y se escapa al compilar. El logotipo se muestra
+sobre una placa clara porque es obra de otra marca: se respeta el fondo para el
+que fue dibujado en vez de teñirlo. Deja en `assets/alianzas/` el archivo
+original y una versión recortada a su contenido, que es la que enlaza la página.
 
 **Datos de contacto** — `src/data/site.js`. Los canales con valor `null` no se
 renderizan, así que la página nunca muestra un teléfono o una red inventados.
