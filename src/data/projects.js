@@ -70,7 +70,8 @@ export const projects = [
     title: "Restaurantes y menús",
     description:
       "Cartas digitales, catálogo de productos y pedidos en línea para restaurantes, cafeterías y marcas de bebidas.",
-    mockup: "dashboard",
+    mockup: "menu",
+    variant: "brand",
     href: "demos/verbena.html",
     size: "half",
     reveal: "far",

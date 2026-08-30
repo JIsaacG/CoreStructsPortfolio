@@ -5,7 +5,12 @@
  * renderer supplies the wrapper. They are built from the primitives defined in
  * `src/styles/components/mockup.css`, which is what keeps eight different
  * interfaces looking like one family — and keeps stock photography out.
+ *
+ * One exception proves the rule: the menu card is a product shot, not an
+ * interface, so it borrows the demo's bottle instead of the primitives.
  */
+
+import { SILHOUETTE } from "./bottle.js";
 
 /** Repeat a row of placeholder text bars. */
 const textLines = (x, y, widths, { gap = 11, height = 5, className = "mk-text" } = {}) =>
@@ -176,6 +181,57 @@ export const mockups = {
       `,
       )}
     </g>
+  `,
+
+  /* 06 — Menu: the only card that shows a product instead of an interface.
+     It is the same bottle the Verbena demo pins to its viewport, shrunk onto a
+     warm shelf, beside the brand and three lines of a card. The strokes inside
+     the scaled group are sized for that 0.315 scale, so they land at the same
+     hairline weight as every other mockup. */
+  menu: `
+    <defs>
+      <radialGradient id="mk-shelf" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0%" stop-color="var(--mk-accent)" stop-opacity="0.3"/>
+        <stop offset="100%" stop-color="var(--mk-accent)" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="mk-plinth" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0%" stop-color="var(--mk-shadow)" stop-opacity="0.6"/>
+        <stop offset="62%" stop-color="var(--mk-shadow)" stop-opacity="0.26"/>
+        <stop offset="100%" stop-color="var(--mk-shadow)" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="mk-drink" gradientUnits="userSpaceOnUse" x1="0" y1="176" x2="0" y2="646">
+        <stop offset="0%" stop-color="var(--mk-accent)"/>
+        <stop offset="100%" stop-color="var(--mk-accent-deep)"/>
+      </linearGradient>
+    </defs>
+
+    <ellipse cx="98" cy="126" rx="92" ry="112" fill="url(#mk-shelf)"/>
+    <ellipse cx="98" cy="229" rx="54" ry="9" fill="url(#mk-plinth)"/>
+
+    <g class="mk-float"><g transform="translate(57 22) scale(0.315)">
+      <path class="mk-glass" d="${SILHOUETTE}"/>
+      <path fill="url(#mk-drink)" d="M112 176C112 206 52 232 52 300L52 618Q52 646 80 646L180 646Q208 646 208 618L208 300C208 232 148 206 148 176Z"/>
+      <rect class="mk-cap" x="104" y="12" width="52" height="52" rx="7"/>
+      <rect class="mk-collar" x="100" y="60" width="60" height="20" rx="5"/>
+      <path class="mk-outline" d="${SILHOUETTE}"/>
+      <rect class="mk-label" x="54" y="366" width="152" height="192" rx="9"/>
+      <text class="mk-label-mark" x="130" y="452" text-anchor="middle">V</text>
+      <path class="mk-label-rule" d="M84 480h92M84 506h60"/>
+    </g></g>
+
+    <text class="mk-kicker" x="196" y="72">BEBIDAS DE AUTOR</text>
+    <text class="mk-wordmark" x="196" y="104">VERBENA</text>
+    <rect class="mk-accent" x="196" y="116" width="32" height="2.5" rx="1.25"/>
+
+    ${[
+      [148, 82, 20],
+      [172, 100, 22],
+      [196, 68, 18],
+    ].map(([y, name, price]) => `
+      <rect class="mk-text-strong" x="196" y="${y}" width="${name}" height="5" rx="2.5"/>
+      <path class="mk-line-soft" d="M${200 + name} ${y + 2.5}h${162 - name - price}"/>
+      <rect class="mk-text" x="${366 - price}" y="${y}" width="${price}" height="5" rx="2.5"/>
+    `).join("")}
   `,
 
   /* 06 — Dashboard: three indicators, a trend and a breakdown. */

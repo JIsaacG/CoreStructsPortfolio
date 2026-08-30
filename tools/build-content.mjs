@@ -108,6 +108,11 @@ const SIZE_CLASS = {
   wide: "project-card--wide",
 };
 
+/** Opt-in looks. Only one card takes one, and only because it sells a product. */
+const VARIANT_CLASS = {
+  brand: "project-card--brand",
+};
+
 function renderProject(project) {
   const mockup = mockups[project.mockup];
   if (!mockup) throw new Error(`project "${project.title}" references unknown mockup "${project.mockup}"`);
@@ -115,7 +120,12 @@ function renderProject(project) {
   const sizeClass = SIZE_CLASS[project.size];
   if (!sizeClass) throw new Error(`project "${project.title}" has unknown size "${project.size}"`);
 
-  const classes = ["project-card", sizeClass, project.offset && "project-card--offset"]
+  const variantClass = project.variant ? VARIANT_CLASS[project.variant] : "";
+  if (project.variant && !variantClass) {
+    throw new Error(`project "${project.title}" has unknown variant "${project.variant}"`);
+  }
+
+  const classes = ["project-card", sizeClass, variantClass, project.offset && "project-card--offset"]
     .filter(Boolean)
     .join(" ");
   const titleId = `proyecto-${project.number}`;

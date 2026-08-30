@@ -10,8 +10,11 @@
  * 140 % of its natural size, and it has to weigh nothing.
  */
 
-/** The glass outline, reused as both the silhouette and the liquid's clip. */
-const SILHOUETTE =
+/**
+ * The glass outline, reused as both the silhouette and the liquid's clip — and,
+ * exported, as the product shot on the portfolio card that links to the demo.
+ */
+export const SILHOUETTE =
   "M112 82 L112 176 C112 206 52 232 52 300 L52 618 Q52 646 80 646 " +
   "L180 646 Q208 646 208 618 L208 300 C208 232 148 206 148 176 L148 82 Z";
 

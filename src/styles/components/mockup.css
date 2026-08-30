@@ -14,7 +14,13 @@
   --mk-text-strong: rgb(255 255 255 / 0.42);
   --mk-accent: var(--brand-secondary);
   --mk-accent-soft: rgb(var(--brand-secondary-rgb) / 0.32);
+  --mk-accent-deep: var(--brand-primary);
   --mk-navy: rgb(var(--brand-primary-rgb) / 0.65);
+
+  /* Only the product shot reads these; the brand card overrides the pair. */
+  --mk-label: rgb(255 255 255 / 0.9);
+  --mk-label-ink: var(--background);
+  --mk-shadow: #04060c;
 
   display: block;
   width: 100%;
@@ -84,4 +90,65 @@
   .mk-float {
     animation: none;
   }
+}
+
+/* --- Product shot -----------------------------------------------------------
+   One card sells a bottle rather than an interface. The drawing is the demo's
+   own silhouette, dropped in at 0.315 scale, so every stroke width here is
+   pre-multiplied to land at the same hairline the other mockups draw.
+   ========================================================================== */
+
+.mk-glass {
+  fill: rgb(255 255 255 / 0.05);
+}
+
+.mk-outline {
+  fill: none;
+  stroke: rgb(255 255 255 / 0.32);
+  stroke-width: 3.5;
+}
+
+.mk-cap {
+  fill: var(--mk-accent-deep);
+}
+
+.mk-collar {
+  fill: rgb(255 255 255 / 0.16);
+}
+
+/* The label is the one light surface in the whole grid — which is most of why
+   this card reads as a product the moment the section scrolls into view. */
+.mk-label {
+  fill: var(--mk-label);
+}
+
+.mk-label-mark {
+  fill: var(--mk-label-ink);
+  font-family: var(--font-brand);
+  font-size: 66px;
+}
+
+.mk-label-rule {
+  fill: none;
+  stroke: var(--mk-label-ink);
+  stroke-opacity: 0.32;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+}
+
+/* Brand lettering beside the bottle: the demo's name, set the way the demo
+   sets it, so the card previews the page it opens. */
+.mk-kicker {
+  fill: var(--mk-text-strong);
+  font-family: var(--font-sans);
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+}
+
+.mk-wordmark {
+  fill: rgb(255 255 255 / 0.92);
+  font-family: var(--font-brand);
+  font-size: 26px;
+  letter-spacing: 0.05em;
 }

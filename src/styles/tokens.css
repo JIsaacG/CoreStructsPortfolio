@@ -12,6 +12,17 @@
   --brand-primary-rgb: 37 56 128;
   --brand-secondary-rgb: 56 152 212;
 
+  /* --- Product accent ----------------------------------------------------- */
+  /* Not a CoreStruct colour: the amber the Verbena demo is built on, borrowed
+     by the one portfolio card that shows a product instead of an interface.
+     Warm against a site that is otherwise navy and cyan, which is the point. */
+  --product-amber: #f0b93c;
+  --product-amber-rgb: 240 185 60;
+  --product-ember-rgb: 240 120 60;
+  --product-deep: #5e2410;
+  --product-label: #f4ece0;
+  --product-ink: #2a1508;
+
   /* --- Surfaces ---------------------------------------------------------- */
   --background: #080b12;
   --surface: #0d1220;

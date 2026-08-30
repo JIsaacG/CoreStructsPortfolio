@@ -177,6 +177,42 @@
   transform: scaleX(1.5);
 }
 
+/* --- Brand card -------------------------------------------------------------
+   One card in the grid is a product, not a service, so it steps out of the blue
+   the other seven share. Everything below is driven by re-pointing the two
+   secondary-brand properties at the amber: the index, the title hover, the
+   arrow rule, the cursor light and the mockup's accent all follow without a
+   single extra override.
+   ========================================================================== */
+
+.project-card--brand .project-card__link {
+  --brand-secondary: var(--product-amber);
+  --brand-secondary-rgb: var(--product-amber-rgb);
+  --card-border: rgb(var(--product-amber-rgb) / 0.18);
+  --card-surface: rgb(30 18 10 / 0.55);
+}
+
+.project-card--brand .project-card__link:hover,
+.project-card--brand .project-card__link:focus-visible {
+  --card-border: rgb(var(--product-amber-rgb) / 0.48);
+  --card-surface: rgb(44 27 14 / 0.72);
+}
+
+/* The shelf the bottle stands on: warm where every other visual is navy. */
+.project-card--brand .project-card__visual {
+  background:
+    radial-gradient(86% 116% at 50% 0%, rgb(var(--product-ember-rgb) / 0.32), transparent 64%),
+    linear-gradient(180deg, rgb(255 255 255 / 0.05), transparent 45%),
+    #150d07;
+  border-bottom-color: rgb(var(--product-amber-rgb) / 0.16);
+}
+
+.project-card--brand .mk {
+  --mk-accent-deep: var(--product-deep);
+  --mk-label: var(--product-label);
+  --mk-label-ink: var(--product-ink);
+}
+
 /* --- Desktop composition ---------------------------------------------------- */
 
 @media (min-width: 48rem) {
