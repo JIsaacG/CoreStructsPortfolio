@@ -661,6 +661,11 @@ ${renderHead(demo)}
   <body>
     <a class="skip-link" href="#inicio">Saltar al contenido</a>
 
+    <!-- The drink, behind the page: bubbles rising in the colour of whatever
+         flavour is on screen. Purely decorative, painted by fizz.js and empty
+         until it runs, so a browser without JavaScript never sees it. -->
+    <canvas class="dm-fizz" data-fizz aria-hidden="true"></canvas>
+
 ${renderSprite(isotype)}
 
 ${renderBadge(isotype)}

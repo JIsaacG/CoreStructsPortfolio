@@ -1,0 +1,29 @@
+/* =============================================================================
+   Effervescence
+
+   The demo's ambient field: one fixed canvas at the backdrop layer, painted by
+   `fizz.js`. Same place in the stack as the portfolio's starfield — above the
+   radial brand washes, below every section — so the bubbles read as the page
+   being carbonated rather than as an overlay sitting on top of it.
+
+   Nothing here describes the motion. The element is inert until the module
+   claims it, and a browser without JavaScript simply never sees it.
+   ========================================================================== */
+
+.dm-fizz {
+  position: fixed;
+  inset: 0;
+  z-index: var(--layer-backdrop);
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+
+  /* The field fades in once the first frame is on screen, so the page never
+     starts with a hard pop of bubbles over the hero. */
+  opacity: 0;
+  transition: opacity 1.6s var(--ease-out-quart);
+}
+
+.dm-fizz.is-awake {
+  opacity: 1;
+}

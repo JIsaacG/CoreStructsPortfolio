@@ -18,6 +18,7 @@
 @import "./components/button.css";
 @import "./components/mockup.css";
 
+@import "./demo/fizz.css";
 @import "./demo/shell.css";
 @import "./demo/header.css";
 @import "./demo/stage.css";

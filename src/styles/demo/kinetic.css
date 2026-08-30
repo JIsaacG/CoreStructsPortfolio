@@ -21,9 +21,11 @@
   gap: 0.15em;
   padding-block: var(--space-xl);
   border-block: 1px solid var(--border-soft);
+  /* Held short of opaque so the bubbles keep rising behind the band instead of
+     disappearing into it for a screenful. */
   background:
     radial-gradient(120% 140% at 50% 50%, rgb(var(--brand-secondary-rgb) / 0.09), transparent 70%),
-    var(--surface-sunken);
+    rgb(6 8 16 / 0.72);
   overflow: hidden;
   /* The band ends in air rather than at an edge, so a word is never cut in half
      by the viewport — it fades out before it gets there. */
