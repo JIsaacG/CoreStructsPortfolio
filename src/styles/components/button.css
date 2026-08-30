@@ -121,25 +121,25 @@
 }
 
 /* --- Heartbeat pulse -------------------------------------------------------
-   Reserved for the "Hablemos" CTAs: a double beat ("lub-dub") then a rest.
+   Reserved for the "Hablemos" CTAs: a double beat ("lub-dub") then a long rest.
 
-   Three things fire together, because a blue halo alone is nearly invisible
-   around a button that is already blue: the halo swells, `brightness()` lifts
-   the button itself, and a scale gives the beat a body. Rest sits deliberately
-   dim so the peak has somewhere to travel from — the earlier version pulsed
-   0.35 -> 0.63 alpha and read as noise.
+   Deliberately quiet. The job is to draw the eye back to the CTA, not to alarm
+   anyone, so the halo stays close to the button instead of flooding the grain
+   in the background — a wide, bright bloom lights up that noise and reads as
+   dirt. `brightness()` lifts the button itself just enough to feel alive, and
+   the scale is small enough to register as breathing rather than jumping.
 
-   Timing is per keyframe rather than one curve for the whole cycle: a heart
-   contracts fast and releases slow, so the rise uses a snappy curve and the
-   fall a soft one. `overflow: hidden` clips children, not `box-shadow`.
+   Timing is per keyframe: a heart contracts fast and releases slow. The cycle
+   is long on purpose — nearly two thirds of it is rest, which is what keeps a
+   repeating animation from becoming nagging.
    -------------------------------------------------------------------------- */
 
 .button--pulse {
   --pulse-rgb: var(--brand-secondary-rgb);
   box-shadow:
     0 0 0 0 rgb(var(--pulse-rgb) / 0),
-    0 0 14px 0 rgb(var(--pulse-rgb) / 0.18);
-  animation: button-heartbeat 1.6s linear infinite;
+    0 0 12px 0 rgb(var(--pulse-rgb) / 0.1);
+  animation: button-heartbeat 2.4s linear infinite;
 }
 
 /* The pulse hands the button back to its own hover glow: once the pointer is
@@ -150,60 +150,60 @@
 }
 
 @keyframes button-heartbeat {
-  /* lub — the big beat */
+  /* lub — the beat */
   0% {
     transform: scale(1);
     filter: brightness(1);
-    border-color: rgb(var(--pulse-rgb) / 0.25);
+    border-color: rgb(var(--pulse-rgb) / 0.16);
     box-shadow:
-      0 0 0 0 rgb(var(--pulse-rgb) / 0.5),
-      0 0 14px 0 rgb(var(--pulse-rgb) / 0.18);
+      0 0 0 0 rgb(var(--pulse-rgb) / 0.16),
+      0 0 12px 0 rgb(var(--pulse-rgb) / 0.1);
     animation-timing-function: cubic-bezier(0.2, 0, 0.2, 1);
   }
-  7% {
-    transform: scale(1.07);
-    filter: brightness(1.4);
-    border-color: rgb(var(--pulse-rgb) / 1);
+  6% {
+    transform: scale(1.022);
+    filter: brightness(1.09);
+    border-color: rgb(var(--pulse-rgb) / 0.42);
     box-shadow:
-      0 0 0 10px rgb(var(--pulse-rgb) / 0.45),
-      0 0 55px 12px rgb(var(--pulse-rgb) / 0.9);
+      0 0 0 5px rgb(var(--pulse-rgb) / 0.13),
+      0 0 26px 3px rgb(var(--pulse-rgb) / 0.34);
     animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
   }
-  20% {
+  16% {
     transform: scale(1);
     filter: brightness(1);
-    border-color: rgb(var(--pulse-rgb) / 0.25);
+    border-color: rgb(var(--pulse-rgb) / 0.16);
     box-shadow:
-      0 0 0 26px rgb(var(--pulse-rgb) / 0),
-      0 0 14px 0 rgb(var(--pulse-rgb) / 0.18);
+      0 0 0 14px rgb(var(--pulse-rgb) / 0),
+      0 0 12px 0 rgb(var(--pulse-rgb) / 0.1);
     animation-timing-function: cubic-bezier(0.2, 0, 0.2, 1);
   }
-  /* dub — the smaller echo */
-  27% {
-    transform: scale(1.045);
-    filter: brightness(1.24);
-    border-color: rgb(var(--pulse-rgb) / 0.8);
+  /* dub — the softer echo */
+  22% {
+    transform: scale(1.012);
+    filter: brightness(1.05);
+    border-color: rgb(var(--pulse-rgb) / 0.3);
     box-shadow:
-      0 0 0 7px rgb(var(--pulse-rgb) / 0.35),
-      0 0 42px 8px rgb(var(--pulse-rgb) / 0.7);
-    animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
+      0 0 0 4px rgb(var(--pulse-rgb) / 0.1),
+      0 0 20px 2px rgb(var(--pulse-rgb) / 0.24);
+    animation-timing-function: cubic-bezier(0.3, 0, 0.5, 1);
   }
-  44% {
+  34% {
     transform: scale(1);
     filter: brightness(1);
-    border-color: rgb(var(--pulse-rgb) / 0.25);
+    border-color: rgb(var(--pulse-rgb) / 0.16);
     box-shadow:
-      0 0 0 24px rgb(var(--pulse-rgb) / 0),
-      0 0 14px 0 rgb(var(--pulse-rgb) / 0.18);
+      0 0 0 12px rgb(var(--pulse-rgb) / 0),
+      0 0 12px 0 rgb(var(--pulse-rgb) / 0.1);
   }
   /* rest */
   100% {
     transform: scale(1);
     filter: brightness(1);
-    border-color: rgb(var(--pulse-rgb) / 0.25);
+    border-color: rgb(var(--pulse-rgb) / 0.16);
     box-shadow:
       0 0 0 0 rgb(var(--pulse-rgb) / 0),
-      0 0 14px 0 rgb(var(--pulse-rgb) / 0.18);
+      0 0 12px 0 rgb(var(--pulse-rgb) / 0.1);
   }
 }
 
@@ -214,7 +214,7 @@
    the preference — nothing else here moves. */
 @media (prefers-reduced-motion: reduce) {
   .button--pulse {
-    animation: button-heartbeat 1.6s linear infinite !important;
+    animation: button-heartbeat 2.4s linear infinite !important;
   }
 
   .button--pulse:hover,

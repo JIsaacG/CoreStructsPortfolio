@@ -1,0 +1,102 @@
+/* =============================================================================
+   The kinetic band — the name of the house, moving
+
+   Two rows of the brand name travelling in opposite directions: one solid, one
+   hollow. It is the seam between the story and the map, and it is doing the job
+   a rule would do, only louder.
+
+   Nothing here starts the motion. `kinetic.js` drives both tracks from one
+   rAF loop so scrolling can lean on them — the speed the visitor sees is the
+   base speed plus whatever the wheel is doing — and the animation runs on every
+   viewport and whatever the motion setting says, exactly like the bottle: it is
+   the page's voice, not decoration laid over it.
+   ========================================================================== */
+
+.dm-kinetic {
+  --kinetic-skew: 0deg;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15em;
+  padding-block: var(--space-xl);
+  border-block: 1px solid var(--border-soft);
+  background:
+    radial-gradient(120% 140% at 50% 50%, rgb(var(--brand-secondary-rgb) / 0.09), transparent 70%),
+    var(--surface-sunken);
+  overflow: hidden;
+  /* The band ends in air rather than at an edge, so a word is never cut in half
+     by the viewport — it fades out before it gets there. */
+  mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+
+.dm-kinetic__row {
+  display: flex;
+  overflow: hidden;
+}
+
+/* The track carries the travel, and nothing else: the loop writes its transform
+   every frame, so a transition on it would fight the loop for the property. */
+.dm-kinetic__track {
+  display: flex;
+  flex: 0 0 auto;
+  will-change: transform;
+}
+
+/* The lean the wheel gives it, one level down where it can be eased. The script
+   writes `--kinetic-skew` on the band; both runs read it, so the whole row tilts
+   as one piece. */
+.dm-kinetic__run {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  transform: skewX(var(--kinetic-skew));
+  transition: transform var(--duration-base) var(--ease-out-quart);
+}
+
+.dm-kinetic__word {
+  font-family: var(--font-brand);
+  font-size: clamp(2.5rem, 1.2rem + 5.6vw, 6.5rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--text);
+  transition: color var(--duration-base) var(--ease-out-quart);
+}
+
+/* The second row is the same word with the ink taken out of it, so the two
+   rows read as one weave instead of as a headline repeated twice. */
+.dm-kinetic__word--hollow {
+  color: transparent;
+  -webkit-text-stroke: 1px rgb(255 255 255 / 0.32);
+}
+
+.dm-kinetic__word:hover {
+  color: var(--brand-secondary);
+  -webkit-text-stroke-color: var(--brand-secondary);
+}
+
+/* The diamond between words: the only thing in the band that is not type. */
+.dm-kinetic__sep {
+  flex: 0 0 auto;
+  width: 0.42em;
+  height: 0.42em;
+  margin-inline: 0.42em;
+  font-size: clamp(2.5rem, 1.2rem + 5.6vw, 6.5rem);
+  background: var(--brand-secondary);
+  transform: rotate(45deg);
+  transition: background var(--duration-slow) var(--ease-out-quart);
+}
+
+/* Without the script the tracks never move, and a still band of six words is a
+   wall. Centre one run and hide the duplicate. */
+html:not(.js) .dm-kinetic__track {
+  justify-content: center;
+  width: 100%;
+}
+
+html:not(.js) .dm-kinetic__run:last-child {
+  display: none;
+}

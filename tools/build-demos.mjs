@@ -124,7 +124,9 @@ function renderHead(demo) {
  */
 function renderSprite({ defs }) {
   return `    <svg class="sprite" aria-hidden="true" focusable="false" width="0" height="0">
-      <defs>${collapse(defs)}</defs>
+div>
+
+\$\{renderShop\(demo\)\}defs>${collapse(defs)}</defs>
     </svg>`;
 }
 
@@ -368,6 +370,191 @@ ${items}
 
 /* ---------------------------------------------------------------- the shop */
 
+/* --------------------------------------------------------- the kinetic band */
+
+/** How many times the name is repeated per run. Two runs make the loop seamless. */
+const KINETIC_WORDS = 6;
+
+/**
+ * The brand name, repeated, sliding across the page.
+ *
+ * Two rows travel in opposite directions — one solid, one hollow — so the band
+ * reads as a moving weave rather than as a single ticker. The markup is only the
+ * type and two identical runs of it; the wrap point is the width of one run, so
+ * `kinetic.js` can loop it without measuring anything except the DOM it is given.
+ *
+ * The whole band is `aria-hidden`: it is the name already announced by the
+ * header, set twelve times over. A screen reader gains nothing from hearing it
+ * again, and loses a section to scrolling past it.
+ */
+function renderKinetic(demo) {
+  const word = escape(demo.brand.name.toUpperCase());
+
+  const run = (hollow) =>
+    `<div class="dm-kinetic__run">${Array.from(
+      { length: KINETIC_WORDS },
+      () =>
+        `<span class="dm-kinetic__word${hollow ? " dm-kinetic__word--hollow" : ""}">${word}</span>` +
+        `<span class="dm-kinetic__sep"></span>`,
+    ).join("")}</div>`;
+
+  const row = (hollow, speed) =>
+    `        <div class="dm-kinetic__row">
+          <div class="dm-kinetic__track" data-kinetic-track data-kinetic-speed="${speed}">${run(hollow)}${run(hollow)}</div>
+        </div>`;
+
+  return `      <div class="dm-kinetic" data-kinetic aria-hidden="true">
+${row(false, -46)}
+${row(true, 34)}
+      </div>`;
+}
+
+/* --------------------------------------------------------------- the places */
+
+/** A drawn map is a decoration; a real one is a dependency. This is the drawn one. */
+function renderMapArt() {
+  /* Blocks are placed by a seeded generator rather than by hand: the layout has
+     to look like a city and stay identical between builds, and thirty literal
+     rectangles in the source would be thirty things to keep in order. */
+  let seed = 20140;
+  const random = () => {
+    seed = (seed * 1103515245 + 12345) % 2147483648;
+    return seed / 2147483648;
+  };
+
+  const blocks = Array.from({ length: 34 }, () => {
+    const x = Math.round(random() * 560);
+    /* Nothing is built on the water, so the band across the top stays clear. */
+    const y = Math.round(140 + random() * 250);
+    const w = Math.round(22 + random() * 58);
+    const h = Math.round(16 + random() * 40);
+    return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3"/>`;
+  }).join("");
+
+  return `<svg class="dm-map__art" viewBox="0 0 600 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+            <defs>
+              <pattern id="dm-map-grid" width="24" height="24" patternUnits="userSpaceOnUse">
+                <path d="M24 0H0v24" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.5"/>
+              </pattern>
+            </defs>
+            <rect class="dm-map__grid" width="600" height="420" fill="url(#dm-map-grid)"/>
+            <path class="dm-map__water" d="M0 0h600v88c-78 26-132-14-208 6-72 19-118-16-186 4C154 112 74 88 0 106Z"/>
+            <path class="dm-map__wave" d="M0 132c68-16 112 12 182 0s112 16 180 4 152 10 238-8"/>
+            <g class="dm-map__blocks">${blocks}</g>
+            <g class="dm-map__roads">
+              <path d="M-20 172h640"/>
+              <path d="M-20 268h640"/>
+              <path d="M-20 356h640"/>
+              <path d="M118 130v300"/>
+              <path d="M300 130v300"/>
+              <path d="M452 130v300"/>
+              <path d="M-20 420C120 330 190 330 300 268 410 206 470 200 620 150"/>
+            </g>
+            <path class="dm-map__park" d="M330 292h108c14 0 22 10 20 24l-8 44c-2 12-10 18-22 18h-96c-14 0-22-10-20-24l8-44c2-12 10-18 22-18Z"/>
+            <path class="dm-map__route" d="M92 372c66-4 96-38 150-46s96 22 154-16 84-96 148-118"/>
+            <g class="dm-map__compass" transform="translate(548 372)">
+              <circle r="17"/>
+              <path d="M0-13 4 0 0 13-4 0Z"/>
+            </g>
+          </svg>`;
+}
+
+/**
+ * "Dónde estamos" — a drawn map with pins on it, and one card per pin.
+ *
+ * The panel starts as an illustration, because a real map is an iframe, and an
+ * iframe is a third party, a frame budget and a cookie the visitor did not ask
+ * for while scrolling past. Picking a place is what buys it: only then does
+ * `places.js` insert the Google embed, into the panel the illustration held.
+ *
+ * Every control is a real link to Google Maps first — pin and card alike — so
+ * the section works before a single line of script runs. The script takes those
+ * clicks over and answers them in place instead.
+ */
+function renderPlaces(demo) {
+  const { places } = demo;
+
+  const search = (place) =>
+    `https://www.google.com/maps/search/?api=1&amp;query=${place.map.lat}%2C${place.map.lng}`;
+
+  const pins = places.list
+    .map(
+      (place, index) => `              <a
+                class="dm-map__pin"
+                href="${search(place)}"
+                target="_blank"
+                rel="noopener"
+                style="--pin-x: ${place.pin.x}%; --pin-y: ${place.pin.y}%; --pin-delay: ${index * 140}ms"
+                data-place-pin="${escape(place.id)}"
+                aria-label="Ver ${escape(place.name)}, ${escape(place.city)}, en el mapa"
+              >
+                <span class="dm-map__pin-mark"></span>
+                <span class="dm-map__pin-label">${escape(place.city)}</span>
+              </a>`,
+    )
+    .join("\n");
+
+  const cards = places.list
+    .map(
+      (place, index) => `              <li>
+                <article
+                  class="dm-place"
+                  data-place="${escape(place.id)}"
+                  data-place-lat="${place.map.lat}"
+                  data-place-lng="${place.map.lng}"
+                  data-place-zoom="${place.map.zoom}"
+                  data-place-name="${escape(place.name)}"
+                  data-reveal="rise"
+                >
+                  <p class="dm-place__index">${String(index + 1).padStart(2, "0")}</p>
+                  <p class="dm-place__kind">${escape(place.kind)}</p>
+                  <h3 class="dm-place__name">
+                    <a class="dm-place__open" href="${search(place)}" target="_blank" rel="noopener" data-place-open>${escape(place.name)}</a>
+                  </h3>
+                  <p class="dm-place__where">${escape(place.address)} · ${escape(place.city)}</p>
+                  <p class="dm-place__hours">${escape(place.hours)}</p>
+                  <p class="dm-place__note">${escape(place.note)}</p>
+                  <a
+                    class="dm-place__route"
+                    href="https://www.google.com/maps/dir/?api=1&amp;destination=${place.map.lat}%2C${place.map.lng}"
+                    target="_blank"
+                    rel="noopener"
+                  >Cómo llegar</a>
+                </article>
+              </li>`,
+    )
+    .join("\n");
+
+  return `      <section class="dm-section dm-places" id="donde">
+        <div class="dm-shell">
+          <header class="dm-shop__head" data-reveal="rise">
+            <p class="dm-label"><span class="dm-label__index">04</span> ${escape(places.label)}</p>
+            <h2 class="dm-title">${escape(places.title)}</h2>
+            <p class="dm-text">${escape(places.text)}</p>
+          </header>
+
+          <div class="dm-places__grid" data-places>
+            <div class="dm-map" data-reveal="scale">
+              <div class="dm-map__paper">
+                ${renderMapArt()}
+                <div class="dm-map__pins">
+${pins}
+                </div>
+                <p class="dm-map__hint" data-map-hint>${escape(places.hint)}</p>
+                <div class="dm-map__live" data-map-live></div>
+              </div>
+            </div>
+
+            <ol class="dm-places__list" data-reveal-group>
+${cards}
+            </ol>
+          </div>
+
+          <p class="dm-shop__note">${escape(places.note)}</p>
+        </div>
+      </section>`;
+}
+
 function renderShop(demo) {
   const products = demo.flavours
     .map(
@@ -409,7 +596,7 @@ function renderShop(demo) {
   return `      <section class="dm-section dm-shop" id="tienda">
         <div class="dm-shell">
           <header class="dm-shop__head" data-reveal="rise">
-            <p class="dm-label"><span class="dm-label__index">04</span> ${escape(demo.shop.label)}</p>
+            <p class="dm-label"><span class="dm-label__index">05</span> ${escape(demo.shop.label)}</p>
             <h2 class="dm-title">${escape(demo.shop.title)}</h2>
             <p class="dm-text">${escape(demo.shop.text)}</p>
           </header>
@@ -494,6 +681,10 @@ ${renderSpec(demo)}
 
 ${renderStory(demo)}
       </div>
+
+${renderKinetic(demo)}
+
+${renderPlaces(demo)}
 
 ${renderShop(demo)}
 

@@ -147,6 +147,76 @@ export const demos = [
       ],
     },
 
+
+    /* Where to find the brand in the wild. Each entry carries two maps' worth of
+       data: a pin on the drawn map (`pin`, in per-cent of the panel) and the real
+       coordinates the Google embed opens on when the card is picked. */
+    places: {
+      label: "Dónde estamos",
+      title: "Búscanos en el mapa",
+      text:
+        "Cinco puntos donde la botella se sirve fría y sin intermediarios. Toca un pin " +
+        "—o una tarjeta— y el mapa dibujado se convierte en uno de verdad.",
+      hint: "Toca un punto para abrir el mapa",
+      note: "¿No hay un punto cerca? El envío en frío llega a los dieciocho departamentos en 48 horas.",
+      list: [
+        {
+          id: "leona",
+          name: "Casa Verbena",
+          kind: "Casa matriz",
+          city: "Tegucigalpa",
+          address: "Barrio La Leona, subida al Picacho",
+          hours: "Mar a dom · 11:00 – 22:00",
+          note: "La cocina donde salió la primera tanda. Se cata de pie, junto a los tanques.",
+          pin: { x: 30, y: 78 },
+          map: { lat: 14.105, lng: -87.2078, zoom: 16 },
+        },
+        {
+          id: "andes",
+          name: "La bodega",
+          kind: "Bodega y tienda",
+          city: "San Pedro Sula",
+          address: "Barrio Los Andes, 9 calle",
+          hours: "Lun a sáb · 8:00 – 17:00",
+          note: "Aquí fermenta todo. Se vende caja completa y se recibe vidrio de vuelta.",
+          pin: { x: 20, y: 46 },
+          map: { lat: 15.504, lng: -88.025, zoom: 16 },
+        },
+        {
+          id: "ceiba",
+          name: "Barra El Muelle",
+          kind: "Bar aliado",
+          city: "La Ceiba",
+          address: "Barrio La Isla, frente al malecón",
+          hours: "Jue a sáb · 18:00 – 02:00",
+          note: "Cinco grifos, uno por receta. El de maracuyá se acaba primero, siempre.",
+          pin: { x: 57, y: 35 },
+          map: { lat: 15.783, lng: -86.79, zoom: 16 },
+        },
+        {
+          id: "comayagua",
+          name: "Puesto 14",
+          kind: "Mercado",
+          city: "Comayagua",
+          address: "Mercado central, centro histórico",
+          hours: "Sáb y dom · 6:00 – 13:00",
+          note: "El puesto de siempre. Si llegas después de las once, quedan tres sabores.",
+          pin: { x: 44, y: 61 },
+          map: { lat: 14.452, lng: -87.638, zoom: 16 },
+        },
+        {
+          id: "roatan",
+          name: "Kiosco Verbena",
+          kind: "Kiosco de playa",
+          city: "Roatán",
+          address: "West End, calle principal",
+          hours: "Todos los días · 10:00 – 20:00",
+          note: "Botella en hielo y nada más. Cierra cuando se acaba la última.",
+          pin: { x: 78, y: 33 },
+          map: { lat: 16.3, lng: -86.596, zoom: 15 },
+        },
+      ],
+    },
     shop: {
       label: "La tienda",
       title: "Llévate la caja",
@@ -174,5 +244,6 @@ export const demoNavigation = [
   { id: "sabores", label: "Sabores" },
   { id: "receta", label: "Receta" },
   { id: "casa", label: "La casa" },
+  { id: "donde", label: "Dónde" },
   { id: "tienda", label: "Tienda" },
 ];
