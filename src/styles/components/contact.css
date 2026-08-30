@@ -1,0 +1,208 @@
+/* =============================================================================
+   Closing CTA + footer — one zone, not two
+   ========================================================================== */
+
+.contact {
+  position: relative;
+  padding-block: var(--space-3xl) var(--space-xl);
+}
+
+/* The page's brightest moment: light gathers at the point of contact.
+   No `overflow: hidden` on the section — the glow reaches above its own box, and
+   clipping it there cut a hard horizontal edge straight across the page. The
+   root already uses `overflow-x: clip`, so letting it bleed costs no scrollbar. */
+.contact::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 50%;
+  width: min(120rem, 190%);
+  aspect-ratio: 2 / 1;
+  translate: -50% -32%;
+  background: radial-gradient(
+    50% 50% at 50% 50%,
+    rgb(var(--brand-secondary-rgb) / 0.16),
+    rgb(var(--brand-primary-rgb) / 0.1) 42%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.contact__inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  text-align: center;
+}
+
+.contact__title {
+  font-size: var(--text-5xl);
+  font-weight: 800;
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+.contact__subtitle {
+  max-width: 30ch;
+  font-size: var(--text-xl);
+  font-weight: 500;
+  line-height: var(--leading-snug);
+  color: var(--text-muted);
+}
+
+.contact__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
+}
+
+/* --- Direct channels -------------------------------------------------------- */
+
+.contact__channels {
+  display: grid;
+  gap: var(--space-md);
+  width: 100%;
+  margin-top: var(--space-2xl);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--border);
+  text-align: left;
+}
+
+.channel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.channel__label {
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.channel__value {
+  position: relative;
+  display: inline-block;
+  width: fit-content;
+  font-size: var(--text-lg);
+  font-weight: 600;
+  letter-spacing: var(--tracking-snug);
+  transition: color var(--duration-base) var(--ease-out-quart);
+}
+
+/* Animated underline shared by every inline link in this zone. */
+.channel__value::after,
+.footer__link::after {
+  content: "";
+  position: absolute;
+  inset-block-end: -2px;
+  inset-inline-start: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform var(--duration-base) var(--ease-out-expo);
+}
+
+.channel__value:hover,
+.channel__value:focus-visible,
+.footer__link:hover,
+.footer__link:focus-visible {
+  color: var(--brand-secondary);
+}
+
+.channel__value:hover::after,
+.channel__value:focus-visible::after,
+.footer__link:hover::after,
+.footer__link:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+/* Touch targets stay comfortable on phones. */
+a.channel__value {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+@media (min-width: 48rem) {
+  .contact__channels {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-lg);
+  }
+}
+
+/* --- Footer ---------------------------------------------------------------- */
+
+.footer {
+  position: relative;
+  padding-block: var(--space-lg) var(--space-md);
+}
+
+.footer__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--border);
+}
+
+.footer__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.footer__mark {
+  height: 1.6rem;
+  width: auto;
+}
+
+.footer__wordmark {
+  height: 0.8rem;
+  width: auto;
+  opacity: 0.8;
+}
+
+.footer__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs) var(--space-md);
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+}
+
+.footer__link {
+  position: relative;
+  display: inline-block;
+  min-height: 24px;
+  color: var(--text-muted);
+  transition: color var(--duration-base) var(--ease-out-quart);
+}
+
+.footer__note {
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+}
+
+@media (min-width: 48rem) {
+  .footer__inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer__meta {
+    justify-content: flex-end;
+  }
+}

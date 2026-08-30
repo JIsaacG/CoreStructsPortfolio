@@ -1,0 +1,17 @@
+{
+  "name": "CoreStruct",
+  "short_name": "CoreStruct",
+  "description": "Estudio de tecnología y desarrollo de software.",
+  "lang": "es",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#080b12",
+  "theme_color": "#080b12",
+  "icons": [
+    { "src": "assets/brand/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/brand/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/brand/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "assets/brand/isotipo.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

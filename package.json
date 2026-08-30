@@ -1,0 +1,19 @@
+{
+  "name": "corestruct-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sitio portfolio corporativo de CoreStruct — HTML, CSS y JavaScript estáticos, sin dependencias de runtime.",
+  "type": "module",
+  "scripts": {
+    "build": "npm run build:brand && npm run build:css && npm run build:content",
+    "build:brand": "node tools/build-brand.mjs",
+    "build:css": "node tools/build-css.mjs",
+    "build:content": "node tools/build-content.mjs",
+    "check": "node tools/check.mjs",
+    "serve": "node tools/serve.mjs",
+    "start": "npm run build && npm run serve"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

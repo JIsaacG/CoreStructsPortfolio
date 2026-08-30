@@ -1,0 +1,123 @@
+/* =============================================================================
+   Design tokens — the single source of truth for the CoreStruct identity.
+   Nothing below this file should hard-code a brand colour, font or duration.
+   ========================================================================== */
+
+:root {
+  color-scheme: dark;
+
+  /* --- Brand ------------------------------------------------------------- */
+  --brand-primary: #253880;          /* navy: trust, structure, track record */
+  --brand-secondary: #3898d4;        /* cyan: accents, hover, light, motion  */
+  --brand-primary-rgb: 37 56 128;
+  --brand-secondary-rgb: 56 152 212;
+
+  /* --- Surfaces ---------------------------------------------------------- */
+  --background: #080b12;
+  --surface: #0d1220;
+  --surface-raised: #111a2e;
+  --surface-sunken: #060810;
+
+  /* --- Text -------------------------------------------------------------- */
+  --text: #ffffff;
+  --text-muted: rgb(255 255 255 / 0.65);
+  --text-faint: rgb(255 255 255 / 0.42);
+
+  /* --- Lines ------------------------------------------------------------- */
+  --border: rgb(255 255 255 / 0.1);
+  --border-soft: rgb(255 255 255 / 0.06);
+  --border-strong: rgb(255 255 255 / 0.2);
+
+  /* --- Brand blends ------------------------------------------------------ */
+  --gradient-brand: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
+  --gradient-edge: linear-gradient(
+    90deg,
+    transparent,
+    rgb(var(--brand-secondary-rgb) / 0.55),
+    transparent
+  );
+
+  /* --- Typography -------------------------------------------------------- */
+  /* Manrope carries the whole interface. Quantify is reserved for branding
+     and is declared in fonts.css with a geometric fallback stack. */
+  --font-sans:
+    "Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-brand:
+    "Quantify", "Manrope", ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+
+  /* Fluid scale, 360px -> 1600px viewport. */
+  --text-2xs: clamp(0.625rem, 0.6rem + 0.12vw, 0.6875rem);
+  --text-xs: clamp(0.6875rem, 0.66rem + 0.14vw, 0.75rem);
+  --text-sm: clamp(0.8125rem, 0.79rem + 0.12vw, 0.875rem);
+  --text-base: clamp(0.9375rem, 0.9rem + 0.19vw, 1.0625rem);
+  --text-lg: clamp(1.0625rem, 1rem + 0.31vw, 1.25rem);
+  --text-xl: clamp(1.25rem, 1.13rem + 0.5vw, 1.5rem);
+  --text-2xl: clamp(1.5rem, 1.28rem + 0.94vw, 2.125rem);
+  --text-3xl: clamp(1.875rem, 1.44rem + 1.88vw, 3rem);
+  --text-4xl: clamp(2.25rem, 1.44rem + 3.44vw, 4.25rem);
+  --text-5xl: clamp(2.75rem, 1.42rem + 5.63vw, 6.5rem);
+  --text-6xl: clamp(3rem, 0.94rem + 8.75vw, 9rem);
+
+  --leading-tight: 0.95;
+  --leading-snug: 1.12;
+  --leading-normal: 1.55;
+  --leading-relaxed: 1.7;
+
+  --tracking-tight: -0.03em;
+  --tracking-snug: -0.015em;
+  --tracking-wide: 0.08em;
+  --tracking-widest: 0.22em;
+
+  /* --- Space ------------------------------------------------------------- */
+  --space-3xs: 0.25rem;
+  --space-2xs: 0.5rem;
+  --space-xs: 0.75rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2.5rem;
+  --space-xl: 4rem;
+  --space-2xl: 6rem;
+  --space-3xl: clamp(5rem, 3.5rem + 7vw, 11rem);
+
+  --gutter: clamp(1.25rem, 0.9rem + 1.7vw, 3rem);
+  --measure: 62ch;
+  --shell-max: 84rem;
+  --shell: min(100% - var(--gutter) * 2, var(--shell-max));
+
+  --radius-sm: 6px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+
+  /* --- Motion ------------------------------------------------------------ */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --duration-fast: 180ms;
+  --duration-base: 320ms;
+  --duration-slow: 620ms;
+  --duration-reveal: 900ms;
+
+  /* --- Layers ------------------------------------------------------------ */
+  --layer-backdrop: 0;
+  --layer-content: 1;
+  --layer-header: 50;
+  --layer-skip: 100;
+
+  /* --- Runtime values written by JS -------------------------------------- */
+  /* Fallbacks keep every layout correct with JavaScript disabled. */
+  --scroll-progress: 0;
+  /* Coarse copy of the progress value (0.05 steps). The ambient background
+     repaints a full-viewport gradient, so it is stepped rather than continuous;
+     --scroll-progress stays smooth because it only drives a composited scaleX. */
+  --ambient-progress: 0;
+  --hero-exit: 0;
+  --header-height: 4.5rem;
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --header-height: 5.25rem;
+  }
+}

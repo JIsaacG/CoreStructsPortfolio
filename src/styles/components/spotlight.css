@@ -1,0 +1,55 @@
+/* =============================================================================
+   Cursor spotlight
+
+   The cyan light of the page is attached to the pointer instead of being baked
+   into the background. It is one fixed, perfectly round element that only ever
+   changes `transform`, so it rides on the compositor and never repaints.
+
+   Its lag and the slight stretch along the direction of travel come from
+   `pointer-spotlight.js`; the element is invisible until a mouse actually moves,
+   so touch devices never see it.
+   ========================================================================== */
+
+.spotlight {
+  /* Generous, because the falloff has to be gradual enough to read as light
+     rather than as a shape with an edge. */
+  --spotlight-size: clamp(26rem, 48vw, 48rem);
+
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  z-index: var(--layer-backdrop);
+  width: var(--spotlight-size);
+  height: var(--spotlight-size);
+  /* Centre the circle on the origin so JS can translate to raw cursor coords. */
+  margin-block-start: calc(var(--spotlight-size) / -2);
+  margin-inline-start: calc(var(--spotlight-size) / -2);
+  border-radius: 50%;
+  pointer-events: none;
+
+  /* `closest-side` keeps the falloff circular no matter how the element is
+     stretched, so the smear deforms the light instead of clipping it. */
+  background: radial-gradient(
+    circle closest-side,
+    rgb(var(--brand-secondary-rgb) / 0.19),
+    rgb(var(--brand-secondary-rgb) / 0.1) 36%,
+    rgb(var(--brand-primary-rgb) / 0.08) 60%,
+    transparent 78%
+  );
+
+  opacity: 0;
+  transition: opacity 700ms var(--ease-out-quart);
+  will-change: transform;
+}
+
+.spotlight.is-lit {
+  opacity: 1;
+}
+
+/* Without a fine pointer — or with reduced motion — the light never runs, so
+   the ambient wash in base.css carries the atmosphere on its own. */
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .spotlight {
+    display: none;
+  }
+}

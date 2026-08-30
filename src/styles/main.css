@@ -1,0 +1,28 @@
+/* =============================================================================
+   CoreStruct — stylesheet entry point
+
+   Import order is the cascade order: tokens and reset first, then layout, then
+   components. `npm run build:css` inlines these into `dist/corestruct.css`,
+   which is what the page actually links, so the browser makes one request
+   instead of walking an @import waterfall.
+   ========================================================================== */
+
+@import "./tokens.css";
+@import "./fonts.css";
+@import "./base.css";
+@import "./layout.css";
+@import "./motion.css";
+
+/* Generic UI primitives first, then the page zones that compose them: several
+   zone rules intentionally override a primitive (the header hides its CTA on
+   small screens, for instance) at equal specificity, so they must come last. */
+@import "./components/button.css";
+@import "./components/mockup.css";
+@import "./components/spotlight.css";
+
+@import "./components/header.css";
+@import "./components/hero.css";
+@import "./components/projects.css";
+@import "./components/capabilities.css";
+@import "./components/manifesto.css";
+@import "./components/contact.css";

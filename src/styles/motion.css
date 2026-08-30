@@ -1,0 +1,131 @@
+/* =============================================================================
+   Scroll-reveal system
+
+   Everything animates on `transform` and `opacity` only, so reveals stay on the
+   compositor. Elements are hidden by the `.js` guard, which is set by an inline
+   script before first paint — without JavaScript nothing is ever hidden.
+   ========================================================================== */
+
+.js [data-reveal] {
+  opacity: 0;
+  transform:
+    translate3d(var(--reveal-x, 0), var(--reveal-y, 2.5rem), 0)
+    scale(var(--reveal-scale, 1));
+  transition:
+    opacity var(--duration-reveal) var(--ease-out-expo) var(--reveal-delay, 0ms),
+    transform var(--duration-reveal) var(--ease-out-expo) var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.js [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
+/* Variants — the brief asks for related but not identical entrances. */
+[data-reveal="far"] {
+  --reveal-y: 5rem;
+}
+
+[data-reveal="rise"] {
+  --reveal-y: 7.5rem;
+}
+
+[data-reveal="scale"] {
+  --reveal-y: 3rem;
+  --reveal-scale: 0.96;
+}
+
+[data-reveal="left"] {
+  --reveal-x: -2rem;
+  --reveal-y: 1.5rem;
+}
+
+[data-reveal="right"] {
+  --reveal-x: 2rem;
+  --reveal-y: 1.5rem;
+}
+
+[data-reveal="fade"] {
+  --reveal-y: 0;
+}
+
+/* --- Line-by-line text reveal ---------------------------------------------
+   Each line sits in a clipping box and slides up from below it.
+   -------------------------------------------------------------------------- */
+
+.reveal-lines {
+  display: block;
+}
+
+.reveal-lines__line {
+  display: block;
+  overflow: hidden;
+  padding-block: 0.06em;
+  margin-block: -0.06em;
+}
+
+.reveal-lines__line > span {
+  display: block;
+}
+
+.js .reveal-lines__line > span {
+  transform: translate3d(0, 105%, 0);
+  transition: transform var(--duration-reveal) var(--ease-out-expo) var(--reveal-delay, 0ms);
+  will-change: transform;
+}
+
+.js .reveal-lines.is-revealed .reveal-lines__line > span {
+  transform: none;
+  will-change: auto;
+}
+
+/* --- Word-by-word reveal, used for the manifesto --------------------------- */
+
+.js .reveal-words > span {
+  display: inline-block;
+  opacity: 0.12;
+  transition: opacity var(--duration-slow) var(--ease-out-quart) var(--reveal-delay, 0ms);
+}
+
+.js .reveal-words.is-revealed > span {
+  opacity: 1;
+}
+
+/* --- Reduced motion --------------------------------------------------------
+   Movement is removed entirely; content still fades in so the page does not
+   feel static, and nothing depends on an animation to become visible.
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    /* Keep gentle fades, drop every movement: restricting the transitionable
+       properties disables transforms without disabling the whole transition. */
+    transition-property: opacity, color, background-color, border-color, fill !important;
+    transition-duration: var(--duration-base) !important;
+  }
+
+  .js [data-reveal] {
+    transform: none;
+  }
+
+  .js .reveal-lines__line > span {
+    transform: none;
+    transition: none;
+  }
+
+  .js .reveal-words > span {
+    opacity: 1;
+    transition: none;
+  }
+}

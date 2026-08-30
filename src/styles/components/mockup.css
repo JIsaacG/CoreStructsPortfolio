@@ -1,0 +1,87 @@
+/* =============================================================================
+   Card mockups
+
+   Every project visual is a small vector interface drawn from the same set of
+   primitives, so eight different cards still read as one design system — and
+   nothing depends on stock photography.
+   ========================================================================== */
+
+.mk {
+  --mk-surface: rgb(255 255 255 / 0.045);
+  --mk-surface-strong: rgb(255 255 255 / 0.08);
+  --mk-line: rgb(255 255 255 / 0.14);
+  --mk-text: rgb(255 255 255 / 0.24);
+  --mk-text-strong: rgb(255 255 255 / 0.42);
+  --mk-accent: var(--brand-secondary);
+  --mk-accent-soft: rgb(var(--brand-secondary-rgb) / 0.32);
+  --mk-navy: rgb(var(--brand-primary-rgb) / 0.65);
+
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Primitives, referenced by class from the SVG markup. */
+.mk-surface { fill: var(--mk-surface); }
+.mk-surface-strong { fill: var(--mk-surface-strong); }
+.mk-text { fill: var(--mk-text); }
+.mk-text-strong { fill: var(--mk-text-strong); }
+.mk-accent { fill: var(--mk-accent); }
+.mk-accent-soft { fill: var(--mk-accent-soft); }
+.mk-navy { fill: var(--mk-navy); }
+
+.mk-line {
+  fill: none;
+  stroke: var(--mk-line);
+  stroke-width: 1;
+}
+
+.mk-line-accent {
+  fill: none;
+  stroke: var(--mk-accent);
+  stroke-width: 1.25;
+}
+
+.mk-line-soft {
+  fill: none;
+  stroke: var(--mk-line);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+}
+
+/* The floating window frame most mockups are built on. */
+.mk-window {
+  fill: rgb(6 8 16 / 0.72);
+  stroke: var(--mk-line);
+  stroke-width: 1;
+}
+
+/* A single element per mockup gets the brand gradient so the accent stays rare. */
+.mk-gradient {
+  fill: url(#mk-brand-gradient);
+}
+
+/* Idle drift, only where it reads as ambience. Disabled for reduced motion. */
+.mk-float {
+  animation: mk-float 7s var(--ease-in-out) infinite;
+}
+
+.mk-float--delayed {
+  animation-delay: -3.5s;
+}
+
+@keyframes mk-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-1.6%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mk-float {
+    animation: none;
+  }
+}

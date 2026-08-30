@@ -1,0 +1,245 @@
+/* =============================================================================
+   Portfolio grid — the centrepiece of the page
+
+   A 12-column editorial grid where card widths alternate (7/5, 5/7, 12, 6/6,
+   12) so the section has rhythm instead of reading as a uniform card wall.
+   ========================================================================== */
+
+.projects__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+.projects__count {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.projects__grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(1rem, 2.2vw, 2rem);
+}
+
+/* Mobile first: every card is full width. */
+.project-card {
+  grid-column: 1 / -1;
+}
+
+/* Cards that share a row arrive a beat apart. Staggering by position rather
+   than by DOM index means the delay never accumulates down a long grid. */
+.project-card:nth-child(even) {
+  --reveal-delay: 130ms;
+}
+
+/* --- Card ------------------------------------------------------------------ */
+
+.project-card__link {
+  --card-border: var(--border);
+  --card-surface: rgb(13 18 32 / 0.55);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  background: var(--card-surface);
+  transition:
+    border-color var(--duration-base) var(--ease-out-quart),
+    background-color var(--duration-base) var(--ease-out-quart),
+    transform var(--duration-base) var(--ease-out-expo);
+}
+
+/* Cursor light. Pure CSS paint driven by two custom properties that a
+   pointermove listener updates; it never triggers layout. */
+.project-card__link::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(
+    18rem 18rem at var(--pointer-x, 50%) var(--pointer-y, 0%),
+    rgb(var(--brand-secondary-rgb) / 0.14),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity var(--duration-base) var(--ease-out-quart);
+}
+
+.project-card__link:hover,
+.project-card__link:focus-visible {
+  --card-border: rgb(var(--brand-secondary-rgb) / 0.45);
+  --card-surface: rgb(17 26 46 / 0.72);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .project-card__link:hover::before {
+    opacity: 1;
+  }
+}
+
+/* --- Visual ---------------------------------------------------------------- */
+
+.project-card__visual {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  background:
+    radial-gradient(90% 120% at 70% 0%, rgb(var(--brand-primary-rgb) / 0.4), transparent 62%),
+    linear-gradient(180deg, rgb(255 255 255 / 0.04), transparent 45%),
+    var(--surface-sunken);
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.project-card__mockup {
+  width: 100%;
+  height: 100%;
+  transform: scale(1);
+  transition: transform var(--duration-slow) var(--ease-out-expo);
+}
+
+.project-card__link:hover .project-card__mockup,
+.project-card__link:focus-visible .project-card__mockup {
+  transform: scale(1.035);
+}
+
+/* --- Body ------------------------------------------------------------------ */
+
+.project-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  flex: 1;
+  padding: clamp(1.25rem, 2.4vw, 2rem);
+}
+
+.project-card__meta {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-3xs);
+}
+
+.project-card__index {
+  font-size: var(--text-xs);
+  font-weight: 800;
+  letter-spacing: var(--tracking-wide);
+  color: var(--brand-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.project-card__category {
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.project-card__title {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  letter-spacing: var(--tracking-snug);
+  transition: color var(--duration-base) var(--ease-out-quart);
+}
+
+.project-card__link:hover .project-card__title,
+.project-card__link:focus-visible .project-card__title {
+  color: var(--brand-secondary);
+}
+
+.project-card__text {
+  max-width: 46ch;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  line-height: var(--leading-normal);
+}
+
+.project-card__cta {
+  margin-top: auto;
+  padding-top: var(--space-md);
+}
+
+.project-card__link:hover .arrow-link__arrow,
+.project-card__link:focus-visible .arrow-link__arrow {
+  transform: translateX(0.4em);
+}
+
+.project-card__link:hover .arrow-link__line,
+.project-card__link:focus-visible .arrow-link__line {
+  transform: scaleX(1.5);
+}
+
+/* --- Desktop composition ---------------------------------------------------- */
+
+@media (min-width: 48rem) {
+  .project-card--half {
+    grid-column: span 6;
+  }
+}
+
+@media (min-width: 64rem) {
+  .project-card--major {
+    grid-column: span 7;
+  }
+
+  .project-card--minor {
+    grid-column: span 5;
+  }
+
+  .project-card--half {
+    grid-column: span 6;
+  }
+
+  /* Full-bleed feature card: visual and copy sit side by side. */
+  .project-card--wide {
+    grid-column: 1 / -1;
+  }
+
+  .project-card--wide .project-card__link {
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .project-card--wide .project-card__visual {
+    flex: 1 1 58%;
+    aspect-ratio: auto;
+    min-height: 22rem;
+    border-bottom: 0;
+    border-inline-end: 1px solid var(--border-soft);
+  }
+
+  .project-card--wide .project-card__body {
+    flex: 1 1 42%;
+    justify-content: center;
+    padding: clamp(2rem, 3.4vw, 3.5rem);
+  }
+
+  .project-card--wide .project-card__title {
+    font-size: var(--text-2xl);
+  }
+
+  .project-card--wide .project-card__text {
+    font-size: var(--text-base);
+  }
+
+  /* The feature card centres its copy, so the CTA must sit with the text
+     instead of being pushed to the bottom edge by the default auto margin. */
+  .project-card--wide .project-card__cta {
+    margin-top: 0;
+    padding-top: var(--space-lg);
+  }
+
+  /* Nudge one card of a pair out of lockstep so the grid breathes. A margin
+     rather than a transform, so the grid row still accounts for the shift. */
+  .project-card--offset {
+    margin-block-start: 3rem;
+  }
+}

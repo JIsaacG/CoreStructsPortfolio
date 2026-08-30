@@ -1,0 +1,147 @@
+/* =============================================================================
+   Capabilities — large type rows, minimal chrome
+   ========================================================================== */
+
+.capabilities {
+  position: relative;
+}
+
+.capabilities__head {
+  margin-bottom: var(--space-xl);
+}
+
+.capabilities__title {
+  font-size: var(--text-4xl);
+  text-transform: uppercase;
+  max-width: 14ch;
+}
+
+.capabilities__title em {
+  font-style: normal;
+  color: var(--brand-secondary);
+}
+
+.capabilities__list {
+  border-top: 1px solid var(--border);
+}
+
+.capability {
+  border-bottom: 1px solid var(--border);
+}
+
+.capability__row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: var(--space-sm);
+  width: 100%;
+  padding-block: clamp(1.1rem, 2.4vw, 1.9rem);
+  text-align: left;
+  color: var(--text);
+  transition: color var(--duration-base) var(--ease-out-quart);
+}
+
+/* A cyan wash that wipes in from the left on hover. */
+.capability__row::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: calc(var(--gutter) * -0.5);
+  width: calc(100% + var(--gutter));
+  background: linear-gradient(
+    90deg,
+    rgb(var(--brand-secondary-rgb) / 0.09),
+    transparent 55%
+  );
+  opacity: 0;
+  transition: opacity var(--duration-base) var(--ease-out-quart);
+  pointer-events: none;
+}
+
+.capability__name {
+  display: block;
+  font-size: var(--text-3xl);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+  transition: transform var(--duration-slow) var(--ease-out-expo),
+    color var(--duration-base) var(--ease-out-quart);
+}
+
+.capability__index {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-wide);
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+  transition: color var(--duration-base) var(--ease-out-quart);
+}
+
+.capability__detail {
+  grid-column: 1 / -1;
+  max-width: 52ch;
+  margin-top: var(--space-2xs);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  line-height: var(--leading-normal);
+}
+
+.capability:hover .capability__row::before {
+  opacity: 1;
+}
+
+.capability:hover .capability__name {
+  color: var(--brand-secondary);
+}
+
+.capability:hover .capability__index {
+  color: var(--brand-secondary);
+}
+
+@media (min-width: 48rem) {
+  .capability__name {
+    font-size: var(--text-4xl);
+  }
+
+  .capability:hover .capability__name {
+    transform: translateX(1.25rem);
+  }
+
+  .capability__row {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 22rem);
+  }
+
+  .capability__index {
+    grid-column: 2;
+  }
+
+  /* The description stays readable at rest — hover only brings it forward, so
+     the content is never gated behind a pointer interaction. */
+  .capability__detail {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
+    max-width: 32ch;
+    margin-top: 0;
+    text-align: right;
+    opacity: 0.55;
+    transition: opacity var(--duration-base) var(--ease-out-quart);
+  }
+
+  .capability:hover .capability__detail {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .capability:hover .capability__name {
+    transform: none;
+  }
+
+  .capability__detail {
+    opacity: 1;
+    transform: none;
+  }
+}

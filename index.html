@@ -1,0 +1,663 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>CoreStruct — Desarrollo de software y experiencias digitales</title>
+    <meta
+      name="description"
+      content="Estudio de tecnología y desarrollo de software. Construimos sitios corporativos, plataformas web, sistemas empresariales y automatizaciones a la medida de cada operación."
+    />
+    <link rel="canonical" href="https://corestruct.com/" />
+    <meta name="theme-color" content="#080b12" />
+    <meta name="color-scheme" content="dark" />
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="CoreStruct" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:url" content="https://corestruct.com/" />
+    <meta property="og:title" content="CoreStruct — Desarrollo de software y experiencias digitales" />
+    <meta
+      property="og:description"
+      content="Convertimos ideas en sistemas que funcionan: sitios corporativos, plataformas, sistemas empresariales y automatización."
+    />
+    <meta property="og:image" content="https://corestruct.com/assets/brand/og-card.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="CoreStruct" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="CoreStruct — Desarrollo de software y experiencias digitales" />
+    <meta
+      name="twitter:description"
+      content="Convertimos ideas en sistemas que funcionan: sitios corporativos, plataformas, sistemas empresariales y automatización."
+    />
+    <meta name="twitter:image" content="https://corestruct.com/assets/brand/og-card.png" />
+
+    <!-- Icons -->
+    <link rel="icon" href="favicon.ico" sizes="32x32" />
+    <link rel="icon" href="assets/brand/isotipo.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png" />
+    <link rel="manifest" href="site.webmanifest" />
+
+    <!-- The latin subset carries every glyph on this page; the extended subset
+         is left to load on demand. -->
+    <link
+      rel="preload"
+      href="assets/fonts/manrope-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="dist/corestruct.css" />
+
+    <!-- Marks the document as scripted before first paint, so the reveal system
+         never hides content from a browser that will not un-hide it.
+
+         The timer is the safety net for the opposite case: scripting is on, but
+         the behaviour module never runs (blocked by CORS on file://, an offline
+         cache miss, a parse error). Reveals are an enhancement and must never be
+         able to swallow the page, so hiding is switched off if nothing claimed
+         it. `main.js` sets the flag as soon as the reveal system is live. -->
+    <script>
+      document.documentElement.classList.add("js");
+      setTimeout(function () {
+        if (!document.documentElement.dataset.revealsReady) {
+          document.documentElement.classList.remove("js");
+        }
+      }, 2500);
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "CoreStruct",
+        "url": "https://corestruct.com/",
+        "logo": "https://corestruct.com/assets/brand/icon-512.png",
+        "image": "https://corestruct.com/assets/brand/og-card.png",
+        "description": "Estudio de tecnología y desarrollo de software: sitios corporativos, plataformas web, sistemas empresariales, portales educativos, dashboards y automatización.",
+        "email": "contacto@corestruct.com",
+        "knowsAbout": [
+          "Desarrollo web",
+          "Plataformas web",
+          "Sistemas empresariales",
+          "Portales educativos",
+          "Dashboards",
+          "Automatización de procesos"
+        ]
+      }
+    </script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+    <!-- The page's cyan light. Purely decorative; driven by pointer-spotlight.js -->
+    <div class="spotlight" data-spotlight aria-hidden="true"></div>
+
+    <!-- build:sprite -->
+    <svg class="sprite" aria-hidden="true" focusable="false" width="0" height="0">
+      <defs>
+        <linearGradient id="cs-face-top" gradientUnits="userSpaceOnUse" x1="33.3" y1="8.9" x2="353.6" y2="94.7"><stop offset="0%" stop-color="#140538"/><stop offset="16.7%" stop-color="#191754"/><stop offset="33.3%" stop-color="#223e81"/><stop offset="50%" stop-color="#2c6fb2"/><stop offset="66.7%" stop-color="#359dda"/><stop offset="83.3%" stop-color="#3bbaf1"/><stop offset="100%" stop-color="#3eccfb"/></linearGradient>
+        <linearGradient id="mk-brand-gradient" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#253880" />
+          <stop offset="100%" stop-color="#3898d4" />
+        </linearGradient>
+        <symbol id="cs-isotipo" viewBox="0 0 362 422"><path class="cs-face cs-face--top" fill="url(#cs-face-top)" d="M10 98L17 92L181 1L188 3L354 96L353 99L200 186L185 179L173 181L166 186L11 98Z"/><path class="cs-face cs-face--right" fill="#3898d4" d="M188 421L188 373L190 371L320 295L320 248L318 248L188 324L188 217L198 211L202 203L202 197L358 111L361 109L361 165L233 234L233 275L361 200L361 321L189 421Z"/><path class="cs-face cs-face--left" fill="#253880" d="M1 107L160 195L166 210L176 216L176 252L174 252L42 176L42 294L114 336L154 359L154 297L176 309L176 422L2 321L1 108Z"/></symbol>
+      </defs>
+    </svg>
+<!-- /build:sprite -->
+
+    <header class="header" data-header>
+      <div class="header__inner">
+        <a class="brand" href="#inicio" aria-label="CoreStruct — inicio">
+          <svg class="brand__mark" viewBox="0 0 362 422" aria-hidden="true" focusable="false">
+            <use href="#cs-isotipo" />
+          </svg>
+          <img
+            class="brand__wordmark"
+            src="assets/brand/wordmark-white.png"
+            alt="CoreStruct"
+            width="720"
+            height="104"
+          />
+        </a>
+
+        <nav class="header__nav" aria-label="Principal">
+          <ul class="nav__list">
+            <li><a class="nav__link" href="#proyectos" data-nav-link>Proyectos</a></li>
+            <li><a class="nav__link" href="#capacidades" data-nav-link>Capacidades</a></li>
+            <li><a class="nav__link" href="#contacto" data-nav-link>Contacto</a></li>
+          </ul>
+        </nav>
+
+        <div class="header__actions">
+          <a class="button button--ghost button--compact header__cta" href="#contacto">
+            Hablemos
+            <span class="button__arrow" aria-hidden="true">&rarr;</span>
+          </a>
+          <button
+            class="menu-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="menu-movil"
+            aria-label="Abrir menú"
+            data-menu-toggle
+          >
+            <span class="menu-toggle__bar" aria-hidden="true"></span>
+            <span class="menu-toggle__bar" aria-hidden="true"></span>
+            <span class="menu-toggle__bar" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+
+      <nav class="mobile-nav" id="menu-movil" aria-label="Menú" data-mobile-nav>
+        <a class="mobile-nav__link" href="#proyectos">
+          <span class="mobile-nav__index">01</span> Proyectos
+        </a>
+        <a class="mobile-nav__link" href="#capacidades">
+          <span class="mobile-nav__index">02</span> Capacidades
+        </a>
+        <a class="mobile-nav__link" href="#contacto">
+          <span class="mobile-nav__index">03</span> Contacto
+        </a>
+        <a class="button button--primary mobile-nav__cta" href="#contacto">
+          Iniciar un proyecto
+          <span class="button__arrow" aria-hidden="true">&rarr;</span>
+        </a>
+      </nav>
+    </header>
+
+    <main id="contenido">
+      <!-- ===================================================== 01 · Hero -->
+      <section class="hero" id="inicio" data-hero>
+        <div class="hero__stage">
+          <div class="hero__content shell">
+            <div class="hero__mark">
+              <!-- build:hero-mark -->
+              <svg
+                class="hero__mark-svg"
+                viewBox="0 0 362 422"
+                aria-hidden="true"
+                focusable="false"
+              ><path class="cs-face cs-face--top" fill="url(#cs-face-top)" d="M10 98L17 92L181 1L188 3L354 96L353 99L200 186L185 179L173 181L166 186L11 98Z"/><path class="cs-face cs-face--right" fill="#3898d4" d="M188 421L188 373L190 371L320 295L320 248L318 248L188 324L188 217L198 211L202 203L202 197L358 111L361 109L361 165L233 234L233 275L361 200L361 321L189 421Z"/><path class="cs-face cs-face--left" fill="#253880" d="M1 107L160 195L166 210L176 216L176 252L174 252L42 176L42 294L114 336L154 359L154 297L176 309L176 422L2 321L1 108Z"/></svg>
+<!-- /build:hero-mark -->
+            </div>
+
+            <img
+              class="hero__wordmark"
+              src="assets/brand/wordmark-white.png"
+              alt="CoreStruct"
+              width="720"
+              height="104"
+              fetchpriority="high"
+            />
+
+            <h1 class="hero__headline reveal-lines">
+              <span class="reveal-lines__line"><span>Convertimos ideas</span></span>
+              <span class="reveal-lines__line"><span>en sistemas que</span></span>
+              <span class="reveal-lines__line"><span><em>funcionan.</em></span></span>
+            </h1>
+
+            <p class="hero__lede" data-reveal="fade">
+              <span>Desarrollo web</span> · <span>Plataformas</span> ·
+              <span>Sistemas</span> · <span>Experiencias digitales</span>
+            </p>
+
+            <a class="button button--ghost hero__cta" href="#proyectos" data-reveal="fade">
+              Ver lo que podemos crear
+              <span class="button__arrow" aria-hidden="true">&darr;</span>
+            </a>
+          </div>
+
+          <p class="hero__hint" aria-hidden="true">
+            <span class="hero__hint-rail"></span>
+            Scroll
+          </p>
+        </div>
+      </section>
+
+      <!-- =============================================== 02 · Statement -->
+      <section class="statement" aria-labelledby="statement-title">
+        <div class="statement__inner shell">
+          <p class="eyebrow statement__eyebrow" data-reveal="fade">
+            El punto de partida <span class="eyebrow__index">/ 01</span>
+          </p>
+
+          <h2 class="statement__title reveal-lines" id="statement-title">
+            <span class="reveal-lines__line"><span>Todo empieza</span></span>
+            <span class="reveal-lines__line"><span>con <em>una idea.</em></span></span>
+          </h2>
+
+          <p class="statement__body" data-reveal="far">
+            Nosotros la convertimos en una experiencia digital que tu equipo puede operar
+            y tus clientes entienden desde el primer momento.
+          </p>
+        </div>
+      </section>
+
+      <span class="connector" aria-hidden="true"></span>
+
+      <!-- ================================================ 03 · Projects -->
+      <section class="section projects" id="proyectos" aria-labelledby="projects-title">
+        <div class="shell">
+          <header class="projects__head">
+            <p class="eyebrow" data-reveal="fade">
+              Proyectos <span class="eyebrow__index">/ 02</span>
+            </p>
+            <h2 class="section__title" id="projects-title" data-reveal="far">
+              Lo que podemos construir
+            </h2>
+            <p class="section__lede" data-reveal="far">
+              Ocho formas de resolver el mismo problema: que la tecnología acompañe la
+              operación real de tu empresa, en lugar de imponerle una forma de trabajar.
+            </p>
+          </header>
+
+          <!-- build:projects -->
+          <div class="projects__grid">
+            <article class="project-card project-card--major" data-reveal="far">
+              <a
+                class="project-card__link"
+                href="#contacto"
+                aria-label="Sitios corporativos — hablemos de tu proyecto"
+                data-pointer-glow
+              >
+                <div class="project-card__visual">
+                  <svg
+                    class="mk project-card__mockup"
+                    viewBox="0 0 400 250"
+                    preserveAspectRatio="xMidYMid meet"
+                    aria-hidden="true"
+                    focusable="false"
+                  ><g class="mk-float"> <rect class="mk-window" x="40" y="28" width="320" height="194" rx="9"/> <path class="mk-line" d="M40 52h320"/> <circle class="mk-text" cx="56" cy="40" r="3"/> <circle class="mk-text" cx="67" cy="40" r="3"/> <circle class="mk-text" cx="78" cy="40" r="3"/> <rect class="mk-surface" x="196" y="34" width="60" height="9" rx="4.5"/> <rect class="mk-surface" x="262" y="34" width="40" height="9" rx="4.5"/> <rect class="mk-accent-soft" x="308" y="34" width="36" height="9" rx="4.5"/> <rect class="mk-navy" x="56" y="66" width="288" height="76" rx="6"/> <rect class="mk-gradient" x="56" y="66" width="288" height="2.5" rx="1.25"/> <rect class="mk-text" x="72" y="84" width="148" height="9" rx="4.5"/><rect class="mk-text" x="72" y="99" width="104" height="9" rx="4.5"/> <rect class="mk-accent" x="72" y="116" width="52" height="14" rx="7"/> <rect class="mk-surface-strong" x="132" y="116" width="52" height="14" rx="7"/> <rect class="mk-surface" x="56" y="156" width="88" height="52" rx="5"/> <rect class="mk-surface" x="156" y="156" width="88" height="52" rx="5"/> <rect class="mk-surface" x="256" y="156" width="88" height="52" rx="5"/> <rect class="mk-text" x="66" y="170" width="46" height="5" rx="2.5"/> <rect class="mk-text" x="166" y="170" width="52" height="5" rx="2.5"/> <rect class="mk-text" x="266" y="170" width="40" height="5" rx="2.5"/> <rect class="mk-text" x="66" y="184" width="62" height="4" rx="2"/><rect class="mk-text" x="66" y="193" width="44" height="4" rx="2"/> <rect class="mk-text" x="166" y="184" width="58" height="4" rx="2"/><rect class="mk-text" x="166" y="193" width="50" height="4" rx="2"/> <rect class="mk-text" x="266" y="184" width="64" height="4" rx="2"/><rect class="mk-text" x="266" y="193" width="38" height="4" rx="2"/> </g></svg>
+                </div>
+                <div class="project-card__body">
+                  <p class="project-card__meta">
+                    <span class="project-card__index">01</span>
+                    <span class="project-card__category">Desarrollo web</span>
+                  </p>
+                  <h3 class="project-card__title" id="proyecto-01">Sitios corporativos</h3>
+                  <p class="project-card__text">Presencia institucional a medida: rápida, accesible y construida para sostener la reputación de la marca en cualquier dispositivo.</p>
+                  <p class="project-card__cta arrow-link">
+                    <span class="arrow-link__line" aria-hidden="true"></span>
+                    Explorar
+                    <span class="arrow-link__arrow" aria-hidden="true">&rarr;</span>
+                  </p>
+                </div>
+              </a>
+            </article>
+            <article class="project-card project-card--minor project-card--offset" data-reveal="rise">
+              <a
+                class="project-card__link"
+                href="#contacto"
+                aria-label="Plataformas web — hablemos de tu proyecto"
+                data-pointer-glow
+              >
+                <div class="project-card__visual">
+                  <svg
+                    class="mk project-card__mockup"
+                    viewBox="0 0 400 250"
+                    preserveAspectRatio="xMidYMid meet"
+                    aria-hidden="true"
+                    focusable="false"
+                  ><g class="mk-float mk-float--delayed" opacity="0.45"> <rect class="mk-window" x="96" y="18" width="272" height="160" rx="9"/> <path class="mk-line" d="M96 42h272"/> </g> <g class="mk-float"> <rect class="mk-window" x="32" y="56" width="300" height="172" rx="9"/> <path class="mk-line" d="M32 80h300"/> <circle class="mk-text" cx="48" cy="68" r="3"/> <circle class="mk-text" cx="59" cy="68" r="3"/> <circle class="mk-text" cx="70" cy="68" r="3"/> <path class="mk-line" d="M110 80v148"/> <rect class="mk-accent-soft" x="44" y="92" width="52" height="9" rx="4.5"/> <rect class="mk-text" x="44" y="110" width="46" height="6" rx="3"/><rect class="mk-text" x="44" y="125" width="54" height="6" rx="3"/><rect class="mk-text" x="44" y="140" width="40" height="6" rx="3"/><rect class="mk-text" x="44" y="155" width="50" height="6" rx="3"/> <rect class="mk-surface" x="40" y="196" width="60" height="20" rx="6"/> <rect class="mk-surface" x="124" y="92" width="92" height="46" rx="5"/> <rect class="mk-surface" x="226" y="92" width="92" height="46" rx="5"/> <rect class="mk-gradient" x="124" y="92" width="92" height="2.5" rx="1.25"/> <rect class="mk-text" x="134" y="104" width="40" height="5" rx="2.5"/><rect class="mk-text" x="134" y="116" width="58" height="5" rx="2.5"/> <rect class="mk-text" x="236" y="104" width="46" height="5" rx="2.5"/><rect class="mk-text" x="236" y="116" width="50" height="5" rx="2.5"/> <rect class="mk-surface" x="124" y="150" width="194" height="66" rx="5"/> <path class="mk-line-accent" d="M136 200l24-16 22 10 26-26 24 14 26-22 24 12"/> <circle class="mk-accent" cx="282" cy="172" r="3"/> </g></svg>
+                </div>
+                <div class="project-card__body">
+                  <p class="project-card__meta">
+                    <span class="project-card__index">02</span>
+                    <span class="project-card__category">Producto digital</span>
+                  </p>
+                  <h3 class="project-card__title" id="proyecto-02">Plataformas web</h3>
+                  <p class="project-card__text">Portales, áreas privadas y herramientas internas donde cada perfil encuentra exactamente lo que necesita.</p>
+                  <p class="project-card__cta arrow-link">
+                    <span class="arrow-link__line" aria-hidden="true"></span>
+                    Explorar
+                    <span class="arrow-link__arrow" aria-hidden="true">&rarr;</span>
+                  </p>
+                </div>
+              </a>
+            </article>
+            <article class="project-card project-card--minor" data-reveal="rise">
+              <a
+                class="project-card__link"
+                href="#contacto"
+                aria-label="Sistemas empresariales — hablemos de tu proyecto"
+                data-pointer-glow
+              >
+                <div class="project-card__visual">
+                  <svg
+                    class="mk project-card__mockup"
+                    viewBox="0 0 400 250"
+                    preserveAspectRatio="xMidYMid meet"
+                    aria-hidden="true"
+                    focusable="false"
+                  ><g class="mk-float"> <rect class="mk-window" x="36" y="30" width="328" height="190" rx="9"/> <path class="mk-line" d="M36 54h328"/> <circle class="mk-text" cx="52" cy="42" r="3"/> <circle class="mk-text" cx="63" cy="42" r="3"/> <circle class="mk-text" cx="74" cy="42" r="3"/> <path class="mk-line" d="M78 54v166"/> <rect class="mk-accent-soft" x="50" y="66" width="14" height="14" rx="4"/> <rect class="mk-surface-strong" x="50" y="90" width="14" height="14" rx="4"/> <rect class="mk-surface-strong" x="50" y="114" width="14" height="14" rx="4"/> <rect class="mk-surface-strong" x="50" y="138" width="14" height="14" rx="4"/> <rect class="mk-surface" x="92" y="64" width="258" height="18" rx="4"/> <rect class="mk-text-strong" x="102" y="71" width="40" height="4" rx="2"/> <rect class="mk-text-strong" x="178" y="71" width="46" height="4" rx="2"/> <rect class="mk-text-strong" x="254" y="71" width="34" height="4" rx="2"/> <rect class="mk-text-strong" x="310" y="71" width="28" height="4" rx="2"/> <rect class="mk-accent-soft" x="92" y="112" width="258" height="22" rx="4"/> <rect class="mk-accent" x="92" y="112" width="2.5" height="22" rx="1.25"/> <rect class="mk-text" x="102" y="95" width="52" height="5" rx="2.5"/> <rect class="mk-text" x="178" y="95" width="58" height="5" rx="2.5"/> <rect class="mk-text" x="254" y="95" width="42" height="5" rx="2.5"/> <rect class="mk-surface-strong" x="310" y="93" width="30" height="9" rx="4.5"/> <rect class="mk-text" x="102" y="121" width="52" height="5" rx="2.5"/> <rect class="mk-text" x="178" y="121" width="58" height="5" rx="2.5"/> <rect class="mk-text" x="254" y="121" width="42" height="5" rx="2.5"/> <rect class="mk-accent" x="310" y="119" width="30" height="9" rx="4.5"/> <rect class="mk-text" x="102" y="149" width="52" height="5" rx="2.5"/> <rect class="mk-text" x="178" y="149" width="58" height="5" rx="2.5"/> <rect class="mk-text" x="254" y="149" width="42" height="5" rx="2.5"/> <rect class="mk-surface-strong" x="310" y="147" width="30" height="9" rx="4.5"/> <rect class="mk-text" x="102" y="177" width="52" height="5" rx="2.5"/> <rect class="mk-text" x="178" y="177" width="58" height="5" rx="2.5"/> <rect class="mk-text" x="254" y="177" width="42" height="5" rx="2.5"/> <rect class="mk-surface-strong" x="310" y="175" width="30" height="9" rx="4.5"/> <path class="mk-line" d="M92 108h258M92 142h258M92 170h258"/> </g></svg>
+                </div>
+                <div class="project-card__body">
+                  <p class="project-card__meta">
+                    <span class="project-card__index">03</span>
+                    <span class="project-card__category">Software a medida</span>
+                  </p>
+                  <h3 class="project-card__title" id="proyecto-03">Sistemas empresariales</h3>
+                  <p class="project-card__text">Expedientes, usuarios y operaciones en un sistema que se adapta a los procesos reales de la empresa.</p>
+                  <p class="project-card__cta arrow-link">
+                    <span class="arrow-link__line" aria-hidden="true"></span>
+                    Explorar
+                    <span class="arrow-link__arrow" aria-hidden="true">&rarr;</span>
+                  </p>
+                </div>
+              </a>
+            </article>
+            <article class="project-card project-card--major" data-reveal="far">
+              <a
+                class="project-card__link"
+                href="#contacto"
+                aria-label="Landing pages — hablemos de tu proyecto"
+                data-pointer-glow
+              >
+                <div class="project-card__visual">
+                  <svg
+                    class="mk project-card__mockup"
+                    viewBox="0 0 400 250"
+                    preserveAspectRatio="xMidYMid meet"
+                    aria-hidden="true"
+                    focusable="false"
+                  ><g class="mk-float"> <rect class="mk-window" x="122" y="16" width="156" height="218" rx="10"/> <clipPath id="mk-landing-clip"> <rect x="122" y="16" width="156" height="218" rx="10"/> </clipPath> <g clip-path="url(#mk-landing-clip)"> <rect class="mk-navy" x="122" y="16" width="156" height="86"/> <rect class="mk-gradient" x="122" y="100" width="156" height="2"/> <rect class="mk-text" x="140" y="40" width="110" height="8" rx="4"/><rect class="mk-text" x="140" y="54" width="76" height="8" rx="4"/> <rect class="mk-accent" x="140" y="74" width="58" height="15" rx="7.5"/> <rect class="mk-text-strong" x="140" y="116" width="64" height="6" rx="3"/> <rect class="mk-surface" x="140" y="132" width="54" height="34" rx="4"/> <rect class="mk-surface" x="202" y="132" width="54" height="34" rx="4"/> <rect class="mk-text" x="140" y="178" width="120" height="5" rx="2.5"/><rect class="mk-text" x="140" y="189" width="96" height="5" rx="2.5"/><rect class="mk-text" x="140" y="200" width="108" height="5" rx="2.5"/> <rect class="mk-surface-strong" x="122" y="218" width="156" height="16"/> </g> <rect class="mk-text" x="286" y="40" width="3" height="64" rx="1.5"/> <rect class="mk-accent" x="286" y="40" width="3" height="34" rx="1.5"/> </g></svg>
+                </div>
+                <div class="project-card__body">
+                  <p class="project-card__meta">
+                    <span class="project-card__index">04</span>
+                    <span class="project-card__category">Conversión</span>
+                  </p>
+                  <h3 class="project-card__title" id="proyecto-04">Landing pages</h3>
+                  <p class="project-card__text">Páginas de campaña enfocadas en un único objetivo: que la persona correcta dé el siguiente paso.</p>
+                  <p class="project-card__cta arrow-link">
+                    <span class="arrow-link__line" aria-hidden="true"></span>
+                    Explorar
+                    <span class="arrow-link__arrow" aria-hidden="true">&rarr;</span>
+                  </p>
+                </div>
+              </a>
+            </article>
+            <article class="project-card project-card--wide" data-reveal="scale">
+              <a
+                class="project-card__link"
+                href="#contacto"
+                aria-label="Portales educativos — hablemos de tu proyecto"
+                data-pointer-glow
+              >
+                <div class="project-card__visual">
+                  <svg
+                    class="mk project-card__mockup"
+                    viewBox="0 0 400 250"
+                    preserveAspectRatio="xMidYMid meet"
+                    aria-hidden="true"
+                    focusable="false"
+                  ><g class="mk-float"> <rect class="mk-window" x="30" y="28" width="340" height="194" rx="9"/> <path class="mk-line" d="M30 52h340"/> <circle class="mk-text" cx="46" cy="40" r="3"/> <circle class="mk-text" cx="57" cy="40" r="3"/> <circle class="mk-text" cx="68" cy="40" r="3"/> <path class="mk-line-soft" d="M70 74h220"/> <circle class="mk-accent" cx="70" cy="74" r="9"/> <circle class="mk-accent" cx="180" cy="74" r="9"/> <circle class="mk-surface-strong" cx="290" cy="74" r="9"/> <path class="mk-line-accent" d="M70 74h110"/> <rect class="mk-text" x="52" y="92" width="36" height="4" rx="2"/> <rect class="mk-text-strong" x="160" y="92" width="42" height="4" rx="2"/> <rect class="mk-text" x="272" y="92" width="38" height="4" rx="2"/> <rect class="mk-surface" x="52" y="118" width="180" height="20" rx="5"/> <rect class="mk-surface" x="52" y="146" width="180" height="20" rx="5"/> <rect class="mk-surface" x="52" y="174" width="86" height="20" rx="5"/> <rect class="mk-surface" x="146" y="174" width="86" height="20" rx="5"/> <rect class="mk-text" x="62" y="125" width="58" height="5" rx="2.5"/> <rect class="mk-text" x="62" y="153" width="72" height="5" rx="2.5"/> <rect class="mk-text" x="62" y="181" width="40" height="5" rx="2.5"/> <rect class="mk-text" x="156" y="181" width="44" height="5" rx="2.5"/> <rect class="mk-accent" x="52" y="118" width="2.5" height="20" rx="1.25"/> <rect class="mk-surface" x="252" y="118" width="96" height="76" rx="6"/> <rect class="mk-gradient" x="252" y="118" width="96" height="2.5" rx="1.25"/> <circle class="mk-accent-soft" cx="300" cy="146" r="16"/> <path class="mk-line-accent" d="M293 146l5 5 11-11" stroke-width="2"/> <rect class="mk-text" x="268" y="172" width="64" height="4" rx="2"/><rect class="mk-text" x="268" y="182" width="44" height="4" rx="2"/> </g></svg>
+                </div>
+                <div class="project-card__body">
+                  <p class="project-card__meta">
+                    <span class="project-card__index">05</span>
+                    <span class="project-card__category">Educación</span>
+                  </p>
+                  <h3 class="project-card__title" id="proyecto-05">Portales educativos</h3>
+                  <p class="project-card__text">Admisiones, preinscripción y gestión académica en un solo flujo, desde el primer clic hasta la inscripción confirmada.</p>
+                  <p class="project-card__cta arrow-link">
+                    <span class="arrow-link__line" aria-hidden="true"></span>
+                    Explorar
+                    <span class="arrow-link__arrow" aria-hidden="true">&rarr;</span>
+                  </p>
+                </div>
+              </a>
+            </article>
+            <article class="project-card project-card--half" data-reveal="far">
+              <a
+                class="project-card__link"
+                href="#contacto"
+                aria-label="Dashboards — hablemos de tu proyecto"
+                data-pointer-glow
+              >
+                <div class="project-card__visual">
+                  <svg
+                    class="mk project-card__mockup"
+                    viewBox="0 0 400 250"
+                    preserveAspectRatio="xMidYMid meet"
+                    aria-hidden="true"
+                    focusable="false"
+                  ><g class="mk-float"> <rect class="mk-window" x="34" y="26" width="332" height="198" rx="9"/> <path class="mk-line" d="M34 50h332"/> <circle class="mk-text" cx="50" cy="38" r="3"/> <circle class="mk-text" cx="61" cy="38" r="3"/> <circle class="mk-text" cx="72" cy="38" r="3"/> <linearGradient id="mk-area" x1="0" y1="0" x2="0" y2="1"> <stop offset="0%" stop-color="#3898d4" stop-opacity="0.38"/> <stop offset="100%" stop-color="#3898d4" stop-opacity="0"/> </linearGradient> <rect class="mk-surface" x="50" y="64" width="96" height="42" rx="5"/> <rect class="mk-text" x="62" y="74" width="30" height="4" rx="2"/> <rect class="mk-accent" x="62" y="86" width="44" height="9" rx="4.5"/> <rect class="mk-surface" x="152" y="64" width="96" height="42" rx="5"/> <rect class="mk-text" x="164" y="74" width="30" height="4" rx="2"/> <rect class="mk-text-strong" x="164" y="86" width="36" height="9" rx="4.5"/> <rect class="mk-surface" x="254" y="64" width="96" height="42" rx="5"/> <rect class="mk-text" x="266" y="74" width="30" height="4" rx="2"/> <rect class="mk-text-strong" x="266" y="86" width="36" height="9" rx="4.5"/> <rect class="mk-surface" x="50" y="120" width="196" height="86" rx="5"/> <path fill="url(#mk-area)" d="M64 190l26-18 24 8 26-24 24 10 26-28 24 14v34H64z"/> <path class="mk-line-accent" d="M64 190l26-18 24 8 26-24 24 10 26-28 24 14"/> <circle class="mk-accent" cx="214" cy="152" r="3.5"/> <path class="mk-line-soft" d="M64 138h168M64 164h168"/> <rect class="mk-surface" x="258" y="120" width="92" height="86" rx="5"/> <rect class="mk-surface-strong" x="270" y="148" width="10" height="46" rx="3"/><rect class="mk-surface-strong" x="288" y="164" width="10" height="30" rx="3"/><rect class="mk-accent" x="306" y="132" width="10" height="62" rx="3"/><rect class="mk-surface-strong" x="324" y="156" width="10" height="38" rx="3"/> <rect class="mk-text" x="270" y="132" width="40" height="4" rx="2"/> </g></svg>
+                </div>
+                <div class="project-card__body">
+                  <p class="project-card__meta">
+                    <span class="project-card__index">06</span>
+                    <span class="project-card__category">Datos</span>
+                  </p>
+                  <h3 class="project-card__title" id="proyecto-06">Dashboards</h3>
+                  <p class="project-card__text">Paneles que convierten la operación en decisiones: indicadores claros, reportes y visualización en tiempo real.</p>
+                  <p class="project-card__cta arrow-link">
+                    <span class="arrow-link__line" aria-hidden="true"></span>
+                    Explorar
+                    <span class="arrow-link__arrow" aria-hidden="true">&rarr;</span>
+                  </p>
+                </div>
+              </a>
+            </article>
+            <article class="project-card project-card--half project-card--offset" data-reveal="rise">
+              <a
+                class="project-card__link"
+                href="#contacto"
+                aria-label="Automatización — hablemos de tu proyecto"
+                data-pointer-glow
+              >
+                <div class="project-card__visual">
+                  <svg
+                    class="mk project-card__mockup"
+                    viewBox="0 0 400 250"
+                    preserveAspectRatio="xMidYMid meet"
+                    aria-hidden="true"
+                    focusable="false"
+                  ><g class="mk-float"> <path class="mk-line-soft" d="M118 125h44M232 96h40M232 154h40"/> <path class="mk-line-accent" d="M162 125h20v-29h50M162 125h20v29h50"/> <rect class="mk-window" x="34" y="102" width="84" height="46" rx="8"/> <circle class="mk-accent" cx="54" cy="125" r="6"/> <rect class="mk-text" x="68" y="116" width="36" height="4" rx="2"/><rect class="mk-text" x="68" y="126" width="24" height="4" rx="2"/> <rect class="mk-window" x="182" y="74" width="90" height="44" rx="8"/> <rect class="mk-gradient" x="182" y="74" width="90" height="2.5" rx="1.25"/> <rect class="mk-text" x="196" y="88" width="42" height="4" rx="2"/><rect class="mk-text" x="196" y="98" width="28" height="4" rx="2"/> <rect class="mk-window" x="182" y="132" width="90" height="44" rx="8"/> <rect class="mk-accent-soft" x="182" y="132" width="90" height="2.5" rx="1.25"/> <rect class="mk-text" x="196" y="146" width="38" height="4" rx="2"/><rect class="mk-text" x="196" y="156" width="34" height="4" rx="2"/> <rect class="mk-window" x="286" y="74" width="80" height="44" rx="8"/> <rect class="mk-text" x="300" y="88" width="34" height="4" rx="2"/><rect class="mk-text" x="300" y="98" width="22" height="4" rx="2"/> <rect class="mk-window" x="286" y="132" width="80" height="44" rx="8"/> <rect class="mk-text" x="300" y="146" width="30" height="4" rx="2"/><rect class="mk-text" x="300" y="156" width="26" height="4" rx="2"/> <circle class="mk-accent" cx="182" cy="96" r="3"/> <circle class="mk-accent" cx="182" cy="154" r="3"/> <circle class="mk-text-strong" cx="286" cy="96" r="3"/> <circle class="mk-text-strong" cx="286" cy="154" r="3"/> </g></svg>
+                </div>
+                <div class="project-card__body">
+                  <p class="project-card__meta">
+                    <span class="project-card__index">07</span>
+                    <span class="project-card__category">Integración</span>
+                  </p>
+                  <h3 class="project-card__title" id="proyecto-07">Automatización</h3>
+                  <p class="project-card__text">APIs, generación de documentos, notificaciones y workflows que eliminan el trabajo manual repetido.</p>
+                  <p class="project-card__cta arrow-link">
+                    <span class="arrow-link__line" aria-hidden="true"></span>
+                    Explorar
+                    <span class="arrow-link__arrow" aria-hidden="true">&rarr;</span>
+                  </p>
+                </div>
+              </a>
+            </article>
+            <article class="project-card project-card--wide" data-reveal="scale">
+              <a
+                class="project-card__link"
+                href="#contacto"
+                aria-label="Soluciones a medida — hablemos de tu proyecto"
+                data-pointer-glow
+              >
+                <div class="project-card__visual">
+                  <svg
+                    class="mk project-card__mockup"
+                    viewBox="0 0 400 250"
+                    preserveAspectRatio="xMidYMid meet"
+                    aria-hidden="true"
+                    focusable="false"
+                  ><g class="mk-float"> <path class="mk-line-soft" d="M200 62v26M138 152l-18 10M262 152l18 10"/> <path class="mk-gradient" d="M200 18l72 42-72 42-72-42z" opacity="0.9"/> <path class="mk-line" d="M200 18l72 42-72 42-72-42z"/> <path class="mk-navy" d="M124 106l70 40v82l-70-40z"/> <path class="mk-line" d="M124 106l70 40v82l-70-40z"/> <path class="mk-accent-soft" d="M276 106l-70 40v82l70-40z"/> <path class="mk-line" d="M276 106l-70 40v82l70-40z"/> <circle class="mk-accent" cx="200" cy="102" r="5"/> <circle class="mk-text-strong" cx="124" cy="106" r="3.5"/> <circle class="mk-text-strong" cx="276" cy="106" r="3.5"/> <rect class="mk-text" x="96" y="232" width="56" height="4" rx="2"/> <rect class="mk-text-strong" x="180" y="232" width="40" height="4" rx="2"/> <rect class="mk-text" x="252" y="232" width="52" height="4" rx="2"/> </g></svg>
+                </div>
+                <div class="project-card__body">
+                  <p class="project-card__meta">
+                    <span class="project-card__index">08</span>
+                    <span class="project-card__category">Ingeniería</span>
+                  </p>
+                  <h3 class="project-card__title" id="proyecto-08">Soluciones a medida</h3>
+                  <p class="project-card__text">Cuando nada estándar encaja, diseñamos el software alrededor de la operación del cliente — no al revés.</p>
+                  <p class="project-card__cta arrow-link">
+                    <span class="arrow-link__line" aria-hidden="true"></span>
+                    Explorar
+                    <span class="arrow-link__arrow" aria-hidden="true">&rarr;</span>
+                  </p>
+                </div>
+              </a>
+            </article>
+          </div>
+<!-- /build:projects -->
+        </div>
+      </section>
+
+      <span class="connector" aria-hidden="true"></span>
+
+      <!-- ============================================ 04 · Capabilities -->
+      <section class="section capabilities" id="capacidades" aria-labelledby="capabilities-title">
+        <div class="shell">
+          <header class="capabilities__head">
+            <p class="eyebrow" data-reveal="fade">
+              Capacidades <span class="eyebrow__index">/ 03</span>
+            </p>
+            <h2 class="capabilities__title" id="capabilities-title" data-reveal="far">
+              No solo hacemos <em>páginas web.</em>
+            </h2>
+          </header>
+
+          <!-- build:capabilities -->
+          <ul class="capabilities__list">
+            <li class="capability" data-reveal="left">
+              <div class="capability__row">
+                <span class="capability__name">Diseño</span>
+                <span class="capability__index">01</span>
+                <p class="capability__detail">Dirección de arte, sistemas de diseño e interfaces que se entienden sin manual.</p>
+              </div>
+            </li>
+            <li class="capability" data-reveal="right">
+              <div class="capability__row">
+                <span class="capability__name">Desarrollo</span>
+                <span class="capability__index">02</span>
+                <p class="capability__detail">Front-end y back-end a medida, con código mantenible y rendimiento medido.</p>
+              </div>
+            </li>
+            <li class="capability" data-reveal="left">
+              <div class="capability__row">
+                <span class="capability__name">Automatización</span>
+                <span class="capability__index">03</span>
+                <p class="capability__detail">Procesos, documentos y notificaciones que dejan de depender de trabajo manual.</p>
+              </div>
+            </li>
+            <li class="capability" data-reveal="right">
+              <div class="capability__row">
+                <span class="capability__name">Infraestructura</span>
+                <span class="capability__index">04</span>
+                <p class="capability__detail">Despliegue, dominios, correo, respaldos y monitoreo listos desde el primer día.</p>
+              </div>
+            </li>
+            <li class="capability" data-reveal="left">
+              <div class="capability__row">
+                <span class="capability__name">Integración</span>
+                <span class="capability__index">05</span>
+                <p class="capability__detail">APIs, pasarelas y sistemas existentes conectados sin romper lo que ya funciona.</p>
+              </div>
+            </li>
+            <li class="capability" data-reveal="right">
+              <div class="capability__row">
+                <span class="capability__name">Experiencia</span>
+                <span class="capability__index">06</span>
+                <p class="capability__detail">Accesibilidad, velocidad y claridad como requisitos, no como ajustes finales.</p>
+              </div>
+            </li>
+          </ul>
+<!-- /build:capabilities -->
+        </div>
+      </section>
+
+      <!-- ================================================ 05 · Manifesto -->
+      <section class="manifesto" aria-labelledby="manifesto-quote">
+        <div class="manifesto__inner shell">
+          <h2 class="manifesto__quote reveal-words" id="manifesto-quote">
+            <span>La</span> <span>tecnología</span> <span>debe</span> <span>adaptarse</span>
+            <span>a</span> <span>tu</span> <span>empresa,</span>
+            <span><em>no</em></span> <span><em>tu</em></span> <span><em>empresa</em></span>
+            <span><em>a</em></span> <span><em>la</em></span> <span><em>tecnología.</em></span>
+          </h2>
+          <p class="manifesto__attribution" data-reveal="fade">
+            CoreStruct · Principio de trabajo
+          </p>
+        </div>
+      </section>
+
+      <!-- ================================================== 06 · Contact -->
+      <section class="contact" id="contacto" aria-labelledby="contact-title">
+        <div class="contact__inner shell">
+          <p class="eyebrow" data-reveal="fade">
+            Contacto <span class="eyebrow__index">/ 04</span>
+          </p>
+
+          <h2 class="contact__title" id="contact-title" data-reveal="far">
+            ¿Tienes una idea?
+          </h2>
+          <p class="contact__subtitle" data-reveal="far">
+            Nosotros podemos convertirla en una solución digital.
+          </p>
+
+          <div class="contact__actions" data-reveal="far">
+            <!-- build:cta -->
+            <a class="button button--primary button--large" href="mailto:contacto@corestruct.com">
+              Hablemos
+              <span class="button__arrow" aria-hidden="true">&rarr;</span>
+            </a>
+<!-- /build:cta -->
+          </div>
+
+          <!-- build:channels -->
+          <div class="contact__channels" data-reveal="far">
+            <p class="channel">
+              <span class="channel__label">Correo</span>
+              <a class="channel__value" href="mailto:contacto@corestruct.com">contacto@corestruct.com</a>
+            </p>
+            <p class="channel">
+              <span class="channel__label">Cobertura</span>
+              <span class="channel__value">Servicio remoto · Latinoamérica</span>
+            </p>
+          </div>
+<!-- /build:channels -->
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer__inner shell">
+        <a class="footer__brand" href="#inicio" aria-label="CoreStruct — inicio">
+          <svg class="footer__mark" viewBox="0 0 362 422" aria-hidden="true" focusable="false">
+            <use href="#cs-isotipo" />
+          </svg>
+          <img
+            class="footer__wordmark"
+            src="assets/brand/wordmark-white.png"
+            alt="CoreStruct"
+            width="720"
+            height="104"
+            loading="lazy"
+          />
+        </a>
+
+        <!-- build:footer-meta -->
+        <div class="footer__meta">
+          <a class="footer__link" href="#proyectos">Proyectos</a>
+          <a class="footer__link" href="#capacidades">Capacidades</a>
+          <a class="footer__link" href="#contacto">Contacto</a>
+          <span class="footer__note">
+            &copy; <span data-current-year>2026</span>
+            CoreStruct
+          </span>
+        </div>
+<!-- /build:footer-meta -->
+      </div>
+    </footer>
+
+    <script type="module" src="src/scripts/main.js"></script>
+  </body>
+</html>

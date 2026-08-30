@@ -1,0 +1,146 @@
+/* =============================================================================
+   Section rhythm and the graphic thread that links the zones together
+
+   Sections deliberately share vertical rhythm and never draw their own top
+   border, so the page reads as one continuous composition rather than a stack
+   of independent blocks.
+   ========================================================================== */
+
+main {
+  position: relative;
+  z-index: var(--layer-content);
+}
+
+.section {
+  position: relative;
+  padding-block: var(--space-3xl);
+}
+
+.section--tight {
+  padding-block: var(--space-2xl);
+}
+
+.section__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  max-width: 46rem;
+}
+
+.section__title {
+  font-size: var(--text-3xl);
+  text-transform: uppercase;
+}
+
+.section__lede {
+  max-width: var(--measure);
+  font-size: var(--text-lg);
+  color: var(--text-muted);
+  line-height: var(--leading-relaxed);
+  letter-spacing: var(--tracking-snug);
+}
+
+/* --- Connector -------------------------------------------------------------
+   A hairline with a node on it, echoing the joint at the centre of the
+   isotype. It is the visual seam between two zones.
+   -------------------------------------------------------------------------- */
+
+.connector {
+  position: relative;
+  display: block;
+  width: 1px;
+  height: clamp(4rem, 9vh, 7.5rem);
+  margin-inline: auto;
+  background: linear-gradient(180deg, transparent, var(--border-strong) 35%, transparent);
+}
+
+.connector::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  background: var(--brand-secondary);
+  box-shadow: 0 0 0 4px rgb(var(--brand-secondary-rgb) / 0.14);
+}
+
+.connector--start {
+  background: linear-gradient(180deg, transparent, var(--border-strong));
+}
+
+/* --- Hairline rule --------------------------------------------------------- */
+
+.rule {
+  width: 100%;
+  height: 1px;
+  border: 0;
+  background: var(--gradient-edge);
+  opacity: 0.5;
+}
+
+/* =============================================================================
+   Statement — the hand-off from the hero into the portfolio
+   ========================================================================== */
+
+.statement {
+  position: relative;
+  z-index: var(--layer-content);
+  padding-block: var(--space-3xl) var(--space-2xl);
+  background: linear-gradient(180deg, transparent, rgb(13 18 32 / 0.5) 45%, transparent);
+}
+
+.statement__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.statement__title {
+  font-size: var(--text-5xl);
+  font-weight: 800;
+  line-height: 0.94;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  max-width: 16ch;
+}
+
+.statement__title em {
+  font-style: normal;
+  color: var(--brand-secondary);
+}
+
+.statement__body {
+  max-width: 34ch;
+  margin-inline-start: auto;
+  font-size: var(--text-xl);
+  font-weight: 500;
+  line-height: var(--leading-snug);
+  color: var(--text-muted);
+  text-wrap: balance;
+}
+
+@media (min-width: 60rem) {
+  .statement__inner {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--space-lg);
+    align-items: end;
+  }
+
+  .statement__eyebrow {
+    grid-column: 1 / -1;
+  }
+
+  .statement__title {
+    grid-column: 1 / span 7;
+  }
+
+  .statement__body {
+    grid-column: 9 / -1;
+    margin-inline-start: 0;
+    padding-bottom: 0.6rem;
+  }
+}

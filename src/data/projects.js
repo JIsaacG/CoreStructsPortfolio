@@ -1,0 +1,97 @@
+/**
+ * The portfolio grid.
+ *
+ * Each entry is one card. They currently describe the kinds of work CoreStruct
+ * builds; as real case studies land, replace `title`/`description` and point
+ * `href` at the case study — the layout does not need to change.
+ *
+ * size    'major' (7 cols) | 'minor' (5) | 'half' (6) | 'wide' (full-bleed feature)
+ * offset  nudges the card down a row so the grid does not march in lockstep
+ * reveal  which scroll-entrance variant to use (see motion.css)
+ * mockup  key into src/data/mockups.js
+ */
+
+export const projects = [
+  {
+    number: "01",
+    category: "Desarrollo web",
+    title: "Sitios corporativos",
+    description:
+      "Presencia institucional a medida: rápida, accesible y construida para sostener la reputación de la marca en cualquier dispositivo.",
+    mockup: "corporate",
+    size: "major",
+    reveal: "far",
+  },
+  {
+    number: "02",
+    category: "Producto digital",
+    title: "Plataformas web",
+    description:
+      "Portales, áreas privadas y herramientas internas donde cada perfil encuentra exactamente lo que necesita.",
+    mockup: "platform",
+    size: "minor",
+    offset: true,
+    reveal: "rise",
+  },
+  {
+    number: "03",
+    category: "Software a medida",
+    title: "Sistemas empresariales",
+    description:
+      "Expedientes, usuarios y operaciones en un sistema que se adapta a los procesos reales de la empresa.",
+    mockup: "system",
+    size: "minor",
+    reveal: "rise",
+  },
+  {
+    number: "04",
+    category: "Conversión",
+    title: "Landing pages",
+    description:
+      "Páginas de campaña enfocadas en un único objetivo: que la persona correcta dé el siguiente paso.",
+    mockup: "landing",
+    size: "major",
+    reveal: "far",
+  },
+  {
+    number: "05",
+    category: "Educación",
+    title: "Portales educativos",
+    description:
+      "Admisiones, preinscripción y gestión académica en un solo flujo, desde el primer clic hasta la inscripción confirmada.",
+    mockup: "education",
+    size: "wide",
+    reveal: "scale",
+  },
+  {
+    number: "06",
+    category: "Datos",
+    title: "Dashboards",
+    description:
+      "Paneles que convierten la operación en decisiones: indicadores claros, reportes y visualización en tiempo real.",
+    mockup: "dashboard",
+    size: "half",
+    reveal: "far",
+  },
+  {
+    number: "07",
+    category: "Integración",
+    title: "Automatización",
+    description:
+      "APIs, generación de documentos, notificaciones y workflows que eliminan el trabajo manual repetido.",
+    mockup: "automation",
+    size: "half",
+    offset: true,
+    reveal: "rise",
+  },
+  {
+    number: "08",
+    category: "Ingeniería",
+    title: "Soluciones a medida",
+    description:
+      "Cuando nada estándar encaja, diseñamos el software alrededor de la operación del cliente — no al revés.",
+    mockup: "custom",
+    size: "wide",
+    reveal: "scale",
+  },
+];

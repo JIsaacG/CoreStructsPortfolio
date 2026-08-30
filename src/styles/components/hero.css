@@ -1,0 +1,240 @@
+/* =============================================================================
+   Hero — the isotype assembles, then dissolves into the story below
+   ========================================================================== */
+
+.hero {
+  position: relative;
+  z-index: var(--layer-content);
+  min-height: 100svh;
+}
+
+.hero__stage {
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  align-items: center;
+  padding-block: calc(var(--header-height) + var(--space-lg)) var(--space-lg);
+}
+
+.hero__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-md);
+  /* --hero-exit is written by JS while the hero scrolls away; the 0 fallback
+     keeps the hero perfectly composed with JavaScript disabled. */
+  transform: scale(calc(1 + var(--hero-exit, 0) * 0.06));
+  opacity: calc(1 - var(--hero-exit, 0) * 0.85);
+  will-change: transform, opacity;
+}
+
+/* --- The mark -------------------------------------------------------------- */
+
+.hero__mark {
+  position: relative;
+  width: clamp(8.5rem, 18vw, 15rem);
+  aspect-ratio: 362 / 422;
+  margin-bottom: var(--space-2xs);
+}
+
+.hero__mark-svg {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 18px 45px rgb(var(--brand-primary-rgb) / 0.55));
+}
+
+/* Light pooling behind the cube, echoing the lit face of the logo. */
+.hero__mark::before {
+  content: "";
+  position: absolute;
+  inset: -55%;
+  background: radial-gradient(
+    circle at 58% 38%,
+    rgb(var(--brand-secondary-rgb) / 0.34),
+    rgb(var(--brand-primary-rgb) / 0.16) 42%,
+    transparent 68%
+  );
+  opacity: 0;
+  animation: hero-glow-in 1.6s var(--ease-out-quart) 0.35s forwards,
+    hero-glow-breathe 9s var(--ease-in-out) 2s infinite;
+}
+
+@keyframes hero-glow-in {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes hero-glow-breathe {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.62;
+  }
+}
+
+/* Each face arrives along its own isometric axis, so the cube builds itself. */
+.js .hero__mark-svg .cs-face {
+  opacity: 0;
+  animation: hero-face-in 1s var(--ease-out-expo) forwards;
+}
+
+.js .hero__mark-svg .cs-face--left {
+  transform: translate(-13%, 7%);
+  animation-delay: 0.1s;
+}
+
+.js .hero__mark-svg .cs-face--right {
+  transform: translate(13%, 7%);
+  animation-delay: 0.22s;
+}
+
+.js .hero__mark-svg .cs-face--top {
+  transform: translate(0, -16%);
+  animation-delay: 0.34s;
+}
+
+@keyframes hero-face-in {
+  to {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+
+/* --- Wordmark -------------------------------------------------------------- */
+
+.hero__wordmark {
+  width: clamp(11rem, 24vw, 18rem);
+  height: auto;
+}
+
+/* --- Headline -------------------------------------------------------------- */
+
+.hero__headline {
+  max-width: 20ch;
+  font-size: var(--text-4xl);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+}
+
+.hero__headline em {
+  font-style: normal;
+  background: linear-gradient(120deg, var(--brand-secondary), #8ed3ff 60%, var(--brand-secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero__lede {
+  max-width: 44ch;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.hero__lede span {
+  white-space: nowrap;
+}
+
+.hero__cta {
+  margin-top: var(--space-xs);
+}
+
+.hero__cta .button__arrow {
+  transition: transform var(--duration-base) var(--ease-out-expo);
+}
+
+.hero__cta:hover .button__arrow,
+.hero__cta:focus-visible .button__arrow {
+  transform: translateY(0.3em) translateX(0);
+}
+
+/* --- Scroll hint ----------------------------------------------------------- */
+
+.hero__hint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2xs);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--text-faint);
+  opacity: calc(1 - var(--hero-exit, 0) * 1.6);
+}
+
+.hero__hint-rail {
+  position: relative;
+  width: 1px;
+  height: 3.5rem;
+  background: linear-gradient(180deg, var(--border-strong), transparent);
+  overflow: hidden;
+}
+
+.hero__hint-rail::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  height: 45%;
+  background: linear-gradient(180deg, transparent, var(--brand-secondary));
+  animation: hint-travel 2.6s var(--ease-in-out) infinite;
+}
+
+@keyframes hint-travel {
+  0% {
+    transform: translateY(-120%);
+  }
+  70%,
+  100% {
+    transform: translateY(240%);
+  }
+}
+
+/* --- Desktop: let the hero linger, then hand over to the statement ---------- */
+
+@media (min-width: 48rem) and (min-height: 34rem) {
+  .hero {
+    height: 165svh;
+  }
+
+  .hero__stage {
+    position: sticky;
+    inset-block-start: 0;
+    height: 100svh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__content,
+  .hero__hint {
+    transform: none;
+    opacity: 1;
+  }
+
+  .hero__mark::before {
+    opacity: 1;
+    animation: none;
+  }
+
+  .js .hero__mark-svg .cs-face {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .hero__hint-rail::after {
+    animation: none;
+    transform: translateY(60%);
+  }
+}

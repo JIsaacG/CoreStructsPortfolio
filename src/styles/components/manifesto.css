@@ -1,0 +1,75 @@
+/* =============================================================================
+   Manifesto — one idea, given a whole screen
+   ========================================================================== */
+
+.manifesto {
+  position: relative;
+  display: grid;
+  align-items: center;
+  min-height: 82svh;
+  padding-block: var(--space-3xl);
+  overflow: hidden;
+}
+
+/* A wide, very soft brand wash so the statement sits in its own light. */
+.manifesto::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    75% 60% at 50% 50%,
+    rgb(var(--brand-primary-rgb) / 0.28),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.manifesto__inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  align-items: flex-start;
+}
+
+.manifesto__quote {
+  max-width: 18ch;
+  font-size: var(--text-5xl);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+
+.manifesto__quote em {
+  font-style: normal;
+  background: linear-gradient(115deg, var(--brand-secondary), #9ad9ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.manifesto__attribution {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.manifesto__attribution::before {
+  content: "";
+  width: 3rem;
+  height: 1px;
+  background: var(--brand-secondary);
+}
+
+@media (min-width: 64rem) {
+  .manifesto__quote {
+    max-width: 20ch;
+    font-size: var(--text-6xl);
+  }
+}
