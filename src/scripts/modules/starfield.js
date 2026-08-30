@@ -36,12 +36,12 @@ const SPEED_FAR = 14;
 const SPEED_NEAR = 46;
 
 /** Drawn glow diameter in px, far to near. The lit core is a fraction of it. */
-const SIZE_FAR = 3;
-const SIZE_NEAR = 10;
+const SIZE_FAR = 3.4;
+const SIZE_NEAR = 11.5;
 
 /** Opacity range before the twinkle is applied. */
-const ALPHA_FAR = 0.2;
-const ALPHA_NEAR = 0.65;
+const ALPHA_FAR = 0.3;
+const ALPHA_NEAR = 0.85;
 
 /** How far the field lags the page while it scrolls, at full depth. */
 const PARALLAX = 0.18;
@@ -55,7 +55,7 @@ const SWAY_MIN_PERIOD = 6;
 const SWAY_MAX_PERIOD = 15;
 
 /** Share of its brightness a mote gives up at the dimmest point of a cycle. */
-const TWINKLE_DEPTH = 0.55;
+const TWINKLE_DEPTH = 0.45;
 const TWINKLE_MIN_PERIOD = 2.6;
 const TWINKLE_MAX_PERIOD = 7.5;
 
@@ -71,7 +71,7 @@ const FLARE_SHARE = 0.34;
  */
 const FLARE_MIN_DEPTH = 0.3;
 /** Peak brightness added, as a multiple of the mote's own alpha. */
-const FLARE_GAIN = 1.9;
+const FLARE_GAIN = 2.2;
 /** How much wider the glow blooms at the peak — a flare swells as it lights. */
 const FLARE_SWELL = 0.55;
 /** Seconds a single flare lasts. */
@@ -141,9 +141,9 @@ function renderSprite(rgb) {
   const ctx = canvas.getContext("2d");
   const centre = SPRITE_SIZE / 2;
   const glow = ctx.createRadialGradient(centre, centre, 0, centre, centre, centre);
-  glow.addColorStop(0, rgba(lighten(rgb, 0.55), 1));
-  glow.addColorStop(0.14, rgba(rgb, 0.72));
-  glow.addColorStop(0.42, rgba(rgb, 0.16));
+  glow.addColorStop(0, rgba(lighten(rgb, 0.72), 1));
+  glow.addColorStop(0.15, rgba(lighten(rgb, 0.12), 0.88));
+  glow.addColorStop(0.42, rgba(rgb, 0.26));
   glow.addColorStop(1, rgba(rgb, 0));
 
   ctx.fillStyle = glow;
