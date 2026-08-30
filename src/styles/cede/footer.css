@@ -1,0 +1,362 @@
+/* =============================================================================
+   CEDE — the foot of every page, and the back office
+
+   The footer of a public portal is a service, not a decoration: it is where
+   someone finds the sitemap, the accessibility statement, the licence of the
+   data and the way to report that something is broken. It also carries the last
+   and most explicit statement of the fiction.
+   ========================================================================== */
+
+.cd-footer {
+  background: var(--navy-900);
+  color: rgb(255 255 255 / 0.76);
+  font-size: var(--t-sm);
+}
+
+.cd-footer__top {
+  display: grid;
+  gap: var(--s-lg);
+  padding-block: var(--s-2xl) var(--s-lg);
+}
+
+@media (min-width: 62rem) {
+  .cd-footer__top {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 3fr);
+    column-gap: var(--s-2xl);
+  }
+}
+
+.cd-footer__brand {
+  display: grid;
+  gap: var(--s-sm);
+  align-content: start;
+}
+
+.cd-footer .cd-logo__name {
+  color: #ffffff;
+}
+
+.cd-footer .cd-logo__sub {
+  color: rgb(255 255 255 / 0.6);
+}
+
+.cd-footer .cd-logo__mark {
+  color: #ffffff;
+}
+
+.cd-footer__pitch {
+  font-size: var(--t-sm);
+  color: rgb(255 255 255 / 0.68);
+  max-width: 40ch;
+}
+
+.cd-footer__columns {
+  display: grid;
+  gap: var(--s-md);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (min-width: 46rem) {
+  .cd-footer__columns {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 78rem) {
+  .cd-footer__columns {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+.cd-footer__heading {
+  margin-bottom: var(--s-2xs);
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.cd-footer__link {
+  display: block;
+  padding: 0.28rem 0;
+  color: rgb(255 255 255 / 0.72);
+  font-size: var(--t-xs);
+  text-decoration: none;
+}
+
+.cd-footer__link:hover {
+  color: #ffffff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* --- The service strip ------------------------------------------------------- */
+
+.cd-footer__service {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2xs) var(--s-md);
+  padding-block: var(--s-sm);
+  border-top: 1px solid rgb(255 255 255 / 0.16);
+  font-size: var(--t-xs);
+}
+
+.cd-footer__service a {
+  color: rgb(255 255 255 / 0.72);
+  text-decoration: none;
+}
+
+.cd-footer__service a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.cd-footer__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2xs) var(--s-md);
+  padding-block: var(--s-sm);
+  border-top: 1px solid rgb(255 255 255 / 0.16);
+  font-size: var(--t-2xs);
+  color: rgb(255 255 255 / 0.6);
+}
+
+.cd-footer__meta dt {
+  display: inline;
+  font-weight: 600;
+  color: rgb(255 255 255 / 0.82);
+}
+
+.cd-footer__meta dd {
+  display: inline;
+  margin: 0 var(--s-sm) 0 0.35em;
+}
+
+/* --- The notice --------------------------------------------------------------
+   The last word on every page: what this site is and is not. It is set on its
+   own band, at full contrast, so it cannot be read as small print.
+   -------------------------------------------------------------------------- */
+
+.cd-footer__notice {
+  padding-block: var(--s-md);
+  border-top: 1px solid rgb(255 255 255 / 0.24);
+  background: #000d26;
+}
+
+.cd-footer__notice-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-sm);
+  justify-content: space-between;
+}
+
+.cd-footer__notice p {
+  font-size: var(--t-xs);
+  color: rgb(255 255 255 / 0.86);
+  max-width: 74ch;
+}
+
+/* =============================================================================
+   The demonstration back office
+
+   Not linked from the public navigation. It exists to show the other half of
+   the product — the interface an institution operates the portal with — and it
+   says what it is in its own header.
+   ========================================================================== */
+
+.cd-admin {
+  display: grid;
+  min-height: 100vh;
+  grid-template-rows: auto 1fr;
+  background: var(--surface-sunken);
+}
+
+.cd-admin__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-sm);
+  padding: var(--s-xs) var(--gutter);
+  background: var(--navy-900);
+  color: #ffffff;
+}
+
+.cd-admin__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2xs);
+  font-size: var(--t-sm);
+  font-weight: 600;
+}
+
+.cd-admin__tag {
+  padding: 0.1rem 0.4rem;
+  border: 1px solid rgb(255 255 255 / 0.4);
+  border-radius: var(--r-xs);
+  font-size: var(--t-2xs);
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+}
+
+.cd-admin__user {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2xs);
+  font-size: var(--t-xs);
+  color: rgb(255 255 255 / 0.75);
+}
+
+.cd-admin__avatar {
+  display: grid;
+  place-items: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.16);
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.cd-admin__body {
+  display: grid;
+  gap: 0;
+}
+
+@media (min-width: 62rem) {
+  .cd-admin__body {
+    grid-template-columns: 15rem minmax(0, 1fr);
+  }
+}
+
+.cd-admin__side {
+  padding: var(--s-md) var(--s-sm);
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+}
+
+.cd-admin__group + .cd-admin__group {
+  margin-top: var(--s-md);
+}
+
+.cd-admin__group-title {
+  margin-bottom: var(--s-3xs);
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.cd-admin__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-2xs);
+  padding: 0.45rem 0.5rem;
+  border-radius: var(--r-xs);
+  color: var(--ink);
+  font-size: var(--t-sm);
+  text-decoration: none;
+}
+
+.cd-admin__link:hover {
+  background: var(--navy-100);
+}
+
+.cd-admin__link[aria-current="true"] {
+  background: var(--navy);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.cd-admin__link span {
+  font-size: var(--t-2xs);
+  color: var(--ink-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.cd-admin__link[aria-current="true"] span {
+  color: rgb(255 255 255 / 0.8);
+}
+
+.cd-admin__main {
+  padding: var(--s-lg) var(--gutter) var(--s-2xl);
+  min-width: 0;
+}
+
+.cd-admin__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: var(--s-sm);
+  margin-bottom: var(--s-md);
+}
+
+.cd-admin__title {
+  font-family: var(--font-serif);
+  font-size: var(--t-2xl);
+  color: var(--navy-900);
+}
+
+.cd-admin__panel {
+  padding: var(--s-md);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+}
+
+.cd-admin__panel + .cd-admin__panel {
+  margin-top: var(--s-md);
+}
+
+.cd-admin__panel-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-sm);
+  margin-bottom: var(--s-sm);
+  padding-bottom: var(--s-2xs);
+  border-bottom: 1px solid var(--border);
+  font-size: var(--t-md);
+  font-weight: 600;
+  color: var(--navy-900);
+}
+
+.cd-activity {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cd-activity li {
+  display: grid;
+  gap: 2px var(--s-sm);
+  padding-block: var(--s-xs);
+  border-bottom: 1px solid var(--border);
+  font-size: var(--t-sm);
+}
+
+@media (min-width: 46rem) {
+  .cd-activity li {
+    grid-template-columns: 7rem minmax(0, 1fr);
+    align-items: baseline;
+  }
+}
+
+.cd-activity time {
+  font-size: var(--t-xs);
+  color: var(--ink-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.cd-activity b {
+  font-weight: 600;
+  color: var(--navy-900);
+}

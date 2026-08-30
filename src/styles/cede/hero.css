@@ -1,0 +1,296 @@
+/* =============================================================================
+   CEDE — heroes
+
+   Two of them. The home hero is a deep navy panel with the country drawn as a
+   dot field behind an editorial headline and a strip of four figures. Every
+   other page opens with the page hero: breadcrumb, label, title, lead — the
+   same composition at a quieter volume, so a section never looks like a second
+   home page.
+
+   No stock photograph of an official, no flag, no seal. The subject of the
+   image is the country's information, which is what the institution actually
+   holds.
+   ========================================================================== */
+
+.cd-hero {
+  position: relative;
+  overflow: hidden;
+  background: var(--navy-900);
+  color: #ffffff;
+  isolation: isolate;
+}
+
+/* A single soft wash from the top-left keeps the panel from reading as a flat
+   block without becoming a gradient. */
+.cd-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(120% 80% at 15% 0%, rgb(49 95 172 / 0.42), transparent 62%),
+    radial-gradient(90% 70% at 100% 100%, rgb(13 59 153 / 0.4), transparent 60%);
+  z-index: -2;
+}
+
+.cd-hero__inner {
+  display: grid;
+  gap: var(--s-xl);
+  padding-block: clamp(2.5rem, 1.5rem + 5vw, 5.5rem);
+}
+
+@media (min-width: 68rem) {
+  .cd-hero__inner {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    align-items: center;
+    column-gap: var(--s-2xl);
+  }
+}
+
+.cd-hero__eyebrow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-xs);
+  margin-bottom: var(--s-md);
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.72);
+}
+
+.cd-hero__title {
+  font-family: var(--font-serif);
+  font-size: var(--t-4xl);
+  font-weight: 600;
+  line-height: var(--lead-tight);
+  letter-spacing: -0.022em;
+  color: #ffffff;
+  max-width: 15ch;
+}
+
+.cd-hero__lead {
+  margin-top: var(--s-md);
+  font-size: var(--t-lg);
+  line-height: 1.55;
+  color: rgb(255 255 255 / 0.82);
+  max-width: 52ch;
+}
+
+.cd-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-xs);
+  margin-top: var(--s-lg);
+}
+
+.cd-hero__actions .cd-btn--solid {
+  background: #ffffff;
+  border-color: #ffffff;
+  color: var(--navy-900);
+}
+
+.cd-hero__actions .cd-btn--solid:hover {
+  background: var(--navy-100);
+  border-color: var(--navy-100);
+}
+
+/* --- The figures strip ----------------------------------------------------- */
+
+.cd-hero__figures {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: var(--s-xl);
+  border: 1px solid rgb(255 255 255 / 0.16);
+  background: rgb(255 255 255 / 0.16);
+}
+
+@media (min-width: 48rem) {
+  .cd-hero__figures {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.cd-hero__figure {
+  padding: var(--s-sm);
+  background: var(--navy-900);
+}
+
+.cd-hero__value {
+  font-size: var(--t-xl);
+  font-weight: 600;
+  line-height: 1.1;
+  color: #ffffff;
+}
+
+.cd-hero__caption {
+  margin-top: 2px;
+  font-size: var(--t-2xs);
+  line-height: 1.35;
+  color: rgb(255 255 255 / 0.66);
+}
+
+.cd-hero__figures-note {
+  margin-top: var(--s-2xs);
+}
+
+/* --- The map plate --------------------------------------------------------- */
+
+.cd-hero__plate {
+  position: relative;
+}
+
+.cd-hero__map {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* The dot field is the texture; the outline is the subject. Both are drawn
+   from the same real geometry that the observatory colours in. */
+.cd-hero__dots {
+  fill: rgb(255 255 255 / 0.24);
+}
+
+.cd-hero__outline {
+  fill: none;
+  stroke: rgb(255 255 255 / 0.62);
+  stroke-width: 1.1;
+  stroke-linejoin: round;
+}
+
+.cd-hero__fill {
+  /* Visible on its own: the outline draws itself in, and until it finishes the
+     fill is the only thing holding the composition. */
+  fill: rgb(49 95 172 / 0.42);
+  stroke: rgb(255 255 255 / 0.12);
+  stroke-width: 0.8;
+}
+
+/* Line-drawing entrance: the country draws itself once, in under a second, and
+   never again. Suppressed entirely under reduced motion. */
+.js .cd-hero__outline {
+  stroke-dasharray: var(--len, 4000);
+  stroke-dashoffset: var(--len, 4000);
+  animation: cd-draw 900ms var(--ease-out) 120ms forwards;
+}
+
+@keyframes cd-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.cd-hero__pin {
+  fill: #ffffff;
+}
+
+.cd-hero__pin-halo {
+  fill: rgb(255 255 255 / 0.28);
+}
+
+.cd-hero__plate-caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-2xs);
+  margin-top: var(--s-xs);
+  font-size: var(--t-2xs);
+  color: rgb(255 255 255 / 0.6);
+}
+
+/* --- Page hero ------------------------------------------------------------- */
+
+.cd-pagehero {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.cd-pagehero__inner {
+  display: grid;
+  gap: var(--s-md);
+  padding-block: var(--s-xl);
+}
+
+@media (min-width: 62rem) {
+  .cd-pagehero__inner {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    column-gap: var(--s-2xl);
+    align-items: end;
+  }
+
+  .cd-pagehero__crumbs {
+    grid-column: 1 / -1;
+  }
+}
+
+.cd-pagehero__title {
+  font-family: var(--font-serif);
+  font-size: var(--t-3xl);
+  font-weight: 600;
+  line-height: var(--lead-title);
+  letter-spacing: -0.018em;
+  color: var(--navy-900);
+  max-width: 20ch;
+}
+
+.cd-pagehero__lead {
+  font-size: var(--t-lg);
+  line-height: 1.55;
+  color: var(--ink-soft);
+  max-width: 54ch;
+}
+
+.cd-pagehero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-sm);
+  margin-top: var(--s-sm);
+  padding-top: var(--s-sm);
+  border-top: 1px solid var(--border);
+  font-size: var(--t-xs);
+  color: var(--ink-muted);
+  grid-column: 1 / -1;
+}
+
+.cd-pagehero__meta dt {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.cd-pagehero__meta > div {
+  display: flex;
+  gap: 0.4em;
+}
+
+/* A dark variant for the two pages that lead with a statement rather than a
+   dataset: the institution and the plan. */
+.cd-pagehero--dark {
+  background: var(--navy-900);
+  border-bottom: 0;
+  color: #ffffff;
+}
+
+.cd-pagehero--dark .cd-pagehero__title {
+  color: #ffffff;
+}
+
+.cd-pagehero--dark .cd-pagehero__lead {
+  color: rgb(255 255 255 / 0.8);
+}
+
+.cd-pagehero--dark .cd-crumbs,
+.cd-pagehero--dark .cd-crumbs a {
+  color: rgb(255 255 255 / 0.65);
+}
+
+.cd-pagehero--dark .cd-pagehero__meta {
+  border-top-color: rgb(255 255 255 / 0.2);
+  color: rgb(255 255 255 / 0.7);
+}
+
+.cd-pagehero--dark .cd-pagehero__meta dt {
+  color: #ffffff;
+}

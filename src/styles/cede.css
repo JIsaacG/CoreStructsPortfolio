@@ -1,0 +1,136 @@
+/* =============================================================================
+   CEDE — stylesheet entry point
+
+   The government portal ships its own bundle. It shares the scroll-reveal
+   system with the rest of the site and nothing else: it is light where the
+   portfolio is dark, square where the portfolio is round, serif where the
+   portfolio is not, and it carries a whole statistics interface the portfolio
+   has no use for.
+
+   `npm run build:css` flattens this into `dist/cede.css`.
+   ========================================================================== */
+
+@import "./cede/tokens.css";
+@import "./cede/fonts.css";
+@import "./cede/base.css";
+@import "./motion.css";
+
+@import "./cede/header.css";
+@import "./cede/hero.css";
+@import "./cede/sections.css";
+@import "./cede/charts.css";
+@import "./cede/dashboard.css";
+@import "./cede/tables.css";
+@import "./cede/footer.css";
+
+/* -----------------------------------------------------------------------------
+   Reduced motion
+
+   The portfolio's `motion.css` already removes the reveal transforms. A public
+   administration portal goes further: the map's line-drawing entrance, the
+   counters and every transition are gone too, and nothing is left hidden
+   waiting for an animation that will never run.
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .js .cd-hero__outline {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Print
+
+   A statistics portal gets printed — by someone taking a board into a meeting.
+   Chrome comes off, links keep their destination, and charts survive as ink.
+   -------------------------------------------------------------------------- */
+
+@media print {
+  .cd-topbar,
+  .cd-navband,
+  .cd-panel,
+  .cd-badge,
+  .cd-filters,
+  .cd-boards,
+  .cd-search,
+  .cd-chart__tools,
+  .cd-pager {
+    display: none !important;
+  }
+
+  body {
+    background: #ffffff;
+  }
+
+  .cd-header {
+    position: static;
+  }
+
+  .cd-hero,
+  .cd-cta,
+  .cd-footer {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .cd-hero__title,
+  .cd-cta__title,
+  .cd-hero__lead,
+  .cd-cta__text {
+    color: #000000 !important;
+  }
+
+  .cd-chart,
+  .cd-tablewrap,
+  .cd-map__frame {
+    break-inside: avoid;
+  }
+
+  .cd-datatable {
+    display: none;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Forced colours
+
+   Windows high-contrast replaces the palette wholesale. Charts are the one
+   place that breaks, because a fill of `Canvas` on every series makes them
+   identical — so marks fall back to the system's own tokens and the borders
+   that separate them are made explicit.
+   -------------------------------------------------------------------------- */
+
+@media (forced-colors: active) {
+  .cd-bar,
+  .cd-seg,
+  .cd-map__dep {
+    forced-color-adjust: none;
+    stroke: CanvasText;
+    stroke-width: 1;
+  }
+
+  .cd-legend__key,
+  .cd-maplegend__key {
+    forced-color-adjust: none;
+    border: 1px solid CanvasText;
+  }
+
+  .cd-btn,
+  .cd-tool,
+  .cd-pager__btn {
+    border: 1px solid ButtonText;
+  }
+}

@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Política educativa · CEDE</title>
+    <meta name="description" content="Marco de política educativa demostrativo: qué es una política educativa, objetivos, principios, líneas estratégicas, mecanismos de seguimiento y agenda de políticas." />
+    <link rel="canonical" href="https://www.cede.example/politica-educativa.html" />
+
+    <!-- The Consejo Estratégico para el Desarrollo Educativo does not exist. A
+         demonstration of a public institution must never reach a search result
+         as a real one, so every page of the portal is noindex. -->
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#071e4a" />
+    <meta name="color-scheme" content="light" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Consejo Estratégico para el Desarrollo Educativo" />
+    <meta property="og:locale" content="es_HN" />
+    <meta property="og:title" content="Política educativa · CEDE" />
+    <meta property="og:description" content="Marco de política educativa demostrativo: qué es una política educativa, objetivos, principios, líneas estratégicas, mecanismos de seguimiento y agenda de políticas." />
+    <meta property="og:url" content="https://www.cede.example/politica-educativa.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Política educativa · CEDE" />
+    <meta name="twitter:description" content="Marco de política educativa demostrativo: qué es una política educativa, objetivos, principios, líneas estratégicas, mecanismos de seguimiento y agenda de políticas." />
+
+    <link rel="icon" href="../../favicon.ico" sizes="32x32" />
+
+    <link
+      rel="preload"
+      href="../../assets/fonts/ibm-plex-sans-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="../../assets/fonts/source-serif-4-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <link rel="stylesheet" href="../../dist/cede.css" />
+
+    <script type="application/ld+json">
+      {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Consejo Estratégico para el Desarrollo Educativo",
+            "alternateName": "CEDE",
+            "url": "https://www.cede.example/",
+            "description": "Entidad ficticia de coordinación educativa creada para esta demostración: articula instituciones, produce información pública y da seguimiento a la política educativa nacional.",
+            "disambiguatingDescription": "Entidad ficticia. Portal de demostración creado por CoreStruct; no representa a ninguna institución gubernamental real.",
+            "email": "contacto@cede.example",
+            "areaServed": "HN",
+            "knowsLanguage": [
+                  "es"
+            ]
+      }
+    </script>
+
+    <!-- Runs before first paint. Two jobs: apply the reader's saved
+         accessibility preferences so a high-contrast page never flashes in the
+         default palette, and mark the document scripted so the reveal system
+         may hide what it is about to animate — with a timer that un-marks it if
+         the behaviour module never loads, so nothing is left invisible. -->
+    <script>
+      (function () {
+        var root = document.documentElement;
+        root.classList.add("js");
+        try {
+          var contrast = localStorage.getItem("cede:contrast");
+          if (contrast === "high") root.dataset.contrast = "high";
+          var scale = localStorage.getItem("cede:scale");
+          if (scale) root.style.setProperty("--font-scale", scale);
+        } catch (error) {
+          /* Private mode, or storage disabled: the defaults are correct. */
+        }
+        setTimeout(function () {
+          if (!root.dataset.revealsReady) root.classList.remove("js");
+        }, 2500);
+      })();
+    </script>
+  </head>
+
+  <body>
+    <a class="cd-skip" href="#contenido">Saltar al contenido</a>
+
+    <svg class="cd-sprite" aria-hidden="true" focusable="false" width="0" height="0" style="position:absolute">
+      <defs><linearGradient id="cs-face-top" gradientUnits="userSpaceOnUse" x1="33.3" y1="8.9" x2="353.6" y2="94.7"><stop offset="0%" stop-color="#140538"/><stop offset="16.7%" stop-color="#191754"/><stop offset="33.3%" stop-color="#223e81"/><stop offset="50%" stop-color="#2c6fb2"/><stop offset="66.7%" stop-color="#359dda"/><stop offset="83.3%" stop-color="#3bbaf1"/><stop offset="100%" stop-color="#3eccfb"/></linearGradient></defs>
+    </svg>
+
+    <a class="cd-badge" href="../../index.html#proyectos">
+      <svg class="cd-badge__mark" viewBox="0 0 362 422" aria-hidden="true" focusable="false"><path class="cs-face cs-face--top" fill="url(#cs-face-top)" d="M10 98L17 92L181 1L188 3L354 96L353 99L200 186L185 179L173 181L166 186L11 98Z"/><path class="cs-face cs-face--right" fill="#3898d4" d="M188 421L188 373L190 371L320 295L320 248L318 248L188 324L188 217L198 211L202 203L202 197L358 111L361 109L361 165L233 234L233 275L361 200L361 321L189 421Z"/><path class="cs-face cs-face--left" fill="#253880" d="M1 107L160 195L166 210L176 216L176 252L174 252L42 176L42 294L114 336L154 359L154 297L176 309L176 422L2 321L1 108Z"/></svg>
+      <span class="cd-badge__tag">DEMO</span>
+      <span class="cd-badge__label">Entidad ficticia · no es un sitio oficial<span class="cd-badge__more"> · sitio de ejemplo de CoreStruct</span></span>
+    </a>
+
+    <header class="cd-header" data-header>
+      <div class="cd-topbar">
+        <div class="cd-shell cd-topbar__inner">
+          <p class="cd-topbar__notice"><span class="cd-topbar__dot"></span>Portal público · Concepto demostrativo</p>
+          <div class="cd-tools">
+            <div class="cd-tools__group" role="group" aria-label="Tamaño del texto">
+              <span class="cd-tools__label" aria-hidden="true">Texto</span>
+              <button class="cd-tool" type="button" data-scale="down" aria-label="Reducir el tamaño del texto">A−</button>
+              <button class="cd-tool" type="button" data-scale="reset" aria-label="Restablecer el tamaño del texto">A</button>
+              <button class="cd-tool" type="button" data-scale="up" aria-label="Aumentar el tamaño del texto">A+</button>
+            </div>
+            <div class="cd-tools__group">
+              <button class="cd-tool" type="button" data-contrast aria-pressed="false">Alto contraste</button>
+            </div>
+            <div class="cd-tools__group">
+              <span class="cd-tool" aria-hidden="true">ES</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="cd-identity">
+        <div class="cd-shell cd-identity__inner">
+<a class="cd-logo" href="index.html" aria-label="Consejo Estratégico para el Desarrollo Educativo, inicio"><svg class="cd-logo__mark" viewBox="0 0 44 44" aria-hidden="true" focusable="false"><rect x="1" y="1" width="42" height="42" rx="3" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.35"/><path d="M22 8 34 15v3H10v-3z" fill="currentColor"/><rect x="13" y="21" width="4" height="11" fill="currentColor"/><rect x="20" y="21" width="4" height="11" fill="currentColor"/><rect x="27" y="21" width="4" height="11" fill="currentColor"/><rect x="10" y="34" width="24" height="3" fill="currentColor"/></svg><span class="cd-logo__type"><span class="cd-logo__name">Consejo Estratégico<br />para el Desarrollo Educativo</span><span class="cd-logo__sub">Sistema Nacional de Información y Política Educativa</span></span></a>
+          <search class="cd-search" data-search>
+            <form class="cd-search__form" action="buscar.html" method="get" role="search">
+              <label class="cd-sr" for="cd-q">Buscar en el portal</label>
+              <div class="cd-search__field">
+                <svg class="cd-icon cd-search__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.2" cy="7.2" r="4.4"/><path d="m10.6 10.6 3 3"/></svg>
+                <input
+                  class="cd-search__input"
+                  id="cd-q"
+                  name="q"
+                  type="search"
+                  placeholder="Buscar indicadores, normativa, documentos o noticias"
+                  autocomplete="off"
+                  aria-describedby="cd-q-hint"
+                  aria-expanded="false"
+                  aria-controls="cd-suggest"
+                />
+                <button class="cd-search__submit" type="submit">Buscar</button>
+              </div>
+              <p class="cd-sr" id="cd-q-hint">
+                Los resultados se agrupan por indicadores, normativa, documentos, noticias y datos.
+              </p>
+            </form>
+            <div class="cd-suggest" id="cd-suggest" role="listbox" aria-label="Sugerencias" hidden></div>
+          </search>
+          <div class="cd-identity__end">
+            <a class="cd-btn cd-btn--solid" href="participacion.html">Participación ciudadana</a>
+          </div>
+        </div>
+      </div>
+      <div class="cd-navband">
+        <div class="cd-shell cd-navband__inner">
+          <nav class="cd-nav" aria-label="Navegación principal">
+            <ul class="cd-nav__list">
+            <li class="cd-nav__item" data-mega-item="institucion"><a class="cd-nav__link" href="institucion.html">Institución</a><button class="cd-nav__disc" type="button" aria-expanded="false" aria-controls="cd-mega-institucion" aria-label="Abrir el menú de Institución" data-mega-toggle="institucion"><svg class="cd-nav__caret" viewBox="0 0 12 8" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m1 2 5 5 5-5"/></svg></button></li>
+            <li class="cd-nav__item" data-mega-item="politica" aria-current="true"><a class="cd-nav__link" href="politica-educativa.html" aria-current="page">Política Educativa</a><button class="cd-nav__disc" type="button" aria-expanded="false" aria-controls="cd-mega-politica" aria-label="Abrir el menú de Política Educativa" data-mega-toggle="politica"><svg class="cd-nav__caret" viewBox="0 0 12 8" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m1 2 5 5 5-5"/></svg></button></li>
+            <li class="cd-nav__item"><a class="cd-nav__link" href="planificacion.html">Planificación</a></li>
+            <li class="cd-nav__item" data-mega-item="datos"><a class="cd-nav__link" href="datos.html">Datos e Indicadores</a><button class="cd-nav__disc" type="button" aria-expanded="false" aria-controls="cd-mega-datos" aria-label="Abrir el menú de Datos e Indicadores" data-mega-toggle="datos"><svg class="cd-nav__caret" viewBox="0 0 12 8" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m1 2 5 5 5-5"/></svg></button></li>
+            <li class="cd-nav__item" data-mega-item="normativa"><a class="cd-nav__link" href="normativa.html">Normativa</a><button class="cd-nav__disc" type="button" aria-expanded="false" aria-controls="cd-mega-normativa" aria-label="Abrir el menú de Normativa" data-mega-toggle="normativa"><svg class="cd-nav__caret" viewBox="0 0 12 8" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m1 2 5 5 5-5"/></svg></button></li>
+            <li class="cd-nav__item"><a class="cd-nav__link" href="programas.html">Programas</a></li>
+            <li class="cd-nav__item" data-mega-item="participacion"><a class="cd-nav__link" href="participacion.html">Participación</a><button class="cd-nav__disc" type="button" aria-expanded="false" aria-controls="cd-mega-participacion" aria-label="Abrir el menú de Participación" data-mega-toggle="participacion"><svg class="cd-nav__caret" viewBox="0 0 12 8" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m1 2 5 5 5-5"/></svg></button></li>
+            <li class="cd-nav__item"><a class="cd-nav__link" href="transparencia.html">Transparencia</a></li>
+            <li class="cd-nav__item"><a class="cd-nav__link" href="actualidad.html">Actualidad</a></li>
+            </ul>
+          </nav>
+          <div class="cd-navband__end">
+            <a class="cd-navband__link" href="contacto.html">Contacto</a>
+            <button
+              class="cd-burger"
+              type="button"
+              aria-expanded="false"
+              aria-controls="cd-panel"
+              aria-label="Abrir el menú"
+              data-panel-toggle
+            >
+              <span class="cd-burger__bar"></span>
+              <span class="cd-burger__bar"></span>
+            </button>
+          </div>
+        </div>
+        <div class="cd-mega" id="cd-mega-institucion" data-mega-panel="institucion" hidden>
+          <div class="cd-mega__inner">
+            <div class="cd-mega__intro">
+              <p class="cd-mega__title">Institución</p>
+              <p class="cd-mega__summary">Quiénes somos, qué hacemos y cómo se toman las decisiones.</p>
+            </div>
+            <div class="cd-mega__col"><p class="cd-mega__heading">El Consejo</p><a class="cd-mega__link" href="institucion.html#mandato">Mandato y funciones</a><a class="cd-mega__link" href="institucion.html#mision">Misión y visión</a><a class="cd-mega__link" href="institucion.html#principios">Principios</a><a class="cd-mega__link" href="institucion.html#historia">Historia institucional</a></div><div class="cd-mega__col"><p class="cd-mega__heading">Organización</p><a class="cd-mega__link" href="institucion.html#estructura">Estructura</a><a class="cd-mega__link" href="institucion.html#directorio">Directorio institucional</a><a class="cd-mega__link" href="institucion.html#red">Sistema educativo articulado</a><a class="cd-mega__link" href="contacto.html">Contacto</a></div>
+          </div>
+        </div>
+        <div class="cd-mega" id="cd-mega-politica" data-mega-panel="politica" hidden>
+          <div class="cd-mega__inner">
+            <div class="cd-mega__intro">
+              <p class="cd-mega__title">Política Educativa</p>
+              <p class="cd-mega__summary">El marco que orienta las decisiones del sistema educativo.</p>
+            </div>
+            <div class="cd-mega__col"><p class="cd-mega__heading">Marco</p><a class="cd-mega__link" href="politica-educativa.html#que-es">Qué es una política educativa</a><a class="cd-mega__link" href="politica-educativa.html#objetivos">Objetivos y principios</a><a class="cd-mega__link" href="politica-educativa.html#lineas">Líneas estratégicas</a><a class="cd-mega__link" href="politica-educativa.html#seguimiento">Mecanismos de seguimiento</a></div><div class="cd-mega__col"><p class="cd-mega__heading">Agenda</p><a class="cd-mega__link" href="politica-educativa.html#agenda">Políticas vigentes</a><a class="cd-mega__link" href="politica-educativa.html#agenda">En formulación</a><a class="cd-mega__link" href="participacion.html">En consulta pública</a><a class="cd-mega__link" href="biblioteca.html">Documentos de política</a></div>
+          </div>
+        </div>
+        <div class="cd-mega" id="cd-mega-datos" data-mega-panel="datos" hidden>
+          <div class="cd-mega__inner">
+            <div class="cd-mega__intro">
+              <p class="cd-mega__title">Datos e Indicadores</p>
+              <p class="cd-mega__summary">El estado del sistema educativo, medido y publicado.</p>
+            </div>
+            <div class="cd-mega__col"><p class="cd-mega__heading">Tableros</p><a class="cd-mega__link" href="datos.html#panorama">Panorama nacional</a><a class="cd-mega__link" href="datos.html#matricula">Matrícula</a><a class="cd-mega__link" href="datos.html#cobertura">Cobertura y acceso</a><a class="cd-mega__link" href="datos.html#permanencia">Permanencia</a><a class="cd-mega__link" href="datos.html#docentes">Docentes</a></div><div class="cd-mega__col"><p class="cd-mega__heading"> </p><a class="cd-mega__link" href="datos.html#infraestructura">Infraestructura</a><a class="cd-mega__link" href="datos.html#tecnica">Educación técnica</a><a class="cd-mega__link" href="datos.html#inclusion">Inclusión</a><a class="cd-mega__link" href="datos.html#financiamiento">Financiamiento</a><a class="cd-mega__link" href="datos.html#ods4">ODS 4</a></div><div class="cd-mega__col"><p class="cd-mega__heading">Herramientas</p><a class="cd-mega__link" href="datos/comparador.html">Comparar territorios</a><a class="cd-mega__link" href="datos-abiertos.html">Catálogo de datos abiertos</a><a class="cd-mega__link" href="datos/metodologia.html">Metodología de datos</a></div><div class="cd-mega__feature"><p class="cd-mega__feature-title">Observatorio Educativo</p><p class="cd-mega__feature-text">Diez tableros, dieciocho departamentos y series desde 2019.</p><a class="cd-link" href="datos.html">Abrir</a></div>
+          </div>
+        </div>
+        <div class="cd-mega" id="cd-mega-normativa" data-mega-panel="normativa" hidden>
+          <div class="cd-mega__inner">
+            <div class="cd-mega__intro">
+              <p class="cd-mega__title">Normativa</p>
+              <p class="cd-mega__summary">El marco jurídico y las decisiones del Consejo, en un solo lugar.</p>
+            </div>
+            <div class="cd-mega__col"><p class="cd-mega__heading">Por tipo</p><a class="cd-mega__link" href="normativa.html#ley">Leyes</a><a class="cd-mega__link" href="normativa.html#reglamento">Reglamentos</a><a class="cd-mega__link" href="normativa.html#acuerdo">Acuerdos</a></div><div class="cd-mega__col"><p class="cd-mega__heading"> </p><a class="cd-mega__link" href="normativa.html#politica">Políticas</a><a class="cd-mega__link" href="normativa.html#lineamiento">Lineamientos</a><a class="cd-mega__link" href="resoluciones.html">Resoluciones</a></div><div class="cd-mega__col"><p class="cd-mega__heading">Consulta</p><a class="cd-mega__link" href="normativa.html#buscador">Buscador de normativa</a><a class="cd-mega__link" href="resoluciones.html">Resoluciones y acuerdos</a><a class="cd-mega__link" href="biblioteca.html">Biblioteca digital</a></div>
+          </div>
+        </div>
+        <div class="cd-mega" id="cd-mega-participacion" data-mega-panel="participacion" hidden>
+          <div class="cd-mega__inner">
+            <div class="cd-mega__intro">
+              <p class="cd-mega__title">Participación</p>
+              <p class="cd-mega__summary">Los espacios donde la ciudadanía incide en la política educativa.</p>
+            </div>
+            <div class="cd-mega__col"><p class="cd-mega__heading">Mecanismos</p><a class="cd-mega__link" href="participacion.html#consultas">Consultas públicas</a><a class="cd-mega__link" href="participacion.html#foros">Foros y mesas de diálogo</a><a class="cd-mega__link" href="participacion.html#encuestas">Encuestas</a><a class="cd-mega__link" href="participacion.html#audiencias">Audiencias</a></div><div class="cd-mega__col"><p class="cd-mega__heading">Agenda</p><a class="cd-mega__link" href="actualidad.html#agenda">Calendario institucional</a><a class="cd-mega__link" href="participacion.html#como">Cómo participar</a><a class="cd-mega__link" href="transparencia.html#solicitudes">Solicitudes de información</a></div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="cd-panel" id="cd-panel" data-panel>
+      <div class="cd-panel__top">
+        <p class="cd-label"><span>Menú</span></p>
+        <button class="cd-panel__close" type="button" data-panel-close>Cerrar</button>
+      </div>
+        <div class="cd-panel__group"><a class="cd-panel__link" href="institucion.html">Institución<b>01</b></a><div class="cd-panel__sub"><a href="institucion.html#mandato">Mandato y funciones</a><a href="institucion.html#mision">Misión y visión</a><a href="institucion.html#principios">Principios</a><a href="institucion.html#historia">Historia institucional</a><a href="institucion.html#estructura">Estructura</a><a href="institucion.html#directorio">Directorio institucional</a></div></div>
+        <div class="cd-panel__group"><a class="cd-panel__link" href="politica-educativa.html">Política Educativa<b>02</b></a><div class="cd-panel__sub"><a href="politica-educativa.html#que-es">Qué es una política educativa</a><a href="politica-educativa.html#objetivos">Objetivos y principios</a><a href="politica-educativa.html#lineas">Líneas estratégicas</a><a href="politica-educativa.html#seguimiento">Mecanismos de seguimiento</a><a href="politica-educativa.html#agenda">Políticas vigentes</a><a href="politica-educativa.html#agenda">En formulación</a></div></div>
+        <div class="cd-panel__group"><a class="cd-panel__link" href="planificacion.html">Planificación<b>03</b></a></div>
+        <div class="cd-panel__group"><a class="cd-panel__link" href="datos.html">Datos e Indicadores<b>04</b></a><div class="cd-panel__sub"><a href="datos.html#panorama">Panorama nacional</a><a href="datos.html#matricula">Matrícula</a><a href="datos.html#cobertura">Cobertura y acceso</a><a href="datos.html#permanencia">Permanencia</a><a href="datos.html#docentes">Docentes</a><a href="datos.html#infraestructura">Infraestructura</a></div></div>
+        <div class="cd-panel__group"><a class="cd-panel__link" href="normativa.html">Normativa<b>05</b></a><div class="cd-panel__sub"><a href="normativa.html#ley">Leyes</a><a href="normativa.html#reglamento">Reglamentos</a><a href="normativa.html#acuerdo">Acuerdos</a><a href="normativa.html#politica">Políticas</a><a href="normativa.html#lineamiento">Lineamientos</a><a href="resoluciones.html">Resoluciones</a></div></div>
+        <div class="cd-panel__group"><a class="cd-panel__link" href="programas.html">Programas<b>06</b></a></div>
+        <div class="cd-panel__group"><a class="cd-panel__link" href="participacion.html">Participación<b>07</b></a><div class="cd-panel__sub"><a href="participacion.html#consultas">Consultas públicas</a><a href="participacion.html#foros">Foros y mesas de diálogo</a><a href="participacion.html#encuestas">Encuestas</a><a href="participacion.html#audiencias">Audiencias</a><a href="actualidad.html#agenda">Calendario institucional</a><a href="participacion.html#como">Cómo participar</a></div></div>
+        <div class="cd-panel__group"><a class="cd-panel__link" href="transparencia.html">Transparencia<b>08</b></a></div>
+        <div class="cd-panel__group"><a class="cd-panel__link" href="actualidad.html">Actualidad<b>09</b></a></div>
+      <div class="cd-panel__actions">
+        <a class="cd-btn cd-btn--solid" href="participacion.html">Participación ciudadana</a>
+        <a class="cd-btn cd-btn--ghost" href="buscar.html">Buscar en el portal</a>
+        <a class="cd-btn cd-btn--ghost" href="contacto.html">Contacto</a>
+      </div>
+
+      <!-- The same controls the institutional bar carries. On a phone that bar
+           folds away on scroll, and accessibility settings that are only
+           reachable at the top of a long page are settings nobody uses. -->
+      <div class="cd-panel__a11y">
+        <p class="cd-label"><span>Accesibilidad</span></p>
+        <div class="cd-panel__tools">
+          <div class="cd-tools__group" role="group" aria-label="Tamaño del texto">
+            <span class="cd-tools__label" aria-hidden="true">Texto</span>
+            <button class="cd-tool" type="button" data-scale="down" aria-label="Reducir el tamaño del texto">A−</button>
+            <button class="cd-tool" type="button" data-scale="reset" aria-label="Restablecer el tamaño del texto">A</button>
+            <button class="cd-tool" type="button" data-scale="up" aria-label="Aumentar el tamaño del texto">A+</button>
+          </div>
+          <button class="cd-tool" type="button" data-contrast aria-pressed="false">Alto contraste</button>
+        </div>
+      </div>
+    </div>
+
+    <main id="contenido">
+      <section class="cd-pagehero"><div class="cd-shell"><div class="cd-pagehero__inner"><nav aria-label="Ruta" class="cd-pagehero__crumbs"><ol class="cd-crumbs"><li><a href="index.html">Inicio</a></li><li aria-current="page">Política educativa</li></ol></nav><div><p class="cd-label"><span>Política educativa</span></p><h1 class="cd-pagehero__title">Decidir con método, no con impulso.</h1></div><div><p class="cd-pagehero__lead">Una política educativa es el marco que ordena las decisiones del sistema durante años: qué se busca, con qué principios, por qué medios y cómo se sabrá si funcionó.</p></div><dl class="cd-pagehero__meta"><div><dt>Marco vigente</dt><dd>Política Educativa Nacional 2026–2035</dd></div><div><dt>Consulta previa</dt><dd>Obligatoria para toda política nacional</dd></div><div><dt>Seguimiento</dt><dd>Informe semestral público</dd></div></dl></div></div></section>
+
+      <section class="cd-section" id="que-es">
+        <div class="cd-shell">
+          <header class="cd-head cd-head--split" data-reveal="fade"><p class="cd-label"><span class="cd-label__index">01</span><span>Qué es una política educativa</span></p><h2 class="cd-head__title">Una política no es un plan, ni un programa.</h2><div class="cd-head__aside"><p>La distinción no es académica: determina qué se puede exigir y durante cuánto tiempo.</p></div></header>
+          <div class="cd-prose cd-prose--lead"><p class="cd-prose__p">Una política educativa no es un programa ni un plan de gobierno. Es el acuerdo estable que dice qué problema público se está atendiendo, qué se considera un buen resultado y qué instrumentos se van a usar para alcanzarlo. Los planes la traducen en metas con fecha; los programas la ejecutan en un territorio concreto.</p><p class="cd-prose__p">Esa distinción tiene una consecuencia práctica: una política que cambia con cada administración no llega a producir efectos medibles, porque los ciclos educativos son más largos que los ciclos políticos. Por eso el Consejo formula la política con consulta previa, la publica completa y la somete a seguimiento con indicadores acordados de antemano.</p></div>
+        </div>
+      </section>
+
+      <section class="cd-section cd-section--surface" id="objetivos">
+        <div class="cd-shell">
+          <header class="cd-head" data-reveal="fade"><p class="cd-label"><span class="cd-label__index">02</span><span>Objetivos</span></p><h2 class="cd-head__title">Cinco objetivos de política.</h2></header>
+          <div class="cd-rows" data-reveal-group>
+            <div class="cd-row-item" data-reveal="fade"><p class="cd-row-item__index">01</p><p class="cd-row-item__title">Aprendizaje</p><div><p class="cd-row-item__text">Que cada estudiante alcance los aprendizajes que su nivel promete, y que eso se pueda demostrar.</p></div></div><div class="cd-row-item" data-reveal="fade"><p class="cd-row-item__index">02</p><p class="cd-row-item__title">Trayectoria</p><div><p class="cd-row-item__text">Que quien entra al sistema lo recorra completo, sin salidas que dependan del territorio.</p></div></div><div class="cd-row-item" data-reveal="fade"><p class="cd-row-item__index">03</p><p class="cd-row-item__title">Equidad</p><div><p class="cd-row-item__text">Que la brecha entre territorios se reduzca de forma sostenida y verificable.</p></div></div><div class="cd-row-item" data-reveal="fade"><p class="cd-row-item__index">04</p><p class="cd-row-item__title">Pertinencia</p><div><p class="cd-row-item__text">Que la formación se corresponda con lo que la vida y el trabajo exigen hoy.</p></div></div><div class="cd-row-item" data-reveal="fade"><p class="cd-row-item__index">05</p><p class="cd-row-item__title">Capacidad institucional</p><div><p class="cd-row-item__text">Que el sistema sepa medirse, planificar y rendir cuentas de lo que hace.</p></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cd-section" id="principios-politica">
+        <div class="cd-shell">
+          <header class="cd-head" data-reveal="fade"><p class="cd-label"><span class="cd-label__index">03</span><span>Principios</span></p><h2 class="cd-head__title">Cómo se formula y se aplica.</h2></header>
+          <div class="cd-grid cd-grid--3" data-reveal-group>
+            <div class="cd-card" data-reveal="rise"><p class="cd-card__title cd-card__title--serif">Universalidad</p><p class="cd-card__text">La política se dirige a todo el sistema, no a un segmento seleccionado.</p></div><div class="cd-card" data-reveal="rise"><p class="cd-card__title cd-card__title--serif">Gradualidad</p><p class="cd-card__text">Los cambios se aplican por etapas verificables, con recursos comprometidos por etapa.</p></div><div class="cd-card" data-reveal="rise"><p class="cd-card__title cd-card__title--serif">Evidencia</p><p class="cd-card__text">Toda línea de acción declara el indicador que permitirá evaluarla.</p></div><div class="cd-card" data-reveal="rise"><p class="cd-card__title cd-card__title--serif">Participación</p><p class="cd-card__text">La consulta previa es parte de la formulación, no un trámite posterior.</p></div><div class="cd-card" data-reveal="rise"><p class="cd-card__title cd-card__title--serif">Transparencia</p><p class="cd-card__text">El expediente completo de la política es público desde su borrador.</p></div><div class="cd-card" data-reveal="rise"><p class="cd-card__title cd-card__title--serif">Continuidad</p><p class="cd-card__text">La política se formula para un horizonte de diez años y se revisa, no se reemplaza.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cd-section cd-section--sunken" id="lineas">
+        <div class="cd-shell">
+          <header class="cd-head cd-head--split" data-reveal="fade"><p class="cd-label"><span class="cd-label__index">04</span><span>Líneas estratégicas</span></p><h2 class="cd-head__title">Seis líneas, cada una con su indicador.</h2><div class="cd-head__aside"><p>Una línea de acción que no declara cómo se medirá no puede evaluarse.</p></div></header>
+          <div class="cd-rows" data-reveal-group>
+            <div class="cd-row-item" data-reveal="fade"><p class="cd-row-item__index">01</p><p class="cd-row-item__title">Aprendizajes fundamentales</p><div><p class="cd-row-item__text">Evaluación periódica de los aprendizajes, materiales alineados al currículo y apoyo focalizado a los centros con resultados más bajos.</p><p class="cd-row-item__meta">Indicador de seguimiento: Tasa de finalización de educación básica</p></div></div><div class="cd-row-item" data-reveal="fade"><p class="cd-row-item__index">02</p><p class="cd-row-item__title">Trayectoria completa</p><div><p class="cd-row-item__text">Intervención en los puntos de fuga del sistema, con especial atención a la transición entre educación básica y media.</p><p class="cd-row-item__meta">Indicador de seguimiento: Tasa de transición a educación media</p></div></div><div class="cd-row-item" data-reveal="fade"><p class="cd-row-item__index">03</p><p class="cd-row-item__title">Equidad territorial</p><div><p class="cd-row-item__text">Focalización de la inversión en los territorios con menor cobertura y ampliación de la oferta local donde hoy termina en noveno grado.</p><p class="cd-row-item__meta">Indicador de seguimiento: Brecha de cobertura urbano–rural</p></div></div><div class="cd-row-item" data-reveal="fade"><p class="cd-row-item__index">04</p><p class="cd-row-item__title">Docentes</p><div><p class="cd-row-item__text">Formación inicial vinculada a la práctica, ciclo de formación continua reconocido y condiciones de ejercicio en centros de difícil acceso.</p><p class="cd-row-item__meta">Indicador de seguimiento: Docentes con formación acreditada</p></div></div><div class="cd-row-item" data-reveal="fade"><p class="cd-row-item__index">05</p><p class="cd-row-item__title">Educación técnica</p><div><p class="cd-row-item__text">Actualización continua de la oferta con el sector productivo y seguimiento de la inserción laboral de las personas egresadas.</p><p class="cd-row-item__meta">Indicador de seguimiento: Inserción laboral de egresados técnicos</p></div></div><div class="cd-row-item" data-reveal="fade"><p class="cd-row-item__index">06</p><p class="cd-row-item__title">Información pública</p><div><p class="cd-row-item__text">Base estadística única, abierta y documentada como insumo obligatorio de toda decisión educativa.</p><p class="cd-row-item__meta">Indicador de seguimiento: Conjuntos de datos publicados con metodología</p></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cd-section" id="seguimiento">
+        <div class="cd-shell">
+          <header class="cd-head cd-head--split" data-reveal="fade"><p class="cd-label"><span class="cd-label__index">05</span><span>Mecanismos de seguimiento</span></p><h2 class="cd-head__title">Cómo se sabrá si la política funcionó.</h2><div class="cd-head__aside"><div class="cd-actions" style="margin-top:1rem"><a class="cd-btn cd-btn--ghost" href="planificacion.html#monitor">Ver el monitor del plan<svg class="cd-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h11M9.5 4.5 13 8l-3.5 3.5"/></svg></a></div></div></header>
+          <div class="cd-prose cd-prose--lead"><p class="cd-prose__p">El seguimiento de la política tiene tres piezas. La primera es el conjunto de indicadores estratégicos, acordados antes de aplicar la política y publicados con su metodología. La segunda es el informe semestral de avance, que compara lo alcanzado con lo programado y explica las desviaciones. La tercera es la evaluación intermedia, que puede modificar metas si la evidencia lo justifica —y que deja constancia pública de por qué.</p></div>
+        </div>
+      </section>
+
+      <section class="cd-section cd-section--surface" id="agenda">
+        <div class="cd-shell">
+          <header class="cd-head cd-head--split" data-reveal="fade"><p class="cd-label"><span class="cd-label__index">06</span><span>Agenda de políticas</span></p><h2 class="cd-head__title">Qué está vigente, qué se está formulando y qué está en consulta.</h2><div class="cd-head__aside"><p>Publicar la agenda permite que una política se conozca antes de decidirse, no después de aprobada.</p></div></header>
+          <div class="cd-docs" data-reveal-group><div class="cd-doc" data-reveal="fade"><p class="cd-doc__code">CEDE-P-001</p><div><p class="cd-doc__title">Política Educativa Nacional 2026–2035</p><p class="cd-doc__text">Marco general de la política educativa para la década, con cinco líneas estratégicas y quince indicadores.</p></div><div class="cd-doc__meta"><span class="cd-state cd-state--ok"><svg class="cd-icon cd-state__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>Vigente</span><span>Marzo 2026</span></div></div><div class="cd-doc" data-reveal="fade"><p class="cd-doc__code">CEDE-P-002</p><div><p class="cd-doc__title">Política de Inclusión y Equidad Educativa</p><p class="cd-doc__text">En seguimiento con informe anual; su indicador principal —la brecha urbano–rural— avanza por debajo de lo previsto.</p></div><div class="cd-doc__meta"><span class="cd-state cd-state--info"><svg class="cd-icon cd-state__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h11M9.5 4.5 13 8l-3.5 3.5"/></svg>En seguimiento</span><span>Junio 2025</span></div></div><div class="cd-doc" data-reveal="fade"><p class="cd-doc__code">CEDE-P-003</p><div><p class="cd-doc__title">Política de Transformación Digital Educativa</p><p class="cd-doc__text">En seguimiento; el levantamiento de conectividad operativa es su fuente de verificación anual.</p></div><div class="cd-doc__meta"><span class="cd-state cd-state--info"><svg class="cd-icon cd-state__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h11M9.5 4.5 13 8l-3.5 3.5"/></svg>En seguimiento</span><span>Octubre 2025</span></div></div><div class="cd-doc" data-reveal="fade"><p class="cd-doc__code">CEDE-P-004</p><div><p class="cd-doc__title">Política Nacional de Desarrollo Docente</p><p class="cd-doc__text">Vigente y con marco de competencias adoptado en febrero de 2026.</p></div><div class="cd-doc__meta"><span class="cd-state cd-state--ok"><svg class="cd-icon cd-state__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>Vigente</span><span>Noviembre 2024</span></div></div><div class="cd-doc" data-reveal="fade"><p class="cd-doc__code">LIN-CEDE-2026-009</p><div><p class="cd-doc__title">Lineamientos para el fortalecimiento de la educación técnica</p><p class="cd-doc__text">En consulta pública hasta el 30 de septiembre de 2026. El expediente completo está disponible.</p></div><div class="cd-doc__meta"><span class="cd-state cd-state--warn"><svg class="cd-icon cd-state__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v6M5 8h6"/></svg>En consulta pública</span><span>Julio 2026</span></div></div><div class="cd-doc" data-reveal="fade"><p class="cd-doc__code">CEDE-P-005</p><div><p class="cd-doc__title">Política de Primera Infancia Educativa</p><p class="cd-doc__text">En formulación. La consulta pública está prevista para el primer trimestre de 2027.</p></div><div class="cd-doc__meta"><span class="cd-state cd-state--info"><svg class="cd-icon cd-state__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11.2 2.8 13.2 4.8 5.5 12.5 2.8 13.2l.7-2.7z"/></svg>En formulación</span><span>Mayo 2026</span></div></div><div class="cd-doc" data-reveal="fade"><p class="cd-doc__code">CEDE-P-006</p><div><p class="cd-doc__title">Política de Evaluación de Aprendizajes</p><p class="cd-doc__text">En formulación a partir de los resultados de la evaluación nacional de 2024.</p></div><div class="cd-doc__meta"><span class="cd-state cd-state--info"><svg class="cd-icon cd-state__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11.2 2.8 13.2 4.8 5.5 12.5 2.8 13.2l.7-2.7z"/></svg>En formulación</span><span>Agosto 2026</span></div></div></div>
+          <div class="cd-actions" style="margin-top:1.5rem">
+            <a class="cd-btn cd-btn--ghost" href="biblioteca.html">Documentos de política</a>
+            <a class="cd-btn cd-btn--ghost" href="participacion.html#consultas">Consultas públicas abiertas</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+      <footer class="cd-footer" id="aviso">
+        <div class="cd-shell">
+          <div class="cd-footer__top">
+            <div class="cd-footer__brand">
+<a class="cd-logo" href="index.html"><svg class="cd-logo__mark" viewBox="0 0 44 44" aria-hidden="true" focusable="false"><rect x="1" y="1" width="42" height="42" rx="3" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.35"/><path d="M22 8 34 15v3H10v-3z" fill="currentColor"/><rect x="13" y="21" width="4" height="11" fill="currentColor"/><rect x="20" y="21" width="4" height="11" fill="currentColor"/><rect x="27" y="21" width="4" height="11" fill="currentColor"/><rect x="10" y="34" width="24" height="3" fill="currentColor"/></svg><span class="cd-logo__type"><span class="cd-logo__name">Consejo Estratégico<br />para el Desarrollo Educativo</span><span class="cd-logo__sub">Sistema Nacional de Información y Política Educativa</span></span></a>
+              <p class="cd-footer__pitch">Información pública, política educativa y planificación nacional en un solo sistema. Portal demostrativo de una entidad ficticia.</p>
+              <p class="cd-footer__pitch">Avenida de la República 1200, Tegucigalpa, M.D.C. · Dirección demostrativa<br />
+              contacto@cede.example · Correo demostrativo</p>
+            </div>
+            <div class="cd-footer__columns">
+            <div><p class="cd-footer__heading">Institución</p><a class="cd-footer__link" href="institucion.html#mandato">Mandato y funciones</a><a class="cd-footer__link" href="institucion.html#estructura">Estructura</a><a class="cd-footer__link" href="institucion.html#directorio">Directorio institucional</a><a class="cd-footer__link" href="contacto.html">Contacto</a></div>
+            <div><p class="cd-footer__heading">Política y planificación</p><a class="cd-footer__link" href="politica-educativa.html">Política educativa</a><a class="cd-footer__link" href="planificacion.html">Plan Nacional 2026–2035</a><a class="cd-footer__link" href="planificacion.html#monitor">Monitor del Plan</a><a class="cd-footer__link" href="programas.html">Programas</a></div>
+            <div><p class="cd-footer__heading">Datos</p><a class="cd-footer__link" href="datos.html">Observatorio Educativo</a><a class="cd-footer__link" href="datos/comparador.html">Comparar territorios</a><a class="cd-footer__link" href="datos-abiertos.html">Datos abiertos</a><a class="cd-footer__link" href="datos/metodologia.html">Metodología</a></div>
+            <div><p class="cd-footer__heading">Normativa</p><a class="cd-footer__link" href="normativa.html">Marco normativo</a><a class="cd-footer__link" href="resoluciones.html">Resoluciones y acuerdos</a><a class="cd-footer__link" href="biblioteca.html">Biblioteca digital</a></div>
+            <div><p class="cd-footer__heading">Participación</p><a class="cd-footer__link" href="participacion.html#consultas">Consultas públicas</a><a class="cd-footer__link" href="participacion.html#foros">Foros y mesas</a><a class="cd-footer__link" href="actualidad.html">Actualidad</a><a class="cd-footer__link" href="actualidad.html#agenda">Agenda</a></div>
+            <div><p class="cd-footer__heading">Transparencia</p><a class="cd-footer__link" href="transparencia.html">Portal de transparencia</a><a class="cd-footer__link" href="transparencia.html#presupuesto">Presupuesto</a><a class="cd-footer__link" href="transparencia.html#rendicion">Rendición de cuentas</a><a class="cd-footer__link" href="transparencia.html#solicitudes">Solicitudes de información</a></div>
+            </div>
+          </div>
+
+          <nav class="cd-footer__service" aria-label="Servicios del portal"><a href="buscar.html#mapa">Mapa del sitio</a><a href="#aviso">Política de privacidad</a><a href="#aviso">Accesibilidad</a><a href="#aviso">Términos de uso</a><a href="datos-abiertos.html">Datos abiertos</a><a href="contacto.html#formulario">Reportar un problema técnico</a></nav>
+
+          <dl class="cd-footer__meta">
+            <div><dt>Última actualización</dt><dd>26 de agosto de 2026</dd></div>
+            <div><dt>Versión</dt><dd>Versión del portal 1.0.0 · demostración</dd></div>
+            <div><dt>Licencia de datos</dt><dd>Datos abiertos con atribución</dd></div>
+          </dl>
+        </div>
+
+        <div class="cd-footer__notice">
+          <div class="cd-shell cd-footer__notice-inner">
+            <p>Concepto de portafolio. Entidad ficticia. Este sitio no representa a ninguna institución gubernamental real. Las cifras presentadas en este prototipo son simulaciones creadas exclusivamente para demostrar las capacidades de la plataforma.</p>
+            <p>&copy; <span data-current-year>2026</span> Consejo Estratégico para el Desarrollo Educativo</p>
+          </div>
+        </div>
+      </footer>
+
+    <div class="cd-tip" data-tip-box role="status" aria-live="polite"></div>
+
+    <script type="module" src="../../src/scripts/cede/main.js"></script>
+  </body>
+</html>

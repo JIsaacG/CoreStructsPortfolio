@@ -1,0 +1,185 @@
+/* =============================================================================
+   CEDE — design tokens
+
+   One institutional blue governs everything. The palette below is the brief's
+   navy and its derivations, plus the three chart hues and the four status
+   colours; nothing outside this file may write a colour literal.
+
+   Two of the tokens are controlled by the reader rather than by the design:
+   `--font-scale` (the A- / A / A+ control) and the `[data-contrast="high"]`
+   block at the bottom. Both are applied to the root element before first paint
+   by a script in the head, so a saved preference never flashes.
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  /* --- Institutional blue ------------------------------------------------ */
+  --navy-900: #071e4a;   /* the deepest ground: hero, institutional bar       */
+  --navy-800: #092b70;   /* dark surfaces, footer                            */
+  --navy: #0d3b99;       /* THE brand colour: nav, links, primary marks       */
+  --navy-600: #315fac;   /* secondary marks, hover on dark                   */
+  --navy-200: #c3d4ee;   /* rules on light blue                              */
+  --navy-100: #eaf0fa;   /* tinted surfaces, selected rows                   */
+
+  /* --- Neutrals ---------------------------------------------------------- */
+  --white: #ffffff;
+  --page: #f6f8fc;       /* the institutional background                     */
+  --surface: var(--white);
+  --surface-sunken: #eff3f9;
+  --border: #dce3ee;
+  --border-strong: #bcc7d8;
+  --ink: #172033;        /* body and headings                                */
+  --ink-soft: #3b475c;
+  --ink-muted: #5d6878;  /* secondary text — 4.9:1 on --page                 */
+
+  /* --- Chart palette ------------------------------------------------------
+     Validated, not eyeballed: the three categorical hues clear ΔE 13.7 under
+     protanopia/deuteranopia and 21.6 under normal vision on white, all-pairs;
+     the five sequential steps are one hue, monotone in lightness, with the
+     light end at 2.23:1 against the surface. Changing any of these values
+     means re-running the validator, not adjusting by eye. */
+  --c1: #2456ce;
+  --c2: #b45309;
+  --c3: #0a8f86;
+  --step-0: #8fb0de;
+  --step-1: #6e94d0;
+  --step-2: #4b72bc;
+  --step-3: #2a54a6;
+  --step-4: #0d3b99;
+  --step-none: #e4e9f0;  /* no data — never a value on the ramp              */
+
+  /* --- Status ------------------------------------------------------------
+     Reserved meanings, never reused as a fourth series, and never the only
+     channel: every status ships with a word and an icon. All four clear 6:1
+     as text on the page. */
+  --ok: #0f6b3f;
+  --info: var(--navy);
+  --warn: #8a5200;
+  --bad: #a8261e;
+  --ok-bg: #e8f3ec;
+  --info-bg: var(--navy-100);
+  --warn-bg: #fbf1e3;
+  --bad-bg: #fbeceb;
+
+  /* --- Typography ---------------------------------------------------------
+     Source Serif 4 for what the institution *says* — headlines, the mandate,
+     editorial openings. IBM Plex Sans for everything the institution *does* —
+     navigation, tables, dashboards, forms, every number. */
+  --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
+  /* The reader's size control multiplies the root, so every rem below follows
+     — including the ones inside charts and tables. */
+  --font-scale: 1;
+
+  --t-2xs: 0.6875rem;
+  --t-xs: 0.75rem;
+  --t-sm: 0.8125rem;
+  --t-base: 0.9375rem;
+  --t-md: 1rem;
+  --t-lg: 1.125rem;
+  --t-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --t-2xl: clamp(1.5rem, 1.28rem + 1vw, 2.125rem);
+  --t-3xl: clamp(1.875rem, 1.5rem + 1.7vw, 2.875rem);
+  --t-4xl: clamp(2.25rem, 1.6rem + 2.9vw, 4rem);
+  --t-figure: clamp(2rem, 1.5rem + 2.2vw, 3.25rem);
+
+  --lead-tight: 1.08;
+  --lead-title: 1.18;
+  --lead-body: 1.62;
+  --track-label: 0.14em;
+  --track-caps: 0.08em;
+
+  /* --- Shape --------------------------------------------------------------
+     A public register is drawn with rules, not with rounded cards. Nothing in
+     the portal exceeds 10px, and most of it sits at 2–3. */
+  --r-xs: 2px;
+  --r-sm: 3px;
+  --r-md: 6px;
+  --r-lg: 10px;
+
+  /* --- Rhythm ------------------------------------------------------------ */
+  --s-3xs: 0.25rem;
+  --s-2xs: 0.5rem;
+  --s-xs: 0.75rem;
+  --s-sm: 1rem;
+  --s-md: 1.5rem;
+  --s-lg: 2rem;
+  --s-xl: 3rem;
+  --s-2xl: 4rem;
+  --s-3xl: clamp(3.5rem, 2rem + 6vw, 6.5rem);
+
+  --shell: 78rem;
+  --shell-wide: 88rem;
+  --shell-narrow: 46rem;
+  --gutter: clamp(1rem, 0.4rem + 2.4vw, 2.5rem);
+
+  /* --- Elevation ---------------------------------------------------------
+     Two shadows in the whole system, both for things that float above the
+     page by definition: a menu and a tooltip. Nothing else is raised. */
+  --shadow-menu: 0 16px 40px rgb(7 30 74 / 0.13), 0 2px 6px rgb(7 30 74 / 0.08);
+  --shadow-tip: 0 6px 20px rgb(7 30 74 / 0.22);
+
+  /* --- Motion ------------------------------------------------------------- */
+  --duration-fast: 160ms;
+  --duration: 300ms;
+  --duration-reveal: 620ms;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out: cubic-bezier(0.33, 1, 0.68, 1);
+  /* The shared `motion.css` is the portfolio's, and it reads these three by
+     name. They are declared here rather than forked so the reveal system stays
+     one implementation across every site in the repository. */
+  --duration-base: 240ms;
+  --duration-slow: 520ms;
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+
+  --layer-header: 60;
+  --layer-menu: 70;
+  --layer-tip: 90;
+}
+
+/* -----------------------------------------------------------------------------
+   High contrast
+
+   Not a dark mode and not a filter: a re-declaration of the same tokens at
+   maximum separation. Borders become ink, tinted surfaces become white, and the
+   chart ramp is re-cut so its five steps stay distinguishable when the reader
+   has told us that subtle steps are not.
+   -------------------------------------------------------------------------- */
+
+[data-contrast="high"] {
+  --page: #ffffff;
+  --surface: #ffffff;
+  --surface-sunken: #ffffff;
+  --border: #1b1b1b;
+  --border-strong: #000000;
+  --ink: #000000;
+  --ink-soft: #000000;
+  --ink-muted: #1f2937;
+  --navy: #00297a;
+  --navy-600: #00297a;
+  --navy-100: #ffffff;
+  --navy-200: #000000;
+
+  --c1: #00297a;
+  --c2: #7a3400;
+  --c3: #005c55;
+  --step-0: #d6e0f2;
+  --step-1: #93aede;
+  --step-2: #4f77c0;
+  --step-3: #1f4da0;
+  --step-4: #00297a;
+  --step-none: #ffffff;
+
+  --ok: #005c2e;
+  --warn: #6b3f00;
+  --bad: #8c1008;
+  --ok-bg: #ffffff;
+  --info-bg: #ffffff;
+  --warn-bg: #ffffff;
+  --bad-bg: #ffffff;
+
+  --shadow-menu: 0 0 0 2px #000000;
+  --shadow-tip: 0 0 0 2px #000000;
+}

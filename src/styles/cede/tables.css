@@ -1,0 +1,413 @@
+/* =============================================================================
+   CEDE — tables, filters and forms
+
+   Tables are the primary instrument of a public register, not a fallback for
+   what a chart could not show, so they get the same care as the charts: sticky
+   header, sortable columns, aligned figures, a readable zebra, and a card
+   layout on narrow screens that keeps every cell labelled.
+   ========================================================================== */
+
+.cd-tablewrap {
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  overflow: auto;
+  max-height: 34rem;
+}
+
+.cd-tablewrap--short {
+  max-height: 22rem;
+}
+
+.cd-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: var(--t-sm);
+}
+
+.cd-table caption {
+  padding: var(--s-sm) var(--s-md);
+  text-align: left;
+  font-size: var(--t-xs);
+  color: var(--ink-muted);
+  border-bottom: 1px solid var(--border);
+}
+
+.cd-table th,
+.cd-table td {
+  padding: 0.55rem var(--s-sm);
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.cd-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--surface-sunken);
+  border-bottom: 1px solid var(--border-strong);
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  white-space: nowrap;
+}
+
+.cd-table tbody tr:hover {
+  background: var(--navy-100);
+}
+
+.cd-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.cd-table td.cd-num,
+.cd-table th.cd-num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.cd-table__name {
+  font-weight: 600;
+  color: var(--navy-900);
+}
+
+.cd-table tfoot td {
+  background: var(--surface-sunken);
+  font-weight: 600;
+  border-top: 1px solid var(--border-strong);
+}
+
+/* Sortable headers are buttons, so they work by keyboard and announce their
+   state — sorting a table with a click-handler on a `<th>` is not sortable for
+   everyone. */
+.cd-sort {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  border: 0;
+  background: none;
+  padding: 0;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.cd-sort:hover {
+  color: var(--navy);
+}
+
+.cd-sort__arrow {
+  opacity: 0.35;
+  transition: opacity var(--duration-fast) var(--ease-out), transform var(--duration-fast) var(--ease-out);
+}
+
+[aria-sort="ascending"] .cd-sort__arrow {
+  opacity: 1;
+  transform: rotate(180deg);
+}
+
+[aria-sort="descending"] .cd-sort__arrow {
+  opacity: 1;
+}
+
+[aria-sort] {
+  color: var(--navy);
+}
+
+/* --- Pagination -------------------------------------------------------------- */
+
+.cd-pager {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-2xs);
+  padding-top: var(--s-sm);
+  font-size: var(--t-xs);
+  color: var(--ink-muted);
+}
+
+.cd-pager__controls {
+  display: flex;
+  gap: var(--s-3xs);
+}
+
+.cd-pager__btn {
+  min-width: 2.25rem;
+  min-height: 2.25rem;
+  padding: 0 0.5rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-xs);
+  background: var(--surface);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cd-pager__btn:hover:not(:disabled) {
+  border-color: var(--navy);
+  color: var(--navy);
+}
+
+.cd-pager__btn[aria-current="true"] {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: #ffffff;
+}
+
+.cd-pager__btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* --- Narrow screens ----------------------------------------------------------
+   The table becomes a list of records. Every value keeps the label it had in
+   the header, which is what makes it readable rather than a column of orphaned
+   numbers.
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 46rem) {
+  .cd-table--stack thead {
+    display: none;
+  }
+
+  .cd-table--stack,
+  .cd-table--stack tbody,
+  .cd-table--stack tr,
+  .cd-table--stack td {
+    display: block;
+    width: 100%;
+  }
+
+  .cd-table--stack tr {
+    padding: var(--s-xs) 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cd-table--stack td {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--s-sm);
+    border: 0;
+    padding: 0.2rem var(--s-sm);
+  }
+
+  .cd-table--stack td::before {
+    content: attr(data-label);
+    font-size: var(--t-2xs);
+    font-weight: 600;
+    letter-spacing: var(--track-caps);
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    flex: none;
+  }
+
+  .cd-table--stack td.cd-num {
+    text-align: right;
+  }
+
+  .cd-tablewrap {
+    max-height: none;
+  }
+}
+
+/* --- Filter row above a listing ---------------------------------------------- */
+
+.cd-toolbar {
+  display: grid;
+  gap: var(--s-sm);
+  padding: var(--s-md);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  margin-bottom: var(--s-md);
+}
+
+.cd-toolbar__row {
+  display: grid;
+  gap: var(--s-2xs);
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+}
+
+.cd-toolbar__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-2xs);
+  padding-top: var(--s-2xs);
+  border-top: 1px solid var(--border);
+  font-size: var(--t-xs);
+  color: var(--ink-muted);
+}
+
+.cd-input {
+  width: 100%;
+  min-height: 2.5rem;
+  padding: 0.4rem 0.65rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-xs);
+  background: var(--surface);
+  font-size: var(--t-sm);
+}
+
+.cd-input:focus-visible {
+  border-color: var(--navy);
+  outline: 2px solid var(--navy);
+  outline-offset: 1px;
+}
+
+.cd-input::placeholder {
+  color: var(--ink-muted);
+}
+
+textarea.cd-input {
+  min-height: 8rem;
+  resize: vertical;
+}
+
+/* --- Segmented view switch ---------------------------------------------------- */
+
+.cd-switch {
+  display: inline-flex;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-xs);
+  overflow: hidden;
+}
+
+.cd-switch button {
+  min-height: 2.25rem;
+  padding: 0.3rem 0.7rem;
+  border: 0;
+  background: var(--surface);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  color: var(--ink-muted);
+  cursor: pointer;
+}
+
+.cd-switch button + button {
+  border-left: 1px solid var(--border-strong);
+}
+
+.cd-switch button[aria-pressed="true"] {
+  background: var(--navy);
+  color: #ffffff;
+}
+
+/* --- Forms --------------------------------------------------------------------- */
+
+.cd-form {
+  display: grid;
+  gap: var(--s-md);
+  padding: var(--s-lg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+}
+
+.cd-form__grid {
+  display: grid;
+  gap: var(--s-sm);
+}
+
+@media (min-width: 46rem) {
+  .cd-form__grid--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.cd-form__field {
+  display: grid;
+  gap: 4px;
+}
+
+.cd-form__field--wide {
+  grid-column: 1 / -1;
+}
+
+.cd-form__label {
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.cd-form__label .cd-req {
+  color: var(--bad);
+}
+
+.cd-form__hint {
+  font-size: var(--t-xs);
+  color: var(--ink-muted);
+}
+
+/* An error is announced in words next to the field, never as a red border
+   alone: colour is not a message. */
+.cd-form__error {
+  display: none;
+  align-items: center;
+  gap: 0.35em;
+  font-size: var(--t-xs);
+  font-weight: 600;
+  color: var(--bad);
+}
+
+.cd-form__field[data-invalid] .cd-form__error {
+  display: flex;
+}
+
+.cd-form__field[data-invalid] .cd-input {
+  border-color: var(--bad);
+  background: var(--bad-bg);
+}
+
+.cd-form__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-sm);
+  padding-top: var(--s-sm);
+  border-top: 1px solid var(--border);
+}
+
+.cd-form__status {
+  display: none;
+  gap: var(--s-2xs);
+  padding: var(--s-sm);
+  border: 1px solid var(--ok);
+  border-left-width: 3px;
+  border-radius: var(--r-xs);
+  background: var(--ok-bg);
+  font-size: var(--t-sm);
+  color: var(--ink);
+}
+
+.cd-form__status.is-visible {
+  display: grid;
+}
+
+.cd-form__status b {
+  color: var(--ok);
+}
+
+.cd-check {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.6rem;
+  align-items: start;
+  font-size: var(--t-sm);
+}
+
+.cd-check input {
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-top: 0.2rem;
+  accent-color: var(--navy);
+}

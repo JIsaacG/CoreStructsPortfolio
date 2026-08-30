@@ -5,12 +5,14 @@
   "description": "Sitio portfolio corporativo de CoreStruct — HTML, CSS y JavaScript estáticos, sin dependencias de runtime.",
   "type": "module",
   "scripts": {
-    "build": "npm run build:brand && npm run build:css && npm run build:content && npm run build:demos && npm run build:aurelis",
+    "build": "npm run build:brand && npm run build:css && npm run build:content && npm run build:demos && npm run build:aurelis && npm run build:cede",
     "build:brand": "node tools/build-brand.mjs",
     "build:css": "node tools/build-css.mjs",
     "build:content": "node tools/build-content.mjs",
     "build:demos": "node tools/build-demos.mjs",
     "build:aurelis": "node tools/build-aurelis.mjs",
+    "build:cede": "node tools/build-cede.mjs",
+    "build:map": "node tools/build-map.mjs",
     "check": "node tools/check.mjs",
     "serve": "node tools/serve.mjs",
     "start": "npm run build && npm run serve"

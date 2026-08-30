@@ -1,0 +1,861 @@
+/* =============================================================================
+   CEDE — the zones a page is built from
+
+   Quick access, figures, cards, editorial lists, the plan monitor, the network,
+   news, events, the task index. All of them share one construction: a grid of
+   hairlines rather than a field of floating cards. Where a border is enough,
+   there is no shadow; where a rule is enough, there is no border.
+   ========================================================================== */
+
+/* --- Quick access ----------------------------------------------------------
+   Six destinations as a numbered index, not as six product cards.
+   -------------------------------------------------------------------------- */
+
+.cd-access {
+  display: grid;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  overflow: hidden;
+}
+
+@media (min-width: 40rem) {
+  .cd-access {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 62rem) {
+  .cd-access {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.cd-access__item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0 var(--s-sm);
+  padding: var(--s-md);
+  background: var(--surface);
+  color: inherit;
+  text-decoration: none;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.cd-access__item:hover {
+  background: var(--navy-100);
+}
+
+.cd-access__index {
+  grid-row: span 2;
+  font-size: var(--t-xs);
+  font-weight: 600;
+  color: var(--navy);
+  font-variant-numeric: tabular-nums;
+  padding-top: 3px;
+}
+
+.cd-access__title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-2xs);
+  font-size: var(--t-md);
+  font-weight: 600;
+  color: var(--navy-900);
+}
+
+.cd-access__arrow {
+  flex: none;
+  color: var(--navy);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity var(--duration-fast) var(--ease-out), transform var(--duration-fast) var(--ease-out);
+}
+
+.cd-access__item:hover .cd-access__arrow,
+.cd-access__item:focus-visible .cd-access__arrow {
+  opacity: 1;
+  transform: none;
+}
+
+.cd-access__text {
+  font-size: var(--t-sm);
+  color: var(--ink-muted);
+  margin-top: 2px;
+}
+
+/* --- Figures ---------------------------------------------------------------
+   The KPI row. Value, label, change, sparkline — in that order, because that is
+   the order the eye reads them and the order that survives being narrow.
+   -------------------------------------------------------------------------- */
+
+.cd-figures {
+  display: grid;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  overflow: hidden;
+}
+
+@media (min-width: 34rem) {
+  .cd-figures {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 56rem) {
+  .cd-figures--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .cd-figures--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .cd-figures--6 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (min-width: 76rem) {
+  .cd-figures--6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}
+
+.cd-figure {
+  display: grid;
+  gap: var(--s-3xs);
+  padding: var(--s-md);
+  background: var(--surface);
+}
+
+.cd-figure__label {
+  font-size: var(--t-xs);
+  color: var(--ink-muted);
+  line-height: 1.3;
+}
+
+.cd-figure__value {
+  font-size: var(--t-2xl);
+  font-weight: 600;
+  line-height: 1.05;
+  color: var(--navy-900);
+  /* Proportional figures: tabular digits make a display-size number look loose. */
+  font-variant-numeric: proportional-nums;
+}
+
+.cd-figure__value sup {
+  font-size: 0.45em;
+  font-weight: 600;
+  vertical-align: super;
+  color: var(--ink-muted);
+}
+
+.cd-figure__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-2xs);
+  min-height: 1.9rem;
+}
+
+.cd-change {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  font-size: var(--t-xs);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Direction is not the same thing as good news: a falling dropout rate is an
+   improvement, so the tone follows the indicator, never the sign. */
+.cd-change--up { color: var(--ok); }
+.cd-change--down { color: var(--bad); }
+.cd-change--flat { color: var(--ink-muted); }
+
+.cd-change__arrow {
+  flex: none;
+}
+
+.cd-figure__note {
+  font-size: var(--t-2xs);
+  color: var(--ink-muted);
+}
+
+.cd-figure--hero {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 56rem) {
+  .cd-figure--hero {
+    grid-column: span 2;
+    grid-row: span 2;
+    align-content: center;
+  }
+
+  .cd-figure--hero .cd-figure__value {
+    /* The one number a board leads with, in the interface sans like every
+       other figure — a serif here would read as decoration. */
+    font-size: var(--t-figure);
+  }
+}
+
+/* --- Cards ---------------------------------------------------------------- */
+
+.cd-grid {
+  display: grid;
+  gap: var(--s-md);
+}
+
+.cd-grid--1 { grid-template-columns: minmax(0, 1fr); }
+
+@media (min-width: 44rem) {
+  .cd-grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 62rem) {
+  .cd-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .cd-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .cd-grid--2-1 { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
+  .cd-grid--1-2 { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); }
+}
+
+.cd-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2xs);
+  padding: var(--s-md);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  color: inherit;
+  text-decoration: none;
+}
+
+a.cd-card {
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+a.cd-card:hover {
+  border-color: var(--navy);
+}
+
+.cd-card__kicker {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2xs);
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: var(--navy);
+}
+
+.cd-card__title {
+  font-size: var(--t-lg);
+  font-weight: 600;
+  line-height: 1.28;
+  color: var(--navy-900);
+}
+
+.cd-card__title--serif {
+  font-family: var(--font-serif);
+}
+
+.cd-card__text {
+  font-size: var(--t-sm);
+  color: var(--ink-muted);
+}
+
+.cd-card__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-2xs);
+  margin-top: auto;
+  padding-top: var(--s-xs);
+  font-size: var(--t-xs);
+  color: var(--ink-muted);
+}
+
+.cd-card--flat {
+  border: 0;
+  border-top: 2px solid var(--navy);
+  border-radius: 0;
+  padding: var(--s-sm) 0 0;
+  background: none;
+}
+
+/* --- Definition rows ------------------------------------------------------
+   The workhorse of an institutional site: a list where each row is a term, a
+   description and sometimes a state. Used for functions, principles, seats,
+   methodology, transparency categories.
+   -------------------------------------------------------------------------- */
+
+.cd-rows {
+  border-top: 1px solid var(--border);
+}
+
+.cd-row-item {
+  display: grid;
+  gap: var(--s-2xs) var(--s-md);
+  padding-block: var(--s-md);
+  border-bottom: 1px solid var(--border);
+}
+
+@media (min-width: 52rem) {
+  .cd-row-item {
+    grid-template-columns: 3rem minmax(0, 1fr) minmax(0, 1.4fr);
+    align-items: baseline;
+  }
+}
+
+.cd-row-item__index {
+  font-size: var(--t-xs);
+  font-weight: 600;
+  color: var(--navy);
+  font-variant-numeric: tabular-nums;
+}
+
+.cd-row-item__title {
+  font-size: var(--t-md);
+  font-weight: 600;
+  color: var(--navy-900);
+}
+
+.cd-row-item__text {
+  font-size: var(--t-sm);
+  color: var(--ink-muted);
+}
+
+.cd-row-item__meta {
+  font-size: var(--t-xs);
+  color: var(--ink-muted);
+}
+
+/* --- Status pills ---------------------------------------------------------
+   Never colour alone: each carries an icon and a word.
+   -------------------------------------------------------------------------- */
+
+.cd-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.15rem 0.5rem;
+  border: 1px solid currentcolor;
+  border-radius: var(--r-xs);
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.cd-state__icon { flex: none; }
+.cd-state--ok { color: var(--ok); background: var(--ok-bg); }
+.cd-state--info { color: var(--info); background: var(--info-bg); }
+.cd-state--warn { color: var(--warn); background: var(--warn-bg); }
+.cd-state--bad { color: var(--bad); background: var(--bad-bg); }
+.cd-state--mute { color: var(--ink-muted); background: var(--surface-sunken); border-color: var(--border-strong); }
+
+/* --- The plan monitor ------------------------------------------------------ */
+
+.cd-monitor {
+  display: grid;
+  gap: var(--s-md);
+}
+
+@media (min-width: 66rem) {
+  .cd-monitor {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.45fr);
+    gap: var(--s-2xl);
+    align-items: start;
+  }
+}
+
+.cd-monitor__totals {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  overflow: hidden;
+}
+
+.cd-monitor__total {
+  padding: var(--s-sm);
+  background: var(--surface);
+}
+
+.cd-monitor__total b {
+  display: block;
+  font-size: var(--t-xl);
+  font-weight: 600;
+  color: var(--navy-900);
+  line-height: 1.1;
+}
+
+.cd-monitor__total span {
+  font-size: var(--t-xs);
+  color: var(--ink-muted);
+}
+
+.cd-monitor__overall {
+  margin-top: var(--s-md);
+  padding: var(--s-md);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--navy-900);
+  color: #ffffff;
+}
+
+.cd-monitor__overall-value {
+  font-size: var(--t-figure);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.cd-monitor__overall-label {
+  font-size: var(--t-xs);
+  color: rgb(255 255 255 / 0.72);
+}
+
+.cd-axisrow {
+  display: grid;
+  gap: var(--s-2xs);
+  padding-block: var(--s-sm);
+  border-bottom: 1px solid var(--border);
+}
+
+.cd-axisrow:first-child {
+  border-top: 1px solid var(--border);
+}
+
+.cd-axisrow__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-2xs);
+}
+
+.cd-axisrow__name {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-2xs);
+  font-size: var(--t-md);
+  font-weight: 600;
+  color: var(--navy-900);
+  text-decoration: none;
+}
+
+.cd-axisrow__index {
+  font-size: var(--t-xs);
+  color: var(--navy);
+  font-variant-numeric: tabular-nums;
+}
+
+.cd-axisrow__value {
+  font-size: var(--t-md);
+  font-weight: 600;
+  color: var(--navy);
+  font-variant-numeric: tabular-nums;
+}
+
+.cd-axisrow__text {
+  font-size: var(--t-sm);
+  color: var(--ink-muted);
+  max-width: 68ch;
+}
+
+/* --- Timeline -------------------------------------------------------------- */
+
+.cd-timeline {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cd-timeline__item {
+  display: grid;
+  gap: var(--s-2xs) var(--s-md);
+  padding: var(--s-md) 0 var(--s-md) var(--s-lg);
+  border-left: 1px solid var(--border);
+  position: relative;
+}
+
+@media (min-width: 52rem) {
+  .cd-timeline__item {
+    grid-template-columns: 9rem minmax(0, 1fr);
+    align-items: baseline;
+  }
+}
+
+.cd-timeline__item::before {
+  content: "";
+  position: absolute;
+  left: -5px;
+  top: calc(var(--s-md) + 0.45rem);
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--border-strong);
+}
+
+.cd-timeline__item[data-state="cumplido"]::before {
+  background: var(--ok);
+  border-color: var(--ok);
+}
+
+.cd-timeline__item[data-state="curso"]::before {
+  background: var(--navy);
+  border-color: var(--navy);
+}
+
+.cd-timeline__date {
+  font-size: var(--t-xs);
+  font-weight: 600;
+  color: var(--navy);
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+}
+
+.cd-timeline__title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2xs);
+  font-size: var(--t-md);
+  font-weight: 600;
+  color: var(--navy-900);
+}
+
+.cd-timeline__text {
+  font-size: var(--t-sm);
+  color: var(--ink-muted);
+}
+
+/* --- The network diagram --------------------------------------------------- */
+
+.cd-network {
+  display: grid;
+  gap: var(--s-lg);
+  align-items: center;
+}
+
+@media (min-width: 68rem) {
+  .cd-network {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: var(--s-2xl);
+  }
+}
+
+.cd-network__legend {
+  border-top: 1px solid var(--border);
+}
+
+.cd-network__entry {
+  display: grid;
+  gap: 2px;
+  padding-block: var(--s-xs);
+  border-bottom: 1px solid var(--border);
+  cursor: default;
+}
+
+.cd-network__entry.is-active {
+  background: var(--navy-100);
+  box-shadow: inset 3px 0 0 var(--navy);
+  padding-left: var(--s-2xs);
+}
+
+.cd-network__name {
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--navy-900);
+}
+
+.cd-network__text {
+  font-size: var(--t-xs);
+  color: var(--ink-muted);
+}
+
+/* --- News ------------------------------------------------------------------ */
+
+.cd-news {
+  display: grid;
+  gap: var(--s-md);
+}
+
+@media (min-width: 56rem) {
+  .cd-news {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cd-news__lead {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: var(--s-lg);
+    align-items: center;
+  }
+}
+
+.cd-article {
+  display: grid;
+  gap: var(--s-2xs);
+  padding-top: var(--s-sm);
+  border-top: 2px solid var(--navy);
+  color: inherit;
+  text-decoration: none;
+}
+
+.cd-article__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2xs);
+  font-size: var(--t-2xs);
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.cd-article__category {
+  color: var(--navy);
+  font-weight: 600;
+}
+
+.cd-article__title {
+  font-family: var(--font-serif);
+  font-size: var(--t-lg);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--navy-900);
+}
+
+.cd-news__lead .cd-article__title {
+  font-size: var(--t-2xl);
+}
+
+.cd-article:hover .cd-article__title {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.cd-article__summary {
+  font-size: var(--t-sm);
+  color: var(--ink-muted);
+}
+
+/* --- Events ---------------------------------------------------------------- */
+
+.cd-events {
+  border-top: 1px solid var(--border);
+}
+
+.cd-event {
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr);
+  gap: var(--s-2xs) var(--s-md);
+  padding-block: var(--s-sm);
+  border-bottom: 1px solid var(--border);
+}
+
+@media (min-width: 52rem) {
+  .cd-event {
+    grid-template-columns: 3.5rem minmax(0, 1fr) 12rem;
+    align-items: center;
+  }
+}
+
+.cd-event__date {
+  display: grid;
+  place-items: center;
+  padding: var(--s-3xs);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xs);
+  background: var(--surface);
+  line-height: 1.1;
+}
+
+.cd-event__day {
+  font-size: var(--t-md);
+  font-weight: 600;
+  color: var(--navy-900);
+}
+
+.cd-event__month {
+  font-size: var(--t-2xs);
+  color: var(--navy);
+  font-weight: 600;
+}
+
+.cd-event__title {
+  font-size: var(--t-md);
+  font-weight: 600;
+  color: var(--navy-900);
+}
+
+.cd-event__text {
+  font-size: var(--t-sm);
+  color: var(--ink-muted);
+}
+
+.cd-event__place {
+  font-size: var(--t-xs);
+  color: var(--ink-muted);
+}
+
+.cd-event[data-held] {
+  opacity: 0.62;
+}
+
+/* --- The task index -------------------------------------------------------- */
+
+.cd-tasks {
+  display: grid;
+  gap: 1px;
+  background: var(--border);
+  border-block: 1px solid var(--border);
+}
+
+@media (min-width: 46rem) {
+  .cd-tasks {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 68rem) {
+  .cd-tasks {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.cd-task {
+  display: grid;
+  gap: var(--s-3xs);
+  padding: var(--s-sm) var(--s-md);
+  background: var(--surface);
+  text-decoration: none;
+  color: inherit;
+}
+
+.cd-task:hover {
+  background: var(--navy-100);
+}
+
+.cd-task__want {
+  font-size: var(--t-sm);
+  color: var(--ink-muted);
+}
+
+.cd-task__go {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  font-size: var(--t-md);
+  font-weight: 600;
+  color: var(--navy);
+}
+
+/* --- Document strip -------------------------------------------------------- */
+
+.cd-docs {
+  border-top: 1px solid var(--border);
+}
+
+.cd-doc {
+  display: grid;
+  gap: var(--s-2xs) var(--s-md);
+  padding-block: var(--s-sm);
+  border-bottom: 1px solid var(--border);
+  color: inherit;
+  text-decoration: none;
+}
+
+@media (min-width: 56rem) {
+  .cd-doc {
+    grid-template-columns: 10rem minmax(0, 1fr) auto;
+    align-items: center;
+  }
+}
+
+.cd-doc:hover {
+  background: var(--navy-100);
+}
+
+.cd-doc__code {
+  font-size: var(--t-xs);
+  font-weight: 600;
+  color: var(--navy);
+  font-variant-numeric: tabular-nums;
+}
+
+.cd-doc__title {
+  font-size: var(--t-md);
+  font-weight: 600;
+  color: var(--navy-900);
+}
+
+.cd-doc__text {
+  font-size: var(--t-sm);
+  color: var(--ink-muted);
+}
+
+.cd-doc__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2xs);
+  font-size: var(--t-xs);
+  color: var(--ink-muted);
+}
+
+/* --- Callout / CTA band ---------------------------------------------------- */
+
+.cd-cta {
+  background: var(--navy-900);
+  color: #ffffff;
+}
+
+.cd-cta__inner {
+  display: grid;
+  gap: var(--s-md);
+  padding-block: var(--s-2xl);
+}
+
+@media (min-width: 60rem) {
+  .cd-cta__inner {
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    align-items: center;
+    column-gap: var(--s-2xl);
+  }
+}
+
+.cd-cta__title {
+  font-family: var(--font-serif);
+  font-size: var(--t-2xl);
+  color: #ffffff;
+  max-width: 20ch;
+}
+
+.cd-cta__text {
+  font-size: var(--t-md);
+  color: rgb(255 255 255 / 0.78);
+  max-width: 52ch;
+}
+
+/* --- Pull quote / statement ------------------------------------------------ */
+
+.cd-statement {
+  font-family: var(--font-serif);
+  font-size: var(--t-2xl);
+  line-height: 1.32;
+  letter-spacing: -0.012em;
+  color: var(--navy-900);
+  max-width: 26ch;
+}
+
+.cd-statement--wide {
+  max-width: 34ch;
+}

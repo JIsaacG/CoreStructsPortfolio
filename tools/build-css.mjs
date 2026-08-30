@@ -23,6 +23,9 @@ const BUNDLES = [
   /* The corporate demo disagrees with both of the above about colour, shape and
      temperature, so it carries its own foundation rather than overriding one. */
   { entry: join(ROOT, "src", "styles", "aurelis.css"), output: join(ROOT, "dist", "aurelis.css") },
+  /* The government portal disagrees with all three: light, square, serif, and
+     carrying a statistics interface none of the others need. */
+  { entry: join(ROOT, "src", "styles", "cede.css"), output: join(ROOT, "dist", "cede.css") },
 ];
 
 const IMPORT = /@import\s+(?:url\()?["']([^"']+)["']\)?\s*;/g;

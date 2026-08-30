@@ -133,6 +133,7 @@ function checkBundle(bundle) {
 checkBundle(BUNDLE);
 checkBundle(join(ROOT, "dist", "demo.css"));
 checkBundle(join(ROOT, "dist", "aurelis.css"));
+checkBundle(join(ROOT, "dist", "cede.css"));
 
 /* ------------------------------------------------------------ JS imports */
 

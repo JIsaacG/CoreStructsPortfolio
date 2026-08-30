@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Comparar territorios · CEDE</title>
+    <meta name="description" content="Herramienta demostrativa para comparar hasta tres departamentos de Honduras en once indicadores educativos, con series históricas y tabla descargable." />
+    <link rel="canonical" href="https://www.cede.example/datos/comparador.html" />
+
+    <!-- The Consejo Estratégico para el Desarrollo Educativo does not exist. A
+         demonstration of a public institution must never reach a search result
+         as a real one, so every page of the portal is noindex. -->
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#071e4a" />
+    <meta name="color-scheme" content="light" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Consejo Estratégico para el Desarrollo Educativo" />
+    <meta property="og:locale" content="es_HN" />
+    <meta property="og:title" content="Comparar territorios · CEDE" />
+    <meta property="og:description" content="Herramienta demostrativa para comparar hasta tres departamentos de Honduras en once indicadores educativos, con series históricas y tabla descargable." />
+    <meta property="og:url" content="https://www.cede.example/datos/comparador.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Comparar territorios · CEDE" />
+    <meta name="twitter:description" content="Herramienta demostrativa para comparar hasta tres departamentos de Honduras en once indicadores educativos, con series históricas y tabla descargable." />
+
+    <link rel="icon" href="../../../favicon.ico" sizes="32x32" />
+
+    <link
+      rel="preload"
+      href="../../../assets/fonts/ibm-plex-sans-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="../../../assets/fonts/source-serif-4-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <link rel="stylesheet" href="../../../dist/cede.css" />
+
+    <script type="application/ld+json">
+      {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Consejo Estratégico para el Desarrollo Educativo",
+            "alternateName": "CEDE",
+            "url": "https://www.cede.example/",
+            "description": "Entidad ficticia de coordinación educativa creada para esta demostración: articula instituciones, produce información pública y da seguimiento a la política educativa nacional.",
+            "disambiguatingDescription": "Entidad ficticia. Portal de demostración creado por CoreStruct; no representa a ninguna institución gubernamental real.",
+            "email": "contacto@cede.example",
+            "areaServed": "HN",
+            "knowsLanguage": [
+                  "es"
+            ]
+      }
+    </script>
+
+    <!-- Runs before first paint. Two jobs: apply the reader's saved
+         accessibility preferences so a high-contrast page never flashes in the
+         default palette, and mark the document scripted so the reveal system
+         may hide what it is about to animate — with a timer that un-marks it if
+         the behaviour module never loads, so nothing is left invisible. -->
+    <script>
+      (function () {
+        var root = document.documentElement;
+        root.classList.add("js");
+        try {
+          var contrast = localStorage.getItem("cede:contrast");
+          if (contrast === "high") root.dataset.contrast = "high";
+          var scale = localStorage.getItem("cede:scale");
+          if (scale) root.style.setProperty("--font-scale", scale);
+        } catch (error) {
+          /* Private mode, or storage disabled: the defaults are correct. */
+        }
+        setTimeout(function () {
+          if (!root.dataset.revealsReady) root.classList.remove("js");
+        }, 2500);
+      })();
+    </script>
+  </head>
+
+  <body>
+    <a class="cd-skip" href="#contenido">Saltar al contenido</a>
+
+    <svg class="cd-sprite" aria-hidden="true" focusable="false" width="0" height="0" style="position:absolute">
+      <defs><linearGradient id="cs-face-top" gradientUnits="userSpaceOnUse" x1="33.3" y1="8.9" x2="353.6" y2="94.7"><stop offset="0%" stop-color="#140538"/><stop offset="16.7%" stop-color="#191754"/><stop offset="33.3%" stop-color="#223e81"/><stop offset="50%" stop-color="#2c6fb2"/><stop offset="66.7%" stop-color="#359dda"/><stop offset="83.3%" stop-color="#3bbaf1"/><stop offset="100%" stop-color="#3eccfb"/></linearGradient></defs>
+    </svg>
+
+    <a class="cd-badge" href="../../../index.html#proyectos">
+      <svg class="cd-badge__mark" viewBox="0 0 362 422" aria-hidden="true" focusable="false"><path class="cs-face cs-face--top" fill="url(#cs-face-top)" d="M10 98L17 92L181 1L188 3L354 96L353 99L200 186L185 179L173 181L166 186L11 98Z"/><path class="cs-face cs-face--right" fill="#3898d4" d="M188 421L188 373L190 371L320 295L320 248L318 248L188 324L188 217L198 211L202 203L202 197L358 111L361 109L361 165L233 234L233 275L361 200L361 321L189 421Z"/><path class="cs-face cs-face--left" fill="#253880" d="M1 107L160 195L166 210L176 216L176 252L174 252L42 176L42 294L114 336L154 359L154 297L176 309L176 422L2 321L1 108Z"/></svg>
+      <span class="cd-badge__tag">DEMO</span>
+      <span class="cd-badge__label">Entidad ficticia · no es un sitio oficial<span class="cd-badge__more"> · sitio de ejemplo de CoreStruct</span></span>
+    </a>
+
+    <header class="cd-header" data-header>
+      <div class="cd-topbar">
+        <div class="cd-shell cd-topbar__inner">
+          <p class="cd-topbar__notice"><span class="cd-topbar__dot"></span>Portal público · Concepto demostrativo</p>
+          <div class="cd-tools">
+            <div class="cd-tools__group" role="group" aria-label="Tamaño del texto">
+              <span class="cd-tools__label" aria-hidden="true">Texto</span>
+              <button class="cd-tool" type="button" data-scale="down" aria-label="Reducir el tamaño del texto">A−</button>
+              <button class="cd-tool" type="button" data-scale="reset" aria-label="Restablecer el tamaño del texto">A</button>
+              <button class="cd-tool" type="button" data-scale="up" aria-label="Aumentar el tamaño del texto">A+</button>
+            </div>
+            <div class="cd-tools__group">
+              <button class="cd-tool" type="button" data-contrast aria-pressed="false">Alto contraste</button>
+            </div>
+            <div class="cd-tools__group">
+              <span class="cd-tool" aria-hidden="true">ES</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="cd-identity">
+        <div class="cd-shell cd-identity__inner">
+<a class="cd-logo" href="../index.html" aria-label="Consejo Estratégico para el Desarrollo Educativo, inicio"><svg class="cd-logo__mark" viewBox="0 0 44 44" aria-hidden="true" focusable="false"><rect x="1" y="1" width="42" height="42" rx="3" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.35"/><path d="M22 8 34 15v3H10v-3z" fill="currentColor"/><rect x="13" y="21" width="4" height="11" fill="currentColor"/><rect x="20" y="21" width="4" height="11" fill="currentColor"/><rect x="27" y="21" width="4" height="11" fill="currentColor"/><rect x="10" y="34" width="24" height="3" fill="currentColor"/></svg><span class="cd-logo__type"><span class="cd-logo__name">Consejo Estratégico<br />para el Desarrollo Educativo</span><span class="cd-logo__sub">Sistema Nacional de Información y Política Educativa</span></span></a>
+          <search class="cd-search" data-search>
+            <form class="cd-search__form" action="../buscar.html" method="get" role="search">
+              <label class="cd-sr" for="cd-q">Buscar en el portal</label>
+              <div class="cd-search__field">
+                <svg class="cd-icon cd-search__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.2" cy="7.2" r="4.4"/><path d="m10.6 10.6 3 3"/></svg>
+                <input
+                  class="cd-search__input"
+                  id="cd-q"
+                  name="q"
+                  type="search"
+                  placeholder="Buscar indicadores, normativa, documentos o noticias"
+                  autocomplete="off"
+                  aria-describedby="cd-q-hint"
+                  aria-expanded="false"
+                  aria-controls="cd-suggest"
+                />
+                <button class="cd-search__submit" type="submit">Buscar</button>
+              </div>
+              <p class="cd-sr" id="cd-q-hint">
+                Los resultados se agrupan por indicadores, normativa, documentos, noticias y datos.
+              </p>
+            </form>
+            <div class="cd-suggest" id="cd-suggest" role="listbox" aria-label="Sugerencias" hidden></div>
+          </search>
+          <div class="cd-identity__end">
+            <a class="cd-btn cd-btn--solid" href="../participacion.html">Participación ciudadana</a>
+          </div>
+        </div>
+      </div>
+      <div class="cd-navband">
+        <div class="cd-shell cd-navband__inner">
+          <nav class="cd-nav" aria-label="Navegación principal">
+            <ul class="cd-nav__list">
+            <li class="cd-nav__item" data-mega-item="institucion"><a class="cd-nav__link" href="../institucion.html">Institución</a><button class="cd-nav__disc" type="button" aria-expanded="false" aria-controls="cd-mega-institucion" aria-label="Abrir el menú de Institución" data-mega-toggle="institucion"><svg class="cd-nav__caret" viewBox="0 0 12 8" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m1 2 5 5 5-5"/></svg></button></li>
+            <li class="cd-nav__item" data-mega-item="politica"><a class="cd-nav__link" href="../politica-educativa.html">Política Educativa</a><button class="cd-nav__disc" type="button" aria-expanded="false" aria-controls="cd-mega-politica" aria-label="Abrir el menú de Política Educativa" data-mega-toggle="politica"><svg class="cd-nav__caret" viewBox="0 0 12 8" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m1 2 5 5 5-5"/></svg></button></li>
+            <li class="cd-nav__item"><a class="cd-nav__link" href="../planificacion.html">Planificación</a></li>
+            <li class="cd-nav__item" data-mega-item="datos" aria-current="true"><a class="cd-nav__link" href="../datos.html" aria-current="page">Datos e Indicadores</a><button class="cd-nav__disc" type="button" aria-expanded="false" aria-controls="cd-mega-datos" aria-label="Abrir el menú de Datos e Indicadores" data-mega-toggle="datos"><svg class="cd-nav__caret" viewBox="0 0 12 8" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m1 2 5 5 5-5"/></svg></button></li>
+            <li class="cd-nav__item" data-mega-item="normativa"><a class="cd-nav__link" href="../normativa.html">Normativa</a><button class="cd-nav__disc" type="button" aria-expanded="false" aria-controls="cd-mega-normativa" aria-label="Abrir el menú de Normativa" data-mega-toggle="normativa"><svg class="cd-nav__caret" viewBox="0 0 12 8" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m1 2 5 5 5-5"/></svg></button></li>
+            <li class="cd-nav__item"><a class="cd-nav__link" href="../programas.html">Programas</a></li>
+            <li class="cd-nav__item" data-mega-item="participacion"><a class="cd-nav__link" href="../participacion.html">Participación</a><button class="cd-nav__disc" type="button" aria-expanded="false" aria-controls="cd-mega-participacion" aria-label="Abrir el menú de Participación" data-mega-toggle="participacion"><svg class="cd-nav__caret" viewBox="0 0 12 8" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m1 2 5 5 5-5"/></svg></button></li>
+            <li class="cd-nav__item"><a class="cd-nav__link" href="../transparencia.html">Transparencia</a></li>
+            <li class="cd-nav__item"><a class="cd-nav__link" href="../actualidad.html">Actualidad</a></li>
+            </ul>
+          </nav>
+          <div class="cd-navband__end">
+            <a class="cd-navband__link" href="../contacto.html">Contacto</a>
+            <button
+              class="cd-burger"
+              type="button"
+              aria-expanded="false"
+              aria-controls="cd-panel"
+              aria-label="Abrir el menú"
+              data-panel-toggle
+            >
+              <span class="cd-burger__bar"></span>
+              <span class="cd-burger__bar"></span>
+            </button>
+          </div>
+        </div>
+        <div class="cd-mega" id="cd-mega-institucion" data-mega-panel="institucion" hidden>
+          <div class="cd-mega__inner">
+            <div class="cd-mega__intro">
+              <p class="cd-mega__title">Institución</p>
+              <p class="cd-mega__summary">Quiénes somos, qué hacemos y cómo se toman las decisiones.</p>
+            </div>
+            <div class="cd-mega__col"><p class="cd-mega__heading">El Consejo</p><a class="cd-mega__link" href="../institucion.html#mandato">Mandato y funciones</a><a class="cd-mega__link" href="../institucion.html#mision">Misión y visión</a><a class="cd-mega__link" href="../institucion.html#principios">Principios</a><a class="cd-mega__link" href="../institucion.html#historia">Historia institucional</a></div><div class="cd-mega__col"><p class="cd-mega__heading">Organización</p><a class="cd-mega__link" href="../institucion.html#estructura">Estructura</a><a class="cd-mega__link" href="../institucion.html#directorio">Directorio institucional</a><a class="cd-mega__link" href="../institucion.html#red">Sistema educativo articulado</a><a class="cd-mega__link" href="../contacto.html">Contacto</a></div>
+          </div>
+        </div>
+        <div class="cd-mega" id="cd-mega-politica" data-mega-panel="politica" hidden>
+          <div class="cd-mega__inner">
+            <div class="cd-mega__intro">
+              <p class="cd-mega__title">Política Educativa</p>
+              <p class="cd-mega__summary">El marco que orienta las decisiones del sistema educativo.</p>
+            </div>
+            <div class="cd-mega__col"><p class="cd-mega__heading">Marco</p><a class="cd-mega__link" href="../politica-educativa.html#que-es">Qué es una política educativa</a><a class="cd-mega__link" href="../politica-educativa.html#objetivos">Objetivos y principios</a><a class="cd-mega__link" href="../politica-educativa.html#lineas">Líneas estratégicas</a><a class="cd-mega__link" href="../politica-educativa.html#seguimiento">Mecanismos de seguimiento</a></div><div class="cd-mega__col"><p class="cd-mega__heading">Agenda</p><a class="cd-mega__link" href="../politica-educativa.html#agenda">Políticas vigentes</a><a class="cd-mega__link" href="../politica-educativa.html#agenda">En formulación</a><a class="cd-mega__link" href="../participacion.html">En consulta pública</a><a class="cd-mega__link" href="../biblioteca.html">Documentos de política</a></div>
+          </div>
+        </div>
+        <div class="cd-mega" id="cd-mega-datos" data-mega-panel="datos" hidden>
+          <div class="cd-mega__inner">
+            <div class="cd-mega__intro">
+              <p class="cd-mega__title">Datos e Indicadores</p>
+              <p class="cd-mega__summary">El estado del sistema educativo, medido y publicado.</p>
+            </div>
+            <div class="cd-mega__col"><p class="cd-mega__heading">Tableros</p><a class="cd-mega__link" href="../datos.html#panorama">Panorama nacional</a><a class="cd-mega__link" href="../datos.html#matricula">Matrícula</a><a class="cd-mega__link" href="../datos.html#cobertura">Cobertura y acceso</a><a class="cd-mega__link" href="../datos.html#permanencia">Permanencia</a><a class="cd-mega__link" href="../datos.html#docentes">Docentes</a></div><div class="cd-mega__col"><p class="cd-mega__heading"> </p><a class="cd-mega__link" href="../datos.html#infraestructura">Infraestructura</a><a class="cd-mega__link" href="../datos.html#tecnica">Educación técnica</a><a class="cd-mega__link" href="../datos.html#inclusion">Inclusión</a><a class="cd-mega__link" href="../datos.html#financiamiento">Financiamiento</a><a class="cd-mega__link" href="../datos.html#ods4">ODS 4</a></div><div class="cd-mega__col"><p class="cd-mega__heading">Herramientas</p><a class="cd-mega__link" href="../datos/comparador.html">Comparar territorios</a><a class="cd-mega__link" href="../datos-abiertos.html">Catálogo de datos abiertos</a><a class="cd-mega__link" href="../datos/metodologia.html">Metodología de datos</a></div><div class="cd-mega__feature"><p class="cd-mega__feature-title">Observatorio Educativo</p><p class="cd-mega__feature-text">Diez tableros, dieciocho departamentos y series desde 2019.</p><a class="cd-link" href="../datos.html">Abrir</a></div>
+          </div>
+        </div>
+        <div class="cd-mega" id="cd-mega-normativa" data-mega-panel="normativa" hidden>
+          <div class="cd-mega__inner">
+            <div class="cd-mega__intro">
+              <p class="cd-mega__title">Normativa</p>
+              <p class="cd-mega__summary">El marco jurídico y las decisiones del Consejo, en un solo lugar.</p>
+            </div>
+            <div class="cd-mega__col"><p class="cd-mega__heading">Por tipo</p><a class="cd-mega__link" href="../normativa.html#ley">Leyes</a><a class="cd-mega__link" href="../normativa.html#reglamento">Reglamentos</a><a class="cd-mega__link" href="../normativa.html#acuerdo">Acuerdos</a></div><div class="cd-mega__col"><p class="cd-mega__heading"> </p><a class="cd-mega__link" href="../normativa.html#politica">Políticas</a><a class="cd-mega__link" href="../normativa.html#lineamiento">Lineamientos</a><a class="cd-mega__link" href="../resoluciones.html">Resoluciones</a></div><div class="cd-mega__col"><p class="cd-mega__heading">Consulta</p><a class="cd-mega__link" href="../normativa.html#buscador">Buscador de normativa</a><a class="cd-mega__link" href="../resoluciones.html">Resoluciones y acuerdos</a><a class="cd-mega__link" href="../biblioteca.html">Biblioteca digital</a></div>
+          </div>
+        </div>
+        <div class="cd-mega" id="cd-mega-participacion" data-mega-panel="participacion" hidden>
+          <div class="cd-mega__inner">
+            <div class="cd-mega__intro">
+              <p class="cd-mega__title">Participación</p>
+              <p class="cd-mega__summary">Los espacios donde la ciudadanía incide en la política educativa.</p>
+            </div>
+            <div class="cd-mega__col"><p class="cd-mega__heading">Mecanismos</p><a class="cd-mega__link" href="../participacion.html#consultas">Consultas públicas</a><a class="cd-mega__link" href="../participacion.html#foros">Foros y mesas de diálogo</a><a class="cd-mega__link" href="../participacion.html#encuestas">Encuestas</a><a class="cd-mega__link" href="../participacion.html#audiencias">Audiencias</a></div><div class="cd-mega__col"><p class="cd-mega__heading">Agenda</p><a class="cd-mega__link" href="../actualidad.html#agenda">Calendario institucional</a><a class="cd-mega__link" href="../participacion.html#como">Cómo participar</a><a class="cd-mega__link" href="../transparencia.html#solicitudes">Solicitudes de información</a></div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="cd-panel" id="cd-panel" data-panel>
+      <div class="cd-panel__top">
+        <p class="cd-label"><span>Menú</span></p>
+        <button class="cd-panel__close" type="button" data-panel-close>Cerrar</button>
+      </div>
+        <div class="cd-panel__group"><a class="cd-panel__link" href="../institucion.html">Institución<b>01</b></a><div class="cd-panel__sub"><a href="../institucion.html#mandato">Mandato y funciones</a><a href="../institucion.html#mision">Misión y visión</a><a href="../institucion.html#principios">Principios</a><a href="../institucion.html#historia">Historia institucional</a><a href="../institucion.html#estructura">Estructura</a><a href="../institucion.html#directorio">Directorio institucional</a></div></div>
+        <div class="cd-panel__group"><a class="cd-panel__link" href="../politica-educativa.html">Política Educativa<b>02</b></a><div class="cd-panel__sub"><a href="../politica-educativa.html#que-es">Qué es una política educativa</a><a href="../politica-educativa.html#objetivos">Objetivos y principios</a><a href="../politica-educativa.html#lineas">Líneas estratégicas</a><a href="../politica-educativa.html#seguimiento">Mecanismos de seguimiento</a><a href="../politica-educativa.html#agenda">Políticas vigentes</a><a href="../politica-educativa.html#agenda">En formulación</a></div></div>
+        <div class="cd-panel__group"><a class="cd-panel__link" href="../planificacion.html">Planificación<b>03</b></a></div>
+        <div class="cd-panel__group"><a class="cd-panel__link" href="../datos.html">Datos e Indicadores<b>04</b></a><div class="cd-panel__sub"><a href="../datos.html#panorama">Panorama nacional</a><a href="../datos.html#matricula">Matrícula</a><a href="../datos.html#cobertura">Cobertura y acceso</a><a href="../datos.html#permanencia">Permanencia</a><a href="../datos.html#docentes">Docentes</a><a href="../datos.html#infraestructura">Infraestructura</a></div></div>
+        <div class="cd-panel__group"><a class="cd-panel__link" href="../normativa.html">Normativa<b>05</b></a><div class="cd-panel__sub"><a href="../normativa.html#ley">Leyes</a><a href="../normativa.html#reglamento">Reglamentos</a><a href="../normativa.html#acuerdo">Acuerdos</a><a href="../normativa.html#politica">Políticas</a><a href="../normativa.html#lineamiento">Lineamientos</a><a href="../resoluciones.html">Resoluciones</a></div></div>
+        <div class="cd-panel__group"><a class="cd-panel__link" href="../programas.html">Programas<b>06</b></a></div>
+        <div class="cd-panel__group"><a class="cd-panel__link" href="../participacion.html">Participación<b>07</b></a><div class="cd-panel__sub"><a href="../participacion.html#consultas">Consultas públicas</a><a href="../participacion.html#foros">Foros y mesas de diálogo</a><a href="../participacion.html#encuestas">Encuestas</a><a href="../participacion.html#audiencias">Audiencias</a><a href="../actualidad.html#agenda">Calendario institucional</a><a href="../participacion.html#como">Cómo participar</a></div></div>
+        <div class="cd-panel__group"><a class="cd-panel__link" href="../transparencia.html">Transparencia<b>08</b></a></div>
+        <div class="cd-panel__group"><a class="cd-panel__link" href="../actualidad.html">Actualidad<b>09</b></a></div>
+      <div class="cd-panel__actions">
+        <a class="cd-btn cd-btn--solid" href="../participacion.html">Participación ciudadana</a>
+        <a class="cd-btn cd-btn--ghost" href="../buscar.html">Buscar en el portal</a>
+        <a class="cd-btn cd-btn--ghost" href="../contacto.html">Contacto</a>
+      </div>
+
+      <!-- The same controls the institutional bar carries. On a phone that bar
+           folds away on scroll, and accessibility settings that are only
+           reachable at the top of a long page are settings nobody uses. -->
+      <div class="cd-panel__a11y">
+        <p class="cd-label"><span>Accesibilidad</span></p>
+        <div class="cd-panel__tools">
+          <div class="cd-tools__group" role="group" aria-label="Tamaño del texto">
+            <span class="cd-tools__label" aria-hidden="true">Texto</span>
+            <button class="cd-tool" type="button" data-scale="down" aria-label="Reducir el tamaño del texto">A−</button>
+            <button class="cd-tool" type="button" data-scale="reset" aria-label="Restablecer el tamaño del texto">A</button>
+            <button class="cd-tool" type="button" data-scale="up" aria-label="Aumentar el tamaño del texto">A+</button>
+          </div>
+          <button class="cd-tool" type="button" data-contrast aria-pressed="false">Alto contraste</button>
+        </div>
+      </div>
+    </div>
+
+    <main id="contenido">
+      <section class="cd-pagehero"><div class="cd-shell"><div class="cd-pagehero__inner"><nav aria-label="Ruta" class="cd-pagehero__crumbs"><ol class="cd-crumbs"><li><a href="../index.html">Inicio</a></li><li><a href="../datos.html">Datos e indicadores</a></li><li aria-current="page">Comparar territorios</li></ol></nav><div><p class="cd-label"><span>Herramienta</span></p><h1 class="cd-pagehero__title">Comparar territorios.</h1></div><div><p class="cd-pagehero__lead">Elija hasta tres departamentos y véalos lado a lado en once indicadores. Los tres colores se mantienen mientras la selección cambia, para que ninguna serie cambie de identidad.</p></div></div></div></section>
+
+      <section class="cd-section cd-section--tight">
+        <div class="cd-shell" data-comparator>
+          <div class="cd-compare__picker"><div class="cd-compare__slot" data-slot="1"><label class="cd-field__label" for="cmp-0">Territorio 1</label><span class="cd-select"><select id="cmp-0" data-compare="0"><option value="at">Atlántida</option><option value="ch">Choluteca</option><option value="cl">Colón</option><option value="cm">Comayagua</option><option value="cp">Copán</option><option value="cr">Cortés</option><option value="ep">El Paraíso</option><option value="fm" selected>Francisco Morazán</option><option value="gd">Gracias a Dios</option><option value="in">Intibucá</option><option value="ib">Islas de la Bahía</option><option value="lp">La Paz</option><option value="le">Lempira</option><option value="oc">Ocotepeque</option><option value="ol">Olancho</option><option value="sb">Santa Bárbara</option><option value="va">Valle</option><option value="yo">Yoro</option></select></span></div><div class="cd-compare__slot" data-slot="2"><label class="cd-field__label" for="cmp-1">Territorio 2</label><span class="cd-select"><select id="cmp-1" data-compare="1"><option value="at">Atlántida</option><option value="ch">Choluteca</option><option value="cl">Colón</option><option value="cm">Comayagua</option><option value="cp">Copán</option><option value="cr" selected>Cortés</option><option value="ep">El Paraíso</option><option value="fm">Francisco Morazán</option><option value="gd">Gracias a Dios</option><option value="in">Intibucá</option><option value="ib">Islas de la Bahía</option><option value="lp">La Paz</option><option value="le">Lempira</option><option value="oc">Ocotepeque</option><option value="ol">Olancho</option><option value="sb">Santa Bárbara</option><option value="va">Valle</option><option value="yo">Yoro</option></select></span></div><div class="cd-compare__slot" data-slot="3"><label class="cd-field__label" for="cmp-2">Territorio 3</label><span class="cd-select"><select id="cmp-2" data-compare="2"><option value="at">Atlántida</option><option value="ch">Choluteca</option><option value="cl">Colón</option><option value="cm" selected>Comayagua</option><option value="cp">Copán</option><option value="cr">Cortés</option><option value="ep">El Paraíso</option><option value="fm">Francisco Morazán</option><option value="gd">Gracias a Dios</option><option value="in">Intibucá</option><option value="ib">Islas de la Bahía</option><option value="lp">La Paz</option><option value="le">Lempira</option><option value="oc">Ocotepeque</option><option value="ol">Olancho</option><option value="sb">Santa Bárbara</option><option value="va">Valle</option><option value="yo">Yoro</option></select></span></div></div>
+
+          <div class="cd-compare__grid">
+            <figure class="cd-chart" id="cmp-matricula" aria-labelledby="cmp-matricula-t" data-reveal="fade"><figcaption class="cd-chart__head"><p class="cd-chart__title" id="cmp-matricula-t">Matrícula total</p><p class="cd-chart__desc">Serie 2019–2026 de los territorios seleccionados.</p></figcaption><ul class="cd-legend"><li class="cd-legend__item"><span class="cd-legend__key cd-c1"></span>Francisco Morazán</li><li class="cd-legend__item"><span class="cd-legend__key cd-c2"></span>Cortés</li><li class="cd-legend__item"><span class="cd-legend__key cd-c3"></span>Comayagua</li></ul><div class="cd-chart__plot" data-chart="{&quot;kind&quot;:&quot;compareTrend&quot;,&quot;metric&quot;:&quot;matricula&quot;}"><svg class="cd-chart__svg" viewBox="0 0 760 300" width="760" height="300" role="img" aria-label="Comparación de matrícula" ><line class="cd-grid" x1="54" y1="270" x2="698" y2="270"/><text class="cd-axis cd-axis--y" x="44" y="270" dy="0.32em" text-anchor="end">0</text><line class="cd-grid" x1="54" y1="206.5" x2="698" y2="206.5"/><text class="cd-axis cd-axis--y" x="44" y="206.5" dy="0.32em" text-anchor="end">200 mil</text><line class="cd-grid" x1="54" y1="143" x2="698" y2="143"/><text class="cd-axis cd-axis--y" x="44" y="143" dy="0.32em" text-anchor="end">400 mil</text><line class="cd-grid" x1="54" y1="79.5" x2="698" y2="79.5"/><text class="cd-axis cd-axis--y" x="44" y="79.5" dy="0.32em" text-anchor="end">600 mil</text><line class="cd-grid" x1="54" y1="16" x2="698" y2="16"/><text class="cd-axis cd-axis--y" x="44" y="16" dy="0.32em" text-anchor="end">800 mil</text><path class="cd-line cd-s1" d="M54 134.96L146 136.94L238 138.57L330 136.12L422 133.6L514 131.68L606 130.17L698 128.75"/><circle class="cd-dot cd-c1" cx="54" cy="134.96" r="3.5" data-tip="Francisco Morazán · 2019: 425,334"/><circle class="cd-dot cd-c1" cx="146" cy="136.94" r="3.5" data-tip="Francisco Morazán · 2020: 419,078"/><circle class="cd-dot cd-c1" cx="238" cy="138.57" r="3.5" data-tip="Francisco Morazán · 2021: 413,960"/><circle class="cd-dot cd-c1" cx="330" cy="136.12" r="3.5" data-tip="Francisco Morazán · 2022: 421,660"/><circle class="cd-dot cd-c1" cx="422" cy="133.6" r="3.5" data-tip="Francisco Morazán · 2023: 429,606"/><circle class="cd-dot cd-c1" cx="514" cy="131.68" r="3.5" data-tip="Francisco Morazán · 2024: 435,660"/><circle class="cd-dot cd-c1" cx="606" cy="130.17" r="3.5" data-tip="Francisco Morazán · 2025: 440,415"/><circle class="cd-dot cd-c1" cx="698" cy="128.75" r="4.5" data-tip="Francisco Morazán · 2026: 444,872"/><text class="cd-endlabel" x="708" y="128.75" dy="0.32em">444,872</text><path class="cd-line cd-s2" d="M54 129.62L146 131.69L238 133.38L330 130.85L422 128.24L514 126.25L606 124.68L698 123.22"/><circle class="cd-dot cd-c2" cx="54" cy="129.62" r="3.5" data-tip="Cortés · 2019: 442,131"/><circle class="cd-dot cd-c2" cx="146" cy="131.69" r="3.5" data-tip="Cortés · 2020: 435,631"/><circle class="cd-dot cd-c2" cx="238" cy="133.38" r="3.5" data-tip="Cortés · 2021: 430,309"/><circle class="cd-dot cd-c2" cx="330" cy="130.85" r="3.5" data-tip="Cortés · 2022: 438,274"/><circle class="cd-dot cd-c2" cx="422" cy="128.24" r="3.5" data-tip="Cortés · 2023: 446,496"/><circle class="cd-dot cd-c2" cx="514" cy="126.25" r="3.5" data-tip="Cortés · 2024: 452,767"/><circle class="cd-dot cd-c2" cx="606" cy="124.68" r="3.5" data-tip="Cortés · 2025: 457,686"/><circle class="cd-dot cd-c2" cx="698" cy="123.22" r="4.5" data-tip="Cortés · 2026: 462,299"/><text class="cd-endlabel" x="708" y="123.22" dy="0.32em">462,299</text><path class="cd-line cd-s3" d="M54 227.5L146 228.12L238 228.63L330 227.91L422 227.15L514 226.56L606 226.11L698 225.69"/><circle class="cd-dot cd-c3" cx="54" cy="227.5" r="3.5" data-tip="Comayagua · 2019: 133,863"/><circle class="cd-dot cd-c3" cx="146" cy="228.12" r="3.5" data-tip="Comayagua · 2020: 131,898"/><circle class="cd-dot cd-c3" cx="238" cy="228.63" r="3.5" data-tip="Comayagua · 2021: 130,285"/><circle class="cd-dot cd-c3" cx="330" cy="227.91" r="3.5" data-tip="Comayagua · 2022: 132,582"/><circle class="cd-dot cd-c3" cx="422" cy="227.15" r="3.5" data-tip="Comayagua · 2023: 134,968"/><circle class="cd-dot cd-c3" cx="514" cy="226.56" r="3.5" data-tip="Comayagua · 2024: 136,806"/><circle class="cd-dot cd-c3" cx="606" cy="226.11" r="3.5" data-tip="Comayagua · 2025: 138,232"/><circle class="cd-dot cd-c3" cx="698" cy="225.69" r="4.5" data-tip="Comayagua · 2026: 139,569"/><text class="cd-endlabel" x="708" y="225.69" dy="0.32em">139,569</text><text class="cd-axis" x="54" y="290" text-anchor="middle">2019</text><text class="cd-axis" x="146" y="290" text-anchor="middle">2020</text><text class="cd-axis" x="238" y="290" text-anchor="middle">2021</text><text class="cd-axis" x="330" y="290" text-anchor="middle">2022</text><text class="cd-axis" x="422" y="290" text-anchor="middle">2023</text><text class="cd-axis" x="514" y="290" text-anchor="middle">2024</text><text class="cd-axis" x="606" y="290" text-anchor="middle">2025</text><text class="cd-axis" x="698" y="290" text-anchor="middle">2026</text></svg></div><details class="cd-datatable"><summary class="cd-datatable__toggle">Ver tabla de datos</summary><div class="cd-datatable__wrap"><div class="cd-tablewrap"><table class="cd-table cd-table--stack"><caption>Matrícula comparada. Datos demostrativos.</caption><thead><tr><th scope="col">Año</th><th scope="col" class="cd-num">Francisco Morazán</th><th scope="col" class="cd-num">Cortés</th><th scope="col" class="cd-num">Comayagua</th></tr></thead><tbody><tr><td class="cd-table__name" data-label="Año">2019</td><td class="cd-num" data-label="Francisco Morazán">425,334</td><td class="cd-num" data-label="Cortés">442,131</td><td class="cd-num" data-label="Comayagua">133,863</td></tr><tr><td class="cd-table__name" data-label="Año">2020</td><td class="cd-num" data-label="Francisco Morazán">419,078</td><td class="cd-num" data-label="Cortés">435,631</td><td class="cd-num" data-label="Comayagua">131,898</td></tr><tr><td class="cd-table__name" data-label="Año">2021</td><td class="cd-num" data-label="Francisco Morazán">413,960</td><td class="cd-num" data-label="Cortés">430,309</td><td class="cd-num" data-label="Comayagua">130,285</td></tr><tr><td class="cd-table__name" data-label="Año">2022</td><td class="cd-num" data-label="Francisco Morazán">421,660</td><td class="cd-num" data-label="Cortés">438,274</td><td class="cd-num" data-label="Comayagua">132,582</td></tr><tr><td class="cd-table__name" data-label="Año">2023</td><td class="cd-num" data-label="Francisco Morazán">429,606</td><td class="cd-num" data-label="Cortés">446,496</td><td class="cd-num" data-label="Comayagua">134,968</td></tr><tr><td class="cd-table__name" data-label="Año">2024</td><td class="cd-num" data-label="Francisco Morazán">435,660</td><td class="cd-num" data-label="Cortés">452,767</td><td class="cd-num" data-label="Comayagua">136,806</td></tr><tr><td class="cd-table__name" data-label="Año">2025</td><td class="cd-num" data-label="Francisco Morazán">440,415</td><td class="cd-num" data-label="Cortés">457,686</td><td class="cd-num" data-label="Comayagua">138,232</td></tr><tr><td class="cd-table__name" data-label="Año">2026</td><td class="cd-num" data-label="Francisco Morazán">444,872</td><td class="cd-num" data-label="Cortés">462,299</td><td class="cd-num" data-label="Comayagua">139,569</td></tr></tbody></table></div></div></details><div class="cd-chart__foot"><p class="cd-chart__source">Fuente: CEDE · Sistema Nacional de Información Educativa (datos demostrativos) · 2019–2026</p><div class="cd-chart__tools"><button class="cd-download" type="button" data-download="csv"><svg class="cd-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5v8M4.8 7.6 8 10.8l3.2-3.2M2.8 13.2h10.4"/></svg>CSV</button><button class="cd-download" type="button" data-download="xlsx"><svg class="cd-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5v8M4.8 7.6 8 10.8l3.2-3.2M2.8 13.2h10.4"/></svg>XLSX</button><button class="cd-download" type="button" data-download="json"><svg class="cd-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5v8M4.8 7.6 8 10.8l3.2-3.2M2.8 13.2h10.4"/></svg>JSON</button><button class="cd-download" type="button" data-print><svg class="cd-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4.6 6V2.8h6.8V6"/><path d="M4.6 12h-2V6.8h10.8V12h-2"/><path d="M4.6 9.6h6.8v3.6H4.6z"/></svg>PDF</button></div></div></figure>
+
+            <figure class="cd-chart" id="cmp-cobertura" aria-labelledby="cmp-cobertura-t" data-reveal="fade"><figcaption class="cd-chart__head"><p class="cd-chart__title" id="cmp-cobertura-t">Cobertura en educación media</p><p class="cd-chart__desc">El indicador de acceso más exigente del sistema.</p></figcaption><ul class="cd-legend"><li class="cd-legend__item"><span class="cd-legend__key cd-c1"></span>Francisco Morazán</li><li class="cd-legend__item"><span class="cd-legend__key cd-c2"></span>Cortés</li><li class="cd-legend__item"><span class="cd-legend__key cd-c3"></span>Comayagua</li></ul><div class="cd-chart__plot" data-chart="{&quot;kind&quot;:&quot;compareTrend&quot;,&quot;metric&quot;:&quot;cobertura_med&quot;,&quot;kindFormat&quot;:&quot;rate&quot;}"><svg class="cd-chart__svg" viewBox="0 0 760 300" width="760" height="300" role="img" aria-label="Comparación de cobertura en media" ><line class="cd-grid" x1="54" y1="270" x2="698" y2="270"/><text class="cd-axis cd-axis--y" x="44" y="270" dy="0.32em" text-anchor="end">0</text><line class="cd-grid" x1="54" y1="206.5" x2="698" y2="206.5"/><text class="cd-axis cd-axis--y" x="44" y="206.5" dy="0.32em" text-anchor="end">10</text><line class="cd-grid" x1="54" y1="143" x2="698" y2="143"/><text class="cd-axis cd-axis--y" x="44" y="143" dy="0.32em" text-anchor="end">20</text><line class="cd-grid" x1="54" y1="79.5" x2="698" y2="79.5"/><text class="cd-axis cd-axis--y" x="44" y="79.5" dy="0.32em" text-anchor="end">30</text><line class="cd-grid" x1="54" y1="16" x2="698" y2="16"/><text class="cd-axis cd-axis--y" x="44" y="16" dy="0.32em" text-anchor="end">40</text><path class="cd-line cd-s1" d="M54 144.55L146 168.65L238 178.69L330 140.53L422 102.37L514 72.24L606 52.15L698 32.07"/><circle class="cd-dot cd-c1" cx="54" cy="144.55" r="3.5" data-tip="Francisco Morazán · 2019: 33.6 %"/><circle class="cd-dot cd-c1" cx="146" cy="168.65" r="3.5" data-tip="Francisco Morazán · 2020: 32.4 %"/><circle class="cd-dot cd-c1" cx="238" cy="178.69" r="3.5" data-tip="Francisco Morazán · 2021: 31.9 %"/><circle class="cd-dot cd-c1" cx="330" cy="140.53" r="3.5" data-tip="Francisco Morazán · 2022: 33.8 %"/><circle class="cd-dot cd-c1" cx="422" cy="102.37" r="3.5" data-tip="Francisco Morazán · 2023: 35.7 %"/><circle class="cd-dot cd-c1" cx="514" cy="72.24" r="3.5" data-tip="Francisco Morazán · 2024: 37.2 %"/><circle class="cd-dot cd-c1" cx="606" cy="52.15" r="3.5" data-tip="Francisco Morazán · 2025: 38.2 %"/><circle class="cd-dot cd-c1" cx="698" cy="32.07" r="4.5" data-tip="Francisco Morazán · 2026: 39.2 %"/><text class="cd-endlabel" x="708" y="32.07" dy="0.32em">39.2 %</text><path class="cd-line cd-s2" d="M54 152.58L146 176.68L238 184.72L330 148.56L422 110.4L514 82.28L606 62.2L698 42.11"/><circle class="cd-dot cd-c2" cx="54" cy="152.58" r="3.5" data-tip="Cortés · 2019: 33.2 %"/><circle class="cd-dot cd-c2" cx="146" cy="176.68" r="3.5" data-tip="Cortés · 2020: 32.0 %"/><circle class="cd-dot cd-c2" cx="238" cy="184.72" r="3.5" data-tip="Cortés · 2021: 31.6 %"/><circle class="cd-dot cd-c2" cx="330" cy="148.56" r="3.5" data-tip="Cortés · 2022: 33.4 %"/><circle class="cd-dot cd-c2" cx="422" cy="110.4" r="3.5" data-tip="Cortés · 2023: 35.3 %"/><circle class="cd-dot cd-c2" cx="514" cy="82.28" r="3.5" data-tip="Cortés · 2024: 36.7 %"/><circle class="cd-dot cd-c2" cx="606" cy="62.2" r="3.5" data-tip="Cortés · 2025: 37.7 %"/><circle class="cd-dot cd-c2" cx="698" cy="42.11" r="4.5" data-tip="Cortés · 2026: 38.7 %"/><text class="cd-endlabel" x="708" y="42.11" dy="0.32em">38.7 %</text><path class="cd-line cd-s3" d="M54 204.8L146 226.9L238 234.93L330 200.79L422 166.64L514 140.53L606 122.45L698 104.38"/><circle class="cd-dot cd-c3" cx="54" cy="204.8" r="3.5" data-tip="Comayagua · 2019: 30.6 %"/><circle class="cd-dot cd-c3" cx="146" cy="226.9" r="3.5" data-tip="Comayagua · 2020: 29.5 %"/><circle class="cd-dot cd-c3" cx="238" cy="234.93" r="3.5" data-tip="Comayagua · 2021: 29.1 %"/><circle class="cd-dot cd-c3" cx="330" cy="200.79" r="3.5" data-tip="Comayagua · 2022: 30.8 %"/><circle class="cd-dot cd-c3" cx="422" cy="166.64" r="3.5" data-tip="Comayagua · 2023: 32.5 %"/><circle class="cd-dot cd-c3" cx="514" cy="140.53" r="3.5" data-tip="Comayagua · 2024: 33.8 %"/><circle class="cd-dot cd-c3" cx="606" cy="122.45" r="3.5" data-tip="Comayagua · 2025: 34.7 %"/><circle class="cd-dot cd-c3" cx="698" cy="104.38" r="4.5" data-tip="Comayagua · 2026: 35.6 %"/><text class="cd-endlabel" x="708" y="104.38" dy="0.32em">35.6 %</text><text class="cd-axis" x="54" y="290" text-anchor="middle">2019</text><text class="cd-axis" x="146" y="290" text-anchor="middle">2020</text><text class="cd-axis" x="238" y="290" text-anchor="middle">2021</text><text class="cd-axis" x="330" y="290" text-anchor="middle">2022</text><text class="cd-axis" x="422" y="290" text-anchor="middle">2023</text><text class="cd-axis" x="514" y="290" text-anchor="middle">2024</text><text class="cd-axis" x="606" y="290" text-anchor="middle">2025</text><text class="cd-axis" x="698" y="290" text-anchor="middle">2026</text></svg></div><details class="cd-datatable"><summary class="cd-datatable__toggle">Ver tabla de datos</summary><div class="cd-datatable__wrap"><div class="cd-tablewrap"><table class="cd-table cd-table--stack"><caption>Cobertura en media comparada. Datos demostrativos.</caption><thead><tr><th scope="col">Año</th><th scope="col" class="cd-num">Francisco Morazán</th><th scope="col" class="cd-num">Cortés</th><th scope="col" class="cd-num">Comayagua</th></tr></thead><tbody><tr><td class="cd-table__name" data-label="Año">2019</td><td class="cd-num" data-label="Francisco Morazán">33.6 %</td><td class="cd-num" data-label="Cortés">33.2 %</td><td class="cd-num" data-label="Comayagua">30.6 %</td></tr><tr><td class="cd-table__name" data-label="Año">2020</td><td class="cd-num" data-label="Francisco Morazán">32.4 %</td><td class="cd-num" data-label="Cortés">32.0 %</td><td class="cd-num" data-label="Comayagua">29.5 %</td></tr><tr><td class="cd-table__name" data-label="Año">2021</td><td class="cd-num" data-label="Francisco Morazán">31.9 %</td><td class="cd-num" data-label="Cortés">31.6 %</td><td class="cd-num" data-label="Comayagua">29.1 %</td></tr><tr><td class="cd-table__name" data-label="Año">2022</td><td class="cd-num" data-label="Francisco Morazán">33.8 %</td><td class="cd-num" data-label="Cortés">33.4 %</td><td class="cd-num" data-label="Comayagua">30.8 %</td></tr><tr><td class="cd-table__name" data-label="Año">2023</td><td class="cd-num" data-label="Francisco Morazán">35.7 %</td><td class="cd-num" data-label="Cortés">35.3 %</td><td class="cd-num" data-label="Comayagua">32.5 %</td></tr><tr><td class="cd-table__name" data-label="Año">2024</td><td class="cd-num" data-label="Francisco Morazán">37.2 %</td><td class="cd-num" data-label="Cortés">36.7 %</td><td class="cd-num" data-label="Comayagua">33.8 %</td></tr><tr><td class="cd-table__name" data-label="Año">2025</td><td class="cd-num" data-label="Francisco Morazán">38.2 %</td><td class="cd-num" data-label="Cortés">37.7 %</td><td class="cd-num" data-label="Comayagua">34.7 %</td></tr><tr><td class="cd-table__name" data-label="Año">2026</td><td class="cd-num" data-label="Francisco Morazán">39.2 %</td><td class="cd-num" data-label="Cortés">38.7 %</td><td class="cd-num" data-label="Comayagua">35.6 %</td></tr></tbody></table></div></div></details><div class="cd-chart__foot"><p class="cd-chart__source">Fuente: CEDE · Sistema Nacional de Información Educativa (datos demostrativos) · 2019–2026</p><div class="cd-chart__tools"><button class="cd-download" type="button" data-download="csv"><svg class="cd-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5v8M4.8 7.6 8 10.8l3.2-3.2M2.8 13.2h10.4"/></svg>CSV</button><button class="cd-download" type="button" data-download="xlsx"><svg class="cd-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5v8M4.8 7.6 8 10.8l3.2-3.2M2.8 13.2h10.4"/></svg>XLSX</button><button class="cd-download" type="button" data-download="json"><svg class="cd-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5v8M4.8 7.6 8 10.8l3.2-3.2M2.8 13.2h10.4"/></svg>JSON</button><button class="cd-download" type="button" data-print><svg class="cd-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4.6 6V2.8h6.8V6"/><path d="M4.6 12h-2V6.8h10.8V12h-2"/><path d="M4.6 9.6h6.8v3.6H4.6z"/></svg>PDF</button></div></div></figure>
+          </div>
+
+          <div style="margin-top:1.5rem">
+            <p class="cd-label" style="margin-bottom:.75rem"><span>Tabla comparativa</span><span class="cd-demo">Datos demostrativos</span></p>
+            <div class="cd-tablewrap" data-compare-table>
+              <table class="cd-table cd-table--stack">
+                <caption>Indicadores comparados, 2026. Todas las cifras son demostrativas.</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Indicador</th>
+                    <th scope="col" class="cd-num" data-compare-head>Francisco Morazán</th><th scope="col" class="cd-num" data-compare-head>Cortés</th><th scope="col" class="cd-num" data-compare-head>Comayagua</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr data-compare-row="matricula"><td class="cd-table__name" data-label="Indicador">Matrícula</td><td class="cd-num" data-label="Francisco Morazán">444,872</td><td class="cd-num" data-label="Cortés">462,299</td><td class="cd-num" data-label="Comayagua">139,569</td></tr><tr data-compare-row="centros"><td class="cd-table__name" data-label="Indicador">Centros educativos</td><td class="cd-num" data-label="Francisco Morazán">3,673</td><td class="cd-num" data-label="Cortés">3,901</td><td class="cd-num" data-label="Comayagua">1,412</td></tr><tr data-compare-row="docentes"><td class="cd-table__name" data-label="Indicador">Personal docente</td><td class="cd-num" data-label="Francisco Morazán">13,781</td><td class="cd-num" data-label="Cortés">14,416</td><td class="cd-num" data-label="Comayagua">4,628</td></tr><tr data-compare-row="ratio"><td class="cd-table__name" data-label="Indicador">Estudiantes por docente</td><td class="cd-num" data-label="Francisco Morazán">32.3</td><td class="cd-num" data-label="Cortés">32.1</td><td class="cd-num" data-label="Comayagua">30.2</td></tr><tr data-compare-row="cobertura"><td class="cd-table__name" data-label="Indicador">Cobertura en básica</td><td class="cd-num" data-label="Francisco Morazán">92.5 %</td><td class="cd-num" data-label="Cortés">92.1 %</td><td class="cd-num" data-label="Comayagua">89.3 %</td></tr><tr data-compare-row="coberturaMedia"><td class="cd-table__name" data-label="Indicador">Cobertura en media</td><td class="cd-num" data-label="Francisco Morazán">39.2 %</td><td class="cd-num" data-label="Cortés">38.7 %</td><td class="cd-num" data-label="Comayagua">35.6 %</td></tr><tr data-compare-row="permanencia"><td class="cd-table__name" data-label="Indicador">Permanencia</td><td class="cd-num" data-label="Francisco Morazán">95.7 %</td><td class="cd-num" data-label="Cortés">95.1 %</td><td class="cd-num" data-label="Comayagua">92.6 %</td></tr><tr data-compare-row="desercion"><td class="cd-table__name" data-label="Indicador">Deserción</td><td class="cd-num" data-label="Francisco Morazán">3.6 %</td><td class="cd-num" data-label="Cortés">3.7 %</td><td class="cd-num" data-label="Comayagua">4.1 %</td></tr><tr data-compare-row="transicion"><td class="cd-table__name" data-label="Indicador">Transición a media</td><td class="cd-num" data-label="Francisco Morazán">92.4 %</td><td class="cd-num" data-label="Cortés">91.6 %</td><td class="cd-num" data-label="Comayagua">87.4 %</td></tr><tr data-compare-row="conectividad"><td class="cd-table__name" data-label="Indicador">Conectividad de centros</td><td class="cd-num" data-label="Francisco Morazán">54.7 %</td><td class="cd-num" data-label="Cortés">52.8 %</td><td class="cd-num" data-label="Comayagua">40.0 %</td></tr><tr data-compare-row="tecnica"><td class="cd-table__name" data-label="Indicador">Matrícula técnica</td><td class="cd-num" data-label="Francisco Morazán">19,600</td><td class="cd-num" data-label="Cortés">19,694</td><td class="cd-num" data-label="Comayagua">4,509</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p class="cd-note cd-note--boxed" style="margin-top:1rem">Las cifras presentadas en este prototipo son simulaciones creadas exclusivamente para demostrar las capacidades de la plataforma.</p>
+        </div>
+      </section>
+    </main>
+
+      <footer class="cd-footer" id="aviso">
+        <div class="cd-shell">
+          <div class="cd-footer__top">
+            <div class="cd-footer__brand">
+<a class="cd-logo" href="../index.html"><svg class="cd-logo__mark" viewBox="0 0 44 44" aria-hidden="true" focusable="false"><rect x="1" y="1" width="42" height="42" rx="3" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.35"/><path d="M22 8 34 15v3H10v-3z" fill="currentColor"/><rect x="13" y="21" width="4" height="11" fill="currentColor"/><rect x="20" y="21" width="4" height="11" fill="currentColor"/><rect x="27" y="21" width="4" height="11" fill="currentColor"/><rect x="10" y="34" width="24" height="3" fill="currentColor"/></svg><span class="cd-logo__type"><span class="cd-logo__name">Consejo Estratégico<br />para el Desarrollo Educativo</span><span class="cd-logo__sub">Sistema Nacional de Información y Política Educativa</span></span></a>
+              <p class="cd-footer__pitch">Información pública, política educativa y planificación nacional en un solo sistema. Portal demostrativo de una entidad ficticia.</p>
+              <p class="cd-footer__pitch">Avenida de la República 1200, Tegucigalpa, M.D.C. · Dirección demostrativa<br />
+              contacto@cede.example · Correo demostrativo</p>
+            </div>
+            <div class="cd-footer__columns">
+            <div><p class="cd-footer__heading">Institución</p><a class="cd-footer__link" href="../institucion.html#mandato">Mandato y funciones</a><a class="cd-footer__link" href="../institucion.html#estructura">Estructura</a><a class="cd-footer__link" href="../institucion.html#directorio">Directorio institucional</a><a class="cd-footer__link" href="../contacto.html">Contacto</a></div>
+            <div><p class="cd-footer__heading">Política y planificación</p><a class="cd-footer__link" href="../politica-educativa.html">Política educativa</a><a class="cd-footer__link" href="../planificacion.html">Plan Nacional 2026–2035</a><a class="cd-footer__link" href="../planificacion.html#monitor">Monitor del Plan</a><a class="cd-footer__link" href="../programas.html">Programas</a></div>
+            <div><p class="cd-footer__heading">Datos</p><a class="cd-footer__link" href="../datos.html">Observatorio Educativo</a><a class="cd-footer__link" href="../datos/comparador.html">Comparar territorios</a><a class="cd-footer__link" href="../datos-abiertos.html">Datos abiertos</a><a class="cd-footer__link" href="../datos/metodologia.html">Metodología</a></div>
+            <div><p class="cd-footer__heading">Normativa</p><a class="cd-footer__link" href="../normativa.html">Marco normativo</a><a class="cd-footer__link" href="../resoluciones.html">Resoluciones y acuerdos</a><a class="cd-footer__link" href="../biblioteca.html">Biblioteca digital</a></div>
+            <div><p class="cd-footer__heading">Participación</p><a class="cd-footer__link" href="../participacion.html#consultas">Consultas públicas</a><a class="cd-footer__link" href="../participacion.html#foros">Foros y mesas</a><a class="cd-footer__link" href="../actualidad.html">Actualidad</a><a class="cd-footer__link" href="../actualidad.html#agenda">Agenda</a></div>
+            <div><p class="cd-footer__heading">Transparencia</p><a class="cd-footer__link" href="../transparencia.html">Portal de transparencia</a><a class="cd-footer__link" href="../transparencia.html#presupuesto">Presupuesto</a><a class="cd-footer__link" href="../transparencia.html#rendicion">Rendición de cuentas</a><a class="cd-footer__link" href="../transparencia.html#solicitudes">Solicitudes de información</a></div>
+            </div>
+          </div>
+
+          <nav class="cd-footer__service" aria-label="Servicios del portal"><a href="../buscar.html#mapa">Mapa del sitio</a><a href="#aviso">Política de privacidad</a><a href="#aviso">Accesibilidad</a><a href="#aviso">Términos de uso</a><a href="../datos-abiertos.html">Datos abiertos</a><a href="../contacto.html#formulario">Reportar un problema técnico</a></nav>
+
+          <dl class="cd-footer__meta">
+            <div><dt>Última actualización</dt><dd>26 de agosto de 2026</dd></div>
+            <div><dt>Versión</dt><dd>Versión del portal 1.0.0 · demostración</dd></div>
+            <div><dt>Licencia de datos</dt><dd>Datos abiertos con atribución</dd></div>
+          </dl>
+        </div>
+
+        <div class="cd-footer__notice">
+          <div class="cd-shell cd-footer__notice-inner">
+            <p>Concepto de portafolio. Entidad ficticia. Este sitio no representa a ninguna institución gubernamental real. Las cifras presentadas en este prototipo son simulaciones creadas exclusivamente para demostrar las capacidades de la plataforma.</p>
+            <p>&copy; <span data-current-year>2026</span> Consejo Estratégico para el Desarrollo Educativo</p>
+          </div>
+        </div>
+      </footer>
+
+    <div class="cd-tip" data-tip-box role="status" aria-live="polite"></div>
+
+    <script type="module" src="../../../src/scripts/cede/main.js"></script>
+  </body>
+</html>

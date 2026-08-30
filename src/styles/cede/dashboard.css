@@ -1,0 +1,490 @@
+/* =============================================================================
+   CEDE — the Observatory
+
+   Filters, board navigation, panels and the mobile rework of all three.
+
+   The rule the layout follows: one filter row above everything it scopes, never
+   a control inside a chart card. Change a filter and every board re-renders
+   against the same slice, so two charts on screen can never describe different
+   years.
+   ========================================================================== */
+
+.cd-observatory {
+  background: var(--page);
+}
+
+/* --- Filter bar ------------------------------------------------------------
+   Sticky under the header on desktop; on a phone it collapses into a summary
+   that says how many filters are active, because eight selects stacked above a
+   chart is not a dashboard, it is a form.
+   -------------------------------------------------------------------------- */
+
+.cd-filters {
+  position: sticky;
+  top: 3.25rem;
+  z-index: 40;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.cd-filters__inner {
+  display: grid;
+  gap: var(--s-xs);
+  padding-block: var(--s-sm);
+}
+
+.cd-filters__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-2xs);
+}
+
+.cd-filters__title {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2xs);
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.cd-filters__grid {
+  display: grid;
+  gap: var(--s-2xs);
+  grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+}
+
+.cd-field {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.cd-field__label {
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.cd-select {
+  position: relative;
+  display: block;
+}
+
+.cd-select select {
+  width: 100%;
+  min-height: 2.5rem;
+  padding: 0.35rem 2rem 0.35rem 0.6rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-xs);
+  background: var(--surface);
+  font-size: var(--t-sm);
+  appearance: none;
+  cursor: pointer;
+}
+
+.cd-select select:hover {
+  border-color: var(--navy);
+}
+
+.cd-select::after {
+  content: "";
+  position: absolute;
+  right: 0.7rem;
+  top: 50%;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-right: 1.5px solid var(--ink-muted);
+  border-bottom: 1.5px solid var(--ink-muted);
+  transform: translateY(-70%) rotate(45deg);
+  pointer-events: none;
+}
+
+.cd-filters__state {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2xs);
+  padding-top: var(--s-2xs);
+  border-top: 1px solid var(--border);
+  font-size: var(--t-xs);
+  color: var(--ink-muted);
+}
+
+/* The line that tells the reader what slice they are looking at. It updates
+   with every filter change and is announced politely to screen readers. */
+.cd-slice {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-weight: 600;
+  color: var(--navy-900);
+}
+
+.cd-slice__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--navy);
+  flex: none;
+}
+
+.cd-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.15rem 0.5rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: var(--surface);
+  font-size: var(--t-2xs);
+  color: var(--ink-soft);
+}
+
+.cd-chip button {
+  border: 0;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--ink-muted);
+  line-height: 1;
+}
+
+.cd-chip button:hover {
+  color: var(--bad);
+}
+
+/* --- Board navigation ------------------------------------------------------
+   Ten boards. A horizontal rail that scrolls on narrow screens, with the
+   current board marked by more than colour.
+   -------------------------------------------------------------------------- */
+
+.cd-boards {
+  position: sticky;
+  top: 3.25rem;
+  z-index: 41;
+  background: var(--navy-900);
+  border-bottom: 1px solid var(--navy-800);
+}
+
+.cd-boards__list {
+  display: flex;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+.cd-boards__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  padding: 0.7rem 0.85rem;
+  border-bottom: 3px solid transparent;
+  color: rgb(255 255 255 / 0.72);
+  font-size: var(--t-xs);
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.cd-boards__link b {
+  font-weight: 600;
+  color: rgb(255 255 255 / 0.5);
+  font-variant-numeric: tabular-nums;
+}
+
+.cd-boards__link:hover {
+  color: #ffffff;
+  background: rgb(255 255 255 / 0.08);
+}
+
+.cd-boards__link[aria-current="true"] {
+  color: #ffffff;
+  border-bottom-color: #ffffff;
+  background: rgb(255 255 255 / 0.1);
+}
+
+.cd-boards__link[aria-current="true"] b {
+  color: #ffffff;
+}
+
+/* --- A board ---------------------------------------------------------------- */
+
+.cd-board {
+  padding-block: var(--s-xl);
+  border-bottom: 1px solid var(--border);
+  scroll-margin-top: 8rem;
+}
+
+.cd-board__head {
+  display: grid;
+  gap: var(--s-2xs);
+  margin-bottom: var(--s-md);
+}
+
+@media (min-width: 60rem) {
+  .cd-board__head {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+  }
+}
+
+.cd-board__title {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-2xs);
+  font-family: var(--font-serif);
+  font-size: var(--t-2xl);
+  color: var(--navy-900);
+}
+
+.cd-board__index {
+  font-family: var(--font-sans);
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--navy);
+  font-variant-numeric: tabular-nums;
+}
+
+.cd-board__lead {
+  font-size: var(--t-md);
+  color: var(--ink-muted);
+  max-width: 60ch;
+}
+
+.cd-board__body {
+  display: grid;
+  gap: var(--s-md);
+}
+
+@media (min-width: 66rem) {
+  .cd-board__body--split {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cd-board__body--map {
+    grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .cd-board__wide {
+    grid-column: 1 / -1;
+  }
+}
+
+/* --- Indicator tiles inside a board ---------------------------------------- */
+
+.cd-tiles {
+  display: grid;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (min-width: 52rem) {
+  .cd-tiles {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.cd-tile {
+  display: grid;
+  gap: var(--s-3xs);
+  align-content: start;
+  padding: var(--s-sm);
+  background: var(--surface);
+  color: inherit;
+  text-decoration: none;
+}
+
+a.cd-tile:hover {
+  background: var(--navy-100);
+}
+
+.cd-tile__label {
+  font-size: var(--t-xs);
+  color: var(--ink-muted);
+  line-height: 1.25;
+}
+
+.cd-tile__value {
+  font-size: var(--t-xl);
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--navy-900);
+  font-variant-numeric: proportional-nums;
+}
+
+.cd-tile__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3xs);
+  font-size: var(--t-2xs);
+  color: var(--ink-muted);
+}
+
+.cd-tile__source {
+  font-size: var(--t-2xs);
+  color: var(--ink-muted);
+  padding-top: var(--s-3xs);
+  border-top: 1px dotted var(--border);
+}
+
+/* --- ODS 4 ------------------------------------------------------------------ */
+
+.cd-ods {
+  display: grid;
+  gap: var(--s-2xs);
+}
+
+.cd-ods__row {
+  display: grid;
+  gap: var(--s-2xs) var(--s-sm);
+  padding: var(--s-sm);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xs);
+  background: var(--surface);
+}
+
+@media (min-width: 62rem) {
+  .cd-ods__row {
+    grid-template-columns: 4rem minmax(0, 1.6fr) minmax(0, 1fr) 8rem;
+    align-items: center;
+  }
+}
+
+.cd-ods__id {
+  font-size: var(--t-md);
+  font-weight: 600;
+  color: var(--navy);
+  font-variant-numeric: tabular-nums;
+}
+
+.cd-ods__target {
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--navy-900);
+}
+
+.cd-ods__indicator {
+  font-size: var(--t-xs);
+  color: var(--ink-muted);
+}
+
+.cd-ods__track {
+  display: grid;
+  gap: 3px;
+}
+
+.cd-ods__numbers {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--t-2xs);
+  color: var(--ink-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- The comparator ---------------------------------------------------------- */
+
+.cd-compare__picker {
+  display: grid;
+  gap: var(--s-2xs);
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  padding: var(--s-md);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+}
+
+.cd-compare__slot {
+  display: grid;
+  gap: 3px;
+}
+
+.cd-compare__slot[data-slot="1"] .cd-field__label { color: var(--c1); }
+.cd-compare__slot[data-slot="2"] .cd-field__label { color: var(--c2); }
+.cd-compare__slot[data-slot="3"] .cd-field__label { color: var(--c3); }
+
+.cd-compare__grid {
+  display: grid;
+  gap: var(--s-md);
+  margin-top: var(--s-md);
+}
+
+@media (min-width: 62rem) {
+  .cd-compare__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* --- Download simulation ----------------------------------------------------- */
+
+.cd-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  min-height: 2rem;
+  padding: 0.25rem 0.6rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-xs);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.cd-download:hover {
+  border-color: var(--navy);
+  color: var(--navy);
+}
+
+.cd-download[data-done]::after {
+  content: "✓";
+  color: var(--ok);
+}
+
+/* --- Mobile rework -----------------------------------------------------------
+   Not a squeeze: a different arrangement. The tiles become a horizontal rail
+   the thumb can flick through, the sticky offsets shrink, and the filter grid
+   becomes two columns so a select is still wide enough to read.
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 52rem) {
+  .cd-filters,
+  .cd-boards {
+    top: 2.9rem;
+  }
+
+  .cd-tiles {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    border-radius: var(--r-sm);
+    gap: 1px;
+  }
+
+  .cd-tile {
+    flex: 0 0 min(68vw, 16rem);
+    scroll-snap-align: start;
+  }
+
+  .cd-board {
+    padding-block: var(--s-lg);
+  }
+}
