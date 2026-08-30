@@ -168,8 +168,8 @@ a.channel__value {
 }
 
 .footer__wordmark {
-  height: 0.8rem;
-  width: auto;
+  /* 0.8rem of lettering — see .brand__wordmark for the ratio. */
+  font-size: 1.114rem;
   opacity: 0.8;
 }
 

@@ -2,13 +2,15 @@
    Manifesto — one idea, given a whole screen
    ========================================================================== */
 
+/* No `overflow: hidden`: every glow on this page has to fade out on its own
+   rather than be cut off at a section boundary, which reads as a straight edge
+   across the screen. */
 .manifesto {
   position: relative;
   display: grid;
   align-items: center;
   min-height: 82svh;
   padding-block: var(--space-3xl);
-  overflow: hidden;
 }
 
 /* A wide, very soft brand wash so the statement sits in its own light. */

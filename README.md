@@ -75,19 +75,21 @@ src/
   styles/
     main.css               punto de entrada (define el orden de la cascada)
     tokens.css             color, tipografía, espacio, motion — fuente única
-    fonts.css              @font-face de Manrope (y el hueco de Quantify)
+    fonts.css              @font-face de Manrope y de Quantify (la de marca)
     base.css               reset, fondo ambiental, foco, helpers
     layout.css             ritmo de secciones, conectores, bloque "statement"
     motion.css             sistema de scroll-reveal + prefers-reduced-motion
-    components/            header, button, hero, projects, mockup,
-                           capabilities, manifesto, contact
+    components/            header, button, hero, wordmark, spotlight, projects,
+                           mockup, capabilities, manifesto, contact
   scripts/
     main.js                arranque
     modules/
       header.js            estado frosted, menú móvil, sección activa
       scroll-metrics.js    publica el scroll a CSS como custom properties
       scroll-reveal.js     IntersectionObserver + stagger
-      pointer-glow.js      la luz cian que sigue al cursor en las tarjetas
+      pointer-glow.js      el realce cian dentro de una tarjeta al pasar por ella
+      pointer-spotlight.js la luz de la página: sigue al cursor con retardo
+                           y se deforma según la velocidad
 
 tools/                     scripts de compilación (Node, sin dependencias)
   lib/png.mjs              códec PNG mínimo (decodificar, codificar, escalar)
@@ -97,7 +99,7 @@ tools/                     scripts de compilación (Node, sin dependencias)
 assets/
   source/                  exportaciones originales de marca (no se tocan)
   brand/                   assets generados que usa el sitio
-  fonts/                   Manrope (OFL) + licencia
+  fonts/                   Manrope (OFL) y Quantify (marca) + sus licencias
 dist/corestruct.css        hoja de estilos compilada (es la que enlaza la página)
 ```
 
@@ -153,12 +155,14 @@ Ningún componente escribe un color de marca a mano.
 - **Manrope** (400–800) para toda la interfaz. Se sirve desde el propio dominio,
   en un archivo variable por subconjunto, con `font-display: swap`. Licencia
   SIL OFL 1.1 incluida en `assets/fonts/Manrope-OFL.txt`.
-- **Quantify** queda reservada a la marca. **No está en el repositorio** porque es
-  una fuente licenciada y el kit no la incluía. Todo lo que hoy debe ir en Quantify
-  —el logotipo CoreStruct— se toma del arte oficial del logo, así que no falta nada
-  en la página. Para añadirla: deja `quantify.woff2` en `assets/fonts/` y descomenta
-  el bloque de `src/styles/fonts.css`. Está comentado a propósito para que el
-  navegador no pida un archivo inexistente.
+- **Quantify** v3 (Saidi Alfianor, Sentype Foundry) queda reservada a la marca: el
+  logotipo CoreStruct se compone con ella como texto real —clase `.wordmark`— en
+  vez de servirse como PNG. Va subconjunta a Latin-1 y sin hinting (65 KB de TTF
+  quedan en 12 KB de WOFF2) y con `font-display: block`, porque un logotipo pintado
+  un instante con otra tipografía se lee como marca rota. Es una display incompleta
+  para el castellano —no trae ñ, ni raya ni semirraya—, así que no sale del
+  lettering de marca: el resto de la página es Manrope.
+  **Licencia: gratis solo para uso personal** (`assets/fonts/Quantify-EULA.txt`).
 
 ### Assets de marca
 
@@ -178,6 +182,12 @@ después los iconos y la tarjeta Open Graph, en vez de escalar el PNG.
 - Las animaciones se limitan a `transform` y `opacity`. `--scroll-progress` mueve
   una barra compuesta; el fondo usa una copia escalonada (`--ambient-progress`)
   para no repintar el viewport completo en cada frame.
+- El cian de la página lo lleva el spotlight del cursor: un solo elemento fijo y
+  redondo que únicamente cambia `transform`, con el bucle rAF apagándose en
+  cuanto alcanza al puntero. Sin ratón o con `prefers-reduced-motion` no existe,
+  y el lavado de fondo sube para compensar.
+- Ninguna sección usa `overflow: hidden` sobre sus resplandores: recortarlos en el
+  borde de la sección dibujaba una línea recta a lo ancho de la pantalla.
 - Sin peticiones a terceros: ni fuentes, ni analítica, ni CDNs.
 - El contenido se genera al compilar, no en el navegador: la página es indexable
   y se pinta en el primer frame. Si el JavaScript no llega a ejecutarse, un
@@ -187,7 +197,10 @@ después los iconos y la tarjeta Open Graph, en vez de escalar el PNG.
 
 ## Pendiente de aportar
 
-1. **Fuente Quantify** (`.woff2`) si se quiere lettering de marca más allá del logo.
+1. **Licencia comercial de Quantify**: la que está en el repositorio es la descarga
+   gratuita de DaFont, válida solo para uso personal, y este sitio es uso comercial.
+   Escribir a la fundición (correo en `assets/fonts/Quantify-EULA.txt`) antes de
+   publicar, o sustituir el logotipo por el arte del logo.
 2. **Datos de contacto reales** en `src/data/site.js`: el correo actual
    (`contacto@corestruct.com`) es un marcador; teléfono, WhatsApp y redes están
    en `null` y por eso no aparecen.

@@ -31,32 +31,25 @@
 /* -----------------------------------------------------------------------------
    Quantify — the brand typeface, reserved for the logotype and brand lettering.
 
-   The font is NOT in this repository: it is a licensed face and no legitimate
-   copy shipped with the brand kit. Everything that must be set in Quantify today
-   (the CoreStruct wordmark) is drawn from the official logo artwork instead, so
-   nothing is missing from the page.
+   Quantify v3 by Saidi Alfianor (Sentype Foundry), the face the CoreStruct
+   logotype is drawn in. LICENCE: free for personal use only; commercial use
+   needs a licence from the foundry (assets/fonts/Quantify-EULA.txt).
 
-   To add it later:
-     1. Drop `quantify.woff2` (and optionally `quantify-bold.woff2`) into
-        `assets/fonts/`.
-     2. Uncomment the block below.
-     3. Apply `font-family: var(--font-brand)` to the brand lettering.
+   Subset to Latin-1 plus the punctuation this site sets, with hinting and the
+   legacy metric tables dropped: 65 KB of TTF becomes 12 KB of WOFF2.
 
-   It stays commented so the browser never requests a file that isn't there.
+   It is a display face and incomplete for Spanish body copy — there is no
+   lowercase "n" with tilde, no em dash and no en dash — so it stays on brand
+   lettering, where the strings are known. Interface text is Manrope.
+   ========================================================================== */
 
 @font-face {
   font-family: "Quantify";
   font-style: normal;
   font-weight: 400;
-  font-display: swap;
+  /* `block` rather than `swap`: this face only ever sets the logotype, and a
+     flash of the wordmark in the wrong typeface reads as a broken brand. The
+     file is preloaded and small, so the block period ends before first paint. */
+  font-display: block;
   src: url("../../assets/fonts/quantify.woff2") format("woff2");
 }
-
-@font-face {
-  font-family: "Quantify";
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url("../../assets/fonts/quantify-bold.woff2") format("woff2");
-}
------------------------------------------------------------------------------ */

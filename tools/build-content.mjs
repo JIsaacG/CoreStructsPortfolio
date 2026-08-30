@@ -83,7 +83,7 @@ function renderSprite({ defs, paths }) {
 }
 
 function renderHeroMark({ paths }) {
-  // Decorative: the wordmark image right below it carries the accessible name.
+  // Decorative: the wordmark right below it carries the accessible name.
   return `              <svg
                 class="hero__mark-svg"
                 viewBox="0 0 362 422"

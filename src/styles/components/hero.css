@@ -110,8 +110,10 @@
 /* --- Wordmark -------------------------------------------------------------- */
 
 .hero__wordmark {
-  width: clamp(11rem, 24vw, 18rem);
-  height: auto;
+  /* The image was sized by width: clamp(11rem, 24vw, 18rem). "CoreStruct" is
+     4.973em wide with the logotype's tracking, so every term of the clamp is
+     divided by that and the hero keeps its proportions. */
+  font-size: clamp(2.212rem, 4.826vw, 3.62rem);
 }
 
 /* --- Headline -------------------------------------------------------------- */

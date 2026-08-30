@@ -50,6 +50,16 @@
       type="font/woff2"
       crossorigin
     />
+
+    <!-- The logotype is live text in the brand face, so it is in the first
+         paint and blocks on this file (see fonts.css). 12 KB, fetched early. -->
+    <link
+      rel="preload"
+      href="assets/fonts/quantify.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <link rel="stylesheet" href="dist/corestruct.css" />
 
     <!-- Marks the document as scripted before first paint, so the reveal system
@@ -116,13 +126,7 @@
           <svg class="brand__mark" viewBox="0 0 362 422" aria-hidden="true" focusable="false">
             <use href="#cs-isotipo" />
           </svg>
-          <img
-            class="brand__wordmark"
-            src="assets/brand/wordmark-white.png"
-            alt="CoreStruct"
-            width="720"
-            height="104"
-          />
+          <span class="brand__wordmark wordmark">CoreStruct</span>
         </a>
 
         <nav class="header__nav" aria-label="Principal">
@@ -186,14 +190,7 @@
 <!-- /build:hero-mark -->
             </div>
 
-            <img
-              class="hero__wordmark"
-              src="assets/brand/wordmark-white.png"
-              alt="CoreStruct"
-              width="720"
-              height="104"
-              fetchpriority="high"
-            />
+            <p class="hero__wordmark wordmark">CoreStruct</p>
 
             <h1 class="hero__headline reveal-lines">
               <span class="reveal-lines__line"><span>Convertimos ideas</span></span>
@@ -634,14 +631,7 @@
           <svg class="footer__mark" viewBox="0 0 362 422" aria-hidden="true" focusable="false">
             <use href="#cs-isotipo" />
           </svg>
-          <img
-            class="footer__wordmark"
-            src="assets/brand/wordmark-white.png"
-            alt="CoreStruct"
-            width="720"
-            height="104"
-            loading="lazy"
-          />
+          <span class="footer__wordmark wordmark">CoreStruct</span>
         </a>
 
         <!-- build:footer-meta -->

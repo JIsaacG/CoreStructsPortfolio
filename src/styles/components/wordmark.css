@@ -1,0 +1,29 @@
+/* =============================================================================
+   Wordmark — the CoreStruct logotype, set as live text in Quantify
+   ========================================================================== */
+
+/* The logotype used to be a PNG crop of the horizontal lockup. Now that the
+   brand face is in the repo it is real text: sharp at any size, recoloured by
+   CSS, selectable, and one fewer image on the critical path. The lockups below
+   keep sizing it the way they sized that image.
+
+   Two numbers are measured off the official artwork:
+
+   · -0.02em of tracking, which is the only place the drawn logotype departs
+     from Quantify as the foundry ships it (720 x 104 of artwork against 5.153em
+     of default advance at the same cap height).
+   · 0.718 line-height — the ink height of "CoreStruct" in em — so the box is
+     the lettering and nothing else, exactly like the image box it replaces. */
+
+.wordmark {
+  font-family: var(--font-brand);
+  font-weight: 400;
+  font-style: normal;
+  line-height: 0.718;
+  letter-spacing: -0.02em;
+  /* Tracking also lands after the final "t". Give the box that sliver back so
+     a centred lockup centres on the lettering rather than on the gap. */
+  padding-inline-end: 0.02em;
+  /* A logotype never breaks across lines. */
+  white-space: nowrap;
+}
