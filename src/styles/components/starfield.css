@@ -1,0 +1,37 @@
+/* =============================================================================
+   Starfield
+
+   The ambient particle field behind the whole page: one fixed canvas at the
+   backdrop layer, painted by `starfield.js`. It sits above the radial brand
+   washes and below every section, so the motes read as depth behind the
+   content rather than as an overlay on top of it.
+
+   Nothing here describes the motion — the element is inert until the module
+   claims it, and a browser without JavaScript simply never sees it.
+   ========================================================================== */
+
+.starfield {
+  position: fixed;
+  inset: 0;
+  z-index: var(--layer-backdrop);
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+
+  /* The field fades in once the first frame is on screen, so the page never
+     starts with a hard pop of dots over the hero. */
+  opacity: 0;
+  transition: opacity 1.6s var(--ease-out-quart);
+}
+
+.starfield.is-awake {
+  opacity: 1;
+}
+
+/* Reduced motion still gets the field — `starfield.js` paints one static frame
+   and stops — but it appears without the fade. */
+@media (prefers-reduced-motion: reduce) {
+  .starfield {
+    transition: none;
+  }
+}

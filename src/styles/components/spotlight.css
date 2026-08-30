@@ -2,13 +2,55 @@
    Cursor spotlight
 
    The cyan light of the page is attached to the pointer instead of being baked
-   into the background. It is one fixed, perfectly round element that only ever
-   changes `transform`, so it rides on the compositor and never repaints.
+   into the background, and it comes in two deliberately different scales:
 
-   Its lag and the slight stretch along the direction of travel come from
-   `pointer-spotlight.js`; the element is invisible until a mouse actually moves,
-   so touch devices never see it.
+   - `.spotlight-trail`, the wake — a tight, bright streak on the path the light
+     has just travelled, fading and spreading as it ages.
+   - `.spotlight`, the head — a broad, soft glow that rides at the front of that
+     wake. It only ever changes `transform`, so it stays on the compositor.
+
+   Reading them together is what makes the light feel like a moving object
+   rather than a circle pinned to the cursor. Both are driven by
+   `pointer-spotlight.js` and stay invisible until a mouse actually moves, so
+   touch devices never see either one.
    ========================================================================== */
+
+/* --- The wake --------------------------------------------------------------
+   A canvas, because the trail has to follow the path the light actually took —
+   every curve and flick of it. Lagging copies of the head could only ever draw
+   a chain of dots that all move at once.
+
+   The bitmap is deliberately half resolution: the whole thing is soft gradient,
+   so the upscale costs nothing and smooths it for free.
+   -------------------------------------------------------------------------- */
+
+.spotlight-trail {
+  position: fixed;
+  inset: 0;
+  /* Just under the head, so the brightest point of the light is its front. */
+  z-index: calc(var(--layer-spotlight) - 1);
+  width: 100%;
+  height: 100%;
+  /* Additive, like the head: the wake only ever brightens what it passes over. */
+  mix-blend-mode: screen;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 500ms var(--ease-out-quart);
+}
+
+.spotlight-trail.is-lit {
+  opacity: 1;
+}
+
+/* A wake is nothing but movement, so reduced motion drops it entirely and keeps
+   the head alone, pinned to the cursor. */
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .spotlight-trail {
+    display: none;
+  }
+}
+
+/* --- The head -------------------------------------------------------------- */
 
 .spotlight {
   /* One dial for the whole effect: raise it for a stronger light. */

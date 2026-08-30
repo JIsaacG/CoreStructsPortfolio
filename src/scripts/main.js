@@ -11,8 +11,10 @@ import { initPointerGlow } from "./modules/pointer-glow.js";
 import { initPointerSpotlight } from "./modules/pointer-spotlight.js";
 import { initScrollMetrics } from "./modules/scroll-metrics.js";
 import { initScrollReveal } from "./modules/scroll-reveal.js";
+import { initStarfield } from "./modules/starfield.js";
 
 initHeader();
+initStarfield();
 initScrollMetrics();
 initScrollReveal();
 initPointerSpotlight();

@@ -104,7 +104,15 @@
   <body>
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
 
-    <!-- The page's cyan light. Purely decorative; driven by pointer-spotlight.js -->
+    <!-- The ambient field of brand-coloured motes that rises behind the whole
+         page. Purely decorative; painted by starfield.js and empty until it
+         runs, so a browser without JavaScript never sees it. -->
+    <canvas class="starfield" data-starfield aria-hidden="true"></canvas>
+
+    <!-- The page's cyan light: the wake the cursor traces, and the soft head
+         that rides at the front of it. Purely decorative, both driven by
+         pointer-spotlight.js; empty and invisible until a mouse moves. -->
+    <canvas class="spotlight-trail" data-spotlight-trail aria-hidden="true"></canvas>
     <div class="spotlight" data-spotlight aria-hidden="true"></div>
 
     <!-- build:sprite -->
