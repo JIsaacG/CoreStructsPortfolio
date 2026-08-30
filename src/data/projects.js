@@ -71,6 +71,7 @@ export const projects = [
     description:
       "Paneles que convierten la operación en decisiones: indicadores claros, reportes y visualización en tiempo real.",
     mockup: "dashboard",
+    href: "demos/verbena.html",
     size: "half",
     reveal: "far",
   },

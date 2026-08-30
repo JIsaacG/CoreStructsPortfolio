@@ -42,7 +42,7 @@
 }
 
 @media (min-width: 60rem) {
-  /* The half the mark is not occupying. */
+  /* The half the bottle is not occupying. */
   .dm-grid__body--start {
     grid-column: 1 / 7;
   }

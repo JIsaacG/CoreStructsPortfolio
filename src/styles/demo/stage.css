@@ -22,14 +22,32 @@
   pointer-events: none;
 }
 
-@media (min-width: 60rem) {
-  .dm-stage {
-    position: sticky;
-    inset-block-start: var(--header-height);
-    height: calc(100svh - var(--header-height));
-    /* Cancels its own height: the sections below start where the track starts. */
-    margin-block-end: calc(-1 * (100svh - var(--header-height)));
-    padding-block: 0;
+/* Pinned on every viewport and under every motion setting: the animation is the
+   page's subject, not decoration laid over it.
+
+   The one condition is that `stage.js` is actually driving the stage — it adds
+   `is-pinned` once it is live. A pinned bottle that nothing moves would sit at
+   full size on top of the copy, so a page that never ran the module keeps the
+   bottle in the flow instead. */
+.dm-track.is-pinned .dm-stage {
+  position: sticky;
+  inset-block-start: var(--header-height);
+  height: calc(100svh - var(--header-height));
+  /* Cancels its own height: the sections below start where the track starts. */
+  margin-block-end: calc(-1 * (100svh - var(--header-height)));
+  padding-block: 0;
+}
+
+/* On a phone there is no second column to move the bottle into, so it goes
+   behind the copy instead of beside it: same travel, same re-tint, dimmed far
+   enough that the text on top of it never has to compete. */
+@media (max-width: 59.999rem) {
+  .dm-bottle {
+    --bottle-h: min(62vh, 24rem);
+  }
+
+  .dm-track.is-pinned .dm-bottle {
+    opacity: calc(var(--mark-fade, 1) * 0.3);
   }
 }
 
@@ -216,10 +234,43 @@
   }
 }
 
+/* --- Motion settings --------------------------------------------------------
+   The shared `motion.css` clamps every animation and transition when the visitor
+   asks for reduced motion. That is right for the portfolio, and wrong here: a
+   demo whose whole point is the scroll animation has to run it. These lift the
+   clamp for the parts of the page that carry the story.
+   -------------------------------------------------------------------------- */
+
 @media (prefers-reduced-motion: reduce) {
   .bt-bubble {
-    animation: none;
-    opacity: 0.35;
-    transform: translateY(430px);
+    animation: bt-rise 9s linear infinite !important;
+    animation-delay: var(--bubble-delay, 0s) !important;
+  }
+
+  .dm-cue__rail::after {
+    animation: dm-cue-run 2.4s var(--ease-in-out) infinite !important;
+  }
+
+  /* The reveal system, restored: transform is back on the transition list. */
+  .js [data-reveal] {
+    transform:
+      translate3d(var(--reveal-x, 0), var(--reveal-y, 2.5rem), 0)
+      scale(var(--reveal-scale, 1));
+    transition-property: opacity, transform !important;
+    transition-duration: var(--duration-reveal) !important;
+  }
+
+  .js [data-reveal].is-revealed {
+    transform: none;
+  }
+
+  .js .reveal-lines__line > span {
+    transform: translate3d(0, 105%, 0);
+    transition:
+      transform var(--duration-reveal) var(--ease-out-expo) var(--reveal-delay, 0ms) !important;
+  }
+
+  .js .reveal-lines.is-revealed .reveal-lines__line > span {
+    transform: none;
   }
 }

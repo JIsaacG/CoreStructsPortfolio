@@ -10,13 +10,13 @@
   padding-block: var(--space-lg) var(--space-2xl);
 }
 
-@media (min-width: 60rem) {
-  .dm-hero {
-    /* The pinned stage already occupies this screenful; the hero has to be
-       exactly as tall so the bottle and the headline share one frame. */
-    min-height: calc(100svh - var(--header-height));
-    padding-block: 0;
-  }
+/* The pinned stage overlays this screenful without taking any layout from it, so
+   the hero has to be exactly as tall for the bottle and the headline to share
+   one frame. Only while it is pinned: unpinned, the stage takes its own height
+   and a full-height hero would push the copy a second screen down. */
+.dm-track.is-pinned .dm-hero {
+  min-height: calc(100svh - var(--header-height));
+  padding-block: 0;
 }
 
 .dm-hero__body {

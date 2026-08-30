@@ -1,8 +1,8 @@
 /**
- * The pinned mark — the piece that makes a demo page feel like one continuous
+ * The pinned bottle — the piece that makes a demo page feel like one continuous
  * shot instead of a stack of sections.
  *
- * The isotype is held by a `position: sticky` stage that spans several sections,
+ * The bottle is held by a `position: sticky` stage that spans several sections,
  * and its transform is driven by how far the page has scrolled through that
  * span. Nothing here animates on a timer: scroll position is the only clock.
  *
@@ -11,8 +11,11 @@
  * section reaches the top of the stage, and those positions are measured from
  * the live layout. Rewriting the copy therefore re-times the animation on its own.
  *
- * On narrow screens and under `prefers-reduced-motion` the stage never pins: the
- * mark simply sits in the hero, which is the honest version of the same page.
+ * The animation is deliberately unconditional: it runs on every viewport and
+ * whatever the visitor's motion setting says, because it is the page's subject
+ * rather than decoration on top of it. The only case it stands down for is a
+ * page where this module never loaded — see the `html:not(.js)` rule in the
+ * stylesheet, which un-pins the stage so a still bottle cannot cover the copy.
  */
 
 /** The transform the mark rests at, and the full set of animatable properties. */
@@ -104,14 +107,10 @@ export function initDemoStage() {
   const sections = [...track.querySelectorAll("[data-stage-frame]")];
   if (!sections.length) return;
 
-  const motionOk = window.matchMedia("(prefers-reduced-motion: no-preference)");
-  const wide = window.matchMedia("(min-width: 60rem)");
-
   let frames = [];
   let rendered = { ...REST };
   let target = { ...REST };
   let frame = 0;
-  let active = false;
 
   const paint = () => {
     for (const key of KEYS) {
@@ -139,39 +138,16 @@ export function initDemoStage() {
   };
 
   const onScroll = () => {
-    if (!active) return;
     target = stateAt(frames, window.scrollY);
     if (!frame) frame = requestAnimationFrame(tick);
   };
 
   const measure = () => {
-    if (!active) return;
     // The sticky offset is read from the declared style: the element's current
     // box only reports it while the stage is actually stuck.
     const declared = Number.parseFloat(getComputedStyle(stage).top);
     frames = readKeyframes(track, sections, Number.isFinite(declared) ? declared : 0);
     onScroll();
-  };
-
-  /** Enter or leave the pinned behaviour without reloading the page. */
-  const setActive = (next) => {
-    if (next === active) return;
-    active = next;
-    track.classList.toggle("is-pinned", active);
-
-    if (active) {
-      measure();
-      // The first paint must not animate in from rest — snap to the real state.
-      rendered = { ...target };
-      paint();
-      return;
-    }
-
-    if (frame) cancelAnimationFrame(frame);
-    frame = 0;
-    rendered = { ...REST };
-    target = { ...REST };
-    paint();
   };
 
   window.addEventListener("scroll", onScroll, { passive: true });
@@ -180,8 +156,10 @@ export function initDemoStage() {
   // offset, so the track is re-measured once the text has settled.
   document.fonts?.ready.then(measure).catch(() => {});
 
-  const sync = () => setActive(motionOk.matches && wide.matches);
-  motionOk.addEventListener("change", sync);
-  wide.addEventListener("change", sync);
-  sync();
+  // Tells the stylesheet the engine is live and the stage may be pinned.
+  track.classList.add("is-pinned");
+  measure();
+  // The first paint must not animate in from rest — snap to the real state.
+  rendered = { ...target };
+  paint();
 }
