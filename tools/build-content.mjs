@@ -240,7 +240,7 @@ function renderCta() {
   const buttons = [];
 
   if (email) {
-    buttons.push(`            <a class="button button--primary button--large" href="mailto:${escape(email)}">
+    buttons.push(`            <a class="button button--primary button--large button--pulse" href="mailto:${escape(email)}">
               Hablemos
               <span class="button__arrow" aria-hidden="true">&rarr;</span>
             </a>`);

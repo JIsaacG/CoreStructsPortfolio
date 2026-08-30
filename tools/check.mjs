@@ -85,17 +85,21 @@ if (!/<title>[^<]{10,70}<\/title>/.test(html)) warn("<title> is missing or an un
 
 /* ------------------------------------------------- CSS custom properties */
 
-if (!existsSync(BUNDLE)) {
-  fail("dist/corestruct.css is missing — run `npm run build:css`");
-} else {
-  const css = readFileSync(BUNDLE, "utf8");
+function checkBundle(bundle) {
+  const label = bundle.replace(ROOT, ".").split("\\").join("/");
+  if (!existsSync(bundle)) {
+    fail(`${label} is missing — run \`npm run build:css\``);
+    return;
+  }
+
+  const css = readFileSync(bundle, "utf8");
   const defined = new Set([...css.matchAll(/(--[\w-]+)\s*:/g)].map((m) => m[1]));
   // A var() with a fallback is deliberate; only bare references must resolve.
   for (const [, name] of css.matchAll(/var\(\s*(--[\w-]+)\s*\)/g)) {
     if (!defined.has(name)) fail(`CSS references undefined custom property ${name}`);
   }
   for (const [, url] of css.matchAll(/url\("(?!data:)([^"]+)"\)/g)) {
-    if (!existsSync(resolve(dirname(BUNDLE), url))) fail(`missing asset referenced from CSS: ${url}`);
+    if (!existsSync(resolve(dirname(bundle), url))) fail(`missing asset referenced from CSS: ${url}`);
   }
 
   // calc()/clamp() silently invalidate the whole declaration when the spaces
@@ -125,6 +129,9 @@ if (!existsSync(BUNDLE)) {
     }
   }
 }
+
+checkBundle(BUNDLE);
+checkBundle(join(ROOT, "dist", "demo.css"));
 
 /* ------------------------------------------------------------ JS imports */
 

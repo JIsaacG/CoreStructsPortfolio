@@ -1,0 +1,150 @@
+/* =============================================================================
+   Demo shell — the page frame every demo site shares
+
+   A demo swaps `--brand-primary` / `--brand-secondary` in its own <style> block
+   and everything below re-tints, because nothing here names a colour directly.
+   ========================================================================== */
+
+.dm {
+  position: relative;
+  z-index: var(--layer-content);
+}
+
+/* --- Section rhythm --------------------------------------------------------
+   Sections inside the pinned track sit above the stage and never draw their own
+   background, so the mark stays visible behind the type.
+   -------------------------------------------------------------------------- */
+
+.dm-section {
+  position: relative;
+  z-index: 1;
+  padding-block: var(--space-3xl);
+}
+
+.dm-shell {
+  width: var(--shell);
+  margin-inline: auto;
+}
+
+/* Twelve columns is what lets a section hand half the screen to the mark. */
+.dm-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--space-lg) var(--space-md);
+  align-items: center;
+}
+
+.dm-grid__body {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+@media (min-width: 60rem) {
+  /* The half the mark is not occupying. */
+  .dm-grid__body--start {
+    grid-column: 1 / 7;
+  }
+
+  .dm-grid__body--end {
+    grid-column: 7 / -1;
+  }
+}
+
+/* --- Shared type ----------------------------------------------------------- */
+
+.dm-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.dm-label::before {
+  content: "";
+  width: 1.75rem;
+  height: 1px;
+  background: linear-gradient(90deg, var(--brand-secondary), transparent);
+}
+
+.dm-label__index {
+  color: var(--brand-secondary);
+}
+
+.dm-title {
+  font-size: var(--text-3xl);
+  max-width: 18ch;
+}
+
+.dm-text {
+  max-width: var(--measure);
+  font-size: var(--text-lg);
+  color: var(--text-muted);
+  line-height: var(--leading-relaxed);
+}
+
+.dm-note {
+  max-width: 44ch;
+  font-size: var(--text-sm);
+  color: var(--text-faint);
+}
+
+/* --- The badge that keeps the fiction honest -------------------------------
+   A demo site invents a company. This is the permanent, unmissable reminder
+   that it is a sample, and the way back to the real portfolio.
+   -------------------------------------------------------------------------- */
+
+.dm-badge {
+  position: fixed;
+  inset-block-end: var(--space-sm);
+  inset-inline-start: var(--space-sm);
+  z-index: var(--layer-header);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.9rem 0.5rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: rgb(6 8 16 / 0.78);
+  backdrop-filter: blur(14px);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition:
+    border-color var(--duration-base) var(--ease-out-quart),
+    color var(--duration-base) var(--ease-out-quart),
+    transform var(--duration-base) var(--ease-out-expo);
+}
+
+.dm-badge:hover,
+.dm-badge:focus-visible {
+  border-color: var(--border-strong);
+  color: var(--text);
+  transform: translateY(-2px);
+}
+
+.dm-badge__mark {
+  width: 1.05rem;
+  height: 1.22rem;
+  flex: none;
+}
+
+.dm-badge__tag {
+  padding: 0.15rem 0.45rem;
+  border-radius: var(--radius-sm);
+  background: rgb(var(--brand-secondary-rgb) / 0.16);
+  color: var(--brand-secondary);
+}
+
+@media (max-width: 30rem) {
+  .dm-badge__label {
+    display: none;
+  }
+}

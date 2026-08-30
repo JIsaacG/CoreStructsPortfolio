@@ -1,0 +1,224 @@
+/* =============================================================================
+   The shop — where the five flavours become five things you can buy
+   ========================================================================== */
+
+.dm-shop {
+  position: relative;
+  z-index: 1;
+  border-block-start: 1px solid var(--border-soft);
+}
+
+.dm-shop__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  max-width: 46rem;
+  margin-block-end: var(--space-xl);
+}
+
+/* --- The bottles ----------------------------------------------------------- */
+
+.dm-rack {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr));
+  gap: var(--space-md);
+}
+
+.dm-product {
+  /* Overridden per card by the build; declared here so the rules below resolve
+     even for a card that never got a tint. */
+  --product-tint: var(--brand-secondary);
+  --product-tint-rgb: var(--brand-secondary-rgb);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-md) var(--space-sm) var(--space-sm);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.028), transparent 60%);
+  transition:
+    border-color var(--duration-base) var(--ease-out-quart),
+    transform var(--duration-base) var(--ease-out-expo),
+    background-color var(--duration-base) var(--ease-out-quart);
+}
+
+.dm-product:hover {
+  transform: translateY(-4px);
+  border-color: rgb(var(--product-tint-rgb) / 0.55);
+}
+
+.dm-product__shelf {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding-block: var(--space-sm);
+}
+
+/* The flavour's light, again — same idea as the hero, a tenth of the size. */
+.dm-product__shelf::after {
+  content: "";
+  position: absolute;
+  inset-block-end: 12%;
+  width: 68%;
+  height: 62%;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(var(--product-tint-rgb) / 0.4), transparent 70%);
+  filter: blur(12px);
+}
+
+.dm-product__bottle {
+  width: auto;
+  height: 8.5rem;
+  filter: drop-shadow(0 10px 22px rgb(0 0 0 / 0.5));
+}
+
+.dm-product__name {
+  font-size: var(--text-base);
+  font-weight: 800;
+  letter-spacing: var(--tracking-snug);
+}
+
+.dm-product__note {
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--product-tint);
+}
+
+.dm-product__buy {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  margin-block-start: auto;
+  padding-block-start: var(--space-sm);
+  border-block-start: 1px solid var(--border-soft);
+}
+
+.dm-product__price {
+  font-size: var(--text-lg);
+  font-weight: 800;
+}
+
+.dm-product__add {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 36px;
+  padding-inline: 0.85rem;
+  border: 1px solid rgb(var(--product-tint-rgb) / 0.5);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--product-tint);
+  transition:
+    background-color var(--duration-base) var(--ease-out-quart),
+    color var(--duration-base) var(--ease-out-quart);
+}
+
+.dm-product__add:hover {
+  background: rgb(var(--product-tint-rgb) / 0.16);
+  color: var(--text);
+}
+
+/* --- Packs ------------------------------------------------------------------ */
+
+.dm-packs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: var(--space-md);
+  margin-block-start: var(--space-xl);
+}
+
+.dm-pack {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  padding: var(--space-lg) var(--space-md) var(--space-md);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(160deg, rgb(255 255 255 / 0.035), transparent 55%);
+}
+
+.dm-pack--featured {
+  border-color: rgb(var(--brand-secondary-rgb) / 0.42);
+  background: linear-gradient(160deg, rgb(var(--brand-secondary-rgb) / 0.12), transparent 62%);
+}
+
+.dm-pack__tag {
+  position: absolute;
+  inset-block-start: calc(-1 * var(--space-xs));
+  inset-inline-start: var(--space-md);
+  padding: 0.25rem 0.7rem;
+  border-radius: var(--radius-pill);
+  background: var(--brand-secondary);
+  color: #0a0d16;
+  font-size: var(--text-2xs);
+  font-weight: 800;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  transition: background var(--duration-slow) var(--ease-out-quart);
+}
+
+.dm-pack__name {
+  font-size: var(--text-xl);
+}
+
+.dm-pack__detail {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+.dm-pack__price {
+  margin-block-start: var(--space-sm);
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  letter-spacing: var(--tracking-tight);
+}
+
+.dm-pack .button {
+  margin-block-start: var(--space-md);
+  width: 100%;
+}
+
+.dm-shop__note {
+  margin-block-start: var(--space-lg);
+  font-size: var(--text-sm);
+  color: var(--text-faint);
+  max-width: var(--measure);
+}
+
+/* --- The shelf drawing ------------------------------------------------------
+   Flat fills only; the card's tint does all the work.
+   -------------------------------------------------------------------------- */
+
+.btm-liquid,
+.btm-cap {
+  fill: var(--product-tint);
+}
+
+.btm-collar {
+  fill: rgb(255 255 255 / 0.14);
+}
+
+.btm-outline {
+  fill: rgb(255 255 255 / 0.05);
+  stroke: rgb(255 255 255 / 0.24);
+  stroke-width: 2.5;
+}
+
+.btm-label {
+  fill: rgb(250 248 244 / 0.92);
+}
+
+.btm-rule {
+  stroke: rgb(26 20 32 / 0.45);
+  stroke-width: 5;
+  stroke-linecap: round;
+}

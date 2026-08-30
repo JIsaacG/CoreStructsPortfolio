@@ -19,6 +19,7 @@ export const projects = [
     description:
       "Presencia institucional a medida: rápida, accesible y construida para sostener la reputación de la marca en cualquier dispositivo.",
     mockup: "corporate",
+    href: "demos/verbena.html",
     size: "major",
     reveal: "far",
   },

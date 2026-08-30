@@ -119,3 +119,56 @@
   display: inline-block;
   transition: transform var(--duration-base) var(--ease-out-expo);
 }
+
+/* --- Heartbeat pulse -------------------------------------------------------
+   Reserved for the "Hablemos" CTAs: a double blue beat ("lub-dub") followed by
+   a long rest, so the call to action breathes without turning into a strobe.
+   Two rings ripple out of the border box — `overflow: hidden` clips children,
+   not `box-shadow`, so the effect survives the button's own clipping. The
+   animation is dropped on hover/focus so each variant's own glow takes over.
+   -------------------------------------------------------------------------- */
+
+.button--pulse {
+  animation: button-heartbeat 2.4s var(--ease-out-quart) infinite;
+}
+
+.button--pulse:hover,
+.button--pulse:focus-visible {
+  animation: none;
+}
+
+@keyframes button-heartbeat {
+  /* lub */
+  0% {
+    box-shadow:
+      0 0 0 0 rgb(var(--brand-secondary-rgb) / 0.55),
+      0 0 0 0 rgb(var(--brand-secondary-rgb) / 0),
+      0 0 18px 0 rgb(var(--brand-secondary-rgb) / 0.45);
+  }
+  14% {
+    box-shadow:
+      0 0 0 12px rgb(var(--brand-secondary-rgb) / 0),
+      0 0 0 0 rgb(var(--brand-secondary-rgb) / 0),
+      0 0 22px 2px rgb(var(--brand-secondary-rgb) / 0.16);
+  }
+  /* dub */
+  15% {
+    box-shadow:
+      0 0 0 12px rgb(var(--brand-secondary-rgb) / 0),
+      0 0 0 0 rgb(var(--brand-secondary-rgb) / 0.45),
+      0 0 20px 1px rgb(var(--brand-secondary-rgb) / 0.4);
+  }
+  34% {
+    box-shadow:
+      0 0 0 12px rgb(var(--brand-secondary-rgb) / 0),
+      0 0 0 18px rgb(var(--brand-secondary-rgb) / 0),
+      0 0 26px 3px rgb(var(--brand-secondary-rgb) / 0);
+  }
+  /* rest */
+  100% {
+    box-shadow:
+      0 0 0 12px rgb(var(--brand-secondary-rgb) / 0),
+      0 0 0 18px rgb(var(--brand-secondary-rgb) / 0),
+      0 0 26px 3px rgb(var(--brand-secondary-rgb) / 0);
+  }
+}

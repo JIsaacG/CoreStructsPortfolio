@@ -1,0 +1,27 @@
+/* =============================================================================
+   Demo sites — stylesheet entry point
+
+   A demo reuses the portfolio's foundation (tokens, fonts, reset, reveal system,
+   buttons) and adds only what a brand site needs on top. `npm run build:css`
+   flattens this into `dist/demo.css`.
+
+   Every demo page overrides `--brand-primary` / `--brand-secondary` in a small
+   inline block, and the flavour beat repoints `--brand-secondary` again while
+   scrolling, so nothing below may hard-code a brand colour.
+   ========================================================================== */
+
+@import "./tokens.css";
+@import "./fonts.css";
+@import "./base.css";
+@import "./motion.css";
+
+@import "./components/button.css";
+@import "./components/mockup.css";
+
+@import "./demo/shell.css";
+@import "./demo/header.css";
+@import "./demo/stage.css";
+@import "./demo/hero.css";
+@import "./demo/sections.css";
+@import "./demo/shop.css";
+@import "./demo/footer.css";

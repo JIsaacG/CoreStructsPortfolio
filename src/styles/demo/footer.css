@@ -1,0 +1,106 @@
+/* =============================================================================
+   Closing call to action and footer
+
+   This is the one place the demo drops the fiction and says who built it.
+   ========================================================================== */
+
+.dm-cta {
+  position: relative;
+  z-index: 1;
+  border-block-start: 1px solid var(--border-soft);
+  text-align: center;
+}
+
+.dm-cta__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  max-width: 44rem;
+  margin-inline: auto;
+}
+
+.dm-cta__mark {
+  width: 2.6rem;
+  height: 3rem;
+}
+
+.dm-cta__title {
+  font-size: var(--text-3xl);
+}
+
+.dm-cta__text {
+  font-size: var(--text-lg);
+  color: var(--text-muted);
+  line-height: var(--leading-relaxed);
+}
+
+.dm-cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-sm);
+  margin-block-start: var(--space-2xs);
+}
+
+/* --- Footer ---------------------------------------------------------------- */
+
+.dm-footer {
+  position: relative;
+  z-index: 1;
+  padding-block: var(--space-xl) calc(var(--space-xl) + 2rem);
+  border-block-start: 1px solid var(--border-soft);
+}
+
+.dm-footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.dm-footer__brand {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xs);
+}
+
+.dm-footer__name {
+  font-family: var(--font-brand);
+  font-size: var(--text-lg);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.dm-footer__line,
+.dm-footer__credit {
+  font-size: var(--text-sm);
+  color: var(--text-faint);
+}
+
+.dm-footer__credit a {
+  color: var(--text-muted);
+  border-block-end: 1px solid var(--border);
+  transition:
+    color var(--duration-base) var(--ease-out-quart),
+    border-color var(--duration-base) var(--ease-out-quart);
+}
+
+.dm-footer__credit a:hover {
+  color: var(--text);
+  border-block-end-color: var(--brand-secondary);
+}
+
+.dm-footer__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+.dm-footer__nav a:hover {
+  color: var(--text);
+}

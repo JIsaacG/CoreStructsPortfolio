@@ -1,0 +1,258 @@
+/* =============================================================================
+   The three scroll beats the bottle travels through:
+   flavours, recipe, and the house's own timeline.
+   ========================================================================== */
+
+/* --- Flavours ---------------------------------------------------------------
+   One screenful per recipe. Only the flavour crossing the middle of the
+   viewport is lit; the rest hold back, so the column reads as a dial being
+   turned rather than as five paragraphs stacked.
+   -------------------------------------------------------------------------- */
+
+.dm-flavours__head {
+  margin-block-end: var(--space-xl);
+}
+
+.dm-flavour {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  padding-block: var(--space-2xl);
+  min-height: 72svh;
+  justify-content: center;
+  opacity: 0.34;
+  transition: opacity var(--duration-slow) var(--ease-out-quart);
+}
+
+.dm-flavour.is-active {
+  opacity: 1;
+}
+
+/* With no script no flavour is ever marked active, so none may stay dimmed. */
+html:not(.js) .dm-flavour {
+  opacity: 1;
+}
+
+.dm-flavour__index {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-widest);
+  color: var(--text-faint);
+}
+
+.dm-flavour__index b {
+  color: var(--brand-secondary);
+  transition: color var(--duration-slow) var(--ease-out-quart);
+}
+
+.dm-flavour__name {
+  font-size: var(--text-4xl);
+  line-height: 0.98;
+  max-width: 13ch;
+}
+
+.dm-flavour__note {
+  display: inline-flex;
+  padding: 0.3rem 0.75rem;
+  border: 1px solid rgb(var(--brand-secondary-rgb) / 0.45);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--brand-secondary);
+  transition:
+    color var(--duration-slow) var(--ease-out-quart),
+    border-color var(--duration-slow) var(--ease-out-quart);
+}
+
+.dm-flavour__text {
+  max-width: 42ch;
+  font-size: var(--text-lg);
+  color: var(--text-muted);
+  line-height: var(--leading-relaxed);
+}
+
+.dm-flavour__facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(7rem, max-content));
+  gap: var(--space-md) var(--space-lg);
+  margin-block-start: var(--space-2xs);
+  padding-block-start: var(--space-md);
+  border-block-start: 1px solid var(--border-soft);
+  width: 100%;
+  max-width: 32rem;
+}
+
+.dm-flavour__facts dt {
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.dm-flavour__facts dd {
+  margin: 0.35rem 0 0;
+  font-size: var(--text-base);
+  font-weight: 600;
+}
+
+.dm-flavour__facts .dm-flavour__price {
+  font-size: var(--text-xl);
+  font-weight: 800;
+  color: var(--brand-secondary);
+  transition: color var(--duration-slow) var(--ease-out-quart);
+}
+
+/* --- Recipe -----------------------------------------------------------------
+   The reference's ingredient list: a quantity, a name, and one line on why it
+   is in there. A rule between rows, nothing else.
+   -------------------------------------------------------------------------- */
+
+.dm-spec__list {
+  margin-block-start: var(--space-lg);
+  border-block-start: 1px solid var(--border-soft);
+}
+
+.dm-spec__item {
+  display: grid;
+  gap: var(--space-2xs) var(--space-md);
+  grid-template-columns: minmax(5.5rem, auto) 1fr;
+  align-items: baseline;
+  padding-block: var(--space-md);
+  border-block-end: 1px solid var(--border-soft);
+}
+
+.dm-spec__value {
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  letter-spacing: var(--tracking-tight);
+  color: var(--brand-secondary);
+  transition: color var(--duration-slow) var(--ease-out-quart);
+}
+
+.dm-spec__unit {
+  margin-inline-start: 0.15em;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--text-faint);
+}
+
+.dm-spec__name {
+  font-size: var(--text-lg);
+  font-weight: 700;
+}
+
+.dm-spec__text {
+  grid-column: 2;
+  max-width: 46ch;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  line-height: var(--leading-relaxed);
+}
+
+/* --- The house's timeline ---------------------------------------------------
+   Entries hang off a centre rail on desktop and off a left rail below it.
+   -------------------------------------------------------------------------- */
+
+.dm-story__list {
+  position: relative;
+  margin-block-start: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.dm-story__list::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, var(--border-strong) 12%, var(--border-strong) 88%, transparent);
+}
+
+.dm-story__item {
+  position: relative;
+  padding-inline-start: var(--space-lg);
+}
+
+.dm-story__item::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 0.7em;
+  inset-inline-start: -3px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--brand-secondary);
+  box-shadow: 0 0 0 4px rgb(var(--brand-secondary-rgb) / 0.15);
+  transition:
+    background var(--duration-slow) var(--ease-out-quart),
+    box-shadow var(--duration-slow) var(--ease-out-quart);
+}
+
+.dm-story__stamp {
+  font-family: var(--font-brand);
+  font-size: var(--text-xl);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--brand-secondary);
+  transition: color var(--duration-slow) var(--ease-out-quart);
+}
+
+.dm-story__title {
+  margin-block-start: var(--space-3xs);
+  font-size: var(--text-xl);
+}
+
+.dm-story__text {
+  margin-block-start: var(--space-2xs);
+  max-width: 40ch;
+  color: var(--text-muted);
+  line-height: var(--leading-relaxed);
+}
+
+@media (min-width: 60rem) {
+  /* The rail moves to the centre so the entries can pass either side of the
+     bottle, which is parked in the middle for this section. */
+  .dm-story__list {
+    gap: var(--space-2xl);
+  }
+
+  .dm-story__list::before {
+    inset-inline-start: 50%;
+  }
+
+  .dm-story__item {
+    width: calc(50% - var(--space-2xl));
+    padding-inline-start: 0;
+  }
+
+  .dm-story__item::before {
+    inset-inline-start: auto;
+    inset-inline-end: calc(-1 * var(--space-2xl) - 3.5px);
+  }
+
+  .dm-story__item:nth-child(even) {
+    margin-inline-start: calc(50% + var(--space-2xl));
+  }
+
+  .dm-story__item:nth-child(even)::before {
+    inset-inline-start: calc(-1 * var(--space-2xl) - 3.5px);
+    inset-inline-end: auto;
+  }
+
+  .dm-story__item:nth-child(odd) {
+    text-align: right;
+  }
+
+  .dm-story__item:nth-child(odd) .dm-story__text {
+    margin-inline-start: auto;
+  }
+}

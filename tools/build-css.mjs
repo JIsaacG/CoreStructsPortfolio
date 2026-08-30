@@ -1,5 +1,5 @@
 /**
- * Bundles `src/styles/main.css` into `dist/corestruct.css`.
+ * Bundles each stylesheet entry point into `dist/`.
  *
  * Native `@import` would make the browser discover each stylesheet only after
  * fetching the one before it, so the modular source is flattened into a single
@@ -13,8 +13,14 @@ import { dirname, join, posix, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
-const ENTRY = join(ROOT, "src", "styles", "main.css");
-const OUTPUT = join(ROOT, "dist", "corestruct.css");
+
+/* The portfolio and the demo sites share tokens, reset and reveal system but
+   ship separately: a demo must not pay for the starfield, and index.html must
+   not pay for the bottle. */
+const BUNDLES = [
+  { entry: join(ROOT, "src", "styles", "main.css"), output: join(ROOT, "dist", "corestruct.css") },
+  { entry: join(ROOT, "src", "styles", "demo.css"), output: join(ROOT, "dist", "demo.css") },
+];
 
 const IMPORT = /@import\s+(?:url\()?["']([^"']+)["']\)?\s*;/g;
 /* Quoted forms are matched first and greedily to the closing quote: a data URI
@@ -33,7 +39,7 @@ function rewriteUrls(css, fromDir, toDir) {
 }
 
 /** Depth-first inline of `@import` statements. */
-function inline(file, seen = new Set()) {
+function inline(file, outDir, seen = new Set()) {
   const path = resolve(file);
   if (seen.has(path)) return "";
   seen.add(path);
@@ -44,11 +50,11 @@ function inline(file, seen = new Set()) {
   let cursor = 0;
 
   for (const match of source.matchAll(IMPORT)) {
-    out += rewriteUrls(source.slice(cursor, match.index), dir, dirname(OUTPUT));
-    out += inline(join(dir, match[1]), seen);
+    out += rewriteUrls(source.slice(cursor, match.index), dir, outDir);
+    out += inline(join(dir, match[1]), outDir, seen);
     cursor = match.index + match[0].length;
   }
-  out += rewriteUrls(source.slice(cursor), dir, dirname(OUTPUT));
+  out += rewriteUrls(source.slice(cursor), dir, outDir);
   return out;
 }
 
@@ -113,15 +119,18 @@ function minify(css) {
   }
   return out.trim();
 }
-
-const bundled = inline(ENTRY);
-const minified = minify(bundled);
-
-mkdirSync(dirname(OUTPUT), { recursive: true });
-writeFileSync(OUTPUT, `${minified}\n`);
-
 const kb = (n) => `${(n / 1024).toFixed(1)} KB`;
-console.log(
-  `dist/corestruct.css  ${kb(Buffer.byteLength(minified))}  ` +
-    `(from ${kb(Buffer.byteLength(bundled))} of source)`,
-);
+
+for (const { entry, output } of BUNDLES) {
+  const bundled = inline(entry, dirname(output));
+  const minified = minify(bundled);
+
+  mkdirSync(dirname(output), { recursive: true });
+  writeFileSync(output, `${minified}
+`);
+
+  console.log(
+    `${relative(ROOT, output).split("\\").join(posix.sep)}  ${kb(Buffer.byteLength(minified))}  ` +
+      `(from ${kb(Buffer.byteLength(bundled))} of source)`,
+  );
+}

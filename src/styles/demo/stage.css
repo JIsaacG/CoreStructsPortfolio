@@ -1,0 +1,225 @@
+/* =============================================================================
+   The pinned bottle
+
+   `.dm-stage` is a sticky block whose negative bottom margin cancels its own
+   height, so it hangs over the sections that follow without taking a single
+   pixel of layout from them. Everything it does is driven by the custom
+   properties `stage.js` writes on `.dm-bottle`; with no script the bottle simply
+   sits still in the hero, which is a perfectly good page.
+   ========================================================================== */
+
+.dm-track {
+  position: relative;
+}
+
+.dm-stage {
+  position: relative;
+  z-index: 0;
+  display: grid;
+  place-items: center;
+  padding-block: var(--space-xl) 0;
+  /* The bottle is scenery; every link and button lives in the sections above it. */
+  pointer-events: none;
+}
+
+@media (min-width: 60rem) {
+  .dm-stage {
+    position: sticky;
+    inset-block-start: var(--header-height);
+    height: calc(100svh - var(--header-height));
+    /* Cancels its own height: the sections below start where the track starts. */
+    margin-block-end: calc(-1 * (100svh - var(--header-height)));
+    padding-block: 0;
+  }
+}
+
+/* --- The bottle itself ------------------------------------------------------
+   One transform, six numbers. `x` and `y` are viewport units so the travel
+   reads the same on a laptop and on a wide monitor; the rest are unitless.
+   -------------------------------------------------------------------------- */
+
+.dm-bottle {
+  /* The one length everything on the bottle is measured from, label included. */
+  --bottle-h: clamp(20rem, 46vh, 26rem);
+  position: relative;
+  width: fit-content;
+  transform:
+    translate3d(calc(var(--mark-x, 0) * 1vw), calc(var(--mark-y, 0) * 1vh), 0)
+    rotate(var(--mark-rot, 0deg))
+    scale(var(--mark-scale, 1));
+  opacity: var(--mark-fade, 1);
+  will-change: transform;
+}
+
+.dm-bottle__svg {
+  width: auto;
+  height: var(--bottle-h);
+  overflow: visible;
+  filter: drop-shadow(0 30px 60px rgb(0 0 0 / 0.55));
+}
+
+@media (min-width: 60rem) {
+  .dm-bottle {
+    --bottle-h: min(74vh, 34rem);
+  }
+}
+
+/* The flavour's light. It sits behind the glass and is the reason a re-tint
+   reads as a change of mood and not just a change of fill. */
+.dm-bottle::before {
+  content: "";
+  position: absolute;
+  inset: -22% -60%;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    rgb(var(--brand-secondary-rgb) / 0.36),
+    transparent 72%
+  );
+  filter: blur(18px);
+  transition: background var(--duration-slow) var(--ease-out-quart);
+}
+
+/* --- Glass and liquid ------------------------------------------------------ */
+
+.bt-glass {
+  fill: rgb(255 255 255 / 0.045);
+}
+
+.bt-outline {
+  fill: none;
+  stroke: rgb(255 255 255 / 0.22);
+  stroke-width: 2;
+}
+
+.bt-liquid,
+.bt-cap,
+.bt-surface {
+  transition: fill var(--duration-slow) var(--ease-out-quart);
+}
+
+/* Scrolling into the story drains the bottle: `split` is the level. */
+.bt-liquid {
+  y: calc(252px + var(--mark-split, 0) * 130px);
+  height: calc(420px - var(--mark-split, 0) * 130px);
+}
+
+.bt-surface {
+  y: calc(252px + var(--mark-split, 0) * 130px);
+  fill: rgb(255 255 255 / 0.4);
+}
+
+.bt-collar {
+  fill: rgb(255 255 255 / 0.12);
+}
+
+.bt-cap-ridge {
+  stroke: rgb(0 0 0 / 0.22);
+  stroke-width: 2;
+}
+
+.bt-sheen {
+  mix-blend-mode: screen;
+}
+
+/* --- Label plate -----------------------------------------------------------
+   The paper. The type on top of it is HTML, so it stays selectable, legible and
+   swappable when the flavour changes.
+   -------------------------------------------------------------------------- */
+
+.bt-label {
+  fill: rgb(250 248 244 / 0.94);
+}
+
+.bt-label-inner {
+  fill: none;
+  stroke: var(--flavour-deep, #2c1258);
+  stroke-width: 1.5;
+  stroke-opacity: 0.5;
+  transition: stroke var(--duration-slow) var(--ease-out-quart);
+}
+
+/* The label copy, positioned over the plate in the SVG's own proportions. */
+.dm-bottle__paper {
+  position: absolute;
+  /* 366/680 and 192/680 — the plate's box expressed against the drawing height,
+     inset by 54/260 horizontally. The type is fitted to that box, not the other
+     way round: a long flavour name must never spill onto the glass. */
+  inset-block-start: 53.8%;
+  height: 28.2%;
+  inset-inline: 20.8%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3em;
+  padding-inline: 0.45em;
+  text-align: center;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+  color: #1a1420;
+}
+
+.dm-bottle__house {
+  font-family: var(--font-brand);
+  font-size: calc(var(--bottle-h) * 0.021);
+  font-weight: 700;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--flavour-deep, #2c1258);
+  transition: color var(--duration-slow) var(--ease-out-quart);
+}
+
+.dm-bottle__name {
+  font-size: calc(var(--bottle-h) * 0.03);
+  font-weight: 800;
+  line-height: 1.06;
+  letter-spacing: var(--tracking-tight);
+  text-wrap: balance;
+}
+
+.dm-bottle__note {
+  font-size: calc(var(--bottle-h) * 0.019);
+  font-weight: 700;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  opacity: 0.62;
+}
+
+/* --- Bubbles ----------------------------------------------------------------
+   Eight circles on one keyframe, spread apart by a negative delay so they are
+   already mid-flight on the first frame.
+   -------------------------------------------------------------------------- */
+
+.bt-bubble {
+  fill: rgb(255 255 255 / 0.42);
+  animation: bt-rise 9s linear infinite;
+  animation-delay: var(--bubble-delay, 0s);
+}
+
+@keyframes bt-rise {
+  from {
+    transform: translateY(660px);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.7;
+  }
+  85% {
+    opacity: 0.5;
+  }
+  to {
+    transform: translateY(270px);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bt-bubble {
+    animation: none;
+    opacity: 0.35;
+    transform: translateY(430px);
+  }
+}
