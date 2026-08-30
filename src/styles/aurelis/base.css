@@ -1,0 +1,468 @@
+/* =============================================================================
+   Reset, document shell and the primitives every zone composes with
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  overflow-x: clip;
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + var(--s-md));
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  overflow-x: clip;
+  min-height: 100svh;
+  background-color: var(--page);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--t-base);
+  font-weight: 400;
+  line-height: var(--lead-body);
+  letter-spacing: var(--track-snug);
+  font-synthesis-weight: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- Typography defaults --------------------------------------------------- */
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-weight: 550;
+  line-height: var(--lead-title);
+  letter-spacing: var(--track-tight);
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+svg,
+picture,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+::selection {
+  background: rgb(var(--gold-rgb) / 0.28);
+}
+
+/* --- Focus ------------------------------------------------------------------
+   Visible on every interactive element, on paper and on graphite alike. The
+   offset keeps the ring clear of the 1px rules the layout is built from. */
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--radius);
+}
+
+.au-skip {
+  position: fixed;
+  top: var(--s-sm);
+  left: var(--s-sm);
+  z-index: var(--layer-skip);
+  padding: var(--s-xs) var(--s-md);
+  background: var(--ink);
+  color: var(--white);
+  font-size: var(--t-sm);
+  font-weight: 600;
+  transform: translateY(-180%);
+  transition: transform var(--duration-base) var(--ease-out-expo);
+}
+
+.au-skip:focus-visible {
+  transform: translateY(0);
+}
+
+/* --- Layout primitives ------------------------------------------------------ */
+
+.au-shell {
+  width: var(--shell);
+  margin-inline: auto;
+}
+
+.au-shell--narrow {
+  width: min(100% - var(--gutter) * 2, 62rem);
+  margin-inline: auto;
+}
+
+.au-section {
+  position: relative;
+  padding-block: var(--section-y);
+  background-color: var(--page);
+  color: var(--text);
+}
+
+/* Sections stack straight onto each other, so the seam between two zones of the
+   same colour is a hairline rather than a shadow. */
+.au-section + .au-section:not(.au-dark):not(.au-section--flush) {
+  border-top: 1px solid var(--rule-soft);
+}
+
+.au-section--tight {
+  padding-block: calc(var(--section-y) * 0.62);
+}
+
+.au-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.au-sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* --- The editorial grid -----------------------------------------------------
+   Twelve columns on desktop, one below. Sections opt in and place their parts
+   by `grid-column`, which is what keeps type on a shared measure across zones
+   that otherwise look nothing alike. */
+
+.au-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--s-md) var(--gutter);
+}
+
+@media (max-width: 59.99rem) {
+  .au-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .au-grid > * {
+    grid-column: 1 / -1 !important;
+  }
+}
+
+/* --- Labels ------------------------------------------------------------------
+   `01 / 06  SECCION`. The index is the only routine use of the accent colour,
+   and the rule that follows it is what turns a caption into a section marker. */
+
+.au-label {
+  display: flex;
+  align-items: baseline;
+  gap: 0.85rem;
+  font-size: var(--t-xs);
+  font-weight: 600;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.au-label__index {
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--track-label);
+  white-space: nowrap;
+}
+
+.au-label__index::after {
+  content: "";
+  display: inline-block;
+  width: 1.5rem;
+  height: 1px;
+  margin-left: 0.85rem;
+  vertical-align: 0.28em;
+  background: currentcolor;
+  opacity: 0.5;
+}
+
+/* --- Headings and body copy -------------------------------------------------- */
+
+.au-h1 {
+  font-size: var(--t-4xl);
+  line-height: var(--lead-snug);
+  font-weight: 500;
+}
+
+.au-h2 {
+  font-size: var(--t-3xl);
+  font-weight: 550;
+}
+
+.au-h3 {
+  font-size: var(--t-xl);
+  font-weight: 600;
+  letter-spacing: var(--track-snug);
+}
+
+.au-lead {
+  max-width: var(--measure);
+  font-size: var(--t-lg);
+  line-height: var(--lead-loose);
+  color: var(--text-soft);
+}
+
+.au-body {
+  max-width: var(--measure);
+  color: var(--text-soft);
+}
+
+.au-body + .au-body {
+  margin-top: var(--s-sm);
+}
+
+.au-note {
+  max-width: var(--measure);
+  font-size: var(--t-sm);
+  line-height: var(--lead-body);
+  color: var(--text-muted);
+}
+
+/* --- Section heads ------------------------------------------------------------ */
+
+.au-head {
+  display: grid;
+  gap: var(--s-md);
+  margin-bottom: clamp(2.5rem, 1.5rem + 3vw, 4.5rem);
+}
+
+.au-head__title {
+  max-width: 20ch;
+}
+
+@media (min-width: 60rem) {
+  .au-head--split {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    align-items: end;
+    column-gap: var(--gutter);
+  }
+
+  .au-head--split .au-label {
+    grid-column: 1 / -1;
+  }
+}
+
+/* --- Rules --------------------------------------------------------------------- */
+
+.au-rule {
+  height: 1px;
+  border: 0;
+  background: var(--rule);
+}
+
+/* --- Buttons -------------------------------------------------------------------
+   Two weights only: a solid one for the single action a page is asking for, and
+   an outlined one for everything else. Square, uppercase, letterspaced — the
+   shape of a corporate control rather than a consumer one. */
+
+.au-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75em;
+  min-height: 3rem;
+  padding: 0.85rem 1.75rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-size: var(--t-xs);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition:
+    background-color var(--duration-base) var(--ease-out-quart),
+    border-color var(--duration-base) var(--ease-out-quart),
+    color var(--duration-base) var(--ease-out-quart);
+}
+
+.au-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.au-btn--solid {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+
+.au-btn--solid:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--ink);
+}
+
+.au-dark .au-btn--solid {
+  background: var(--white);
+  border-color: var(--white);
+  color: var(--ink);
+}
+
+.au-dark .au-btn--solid:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--ink);
+}
+
+.au-btn--gold {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--ink);
+}
+
+.au-btn--gold:hover {
+  background: transparent;
+  color: var(--accent);
+}
+
+.au-btn__arrow {
+  transition: transform var(--duration-base) var(--ease-out-expo);
+}
+
+.au-btn:hover .au-btn__arrow {
+  transform: translateX(0.25rem);
+}
+
+.au-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-sm);
+}
+
+/* --- Arrow link -----------------------------------------------------------------
+   The portal's most repeated control. The rule to its left grows on hover: one
+   moving part, no colour change on the rule, no underline. */
+
+.au-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  font-size: var(--t-xs);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text);
+  transition: color var(--duration-base) var(--ease-out-quart);
+}
+
+.au-link::before {
+  content: "";
+  flex: none;
+  width: 1.75rem;
+  height: 1px;
+  background: var(--accent);
+  transition: width var(--duration-base) var(--ease-out-expo);
+}
+
+.au-link:hover {
+  color: var(--accent);
+}
+
+.au-link:hover::before {
+  width: 2.75rem;
+}
+
+.au-link__arrow {
+  transition: transform var(--duration-base) var(--ease-out-expo);
+}
+
+.au-link:hover .au-link__arrow {
+  transform: translateX(0.3rem);
+}
+
+/* --- Tags ------------------------------------------------------------------------ */
+
+.au-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.au-tag--accent {
+  border-color: rgb(var(--gold-rgb) / 0.5);
+  color: var(--accent);
+}
+
+/* --- Breadcrumbs ------------------------------------------------------------------ */
+
+.au-crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.au-crumbs li:not(:last-child)::after {
+  content: "/";
+  margin-left: 0.6rem;
+  color: var(--accent);
+}
+
+.au-crumbs a:hover {
+  color: var(--accent);
+}

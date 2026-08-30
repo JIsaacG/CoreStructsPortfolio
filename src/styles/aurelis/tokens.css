@@ -1,0 +1,157 @@
+/* =============================================================================
+   Aurelis — design tokens
+
+   The corporate demo does not inherit the CoreStruct identity: it is a different
+   company with a different temperature. Where the portfolio is dark, navy and
+   cyan, Aurelis is warm paper with graphite type and one restrained bronze.
+
+   Only three families of value live here: the palette, an institutional type
+   scale, and the rhythm (space, rule, shell). Nothing below this file may
+   hard-code a colour — swapping a client's brand in means editing this block.
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  /* --- Palette ----------------------------------------------------------- */
+  --ink: #0b0d10;            /* graphite black: headings, the darkest ground  */
+  --ink-navy: #101827;       /* corporate navy: the second dark surface       */
+  --paper: #f5f4f0;          /* warm white: the page                          */
+  --white: #ffffff;
+  --grey: #737982;           /* secondary text                                */
+  --grey-line: #e7e7e5;      /* hairlines and inert fills on paper            */
+  --gold: #b89b5e;           /* the one accent: indices, rules, hover, states */
+
+  --ink-rgb: 11 13 16;
+  --navy-rgb: 16 24 39;
+  --paper-rgb: 245 244 240;
+  --gold-rgb: 184 155 94;
+
+  /* --- Semantic surfaces --------------------------------------------------
+     Every zone reads these, never the palette above, so `.au-dark` can invert
+     a whole section by redefining six values instead of restyling its parts. */
+  --page: var(--paper);
+  --surface: var(--white);
+  --surface-sunken: #edece7;
+  --text: var(--ink);
+  --text-soft: #3d434c;
+  --text-muted: var(--grey);
+  --rule: rgb(11 13 16 / 0.12);
+  --rule-soft: rgb(11 13 16 / 0.07);
+  --rule-strong: rgb(11 13 16 / 0.26);
+  --accent: var(--gold);
+  --accent-rgb: var(--gold-rgb);
+
+  /* --- Typography ---------------------------------------------------------
+     Manrope carries the whole portal. Headings sit at 500–600: an institution
+     does not shout in 800, it is simply large. */
+  --font-sans:
+    "Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+
+  /* Fluid, 360px -> 1600px. The display sizes are deliberately far apart from
+     body copy: the jump is what makes a page read as editorial rather than as
+     a document. */
+  --t-2xs: clamp(0.625rem, 0.6rem + 0.11vw, 0.6875rem);
+  --t-xs: clamp(0.6875rem, 0.66rem + 0.13vw, 0.75rem);
+  --t-sm: clamp(0.8125rem, 0.79rem + 0.12vw, 0.875rem);
+  --t-base: clamp(1.0625rem, 1.02rem + 0.2vw, 1.25rem);   /* 17 -> 20px       */
+  --t-lg: clamp(1.1875rem, 1.09rem + 0.4vw, 1.4375rem);
+  --t-xl: clamp(1.375rem, 1.2rem + 0.75vw, 1.875rem);
+  --t-2xl: clamp(1.75rem, 1.42rem + 1.4vw, 2.75rem);
+  --t-3xl: clamp(2.125rem, 1.6rem + 2.3vw, 4rem);          /* h2: 48 -> 64px  */
+  --t-4xl: clamp(2.5rem, 1.5rem + 4.4vw, 6rem);            /* h1: 72 -> 96px  */
+  --t-metric: clamp(2.75rem, 1.7rem + 4.6vw, 6.25rem);
+
+  --lead-tight: 1;
+  --lead-snug: 1.1;
+  --lead-title: 1.16;
+  --lead-body: 1.62;
+  --lead-loose: 1.75;
+
+  --track-tight: -0.028em;
+  --track-snug: -0.015em;
+  --track-label: 0.16em;
+  --track-wide: 0.24em;
+
+  /* --- Rhythm ------------------------------------------------------------- */
+  --s-3xs: 0.25rem;
+  --s-2xs: 0.5rem;
+  --s-xs: 0.75rem;
+  --s-sm: 1rem;
+  --s-md: 1.5rem;
+  --s-lg: 2.5rem;
+  --s-xl: 4rem;
+  --s-2xl: 6rem;
+
+  /* The single value that sets how much air the portal has. Whitespace is the
+     whole difference between "corporate" and "template", so it is generous. */
+  --section-y: clamp(4.5rem, 2.6rem + 7.6vw, 9.5rem);
+
+  --gutter: clamp(1.25rem, 0.6rem + 2.6vw, 3.5rem);
+  --shell-max: 88rem;
+  --shell: min(100% - var(--gutter) * 2, var(--shell-max));
+  --measure: 60ch;
+  --measure-tight: 46ch;
+
+  /* Corners stay nearly square. A 20px radius reads as an app; an institution
+     reads as a printed page. */
+  --radius: 2px;
+  --radius-md: 4px;
+
+  /* --- Motion --------------------------------------------------------------
+     500–900ms with a long tail: movement that settles rather than snaps. */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --duration-fast: 200ms;
+  --duration-base: 380ms;
+  --duration-slow: 620ms;
+  --duration-reveal: 860ms;
+
+  /* --- Layers -------------------------------------------------------------- */
+  --layer-content: 1;
+  --layer-header: 60;
+  --layer-mega: 55;
+  --layer-skip: 100;
+
+  --header-h: 4.5rem;
+}
+
+@media (min-width: 60rem) {
+  :root {
+    --header-h: 5.5rem;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   The dark institutional surface.
+
+   Applied to a section (or to the document, for the hero) it repaints the six
+   semantic values every component reads. Nothing else changes: the same block,
+   the same rule, the same label sit on graphite instead of paper.
+   -------------------------------------------------------------------------- */
+
+.au-dark {
+  color-scheme: dark;
+  --page: var(--ink);
+  --surface: #12161d;
+  --surface-sunken: #080a0d;
+  --text: var(--white);
+  --text-soft: rgb(255 255 255 / 0.78);
+  --text-muted: rgb(255 255 255 / 0.55);
+  --rule: rgb(255 255 255 / 0.14);
+  --rule-soft: rgb(255 255 255 / 0.08);
+  --rule-strong: rgb(255 255 255 / 0.3);
+  background-color: var(--page);
+  color: var(--text);
+}
+
+/* The navy variant, for the zone that must not be the same black twice in a
+   row (global presence sits between two graphite sections). */
+.au-dark--navy {
+  --page: var(--ink-navy);
+  --surface: #162033;
+  --surface-sunken: #0b1220;
+}

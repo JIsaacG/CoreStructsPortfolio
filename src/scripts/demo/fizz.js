@@ -32,8 +32,32 @@
 
 /** Bubbles per pixel² of viewport, then clamped: a density, not a fixed count. */
 const DENSITY = 1 / 15000;
-const MIN_BUBBLES = 22;
+const MIN_BUBBLES = 28;
 const MAX_BUBBLES = 110;
+
+/**
+ * The compact profile, below the width the layout calls a phone.
+ *
+ * A density in px² is the right way to seed a field and the wrong way to judge
+ * one: a phone is a fifth of a laptop's area, so it was getting a fifth of the
+ * bubbles, and the ones it did get were mostly the small dim far ones. On top of
+ * that the ambient washes are raised on touch devices — see `base.css` — so the
+ * field was being read against a lighter background than the one it was tuned
+ * for. The count goes up, the bubbles come nearer, and both gains land where
+ * they are needed rather than everywhere.
+ */
+const COMPACT_WIDTH = 768;
+const COMPACT_DENSITY = 1.9;
+const COMPACT_SIZE = 1.3;
+const COMPACT_ALPHA = 1.35;
+
+/**
+ * The exponent on a bubble's depth. Squared-ish, so the field is mostly distant
+ * bubbles with a few near ones in front of them; nearer to linear on a phone,
+ * where the far ones are too small to survive the trip.
+ */
+const DEPTH_BIAS = 1.6;
+const COMPACT_DEPTH = 1.15;
 
 /** Retina is worth drawing for; past 2x nobody can see what it costs. */
 const MAX_DPR = 2;
@@ -185,14 +209,16 @@ function spriteFor(rgb) {
 }
 
 /** Send a bubble back to the bottom, either into a stream or on its own. */
-function seed(bubble, width, height, streams, first) {
+function seed(bubble, field, first) {
+  const { width, height, streams } = field;
   const stream = Math.random() < STREAM_SHARE ? streams[(Math.random() * streams.length) | 0] : null;
 
-  bubble.depth = Math.random() ** 1.6;
+  bubble.depth = Math.random() ** field.depthBias;
   bubble.x = stream ? stream + random(-3, 3) : Math.random() * width;
-  bubble.size = lerp(SIZE_FAR, SIZE_NEAR, bubble.depth) * (stream ? STREAM_SIZE : 1);
+  bubble.size =
+    lerp(SIZE_FAR, SIZE_NEAR, bubble.depth) * field.sizeGain * (stream ? STREAM_SIZE : 1);
   bubble.speed = lerp(SPEED_FAR, SPEED_NEAR, bubble.depth) * (stream ? 1.15 : 1);
-  bubble.alpha = lerp(ALPHA_FAR, ALPHA_NEAR, bubble.depth) * random(0.75, 1);
+  bubble.alpha = lerp(ALPHA_FAR, ALPHA_NEAR, bubble.depth) * field.alphaGain * random(0.75, 1);
   bubble.wobble = random(5, WOBBLE_MAX) * bubble.depth * (stream ? STREAM_WOBBLE : 1);
   bubble.wobbleRate = (Math.PI * 2) / random(WOBBLE_MIN_PERIOD, WOBBLE_MAX_PERIOD);
   bubble.wobblePhase = Math.random() * Math.PI * 2;
@@ -204,7 +230,7 @@ function seed(bubble, width, height, streams, first) {
      spaces a stream out into a chain instead of a clump. */
   bubble.y = first
     ? random(bubble.surface, height + MARGIN)
-    : height + MARGIN + Math.random() * QUEUE_MAX;
+    : height + MARGIN + Math.random() * field.queue;
 
   return bubble;
 }
@@ -221,7 +247,17 @@ export function initFizz() {
   let width = 0;
   let height = 0;
   let bubbles = [];
-  let streams = [];
+  /* Everything a bubble needs to know about the glass it is being born into.
+     Held as one object because `measure` writes it and `seed` reads all of it. */
+  const field = {
+    width: 0,
+    height: 0,
+    streams: [],
+    sizeGain: 1,
+    alphaGain: 1,
+    depthBias: DEPTH_BIAS,
+    queue: QUEUE_MAX,
+  };
   let clock = 0;
   let last = 0;
   let frame = 0;
@@ -262,19 +298,31 @@ export function initFizz() {
     // than painting over one another.
     ctx.globalCompositeOperation = "lighter";
 
+    const compact = width < COMPACT_WIDTH;
+    field.width = width;
+    field.height = height;
+    field.sizeGain = compact ? COMPACT_SIZE : 1;
+    field.alphaGain = compact ? COMPACT_ALPHA : 1;
+    field.depthBias = compact ? COMPACT_DEPTH : DEPTH_BIAS;
+    /* A bubble waiting its turn is a bubble nobody can see, so the queue is
+       never allowed to run deeper than a third of the screen it feeds — on a
+       phone a fixed 320 px of it would be most of the field, held off stage. */
+    field.queue = Math.min(QUEUE_MAX, height * 0.35);
+
     /* The nucleation points move with the viewport but not with every frame:
        a stream that wandered would stop reading as a scratch in the glass. */
-    streams = Array.from({ length: STREAMS }, (_, index) =>
+    field.streams = Array.from({ length: STREAMS }, (_, index) =>
       Math.round(width * ((index + random(0.25, 0.75)) / STREAMS)),
     );
 
     const target = Math.round(
-      Math.min(MAX_BUBBLES, Math.max(MIN_BUBBLES, width * height * DENSITY)),
+      Math.min(
+        MAX_BUBBLES,
+        Math.max(MIN_BUBBLES, width * height * DENSITY * (compact ? COMPACT_DENSITY : 1)),
+      ),
     );
     while (bubbles.length > target) bubbles.pop();
-    while (bubbles.length < target) {
-      bubbles.push(seed({}, width, height, streams, true));
-    }
+    while (bubbles.length < target) bubbles.push(seed({}, field, true));
   };
 
   /** Every bubble, once per sprite the field is currently crossfading between. */
@@ -330,7 +378,7 @@ export function initFizz() {
 
     for (const bubble of bubbles) {
       if (bubble.popped !== null) {
-        if (clock - bubble.popped > POP_SPAN) seed(bubble, width, height, streams, false);
+        if (clock - bubble.popped > POP_SPAN) seed(bubble, field, false);
         continue;
       }
 
