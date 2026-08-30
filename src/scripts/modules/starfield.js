@@ -10,8 +10,9 @@
  * The per-frame cost is kept flat on purpose. Every mote is a single
  * `drawImage` of a sprite pre-rendered once per brand colour, the field is
  * drawn additively so overlaps glow instead of stacking as opaque discs, and
- * the loop sleeps whenever the tab is hidden. Reduced motion gets one static
- * frame and no loop at all.
+ * the loop sleeps whenever the tab is hidden. Reduced motion does not freeze
+ * the field — it strips it back to the rise alone, at a gentler pace: no sway,
+ * no twinkle, no parallax, nothing that moves for its own sake.
  *
  * Colours are read from the token sheet at runtime — `tokens.css` stays the
  * only place a brand colour is written down.
@@ -26,8 +27,8 @@ const MAX_MOTES = 130;
 const MAX_DPR = 2;
 
 /** Rise speed, px per second, from the farthest mote to the nearest. */
-const SPEED_FAR = 3.5;
-const SPEED_NEAR = 15;
+const SPEED_FAR = 14;
+const SPEED_NEAR = 46;
 
 /** Drawn glow diameter in px, far to near. The lit core is a fraction of it. */
 const SIZE_FAR = 3;
@@ -40,15 +41,18 @@ const ALPHA_NEAR = 0.65;
 /** How far the field lags the page while it scrolls, at full depth. */
 const PARALLAX = 0.18;
 
+/** Share of its pace the field keeps when the system asks for less motion. */
+const CALM_PACE = 0.55;
+
 /** Sideways drift: amplitude in px, and seconds per cycle. */
 const SWAY_MAX = 14;
-const SWAY_MIN_PERIOD = 9;
-const SWAY_MAX_PERIOD = 22;
+const SWAY_MIN_PERIOD = 6;
+const SWAY_MAX_PERIOD = 15;
 
 /** Share of its brightness a mote gives up at the dimmest point of a cycle. */
 const TWINKLE_DEPTH = 0.55;
-const TWINKLE_MIN_PERIOD = 3.5;
-const TWINKLE_MAX_PERIOD = 11;
+const TWINKLE_MIN_PERIOD = 2.6;
+const TWINKLE_MAX_PERIOD = 7.5;
 
 /**
  * A frame that arrives after a stall — a background tab, a long task — must
@@ -193,22 +197,25 @@ export function initStarfield() {
     while (motes.length < target) motes.push(createMote(palette, width, span));
   };
 
-  const draw = () => {
+  /** `calm` is the reduced-motion field: the rise, and nothing else. */
+  const draw = (calm = reducedMotion.matches) => {
     ctx.clearRect(0, 0, width, height);
 
     // The canvas is fixed, so the page sliding underneath it is what gives the
     // near motes something to lag behind.
-    const scrolled = reducedMotion.matches ? 0 : window.scrollY * PARALLAX;
+    const scrolled = calm ? 0 : window.scrollY * PARALLAX;
 
     for (const mote of motes) {
       // `y` is the mote's own place in the field; the parallax offset is applied
       // at draw time, so scrolling back up retraces the same path.
       const offset = (((mote.y - scrolled * mote.depth) % span) + span) % span;
       const y = offset - MARGIN;
-      const x = mote.x + Math.sin(elapsed * mote.swayRate + mote.swayPhase) * mote.sway;
+      const x = calm
+        ? mote.x
+        : mote.x + Math.sin(elapsed * mote.swayRate + mote.swayPhase) * mote.sway;
 
       const dip = 0.5 - 0.5 * Math.cos(elapsed * mote.twinkleRate + mote.twinklePhase);
-      ctx.globalAlpha = mote.alpha * (1 - TWINKLE_DEPTH * dip);
+      ctx.globalAlpha = calm ? mote.alpha : mote.alpha * (1 - TWINKLE_DEPTH * dip);
       ctx.drawImage(mote.sprite, x - mote.size / 2, y - mote.size / 2, mote.size, mote.size);
     }
 
@@ -216,16 +223,21 @@ export function initStarfield() {
   };
 
   const render = (now) => {
+    const calm = reducedMotion.matches;
     const step = last ? Math.min(MAX_STEP, (now - last) / 1000) : 0;
     last = now;
-    elapsed += step;
+    // The sway and the twinkle are the two things a calm field gives up, and
+    // both run off this clock — so the clock stops with them, and they resume
+    // from where they left off rather than snapping to a new phase.
+    if (!calm) elapsed += step;
 
+    const pace = calm ? CALM_PACE : 1;
     for (const mote of motes) {
-      mote.y -= mote.speed * step;
+      mote.y -= mote.speed * pace * step;
       if (mote.y < 0) mote.y += span;
     }
 
-    draw();
+    draw(calm);
     frame = requestAnimationFrame(render);
   };
 
@@ -235,14 +247,10 @@ export function initStarfield() {
     last = 0;
   };
 
-  /** Run the field, or leave it standing still — whichever the moment calls for. */
+  /** Run the field, unless there is nobody looking at it. */
   const sync = () => {
     stop();
     if (document.hidden) return;
-    if (reducedMotion.matches) {
-      draw();
-      return;
-    }
     frame = requestAnimationFrame(render);
   };
 
@@ -273,7 +281,6 @@ export function initStarfield() {
   // A hidden tab is given no frames anyway; dropping the loop keeps the page
   // from waking to a queued animation the moment it comes back.
   document.addEventListener("visibilitychange", sync);
-  reducedMotion.addEventListener("change", sync);
 
   measure();
   draw();

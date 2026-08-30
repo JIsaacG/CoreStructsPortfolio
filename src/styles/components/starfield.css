@@ -28,8 +28,9 @@
   opacity: 1;
 }
 
-/* Reduced motion still gets the field — `starfield.js` paints one static frame
-   and stops — but it appears without the fade. */
+/* Reduced motion keeps the field and keeps it rising; what it drops is the
+   sway, the twinkle and the parallax (see `starfield.js`) — and here, the fade
+   the field would otherwise arrive on. */
 @media (prefers-reduced-motion: reduce) {
   .starfield {
     transition: none;
