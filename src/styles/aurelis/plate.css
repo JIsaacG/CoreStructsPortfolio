@@ -1,0 +1,221 @@
+/* =============================================================================
+   Plates — the portal's imagery
+
+   Every image slot on the site is a `figure.au-plate` holding one drawn SVG.
+   They are technical elevations and sections rather than photographs: a demo
+   that shipped stock photography would look like the stock photography, and the
+   brief asks for the opposite. The markup is the shape a real photograph needs
+   — a fixed aspect box, a caption, a lazy-loaded child — so replacing a plate
+   with a client's own photograph is one swap in the data file, not a re-layout.
+
+   Colour comes entirely from `currentcolor` and three custom properties, so the
+   same plate reads correctly on paper and on graphite.
+   ========================================================================== */
+
+.au-plate {
+  --plate-ground: #171b21;
+  --plate-line: rgb(255 255 255 / 0.5);
+  --plate-hair: rgb(255 255 255 / 0.14);
+  --plate-mass: rgb(255 255 255 / 0.07);
+  --plate-accent: var(--gold);
+
+  position: relative;
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background-color: var(--plate-ground);
+  border-radius: var(--radius);
+  isolation: isolate;
+}
+
+.au-plate--portrait {
+  aspect-ratio: 4 / 5;
+}
+
+.au-plate--wide {
+  aspect-ratio: 21 / 9;
+}
+
+.au-plate--square {
+  aspect-ratio: 3 / 2;
+}
+
+.au-plate__art {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* The drawing's own vocabulary. Every plate is built from these four roles, so
+   a new plate inherits the whole visual language by using the right class. */
+.au-plate__hair {
+  fill: none;
+  stroke: var(--plate-hair);
+  stroke-width: 1;
+}
+
+.au-plate__line {
+  fill: none;
+  stroke: var(--plate-line);
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.au-plate__line--thin {
+  stroke-width: 1;
+}
+
+.au-plate__mass {
+  fill: var(--plate-mass);
+  stroke: var(--plate-line);
+  stroke-width: 1.2;
+}
+
+.au-plate__fill {
+  fill: var(--plate-mass);
+  stroke: none;
+}
+
+.au-plate__accent {
+  fill: none;
+  stroke: var(--plate-accent);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+
+.au-plate__accent-fill {
+  fill: var(--plate-accent);
+  stroke: none;
+}
+
+.au-plate__type {
+  fill: var(--plate-line);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.au-plate__type--accent {
+  fill: var(--plate-accent);
+}
+
+/* A very slight vignette and grain keep the flat vector from reading as a
+   diagram. Both are painted once and never animate. */
+.au-plate::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E"),
+    radial-gradient(120% 100% at 50% 40%, transparent 45%, rgb(0 0 0 / 0.42) 100%);
+  background-size: 160px 160px, cover;
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+}
+
+/* --- Caption -------------------------------------------------------------------- */
+
+.au-figure {
+  display: grid;
+  gap: var(--s-xs);
+}
+
+.au-figure__caption {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.au-figure__caption b {
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Parallax --------------------------------------------------------------------
+   A single translate driven by `--plate-shift`, which the scroll module writes
+   in the range -1 .. 1. The movement is 2.5% of the plate's height: enough to
+   feel like depth, not enough to notice as an effect.
+   -------------------------------------------------------------------------------- */
+
+.au-plate__art {
+  transform: translate3d(0, calc(var(--plate-shift, 0) * 2.5%), 0) scale(1.06);
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .au-plate__art {
+    transform: scale(1.06);
+  }
+}
+
+/* --- Reveal -----------------------------------------------------------------------
+   The clip reveal the brief asks for: the frame arrives first and the drawing
+   wipes up into it from the bottom edge.
+
+   The clip is on the ARTWORK, never on `.au-plate` itself. `.au-plate` is the
+   element the IntersectionObserver watches, and a `clip-path` that collapses it
+   to zero height also collapses its intersection rectangle — so the observer
+   could never see it enter the viewport, and the plate would stay hidden for
+   ever. Clipping the child breaks that deadlock and reads better besides.
+   -------------------------------------------------------------------------------- */
+
+.js .au-plate[data-reveal-plate] .au-plate__art {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path var(--duration-reveal) var(--ease-out-expo);
+}
+
+.js .au-plate[data-reveal-plate].is-revealed .au-plate__art {
+  clip-path: inset(0 0 0 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .au-plate[data-reveal-plate] .au-plate__art {
+    clip-path: none;
+  }
+}
+
+/* --- Logotype marks ----------------------------------------------------------------
+   The client wall. Each mark is a small geometric device plus letterspaced type,
+   drawn monochrome and sitting at 55% opacity until hovered — a logo wall that
+   competes with the page is a logo wall nobody reads past.
+   -------------------------------------------------------------------------------- */
+
+.au-mark {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  flex: none;
+  color: var(--text);
+  opacity: 0.5;
+  transition: opacity var(--duration-base) var(--ease-out-quart);
+}
+
+.au-mark:hover {
+  opacity: 0.95;
+}
+
+.au-mark__glyph {
+  width: 1.65rem;
+  height: 1.65rem;
+  flex: none;
+  fill: none;
+  stroke: currentcolor;
+  stroke-width: 1.4;
+}
+
+.au-mark__name {
+  font-size: var(--t-sm);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}

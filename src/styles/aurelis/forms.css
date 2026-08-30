@@ -1,0 +1,358 @@
+/* =============================================================================
+   Contact form and its five states
+
+   Normal, focus, error, sending, success. The demo has no backend, so the
+   submit is simulated — but everything up to the request is real: constraint
+   validation, per-field messages, a live region and a disabled control while
+   the request is in flight.
+   ========================================================================== */
+
+.au-contact {
+  display: grid;
+  gap: clamp(2.5rem, 1.6rem + 3.4vw, 5rem) var(--gutter);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 60rem) {
+  .au-contact {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .au-contact__form {
+    grid-column: 1 / span 7;
+  }
+
+  .au-contact__aside {
+    grid-column: 9 / span 4;
+  }
+}
+
+.au-form {
+  display: grid;
+  gap: var(--s-md);
+}
+
+.au-form__row {
+  display: grid;
+  gap: var(--s-md);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 40rem) {
+  .au-form__row--two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.au-field {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.au-field__label {
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.au-field__label .au-req {
+  color: var(--accent);
+}
+
+.au-field__control {
+  width: 100%;
+  min-height: 3.25rem;
+  padding: 0.85rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  font-size: var(--t-sm);
+  letter-spacing: 0;
+  transition:
+    border-color var(--duration-fast) var(--ease-out-quart),
+    background-color var(--duration-fast) var(--ease-out-quart),
+    box-shadow var(--duration-fast) var(--ease-out-quart);
+}
+
+textarea.au-field__control {
+  min-height: 9rem;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+/* The native arrow is replaced so the control matches the square inputs on
+   every platform. */
+select.au-field__control {
+  appearance: none;
+  padding-right: 2.75rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5l5-5' fill='none' stroke='%23737982' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 0.75rem;
+}
+
+.au-field__control::placeholder {
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+.au-field__control:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgb(var(--gold-rgb) / 0.16);
+}
+
+/* Error is announced by colour, by a message and by aria-invalid — never by
+   colour alone. */
+.au-field[data-state="error"] .au-field__control {
+  border-color: #a4331f;
+  background: #fdf3f1;
+}
+
+.au-field[data-state="error"] .au-field__label {
+  color: #a4331f;
+}
+
+.au-field__error {
+  display: none;
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #a4331f;
+}
+
+.au-field[data-state="error"] .au-field__error {
+  display: block;
+}
+
+/* --- Consent ---------------------------------------------------------------------- */
+
+.au-check {
+  display: grid;
+  grid-template-columns: 1.25rem minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: start;
+  font-size: var(--t-sm);
+  color: var(--text-soft);
+}
+
+.au-check input {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin: 0.2rem 0 0;
+  accent-color: var(--gold);
+}
+
+.au-check a {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.au-check a:hover {
+  color: var(--accent);
+}
+
+.au-check[data-state="error"] {
+  color: #a4331f;
+}
+
+/* --- Submit and status --------------------------------------------------------------- */
+
+.au-form__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-md);
+  padding-top: var(--s-sm);
+  border-top: 1px solid var(--rule);
+}
+
+.au-form__submit[aria-disabled="true"] {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.au-form__status {
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.au-form__status[data-state="sending"]::before,
+.au-form__status[data-state="success"]::before,
+.au-form__status[data-state="error"]::before {
+  content: "";
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-right: 0.6rem;
+  border-radius: 50%;
+  vertical-align: 0.05em;
+  background: currentcolor;
+}
+
+.au-form__status[data-state="sending"] {
+  color: var(--accent);
+}
+
+.au-form__status[data-state="success"] {
+  color: #1f6b46;
+}
+
+.au-form__status[data-state="error"] {
+  color: #a4331f;
+}
+
+/* --- Contact details ------------------------------------------------------------------ */
+
+.au-channels {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.au-channel {
+  display: grid;
+  gap: 0.2rem;
+  padding: var(--s-sm) 0;
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.au-channel__label {
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.au-channel__value {
+  font-size: var(--t-lg);
+  font-weight: 550;
+  letter-spacing: var(--track-snug);
+}
+
+a.au-channel__value:hover {
+  color: var(--accent);
+}
+
+.au-channel__note {
+  font-size: var(--t-2xs);
+  color: var(--text-muted);
+}
+
+/* --- Downloads and specification tables ------------------------------------------------- */
+
+.au-specs {
+  border-top: 1px solid var(--rule);
+  font-size: var(--t-sm);
+}
+
+.au-specs th,
+.au-specs td {
+  padding: 0.85rem var(--s-sm) 0.85rem 0;
+  border-bottom: 1px solid var(--rule-soft);
+  text-align: left;
+  vertical-align: top;
+}
+
+.au-specs th {
+  width: 42%;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.au-specs td {
+  font-weight: 550;
+  font-variant-numeric: tabular-nums;
+}
+
+.au-downloads {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.au-download {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-md);
+  padding: var(--s-sm) 0;
+  border-bottom: 1px solid var(--rule-soft);
+  transition: border-color var(--duration-base) var(--ease-out-quart);
+}
+
+.au-download:hover {
+  border-color: var(--accent);
+}
+
+.au-download__name {
+  font-size: var(--t-sm);
+  font-weight: 600;
+}
+
+.au-download__meta {
+  flex: none;
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* --- FAQ ---------------------------------------------------------------------------------
+   Native <details>, so it works with the keyboard, with search-in-page and with
+   JavaScript off. Only the marker is restyled.
+   ---------------------------------------------------------------------------------------- */
+
+.au-faq {
+  border-top: 1px solid var(--rule);
+}
+
+.au-faq__item {
+  border-bottom: 1px solid var(--rule);
+}
+
+.au-faq__q {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-md);
+  padding: var(--s-md) 0;
+  cursor: pointer;
+  font-size: var(--t-lg);
+  font-weight: 550;
+  letter-spacing: var(--track-snug);
+  list-style: none;
+}
+
+.au-faq__q::-webkit-details-marker {
+  display: none;
+}
+
+.au-faq__q::after {
+  content: "";
+  flex: none;
+  width: 0.85rem;
+  height: 0.85rem;
+  margin-top: 0.35rem;
+  background: currentcolor;
+  color: var(--accent);
+  transition: transform var(--duration-base) var(--ease-out-expo);
+  clip-path: polygon(45% 0, 55% 0, 55% 45%, 100% 45%, 100% 55%, 55% 55%, 55% 100%, 45% 100%, 45% 55%, 0 55%, 0 45%, 45% 45%);
+}
+
+.au-faq__item[open] .au-faq__q::after {
+  transform: rotate(135deg);
+}
+
+.au-faq__a {
+  max-width: var(--measure);
+  padding-bottom: var(--s-md);
+  font-size: var(--t-sm);
+  color: var(--text-soft);
+}

@@ -1,0 +1,30 @@
+/* =============================================================================
+   Aurelis Group — stylesheet entry point
+
+   The corporate demo ships its own bundle rather than extending the portfolio's.
+   It shares exactly two things with the rest of the site — the typeface and the
+   scroll-reveal system — and disagrees with it about everything else: it is
+   light where the portfolio is dark, square where the portfolio is round, and
+   bronze where the portfolio is cyan. Importing `base.css` here would mean
+   overriding it line by line, which is how a design system stops being one.
+
+   `npm run build:css` flattens this into `dist/aurelis.css`.
+   ========================================================================== */
+
+@import "./aurelis/tokens.css";
+@import "./fonts.css";
+@import "./aurelis/base.css";
+@import "./motion.css";
+
+/* Primitives the zones compose with, before the zones themselves. */
+@import "./aurelis/plate.css";
+
+@import "./aurelis/header.css";
+@import "./aurelis/hero.css";
+@import "./aurelis/sections.css";
+@import "./aurelis/industries.css";
+@import "./aurelis/case.css";
+@import "./aurelis/atlas.css";
+@import "./aurelis/catalog.css";
+@import "./aurelis/forms.css";
+@import "./aurelis/footer.css";

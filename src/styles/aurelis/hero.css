@@ -1,0 +1,301 @@
+/* =============================================================================
+   Hero and page headers
+
+   The home hero is a full-height graphite frame with one plate behind the type.
+   Interior pages get the same construction at a third of the height, so a
+   visitor arriving on a service page recognises where they are before reading a
+   word.
+   ========================================================================== */
+
+.au-hero {
+  position: relative;
+  display: grid;
+  /* Copy first, statistics rail last: the 1fr row is what pushes the headline
+     to the foot of the frame however tall the viewport is. */
+  grid-template-rows: 1fr auto;
+  align-items: end;
+  min-height: min(92svh, 58rem);
+  padding-top: calc(var(--header-h) + var(--s-lg));
+  padding-bottom: 0;
+  overflow: hidden;
+  background: var(--ink);
+  color: var(--white);
+  isolation: isolate;
+}
+
+/* --- Backdrop -------------------------------------------------------------------
+   The plate is pinned behind everything and washed down so type sits on it at
+   full contrast. Two overlays: a vertical scrim for the copy, and a very faint
+   bronze wash on the right so the frame is not neutral grey. */
+
+.au-hero__backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+/* Full-bleed plates sit under a heavy scrim, so they are drawn brighter than a
+   framed one — otherwise the elevation disappears and the hero is a black box. */
+.au-hero__backdrop .au-plate,
+.au-pagehead__backdrop .au-plate {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  border-radius: 0;
+  --plate-ground: transparent;
+  --plate-line: rgb(255 255 255 / 0.6);
+  --plate-hair: rgb(255 255 255 / 0.16);
+  --plate-mass: rgb(255 255 255 / 0.05);
+}
+
+.au-hero__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgb(11 13 16 / 0.9) 0%, rgb(11 13 16 / 0.6) 44%, rgb(11 13 16 / 0.16) 100%),
+    linear-gradient(0deg, rgb(11 13 16 / 0.92) 0%, transparent 46%),
+    radial-gradient(70% 60% at 88% 22%, rgb(var(--gold-rgb) / 0.12), transparent 70%);
+}
+
+.au-hero__body {
+  width: var(--shell);
+  margin-inline: auto;
+  padding-bottom: clamp(2rem, 1.4rem + 2.2vw, 3.25rem);
+}
+
+.au-hero__eyebrow {
+  margin-bottom: var(--s-md);
+}
+
+/* No measure limit: the headline's line breaks are authored in the data, and a
+   max-width narrow enough to be useful would force one of them to wrap inside
+   its own clipping box — which is exactly what the clip reveal cannot survive. */
+.au-hero__title {
+  margin-bottom: var(--s-md);
+}
+
+/* Below this width the authored lines no longer fit on one line, so the clip is
+   dropped and the headline settles in with the rest of the hero instead. A
+   half-revealed line is worse than no line reveal at all. */
+@media (max-width: 74.99rem) {
+  .js .au-hero__title .reveal-lines__line {
+    overflow: visible;
+  }
+
+  .js .au-hero__title .reveal-lines__line > span {
+    transform: none;
+    transition: none;
+  }
+}
+
+.au-hero__lead {
+  max-width: 52ch;
+  color: rgb(255 255 255 / 0.76);
+}
+
+.au-hero__actions {
+  margin-top: clamp(1.5rem, 1.1rem + 1.2vw, 2.25rem);
+}
+
+/* --- The statistics rail ---------------------------------------------------------
+   Four figures across the foot of the hero, divided by hairlines. This is the
+   part of the page that answers "how big are they" before any scrolling.
+   -------------------------------------------------------------------------------- */
+
+.au-hero__rail {
+  border-top: 1px solid rgb(255 255 255 / 0.16);
+  background: rgb(11 13 16 / 0.45);
+  backdrop-filter: blur(6px);
+}
+
+.au-hero__rail-inner {
+  width: var(--shell);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (min-width: 60rem) {
+  .au-hero__rail-inner {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.au-stat {
+  display: grid;
+  gap: 0.35rem;
+  padding: clamp(1.1rem, 0.8rem + 1vw, 1.9rem) 0;
+  padding-right: var(--s-md);
+}
+
+.au-hero__rail-inner .au-stat + .au-stat {
+  border-left: 1px solid rgb(255 255 255 / 0.14);
+  padding-left: var(--s-md);
+}
+
+@media (min-width: 60rem) {
+  .au-hero__rail-inner .au-stat + .au-stat {
+    padding-left: var(--gutter);
+  }
+}
+
+/* On two columns the third and fourth cells need a rule above them and the
+   third must lose the left rule it inherits from the flat sequence. */
+@media (max-width: 59.99rem) {
+  .au-hero__rail-inner .au-stat:nth-child(n + 3) {
+    border-top: 1px solid rgb(255 255 255 / 0.14);
+  }
+
+  .au-hero__rail-inner .au-stat:nth-child(3) {
+    border-left: 0;
+    padding-left: 0;
+  }
+}
+
+.au-stat__value {
+  font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.375rem);
+  font-weight: 550;
+  line-height: 1;
+  letter-spacing: var(--track-tight);
+  font-variant-numeric: tabular-nums;
+}
+
+.au-stat__value sup {
+  font-size: 0.5em;
+  font-weight: 600;
+  vertical-align: super;
+  color: var(--gold);
+}
+
+.au-stat__label {
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.55);
+}
+
+/* --- Scroll cue -------------------------------------------------------------------
+   A hairline that fills top to bottom on a slow loop. It is the only element on
+   the page that moves without being asked to, which is exactly why it is one
+   pixel wide.
+   -------------------------------------------------------------------------------- */
+
+.au-cue {
+  position: absolute;
+  right: var(--gutter);
+  bottom: clamp(7rem, 6rem + 4vw, 10rem);
+  display: none;
+  align-items: center;
+  gap: 0.9rem;
+  writing-mode: vertical-rl;
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.5);
+}
+
+@media (min-width: 68rem) {
+  .au-cue {
+    display: flex;
+  }
+}
+
+.au-cue__rail {
+  position: relative;
+  width: 1px;
+  height: 4.5rem;
+  background: rgb(255 255 255 / 0.2);
+  overflow: hidden;
+}
+
+.au-cue__rail::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--gold);
+  transform-origin: top;
+  animation: au-cue 2.6s var(--ease-in-out) infinite;
+}
+
+@keyframes au-cue {
+  0% { transform: scaleY(0); transform-origin: top; }
+  45% { transform: scaleY(1); transform-origin: top; }
+  55% { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+/* --- Interior page header -----------------------------------------------------------
+   Same graphite frame, a third of the height, and a breadcrumb where the hero
+   keeps its eyebrow.
+   ---------------------------------------------------------------------------------- */
+
+.au-pagehead {
+  position: relative;
+  padding-top: calc(var(--header-h) + clamp(3rem, 2rem + 4vw, 6rem));
+  padding-bottom: clamp(3rem, 2rem + 4vw, 6rem);
+  overflow: hidden;
+  background: var(--ink);
+  color: var(--white);
+  isolation: isolate;
+}
+
+.au-pagehead__backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+.au-pagehead__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgb(11 13 16 / 0.92) 0%, rgb(11 13 16 / 0.7) 48%, rgb(11 13 16 / 0.3) 100%),
+    linear-gradient(0deg, rgb(11 13 16 / 0.75), transparent 60%);
+}
+
+.au-pagehead__body {
+  width: var(--shell);
+  margin-inline: auto;
+  display: grid;
+  gap: var(--s-md);
+}
+
+.au-pagehead__title {
+  max-width: 18ch;
+}
+
+.au-pagehead__lead {
+  max-width: 54ch;
+  color: rgb(255 255 255 / 0.74);
+}
+
+.au-pagehead__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-md) var(--s-lg);
+  margin-top: var(--s-sm);
+  padding-top: var(--s-md);
+  border-top: 1px solid rgb(255 255 255 / 0.16);
+}
+
+.au-pagehead__fact {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.au-pagehead__fact dt {
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.5);
+}
+
+.au-pagehead__fact dd {
+  font-size: var(--t-base);
+  font-weight: 550;
+}

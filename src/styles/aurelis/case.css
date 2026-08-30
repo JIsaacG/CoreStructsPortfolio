@@ -1,0 +1,303 @@
+/* =============================================================================
+   Case studies — the featured block on the home page and the full record
+
+   This is the section that has to carry the most weight: a business reader
+   decides whether the company is credible here. So it is built like evidence —
+   a large plate, named client, named country, four measured results — and not
+   like a testimonial.
+   ========================================================================== */
+
+/* --- Featured block ------------------------------------------------------------- */
+
+.au-case {
+  display: grid;
+  gap: var(--gutter);
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+}
+
+@media (min-width: 60rem) {
+  .au-case {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .au-case__figure {
+    grid-column: 1 / span 7;
+  }
+
+  .au-case__body {
+    grid-column: 9 / span 4;
+  }
+}
+
+.au-case__figure .au-plate {
+  aspect-ratio: 4 / 3;
+}
+
+.au-case__title {
+  margin-block: var(--s-sm);
+  font-size: var(--t-2xl);
+  max-width: 18ch;
+}
+
+.au-case__text {
+  color: var(--text-soft);
+}
+
+.au-case__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-xs) var(--s-md);
+  margin-top: var(--s-md);
+  padding-top: var(--s-sm);
+  border-top: 1px solid var(--rule);
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.au-case__meta b {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* --- Results ---------------------------------------------------------------------
+   Four figures on a hairline grid. Tabular numerals so the column edges line
+   up: a results block where the digits wobble reads as decoration, not data.
+   -------------------------------------------------------------------------------- */
+
+.au-results {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: var(--s-md);
+  border-top: 1px solid var(--rule);
+}
+
+@media (min-width: 48rem) {
+  .au-results--four {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.au-result {
+  display: grid;
+  gap: 0.2rem;
+  align-content: start;
+  padding: var(--s-md) var(--s-sm) var(--s-md) 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.au-result + .au-result {
+  padding-left: var(--s-sm);
+  border-left: 1px solid var(--rule);
+}
+
+.au-result__value {
+  font-size: clamp(1.75rem, 1.2rem + 2.2vw, 3.25rem);
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  font-variant-numeric: tabular-nums;
+}
+
+.au-result__value--up {
+  color: var(--accent);
+}
+
+.au-result__label {
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* --- Full record ------------------------------------------------------------------- */
+
+.au-record {
+  display: grid;
+  gap: clamp(2rem, 1.4rem + 2.4vw, 3.5rem) var(--gutter);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 60rem) {
+  .au-record {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .au-record__aside {
+    grid-column: 1 / span 3;
+    position: sticky;
+    top: calc(var(--header-h) + var(--s-lg));
+    align-self: start;
+  }
+
+  .au-record__main {
+    grid-column: 5 / span 8;
+  }
+}
+
+.au-record__facts {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.au-record__facts > div {
+  display: grid;
+  gap: 0.15rem;
+  padding: var(--s-sm) 0;
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.au-record__facts dt {
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.au-record__facts dd {
+  font-size: var(--t-sm);
+  font-weight: 550;
+}
+
+.au-block + .au-block {
+  margin-top: clamp(2rem, 1.4rem + 2.4vw, 3.5rem);
+}
+
+.au-block__title {
+  margin-bottom: var(--s-sm);
+  font-size: var(--t-xl);
+  font-weight: 600;
+}
+
+.au-block__title::before {
+  content: "";
+  display: block;
+  width: 1.75rem;
+  height: 2px;
+  margin-bottom: var(--s-sm);
+  background: var(--accent);
+}
+
+.au-block p + p {
+  margin-top: var(--s-sm);
+}
+
+/* --- Numbered process list, reused by case records and service pages ---------------- */
+
+.au-steps {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.au-steps li {
+  display: grid;
+  gap: 0.25rem;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  padding: var(--s-md) 0;
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.au-steps b {
+  grid-row: span 2;
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--track-label);
+  color: var(--accent);
+  padding-top: 0.4em;
+}
+
+.au-steps strong {
+  font-size: var(--t-lg);
+  font-weight: 600;
+  letter-spacing: var(--track-snug);
+}
+
+.au-steps span {
+  font-size: var(--t-sm);
+  color: var(--text-soft);
+}
+
+/* --- Gallery --------------------------------------------------------------------------
+   Three plates on an editorial rhythm: one wide, two square. Nothing crops on a
+   phone; the grid simply becomes one column.
+   ------------------------------------------------------------------------------------- */
+
+.au-gallery {
+  display: grid;
+  gap: var(--gutter);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 48rem) {
+  .au-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .au-gallery > :first-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* --- Pull quote ------------------------------------------------------------------------ */
+
+.au-pull {
+  display: grid;
+  gap: var(--s-md);
+  padding: clamp(1.75rem, 1.2rem + 2vw, 3rem) 0;
+  border-block: 1px solid var(--rule);
+}
+
+.au-pull__text {
+  max-width: 30ch;
+  font-size: var(--t-2xl);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: var(--track-tight);
+}
+
+/* --- Related rail ----------------------------------------------------------------------- */
+
+.au-related {
+  display: grid;
+  gap: var(--gutter);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+}
+
+.au-related__item {
+  display: grid;
+  align-content: start;
+  gap: var(--s-2xs);
+  padding-top: var(--s-sm);
+  border-top: 1px solid var(--rule);
+  transition: border-color var(--duration-base) var(--ease-out-quart);
+}
+
+.au-related__item:hover {
+  border-color: var(--accent);
+}
+
+.au-related__kind {
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.au-related__title {
+  font-size: var(--t-lg);
+  font-weight: 600;
+}
+
+.au-related__text {
+  font-size: var(--t-sm);
+  color: var(--text-muted);
+}

@@ -60,7 +60,7 @@
   --t-xl: clamp(1.375rem, 1.2rem + 0.75vw, 1.875rem);
   --t-2xl: clamp(1.75rem, 1.42rem + 1.4vw, 2.75rem);
   --t-3xl: clamp(2.125rem, 1.6rem + 2.3vw, 4rem);          /* h2: 48 -> 64px  */
-  --t-4xl: clamp(2.5rem, 1.5rem + 4.4vw, 6rem);            /* h1: 72 -> 96px  */
+  --t-4xl: clamp(2.375rem, 1.5rem + 3.9vw, 5.5rem);        /* h1: 72 -> 88px  */
   --t-metric: clamp(2.75rem, 1.7rem + 4.6vw, 6.25rem);
 
   --lead-tight: 1;

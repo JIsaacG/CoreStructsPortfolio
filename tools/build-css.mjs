@@ -20,6 +20,9 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const BUNDLES = [
   { entry: join(ROOT, "src", "styles", "main.css"), output: join(ROOT, "dist", "corestruct.css") },
   { entry: join(ROOT, "src", "styles", "demo.css"), output: join(ROOT, "dist", "demo.css") },
+  /* The corporate demo disagrees with both of the above about colour, shape and
+     temperature, so it carries its own foundation rather than overriding one. */
+  { entry: join(ROOT, "src", "styles", "aurelis.css"), output: join(ROOT, "dist", "aurelis.css") },
 ];
 
 const IMPORT = /@import\s+(?:url\()?["']([^"']+)["']\)?\s*;/g;

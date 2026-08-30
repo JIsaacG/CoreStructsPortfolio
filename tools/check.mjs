@@ -7,7 +7,7 @@
  */
 
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -132,6 +132,7 @@ function checkBundle(bundle) {
 
 checkBundle(BUNDLE);
 checkBundle(join(ROOT, "dist", "demo.css"));
+checkBundle(join(ROOT, "dist", "aurelis.css"));
 
 /* ------------------------------------------------------------ JS imports */
 
@@ -162,14 +163,18 @@ for (const file of walk(join(ROOT, "src")).filter((f) => f.endsWith(".js"))) {
 const DEMO_DIR = join(ROOT, "demos");
 
 if (existsSync(DEMO_DIR)) {
-  for (const name of readdirSync(DEMO_DIR).filter((f) => f.endsWith(".html"))) {
-    const page = readFileSync(join(DEMO_DIR, name), "utf8");
-    const where = `demos/${name}`;
+  // A demo may be a single page (Verbena) or a whole portal of them nested in
+  // sub-directories (Aurelis), so the tree is walked rather than listed, and
+  // every relative link is resolved against the page that wrote it.
+  for (const file of walk(DEMO_DIR).filter((f) => f.endsWith(".html"))) {
+    const page = readFileSync(file, "utf8");
+    const where = relative(ROOT, file).split("\\").join("/");
+    const pageDir = dirname(file);
 
     for (const [, , value] of page.matchAll(/\s(href|src)="([^"]+)"/g)) {
       if (/^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(value) || value.startsWith("#")) continue;
       const target = value.split(/[?#]/)[0];
-      if (target && !existsSync(resolve(DEMO_DIR, target))) {
+      if (target && !existsSync(resolve(pageDir, target))) {
         fail(`missing file referenced from ${where}: ${value}`);
       }
     }

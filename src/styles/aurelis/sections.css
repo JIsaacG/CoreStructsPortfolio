@@ -1,0 +1,686 @@
+/* =============================================================================
+   The home zones
+
+   Every block here is built from the same four ingredients: a hairline, a
+   tabular figure, a label and a lot of air. What separates one zone from the
+   next is the grid it uses, not a new colour or a new card shape.
+   ========================================================================== */
+
+/* --- Client wall ------------------------------------------------------------------
+   A slow horizontal drift, driven from `marquee.js` rather than from a CSS
+   animation: the module halts it off-screen and on hover, and can restart it
+   after a resize without the jump a re-declared keyframe would cause.
+   -------------------------------------------------------------------------------- */
+
+.au-clients {
+  padding-block: clamp(2.5rem, 1.8rem + 2.4vw, 4rem);
+  border-top: 1px solid var(--rule-soft);
+  border-bottom: 1px solid var(--rule-soft);
+  overflow: hidden;
+}
+
+.au-clients__title {
+  width: var(--shell);
+  margin-inline: auto;
+  margin-bottom: var(--s-lg);
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.au-clients__viewport {
+  position: relative;
+  overflow: hidden;
+  /* Fades the strip into the page at both edges so it reads as continuous
+     rather than as a box that happens to be clipped. */
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.au-clients__track {
+  display: flex;
+  align-items: center;
+  gap: clamp(2.5rem, 1.5rem + 4vw, 6rem);
+  width: max-content;
+  will-change: transform;
+}
+
+/* --- Introduction and the counters ---------------------------------------------- */
+
+.au-intro__title {
+  grid-column: 1 / span 7;
+  max-width: 16ch;
+}
+
+.au-intro__body {
+  grid-column: 9 / span 4;
+  align-self: end;
+}
+
+.au-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: clamp(3rem, 2rem + 4vw, 6rem);
+  border-top: 1px solid var(--rule);
+}
+
+@media (min-width: 60rem) {
+  .au-metrics {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.au-metric {
+  display: grid;
+  gap: var(--s-2xs);
+  align-content: start;
+  padding: clamp(1.5rem, 1rem + 1.6vw, 2.5rem) var(--s-md) clamp(1.5rem, 1rem + 1.6vw, 2.5rem) 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+@media (min-width: 60rem) {
+  .au-metric + .au-metric {
+    padding-left: var(--gutter);
+    border-left: 1px solid var(--rule);
+  }
+}
+
+@media (max-width: 59.99rem) {
+  .au-metric:nth-child(even) {
+    padding-left: var(--s-md);
+    border-left: 1px solid var(--rule);
+  }
+}
+
+.au-metric__value {
+  font-size: var(--t-metric);
+  font-weight: 500;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.au-metric__value sup {
+  font-size: 0.36em;
+  font-weight: 600;
+  vertical-align: super;
+  letter-spacing: 0;
+  color: var(--accent);
+}
+
+.au-metric__label {
+  margin-top: var(--s-2xs);
+  font-size: var(--t-sm);
+  font-weight: 600;
+}
+
+.au-metric__note {
+  font-size: var(--t-2xs);
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+/* --- Capabilities ------------------------------------------------------------------
+   Editorial blocks, not cards: full-bleed rules, alternating sides, one plate
+   each. Nothing floats and nothing has a shadow.
+   ---------------------------------------------------------------------------------- */
+
+.au-capability {
+  display: grid;
+  gap: var(--s-lg) var(--gutter);
+  padding-block: clamp(2.5rem, 1.6rem + 3.4vw, 5rem);
+  border-top: 1px solid var(--rule);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.au-capability:last-child {
+  border-bottom: 1px solid var(--rule);
+}
+
+@media (min-width: 60rem) {
+  .au-capability {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    align-items: center;
+  }
+
+  .au-capability__figure {
+    grid-column: 1 / span 6;
+  }
+
+  .au-capability__body {
+    grid-column: 8 / span 5;
+  }
+
+  /* Even blocks flip, so the eye crosses the page instead of running down one
+     rail. The order swap keeps the DOM in reading order. */
+  .au-capability--flip .au-capability__figure {
+    grid-column: 7 / span 6;
+    order: 2;
+  }
+
+  .au-capability--flip .au-capability__body {
+    grid-column: 1 / span 5;
+    order: 1;
+  }
+}
+
+.au-capability__index {
+  display: block;
+  margin-bottom: var(--s-sm);
+  font-size: var(--t-sm);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--track-label);
+  color: var(--accent);
+}
+
+.au-capability__title {
+  margin-bottom: var(--s-sm);
+  font-size: var(--t-2xl);
+}
+
+.au-capability__text {
+  margin-bottom: var(--s-md);
+  color: var(--text-soft);
+}
+
+.au-capability__list {
+  display: grid;
+  gap: 0;
+  margin-bottom: var(--s-md);
+  border-top: 1px solid var(--rule-soft);
+}
+
+.au-capability__list li {
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--rule-soft);
+  font-size: var(--t-sm);
+  color: var(--text-soft);
+}
+
+.au-capability__list li::before {
+  content: "";
+  display: inline-block;
+  width: 0.4rem;
+  height: 1px;
+  margin-right: 0.7rem;
+  vertical-align: 0.3em;
+  background: var(--accent);
+}
+
+/* --- Pillars, 2 x 2 ------------------------------------------------------------------ */
+
+.au-pillars {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  border-top: 1px solid var(--rule);
+}
+
+@media (min-width: 48rem) {
+  .au-pillars {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.au-pillar {
+  display: grid;
+  gap: var(--s-sm);
+  align-content: start;
+  padding: clamp(1.75rem, 1.2rem + 2vw, 3rem) 0;
+  padding-right: var(--gutter);
+  border-bottom: 1px solid var(--rule);
+}
+
+@media (min-width: 48rem) {
+  .au-pillar:nth-child(even) {
+    padding-left: var(--gutter);
+    border-left: 1px solid var(--rule);
+  }
+}
+
+.au-pillar__index {
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--track-label);
+  color: var(--accent);
+}
+
+.au-pillar__title {
+  font-size: var(--t-xl);
+  font-weight: 600;
+}
+
+.au-pillar__text {
+  color: var(--text-soft);
+  max-width: 44ch;
+}
+
+/* --- Methodology ----------------------------------------------------------------------
+   Four steps on one rail. The rail is a hairline that fills as the section is
+   scrolled — `--process` is written by the module in the range 0..1 and drives
+   nothing but a scaled pseudo-element and the state of each marker.
+   ------------------------------------------------------------------------------------- */
+
+.au-process {
+  position: relative;
+  display: grid;
+  gap: var(--s-lg);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 60rem) {
+  .au-process {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--gutter);
+  }
+}
+
+/* The rail: horizontal on desktop, vertical on mobile. */
+.au-process__rail {
+  position: absolute;
+  background: var(--rule);
+  overflow: hidden;
+}
+
+@media (min-width: 60rem) {
+  .au-process__rail {
+    top: 0.55rem;
+    left: 0;
+    right: 0;
+    height: 1px;
+  }
+}
+
+@media (max-width: 59.99rem) {
+  .au-process__rail {
+    top: 0;
+    bottom: 0;
+    left: 0.55rem;
+    width: 1px;
+  }
+}
+
+.au-process__rail::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  transition: transform var(--duration-slow) var(--ease-out-quart);
+}
+
+@media (min-width: 60rem) {
+  .au-process__rail::after {
+    transform: scaleX(var(--process, 0));
+    transform-origin: left;
+  }
+}
+
+@media (max-width: 59.99rem) {
+  .au-process__rail::after {
+    transform: scaleY(var(--process, 0));
+    transform-origin: top;
+  }
+}
+
+.au-step {
+  position: relative;
+  display: grid;
+  gap: var(--s-2xs);
+  align-content: start;
+  padding-top: 2.25rem;
+}
+
+@media (max-width: 59.99rem) {
+  .au-step {
+    padding-top: 0;
+    padding-left: 2.5rem;
+  }
+}
+
+/* The marker sits on the rail and fills when the rail reaches it. */
+.au-step::before {
+  content: "";
+  position: absolute;
+  width: 0.7rem;
+  height: 0.7rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: 50%;
+  background: var(--page);
+  transition:
+    background-color var(--duration-base) var(--ease-out-quart),
+    border-color var(--duration-base) var(--ease-out-quart);
+}
+
+@media (min-width: 60rem) {
+  .au-step::before {
+    top: 0.2rem;
+    left: 0;
+  }
+}
+
+@media (max-width: 59.99rem) {
+  .au-step::before {
+    top: 0.35rem;
+    left: 0.2rem;
+  }
+}
+
+.au-step.is-reached::before {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.au-step__index {
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--track-label);
+  color: var(--text-muted);
+  transition: color var(--duration-base) var(--ease-out-quart);
+}
+
+.au-step.is-reached .au-step__index {
+  color: var(--accent);
+}
+
+.au-step__title {
+  font-size: var(--t-lg);
+  font-weight: 600;
+}
+
+.au-step__text {
+  font-size: var(--t-sm);
+  color: var(--text-soft);
+}
+
+.au-step__out {
+  margin-top: var(--s-2xs);
+  padding-top: var(--s-2xs);
+  border-top: 1px solid var(--rule-soft);
+  font-size: var(--t-2xs);
+  letter-spacing: 0.02em;
+  color: var(--text-muted);
+}
+
+/* --- Certifications --------------------------------------------------------------------- */
+
+.au-certs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  border-top: 1px solid var(--rule);
+  border-left: 1px solid var(--rule);
+}
+
+.au-cert {
+  display: grid;
+  gap: var(--s-2xs);
+  align-content: start;
+  padding: var(--s-md);
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  transition: background-color var(--duration-base) var(--ease-out-quart);
+}
+
+.au-cert:hover {
+  background: var(--surface);
+}
+
+.au-cert__code {
+  font-size: var(--t-lg);
+  font-weight: 600;
+  letter-spacing: var(--track-snug);
+}
+
+.au-cert__name {
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.au-cert__text {
+  font-size: var(--t-sm);
+  color: var(--text-muted);
+}
+
+/* --- Testimonials --------------------------------------------------------------------
+   No stars, no carousel, no round avatars. A quotation set large, the rule, and
+   the attribution — the way a printed annual report runs one.
+   ------------------------------------------------------------------------------------ */
+
+.au-quotes {
+  display: grid;
+  gap: 0;
+  grid-template-columns: minmax(0, 1fr);
+  border-top: 1px solid var(--rule);
+}
+
+@media (min-width: 60rem) {
+  .au-quotes {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.au-quote {
+  display: grid;
+  align-content: space-between;
+  gap: var(--s-lg);
+  padding: clamp(1.75rem, 1.2rem + 2vw, 2.75rem) var(--gutter) clamp(1.75rem, 1.2rem + 2vw, 2.75rem) 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+@media (min-width: 60rem) {
+  .au-quote + .au-quote {
+    padding-left: var(--gutter);
+    border-left: 1px solid var(--rule);
+  }
+}
+
+.au-quote__text {
+  font-size: var(--t-lg);
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: var(--track-snug);
+}
+
+.au-quote__text::before {
+  content: "";
+  display: block;
+  width: 1.75rem;
+  height: 2px;
+  margin-bottom: var(--s-md);
+  background: var(--accent);
+}
+
+.au-quote__by {
+  display: grid;
+  gap: 0.15rem;
+  font-style: normal;
+}
+
+.au-quote__name {
+  font-size: var(--t-sm);
+  font-weight: 700;
+}
+
+.au-quote__role {
+  font-size: var(--t-2xs);
+  letter-spacing: 0.02em;
+  color: var(--text-muted);
+}
+
+.au-quote__org {
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* --- Leadership -------------------------------------------------------------------------
+   Square portraits, square corners. The plate stands in for the photograph and
+   carries the same frame a real one would.
+   --------------------------------------------------------------------------------------- */
+
+.au-people {
+  display: grid;
+  gap: var(--gutter) var(--gutter);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+}
+
+.au-person__figure {
+  margin-bottom: var(--s-sm);
+}
+
+.au-person__figure .au-plate {
+  aspect-ratio: 4 / 5;
+}
+
+.au-person__name {
+  font-size: var(--t-lg);
+  font-weight: 600;
+}
+
+.au-person__role {
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.au-person__text {
+  margin-top: var(--s-2xs);
+  font-size: var(--t-sm);
+  color: var(--text-muted);
+}
+
+/* --- Sustainability ---------------------------------------------------------------------- */
+
+.au-triple {
+  display: grid;
+  gap: var(--gutter);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+}
+
+.au-triple__item {
+  display: grid;
+  gap: var(--s-2xs);
+  align-content: start;
+  padding-top: var(--s-md);
+  border-top: 2px solid var(--accent);
+}
+
+.au-triple__title {
+  font-size: var(--t-lg);
+  font-weight: 600;
+}
+
+.au-triple__text {
+  font-size: var(--t-sm);
+  color: var(--text-soft);
+}
+
+.au-triple__figure {
+  margin-top: var(--s-2xs);
+  font-size: var(--t-2xl);
+  font-weight: 500;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Insights ------------------------------------------------------------------------------ */
+
+.au-insights {
+  display: grid;
+  gap: var(--gutter);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+}
+
+.au-insight {
+  display: grid;
+  align-content: start;
+  gap: var(--s-sm);
+}
+
+.au-insight__figure .au-plate {
+  aspect-ratio: 3 / 2;
+}
+
+.au-insight__meta {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.au-insight__kind {
+  color: var(--accent);
+}
+
+.au-insight__title {
+  font-size: var(--t-xl);
+  font-weight: 600;
+  letter-spacing: var(--track-snug);
+  transition: color var(--duration-base) var(--ease-out-quart);
+}
+
+.au-insight:hover .au-insight__title {
+  color: var(--accent);
+}
+
+.au-insight__text {
+  font-size: var(--t-sm);
+  color: var(--text-soft);
+}
+
+/* --- Closing call to action ------------------------------------------------------------------ */
+
+.au-cta {
+  position: relative;
+  overflow: hidden;
+}
+
+.au-cta__title {
+  max-width: 16ch;
+  font-size: var(--t-4xl);
+  font-weight: 500;
+  line-height: var(--lead-snug);
+}
+
+.au-cta__text {
+  max-width: 46ch;
+  margin-top: var(--s-md);
+  color: var(--text-soft);
+}
+
+.au-cta__actions {
+  margin-top: clamp(2rem, 1.4rem + 2vw, 3rem);
+}
+
+/* A single hairline arc in the corner: the only ornament in the whole portal. */
+.au-cta__ornament {
+  position: absolute;
+  right: calc(var(--gutter) * -1);
+  bottom: -18%;
+  width: min(46rem, 62vw);
+  aspect-ratio: 1;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.au-cta__ornament circle {
+  fill: none;
+  stroke: var(--rule);
+}
+
+.au-cta__ornament circle:last-child {
+  stroke: rgb(var(--gold-rgb) / 0.45);
+}

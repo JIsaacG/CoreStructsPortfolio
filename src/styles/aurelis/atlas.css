@@ -1,0 +1,212 @@
+/* =============================================================================
+   Global presence — the drawn world
+
+   The map is a dot matrix generated at build time from continent outlines, plus
+   a graticule and five office markers. No tile provider, no map library, no
+   third-party request: it is one inline SVG, so it paints with the page and
+   costs nothing after that.
+
+   Hovering or focusing a marker raises the matching office card, and hovering a
+   card raises its marker. Both directions run through one `data-office` value.
+   ========================================================================== */
+
+.au-atlas {
+  display: grid;
+  gap: var(--gutter);
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+}
+
+@media (min-width: 68rem) {
+  .au-atlas {
+    grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+  }
+}
+
+.au-atlas__map {
+  position: relative;
+}
+
+.au-atlas__svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* The land grid. One path of small circles, painted flat — the map is a
+   backdrop for five points, not a subject in itself. */
+.au-atlas__land {
+  fill: rgb(255 255 255 / 0.32);
+}
+
+.au-atlas__graticule {
+  fill: none;
+  stroke: rgb(255 255 255 / 0.09);
+  stroke-width: 1;
+}
+
+.au-atlas__frame {
+  fill: none;
+  stroke: rgb(255 255 255 / 0.14);
+  stroke-width: 1;
+}
+
+/* --- Markers ------------------------------------------------------------------------ */
+
+.au-office {
+  cursor: pointer;
+}
+
+.au-office__halo {
+  fill: rgb(var(--gold-rgb) / 0.16);
+  transform-origin: center;
+  transform-box: fill-box;
+  transform: scale(0.6);
+  opacity: 0;
+  transition:
+    transform var(--duration-slow) var(--ease-out-expo),
+    opacity var(--duration-base) var(--ease-out-quart);
+}
+
+.au-office__ring {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1.2;
+  opacity: 0.65;
+}
+
+.au-office__dot {
+  fill: var(--gold);
+}
+
+.au-office__label {
+  fill: rgb(255 255 255 / 0.72);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity var(--duration-base) var(--ease-out-quart);
+}
+
+.au-office.is-active .au-office__halo,
+.au-office:hover .au-office__halo {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.au-office.is-active .au-office__label,
+.au-office:hover .au-office__label {
+  opacity: 1;
+}
+
+.au-office.is-active .au-office__ring {
+  opacity: 1;
+}
+
+/* The pins land one after another when the section arrives, in the order they
+   are written — headquarters first. */
+.js .au-atlas[data-reveal] .au-office {
+  opacity: 0;
+  transform: translateY(-0.4rem);
+  transition:
+    opacity var(--duration-slow) var(--ease-out-quart) var(--pin-delay, 0ms),
+    transform var(--duration-slow) var(--ease-out-expo) var(--pin-delay, 0ms);
+}
+
+.js .au-atlas[data-reveal].is-revealed .au-office {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .au-atlas[data-reveal] .au-office {
+    transform: none;
+  }
+}
+
+/* --- Office list ---------------------------------------------------------------------- */
+
+.au-offices {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.au-office-card {
+  display: grid;
+  gap: 0.2rem;
+  width: 100%;
+  padding: var(--s-sm) var(--s-sm) var(--s-sm) 0;
+  border-bottom: 1px solid var(--rule-soft);
+  text-align: left;
+  transition:
+    background-color var(--duration-base) var(--ease-out-quart),
+    padding-left var(--duration-base) var(--ease-out-expo);
+}
+
+.au-office-card:hover,
+.au-office-card.is-active {
+  padding-left: var(--s-sm);
+  background: rgb(255 255 255 / 0.04);
+}
+
+.au-office-card__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-sm);
+}
+
+.au-office-card__city {
+  font-size: var(--t-lg);
+  font-weight: 550;
+  letter-spacing: var(--track-snug);
+}
+
+.au-office-card__country {
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.au-office-card__kind {
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.au-office-card__text {
+  font-size: var(--t-sm);
+  color: var(--text-soft);
+}
+
+.au-atlas__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-md);
+  margin-top: var(--s-md);
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.au-atlas__legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.au-atlas__legend i {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--gold);
+}

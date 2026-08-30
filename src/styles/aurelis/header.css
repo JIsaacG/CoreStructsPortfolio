@@ -1,0 +1,454 @@
+/* =============================================================================
+   Header, mega menu and the mobile panel
+
+   The bar starts transparent over a dark hero and becomes an opaque paper strip
+   the moment content passes beneath it. Both states are the same element: only
+   the background, the rule and the text colour change, so the logotype never
+   moves between them.
+   ========================================================================== */
+
+.au-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: var(--layer-header);
+  color: var(--white);
+  transition:
+    background-color var(--duration-base) var(--ease-out-quart),
+    color var(--duration-base) var(--ease-out-quart),
+    border-color var(--duration-base) var(--ease-out-quart);
+  border-bottom: 1px solid transparent;
+}
+
+/* A page whose hero is not dark starts solid, so the bar is never white type on
+   white paper for the first 12 pixels of scroll. */
+.au-header--solid,
+.au-header.is-stuck {
+  background-color: rgb(var(--paper-rgb) / 0.92);
+  backdrop-filter: blur(14px) saturate(1.4);
+  border-bottom-color: var(--rule);
+  color: var(--ink);
+}
+
+.au-header__bar {
+  width: var(--shell);
+  margin-inline: auto;
+  min-height: var(--header-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-md);
+}
+
+/* --- Logotype ---------------------------------------------------------------
+   A drawn mark plus letterspaced caps. The descriptor under the name is what
+   stops a two-word wordmark from reading as a startup. */
+
+.au-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex: none;
+}
+
+.au-logo__mark {
+  width: 2rem;
+  height: 2rem;
+  flex: none;
+  color: var(--accent);
+}
+
+.au-logo__type {
+  display: grid;
+  gap: 0.12rem;
+}
+
+.au-logo__name {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.au-logo__sub {
+  font-size: 0.5625rem;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  line-height: 1;
+  text-transform: uppercase;
+  opacity: 0.62;
+}
+
+@media (max-width: 26rem) {
+  .au-logo__sub {
+    display: none;
+  }
+}
+
+/* --- Primary navigation -------------------------------------------------------- */
+
+.au-nav {
+  display: none;
+}
+
+@media (min-width: 68rem) {
+  .au-nav {
+    display: block;
+    margin-inline: auto;
+  }
+}
+
+.au-nav__list {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.5rem, 0.1rem + 1.1vw, 1.75rem);
+}
+
+.au-nav__item {
+  position: relative;
+}
+
+.au-nav__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0;
+  font-size: var(--t-sm);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  transition: color var(--duration-fast) var(--ease-out-quart);
+}
+
+/* The active/hover rule is drawn under the item rather than under the text, so
+   items with a disclosure caret and items without one underline identically. */
+.au-nav__item::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.35rem;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--duration-base) var(--ease-out-expo);
+}
+
+.au-nav__item:hover::after,
+.au-nav__item:focus-within::after,
+.au-nav__item[data-open]::after,
+.au-nav__item[aria-current]::after {
+  transform: scaleX(1);
+}
+
+.au-nav__caret {
+  width: 0.5rem;
+  height: 0.5rem;
+  opacity: 0.55;
+  transition: transform var(--duration-base) var(--ease-out-expo);
+}
+
+.au-nav__item[data-open] .au-nav__caret {
+  transform: rotate(180deg);
+}
+
+/* The disclosure is its own control so the label above it stays a real link:
+   without JavaScript the section index is one click away, with it the panel is
+   one key away. */
+.au-nav__disc {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 0.15rem;
+  color: inherit;
+}
+
+/* --- Header end ----------------------------------------------------------------- */
+
+.au-header__end {
+  display: flex;
+  align-items: center;
+  gap: var(--s-sm);
+  flex: none;
+}
+
+.au-header__contact {
+  display: none;
+  font-size: var(--t-sm);
+  font-weight: 600;
+}
+
+.au-header__contact:hover {
+  color: var(--accent);
+}
+
+@media (min-width: 68rem) {
+  .au-header__contact {
+    display: inline-flex;
+  }
+}
+
+.au-header__cta {
+  display: none;
+  min-height: 2.75rem;
+  padding: 0.7rem 1.35rem;
+}
+
+@media (min-width: 48rem) {
+  .au-header__cta {
+    display: inline-flex;
+  }
+}
+
+/* On the transparent state the outlined button borrows the hero's white. */
+.au-header:not(.is-stuck):not(.au-header--solid) .au-header__cta {
+  border-color: rgb(255 255 255 / 0.42);
+}
+
+.au-header:not(.is-stuck):not(.au-header--solid) .au-header__cta:hover {
+  border-color: var(--accent);
+}
+
+/* --- Burger ----------------------------------------------------------------------- */
+
+.au-burger {
+  display: grid;
+  place-items: center;
+  gap: 0.3rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid currentcolor;
+  border-radius: var(--radius);
+  opacity: 0.75;
+}
+
+.au-burger__bar {
+  width: 1.05rem;
+  height: 1px;
+  background: currentcolor;
+  transition: transform var(--duration-base) var(--ease-out-expo);
+}
+
+/* Each bar sits half the gap away from the middle, so closing the menu means
+   travelling exactly that far back before rotating. */
+.au-burger[aria-expanded="true"] .au-burger__bar:first-child {
+  transform: translateY(2.9px) rotate(45deg);
+}
+
+.au-burger[aria-expanded="true"] .au-burger__bar:last-child {
+  transform: translateY(-2.9px) rotate(-45deg);
+}
+
+@media (min-width: 68rem) {
+  .au-burger {
+    display: none;
+  }
+}
+
+/* --- Mega menu ---------------------------------------------------------------------
+   One panel per section, absolutely positioned under the bar. It is a light
+   sheet on paper: an index of the section, three columns wide, with one
+   featured item carrying a drawn plate.
+   -------------------------------------------------------------------------------- */
+
+.au-mega {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  z-index: var(--layer-mega);
+  background: var(--paper);
+  color: var(--ink);
+  border-bottom: 1px solid var(--rule);
+  box-shadow: 0 24px 60px rgb(11 13 16 / 0.1);
+}
+
+/* Hidden by the attribute when scripted, so a browser that never runs the
+   module simply never shows a panel it cannot close. */
+.au-mega[hidden] {
+  display: none;
+}
+
+.js .au-mega {
+  opacity: 0;
+  transform: translateY(-0.5rem);
+  transition:
+    opacity var(--duration-base) var(--ease-out-quart),
+    transform var(--duration-base) var(--ease-out-expo);
+}
+
+.js .au-mega.is-open {
+  opacity: 1;
+  transform: none;
+}
+
+.au-mega__inner {
+  width: var(--shell);
+  margin-inline: auto;
+  display: grid;
+  gap: var(--gutter);
+  padding-block: clamp(2rem, 1.2rem + 2.4vw, 3.25rem);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 68rem) {
+  .au-mega__inner {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.au-mega__col {
+  display: grid;
+  gap: var(--s-sm);
+  align-content: start;
+}
+
+.au-mega__heading {
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--grey);
+  padding-bottom: var(--s-2xs);
+  border-bottom: 1px solid var(--rule);
+}
+
+.au-mega__link {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--rule-soft);
+  transition: border-color var(--duration-fast) var(--ease-out-quart);
+}
+
+.au-mega__link:hover {
+  border-color: var(--accent);
+}
+
+.au-mega__name {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  font-size: var(--t-sm);
+  font-weight: 600;
+}
+
+.au-mega__name b {
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+}
+
+.au-mega__text {
+  font-size: var(--t-2xs);
+  line-height: 1.5;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--grey);
+}
+
+/* The featured card: the panel's one piece of image, so the menu is not a wall
+   of links. */
+.au-mega__feature {
+  display: grid;
+  gap: var(--s-xs);
+  align-content: start;
+  padding: var(--s-sm);
+  background: var(--white);
+  border: 1px solid var(--rule);
+}
+
+.au-mega__feature .au-plate {
+  aspect-ratio: 16 / 10;
+}
+
+.au-mega__feature-title {
+  font-size: var(--t-sm);
+  font-weight: 600;
+}
+
+/* --- Mobile panel --------------------------------------------------------------- */
+
+.au-panel {
+  position: fixed;
+  inset: var(--header-h) 0 0;
+  z-index: var(--layer-mega);
+  display: grid;
+  align-content: start;
+  gap: 0;
+  padding: var(--s-md) var(--gutter) var(--s-2xl);
+  background: var(--paper);
+  color: var(--ink);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  transform: translateY(-100%);
+  visibility: hidden;
+  transition:
+    transform var(--duration-slow) var(--ease-out-expo),
+    visibility 0s linear var(--duration-slow);
+}
+
+.au-panel.is-open {
+  transform: none;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+@media (min-width: 68rem) {
+  .au-panel {
+    display: none;
+  }
+}
+
+body.au-locked {
+  overflow: hidden;
+}
+
+.au-panel__group {
+  border-bottom: 1px solid var(--rule);
+}
+
+.au-panel__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-sm);
+  padding: 1.05rem 0;
+  font-size: var(--t-lg);
+  font-weight: 550;
+  letter-spacing: var(--track-snug);
+}
+
+.au-panel__link b {
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+}
+
+.au-panel__sub {
+  display: grid;
+  gap: 0.15rem;
+  padding-bottom: var(--s-sm);
+}
+
+.au-panel__sub a {
+  padding: 0.35rem 0 0.35rem var(--s-sm);
+  border-left: 1px solid var(--rule);
+  font-size: var(--t-sm);
+  color: var(--grey);
+}
+
+.au-panel__sub a:hover {
+  color: var(--ink);
+  border-color: var(--accent);
+}
+
+.au-panel__actions {
+  display: grid;
+  gap: var(--s-2xs);
+  margin-top: var(--s-lg);
+}

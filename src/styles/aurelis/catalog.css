@@ -1,0 +1,327 @@
+/* =============================================================================
+   Index pages — services, industries, products, projects, resources
+
+   One grid does all five. The cards are not cards: they are entries on a
+   hairline table, with a plate where the entry has an image and a number where
+   it has an order. Hovering moves the rule, not the block.
+   ========================================================================== */
+
+.au-index {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.au-entry {
+  display: grid;
+  gap: var(--s-sm) var(--gutter);
+  padding-block: clamp(1.5rem, 1rem + 2vw, 2.75rem);
+  border-bottom: 1px solid var(--rule);
+  grid-template-columns: minmax(0, 1fr);
+  transition: border-color var(--duration-base) var(--ease-out-quart);
+}
+
+.au-entry:hover {
+  border-bottom-color: var(--accent);
+}
+
+@media (min-width: 60rem) {
+  .au-entry {
+    grid-template-columns: 4rem minmax(0, 4fr) minmax(0, 5fr) auto;
+    align-items: start;
+  }
+}
+
+.au-entry__index {
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--track-label);
+  color: var(--accent);
+  padding-top: 0.5em;
+}
+
+.au-entry__title {
+  font-size: var(--t-2xl);
+  font-weight: 550;
+  letter-spacing: var(--track-tight);
+  transition: color var(--duration-base) var(--ease-out-quart);
+}
+
+.au-entry:hover .au-entry__title {
+  color: var(--accent);
+}
+
+.au-entry__kicker {
+  margin-top: 0.3rem;
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.au-entry__text {
+  color: var(--text-soft);
+  max-width: 52ch;
+}
+
+.au-entry__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: var(--s-sm);
+}
+
+.au-entry__go {
+  align-self: center;
+}
+
+/* --- Card grid, for products and resources ------------------------------------------
+   Products need a picture at a glance, so those two indexes use a grid instead
+   of the table. Still square, still hairline, still no shadow.
+   ------------------------------------------------------------------------------------ */
+
+.au-cards {
+  display: grid;
+  gap: var(--gutter);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+}
+
+.au-card {
+  display: grid;
+  align-content: start;
+  gap: var(--s-xs);
+  padding-bottom: var(--s-md);
+  border-bottom: 1px solid var(--rule);
+  transition: border-color var(--duration-base) var(--ease-out-quart);
+}
+
+.au-card:hover {
+  border-color: var(--accent);
+}
+
+.au-card__figure .au-plate {
+  aspect-ratio: 4 / 3;
+}
+
+.au-card__kicker {
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.au-card__title {
+  font-size: var(--t-lg);
+  font-weight: 600;
+  letter-spacing: var(--track-snug);
+}
+
+.au-card__text {
+  font-size: var(--t-sm);
+  color: var(--text-soft);
+}
+
+.au-card__foot {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-sm);
+  margin-top: var(--s-2xs);
+  padding-top: var(--s-2xs);
+  border-top: 1px solid var(--rule-soft);
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* --- Two-column editorial split, used by the company page ------------------------------- */
+
+.au-split {
+  display: grid;
+  gap: clamp(2rem, 1.4rem + 2.4vw, 3.5rem) var(--gutter);
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+}
+
+@media (min-width: 60rem) {
+  .au-split {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .au-split__figure {
+    grid-column: 1 / span 5;
+  }
+
+  .au-split__body {
+    grid-column: 7 / span 6;
+  }
+
+  .au-split--wide .au-split__figure {
+    grid-column: 1 / span 7;
+  }
+
+  .au-split--wide .au-split__body {
+    grid-column: 9 / span 4;
+  }
+}
+
+/* --- Timeline ---------------------------------------------------------------------------
+   The company's history. A year, a title, two lines — the same hairline table
+   as everywhere else, so a reader who has scrolled the whole portal is never
+   asked to learn a new pattern.
+   ---------------------------------------------------------------------------------------- */
+
+.au-timeline {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.au-milestone {
+  display: grid;
+  gap: 0.35rem var(--gutter);
+  padding-block: var(--s-md);
+  border-bottom: 1px solid var(--rule-soft);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 48rem) {
+  .au-milestone {
+    grid-template-columns: 7rem minmax(0, 5fr) minmax(0, 6fr);
+    align-items: baseline;
+  }
+}
+
+.au-milestone__year {
+  font-size: var(--t-lg);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+}
+
+.au-milestone__title {
+  font-size: var(--t-lg);
+  font-weight: 550;
+  letter-spacing: var(--track-snug);
+}
+
+.au-milestone__text {
+  font-size: var(--t-sm);
+  color: var(--text-soft);
+}
+
+/* --- Values -------------------------------------------------------------------------------- */
+
+.au-values {
+  display: grid;
+  gap: var(--gutter);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+}
+
+.au-value {
+  display: grid;
+  gap: var(--s-2xs);
+  align-content: start;
+  padding-top: var(--s-sm);
+  border-top: 1px solid var(--rule);
+}
+
+.au-value__title {
+  font-size: var(--t-lg);
+  font-weight: 600;
+}
+
+.au-value__text {
+  font-size: var(--t-sm);
+  color: var(--text-soft);
+}
+
+/* --- Governance table ------------------------------------------------------------------------ */
+
+.au-govern {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.au-govern > div {
+  display: grid;
+  gap: 0.25rem var(--gutter);
+  padding-block: var(--s-sm);
+  border-bottom: 1px solid var(--rule-soft);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 48rem) {
+  .au-govern > div {
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    align-items: baseline;
+  }
+}
+
+.au-govern dt {
+  font-size: var(--t-sm);
+  font-weight: 700;
+}
+
+.au-govern dd {
+  font-size: var(--t-sm);
+  color: var(--text-soft);
+}
+
+/* --- Article body ------------------------------------------------------------------------------ */
+
+.au-article {
+  max-width: 68ch;
+  margin-inline: auto;
+}
+
+.au-article > * + * {
+  margin-top: var(--s-md);
+}
+
+.au-article h2 {
+  margin-top: clamp(2rem, 1.4rem + 2.4vw, 3.25rem);
+  font-size: var(--t-xl);
+  font-weight: 600;
+}
+
+.au-article p {
+  color: var(--text-soft);
+}
+
+.au-article ul {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.au-article li {
+  padding: 0.65rem 0;
+  border-bottom: 1px solid var(--rule-soft);
+  font-size: var(--t-sm);
+  color: var(--text-soft);
+}
+
+.au-article li::before {
+  content: "";
+  display: inline-block;
+  width: 0.4rem;
+  height: 1px;
+  margin-right: 0.7rem;
+  vertical-align: 0.3em;
+  background: var(--accent);
+}
+
+.au-article blockquote {
+  padding-left: var(--s-md);
+  border-left: 2px solid var(--accent);
+  font-size: var(--t-lg);
+  font-weight: 500;
+  line-height: 1.45;
+}
