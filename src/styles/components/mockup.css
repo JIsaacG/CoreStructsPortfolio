@@ -146,9 +146,36 @@
   letter-spacing: 0.24em;
 }
 
+/* The corporate descriptor is three long words; it needs the tracking of a
+   caption rather than of a label to stay inside the card. */
+.mk-kicker--tight {
+  font-size: 6.5px;
+  letter-spacing: 0.15em;
+}
+
 .mk-wordmark {
   fill: rgb(255 255 255 / 0.92);
   font-family: var(--font-brand);
   font-size: 26px;
   letter-spacing: 0.05em;
+}
+
+/* The corporate demo does not set its name in Quantify — that face belongs to
+   CoreStruct. Its logotype is letterspaced Manrope, so the card sets it the
+   same way, for the same reason the bottle card uses the demo's own bottle. */
+.mk-wordmark--caps {
+  font-family: var(--font-sans);
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+/* A quoted figure: the institutional equivalent of the price on the menu card. */
+.mk-figure {
+  fill: var(--mk-accent);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
 }

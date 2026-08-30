@@ -103,7 +103,7 @@ table {
    offset keeps the ring clear of the 1px rules the layout is built from. */
 
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--accent-ink);
   outline-offset: 3px;
   border-radius: var(--radius);
 }
@@ -210,7 +210,7 @@ table {
 }
 
 .au-label__index {
-  color: var(--accent);
+  color: var(--accent-ink);
   font-variant-numeric: tabular-nums;
   letter-spacing: var(--track-label);
   white-space: nowrap;
@@ -328,8 +328,8 @@ table {
 }
 
 .au-btn:hover {
-  border-color: var(--accent);
-  color: var(--accent);
+  border-color: var(--accent-ink);
+  color: var(--accent-ink);
 }
 
 .au-btn--solid {
@@ -340,7 +340,7 @@ table {
 
 .au-btn--solid:hover {
   background: var(--accent);
-  border-color: var(--accent);
+  border-color: var(--accent-ink);
   color: var(--ink);
 }
 
@@ -352,19 +352,19 @@ table {
 
 .au-dark .au-btn--solid:hover {
   background: var(--accent);
-  border-color: var(--accent);
+  border-color: var(--accent-ink);
   color: var(--ink);
 }
 
 .au-btn--gold {
   background: var(--accent);
-  border-color: var(--accent);
+  border-color: var(--accent-ink);
   color: var(--ink);
 }
 
 .au-btn--gold:hover {
   background: transparent;
-  color: var(--accent);
+  color: var(--accent-ink);
 }
 
 .au-btn__arrow {
@@ -407,7 +407,7 @@ table {
 }
 
 .au-link:hover {
-  color: var(--accent);
+  color: var(--accent-ink);
 }
 
 .au-link:hover::before {
@@ -440,7 +440,7 @@ table {
 
 .au-tag--accent {
   border-color: rgb(var(--gold-rgb) / 0.5);
-  color: var(--accent);
+  color: var(--accent-ink);
 }
 
 /* --- Breadcrumbs ------------------------------------------------------------------ */
@@ -460,9 +460,9 @@ table {
 .au-crumbs li:not(:last-child)::after {
   content: "/";
   margin-left: 0.6rem;
-  color: var(--accent);
+  color: var(--accent-ink);
 }
 
 .au-crumbs a:hover {
-  color: var(--accent);
+  color: var(--accent-ink);
 }

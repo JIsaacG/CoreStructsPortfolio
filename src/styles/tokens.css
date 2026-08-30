@@ -23,6 +23,18 @@
   --product-label: #f4ece0;
   --product-ink: #2a1508;
 
+  /* --- Corporate accent ---------------------------------------------------- */
+  /* Not a CoreStruct colour either: the muted bronze the Aurelis demo is built
+     on, borrowed by the one portfolio card that opens an institutional portal.
+     Cool graphite against a site that is otherwise navy — the opposite move to
+     the amber above, and for the same reason: the card should look like the
+     page it opens. */
+  --corporate-bronze: #b89b5e;
+  --corporate-bronze-rgb: 184 155 94;
+  --corporate-graphite: #0b0d10;
+  --corporate-paper: #f5f4f0;
+  --corporate-ink: #101827;
+
   /* --- Surfaces ---------------------------------------------------------- */
   --background: #080b12;
   --surface: #0d1220;

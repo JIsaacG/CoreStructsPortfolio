@@ -103,7 +103,7 @@
 }
 
 .au-result__value--up {
-  color: var(--accent);
+  color: var(--accent-ink);
 }
 
 .au-result__label {
@@ -210,7 +210,7 @@
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   letter-spacing: var(--track-label);
-  color: var(--accent);
+  color: var(--accent-ink);
   padding-top: 0.4em;
 }
 
@@ -281,7 +281,7 @@
 }
 
 .au-related__item:hover {
-  border-color: var(--accent);
+  border-color: var(--accent-ink);
 }
 
 .au-related__kind {
@@ -289,7 +289,7 @@
   font-weight: 600;
   letter-spacing: var(--track-label);
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--accent-ink);
 }
 
 .au-related__title {

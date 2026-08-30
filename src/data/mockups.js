@@ -6,8 +6,10 @@
  * `src/styles/components/mockup.css`, which is what keeps eight different
  * interfaces looking like one family — and keeps stock photography out.
  *
- * One exception proves the rule: the menu card is a product shot, not an
- * interface, so it borrows the demo's bottle instead of the primitives.
+ * Two cards break the pattern, and both for the same reason: they open a demo
+ * that has a look of its own, so the card previews that look instead of showing
+ * a generic interface. The menu card borrows the Verbena bottle; the corporate
+ * card borrows the Aurelis elevation, logotype and figures.
  */
 
 import { SILHOUETTE } from "./bottle.js";
@@ -21,6 +23,16 @@ const textLines = (x, y, widths, { gap = 11, height = 5, className = "mk-text" }
     )
     .join("");
 
+/** A building mass with its curtain-wall grid: the corporate card's vocabulary. */
+const curtain = (x, y, w, h, cols, rows) => `
+  <rect class="mk-navy" x="${x}" y="${y}" width="${w}" height="${h}" rx="1"/>
+  <rect class="mk-line" style="fill:none" x="${x}" y="${y}" width="${w}" height="${h}" rx="1"/>
+  <g opacity="0.45"><path class="mk-line" d="${
+    Array.from({ length: cols - 1 }, (_, i) => `M${x + ((i + 1) * w) / cols} ${y}v${h}`).join("") +
+    Array.from({ length: rows - 1 }, (_, i) => `M${x} ${y + ((i + 1) * h) / rows}h${w}`).join("")
+  }"/></g>
+`;
+
 /** The browser/app chrome most of the mockups sit inside. */
 const window_ = (x, y, w, h, inner) => `
   <rect class="mk-window" x="${x}" y="${y}" width="${w}" height="${h}" rx="9"/>
@@ -32,34 +44,54 @@ const window_ = (x, y, w, h, inner) => `
 `;
 
 export const mockups = {
-  /* 01 — Corporate site: hero band, headline, call to action, three teasers. */
+  /* 01 — Corporate portal: the Aurelis demo, previewed the way the menu card
+     previews Verbena. A tower elevation drawn in the demo's own hairline
+     vocabulary, its logotype, and three of the figures its hero quotes. */
   corporate: `
+    <defs>
+      <radialGradient id="mk-plaza" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0%" stop-color="var(--mk-accent)" stop-opacity="0.22"/>
+        <stop offset="100%" stop-color="var(--mk-accent)" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+
+    <ellipse cx="100" cy="130" rx="96" ry="108" fill="url(#mk-plaza)"/>
+
     <g class="mk-float">
-      ${window_(
-        40, 28, 320, 194,
-        `
-        <rect class="mk-surface" x="196" y="34" width="60" height="9" rx="4.5"/>
-        <rect class="mk-surface" x="262" y="34" width="40" height="9" rx="4.5"/>
-        <rect class="mk-accent-soft" x="308" y="34" width="36" height="9" rx="4.5"/>
+      ${curtain(30, 122, 40, 90, 3, 6)}
+      ${curtain(134, 102, 40, 110, 3, 7)}
+      ${curtain(78, 62, 48, 150, 4, 12)}
+      ${curtain(52, 186, 100, 26, 8, 1)}
 
-        <rect class="mk-navy" x="56" y="66" width="288" height="76" rx="6"/>
-        <rect class="mk-gradient" x="56" y="66" width="288" height="2.5" rx="1.25"/>
-        ${textLines(72, 84, [148, 104], { gap: 15, height: 9 })}
-        <rect class="mk-accent" x="72" y="116" width="52" height="14" rx="7"/>
-        <rect class="mk-surface-strong" x="132" y="116" width="52" height="14" rx="7"/>
+      <rect class="mk-surface-strong" x="86" y="50" width="32" height="12" rx="1"/>
+      <path class="mk-line" d="M96 50v-9h8v9"/>
+      <path class="mk-line-accent" d="M100 41v-8"/>
 
-        <rect class="mk-surface" x="56" y="156" width="88" height="52" rx="5"/>
-        <rect class="mk-surface" x="156" y="156" width="88" height="52" rx="5"/>
-        <rect class="mk-surface" x="256" y="156" width="88" height="52" rx="5"/>
-        ${textLines(66, 170, [46], { height: 5 })}
-        ${textLines(166, 170, [52], { height: 5 })}
-        ${textLines(266, 170, [40], { height: 5 })}
-        ${textLines(66, 184, [62, 44], { gap: 9, height: 4 })}
-        ${textLines(166, 184, [58, 50], { gap: 9, height: 4 })}
-        ${textLines(266, 184, [64, 38], { gap: 9, height: 4 })}
-      `,
-      )}
+      <path class="mk-line" d="M78 96h48M78 150h48"/>
+      <rect class="mk-surface-strong" x="94" y="196" width="16" height="16" rx="1"/>
     </g>
+
+    <path class="mk-line" d="M12 212h176"/>
+    <g opacity="0.4">
+      <path class="mk-line" d="M12 219h176M12 226h176M12 233h176"/>
+    </g>
+
+    <g transform="translate(196 56)">
+      <path class="mk-line-accent" d="M2 20 12 2l10 18M6 15.5h12"/>
+    </g>
+    <text class="mk-wordmark mk-wordmark--caps" x="226" y="74">AURELIS</text>
+    <text class="mk-kicker mk-kicker--tight" x="196" y="92">INGENIERÍA · TECNOLOGÍA · OPERACIÓN</text>
+    <rect class="mk-accent" x="196" y="102" width="32" height="2.5" rx="1.25"/>
+
+    ${[
+      ["25+", 132, 62],
+      ["12", 162, 48],
+      ["350+", 192, 70],
+    ].map(([value, y, label]) => `
+      <text class="mk-figure" x="240" y="${y}" text-anchor="end">${value}</text>
+      <path class="mk-line-soft" d="M250 ${y - 5}h${108 - label}"/>
+      <rect class="mk-text-strong" x="${366 - label}" y="${y - 9}" width="${label}" height="5" rx="2.5"/>
+    `).join("")}
   `,
 
   /* 02 — Platform: an app shell with a second window layered behind it. */

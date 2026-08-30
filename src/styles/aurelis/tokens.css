@@ -18,9 +18,15 @@
   --ink-navy: #101827;       /* corporate navy: the second dark surface       */
   --paper: #f5f4f0;          /* warm white: the page                          */
   --white: #ffffff;
-  --grey: #737982;           /* secondary text                                */
+  --grey: #737982;           /* the brand grey, for rules and inert marks     */
   --grey-line: #e7e7e5;      /* hairlines and inert fills on paper            */
   --gold: #b89b5e;           /* the one accent: indices, rules, hover, states */
+  /* The same bronze, darkened until it passes WCAG AA as text on paper.
+     #b89b5e measures 2.42:1 against #f5f4f0 — fine as a hairline, unreadable as
+     a word — so anything that COLOURS TEXT or draws a state indicator on a light
+     surface uses this instead, at 4.8:1. On graphite the light gold is already
+     7.3:1 and `.au-dark` points this token back at it. */
+  --gold-ink: #856828;
 
   --ink-rgb: 11 13 16;
   --navy-rgb: 16 24 39;
@@ -35,11 +41,14 @@
   --surface-sunken: #edece7;
   --text: var(--ink);
   --text-soft: #3d434c;
-  --text-muted: var(--grey);
+  /* A notch darker than the brand grey: #737982 is 3.99:1 on paper, which reads
+     fine and fails AA. This is 4.9:1 and looks the same at a glance. */
+  --text-muted: #656a73;
   --rule: rgb(11 13 16 / 0.12);
   --rule-soft: rgb(11 13 16 / 0.07);
   --rule-strong: rgb(11 13 16 / 0.26);
   --accent: var(--gold);
+  --accent-ink: var(--gold-ink);
   --accent-rgb: var(--gold-rgb);
 
   /* --- Typography ---------------------------------------------------------
@@ -144,6 +153,9 @@
   --rule: rgb(255 255 255 / 0.14);
   --rule-soft: rgb(255 255 255 / 0.08);
   --rule-strong: rgb(255 255 255 / 0.3);
+  /* On graphite the light bronze is already 7.3:1, so accent text goes back to
+     the real brand colour. */
+  --accent-ink: var(--gold);
   background-color: var(--page);
   color: var(--text);
 }

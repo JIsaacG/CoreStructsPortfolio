@@ -108,9 +108,11 @@ const SIZE_CLASS = {
   wide: "project-card--wide",
 };
 
-/** Opt-in looks. Only one card takes one, and only because it sells a product. */
+/** Opt-in looks. A card takes one only when it opens a demo with a look of its
+    own, so the card can preview the page instead of describing it. */
 const VARIANT_CLASS = {
   brand: "project-card--brand",
+  corporate: "project-card--corporate",
 };
 
 function renderProject(project) {

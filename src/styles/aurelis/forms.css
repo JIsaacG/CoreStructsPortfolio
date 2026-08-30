@@ -58,7 +58,7 @@
 }
 
 .au-field__label .au-req {
-  color: var(--accent);
+  color: var(--accent-ink);
 }
 
 .au-field__control {
@@ -100,7 +100,7 @@ select.au-field__control {
 
 .au-field__control:focus {
   outline: none;
-  border-color: var(--accent);
+  border-color: var(--accent-ink);
   background: var(--white);
   box-shadow: 0 0 0 3px rgb(var(--gold-rgb) / 0.16);
 }
@@ -152,7 +152,7 @@ select.au-field__control {
 }
 
 .au-check a:hover {
-  color: var(--accent);
+  color: var(--accent-ink);
 }
 
 .au-check[data-state="error"] {
@@ -195,7 +195,7 @@ select.au-field__control {
 }
 
 .au-form__status[data-state="sending"] {
-  color: var(--accent);
+  color: var(--accent-ink);
 }
 
 .au-form__status[data-state="success"] {
@@ -236,7 +236,7 @@ select.au-field__control {
 }
 
 a.au-channel__value:hover {
-  color: var(--accent);
+  color: var(--accent-ink);
 }
 
 .au-channel__note {
@@ -287,7 +287,7 @@ a.au-channel__value:hover {
 }
 
 .au-download:hover {
-  border-color: var(--accent);
+  border-color: var(--accent-ink);
 }
 
 .au-download__name {
@@ -341,7 +341,7 @@ a.au-channel__value:hover {
   height: 0.85rem;
   margin-top: 0.35rem;
   background: currentcolor;
-  color: var(--accent);
+  color: var(--accent-ink);
   transition: transform var(--duration-base) var(--ease-out-expo);
   clip-path: polygon(45% 0, 55% 0, 55% 45%, 100% 45%, 100% 55%, 55% 55%, 55% 100%, 45% 100%, 45% 55%, 0 55%, 0 45%, 45% 45%);
 }

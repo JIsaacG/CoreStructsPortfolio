@@ -136,7 +136,7 @@
 }
 
 .au-figure__caption b {
-  color: var(--accent);
+  color: var(--accent-ink);
   font-variant-numeric: tabular-nums;
 }
 

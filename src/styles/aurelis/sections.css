@@ -106,7 +106,7 @@
   font-weight: 600;
   vertical-align: super;
   letter-spacing: 0;
-  color: var(--accent);
+  color: var(--accent-ink);
 }
 
 .au-metric__label {
@@ -172,7 +172,7 @@
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   letter-spacing: var(--track-label);
-  color: var(--accent);
+  color: var(--accent-ink);
 }
 
 .au-capability__title {
@@ -244,7 +244,7 @@
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   letter-spacing: var(--track-label);
-  color: var(--accent);
+  color: var(--accent-ink);
 }
 
 .au-pillar__title {
@@ -369,7 +369,7 @@
 
 .au-step.is-reached::before {
   background: var(--accent);
-  border-color: var(--accent);
+  border-color: var(--accent-ink);
 }
 
 .au-step__index {
@@ -382,7 +382,7 @@
 }
 
 .au-step.is-reached .au-step__index {
-  color: var(--accent);
+  color: var(--accent-ink);
 }
 
 .au-step__title {
@@ -438,7 +438,7 @@
   font-weight: 600;
   letter-spacing: var(--track-label);
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--accent-ink);
 }
 
 .au-cert__text {
@@ -517,7 +517,7 @@
   font-weight: 600;
   letter-spacing: var(--track-label);
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--accent-ink);
 }
 
 /* --- Leadership -------------------------------------------------------------------------
@@ -549,7 +549,7 @@
   font-weight: 600;
   letter-spacing: var(--track-label);
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--accent-ink);
 }
 
 .au-person__text {
@@ -622,7 +622,7 @@
 }
 
 .au-insight__kind {
-  color: var(--accent);
+  color: var(--accent-ink);
 }
 
 .au-insight__title {
@@ -633,7 +633,7 @@
 }
 
 .au-insight:hover .au-insight__title {
-  color: var(--accent);
+  color: var(--accent-ink);
 }
 
 .au-insight__text {
