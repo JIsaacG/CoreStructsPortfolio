@@ -121,72 +121,104 @@
 }
 
 /* --- Heartbeat pulse -------------------------------------------------------
-   Reserved for the "Hablemos" CTAs: a double blue beat ("lub-dub") followed by
-   a rest, so the call to action reads as a pulse and not as a strobe.
+   Reserved for the "Hablemos" CTAs: a double beat ("lub-dub") then a rest.
 
-   Each beat has to be visible at its peak, so the rings hold a real spread
-   while they still have alpha and only fade once they are wide — a ring that
-   starts at `spread: 0` with full opacity is a zero-size ring, i.e. nothing.
-   `overflow: hidden` clips children, not `box-shadow`, so the rings survive
-   the button's own clipping.
+   Three things fire together, because a blue halo alone is nearly invisible
+   around a button that is already blue: the halo swells, `brightness()` lifts
+   the button itself, and a scale gives the beat a body. Rest sits deliberately
+   dim so the peak has somewhere to travel from — the earlier version pulsed
+   0.35 -> 0.63 alpha and read as noise.
 
-   The resting glow lives on the rule itself rather than inside the keyframes:
-   it is what the button falls back to when the animation is suppressed under
-   reduced motion, so the CTA still stands out without moving.
+   Timing is per keyframe rather than one curve for the whole cycle: a heart
+   contracts fast and releases slow, so the rise uses a snappy curve and the
+   fall a soft one. `overflow: hidden` clips children, not `box-shadow`.
    -------------------------------------------------------------------------- */
 
 .button--pulse {
+  --pulse-rgb: var(--brand-secondary-rgb);
   box-shadow:
-    0 0 0 0 rgb(var(--brand-secondary-rgb) / 0),
-    0 0 22px 2px rgb(var(--brand-secondary-rgb) / 0.35);
-  animation: button-heartbeat 2s var(--ease-out-quart) infinite;
+    0 0 0 0 rgb(var(--pulse-rgb) / 0),
+    0 0 14px 0 rgb(var(--pulse-rgb) / 0.18);
+  animation: button-heartbeat 1.6s linear infinite;
 }
 
 /* The pulse hands the button back to its own hover glow: once the pointer is
-   on it, the CTA no longer needs to ask for attention. */
+   on it, the CTA has done its job and no longer needs to ask for attention. */
 .button--pulse:hover,
 .button--pulse:focus-visible {
   animation: none;
 }
 
 @keyframes button-heartbeat {
+  /* lub — the big beat */
   0% {
     transform: scale(1);
+    filter: brightness(1);
+    border-color: rgb(var(--pulse-rgb) / 0.25);
     box-shadow:
-      0 0 0 0 rgb(var(--brand-secondary-rgb) / 0.5),
-      0 0 20px 1px rgb(var(--brand-secondary-rgb) / 0.3);
+      0 0 0 0 rgb(var(--pulse-rgb) / 0.5),
+      0 0 14px 0 rgb(var(--pulse-rgb) / 0.18);
+    animation-timing-function: cubic-bezier(0.2, 0, 0.2, 1);
   }
-  /* lub */
-  9% {
+  7% {
+    transform: scale(1.07);
+    filter: brightness(1.4);
+    border-color: rgb(var(--pulse-rgb) / 1);
+    box-shadow:
+      0 0 0 10px rgb(var(--pulse-rgb) / 0.45),
+      0 0 55px 12px rgb(var(--pulse-rgb) / 0.9);
+    animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
+  }
+  20% {
+    transform: scale(1);
+    filter: brightness(1);
+    border-color: rgb(var(--pulse-rgb) / 0.25);
+    box-shadow:
+      0 0 0 26px rgb(var(--pulse-rgb) / 0),
+      0 0 14px 0 rgb(var(--pulse-rgb) / 0.18);
+    animation-timing-function: cubic-bezier(0.2, 0, 0.2, 1);
+  }
+  /* dub — the smaller echo */
+  27% {
     transform: scale(1.045);
+    filter: brightness(1.24);
+    border-color: rgb(var(--pulse-rgb) / 0.8);
     box-shadow:
-      0 0 0 9px rgb(var(--brand-secondary-rgb) / 0.32),
-      0 0 42px 8px rgb(var(--brand-secondary-rgb) / 0.65);
+      0 0 0 7px rgb(var(--pulse-rgb) / 0.35),
+      0 0 42px 8px rgb(var(--pulse-rgb) / 0.7);
+    animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
   }
-  22% {
+  44% {
     transform: scale(1);
+    filter: brightness(1);
+    border-color: rgb(var(--pulse-rgb) / 0.25);
     box-shadow:
-      0 0 0 20px rgb(var(--brand-secondary-rgb) / 0),
-      0 0 22px 2px rgb(var(--brand-secondary-rgb) / 0.3);
-  }
-  /* dub */
-  31% {
-    transform: scale(1.03);
-    box-shadow:
-      0 0 0 7px rgb(var(--brand-secondary-rgb) / 0.26),
-      0 0 34px 6px rgb(var(--brand-secondary-rgb) / 0.5);
-  }
-  46% {
-    transform: scale(1);
-    box-shadow:
-      0 0 0 18px rgb(var(--brand-secondary-rgb) / 0),
-      0 0 22px 2px rgb(var(--brand-secondary-rgb) / 0.35);
+      0 0 0 24px rgb(var(--pulse-rgb) / 0),
+      0 0 14px 0 rgb(var(--pulse-rgb) / 0.18);
   }
   /* rest */
   100% {
     transform: scale(1);
+    filter: brightness(1);
+    border-color: rgb(var(--pulse-rgb) / 0.25);
     box-shadow:
-      0 0 0 0 rgb(var(--brand-secondary-rgb) / 0),
-      0 0 22px 2px rgb(var(--brand-secondary-rgb) / 0.35);
+      0 0 0 0 rgb(var(--pulse-rgb) / 0),
+      0 0 14px 0 rgb(var(--pulse-rgb) / 0.18);
+  }
+}
+
+/* The CTA pulse is the one animation on this page that survives reduced
+   motion: it is not decoration on top of content but the signal itself, and a
+   frozen "Hablemos" signals nothing. Same exemption the demo stage takes in
+   `demo/stage.css`, and narrow enough that the rest of the page still honours
+   the preference — nothing else here moves. */
+@media (prefers-reduced-motion: reduce) {
+  .button--pulse {
+    animation: button-heartbeat 1.6s linear infinite !important;
+  }
+
+  .button--pulse:hover,
+  .button--pulse:focus-visible {
+    animation: none !important;
   }
 }
