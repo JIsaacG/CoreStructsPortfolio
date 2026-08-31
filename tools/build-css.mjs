@@ -26,6 +26,10 @@ const BUNDLES = [
   /* The government portal disagrees with all three: light, square, serif, and
      carrying a statistics interface none of the others need. */
   { entry: join(ROOT, "src", "styles", "cede.css"), output: join(ROOT, "dist", "cede.css") },
+  /* The automation demo is a working interface rather than a site: a workflow
+     engine, a register and a generated document, and none of the four bundles
+     above has a component it could borrow. */
+  { entry: join(ROOT, "src", "styles", "flujo.css"), output: join(ROOT, "dist", "flujo.css") },
 ];
 
 const IMPORT = /@import\s+(?:url\()?["']([^"']+)["']\)?\s*;/g;

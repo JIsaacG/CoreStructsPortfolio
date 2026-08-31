@@ -1,0 +1,137 @@
+/* =============================================================================
+   Flujo — stylesheet entry point
+
+   The administrative automation demo ships its own bundle and shares nothing at
+   runtime with the portfolio or the other demos. It is a working interface
+   rather than a marketing site: light, square, ruled, tabular, and built around
+   a handful of primitives plus the workflow components that are the actual
+   subject.
+
+   `npm run build:css` flattens this into `dist/flujo.css`.
+   ========================================================================== */
+
+@import "./flujo/tokens.css";
+@import "./flujo/fonts.css";
+@import "./flujo/base.css";
+@import "./flujo/shell.css";
+@import "./flujo/workflow.css";
+
+/* -----------------------------------------------------------------------------
+   Reduced motion
+
+   Everything decorative stops: hovers, entrances, the smooth scroll, the tour
+   bar sliding in. What does NOT stop is the handful of indicators that would
+   otherwise freeze mid-state and read as a broken page — a sweeping progress
+   bar stuck at 40 % of its track, a spinner stopped at eleven o'clock — and the
+   two transitions that carry the step-by-step meaning of the sequence.
+
+   The sequence itself remains legible without any of it: its pacing is driven
+   by the script, so under this preference the stages still arrive one at a
+   time, they simply arrive rather than slide.
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .wf-progress--indeterminate .wf-progress__fill {
+    animation-duration: 1.15s !important;
+    animation-iteration-count: infinite !important;
+  }
+
+  .wf-btn--busy::after {
+    animation-duration: 0.7s !important;
+    animation-iteration-count: infinite !important;
+  }
+
+  .wf-step,
+  .wf-check {
+    transition-duration: var(--duration) !important;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Print
+
+   Someone will print the generated document, and possibly the audit trail, to
+   take into a meeting. Chrome comes off, the sheet keeps its rules, and nothing
+   interactive survives onto paper as a control nobody can press.
+   -------------------------------------------------------------------------- */
+
+@media print {
+  .fx-header,
+  .fx-badge,
+  .fx-toolbar,
+  .fx-toast,
+  .wf-guide,
+  .wf-approval__actions,
+  .wf-tabs,
+  .fx-cta {
+    display: none !important;
+  }
+
+  body {
+    background: #ffffff;
+  }
+
+  .fx-hero,
+  .fx-footer,
+  .fx-section--dark {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .fx-hero__title,
+  .fx-hero__lead {
+    color: #000000 !important;
+  }
+
+  .wf-doc,
+  .wf-panel,
+  .wf-record,
+  .wf-audit__row {
+    break-inside: avoid;
+  }
+
+  .wf-tabpanel[hidden] {
+    display: block !important;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Forced colours
+
+   Windows high-contrast replaces the palette wholesale. The components that
+   carry meaning in a fill rather than in text are the ones that break, so they
+   get an explicit border back.
+   -------------------------------------------------------------------------- */
+
+@media (forced-colors: active) {
+  .wf-bar__fill,
+  .wf-progress__fill {
+    forced-color-adjust: none;
+    background: Highlight;
+  }
+
+  .fx-btn,
+  .wf-tab,
+  .wf-process,
+  .wf-guide__btn {
+    border: 1px solid ButtonText;
+  }
+
+  .wf-step__mark,
+  .wf-track__dot,
+  .wf-audit__dot {
+    border: 1px solid CanvasText;
+  }
+}

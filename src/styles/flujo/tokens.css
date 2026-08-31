@@ -1,0 +1,108 @@
+/* =============================================================================
+   Flujo — design tokens
+
+   The palette of an administrative system, not of a SaaS dashboard: one
+   institutional blue, a paper-white ground, four reserved status colours and
+   nothing else. Every value below is a token; no file in this bundle writes a
+   colour literal.
+
+   The demo is deliberately square and ruled rather than rounded and shadowed.
+   A screen that records who authorised what, and when, should look like a
+   register — because that is what it is.
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  /* --- Institutional blue ------------------------------------------------ */
+  --navy-900: #071e4a;   /* the deepest ground: hero, top bar, footer        */
+  --navy-800: #092b70;   /* dark surfaces, pressed states                    */
+  --navy: #0d3b99;       /* THE brand colour: links, primary marks, actions  */
+  --navy-600: #315fac;   /* secondary marks, hover on dark                   */
+  --navy-200: #c3d4ee;   /* rules on tinted surfaces                         */
+  --navy-100: #eaf0fa;   /* tinted surfaces, selected rows                   */
+
+  /* --- Neutrals ---------------------------------------------------------- */
+  --white: #ffffff;
+  --page: #f6f8fc;
+  --surface: var(--white);
+  --surface-sunken: #eff3f9;
+  --border: #dce3ee;
+  --border-strong: #bcc7d8;
+  --ink: #172033;
+  --ink-soft: #3b475c;
+  --ink-muted: #5d6878;  /* 4.9:1 on --page                                  */
+
+  /* --- Status -------------------------------------------------------------
+     Reserved meanings, never decorative, and never the only channel: every
+     state in this interface ships with a word and an icon as well as a hue.
+     All four clear 6:1 as text on the page. */
+  --ok: #0f6b3f;
+  --info: var(--navy);
+  --warn: #8a5200;
+  --bad: #a8261e;
+  --ok-bg: #e8f3ec;
+  --info-bg: var(--navy-100);
+  --warn-bg: #fbf1e3;
+  --bad-bg: #fbeceb;
+
+  /* --- Typography ---------------------------------------------------------
+     Source Serif 4 for what the system *states* — page titles, the document it
+     generates. IBM Plex Sans for everything the system *does* — navigation,
+     tables, forms, and every figure. */
+  --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
+  --t-2xs: 0.6875rem;
+  --t-xs: 0.75rem;
+  --t-sm: 0.8125rem;
+  --t-base: 0.9375rem;
+  --t-md: 1rem;
+  --t-lg: 1.125rem;
+  --t-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --t-2xl: clamp(1.5rem, 1.28rem + 1vw, 2.125rem);
+  --t-3xl: clamp(1.875rem, 1.5rem + 1.7vw, 2.875rem);
+  --t-4xl: clamp(2.25rem, 1.6rem + 2.9vw, 3.75rem);
+  --t-figure: clamp(2rem, 1.5rem + 2.2vw, 3.25rem);
+
+  --lead-title: 1.18;
+  --lead-body: 1.62;
+  --track-label: 0.14em;
+  --track-caps: 0.08em;
+
+  /* --- Shape --------------------------------------------------------------
+     Nothing in this interface exceeds 10px, and most of it sits at 2–3. */
+  --r-xs: 2px;
+  --r-sm: 3px;
+  --r-md: 6px;
+  --r-lg: 10px;
+
+  /* --- Rhythm ------------------------------------------------------------ */
+  --s-3xs: 0.25rem;
+  --s-2xs: 0.5rem;
+  --s-xs: 0.75rem;
+  --s-sm: 1rem;
+  --s-md: 1.5rem;
+  --s-lg: 2rem;
+  --s-xl: 3rem;
+  --s-2xl: 4rem;
+  --s-3xl: clamp(3.5rem, 2rem + 6vw, 6rem);
+
+  --shell: 78rem;
+  --shell-narrow: 46rem;
+  --gutter: clamp(1rem, 0.4rem + 2.4vw, 2.5rem);
+
+  /* --- Elevation ----------------------------------------------------------
+     Two shadows in the whole system, both for things that float above the page
+     by definition: the guided-tour bar and the dialog. Nothing else is raised. */
+  --shadow-menu: 0 16px 40px rgb(7 30 74 / 0.13), 0 2px 6px rgb(7 30 74 / 0.08);
+
+  /* --- Motion ------------------------------------------------------------- */
+  --duration-fast: 160ms;
+  --duration: 300ms;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out: cubic-bezier(0.33, 1, 0.68, 1);
+
+  --layer-header: 60;
+  --layer-menu: 70;
+}

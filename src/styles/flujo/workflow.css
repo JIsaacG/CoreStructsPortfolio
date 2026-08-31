@@ -1,0 +1,2104 @@
+/* =============================================================================
+   Flujo — the workflow components
+
+   Everything the subject of this demo needs and a normal site does not: a
+   process chooser, a running automation sequence, a request track, an approval
+   panel, the record an approval leaves, a generated document, a simulated
+   notification, an audit trail, an SLA badge and a rule diagram.
+
+   No component here introduces a colour, a radius or a type size of its own.
+   Every value is a token from `flujo/tokens.css`, which is what keeps a screen
+   about purchase orders looking like one system rather than eleven widgets.
+   ========================================================================== */
+
+/* --- The two labels the fiction is carried by -------------------------------- */
+
+.wf-flag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.2rem 0.55rem;
+  border: 1px solid var(--navy-200);
+  border-radius: var(--r-xs);
+  background: var(--navy-100);
+  color: var(--navy);
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.wf-flag--onDark {
+  border-color: rgb(255 255 255 / 0.4);
+  background: rgb(255 255 255 / 0.12);
+  color: #ffffff;
+}
+
+.wf-flag::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* For the actions that only ever pretend: the mail that is never sent, the
+   file that is never written, the extraction that reads nothing. */
+.wf-sim {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.1rem 0.4rem;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--r-xs);
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  white-space: nowrap;
+}
+
+/* -----------------------------------------------------------------------------
+   01 · The process chooser
+
+   An editorial grid, not a wall of cards: a number, a rule, a line icon and two
+   lines of text. The rules are the grid's own background showing through a 1px
+   gap, so a row of three and a row of two never disagree about where they are.
+   -------------------------------------------------------------------------- */
+
+.wf-processes {
+  display: grid;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  overflow: hidden;
+}
+
+@media (min-width: 40rem) {
+  .wf-processes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 62rem) {
+  .wf-processes { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.wf-process {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-content: start;
+  gap: 0.35rem var(--s-sm);
+  min-height: 100%;
+  padding: var(--s-md);
+  border: 0;
+  background: var(--surface);
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+/* The navy edge that says "this is the one you are on", drawn as an inset
+   shadow rather than a border so selecting a tile never shifts its contents. */
+.wf-process::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 3px 0 0 transparent;
+  transition: box-shadow var(--duration-fast) var(--ease-out);
+  pointer-events: none;
+}
+
+.wf-process:hover { background: var(--navy-100); }
+
+.wf-process:focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: -3px;
+}
+
+.wf-process[aria-pressed="true"] { background: var(--navy-100); }
+
+.wf-process[aria-pressed="true"]::before { box-shadow: inset 3px 0 0 var(--navy); }
+
+.wf-process__index {
+  grid-row: 1 / 3;
+  margin: 0;
+  font-size: var(--t-sm);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--track-caps);
+  color: var(--navy);
+}
+
+.wf-process__title {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin: 0;
+  font-size: var(--t-md);
+  font-weight: 600;
+  color: var(--navy-900);
+}
+
+.wf-process__title .fx-icon { color: var(--navy); opacity: 0.75; }
+
+.wf-process__text {
+  margin: 0;
+  font-size: var(--t-sm);
+  line-height: 1.55;
+  color: var(--ink-muted);
+}
+
+.wf-process__state {
+  grid-column: 2;
+  margin: 0.35rem 0 0;
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.wf-process[data-full] .wf-process__state { color: var(--navy); }
+
+/* -----------------------------------------------------------------------------
+   The panel
+
+   Form, processing sequence and follow-up all live in the same bordered
+   surface, so the visitor sees one object changing state rather than three
+   screens replacing one another.
+   -------------------------------------------------------------------------- */
+
+.wf-panel {
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+}
+
+.wf-panel__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-xs);
+  padding: var(--s-md) var(--s-lg);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-sunken);
+}
+
+.wf-panel__title {
+  margin: 0;
+  font-size: var(--t-md);
+  font-weight: 600;
+  color: var(--navy-900);
+}
+
+.wf-panel__meta {
+  margin: 0.15rem 0 0;
+  font-size: var(--t-xs);
+  color: var(--ink-muted);
+}
+
+.wf-panel__body { padding: var(--s-lg); }
+
+@media (max-width: 40rem) {
+  .wf-panel__head,
+  .wf-panel__body { padding-inline: var(--s-md); }
+}
+
+/* -----------------------------------------------------------------------------
+   The capture assistant
+
+   The only place the module uses anything resembling AI, and deliberately the
+   smallest component on the page: a file, a scan line, four extracted fields
+   and a button that fills the form. Labelled as a simulation twice, because it
+   is one.
+   -------------------------------------------------------------------------- */
+
+.wf-capture {
+  display: grid;
+  gap: var(--s-sm);
+  padding: var(--s-md);
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--r-sm);
+  background: var(--surface-sunken);
+}
+
+.wf-capture__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-2xs);
+}
+
+.wf-capture__label {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin: 0;
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--navy-900);
+}
+
+.wf-capture__label .fx-icon { color: var(--navy); }
+
+.wf-file {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--s-xs);
+  padding: 0.6rem var(--s-sm);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xs);
+  background: var(--surface);
+}
+
+.wf-file__mark {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2.25rem;
+  border: 1px solid var(--navy-200);
+  border-radius: var(--r-xs);
+  background: var(--navy-100);
+  color: var(--navy);
+  font-size: var(--t-2xs);
+  font-weight: 700;
+}
+
+.wf-file__name {
+  margin: 0;
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.wf-file__meta {
+  margin: 0;
+  font-size: var(--t-xs);
+  color: var(--ink-muted);
+}
+
+/* The scan line, which doubles as the progress pattern the run sequence uses. */
+.wf-progress {
+  position: relative;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--navy-200);
+  overflow: hidden;
+}
+
+.wf-progress__fill {
+  display: block;
+  height: 100%;
+  width: 0;
+  border-radius: inherit;
+  background: var(--navy);
+  transition: width var(--duration) linear;
+}
+
+.wf-progress--indeterminate .wf-progress__fill {
+  width: 40%;
+  animation: wf-sweep 1.15s var(--ease-out) infinite;
+}
+
+@keyframes wf-sweep {
+  0% { transform: translateX(-110%); }
+  100% { transform: translateX(260%); }
+}
+
+.wf-capture__fields {
+  display: grid;
+  gap: 1px;
+  margin: 0;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xs);
+  overflow: hidden;
+}
+
+@media (min-width: 44rem) {
+  .wf-capture__fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.wf-capture__fields > div {
+  padding: 0.55rem var(--s-sm);
+  background: var(--surface);
+}
+
+.wf-capture__fields dt {
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.wf-capture__fields dd {
+  margin: 0.15rem 0 0;
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* -----------------------------------------------------------------------------
+   The form
+
+   Seven states, as the brief asks: normal, focus, valid, error, disabled,
+   loading and success. The error is a sentence beside the field, never a red
+   border on its own — a colour is not a message.
+   -------------------------------------------------------------------------- */
+
+.wf-form { display: grid; gap: var(--s-md); }
+
+.wf-form fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.wf-form fieldset[disabled] { opacity: 0.55; }
+
+.wf-form__grid {
+  display: grid;
+  gap: var(--s-sm);
+}
+
+@media (min-width: 46rem) {
+  .wf-form__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.wf-form__field { display: grid; gap: 4px; align-content: start; }
+
+.wf-form__field--wide { grid-column: 1 / -1; }
+
+.wf-form__labelrow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-2xs);
+}
+
+.wf-form__label {
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.wf-form__label .wf-req { color: var(--bad); }
+
+.wf-form__hint {
+  font-size: var(--t-xs);
+  color: var(--ink-muted);
+}
+
+.wf-form__error {
+  display: none;
+  align-items: center;
+  gap: 0.35em;
+  font-size: var(--t-xs);
+  font-weight: 600;
+  color: var(--bad);
+}
+
+.wf-form__field[data-invalid] .wf-form__error { display: flex; }
+
+.wf-form__field[data-invalid] .fx-input,
+.wf-form__field[data-invalid] .fx-select select {
+  border-color: var(--bad);
+  background: var(--bad-bg);
+}
+
+.wf-form__field[data-valid] .fx-input,
+.wf-form__field[data-valid] .fx-select select {
+  border-color: var(--ok);
+}
+
+.wf-ok {
+  display: none;
+  align-items: center;
+  gap: 0.3em;
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  color: var(--ok);
+}
+
+.wf-form__field[data-valid] .wf-ok { display: inline-flex; }
+
+.wf-input--locked {
+  background: var(--surface-sunken);
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.wf-form__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-sm);
+  padding-top: var(--s-sm);
+  border-top: 1px solid var(--border);
+}
+
+.wf-btn--busy {
+  position: relative;
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+.wf-btn--busy::after {
+  content: "";
+  width: 0.85em;
+  height: 0.85em;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: wf-spin 0.7s linear infinite;
+}
+
+@keyframes wf-spin {
+  to { transform: rotate(1turn); }
+}
+
+/* -----------------------------------------------------------------------------
+   The processing sequence
+
+   Five stages appearing one after another over about seven seconds. Each is a
+   row with a marker, a heading and its own checklist; the marker is the only
+   thing that moves, and it moves ten pixels.
+   -------------------------------------------------------------------------- */
+
+.wf-run { display: grid; gap: var(--s-md); }
+
+.wf-run__head { display: grid; gap: var(--s-2xs); }
+
+.wf-run__title {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: var(--t-2xl);
+  font-weight: 600;
+  color: var(--navy-900);
+}
+
+.wf-run__steps {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wf-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.75rem minmax(0, 1fr);
+  gap: var(--s-sm);
+  padding: var(--s-sm) 0;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity var(--duration) var(--ease-out), transform var(--duration) var(--ease-out);
+}
+
+.wf-step + .wf-step { border-top: 1px solid var(--border); }
+
+.wf-step[data-shown] {
+  opacity: 1;
+  transform: none;
+}
+
+/* The rail joining the markers stops at the last step rather than running off
+   the bottom of the list. */
+.wf-step:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  left: 0.8125rem;
+  top: 2.35rem;
+  bottom: -0.35rem;
+  width: 1px;
+  background: var(--border);
+}
+
+.wf-step__mark {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--ink-muted);
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.wf-step[data-state="running"] .wf-step__mark {
+  border-color: var(--navy);
+  color: var(--navy);
+}
+
+.wf-step[data-state="running"] .wf-step__mark::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border: 1px solid var(--navy);
+  border-radius: 50%;
+  opacity: 0;
+  animation: wf-pulse 1.4s var(--ease-out) infinite;
+}
+
+@keyframes wf-pulse {
+  0% { opacity: 0.55; transform: scale(0.85); }
+  100% { opacity: 0; transform: scale(1.18); }
+}
+
+.wf-step[data-state="done"] .wf-step__mark {
+  border-color: var(--ok);
+  background: var(--ok-bg);
+  color: var(--ok);
+}
+
+.wf-step__body {
+  display: grid;
+  gap: var(--s-2xs);
+  align-content: start;
+}
+
+.wf-step__title {
+  margin: 0;
+  font-size: var(--t-md);
+  font-weight: 600;
+  color: var(--navy-900);
+}
+
+/* The per-stage checklist: each line arrives on its own, already ticked. */
+.wf-checks {
+  display: grid;
+  gap: 0.3rem;
+  margin: 0.2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wf-check {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 0.5em;
+  font-size: var(--t-sm);
+  color: var(--ink-soft);
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity var(--duration-fast) var(--ease-out), transform var(--duration-fast) var(--ease-out);
+}
+
+.wf-check[data-shown] {
+  opacity: 1;
+  transform: none;
+}
+
+.wf-check__tick {
+  margin-top: 0.2rem;
+  color: var(--ok);
+}
+
+/* The rule the engine quotes back, set apart because it is the decision. */
+.wf-rulecard {
+  display: grid;
+  gap: var(--s-2xs);
+  margin-top: var(--s-2xs);
+  padding: var(--s-sm);
+  border: 1px solid var(--navy-200);
+  border-left-width: 3px;
+  border-radius: var(--r-xs);
+  background: var(--navy-100);
+}
+
+.wf-rulecard__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35em;
+  font-size: var(--t-sm);
+  color: var(--ink-soft);
+}
+
+.wf-rulecard__row b {
+  color: var(--navy-900);
+  font-variant-numeric: tabular-nums;
+}
+
+.wf-rulecard__text {
+  margin: 0;
+  font-size: var(--t-sm);
+  line-height: 1.55;
+  color: var(--navy-900);
+}
+
+.wf-rulecard__result {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  font-size: var(--t-sm);
+  font-weight: 700;
+  color: var(--navy);
+}
+
+/* The people the rule picked. */
+.wf-assignees {
+  display: grid;
+  gap: var(--s-2xs);
+  margin: var(--s-2xs) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 40rem) {
+  .wf-assignees { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.wf-person {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--s-xs);
+  padding: 0.55rem var(--s-sm);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xs);
+  background: var(--surface);
+}
+
+.wf-person__avatar {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--navy-100);
+  color: var(--navy);
+  font-size: var(--t-2xs);
+  font-weight: 700;
+}
+
+.wf-person__name {
+  margin: 0;
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.wf-person__role {
+  margin: 0;
+  font-size: var(--t-xs);
+  color: var(--ink-muted);
+}
+
+/* -----------------------------------------------------------------------------
+   The track
+
+   Where a request is. Horizontal on a wide screen, vertical on a phone — one
+   component, two directions, no duplicated markup. The brief is explicit that
+   the narrow layout is a redesign and not a scale-down, and this is where that
+   shows most.
+   -------------------------------------------------------------------------- */
+
+.wf-track {
+  display: grid;
+  gap: var(--s-2xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wf-track__node {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.5rem minmax(0, 1fr);
+  align-items: start;
+  gap: var(--s-sm);
+  padding-bottom: var(--s-sm);
+}
+
+.wf-track__node:last-child { padding-bottom: 0; }
+
+.wf-track__node:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 0.6875rem;
+  top: 1.75rem;
+  bottom: 0.15rem;
+  width: 1px;
+  background: var(--border-strong);
+}
+
+.wf-track__node[data-state="done"]:not(:last-child)::after { background: var(--ok); }
+
+.wf-track__dot {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--ink-muted);
+}
+
+.wf-track__node[data-state="done"] .wf-track__dot {
+  border-color: var(--ok);
+  background: var(--ok-bg);
+  color: var(--ok);
+}
+
+.wf-track__node[data-state="current"] .wf-track__dot {
+  border-color: var(--navy);
+  border-width: 2px;
+  color: var(--navy);
+}
+
+.wf-track__node[data-state="current"] .wf-track__dot::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--navy);
+}
+
+.wf-track__node[data-state="blocked"] .wf-track__dot {
+  border-color: var(--bad);
+  background: var(--bad-bg);
+  color: var(--bad);
+}
+
+.wf-track__label {
+  margin: 0;
+  font-size: var(--t-sm);
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--navy-900);
+}
+
+.wf-track__node[data-state="pending"] .wf-track__label {
+  color: var(--ink-muted);
+  font-weight: 500;
+}
+
+.wf-track__meta {
+  margin: 0.1rem 0 0;
+  font-size: var(--t-xs);
+  color: var(--ink-muted);
+}
+
+/* Horizontal from 52rem: the same list on a row, with the rail running through
+   the markers instead of down beside them. */
+@media (min-width: 52rem) {
+  .wf-track--wide {
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .wf-track--wide .wf-track__node {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    gap: var(--s-2xs);
+    padding: 0 var(--s-2xs);
+    text-align: center;
+  }
+
+  .wf-track--wide .wf-track__node:not(:last-child)::after {
+    left: calc(50% + 1rem);
+    right: calc(-50% + 1rem);
+    top: 0.6875rem;
+    bottom: auto;
+    width: auto;
+    height: 1px;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   The approval panel
+
+   What a person with authority actually sees: who they are, what they are being
+   asked to authorise, the amount, and three buttons — one of which is not
+   "approve". A demonstration that only ever lets you say yes is showing an
+   animation, not a workflow.
+   -------------------------------------------------------------------------- */
+
+.wf-approval {
+  display: grid;
+  gap: var(--s-md);
+  padding: var(--s-md);
+  border: 1px solid var(--navy-200);
+  border-radius: var(--r-sm);
+  background: var(--navy-100);
+}
+
+.wf-approval__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-xs);
+}
+
+.wf-approval__title {
+  margin: 0;
+  font-size: var(--t-md);
+  font-weight: 600;
+  color: var(--navy-900);
+}
+
+.wf-approval__facts {
+  display: grid;
+  gap: var(--s-2xs);
+  margin: 0;
+}
+
+@media (min-width: 40rem) {
+  .wf-approval__facts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.wf-approval__facts dt {
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.wf-approval__facts dd {
+  margin: 0.15rem 0 0;
+  font-size: var(--t-md);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--navy-900);
+}
+
+.wf-approval__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2xs);
+  padding-top: var(--s-sm);
+  border-top: 1px solid var(--navy-200);
+}
+
+.wf-btn--danger {
+  border-color: var(--bad);
+  color: var(--bad);
+  background: var(--surface);
+}
+
+.wf-btn--danger:hover { background: var(--bad-bg); }
+
+/* --- What an approval leaves behind ------------------------------------------ */
+
+.wf-records {
+  display: grid;
+  gap: var(--s-sm);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wf-record {
+  display: grid;
+  gap: var(--s-2xs);
+  padding: var(--s-md);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--ok);
+  border-radius: var(--r-xs);
+  background: var(--surface);
+  animation: wf-enter var(--duration) var(--ease-out) both;
+}
+
+.wf-record[data-outcome="rechazada"] { border-left-color: var(--bad); }
+.wf-record[data-outcome="cambios"] { border-left-color: var(--warn); }
+
+@keyframes wf-enter {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+.wf-record__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-2xs);
+}
+
+.wf-record__who {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--s-xs);
+}
+
+.wf-record__name {
+  margin: 0;
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.wf-record__area {
+  margin: 0;
+  font-size: var(--t-xs);
+  color: var(--ink-muted);
+}
+
+.wf-record__when {
+  font-size: var(--t-xs);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-muted);
+}
+
+.wf-record__comment {
+  margin: 0;
+  padding-left: var(--s-sm);
+  border-left: 1px solid var(--border);
+  font-size: var(--t-sm);
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+/* -----------------------------------------------------------------------------
+   The closing sequence
+
+   Five automatic operations ticking themselves off. Small type, small marks:
+   this is the part the visitor is meant to notice happening without anyone
+   doing it.
+   -------------------------------------------------------------------------- */
+
+.wf-closing {
+  display: grid;
+  gap: 1px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xs);
+  overflow: hidden;
+}
+
+.wf-closing__row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--s-xs);
+  padding: 0.6rem var(--s-sm);
+  background: var(--surface);
+  font-size: var(--t-sm);
+  color: var(--ink-muted);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.wf-closing__row[data-done] { color: var(--ink); }
+
+.wf-closing__tick {
+  color: var(--border-strong);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.wf-closing__row[data-done] .wf-closing__tick { color: var(--ok); }
+
+.wf-closing__detail {
+  font-size: var(--t-xs);
+  color: var(--ink-muted);
+  text-align: right;
+}
+
+/* -----------------------------------------------------------------------------
+   The generated document
+
+   A sheet, drawn the way an institutional document is drawn: a dark band, a
+   code, a body of labelled facts, the authorisations that produced it, and a
+   verification block. It is the payoff of the whole flow, so it is the one
+   component allowed to look like an object rather than a panel.
+   -------------------------------------------------------------------------- */
+
+.wf-doc {
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-xs);
+  background: var(--white);
+  overflow: hidden;
+}
+
+.wf-doc__band {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-xs);
+  padding: var(--s-md) var(--s-lg);
+  background: var(--navy-900);
+  color: #ffffff;
+}
+
+.wf-doc__org {
+  margin: 0;
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.68);
+}
+
+.wf-doc__kind {
+  margin: 0.2rem 0 0;
+  font-family: var(--font-serif);
+  font-size: var(--t-lg);
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.wf-doc__code {
+  font-size: var(--t-sm);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+}
+
+.wf-doc__body {
+  display: grid;
+  gap: var(--s-md);
+  padding: var(--s-lg);
+}
+
+@media (max-width: 40rem) {
+  .wf-doc__band,
+  .wf-doc__body { padding-inline: var(--s-md); }
+}
+
+.wf-doc__facts {
+  display: grid;
+  gap: 1px;
+  margin: 0;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+@media (min-width: 44rem) {
+  .wf-doc__facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.wf-doc__facts > div {
+  padding: 0.6rem var(--s-sm);
+  background: var(--white);
+}
+
+.wf-doc__facts dt {
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.wf-doc__facts dd {
+  margin: 0.15rem 0 0;
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.wf-doc__heading {
+  margin: 0;
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.wf-doc__signs {
+  display: grid;
+  gap: var(--s-sm);
+  margin: var(--s-2xs) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 44rem) {
+  .wf-doc__signs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.wf-doc__sign {
+  display: grid;
+  gap: 0.15rem;
+  padding-top: var(--s-2xs);
+  border-top: 1px solid var(--ink);
+}
+
+.wf-doc__sign b { font-size: var(--t-sm); color: var(--ink); }
+
+.wf-doc__sign span { font-size: var(--t-xs); color: var(--ink-muted); }
+
+.wf-doc__sign i {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  font-style: normal;
+  font-size: var(--t-xs);
+  font-weight: 600;
+  color: var(--ok);
+}
+
+.wf-doc__verify {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--s-md);
+  padding: var(--s-md);
+  border: 1px solid var(--border);
+  background: var(--surface-sunken);
+}
+
+.wf-doc__qr {
+  width: 5.5rem;
+  height: 5.5rem;
+  padding: 4px;
+  border: 1px solid var(--border-strong);
+  background: var(--white);
+}
+
+.wf-doc__verify-code {
+  margin: 0.2rem 0 0;
+  font-size: var(--t-md);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  color: var(--navy-900);
+}
+
+/* -----------------------------------------------------------------------------
+   The notification
+
+   An email that is never sent, drawn as an email so nobody has to be told what
+   it is — and stamped SIMULACIÓN so nobody can be misled about it.
+   -------------------------------------------------------------------------- */
+
+.wf-mail {
+  border: 1px solid var(--border);
+  border-radius: var(--r-xs);
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.wf-mail__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-2xs);
+  padding: 0.6rem var(--s-md);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-sunken);
+  font-size: var(--t-xs);
+  color: var(--ink-muted);
+}
+
+.wf-mail__fields {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+  padding: var(--s-md);
+  border-bottom: 1px solid var(--border);
+}
+
+.wf-mail__row {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr);
+  gap: var(--s-xs);
+  font-size: var(--t-sm);
+}
+
+.wf-mail__row dt {
+  padding-top: 0.1rem;
+  font-size: var(--t-xs);
+  font-weight: 600;
+  color: var(--ink-muted);
+}
+
+.wf-mail__row dd {
+  margin: 0;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.wf-mail__body {
+  padding: var(--s-md);
+  font-size: var(--t-sm);
+  line-height: var(--lead-body);
+  color: var(--ink-soft);
+}
+
+/* -----------------------------------------------------------------------------
+   The audit trail
+
+   The section the brief calls the most important one, and it is right: a
+   workflow that cannot be audited is a workflow nobody adopts. Set as a
+   register — tabular times in a fixed column, a marker per kind of event, a
+   rule between every entry. The visual grammar of evidence.
+   -------------------------------------------------------------------------- */
+
+.wf-audit {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wf-audit__row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 3rem 1.25rem minmax(0, 1fr);
+  gap: var(--s-xs);
+  padding: var(--s-sm) 0;
+  border-top: 1px solid var(--border);
+}
+
+.wf-audit__row:last-child { border-bottom: 1px solid var(--border); }
+
+.wf-audit__row:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 4.375rem;
+  top: 2.45rem;
+  bottom: -0.4rem;
+  width: 1px;
+  background: var(--border);
+}
+
+.wf-audit__time {
+  padding-top: 0.1rem;
+  font-size: var(--t-sm);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--navy);
+}
+
+.wf-audit__dot {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: 0.15rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--ink-muted);
+}
+
+.wf-audit__row[data-kind="approval"] .wf-audit__dot {
+  border-color: var(--ok);
+  background: var(--ok-bg);
+  color: var(--ok);
+}
+
+.wf-audit__row[data-kind="rule"] .wf-audit__dot,
+.wf-audit__row[data-kind="document"] .wf-audit__dot {
+  border-color: var(--navy);
+  background: var(--navy-100);
+  color: var(--navy);
+}
+
+.wf-audit__row[data-kind="escalation"] .wf-audit__dot,
+.wf-audit__row[data-kind="rejection"] .wf-audit__dot {
+  border-color: var(--warn);
+  background: var(--warn-bg);
+  color: var(--warn);
+}
+
+.wf-audit__title {
+  margin: 0;
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--navy-900);
+}
+
+.wf-audit__text {
+  margin: 0.15rem 0 0;
+  font-size: var(--t-sm);
+  line-height: 1.5;
+  color: var(--ink-muted);
+}
+
+.wf-audit__actor {
+  margin: 0.2rem 0 0;
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+/* -----------------------------------------------------------------------------
+   Tabs
+
+   Resumen · Aprobaciones · Documentos · Historial · Actividad. A scrolling row
+   on a phone rather than a wrapping stack: five short words that stay on one
+   line are easier to scan than five that reflow into three.
+   -------------------------------------------------------------------------- */
+
+.wf-tabs {
+  display: flex;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--border);
+  scrollbar-width: none;
+}
+
+.wf-tabs::-webkit-scrollbar { display: none; }
+
+.wf-tab {
+  flex: none;
+  margin-bottom: -1px;
+  padding: 0.7rem var(--s-sm);
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  font: inherit;
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--ink-muted);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--ease-out), border-color var(--duration-fast) var(--ease-out);
+}
+
+.wf-tab:hover { color: var(--navy); }
+
+.wf-tab[aria-selected="true"] {
+  color: var(--navy);
+  border-bottom-color: var(--navy);
+}
+
+.wf-tab:focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: -2px;
+}
+
+.wf-tabpanel { padding-top: var(--s-md); }
+
+.wf-tabpanel:focus { outline: none; }
+
+/* -----------------------------------------------------------------------------
+   The state distribution
+
+   A bar list rather than a chart: four categories with a count each does not
+   need axes, a legend or a library.
+   -------------------------------------------------------------------------- */
+
+.wf-bars { display: grid; gap: var(--s-sm); margin: 0; }
+
+.wf-bar__top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-xs);
+  margin-bottom: 0.3rem;
+}
+
+.wf-bar__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.wf-bar__value {
+  font-size: var(--t-sm);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--navy-900);
+}
+
+.wf-bar__track {
+  height: 8px;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  background: var(--surface-sunken);
+  overflow: hidden;
+}
+
+.wf-bar__fill {
+  display: block;
+  height: 100%;
+  background: var(--navy);
+}
+
+.wf-bar[data-tone="ok"] .wf-bar__fill { background: var(--ok); }
+.wf-bar[data-tone="warn"] .wf-bar__fill { background: var(--warn); }
+.wf-bar[data-tone="bad"] .wf-bar__fill { background: var(--bad); }
+.wf-bar[data-tone="mute"] .wf-bar__fill { background: var(--border-strong); }
+
+/* -----------------------------------------------------------------------------
+   SLA and escalation
+
+   Three levels, each carrying a word as well as a colour. `over` is the one
+   that matters: it is what triggers the escalation two sections below.
+   -------------------------------------------------------------------------- */
+
+.wf-sla {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.15rem 0.45rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-xs);
+  background: var(--surface);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--ink-muted);
+}
+
+.wf-sla--ok { color: var(--ok); border-color: var(--ok); background: var(--ok-bg); }
+.wf-sla--warn { color: var(--warn); border-color: var(--warn); background: var(--warn-bg); }
+.wf-sla--over { color: var(--bad); border-color: var(--bad); background: var(--bad-bg); }
+
+.wf-escalation {
+  display: grid;
+  gap: var(--s-sm);
+  padding: var(--s-md);
+  border: 1px solid var(--warn);
+  border-left-width: 3px;
+  border-radius: var(--r-sm);
+  background: var(--warn-bg);
+}
+
+.wf-escalation__title {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin: 0;
+  font-size: var(--t-md);
+  font-weight: 600;
+  color: var(--navy-900);
+}
+
+.wf-escalation__title .fx-icon { color: var(--warn); }
+
+.wf-escalation__facts { display: grid; gap: var(--s-2xs); margin: 0; }
+
+@media (min-width: 44rem) {
+  .wf-escalation__facts { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+.wf-escalation__facts dt {
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.wf-escalation__facts dd {
+  margin: 0.15rem 0 0;
+  font-size: var(--t-sm);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--navy-900);
+}
+
+/* -----------------------------------------------------------------------------
+   Rules
+
+   Three branches of one ladder, drawn as chains. The point of the section is
+   that routing is configuration rather than code, so the chains are built from
+   the same array the engine routes with.
+   -------------------------------------------------------------------------- */
+
+.wf-rules { display: grid; gap: var(--s-sm); }
+
+@media (min-width: 58rem) {
+  .wf-rules { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.wf-rule {
+  display: grid;
+  align-content: start;
+  gap: var(--s-sm);
+  padding: var(--s-md);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--navy);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+}
+
+.wf-rule__if {
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.wf-rule__cond {
+  margin: 0.2rem 0 0;
+  font-size: var(--t-md);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--navy-900);
+}
+
+.wf-chain {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wf-chain__step {
+  display: grid;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: var(--r-xs);
+  background: var(--surface-sunken);
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--navy-900);
+}
+
+.wf-chain__step--start {
+  border-color: var(--navy-200);
+  background: var(--navy-100);
+  color: var(--navy);
+}
+
+.wf-chain__step--end {
+  border-color: var(--ok);
+  background: var(--ok-bg);
+  color: var(--ok);
+}
+
+.wf-chain__arrow {
+  display: grid;
+  place-items: center;
+  height: 1.15rem;
+  color: var(--border-strong);
+}
+
+.wf-rule__note {
+  margin: 0;
+  font-size: var(--t-xs);
+  line-height: 1.5;
+  color: var(--ink-muted);
+}
+
+/* -----------------------------------------------------------------------------
+   One engine, twelve processes
+
+   Deliberately the plainest grid here: twelve names and a line each. The
+   section makes its argument by being short.
+   -------------------------------------------------------------------------- */
+
+.wf-engine {
+  display: grid;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  overflow: hidden;
+}
+
+@media (min-width: 34rem) { .wf-engine { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 52rem) { .wf-engine { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 72rem) { .wf-engine { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+.wf-engine__item {
+  display: grid;
+  align-content: start;
+  gap: 0.2rem;
+  padding: var(--s-sm) var(--s-md);
+  border: 0;
+  background: var(--surface);
+  text-align: left;
+  font: inherit;
+  color: inherit;
+}
+
+button.wf-engine__item {
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+button.wf-engine__item:hover { background: var(--navy-100); }
+
+button.wf-engine__item:focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: -3px;
+}
+
+.wf-engine__title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5em;
+  margin: 0;
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--navy-900);
+}
+
+.wf-engine__title .fx-icon { color: var(--navy); }
+
+.wf-engine__text {
+  margin: 0;
+  font-size: var(--t-xs);
+  line-height: 1.5;
+  color: var(--ink-muted);
+}
+
+/* -----------------------------------------------------------------------------
+   The documentary pipeline
+
+   Seven stages. Not a track this time: these are not the states of one request,
+   they are the shape every documentary process shares.
+   -------------------------------------------------------------------------- */
+
+.wf-pipeline {
+  display: grid;
+  gap: var(--s-2xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 44rem) { .wf-pipeline { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 76rem) { .wf-pipeline { grid-template-columns: repeat(7, minmax(0, 1fr)); } }
+
+.wf-pipeline__stage {
+  display: grid;
+  align-content: start;
+  gap: 0.2rem;
+  padding: var(--s-sm);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xs);
+  background: var(--surface);
+}
+
+.wf-pipeline__index {
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--track-caps);
+  color: var(--navy);
+}
+
+.wf-pipeline__label {
+  margin: 0;
+  font-size: var(--t-sm);
+  font-weight: 600;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: var(--navy-900);
+}
+
+.wf-pipeline__text {
+  margin: 0;
+  font-size: var(--t-xs);
+  line-height: 1.45;
+  color: var(--ink-muted);
+}
+
+/* -----------------------------------------------------------------------------
+   Before / after
+
+   Two columns, no scoring and no red crosses. The left is what an administrative
+   team recognises; the right is what the module does. The contrast makes the
+   argument without raising its voice.
+   -------------------------------------------------------------------------- */
+
+.wf-compare { display: grid; gap: var(--s-sm); }
+
+@media (min-width: 48rem) {
+  .wf-compare { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.wf-compare__side {
+  display: grid;
+  align-content: start;
+  gap: var(--s-sm);
+  padding: var(--s-lg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+}
+
+.wf-compare__side--after {
+  border-color: var(--navy-200);
+  background: var(--navy-100);
+}
+
+.wf-compare__label {
+  margin: 0;
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.wf-compare__side--after .wf-compare__label { color: var(--navy); }
+
+.wf-compare__list {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wf-compare__list li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.65em;
+  padding: 0.6rem 0;
+  font-size: var(--t-md);
+  color: var(--ink-soft);
+}
+
+.wf-compare__list li + li { border-top: 1px solid var(--border); }
+
+.wf-compare__side--after .wf-compare__list li {
+  color: var(--navy-900);
+  font-weight: 500;
+}
+
+.wf-compare__side--after .wf-compare__list li + li { border-top-color: var(--navy-200); }
+
+.wf-compare__list .fx-icon { color: var(--ink-muted); }
+
+.wf-compare__side--after .wf-compare__list .fx-icon { color: var(--ok); }
+
+/* -----------------------------------------------------------------------------
+   Impact
+
+   Four numbers that are not results. Set on the dark ground so they read as a
+   claim about potential rather than as a report, with the SIMULACIÓN label in
+   the same block as the figures and never in a footnote.
+   -------------------------------------------------------------------------- */
+
+.wf-impact {
+  display: grid;
+  gap: 1px;
+  background: rgb(255 255 255 / 0.16);
+  border: 1px solid rgb(255 255 255 / 0.16);
+  border-radius: var(--r-sm);
+  overflow: hidden;
+}
+
+@media (min-width: 34rem) { .wf-impact { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 62rem) { .wf-impact { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+.wf-impact__item {
+  display: grid;
+  gap: 0.25rem;
+  padding: var(--s-lg) var(--s-md);
+  background: var(--navy-900);
+}
+
+.wf-impact__value {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: var(--t-figure);
+  font-weight: 600;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: #ffffff;
+}
+
+.wf-impact__label {
+  margin: 0;
+  font-size: var(--t-sm);
+  color: rgb(255 255 255 / 0.72);
+}
+
+/* -----------------------------------------------------------------------------
+   The register
+   -------------------------------------------------------------------------- */
+
+.wf-code {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.wf-empty {
+  padding: var(--s-xl) var(--s-md);
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  text-align: center;
+  font-size: var(--t-sm);
+  color: var(--ink-muted);
+}
+
+/* -----------------------------------------------------------------------------
+   The guided tour
+
+   A bar pinned to the bottom of the viewport while the tour runs. It narrates
+   what the engine is doing and never takes the controls away: pause and skip
+   are always the two nearest things to the reader's thumb.
+   -------------------------------------------------------------------------- */
+
+.wf-guide {
+  position: fixed;
+  left: 50%;
+  bottom: var(--s-md);
+  z-index: var(--layer-menu);
+  display: none;
+  align-items: center;
+  gap: var(--s-sm);
+  width: min(100% - 2rem, 34rem);
+  padding: var(--s-xs) var(--s-sm);
+  border: 1px solid var(--navy-600);
+  border-radius: var(--r-md);
+  background: var(--navy-900);
+  color: #ffffff;
+  box-shadow: var(--shadow-menu);
+  opacity: 0;
+  transform: translate(-50%, 12px);
+  transition: opacity var(--duration) var(--ease-out), transform var(--duration) var(--ease-out);
+}
+
+.wf-guide.is-open {
+  display: flex;
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.wf-guide__text {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-size: var(--t-xs);
+  line-height: 1.4;
+}
+
+.wf-guide__step {
+  display: block;
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.6);
+}
+
+.wf-guide__actions { display: flex; gap: var(--s-3xs); }
+
+.wf-guide__btn {
+  min-height: 2rem;
+  padding: 0.25rem 0.7rem;
+  border: 1px solid rgb(255 255 255 / 0.4);
+  border-radius: var(--r-xs);
+  background: transparent;
+  color: #ffffff;
+  font: inherit;
+  font-size: var(--t-xs);
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.wf-guide__btn:hover { background: rgb(255 255 255 / 0.14); }
+
+.wf-guide__btn:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 1px;
+}
+
+@media (max-width: 34rem) {
+  .wf-guide { flex-wrap: wrap; }
+  .wf-guide__actions { width: 100%; justify-content: flex-end; }
+}
+
+/* -----------------------------------------------------------------------------
+   The mini-demo dialog
+
+   A native `<dialog>`, so the browser supplies the focus trap, the Escape key
+   and the inert background rather than three hundred lines of JavaScript doing
+   all three worse.
+   -------------------------------------------------------------------------- */
+
+.wf-modal {
+  width: min(100% - 2rem, 40rem);
+  max-height: min(88vh, 48rem);
+  padding: 0;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  color: var(--ink);
+  overflow: hidden;
+}
+
+.wf-modal::backdrop { background: rgb(7 30 74 / 0.55); }
+
+.wf-modal__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--s-sm);
+  padding: var(--s-md) var(--s-lg);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-sunken);
+}
+
+.wf-modal__title {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: var(--t-xl);
+  font-weight: 600;
+  color: var(--navy-900);
+}
+
+.wf-modal__lead {
+  margin: 0.25rem 0 0;
+  font-size: var(--t-sm);
+  color: var(--ink-muted);
+}
+
+.wf-modal__close {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-xs);
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.wf-modal__close:hover {
+  border-color: var(--navy);
+  color: var(--navy);
+}
+
+.wf-modal__body {
+  display: grid;
+  gap: var(--s-md);
+  padding: var(--s-lg);
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.wf-modal__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-xs);
+  padding: var(--s-sm) var(--s-lg);
+  border-top: 1px solid var(--border);
+  background: var(--surface-sunken);
+}
+
+@media (max-width: 40rem) {
+  .wf-modal__head,
+  .wf-modal__body,
+  .wf-modal__foot { padding-inline: var(--s-md); }
+}
+
+.wf-fields {
+  display: grid;
+  gap: 1px;
+  margin: 0;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xs);
+  overflow: hidden;
+}
+
+@media (min-width: 40rem) {
+  .wf-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.wf-fields > div {
+  padding: 0.55rem var(--s-sm);
+  background: var(--surface);
+}
+
+.wf-fields dt {
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.wf-fields dd {
+  margin: 0.15rem 0 0;
+  font-size: var(--t-sm);
+  color: var(--ink);
+}
+
+/* -----------------------------------------------------------------------------
+   Shared layout helpers
+   -------------------------------------------------------------------------- */
+
+.wf-split {
+  display: grid;
+  gap: var(--s-md);
+  align-items: start;
+}
+
+@media (min-width: 64rem) {
+  .wf-split {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: var(--s-lg);
+  }
+}
+
+.wf-stack { display: grid; gap: var(--s-md); }
+
+.wf-subhead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-2xs);
+  margin: 0 0 var(--s-sm);
+}
+
+.wf-subhead__title {
+  margin: 0;
+  font-size: var(--t-md);
+  font-weight: 600;
+  color: var(--navy-900);
+}
+
+.wf-subhead__note {
+  margin: 0;
+  font-size: var(--t-xs);
+  color: var(--ink-muted);
+}
+
+/* Anything the engine hides is hidden because it has not happened yet, not
+   because it is waiting to animate. */
+[hidden] { display: none !important; }
