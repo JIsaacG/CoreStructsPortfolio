@@ -340,6 +340,21 @@ repartirla.
    eso es lo último de la página: quien quiere pulsar llega antes a la consola y
    nunca tiene que bajar por un alegato para llegar al producto.
 
+La demo guiada es la quinta capa y la más explícita: ocho pausas de lectura en
+las que el motor se detiene con el resultado ya en pantalla y explica qué
+trabajo acaba de dejar de hacer una persona.
+
+Dos detalles del narrador que solo aparecen al probarlo. El `hold` de cada
+compás se cuenta en tics de 120 ms en vez de en un `sleep` largo, porque
+`clock.pause()` solo aplaza las esperas que aún no han empezado — un temporizador
+ya lanzado sigue corriendo — así que una pausa de cuatro segundos hecha de una
+sola pieza ignoraba `Pausar` y avanzaba un compás entero, que es justo cuando
+alguien lo pulsa. Y `Siguiente` marca una bandera en lugar de resolver una
+promesa, para que también funcione mientras corre la acción de un compás: la
+petición se recuerda y se salta la pausa siguiente, en vez de que la pulsación
+no haga nada. El botón se deshabilita cuando no hay pausa que saltar, porque
+salta la explicación, no el trabajo.
+
 Y entre la demostración y el alegato hay una cuarta cosa: `tally.js` cuenta lo
 que la ejecución dejó —autorizaciones con constancia, documentos, asientos de
 bitácora y correos perseguidos— leyéndolo de la propia página en vez de llevar
@@ -397,8 +412,14 @@ Lo que trae:
   **bitácora completa** y una **ficha por expediente** en
   `/solicitudes/SOL-2026-0148.html`, detrás de tres pestañas que solo se llenan
   cuando algo ha ocurrido en ellas.
-- **Demo guiada** de unos 16 segundos que conduce el flujo entero sin que nadie
-  toque nada, con pausa y salida siempre en pantalla.
+- **Demo guiada narrada** de unos 55 segundos que conduce el flujo entero sin
+  que nadie toque nada. Cada uno de los ocho compases hace algo y después se
+  detiene a decir qué compra eso: la narración explica el mecanismo, y una
+  segunda línea —marcada aparte— nombra el recado que desaparece. La versión
+  anterior duraba dieciséis segundos y solo narraba el mecanismo, que es
+  enseñarle software competente a alguien que sigue sin saber por qué lo
+  querría. Como las pausas la duplicaron, el narrador lleva barra de progreso, y
+  `Pausar`, `Siguiente` y `Salir` están siempre en pantalla.
 
 Tres decisiones que conviene conocer:
 

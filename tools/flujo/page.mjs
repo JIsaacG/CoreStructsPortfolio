@@ -904,16 +904,30 @@ function miniDialogs() {
     .join("\n\n");
 }
 
-/* ========================================================= the guided tour */
+/* ========================================================= the guided tour
+
+   The narrator. Two lines rather than one: what the engine is doing, and what
+   that replaces — the second is why the tour exists at all, so it gets its own
+   line, its own rule and its own reading time. The progress bar is not
+   decoration either: the explanations roughly doubled the running time, and a
+   sequence whose end you cannot see is a sequence people leave.
+   -------------------------------------------------------------------------- */
 
 function tourBar() {
   return `    <div class="wf-guide" data-wf-guidebar role="status" aria-live="polite">
-      <p class="wf-guide__text">
-        <span class="wf-guide__step" data-wf-guide-step>Demo guiada</span>
-        <span data-wf-guide-text>Preparando la demostración…</span>
-      </p>
+      <div class="wf-guide__track" aria-hidden="true">
+        <span class="wf-guide__fill" data-wf-guide-progress></span>
+      </div>
+      <div class="wf-guide__body">
+        <p class="wf-guide__text">
+          <span class="wf-guide__step" data-wf-guide-step>Demo guiada</span>
+          <span data-wf-guide-text>Preparando la demostración…</span>
+        </p>
+        <p class="wf-guide__gain" data-wf-guide-gain hidden></p>
+      </div>
       <div class="wf-guide__actions">
         <button class="wf-guide__btn" type="button" data-wf-guide-pause>Pausar</button>
+        <button class="wf-guide__btn" type="button" data-wf-guide-next>Siguiente</button>
         <button class="wf-guide__btn" type="button" data-wf-guide-skip>Salir</button>
       </div>
     </div>`;

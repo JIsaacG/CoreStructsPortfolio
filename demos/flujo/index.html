@@ -363,12 +363,19 @@
       </section>
 
     <div class="wf-guide" data-wf-guidebar role="status" aria-live="polite">
-      <p class="wf-guide__text">
-        <span class="wf-guide__step" data-wf-guide-step>Demo guiada</span>
-        <span data-wf-guide-text>Preparando la demostración…</span>
-      </p>
+      <div class="wf-guide__track" aria-hidden="true">
+        <span class="wf-guide__fill" data-wf-guide-progress></span>
+      </div>
+      <div class="wf-guide__body">
+        <p class="wf-guide__text">
+          <span class="wf-guide__step" data-wf-guide-step>Demo guiada</span>
+          <span data-wf-guide-text>Preparando la demostración…</span>
+        </p>
+        <p class="wf-guide__gain" data-wf-guide-gain hidden></p>
+      </div>
       <div class="wf-guide__actions">
         <button class="wf-guide__btn" type="button" data-wf-guide-pause>Pausar</button>
+        <button class="wf-guide__btn" type="button" data-wf-guide-next>Siguiente</button>
         <button class="wf-guide__btn" type="button" data-wf-guide-skip>Salir</button>
       </div>
     </div>

@@ -1286,3 +1286,134 @@ html.js body[data-wf-stage="result"] .gw-waiting {
   line-height: 1.4;
   color: var(--ink-muted);
 }
+
+/* =============================================================================
+   The narrator
+
+   The tour bar carries an argument now, not just a caption, so it is laid out
+   as a small panel instead of a strip: a progress track across the top, the
+   mechanism, then the sentence about what that mechanism replaces, then the
+   three controls. Wide enough for two lines of prose and no wider.
+   ========================================================================== */
+
+.wf-guide {
+  display: none;
+  align-items: stretch;
+  flex-wrap: wrap;
+  gap: var(--s-sm);
+  width: min(100% - 2rem, 46rem);
+  padding: 0 var(--s-sm) var(--s-sm);
+  border-radius: var(--r-md);
+  overflow: hidden;
+}
+
+.wf-guide.is-open {
+  display: flex;
+}
+
+/* Full-bleed across the top of the panel, so it reads as the panel's own
+   progress rather than as one more control inside it. */
+.wf-guide__track {
+  flex: 0 0 100%;
+  height: 2px;
+  margin-inline: calc(var(--s-sm) * -1);
+  background: rgb(255 255 255 / 0.1);
+}
+
+.wf-guide__fill {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--gw-accent);
+  transition: width var(--duration) var(--ease-out);
+}
+
+.wf-guide__body {
+  flex: 1 1 18rem;
+  min-width: 0;
+  padding-top: var(--s-xs);
+}
+
+.wf-guide__text {
+  margin: 0;
+  font-size: var(--t-sm);
+  line-height: 1.45;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+
+.wf-guide__step {
+  display: block;
+  margin-bottom: 0.15rem;
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+/* The reason the pause exists. Set apart from the narration by a rule and a
+   colour so it does not read as a second half of the same sentence. */
+.wf-guide__gain {
+  margin-top: 0.5rem;
+  padding-left: 0.7rem;
+  border-left: 2px solid rgb(127 211 162 / 0.55);
+  font-size: var(--t-xs);
+  line-height: 1.5;
+  color: var(--ink-soft);
+  text-wrap: pretty;
+}
+
+.wf-guide__actions {
+  align-items: center;
+  align-self: center;
+  padding-top: var(--s-xs);
+}
+
+.wf-guide__btn {
+  border-color: var(--gw-edge);
+  border-radius: var(--r-xs);
+  color: var(--ink);
+}
+
+.wf-guide__btn:hover {
+  background: var(--gw-glass-3);
+  border-color: rgb(255 255 255 / 0.28);
+}
+
+.wf-guide__btn:focus-visible {
+  outline-color: var(--gw-accent);
+}
+
+/* `Siguiente` skips the explanation, not the work, so it is only live while
+   there is an explanation on screen. Disabled is better than inert-looking: a
+   button that quietly does nothing during the seven seconds of the processing
+   sequence is a button the visitor stops trusting. */
+.wf-guide__btn[disabled] {
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+
+.wf-guide__btn[disabled]:hover {
+  background: transparent;
+  border-color: var(--gw-edge);
+}
+
+@media (max-width: 40rem) {
+  .wf-guide__actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+/* Two floating things, one corner. While the tour narrates, the transient
+   message steps above the bar instead of landing on top of it. */
+body[data-tour="running"] .fx-toast {
+  bottom: calc(var(--s-md) + 11rem);
+}
+
+@media (max-width: 40rem) {
+  body[data-tour="running"] .fx-toast {
+    bottom: calc(var(--s-md) + 14rem);
+  }
+}
