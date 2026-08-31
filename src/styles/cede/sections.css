@@ -536,6 +536,81 @@ a.cd-card:hover {
   color: var(--ink-muted);
 }
 
+/* --- Compact steps ---------------------------------------------------------
+   The timeline above, shrunk to fit inside a card: no rule, no standfirst, one
+   line per milestone and a rail of dots that says which of them have happened.
+   Used where a date list is supporting evidence rather than the subject.
+   -------------------------------------------------------------------------- */
+
+.cd-steps__caption {
+  margin-top: var(--s-sm);
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.cd-steps {
+  display: grid;
+  gap: 0;
+  margin: var(--s-2xs) 0 0;
+  padding: 0 0 0 var(--s-md);
+  list-style: none;
+  border-left: 1px solid var(--border);
+}
+
+.cd-steps__item {
+  position: relative;
+  display: grid;
+  gap: 0 var(--s-sm);
+  padding-block: var(--s-2xs);
+  font-size: var(--t-sm);
+  color: var(--ink-muted);
+}
+
+@media (min-width: 30rem) {
+  .cd-steps__item {
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+    align-items: baseline;
+  }
+}
+
+.cd-steps__item::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--s-md) * -1 - 4px);
+  top: calc(var(--s-2xs) + 0.42em);
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1.5px solid var(--border-strong);
+}
+
+/* Done is filled and undone is hollow, and the date carries the same
+   distinction in weight: the state is never only the dot. */
+.cd-steps__item.is-done::before {
+  background: var(--navy);
+  border-color: var(--navy);
+}
+
+.cd-steps__date {
+  font-variant-numeric: tabular-nums;
+  font-size: var(--t-xs);
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+}
+
+.cd-steps__item.is-done .cd-steps__date {
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.cd-steps__item.is-done .cd-steps__label {
+  color: var(--ink-soft);
+}
+
 /* --- The network diagram --------------------------------------------------- */
 
 .cd-network {

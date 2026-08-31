@@ -31,6 +31,12 @@ export const moduleInfo = {
     "Los nombres, métricas, personas y procesos mostrados son ficticios y se utilizan " +
     "exclusivamente para demostrar las capacidades de la plataforma.",
   concept: "Solicitudes, aprobaciones y seguimiento en un solo flujo.",
+  /* The one paragraph the console keeps. Somebody arriving cold needs to know
+     what work is being replaced before they are asked to press anything, and
+     two concrete sentences do that better than a section of benefits. */
+  purpose:
+    "Una compra interna viaja hoy por correos, hojas de cálculo y firmas que hay que perseguir. " +
+    "Aquí la regla decide quién autoriza, el sistema vigila el plazo y el expediente se archiva solo.",
   teaser: {
     title: "Procesos administrativos más simples",
     text:
@@ -618,6 +624,41 @@ export const beforeAfter = {
     ],
   },
 };
+
+/**
+ * What each moving part of the console replaces.
+ *
+ * Deliberately paired and deliberately short. The argument for an automation
+ * engine is never the feature, it is the errand the feature deletes — so every
+ * entry names the errand first and the mechanism second, and each one is
+ * anchored to the panel where a visitor is watching that exact thing happen.
+ */
+export const advantages = [
+  {
+    id: "ruta",
+    title: "Nadie pregunta a quién enviarlo",
+    before: "Una ronda de correos para averiguar quién tiene que autorizar.",
+    after: "El monto elige el circuito antes de que nadie abra el expediente.",
+  },
+  {
+    id: "turno",
+    title: "La solicitud no se pierde en un escritorio",
+    before: "Perseguir la firma sin saber en qué bandeja está parada.",
+    after: "El expediente sabe de quién es el turno y cuánto tiempo lleva ahí.",
+  },
+  {
+    id: "documento",
+    title: "El documento no se redacta dos veces",
+    before: "Volver a teclear los mismos datos en una constancia a mano.",
+    after: "Sale generado, con las firmas registradas y su código de verificación.",
+  },
+  {
+    id: "bitacora",
+    title: "La auditoría no es una arqueología",
+    before: "Reconstruir después quién aprobó qué, buscando en correos viejos.",
+    after: "Cada acción queda asentada con su hora, su responsable y su comentario.",
+  },
+];
 
 export const impact = [
   { value: "−65 %", label: "Tiempo de procesamiento" },

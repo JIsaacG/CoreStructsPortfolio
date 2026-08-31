@@ -17,6 +17,7 @@
 
 import { escape, longDate } from "../../src/data/flujo/format.js";
 import {
+  advantages,
   approvals,
   approvalsFor,
   auditTrail,
@@ -26,6 +27,8 @@ import {
   extraction,
   featured,
   formOptions,
+  impact,
+  impactNote,
   miniDemos,
   moduleInfo,
   money,
@@ -149,26 +152,48 @@ function trackNodes(request, done = 0) {
 /* ========================================================== 01 · the intro */
 
 /**
- * The only prose left on the page.
+ * The only prose left on the page, and two sentences of it are load-bearing.
  *
- * One eyebrow, one line, two chips. What used to live here — a headline, a
- * lead, three calls to action, a disclaimer paragraph and a four-column
- * metadata strip — was the product explaining itself before demonstrating
- * itself, and a console that has to be introduced is a console that has not
- * been designed. The disclaimer is not lost: it is in the footer, in full,
- * where it belongs.
+ * An earlier pass cut the introduction to a title and two chips, on the
+ * principle that a console which has to be introduced has not been designed.
+ * That went one cut too far: a visitor arriving cold could see what to press
+ * and still not know what work any of it replaces. `purpose` is the answer, and
+ * it is deliberately concrete — the errand, then the mechanism — rather than a
+ * sentence about digital transformation.
  */
 function intro() {
   return `        <header class="gw-intro">
-          <div>
+          <div class="gw-intro__lead">
             <p class="gw-eyebrow">${escape(product.descriptor)} · ${escape(moduleInfo.tag)}</p>
             <h1 class="gw-intro__title">Ejecute una solicitud <em>de principio a fin</em>.</h1>
+            <p class="gw-intro__purpose">${escape(moduleInfo.purpose)}</p>
           </div>
           <p class="gw-intro__actions">
             ${demoTag("Datos ficticios")}${demoTag("Sin servidor")}
           </p>
         </header>`;
 }
+
+/* ---------------------------------------------------------- what it replaces */
+
+/**
+ * One line of "and this is why", set where the thing is happening.
+ *
+ * Not a benefit bullet: it names the errand that the panel above it deletes, at
+ * the moment the visitor is watching that panel do its work. Marked up as an
+ * aside and set apart visually, so it reads as commentary rather than as one
+ * more instruction to follow.
+ */
+const gain = (id) => {
+  const item = advantages.find((entry) => entry.id === id);
+  if (!item) return "";
+  return (
+    `<p class="gw-gain">` +
+    `<span class="gw-gain__before">${escape(item.before)}</span>` +
+    `<span class="gw-gain__after">${escape(item.after)}</span>` +
+    `</p>`
+  );
+};
 
 /* =========================================================== 02 · the rail */
 
@@ -509,6 +534,7 @@ function closingRun() {
                 )
                 .join("")}
             </ul>
+            ${gain("documento")}
           </div>`;
 }
 
@@ -554,6 +580,7 @@ function routePreview() {
               </p>
               <p class="gw-route__rule" data-wf-route-rule>${escape(rule.text)}</p>
               <ul class="gw-route__list" data-wf-route-list>${stops}</ul>
+              ${gain("ruta")}
             </div>
           </div>`;
 }
@@ -624,6 +651,7 @@ function decisionPanel() {
                 </button>
               </div>
             </div>
+            ${gain("turno")}
           </div>`;
 }
 
@@ -752,10 +780,31 @@ function detail() {
       .slice(0, 4)
       .map((entry) => auditRow(entry).replace("<li ", "<li data-when-static "))
       .join("") +
-    `</ol>`;
+    `</ol>` +
+    gain("bitacora");
+
+  /* The count of what the run actually left behind, filled from the page after
+     the flow closes. It is the argument made arithmetically: four numbers a
+     visitor watched being produced, including the one that stayed at zero. */
+  const tally =
+    `<dl class="gw-tally" data-wf-tally hidden>` +
+    [
+      ["approvals", "Autorización con constancia", "Autorizaciones con constancia"],
+      ["docs", "Documento generado", "Documentos generados"],
+      ["audit", "Asiento de bitácora", "Asientos de bitácora"],
+      ["mail", "Correo que hubo que perseguir", "Correos que hubo que perseguir"],
+    ]
+      .map(
+        ([key, one, many]) =>
+          `<div><dt data-one="${escape(one)}" data-many="${escape(many)}">${escape(many)}</dt>` +
+          `<dd data-wf-tally-${key}>0</dd></div>`,
+      )
+      .join("") +
+    `</dl>`;
 
   return `        <div class="gw-pane gw-lit gw-detail gw-zone" data-gw-zone="result">
           ${zoneHead(3, "Lo que produjo", "Se llena solo, a medida que el flujo avanza.")}
+          ${tally}
           <div class="gw-tabs" role="tablist" aria-label="Resultado del expediente">
             ${tab("aprobaciones", "Aprobaciones", true)}
             ${tab("documentos", "Documento")}
@@ -767,7 +816,49 @@ function detail() {
         </div>`;
 }
 
-/* ================================================ 12 · the two mini demos */
+/* ==================================================== 12 · what it resolves
+
+   The one section on the page that argues rather than demonstrates, and it is
+   deliberately the last thing: a visitor who wants to press things reaches the
+   console first and never has to scroll past a case for the product to get to
+   the product. A visitor who wants to know what it is for finds it here, in
+   four pairs and four figures, without any of it having been in the way.
+   -------------------------------------------------------------------------- */
+
+function whatItResolves() {
+  const pairs = advantages
+    .map(
+      (item) =>
+        `<li class="gw-why__item">` +
+        `<p class="gw-why__name">${escape(item.title)}</p>` +
+        `<p class="gw-why__before"><span>Antes</span>${escape(item.before)}</p>` +
+        `<p class="gw-why__after"><span>Ahora</span>${escape(item.after)}</p>` +
+        `</li>`,
+    )
+    .join("");
+
+  const figures = impact
+    .map(
+      (item) =>
+        `<div class="gw-figure"><p class="gw-figure__value">${escape(item.value)}</p>` +
+        `<p class="gw-figure__label">${escape(item.label)}</p></div>`,
+    )
+    .join("");
+
+  return `        <section class="gw-why" aria-labelledby="h-resuelve">
+          <div class="gw-why__head">
+            <h2 class="gw-why__title" id="h-resuelve">¿Qué resuelve?</h2>
+            <p class="gw-why__sub">Cuatro trámites que el motor deja de pedirle a una persona.</p>
+          </div>
+          <ul class="gw-why__list">${pairs}</ul>
+          <div class="gw-why__foot">
+            <div class="gw-figures">${figures}</div>
+            <p class="fx-note">${escape(impactNote)}</p>
+          </div>
+        </section>`;
+}
+
+/* ================================================ 13 · the two mini demos */
 
 /** Vacations and per-diem, as native dialogs: the same engine, another route. */
 function miniDialogs() {
@@ -881,6 +972,8 @@ ${closingRun()}
         </div>
 
 ${detail()}
+
+${whatItResolves()}
       </section>
 
 ${tourBar()}

@@ -1045,3 +1045,244 @@ html.js body[data-wf-stage="result"] .gw-waiting {
   width: 14px;
   height: 14px;
 }
+
+/* =============================================================================
+   The argument
+
+   Three registers, kept apart on purpose. `gw-intro__purpose` says what work is
+   being replaced, once, before anything is pressed. `gw-gain` names the errand
+   each panel deletes, set beside that panel while it works. `gw-why` is the
+   only section that argues instead of demonstrating, and it is last, so nobody
+   ever scrolls past a case for the product to reach the product.
+   ========================================================================== */
+
+.gw-intro__lead {
+  max-width: 46rem;
+}
+
+.gw-intro__purpose {
+  margin-top: 0.7rem;
+  max-width: 54ch;
+  font-size: var(--t-md);
+  line-height: 1.55;
+  color: var(--ink-soft);
+  text-wrap: pretty;
+}
+
+/* --- The errand each panel deletes -------------------------------------------
+   An aside, and it has to look like one: a rule down the left, smaller type,
+   and the "before" struck through so the pair reads at a glance without either
+   half needing a label.
+   -------------------------------------------------------------------------- */
+
+.gw-gain {
+  display: grid;
+  gap: 0.2rem;
+  margin-top: var(--s-sm);
+  padding: 0.6rem 0 0.6rem 0.75rem;
+  border-left: 2px solid var(--gw-edge);
+  font-size: var(--t-xs);
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.gw-gain__before {
+  color: var(--ink-muted);
+  text-decoration: line-through;
+  text-decoration-color: rgb(223 143 134 / 0.55);
+  text-decoration-thickness: 1px;
+}
+
+.gw-gain__after {
+  color: var(--ink);
+}
+
+.gw-gain__after::before {
+  content: "→ ";
+  color: var(--ok);
+}
+
+/* --- The tally ----------------------------------------------------------------
+   Four figures the visitor watched being produced, including the one that never
+   moves off zero, which is the whole point of it being there.
+   -------------------------------------------------------------------------- */
+
+.gw-tally {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0 0 var(--s-sm);
+  padding: 0;
+  border: 1px solid var(--gw-edge);
+  border-radius: var(--r-sm);
+  background: var(--gw-edge);
+  overflow: hidden;
+}
+
+@media (min-width: 46rem) {
+  .gw-tally {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.gw-tally > div {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 0.15rem;
+  padding: 0.7rem 0.85rem;
+  background: rgb(255 255 255 / 0.035);
+}
+
+.gw-tally dt {
+  font-size: var(--t-2xs);
+  line-height: 1.35;
+  color: var(--ink-muted);
+}
+
+.gw-tally dd {
+  margin: 0;
+  font-size: var(--t-xl);
+  font-weight: 600;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  color: var(--navy-900);
+}
+
+/* --- What it resolves ---------------------------------------------------------- */
+
+.gw-why {
+  margin-top: var(--s-md);
+  padding-top: var(--s-lg);
+  border-top: 1px solid var(--gw-edge);
+}
+
+.gw-why__head {
+  margin-bottom: var(--s-md);
+}
+
+.gw-why__title {
+  font-size: var(--t-xl);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--navy-900);
+}
+
+.gw-why__sub {
+  margin-top: 0.2rem;
+  font-size: var(--t-sm);
+  color: var(--ink-muted);
+}
+
+.gw-why__list {
+  display: grid;
+  gap: var(--s-sm);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 44rem) {
+  .gw-why__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 72rem) {
+  .gw-why__list {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.gw-why__item {
+  display: grid;
+  align-content: start;
+  gap: 0.35rem;
+  padding: var(--s-sm);
+  border: 1px solid var(--gw-edge);
+  border-radius: var(--r-sm);
+  background: rgb(255 255 255 / 0.03);
+}
+
+.gw-why__name {
+  font-size: var(--t-base);
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--navy-900);
+  text-wrap: pretty;
+}
+
+.gw-why__before,
+.gw-why__after {
+  font-size: var(--t-xs);
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.gw-why__before span,
+.gw-why__after span {
+  display: block;
+  margin-bottom: 0.1rem;
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+}
+
+.gw-why__before {
+  color: var(--ink-muted);
+}
+
+.gw-why__before span {
+  color: var(--bad);
+}
+
+.gw-why__after {
+  color: var(--ink-soft);
+}
+
+.gw-why__after span {
+  color: var(--ok);
+}
+
+.gw-why__foot {
+  display: grid;
+  gap: var(--s-sm);
+  margin-top: var(--s-md);
+}
+
+@media (min-width: 62rem) {
+  .gw-why__foot {
+    grid-template-columns: minmax(0, 2.2fr) minmax(0, 1fr);
+    align-items: center;
+    column-gap: var(--s-lg);
+  }
+}
+
+.gw-figures {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-sm);
+}
+
+@media (min-width: 44rem) {
+  .gw-figures {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.gw-figure__value {
+  font-size: clamp(1.5rem, 1.2rem + 1.1vw, 2rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  color: var(--navy-900);
+}
+
+.gw-figure__label {
+  margin-top: 0.25rem;
+  font-size: var(--t-xs);
+  line-height: 1.4;
+  color: var(--ink-muted);
+}

@@ -16,6 +16,7 @@ import { initCapture, initForm } from "./form.js";
 import { initRoute } from "./route.js";
 import { initStages } from "./stages.js";
 import { clear, load, save } from "./state.js";
+import { initTally } from "./tally.js";
 import { createTour } from "./tour.js";
 import {
   initChooser,
@@ -68,6 +69,10 @@ if (formElement) {
      engine because it is a statement about the page, not about the workflow:
      the engine's job is to be right, and this one's is to be followable. */
   const stages = initStages(document);
+
+  /* The four figures under the third zone's heading, counted off the approvals
+     list, the log and the document as the flow produces them. */
+  initTally(document);
 
   const form = initForm(formElement, {
     onSubmit: (request) => {

@@ -29,7 +29,17 @@ const n = (value) => Math.round(value * 100) / 100;
 let seq = 0;
 const uid = () => `cd-art-${++seq}`;
 
-/** The plate. Every scene is composed inside this box. */
+/**
+ * The plate, and its safe band.
+ *
+ * Every scene is composed inside 320 x 240, and every scene keeps its geometry
+ * inside y in [32, 208]. A plate is 4:3 and is always shown `slice`d into a
+ * wider box — 16:10 for the large ones, 16:9 for the rest — so the top and the
+ * bottom of the box are cut before anyone sees them. The band is what survives
+ * the deepest crop the layout can ask for, and it is a constraint on the
+ * drawings rather than on the CSS: a plate that had to be letterboxed to be
+ * seen whole would have stopped being an image.
+ */
 const W = 320;
 const H = 240;
 
@@ -98,7 +108,7 @@ function matricula() {
     for (let col = 0; col < 7; col++) {
       const index = row * 7 + col;
       const x = 35 + col * 38;
-      const y = 92 + row * 27;
+      const y = 92 + row * 25;
       const filled = index % 9 !== 4;
       seats.push(
         `<g class="cd-art__seat${filled ? " is-on" : ""}">` +
@@ -203,7 +213,7 @@ function docentes() {
     for (let col = 0; col < 8; col++) {
       const index = row * 8 + col;
       const x = 30 + col * 37 + (row % 2) * 18;
-      const y = 46 + row * 38;
+      const y = 44 + row * 33;
       if (x > W - 22) continue;
       people.push(
         `<g class="cd-art__person${index % 7 === 3 ? " is-on" : ""}">` +
@@ -213,43 +223,6 @@ function docentes() {
     }
   }
   return ground() + people.join("");
-}
-
-/**
- * Biblioteca — what the Council publishes.
- *
- * Three sheets, offset, hatched with the lines of a text they do not need to
- * contain, and the front one carrying a chart. It is the cover of a report,
- * seen from slightly above.
- */
-function biblioteca() {
-  const sheet = (x, y, rotation, klass) =>
-    `<g class="cd-art__sheet ${klass}" transform="rotate(${rotation} ${x + 60} ${y + 78})">` +
-    `<rect x="${x}" y="${y}" width="120" height="156" rx="1"/></g>`;
-
-  const bars = [22, 34, 16, 40, 28]
-    .map(
-      (height, index) =>
-        `<rect class="cd-art__accent-fill" x="${122 + index * 17}" y="${120 - height}" ` +
-        `width="10" height="${height}"/>`,
-    )
-    .join("");
-
-  const lines = Array.from(
-    { length: 5 },
-    (_, index) => `<path class="cd-art__hatch" d="M122 ${140 + index * 14}h${index === 4 ? 46 : 76}"/>`,
-  ).join("");
-
-  return (
-    ground() +
-    sheet(58, 44, -7, "cd-art__sheet--back") +
-    sheet(74, 40, -3, "cd-art__sheet--mid") +
-    `<g class="cd-art__sheet cd-art__sheet--front"><rect x="108" y="34" width="106" height="174" rx="1"/></g>` +
-    `<path class="cd-art__rule" d="M122 54h78"/>` +
-    `<path class="cd-art__accent-line" d="M122 54h30"/>` +
-    bars +
-    lines
-  );
 }
 
 /**
@@ -284,10 +257,10 @@ function tecnica() {
     ground() +
     `<circle class="cd-art__construction" cx="118" cy="108" r="76"/>` +
     wheel(118, 108, 52, 16, "cd-art__wheel--main") +
-    wheel(232, 164, 30, 11, "cd-art__wheel--accent") +
+    wheel(232, 152, 30, 11, "cd-art__wheel--accent") +
     crosshair(118, 108) +
-    crosshair(232, 164) +
-    `<path class="cd-art__dim" d="M118 212h114M118 206v12M232 206v12"/>`
+    crosshair(232, 152) +
+    `<path class="cd-art__dim" d="M118 202h114M118 196v12M232 196v12"/>`
   );
 }
 
@@ -299,28 +272,41 @@ function tecnica() {
  */
 function participacion() {
   const cx = 160;
-  const cy = 218;
+  const cy = 202;
+  const rings = [56, 82, 108, 134, 160];
   const seats = [];
+  const guides = [];
 
-  [58, 82, 106, 130, 154].forEach((radius, ring) => {
-    const count = 9 + ring * 3;
+  rings.forEach((radius, ring) => {
+    guides.push(
+      `<path class="cd-art__guide" d="M${cx - radius} ${cy}` +
+        `A${radius} ${radius} 0 0 1 ${cx + radius} ${cy}"/>`,
+    );
+
+    /* One seat every ~20 units of arc, so the rings stay legible as rings
+       rather than closing into five solid bands. */
+    const count = 10 + ring * 3;
     for (let index = 0; index < count; index++) {
       const angle = Math.PI + (index + 0.5) * (Math.PI / count);
       const x = cx + Math.cos(angle) * radius;
       const y = cy + Math.sin(angle) * radius;
-      if (y < 26) continue;
+      if (y < 34) continue;
       seats.push(
         `<circle class="cd-art__seat-dot${(ring + index) % 4 ? " is-on" : ""}" ` +
-          `cx="${n(x)}" cy="${n(y)}" r="4.6"/>`,
+          `cx="${n(x)}" cy="${n(y)}" r="5.2"/>`,
       );
     }
   });
 
   return (
-    ground() +
+    /* A sparser, smaller lattice than the other plates use: at the default
+       step the ground dots and the seats are the same object at the same
+       weight, and eighty seats become a texture instead of a room. */
+    ground(16, 0.8) +
+    guides.join("") +
     seats.join("") +
-    `<rect class="cd-art__slab" x="${cx - 26}" y="${cy - 36}" width="52" height="10" rx="1"/>` +
-    `<path class="cd-art__accent-line" d="M${cx - 26} ${cy - 20}h52"/>`
+    `<rect class="cd-art__slab" x="${cx - 28}" y="${cy - 34}" width="56" height="10" rx="1"/>` +
+    `<path class="cd-art__accent-line" d="M${cx - 28} ${cy - 18}h56"/>`
   );
 }
 
@@ -388,7 +374,7 @@ function trayectoria() {
  * cited; the plate draws the list and the citation.
  */
 function normativa() {
-  const entries = Array.from({ length: 6 }, (_, index) => {
+  const entries = Array.from({ length: 5 }, (_, index) => {
     const y = 44 + index * 29;
     return (
       `<g class="cd-art__entry${index === 1 ? " is-on" : ""}">` +
@@ -402,9 +388,9 @@ function normativa() {
   return (
     ground() +
     entries +
-    `<circle class="cd-art__seal" cx="264" cy="212" r="26"/>` +
-    `<circle class="cd-art__seal-inner" cx="264" cy="212" r="17"/>` +
-    `<path class="cd-art__mark" d="M256 212l6 6 12-13"/>`
+    `<circle class="cd-art__seal" cx="262" cy="188" r="19"/>` +
+    `<circle class="cd-art__seal-inner" cx="262" cy="188" r="12"/>` +
+    `<path class="cd-art__mark" d="M256 188l4.5 4.5 9-9.5"/>`
   );
 }
 
@@ -413,7 +399,6 @@ const SCENES = {
   territorio,
   conectividad,
   docentes,
-  biblioteca,
   tecnica,
   participacion,
   datos,
@@ -444,6 +429,9 @@ export function plate(kind, { label, tone = "deep", className = "" } = {}) {
  */
 const COVER_W = 320;
 const COVER_H = 116;
+
+/* A cover is cropped less than a plate, but it is cropped: its own safe band
+   is y in [12, 104]. */
 
 function coverSeries(offset) {
   const points = Array.from({ length: 9 }, (_, index) => ({
@@ -522,7 +510,7 @@ function coverSheets(offset) {
 
   return (
     `<g class="cd-art__sheet cd-art__sheet--mid"><rect x="34" y="20" width="66" height="82" rx="1"/></g>` +
-    `<g class="cd-art__sheet cd-art__sheet--front"><rect x="56" y="12" width="60" height="94" rx="1"/></g>` +
+    `<g class="cd-art__sheet cd-art__sheet--front"><rect x="56" y="14" width="60" height="88" rx="1"/></g>` +
     `<path class="cd-art__accent-line" d="M66 30h30"/>` +
     lines
   );
@@ -552,7 +540,7 @@ function coverSeats(offset) {
 function coverMap() {
   const clip = uid();
   const dots = lattice(7, 0.9);
-  const scale = 0.9;
+  const scale = 0.76;
   const place =
     `translate(${n((COVER_W - CARD_MAP.width * scale) / 2)} ` +
     `${n((COVER_H - CARD_MAP.height * scale) / 2)}) scale(${scale})`;
@@ -624,14 +612,21 @@ const EMBLEMS = {
     '<circle cx="32" cy="32" r="21"/><circle cx="32" cy="32" r="12"/>' +
     '<circle class="cd-art__emblem-dot" cx="32" cy="32" r="4"/>' +
     '<path d="M32 4v7M32 53v7M4 32h7M53 32h7"/>',
+  /* Three unequal columns and the level they are all being brought to: the
+     gap between each bar and the accented line is the axis. */
   inclusion:
-    '<path d="M10 52h44"/><path d="M17 52V34M27 52V24M37 52V40M47 52V28"/>' +
-    '<path class="cd-art__emblem-accent" d="M10 16h44"/>' +
-    '<path d="M17 34l10-10 10 16 10-12"/>',
+    '<path d="M7 54h50"/>' +
+    '<rect x="12" y="38" width="10" height="16"/>' +
+    '<rect x="27" y="30" width="10" height="24"/>' +
+    '<rect x="42" y="45" width="10" height="9"/>' +
+    '<path class="cd-art__emblem-accent" d="M7 22h50"/>',
+  /* A board with two lines written on it and someone standing in front of it.
+     The one emblem in the set that draws a person, because the axis is one. */
   docente:
-    '<path d="M12 54h40"/><path d="M21 54V40h9v14M35 54V26h9v28"/>' +
-    '<path class="cd-art__emblem-accent" d="M14 30l18-16 18 16"/>' +
-    '<circle class="cd-art__emblem-dot" cx="32" cy="10" r="4"/>',
+    '<rect x="8" y="8" width="48" height="30" rx="1"/>' +
+    '<path class="cd-art__emblem-accent" d="M16 18h22M16 27h28"/>' +
+    '<circle cx="32" cy="46" r="5.5"/>' +
+    '<path d="M21 59a11 11 0 0 1 22 0"/>',
   digital:
     '<path d="M8 34a34 34 0 0 1 48 0"/><path d="M18 43a20 20 0 0 1 28 0"/>' +
     '<circle class="cd-art__emblem-dot" cx="32" cy="52" r="4"/>' +

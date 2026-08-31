@@ -1,17 +1,22 @@
 /**
  * The home page.
  *
- * Fourteen zones in the order the brief sets them, but the order earns itself:
+ * Fifteen zones in the order the brief sets them, but the order earns itself:
  * the page opens with what the institution is for, gives the country's figures
  * before it gives its own plans, and only asks for participation once it has
  * shown what there is to participate in.
+ *
+ * The pictures are drawn, never photographed — see `art.mjs` for why an
+ * invented institution cannot honestly do otherwise — and they are placed
+ * where a wall of text would otherwise have formed: the six doors, the gallery
+ * band, the five axes, and the head of every card that carries a summary.
  *
  * Every figure on this page is read live from `statistics.js` at build time, so
  * there is no second copy of a number anywhere in the markup.
  */
 
 import { MAP, byId, departments } from "../../src/data/cede/geography.js";
-import { decimal, group, longDate } from "../../src/data/cede/format.js";
+import { decimal, group, longDate, shortDate } from "../../src/data/cede/format.js";
 import { institution, mandate, network, notice } from "../../src/data/cede/institution.js";
 import { boards, indicators, resolve } from "../../src/data/cede/indicators.js";
 import { articles, knowledge } from "../../src/data/cede/newsroom.js";
@@ -752,6 +757,13 @@ function documents(ctx) {
                   text: item.summary,
                   serif: true,
                   target: page(ctx, "biblioteca", item.slug),
+                  /* An informe is a year of tables and an investigación is an
+                     argument from a series: the two get different drawings so
+                     the grid can be read by kind before a single title is. */
+                  cover: cover(item.kind === "informe" ? "malla" : "serie", {
+                    seed: item.slug,
+                    label: `Portada ilustrada de «${item.title}»`,
+                  }),
                   foot:
                     `<span>${escape(longDate(item.date))}</span>` +
                     `<span>${escape(`PDF · ${item.size}`)}</span>`,
@@ -804,15 +816,35 @@ function recentIndicators(ctx) {
 
 /* ---------------------------------------------------------- 10 · the news */
 
+/* What each newsroom category looks like when it is drawn. Only the piece that
+   leads gets a picture — five would have made the record a gallery — so the map
+   has to cover every category rather than the ones leading today. */
+const ARTICLE_ART = {
+  datos: "datos",
+  participacion: "participacion",
+  tecnica: "tecnica",
+  consejo: "normativa",
+  politica: "trayectoria",
+};
+
 function news(ctx) {
   const [lead, ...rest] = articles.slice(0, 5);
 
-  const article = (item, isLead = false) =>
-    `<a class="cd-article" href="${sub(ctx, "noticias", item.slug)}" data-reveal="fade">` +
+  const body = (item, isLead) =>
     `<span class="cd-article__meta"><span class="cd-article__category">` +
     `${escape(item.category)}</span><span>${escape(longDate(item.date))}</span></span>` +
     `<span class="cd-article__title">${escape(item.title)}</span>` +
-    (isLead ? `<span class="cd-article__summary">${escape(item.summary)}</span>` : "") +
+    (isLead ? `<span class="cd-article__summary">${escape(item.summary)}</span>` : "");
+
+  const article = (item, isLead = false) =>
+    `<a class="cd-article" href="${sub(ctx, "noticias", item.slug)}" data-reveal="fade">` +
+    (isLead
+      ? `<span class="cd-article__cover">` +
+        `${plate(ARTICLE_ART[item.category] ?? "trayectoria", {
+          tone: "light",
+          label: `Ilustración de «${item.title}»`,
+        })}</span><span class="cd-article__body">${body(item, true)}</span>`
+      : body(item, false)) +
     `</a>`;
 
   return `      <section class="cd-section cd-section--surface" aria-labelledby="actualidad-home">
@@ -837,6 +869,30 @@ function news(ctx) {
 
 /* -------------------------------------------------- 11 · participation */
 
+/**
+ * The calendar of an open consultation, compact.
+ *
+ * The interior page gives this timetable the full timeline component; here it
+ * is five rows of thirty pixels, because the card's job is to show that a
+ * consultation has dates at all — and because a card with a picture beside it
+ * and nothing under its own summary was two thirds empty.
+ */
+function schedule(open) {
+  const items = open.schedule
+    .map(
+      (item) =>
+        `<li class="cd-steps__item${item.done ? " is-done" : ""}">` +
+        `<span class="cd-steps__date">${escape(shortDate(item.date))}</span>` +
+        `<span class="cd-steps__label">${escape(item.label)}</span></li>`,
+    )
+    .join("");
+
+  return (
+    `<p class="cd-steps__caption">Calendario de la consulta</p>` +
+    `<ol class="cd-steps">${items}</ol>`
+  );
+}
+
 function participation(ctx) {
   const open = consultations.find((item) => item.state === "abierta");
 
@@ -858,6 +914,7 @@ function participation(ctx) {
               <p class="cd-card__kicker">Consulta abierta · ${escape(open.code)}${statePill("abierta", "Abierta")}</p>
               <h3 class="cd-card__title cd-card__title--serif">${escape(open.title)}</h3>
               <p class="cd-card__text">${escape(open.summary)}</p>
+              ${schedule(open)}
               <div class="cd-card__foot">
                 <span>Cierre: ${escape(longDate(open.closes))}</span>
                 <span>${escape(`${group(open.stats.observations)} observaciones recibidas`)}</span>
@@ -877,6 +934,12 @@ function participation(ctx) {
                 <div class="cd-mapinfo__stat"><b>${escape(String(participationTotals.open))}</b><span>Consultas abiertas</span></div>
               </div>
               <p class="cd-note" style="margin-top:.75rem">${escape(notice.dataShort)} · el prototipo no envía información.</p>
+              <div class="cd-sideplate">
+                ${plate("participacion", {
+                  label:
+                    "Hemiciclo visto desde arriba, con tres cuartas partes de sus asientos ocupados",
+                })}
+              </div>
             </div>
           </div>
         </div>
@@ -884,6 +947,16 @@ function participation(ctx) {
 }
 
 /* ------------------------------------------------------- 12 · the knowledge */
+
+/* A theme, drawn. Four studies side by side is the densest block of prose on
+   the page, and four different pictures is what keeps it from reading as one
+   paragraph in four boxes. */
+const KNOWLEDGE_ART = {
+  "Inclusión y equidad": "mapa",
+  "Educación técnica": "barras",
+  "Formación docente": "red",
+  Permanencia: "serie",
+};
 
 function knowledgeCentre(ctx) {
   return `      <section class="cd-section" aria-labelledby="conocimiento">
@@ -908,6 +981,10 @@ function knowledgeCentre(ctx) {
                   text: item.summary,
                   serif: true,
                   target: page(ctx, "biblioteca", item.slug),
+                  cover: cover(KNOWLEDGE_ART[item.theme] ?? "serie", {
+                    seed: item.slug,
+                    label: `Portada ilustrada de «${item.title}»`,
+                  }),
                   foot:
                     `<span>${escape(longDate(item.date))}</span>` +
                     `<span>${escape(`${item.reading} min de lectura`)}</span>`,
@@ -973,6 +1050,7 @@ export const homeBody = (ctx) =>
   [
     hero(ctx),
     quickAccess(ctx),
+    gallery(ctx),
     figuresSection(),
     dashboard(ctx),
     priorities(ctx),

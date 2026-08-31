@@ -294,12 +294,36 @@ su bundle y su propio espacio de nombres.
 **La página es la consola.** La versión anterior tenía catorce secciones: un
 héroe, un panel de indicadores, un registro de nueve columnas, una tabla de
 plazos, tres tarjetas de reglas, un antes/después, un bloque de impacto y un
-cierre. Todo eso era el producto describiéndose a sí mismo, y nada de eso se
-podía pulsar. Ahora hay una sola sección con cuatro bloques y todos son
-accionables: el riel de procesos, la solicitud, la ruta que produce y las
-decisiones que la cierran. El registro no desapareció —los 15 expedientes siguen
-teniendo su URL— pero pasó a ser una búsqueda (`Buscar expediente`, o `⌘K`) en
-lugar de una tabla en medio del camino.
+cierre. Nada de eso se podía pulsar. Ahora hay una sola sección con cuatro
+bloques y todos son accionables: el riel de procesos, la solicitud, la ruta que
+produce y las decisiones que la cierran. El registro no desapareció —los 15
+expedientes siguen teniendo su URL— pero pasó a ser una búsqueda
+(`Buscar expediente`, o `⌘K`) en lugar de una tabla en medio del camino.
+
+**El argumento vive en tres registros, y ninguno estorba al anterior.** El
+primer recorte se pasó de largo: quedó claro qué pulsar y dejó de estar claro
+para qué servía. La respuesta no fue devolver la sección de beneficios, sino
+repartirla.
+
+1. `moduleInfo.purpose`, dos frases bajo el título, dice qué trabajo se
+   sustituye antes de que nadie pulse nada. Concretas a propósito —el recado
+   primero, el mecanismo después— en vez de una frase sobre transformación
+   digital.
+2. `advantages` ancla cada par *antes → ahora* al panel donde el visitante está
+   viendo esa misma cosa ocurrir: la ronda de correos junto a la ruta que la
+   elimina, la firma perseguida junto al turno, el retecleo junto al documento
+   generado, la arqueología de correos junto a la bitácora. Van marcados como
+   comentario, no como una instrucción más.
+3. `¿Qué resuelve?` es la única sección que argumenta en vez de demostrar, y por
+   eso es lo último de la página: quien quiere pulsar llega antes a la consola y
+   nunca tiene que bajar por un alegato para llegar al producto.
+
+Y entre la demostración y el alegato hay una cuarta cosa: `tally.js` cuenta lo
+que la ejecución dejó —autorizaciones con constancia, documentos, asientos de
+bitácora y correos perseguidos— leyéndolo de la propia página en vez de llevar
+la cuenta aparte, así que la tira no puede afirmar nada que la pantalla detrás
+no muestre. El cuarto número se queda en cero, que es justamente por lo que
+está ahí.
 
 **Glasswing, en grafito.** Fondo oscuro neutro con tres pozos de luz
 desenfocados detrás, y sobre él paneles de vidrio: translúcidos, con
@@ -377,6 +401,12 @@ los glifos en `transparent`, se muestrea el píxel real bajo cada etiqueta y se
 compone encima el color propio del texto con su alfa y la cadena de `opacity` de
 sus ancestros. Con eso se fijaron los valores atenuados de la consola; el peor
 de la página queda en 5,4:1.
+
+Un detalle que cuesta una medición falsa: `text-decoration-color` está fijado
+explícitamente en la línea tachada del *antes*, así que sobrevive a
+`color: transparent` y pinta una raya justo por el punto de muestreo. Si la
+plancha no lo neutraliza también, esa línea se mide contra su propio tachado y
+sale 3,2:1 en vez de 8:1.
 
 **Todo es ficticio y lo dice en voz alta.** Las personas, los montos, los
 códigos y el documento están inventados; el correo no se envía, el archivo no se
