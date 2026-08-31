@@ -32,9 +32,9 @@ const written = [];
 function emit(path, build) {
   const depth = path.split("/").length - 1;
   const ctx = context(depth);
-  const { meta, body } = build(ctx);
+  const { meta, body, console: isConsole = false } = build(ctx);
 
-  const html = document_({ ctx, meta, body });
+  const html = document_({ ctx, meta, body, console: isConsole });
   const file = join(OUT, ...path.split("/"));
   mkdirSync(dirname(file), { recursive: true });
   writeFileSync(file, html);

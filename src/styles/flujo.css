@@ -3,9 +3,9 @@
 
    The administrative automation demo ships its own bundle and shares nothing at
    runtime with the portfolio or the other demos. It is a working interface
-   rather than a marketing site: light, square, ruled, tabular, and built around
-   a handful of primitives plus the workflow components that are the actual
-   subject.
+   rather than a marketing site: a console of glass panes over a dark field,
+   built around a handful of primitives plus the workflow components that are
+   the actual subject.
 
    `npm run build:css` flattens this into `dist/flujo.css`.
    ========================================================================== */
@@ -15,6 +15,12 @@
 @import "./flujo/base.css";
 @import "./flujo/shell.css";
 @import "./flujo/workflow.css";
+
+/* The retheme, and the console the module page became. Both load last: they
+   change the material every component above is made of, and add the handful of
+   components that only the console has. */
+@import "./flujo/glasswing.css";
+@import "./flujo/console.css";
 
 /* -----------------------------------------------------------------------------
    Reduced motion

@@ -49,6 +49,16 @@
   --step-4: #0d3b99;
   --step-none: #e4e9f0;  /* no data — never a value on the ramp              */
 
+  /* --- Drawn imagery ------------------------------------------------------
+     The plates in `cede/art.css` are the portal's photography: diagrams given
+     enough scale to work as pictures. Most of a plate is white-on-navy or the
+     sequential ramp on paper, but each one carries one accented mark, and the
+     ochre of the chart palette goes muddy on the navy grounds. This is that
+     same hue lifted until it clears 4.5:1 on --navy-800, and it is used
+     nowhere except inside a plate. */
+  --art-accent: #e39b45;
+  --art-accent-ink: var(--c2);
+
   /* --- Status ------------------------------------------------------------
      Reserved meanings, never reused as a fourth series, and never the only
      channel: every status ships with a word and an icon. All four clear 6:1
@@ -171,6 +181,11 @@
   --step-3: #1f4da0;
   --step-4: #00297a;
   --step-none: #ffffff;
+
+  /* On a black plate the lifted ochre is the wrong instrument: the accented
+     mark simply becomes the brightest thing in the drawing. */
+  --art-accent: #ffffff;
+  --art-accent-ink: #000000;
 
   --ok: #005c2e;
   --warn: #6b3f00;

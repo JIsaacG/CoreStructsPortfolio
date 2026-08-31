@@ -215,7 +215,7 @@ export function verificationMark(seed, size = 21) {
   return (
     `<svg class="wf-doc__qr" viewBox="0 0 ${size} ${size}" role="img" ` +
     `aria-label="Marca de verificación demostrativa. No es un código legible." ` +
-    `shape-rendering="crispEdges" fill="#071e4a">` +
+    `shape-rendering="crispEdges" fill="#1b1e24">` +
     finders.map(([fx, fy]) => finder(fx, fy)).join("") +
     cells +
     `</svg>`

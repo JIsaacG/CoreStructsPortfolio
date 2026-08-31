@@ -40,6 +40,7 @@ import {
   sparkline,
   stackedBar,
 } from "../../src/scripts/cede/charts.js";
+import { cover, emblem, plate } from "./art.mjs";
 import {
   arrowLink,
   button,
@@ -201,13 +202,16 @@ ${heroMap()}
 /* -------------------------------------------------------------- 02 · access */
 
 function quickAccess(ctx) {
+  /* `art` is the drawing each door gets, and no two of the six share one: the
+     picture is how a returning visitor finds the door they used last time,
+     which only works while the pictures are distinguishable at a glance. */
   const items = [
-    { index: "01", title: "Datos educativos", text: "Diez tableros y dieciocho territorios, con series desde 2019.", route: "datos" },
-    { index: "02", title: "Política educativa", text: "El marco que orienta las decisiones del sistema.", route: "politica" },
-    { index: "03", title: "Plan estratégico", text: "Plan Nacional 2026–2035 y su monitor público de avance.", route: "planificacion" },
-    { index: "04", title: "Normativa", text: "Leyes, reglamentos, acuerdos y resoluciones del Consejo.", route: "normativa" },
-    { index: "05", title: "Biblioteca", text: "Informes, investigaciones y publicaciones descargables.", route: "biblioteca" },
-    { index: "06", title: "Participación", text: "Consultas públicas abiertas y mecanismos de incidencia.", route: "participacion" },
+    { index: "01", title: "Datos educativos", text: "Diez tableros y dieciocho territorios, con series desde 2019.", route: "datos", art: "mapa" },
+    { index: "02", title: "Política educativa", text: "El marco que orienta las decisiones del sistema.", route: "politica", art: "red" },
+    { index: "03", title: "Plan estratégico", text: "Plan Nacional 2026–2035 y su monitor público de avance.", route: "planificacion", art: "serie" },
+    { index: "04", title: "Normativa", text: "Leyes, reglamentos, acuerdos y resoluciones del Consejo.", route: "normativa", art: "registro" },
+    { index: "05", title: "Biblioteca", text: "Informes, investigaciones y publicaciones descargables.", route: "biblioteca", art: "hojas" },
+    { index: "06", title: "Participación", text: "Consultas públicas abiertas y mecanismos de incidencia.", route: "participacion", art: "asamblea" },
   ];
 
   return `      <section class="cd-section cd-section--surface" aria-labelledby="accesos">
@@ -221,17 +225,127 @@ function quickAccess(ctx) {
               "Cada sección responde a una necesidad concreta. Si sabe qué busca, este índice lo " +
               "lleva en un clic; si no, el observatorio es el mejor punto de partida.",
           })}
-          <div class="cd-access" data-reveal-group>
+          <div class="cd-access cd-access--art" data-reveal-group>
             ${items
               .map(
                 (item) =>
                   `<a class="cd-access__item" href="${page(ctx, item.route)}" data-reveal="rise">` +
+                  `<span class="cd-access__cover">` +
+                  `${cover(item.art, { seed: item.route, label: `${item.title}: ilustración de la sección` })}</span>` +
+                  `<span class="cd-access__body">` +
                   `<span class="cd-access__index">${item.index}</span>` +
                   `<span class="cd-access__title">${escape(item.title)}` +
                   `${icon("arrow", "cd-access__arrow")}</span>` +
-                  `<span class="cd-access__text">${escape(item.text)}</span></a>`,
+                  `<span class="cd-access__text">${escape(item.text)}</span></span></a>`,
               )
               .join("")}
+          </div>
+        </div>
+      </section>`;
+}
+
+/* -------------------------------------------------------------- 02 · gallery */
+
+/**
+ * The gallery band.
+ *
+ * The portal's one deliberately pictorial zone, and the answer to a problem an
+ * invented institution has and a real one does not: there is nothing to
+ * photograph. So the five pictures are drawn out of the portal's own material
+ * — a seating plan, the territory, the workforce, the signal, the workshop —
+ * and each one is captioned with the figure it is a picture of, read live from
+ * `statistics.js` like every other number on the page.
+ *
+ * It sits between the six doors and the six figures on purpose: the reader has
+ * just been told where things are and is about to be given the year in
+ * numbers, and this is the one moment where an image can do more than either.
+ */
+function gallery(ctx) {
+  const plates = [
+    {
+      kind: "matricula",
+      span: "wide",
+      title: "Cobertura",
+      value: `${decimal(rate("cobertura_c12", {}), 1)}`,
+      sup: "%",
+      text:
+        "Treinta y cinco plazas, cuatro vacías. Ese es el aula que describe la cobertura de " +
+        "educación básica al cierre del año lectivo.",
+      alt: "Plano de un aula de treinta y cinco plazas, cuatro de ellas vacías",
+    },
+    {
+      kind: "territorio",
+      span: "wide",
+      title: "Territorio",
+      value: group(metricFor("centros", {})),
+      text:
+        "Dieciocho departamentos y 298 municipios, sombreados según el peso de su matrícula: " +
+        "el mismo trazo oficial que colorea el observatorio.",
+      alt: "Mapa de Honduras con sus dieciocho departamentos sombreados según su matrícula",
+    },
+    {
+      kind: "docentes",
+      span: "third",
+      title: "Personal docente",
+      value: group(metricFor("docentes", {})),
+      text: "Una plantilla se dibuja repetida: una sola figura sería un icono.",
+      alt: "Un campo de figuras humanas repetidas, algunas destacadas",
+    },
+    {
+      kind: "conectividad",
+      span: "third",
+      title: "Conectividad",
+      value: `${decimal(rate("conectividad", {}), 1)}`,
+      sup: "%",
+      text: "Centros educativos alcanzados por la señal, y los que todavía no.",
+      alt: "Diagrama de una señal que alcanza parte de una retícula de centros educativos",
+    },
+    {
+      kind: "tecnica",
+      span: "third",
+      title: "Educación técnica",
+      value: group(metricFor("tecnica", {})),
+      text: "Competencias, dibujadas como lo que son: una lámina de taller.",
+      alt: "Lámina técnica de dos ruedas dentadas engranadas con marcas de construcción",
+    },
+  ];
+
+  return `      <section class="cd-gallery" aria-labelledby="imagenes">
+        <div class="cd-shell">
+          ${head({
+            id: "imagenes",
+            index: "02",
+            label: "El sistema en imágenes",
+            title: "Cinco láminas del sistema educativo.",
+            body:
+              "No hay fotografías: el Consejo es una entidad ficticia y no tendría a quién " +
+              "retratar. Cada lámina se dibuja con los mismos datos que alimentan el " +
+              "observatorio, y lleva al pie la cifra que ilustra.",
+            action: button("Ver el observatorio completo", page(ctx, "datos"), {
+              className: "cd-btn--onDark",
+              icon: "arrow",
+            }),
+          })}
+
+          <div class="cd-gallery__grid" data-reveal-group>
+            ${plates
+              .map(
+                (item) =>
+                  `<figure class="cd-plate cd-plate--${item.span}" data-reveal="rise">` +
+                  `<div class="cd-plate__art">${plate(item.kind, { label: item.alt })}</div>` +
+                  `<figcaption class="cd-plate__caption">` +
+                  `<p class="cd-plate__title">${escape(item.title)}</p>` +
+                  `<p class="cd-plate__value">${escape(item.value)}` +
+                  `${item.sup ? `<sup>${escape(item.sup)}</sup>` : ""}</p>` +
+                  `<p class="cd-plate__text">${escape(item.text)}</p>` +
+                  `</figcaption></figure>`,
+              )
+              .join("")}
+          </div>
+
+          <div class="cd-gallery__foot">
+            <span>${escape(notice.data)}</span>
+            ${demoTag("Ilustraciones generadas con los datos del portal", true)}
           </div>
         </div>
       </section>`;
@@ -275,7 +389,7 @@ function figuresSection() {
         <div class="cd-shell">
           ${head({
             id: "cifras",
-            index: "02",
+            index: "03",
             label: "Educación en cifras",
             title: "Honduras en perspectiva.",
             body: "Una lectura integral del sistema educativo, actualizada con el cierre del año lectivo 2026.",
@@ -361,7 +475,7 @@ function dashboard(ctx) {
         <div class="cd-shell">
           ${head({
             id: "panorama-home",
-            index: "03",
+            index: "04",
             label: "Mapa educativo",
             title: "El sistema, territorio por territorio.",
             body:
@@ -483,32 +597,46 @@ function dashboard(ctx) {
 
 /* ------------------------------------------------------ 05 · the priorities */
 
+/**
+ * A strategic axis, with its emblem and its own progress.
+ *
+ * Five cards of running text is a wall, and the axes are the part of the plan
+ * a visitor is most likely to skim: the emblem gives each one a silhouette to
+ * recognise, and the meter puts its progress where the eye already is instead
+ * of hiding it in a footer line.
+ */
+function axisCard(ctx, axis) {
+  return (
+    `<a class="cd-axiscard" href="${page(ctx, "planificacion", `eje-${axis.id}`)}" data-reveal="rise">` +
+    `<div class="cd-axiscard__top">` +
+    `<div><p class="cd-axiscard__kicker">Eje ${escape(axis.index)}</p>` +
+    `<p class="cd-axiscard__title">${escape(axis.name)}</p></div>` +
+    emblem(axis.id) +
+    `</div>` +
+    `<p class="cd-axiscard__text">${escape(axis.lead)}</p>` +
+    `<div class="cd-axiscard__foot">` +
+    `<div class="cd-axiscard__numbers"><span>${escape(`${axis.programmes} programas`)}</span>` +
+    `<span class="cd-axiscard__value">${escape(`${decimal(axis.progress, 1)} %`)}</span></div>` +
+    `<span class="cd-meter" role="img" ` +
+    `aria-label="${escape(`${axis.name}: ${decimal(axis.progress, 1)} % de avance`)}">` +
+    `<span class="cd-meter__fill" style="width:${axis.progress}%"></span></span>` +
+    `</div></a>`
+  );
+}
+
 function priorities(ctx) {
   return `      <section class="cd-section" aria-labelledby="prioridades">
         <div class="cd-shell">
           ${head({
             id: "prioridades",
-            index: "04",
+            index: "05",
             label: "Prioridades estratégicas",
             title: "Cinco ejes para la próxima década.",
             body: plan.lead,
             action: arrowLink("Ver el plan completo", page(ctx, "planificacion")),
           })}
           <div class="cd-grid cd-grid--3" data-reveal-group>
-            ${axes
-              .map((axis) =>
-                card({
-                  kicker: `Eje ${axis.index}`,
-                  title: axis.name,
-                  text: axis.lead,
-                  serif: true,
-                  target: page(ctx, "planificacion", `eje-${axis.id}`),
-                  foot:
-                    `<span>${escape(`${axis.programmes} programas`)}</span>` +
-                    `<span class="cd-num">${escape(`${decimal(axis.progress, 1)} % de avance`)}</span>`,
-                }),
-              )
-              .join("")}
+            ${axes.map((axis) => axisCard(ctx, axis)).join("")}
           </div>
         </div>
       </section>`;
@@ -548,7 +676,7 @@ function monitor(ctx) {
         <div class="cd-shell">
           ${head({
             id: "monitor-home",
-            index: "05",
+            index: "06",
             label: "Monitor del Plan Nacional",
             title: "El avance del plan, en público y en tiempo real.",
             body:
@@ -589,7 +717,7 @@ function systemNetwork() {
         <div class="cd-shell">
           ${head({
             id: "red",
-            index: "06",
+            index: "07",
             label: "Sistema educativo articulado",
             title: network.title,
             body: network.lead,
@@ -609,7 +737,7 @@ function documents(ctx) {
         <div class="cd-shell">
           ${head({
             id: "documentos",
-            index: "07",
+            index: "08",
             label: "Documentos destacados",
             title: "Lo que el Consejo publica.",
             body: "Informes, investigaciones y documentos de política, con su metodología y su fecha.",
@@ -661,7 +789,7 @@ function recentIndicators(ctx) {
         <div class="cd-shell">
           ${head({
             id: "indicadores",
-            index: "08",
+            index: "09",
             label: "Indicadores recientes",
             title: "Cuatro cifras que resumen el año.",
             body:
@@ -691,7 +819,7 @@ function news(ctx) {
         <div class="cd-shell">
           ${head({
             id: "actualidad-home",
-            index: "09",
+            index: "10",
             label: "Actualidad",
             title: "Sesiones, metodologías y acuerdos.",
             body:
@@ -716,7 +844,7 @@ function participation(ctx) {
         <div class="cd-shell">
           ${head({
             id: "participacion-home",
-            index: "10",
+            index: "11",
             label: "Participación ciudadana",
             title: "Antes de decidir, se consulta.",
             body:
@@ -762,7 +890,7 @@ function knowledgeCentre(ctx) {
         <div class="cd-shell">
           ${head({
             id: "conocimiento",
-            index: "11",
+            index: "12",
             label: "Centro de conocimiento",
             title: "Investigación para decidir mejor.",
             body:
@@ -798,7 +926,7 @@ function taskIndex(ctx) {
         <div class="cd-shell">
           ${head({
             id: "tareas",
-            index: "12",
+            index: "13",
             label: "Qué necesita hacer",
             title: "El portal, ordenado por lo que usted busca.",
           })}

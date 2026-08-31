@@ -262,8 +262,16 @@ export const downloadTools = () =>
 
 /* ------------------------------------------------------------------- cards */
 
-export function card({ kicker, title, text, foot, target, serif = false, state }) {
-  const inner =
+/**
+ * A card.
+ *
+ * `cover` is an optional plate from `art.mjs`. When one is present the card
+ * loses its own padding and grows a body, because the drawing has to reach the
+ * card's edges — a picture with a margin reads as an illustration of the card
+ * rather than as the card's own subject.
+ */
+export function card({ kicker, title, text, foot, target, serif = false, state, cover }) {
+  const body =
     (kicker || state
       ? `<p class="cd-card__kicker">${kicker ? escape(kicker) : ""}${state ?? ""}</p>`
       : "") +
@@ -271,9 +279,14 @@ export function card({ kicker, title, text, foot, target, serif = false, state }
     (text ? `<p class="cd-card__text">${escape(text)}</p>` : "") +
     (foot ? `<div class="cd-card__foot">${foot}</div>` : "");
 
+  const inner = cover
+    ? `<div class="cd-cover">${cover}</div><div class="cd-card__body">${body}</div>`
+    : body;
+  const className = `cd-card${cover ? " cd-card--art" : ""}`;
+
   return target
-    ? `<a class="cd-card" href="${escape(target)}" data-reveal="rise">${inner}</a>`
-    : `<div class="cd-card" data-reveal="rise">${inner}</div>`;
+    ? `<a class="${className}" href="${escape(target)}" data-reveal="rise">${inner}</a>`
+    : `<div class="${className}" data-reveal="rise">${inner}</div>`;
 }
 
 /** A numbered definition row — functions, principles, seats, methodology. */

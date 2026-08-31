@@ -1,9 +1,8 @@
 /**
  * The interface around the engine.
  *
- * Tabs, the register's filters and search, the two mini-demo dialogs, the
- * process chooser, the transient message, the simulated download and the reset
- * control. None of it supplies content — every one of these operates on markup
+ * Tabs, the expediente search, the two mini-demo dialogs, the process
+ * chooser, the transient message, the simulated download and the reset control. None of it supplies content — every one of these operates on markup
  * the build already wrote, which is why the page is complete before any of this
  * runs and merely becomes usable afterwards.
  */
@@ -79,65 +78,86 @@ export function initTabs(scope = document) {
   return (name) => first?.(name);
 }
 
-/* --------------------------------------------------------------- register */
+/* ---------------------------------------------------------------- palette */
 
 /**
- * Filters and search over the register.
+ * The register, as a search.
  *
- * Rows carry their own facets as data attributes, written by the build, so
- * filtering is a comparison rather than a re-render: nine columns of fifteen
- * requests stay exactly as they were painted, and nothing can drift.
+ * Fifteen expedientes used to sit in the middle of the demonstration as a
+ * nine-column table with five filter controls over it. They are all still here
+ * and all still addressable — they are simply not in the way: one control in
+ * the bar opens this, typing narrows it, Enter opens the first hit and Escape
+ * closes it.
+ *
+ * Every row is markup the build already wrote, so filtering is a comparison
+ * over `data-text` rather than a re-render, and nothing can drift.
  */
-export function initRegister() {
-  const panel = document.querySelector("[data-wf-filters]");
-  if (!panel) return;
+export function initPalette() {
+  const dialog = document.querySelector("[data-wf-palette]");
+  if (!dialog) return () => {};
 
-  const scope = panel.parentElement;
-  const rows = [...scope.querySelectorAll("[data-wf-register] tbody tr")];
-  const search = panel.querySelector("[data-wf-search]");
-  const selects = [...panel.querySelectorAll("[data-wf-filter]")];
-  const counter = panel.querySelector("[data-wf-count]");
-  const empty = scope.querySelector("[data-wf-noresults]");
-  const clear = panel.querySelector("[data-wf-clear]");
+  const input = dialog.querySelector("[data-wf-palette-input]");
+  const rows = [...dialog.querySelectorAll("[data-text]")];
+  const empty = dialog.querySelector("[data-wf-palette-empty]");
 
   const apply = () => {
-    const query = (search?.value ?? "").trim().toLowerCase();
+    const query = input.value.trim().toLowerCase();
     let shown = 0;
 
     for (const row of rows) {
-      const matchesText = !query || (row.dataset.text ?? "").includes(query);
-      const matchesFacets = selects.every((select) => {
-        const value = select.value;
-        return value === "all" || row.dataset[select.dataset.wfFilter] === value;
-      });
-
-      const visible = matchesText && matchesFacets;
+      const visible = !query || (row.dataset.text ?? "").includes(query);
       row.hidden = !visible;
       if (visible) shown += 1;
     }
-
-    if (counter) {
-      counter.textContent = `${shown} ${shown === 1 ? "solicitud" : "solicitudes"}`;
-    }
-    if (empty) empty.hidden = shown !== 0;
+    if (empty) empty.hidden = shown > 0;
   };
 
-  search?.addEventListener("input", apply);
-  for (const select of selects) select.addEventListener("change", apply);
-
-  clear?.addEventListener("click", () => {
-    if (search) search.value = "";
-    for (const select of selects) select.value = "all";
+  const open = () => {
+    if (typeof dialog.showModal === "function") dialog.showModal();
+    else dialog.setAttribute("open", "");
+    input.value = "";
     apply();
+    input.focus();
+  };
+
+  for (const trigger of document.querySelectorAll("[data-wf-palette-open]")) {
+    trigger.addEventListener("click", open);
+  }
+
+  input.addEventListener("input", apply);
+
+  /* Enter opens whatever is at the top of the list, which is what someone who
+     has just typed a code is asking for. */
+  input.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter") return;
+    const first = rows.find((row) => !row.hidden)?.querySelector("a");
+    if (!first) return;
+    event.preventDefault();
+    first.click();
+  });
+
+  /* The click lands on the dialog element itself only outside the padded box. */
+  dialog.addEventListener("click", (event) => {
+    if (event.target === dialog) dialog.close();
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (!(event.ctrlKey || event.metaKey) || event.key.toLowerCase() !== "k") return;
+    event.preventDefault();
+    if (dialog.open) dialog.close();
+    else open();
   });
 
   /* A code arriving in the address — from a link, or from someone pasting one —
-     lands in the search box rather than nowhere. */
+     opens the search on it rather than nowhere. */
   const query = new URLSearchParams(location.search).get("q");
-  if (query && search) {
-    search.value = query;
+  if (query) {
+    open();
+    input.value = query;
     apply();
   }
+
+  return open;
 }
 
 /* --------------------------------------------------------------- dialogs */
@@ -199,13 +219,13 @@ export function initChooser({ openDialog, toast }) {
       for (const other of tiles) other.setAttribute("aria-pressed", String(other === tile));
 
       if (id === "compra") {
-        document.querySelector("#solicitud")?.scrollIntoView({ behavior: "smooth", block: "start" });
+        document.querySelector("#solicitud")?.scrollIntoView({ behavior: "smooth", block: "center" });
         return;
       }
 
       toast(
-        `${tile.querySelector(".wf-process__title")?.textContent.trim()}: flujo demostrativo. ` +
-          "El motor y la pantalla de seguimiento son los mismos; cambia la definición de pasos.",
+        `${tile.querySelector(".gw-chip__name")?.textContent.trim()}: mismo motor, misma consola. ` +
+          "Cambia la definición de pasos y responsables.",
       );
     });
   }
