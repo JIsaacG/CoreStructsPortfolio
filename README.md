@@ -55,6 +55,8 @@ npm run build:demos    # src/data/demos.js    ->  demos/verbena.html
 npm run build:aurelis  # src/data/aurelis/*   ->  demos/aurelis/*.html
 npm run build:cede     # src/data/cede/*      ->  demos/cede/*.html
 npm run build:flujo    # src/data/flujo/*     ->  demos/flujo/*.html
+npm run build:rumbo    # src/data/rumbo/*     ->  demos/rumbo/*.html
+npm run build:landing  # src/data/landings.js ->  demos/landing/*.html
 npm run check          # validación previa a publicar
 ```
 
@@ -83,6 +85,9 @@ src/
     mockups.js             los visuales SVG de cada tarjeta
     demos.js               el contenido de cada sitio de ejemplo
     bottle.js              la botella SVG que protagoniza el demo Verbena
+    rumbo/                 company.js, clients.js, users.js, operations.js,
+                           format.js — el modelo del panel interno de Rumbo
+    landings.js             el contenido de las dos landings, Cierzo y Lumen
   styles/
     main.css               punto de entrada del portfolio (orden de la cascada)
     demo.css               punto de entrada de los sitios de ejemplo
@@ -94,7 +99,9 @@ src/
     components/            header, button, hero, wordmark, spotlight, projects,
                            mockup, alliances, manifesto, contact
     demo/                  shell, header, stage (la botella), hero, sections,
-                           shop, footer — solo para las páginas de demos/
+                           shop, footer, dashboard (paneles, tablas, pills de
+                           Rumbo), landing (hero, pasos, agenda, FAQ de Cierzo
+                           y Lumen) — solo para las páginas de demos/
   scripts/
     main.js                arranque
     modules/
@@ -109,9 +116,15 @@ src/
       logo-burst.js        las chispas azules que suelta el isotipo del hero
                            al hacer clic o tocarlo
     demo/
-      main.js              arranque de un sitio de ejemplo
+      main.js              arranque de Verbena (suma la botella, el fizz, el sabor)
+      shell.js             arranque de Rumbo y las landings: header + reveal, sin
+                           la maquinaria de la botella
       stage.js             la botella pineada: keyframes medidos del layout
       flavours.js          el sabor en pantalla retiñe la botella y la página
+    rumbo/
+      filters.js           filtro y búsqueda de las tablas de expedientes y
+                           operaciones — mejora progresiva, la tabla ya está
+                           completa en el HTML sin este script
 
 tools/                     scripts de compilación (Node, sin dependencias)
   lib/png.mjs              códec PNG mínimo (decodificar, codificar, escalar)
@@ -120,6 +133,8 @@ tools/                     scripts de compilación (Node, sin dependencias)
   build-aurelis.mjs  aurelis/    el portal corporativo
   build-cede.mjs     cede/       el portal gubernamental
   build-flujo.mjs    flujo/      la demo de automatización administrativa
+  build-rumbo.mjs    rumbo/      el sistema interno de una distribuidora
+  build-landings.mjs             las dos landings, Cierzo y Lumen
   build-map.mjs              GeoJSON -> src/data/cede/geography.js
   check.mjs  serve.mjs
 
@@ -137,6 +152,13 @@ dist/aurelis.css           la del portal corporativo
 dist/cede.css              la del portal gubernamental
 dist/flujo.css             la de la demo de automatización
 ```
+
+Rumbo y las landings no suman un `dist/*.css` propio: comparten `dist/demo.css` con
+Verbena, igual que comparten `src/scripts/demo/shell.js` en vez de `main.js`. A
+diferencia de Aurelis, CEDE y Flujo —que abren una identidad visual completa y por
+eso cargan su propia base— Rumbo y las landings son del mismo tamaño que Verbena:
+les basta con retintar `--brand-primary` / `--brand-secondary` y sumar los
+componentes que les faltan (`demo/dashboard.css`, `demo/landing.css`).
 
 El portal gubernamental sigue la misma división, en su propio espacio de nombres:
 
@@ -416,6 +438,78 @@ descarga y la marca de verificación no es un código legible. Las páginas son
 
 ```bash
 npm run build:flujo    # regenera demos/flujo/*.html
+```
+
+---
+
+### Rumbo — el sistema interno de una distribuidora
+
+La tarjeta **03 · Sistemas empresariales** abre `demos/rumbo/`: el panel que el
+propio personal de una distribuidora mayorista ficticia usaría — un tablero, el
+registro de clientes (expedientes), el personal y sus roles, y la bitácora de
+operaciones. No es la web pública de Rumbo, es lo que hay detrás de ella.
+
+Lo que trae:
+
+- **Panel** con cuatro indicadores, seis semanas de ventas en una barra simple
+  y la actividad reciente — pedidos, entregas, pagos y ajustes con quién los
+  hizo y a qué cliente tocaron.
+- **Expedientes**: seis clientes de muestra sobre una cartera declarada de 184,
+  cada uno con su saldo, su vendedor, su historial de pedidos, sus notas de
+  visita y sus documentos. La lista se filtra por estado y se busca por
+  cliente o zona sin recargar la página.
+- **Usuarios** con rol, área y último acceso, más la matriz de **roles y
+  permisos** debajo — quién puede ver un expediente no es lo mismo que quién
+  puede aprobar un crédito.
+- **Operaciones**: la bitácora completa, filtrable por tipo (pedido, entrega,
+  pago, ajuste) y buscable por cliente o responsable.
+
+Dos decisiones que conviene conocer:
+
+**El filtro es mejora progresiva, no el contenido.** `src/scripts/rumbo/filters.js`
+oculta filas con `hidden`, nunca las quita del HTML: los seis expedientes, los
+ocho usuarios y las dieciséis operaciones están completos en la página que se
+descarga. Sin JavaScript se ve el registro entero en vez de una tabla vacía
+esperando datos.
+
+**El reloj está congelado**, mismo motivo que en Flujo: `RUMBO_TODAY` en
+`company.js` fija qué significa "hoy" en todo el demo, para que el panel
+muestre siempre el mismo reparto entre pedidos completados, un pago pendiente
+y un ajuste cancelado — el que tiene un registro real.
+
+```bash
+npm run build:rumbo    # regenera demos/rumbo/*.html
+```
+
+---
+
+### Cierzo y Lumen — las landing pages
+
+La tarjeta **04 · Landing pages** abre `demos/landing/servicios.html`: dos
+ejemplos, no uno, porque una landing se juzga por qué tan bien se compromete
+con un solo objetivo, y eso solo se nota comparándola con otra que persigue un
+objetivo distinto.
+
+- **Cierzo** vende una consultoría: el objetivo es agendar un diagnóstico
+  gratuito. Trae propuesta de valor, método en tres pasos, testimonios y
+  preguntas frecuentes.
+- **Lumen** vende un lugar en un evento: el objetivo es reservar un cupo. Trae
+  agenda del día, ponentes y las mismas preguntas frecuentes con otras
+  respuestas.
+
+Cada página cierra con un enlace cruzado a la otra — «¿buscas algo distinto?»
+— porque la manera más honesta de mostrar dos landings es dejar que el
+visitante compare.
+
+Ninguna de las dos carga la maquinaria de Verbena (botella, fizz, sabores):
+usan `src/scripts/demo/shell.js`, el mismo arranque liviano de Rumbo, y el
+llamado a la acción es un `mailto:` — no hay backend detrás de ningún demo del
+repositorio, y esta es la única página del sitio donde eso importa, porque
+"agenda tu consulta" sin un lugar real donde escribir sería la única mentira
+del conjunto.
+
+```bash
+npm run build:landing  # regenera demos/landing/*.html
 ```
 
 ---

@@ -43,6 +43,8 @@ export const projects = [
     description:
       "Expedientes, usuarios y operaciones en un sistema que se adapta a los procesos reales de la empresa.",
     mockup: "system",
+    variant: "systems",
+    href: "demos/rumbo/index.html",
     size: "minor",
     reveal: "rise",
   },
@@ -53,6 +55,8 @@ export const projects = [
     description:
       "Páginas de campaña enfocadas en un único objetivo: que la persona correcta dé el siguiente paso.",
     mockup: "landing",
+    variant: "landing",
+    href: "demos/landing/servicios.html",
     size: "major",
     reveal: "far",
   },

@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Pulpería El Progreso — Rumbo · Demo de CoreStruct</title>
+    <meta name="description" content="Ficha de Pulpería El Progreso, El Progreso, Yoro: saldo, historial de pedidos y notas de visita." />
+    <!-- An invented company must never turn up in a search result as a real one. -->
+    <meta name="robots" content="noindex, follow" />
+    <meta name="theme-color" content="#080b12" />
+    <meta name="color-scheme" content="dark" />
+
+    <link rel="icon" href="../../../favicon.ico" sizes="32x32" />
+    <link rel="icon" href="../../../assets/brand/isotipo.svg" type="image/svg+xml" />
+
+    <link
+      rel="preload"
+      href="../../../assets/fonts/manrope-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <link rel="stylesheet" href="../../../dist/demo.css" />
+
+    <!-- Rumbo's jade, in place of CoreStruct's navy and cyan. Every shared
+         component below reads these four values rather than a hard-coded
+         colour, so the whole panel re-tints from here. -->
+    <style>
+      :root {
+        --brand-primary: #0c2a20;
+        --brand-secondary: #2fae7a;
+        --brand-primary-rgb: 12 42 32;
+        --brand-secondary-rgb: 47 174 122;
+      }
+    </style>
+
+    <script>
+      document.documentElement.classList.add("js");
+      setTimeout(function () {
+        if (!document.documentElement.dataset.revealsReady) {
+          document.documentElement.classList.remove("js");
+        }
+      }, 2500);
+    </script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+    <a class="dm-badge" href="../../../index.html#proyectos">
+      <svg class="dm-badge__mark" viewBox="0 0 362 422" aria-hidden="true" focusable="false">
+        <path fill="#2c6fb2" d="M10 98L17 92L181 1L188 3L354 96L353 99L200 186L185 179L173 181L166 186L11 98Z"/>
+        <path fill="#3898d4" d="M188 421L188 373L190 371L320 295L320 248L318 248L188 324L188 217L198 211L202 203L202 197L358 111L361 109L361 165L233 234L233 275L361 200L361 321L189 421Z"/>
+        <path fill="#253880" d="M1 107L160 195L166 210L176 216L176 252L174 252L42 176L42 294L114 336L154 359L154 297L176 309L176 422L2 321L1 108Z"/>
+      </svg>
+      <span class="dm-badge__tag">Demo</span>
+      <span class="dm-badge__label">Sitio de ejemplo · CoreStruct</span>
+    </a>
+
+    <header class="dm-header" data-header>
+      <div class="dm-header__inner">
+        <a class="dm-wordmark" href="../index.html">
+          <span class="dm-wordmark__name">Rumbo</span>
+          <span class="dm-wordmark__mark">Distribución mayorista</span>
+        </a>
+
+        <nav class="dm-nav" aria-label="Secciones">
+            <a class="dm-nav__link" href="../index.html">Panel</a>
+            <a class="dm-nav__link" href="../expedientes.html" aria-current="page">Expedientes</a>
+            <a class="dm-nav__link" href="../usuarios.html">Usuarios</a>
+            <a class="dm-nav__link" href="../operaciones.html">Operaciones</a>
+        </nav>
+
+        <div class="dm-header__actions">
+          <a class="button button--primary" href="../../../index.html#contacto">Hablemos de tu proyecto</a>
+          <button
+            class="dm-burger"
+            type="button"
+            aria-expanded="false"
+            aria-controls="dm-menu"
+            aria-label="Abrir el menú"
+            data-menu-toggle
+          >
+            <span class="dm-burger__bar"></span>
+            <span class="dm-burger__bar"></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="dm-menu" id="dm-menu" data-mobile-nav>
+      <a class="dm-menu__link" href="../index.html">Panel</a>
+      <a class="dm-menu__link" href="../expedientes.html">Expedientes</a>
+      <a class="dm-menu__link" href="../usuarios.html">Usuarios</a>
+      <a class="dm-menu__link" href="../operaciones.html">Operaciones</a>
+      <a class="dm-menu__link" href="../../../index.html#contacto">Hablemos de tu proyecto</a>
+    </div>
+
+    <main class="dm" id="contenido">
+      <div class="dm-page-head dm-shell">
+        <p class="dm-record__code" data-reveal="fade"><a class="dm-table__link" href="../expedientes.html">Expedientes</a> / Pulpería El Progreso</p>
+        <div class="dm-record__header" data-reveal="fade">
+          <div>
+            <h1 class="dm-record__title">Pulpería El Progreso</h1>
+            <p class="dm-page-head__text">El Progreso, Yoro · vendedor Katherine Suazo</p>
+          </div>
+          <span class="dm-pill dm-pill--warn">En mora</span>
+        </div>
+        <div class="dm-record__figures">
+          <div>
+            <p class="dm-record__figure-label">Saldo actual</p>
+            <p class="dm-record__figure-value">L 28,650</p>
+          </div>
+          <div>
+            <p class="dm-record__figure-label">Límite de crédito</p>
+            <p class="dm-record__figure-value">L 25,000</p>
+          </div>
+          <div>
+            <p class="dm-record__figure-label">Cliente desde</p>
+            <p class="dm-record__figure-value">04 sep 2019</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="dm-section dm-shell">
+        <div class="dm-panels dm-panels--split">
+          <div>
+            <div class="dm-panel" data-reveal="rise">
+              <h2 class="dm-panel__title">Historial de pedidos</h2>
+              <div class="dm-table-wrap">
+                <table class="dm-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Fecha</th>
+                      <th scope="col">Pedido</th>
+                      <th scope="col" data-numeric>Monto</th>
+                      <th scope="col">Estado</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td>30 jul 2026</td>
+                    <td>PED-29840</td>
+                    <td data-numeric>L 14,300</td>
+                    <td><span class="dm-pill dm-pill--ok">Entregado</span></td>
+                  </tr>
+                  <tr>
+                    <td>09 jul 2026</td>
+                    <td>PED-29612</td>
+                    <td data-numeric>L 10,100</td>
+                    <td><span class="dm-pill dm-pill--ok">Entregado</span></td>
+                  </tr>
+                  <tr>
+                    <td>18 jun 2026</td>
+                    <td>PED-29388</td>
+                    <td data-numeric>L 9,500</td>
+                    <td><span class="dm-pill dm-pill--bad">Cancelado</span></td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="dm-panel" data-reveal="rise" style="margin-block-start: var(--space-md)">
+              <h2 class="dm-panel__title">Notas de visita</h2>
+              <ul class="dm-notes">
+            <li class="dm-note-card">
+              <span class="dm-note-card__meta">20 ago 2026 · Katherine Suazo</span>
+              Saldo sobre el límite de crédito. Acordó abono el 28 de agosto.
+            </li>
+            <li class="dm-note-card">
+              <span class="dm-note-card__meta">05 ago 2026 · Cobranza</span>
+              Segunda llamada de recordatorio. Sin respuesta.
+            </li>
+              </ul>
+            </div>
+          </div>
+
+          <div>
+            <div class="dm-panel" data-reveal="rise">
+              <h2 class="dm-panel__title">Datos de contacto</h2>
+              <dl class="dm-deflist">
+                <dt>Contacto</dt><dd>Denis Ordóñez</dd>
+                <dt>Teléfono</dt><dd>+504 9456-7702</dd>
+                <dt>Dirección</dt><dd>Barrio El Edén, frente a la iglesia católica, El Progreso</dd>
+                <dt>RTN</dt><dd>1801-2019-007743</dd>
+              </dl>
+            </div>
+
+            <div class="dm-panel" data-reveal="rise" style="margin-block-start: var(--space-md)">
+              <h2 class="dm-panel__title">Documentos</h2>
+              <ul class="dm-doclist">
+            <li class="dm-doc"><svg class="dm-doc__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2.2h5l3 3v8.6H4z"/><path d="M9 2.2v3h3"/></svg>Contrato de crédito</li>
+            <li class="dm-doc"><svg class="dm-doc__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2.2h5l3 3v8.6H4z"/><path d="M9 2.2v3h3"/></svg>Copia de RTN</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="dm-footer">
+        <div class="dm-shell dm-footer__inner">
+          <div class="dm-footer__brand">
+            <p class="dm-footer__name">Rumbo</p>
+            <p class="dm-footer__line">Rumbo Distribución, S. de R.L. · Distribuidora de consumo masivo — ficticia</p>
+            <p class="dm-footer__credit">
+              Marca ficticia. Sitio de ejemplo construido por
+              <a href="../../../index.html">CoreStruct</a> &copy; <span data-current-year>2026</span>.
+            </p>
+          </div>
+          <nav class="dm-footer__nav" aria-label="Pie">
+            <a href="../index.html">Panel</a>
+            <a href="../expedientes.html">Expedientes</a>
+            <a href="../operaciones.html">Operaciones</a>
+            <a href="../../../index.html#contacto">Contacto</a>
+          </nav>
+        </div>
+      </footer>
+    </main>
+
+    <script type="module" src="../../../src/scripts/demo/shell.js"></script>
+    <script type="module" src="../../../src/scripts/rumbo/filters.js"></script>
+  </body>
+</html>

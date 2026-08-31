@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Demostración. Rumbo es una empresa ficticia y sus páginas son noindex. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://corestruct.example/demos/rumbo/</loc>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://corestruct.example/demos/rumbo/expedientes.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://corestruct.example/demos/rumbo/usuarios.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://corestruct.example/demos/rumbo/operaciones.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://corestruct.example/demos/rumbo/expedientes/minimarket-la-terminal.html</loc>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://corestruct.example/demos/rumbo/expedientes/pulperia-el-progreso.html</loc>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://corestruct.example/demos/rumbo/expedientes/super-la-economia.html</loc>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://corestruct.example/demos/rumbo/expedientes/minimarket-villanueva.html</loc>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://corestruct.example/demos/rumbo/expedientes/abarroteria-puerto.html</loc>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://corestruct.example/demos/rumbo/expedientes/pulperia-dona-chinda.html</loc>
+    <priority>0.5</priority>
+  </url>
+</urlset>
