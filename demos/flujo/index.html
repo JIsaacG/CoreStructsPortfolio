@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Gestión administrativa · Flujo</title>
+    <meta name="description" content="Demostración de automatización administrativa: solicitudes, validación, reglas de aprobación, responsables, tiempos de respuesta, documentos generados y trazabilidad completa. Datos ficticios." />
+    <link rel="canonical" href="https://flujo.example/" />
+
+    <!-- Every person, amount, document and request code in this demonstration is
+         invented. A screen full of approvals that look like real authorisations
+         must never surface in a search result, so every page is noindex. -->
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#071e4a" />
+    <meta name="color-scheme" content="light" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Flujo · Gestión administrativa" />
+    <meta property="og:locale" content="es_HN" />
+    <meta property="og:title" content="Gestión administrativa · Flujo" />
+    <meta property="og:description" content="Demostración de automatización administrativa: solicitudes, validación, reglas de aprobación, responsables, tiempos de respuesta, documentos generados y trazabilidad completa. Datos ficticios." />
+    <meta property="og:url" content="https://flujo.example/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Gestión administrativa · Flujo" />
+    <meta name="twitter:description" content="Demostración de automatización administrativa: solicitudes, validación, reglas de aprobación, responsables, tiempos de respuesta, documentos generados y trazabilidad completa. Datos ficticios." />
+
+    <link rel="icon" href="../../favicon.ico" sizes="32x32" />
+
+    <link
+      rel="preload"
+      href="../../assets/fonts/ibm-plex-sans-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="../../assets/fonts/source-serif-4-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <link rel="stylesheet" href="../../dist/flujo.css" />
+
+    <script type="application/ld+json">
+      {
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "Flujo · Gestión administrativa",
+            "applicationCategory": "BusinessApplication",
+            "operatingSystem": "Web",
+            "url": "https://flujo.example/",
+            "description": "Demostración de un motor de flujos administrativos: solicitudes, reglas de aprobación, responsables, tiempos de respuesta, documentos generados y trazabilidad.",
+            "disambiguatingDescription": "Demostración de portafolio creada por CoreStruct. Las personas, las cifras, los documentos y los procesos mostrados son ficticios.",
+            "isAccessibleForFree": true,
+            "inLanguage": "es"
+      }
+    </script>
+
+    <!-- Runs before first paint. The workflow has stages that only exist once
+         the engine can drive them — a document that has not been generated yet,
+         a reset control with nothing to reset. Marking the document scripted
+         here means those are hidden from the start instead of appearing and
+         then vanishing, and it means a reader without JavaScript still gets the
+         complete, already-finished version of every one of them. -->
+    <script>
+      document.documentElement.classList.add("js");
+    </script>
+  </head>
+
+  <body>
+    <a class="fx-skip" href="#contenido">Saltar al contenido</a>
+
+    <svg aria-hidden="true" focusable="false" width="0" height="0" style="position:absolute">
+      <defs><linearGradient id="cs-face-top" gradientUnits="userSpaceOnUse" x1="33.3" y1="8.9" x2="353.6" y2="94.7"><stop offset="0%" stop-color="#140538"/><stop offset="16.7%" stop-color="#191754"/><stop offset="33.3%" stop-color="#223e81"/><stop offset="50%" stop-color="#2c6fb2"/><stop offset="66.7%" stop-color="#359dda"/><stop offset="83.3%" stop-color="#3bbaf1"/><stop offset="100%" stop-color="#3eccfb"/></linearGradient></defs>
+    </svg>
+
+    <a class="fx-badge" href="../../index.html#proyectos">
+      <svg class="fx-badge__mark" viewBox="0 0 362 422" aria-hidden="true" focusable="false"><path class="cs-face cs-face--top" fill="url(#cs-face-top)" d="M10 98L17 92L181 1L188 3L354 96L353 99L200 186L185 179L173 181L166 186L11 98Z"/><path class="cs-face cs-face--right" fill="#3898d4" d="M188 421L188 373L190 371L320 295L320 248L318 248L188 324L188 217L198 211L202 203L202 197L358 111L361 109L361 165L233 234L233 275L361 200L361 321L189 421Z"/><path class="cs-face cs-face--left" fill="#253880" d="M1 107L160 195L166 210L176 216L176 252L174 252L42 176L42 294L114 336L154 359L154 297L176 309L176 422L2 321L1 108Z"/></svg>
+      <span class="fx-badge__tag">DEMO</span>
+      <span class="fx-badge__label">Módulo demostrativo de CoreStruct</span>
+    </a>
+
+    <header class="fx-header fx-dark">
+      <div class="fx-shell fx-header__inner">
+<a class="fx-logo" href="index.html" aria-label="Flujo, inicio"><svg class="fx-logo__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="0.75" y="0.75" width="30.5" height="30.5" rx="3" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.4"/><rect x="7" y="8" width="12" height="3" rx="1.5" fill="currentColor"/><rect x="10" y="14.5" width="12" height="3" rx="1.5" fill="currentColor" opacity="0.75"/><rect x="13" y="21" width="12" height="3" rx="1.5" fill="currentColor" opacity="0.5"/></svg><span class="fx-logo__type"><span class="fx-logo__name">Flujo</span><span class="fx-logo__sub">Gestión administrativa</span></span></a>
+        <nav class="fx-nav" aria-label="Secciones de la demostración"><a class="fx-nav__link" href="index.html#proceso">El proceso</a><a class="fx-nav__link" href="index.html#panel">Panel</a><a class="fx-nav__link" href="index.html#solicitudes">Solicitudes</a><a class="fx-nav__link" href="index.html#reglas">Reglas</a><a class="fx-nav__link" href="index.html#motor">Procesos</a></nav>
+        <div class="fx-header__end">
+          <span class="wf-flag wf-flag--onDark">Módulo demostrativo</span>
+          <button class="fx-btn fx-btn--onDark fx-btn--small" type="button" data-wf-reset hidden>
+            Reiniciar demo
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="contenido">
+<section class="fx-hero fx-dark"><div class="fx-shell fx-hero__inner"><nav class="fx-hero__crumbs" aria-label="Ruta"><ol class="fx-crumbs"><li><a href="../../index.html#proyectos">CoreStruct</a></li><li aria-current="page">Gestión administrativa</li></ol></nav><div><p class="fx-label"><span>Gestión administrativa · Módulo demostrativo</span></p><h1 class="fx-hero__title">Procesos que avanzan sin depender del seguimiento manual.</h1></div><div><p class="fx-hero__lead">Centralice solicitudes, aprobaciones, documentos, responsables y tiempos de respuesta en una única experiencia digital.</p><div class="fx-hero__actions"><a class="fx-btn fx-btn--solid" href="#solicitud">Crear solicitud<svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h11M9.5 4.5 13 8l-3.5 3.5"/></svg></a><button class="fx-btn fx-btn--onDark" type="button" data-wf-tour>Ver demo guiada<svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h11M9.5 4.5 13 8l-3.5 3.5"/></svg></button><a class="fx-btn fx-btn--onDark" href="#seguimiento">Ver proceso demostrativo</a></div><p class="fx-hero__fine">Los nombres, métricas, personas y procesos mostrados son ficticios y se utilizan exclusivamente para demostrar las capacidades de la plataforma.</p></div><dl class="fx-hero__meta"><div><dt>Concepto</dt><dd>Solicitudes, aprobaciones y seguimiento en un solo flujo.</dd></div><div><dt>Proceso completo</dt><dd>Solicitud de compra</dd></div><div><dt>Procesos del motor</dt><dd>12 configurables</dd></div><div><dt>Datos</dt><dd>Ficticios · sin backend</dd></div></dl></div></section>
+
+      <section class="fx-section" id="proceso" aria-labelledby="h-proceso">
+        <div class="fx-shell">
+          <header class="fx-head fx-head--split" id="h-proceso"><p class="fx-label"><span class="fx-label__index">01</span><span>El proceso</span></p><h2 class="fx-head__title">¿Qué necesita gestionar?</h2><div class="fx-head__aside"><p>Seis procesos internos, un mismo motor. La solicitud de compra está desarrollada de principio a fin: formulario, reglas, aprobaciones, documento y archivo.</p></div></header>
+          <div class="wf-processes"><button class="wf-process" type="button" data-wf-process="compra" data-full aria-pressed="true"><span class="wf-process__index">01</span><span class="wf-process__title"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2.2h5l3 3v8.6H4z"/><path d="M9 2.2v3h3"/></svg>Solicitud de compra</span><span class="wf-process__text">Bienes, servicios y suministros con cargo a un centro de costo.</span><span class="wf-process__state">Flujo completo</span></button><button class="wf-process" type="button" data-wf-process="vacaciones" aria-pressed="false"><span class="wf-process__index">02</span><span class="wf-process__title"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="5.6" r="2.4"/><path d="M2 13.2c0-2.2 1.8-4 4-4s4 1.8 4 4"/><path d="M11 4c1.3.3 2.2 1.4 2.2 2.7 0 .9-.4 1.7-1 2.2M11.4 9.6c1.6.5 2.6 1.9 2.6 3.6"/></svg>Permisos y vacaciones</span><span class="wf-process__text">Días de descanso, permisos y licencias del personal.</span><span class="wf-process__state">Flujo demostrativo disponible</span></button><button class="wf-process" type="button" data-wf-process="viaticos" aria-pressed="false"><span class="wf-process__index">03</span><span class="wf-process__title"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.6 4.2 6 2.8l4 1.4 3.4-1.4v9L10 13.2 6 11.8l-3.4 1.4z"/><path d="M6 2.8v9M10 4.2v9"/></svg>Viáticos</span><span class="wf-process__text">Anticipo de gastos de misión y liquidación posterior.</span><span class="wf-process__state">Flujo demostrativo disponible</span></button><button class="wf-process" type="button" data-wf-process="proveedores" aria-pressed="false"><span class="wf-process__index">04</span><span class="wf-process__title"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.8 3.2h4c1 0 1.6.6 1.6 1.6v8c0-.8-.6-1.4-1.6-1.4h-4z"/><path d="M13.2 3.2h-4c-1 0-1.6.6-1.6 1.6v8c0-.8.6-1.4 1.6-1.4h4z"/></svg>Proveedores</span><span class="wf-process__text">Alta, renovación y expediente documental de proveedores.</span><span class="wf-process__state">Flujo demostrativo disponible</span></button><button class="wf-process" type="button" data-wf-process="mantenimiento" aria-pressed="false"><span class="wf-process__index">05</span><span class="wf-process__title"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2 4 9h3.4l-.8 5 5-7H8.2z"/></svg>Mantenimiento</span><span class="wf-process__text">Reportes de infraestructura, equipos y servicios generales.</span><span class="wf-process__state">Flujo demostrativo disponible</span></button><button class="wf-process" type="button" data-wf-process="administrativa" aria-pressed="false"><span class="wf-process__index">06</span><span class="wf-process__title"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11.2 2.8 13.2 4.8 5.5 12.5 2.8 13.2l.7-2.7z"/></svg>Solicitud administrativa</span><span class="wf-process__text">Constancias, autorizaciones y trámites internos del personal.</span><span class="wf-process__state">Flujo demostrativo disponible</span></button></div>
+        </div>
+      </section>
+
+      <section class="fx-section fx-section--sunken" id="solicitud" aria-labelledby="h-solicitud">
+        <div class="fx-shell">
+          <header class="fx-head fx-head--split" id="h-solicitud"><p class="fx-label"><span class="fx-label__index">02</span><span>Solicitud de compra</span></p><h2 class="fx-head__title">Un formulario que ya sabe a quién enviar la solicitud.</h2><div class="fx-head__aside"><p>Complete el monto y el concepto — o deje que el asistente los lea del adjunto — y el motor decide el circuito de autorización antes de que nadie mire el expediente.</p></div></header>
+
+          <div class="wf-panel">
+            <div class="wf-panel__head">
+              <div>
+                <p class="wf-panel__title">Nueva solicitud</p>
+                <p class="wf-panel__meta">Formulario de compra · tiempo objetivo 48 horas</p>
+              </div>
+              <span class="wf-flag">Módulo demostrativo</span>
+            </div>
+            <div class="wf-panel__body wf-stack">
+              <div data-wf-stage="form">
+                <div class="wf-capture" data-wf-capture data-when-scripted>
+              <div class="wf-capture__top">
+                <p class="wf-capture__label"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.6 5.4V2.6h2.8M10.6 2.6h2.8v2.8M13.4 10.6v2.8h-2.8M5.4 13.4H2.6v-2.8"/><path d="M2.6 8h10.8"/></svg>Asistente de captura</p>
+                <span class="wf-sim">Extracción simulada</span>
+              </div>
+
+              <div class="wf-file">
+                <span class="wf-file__mark" aria-hidden="true">PDF</span>
+                <span>
+                  <span class="wf-file__name">Cotizacion_Equipos.pdf</span>
+                  <span class="wf-file__meta">412 KB · adjunto de ejemplo</span>
+                </span>
+                <button class="fx-btn fx-btn--ghost fx-btn--small" type="button" data-wf-scan>
+                  Analizar documento
+                </button>
+              </div>
+
+              <div class="wf-progress" data-wf-scanbar hidden>
+                <span class="wf-progress__fill"></span>
+              </div>
+              <p class="fx-note" data-wf-scanstatus role="status" aria-live="polite"></p>
+
+              <dl class="wf-capture__fields" data-wf-extracted hidden><div><dt>Proveedor</dt><dd data-wf-extract="supplier">Tecnología Central S.A.</dd></div><div><dt>Fecha del documento</dt><dd data-wf-extract="date">28/08/2026</dd></div><div><dt>Monto</dt><dd data-wf-extract="amount">L 58,500.00</dd></div><div><dt>Concepto</dt><dd data-wf-extract="concept">3 computadoras portátiles</dd></div></dl>
+
+              <div class="fx-actions" data-wf-usebox hidden>
+                <button class="fx-btn fx-btn--solid fx-btn--small" type="button" data-wf-use>
+                  Usar información
+                </button>
+                <p class="fx-note" style="align-self:center">Extracción simulada para fines demostrativos.</p>
+              </div>
+            </div>
+                <form class="wf-form" id="solicitud-form" novalidate data-wf-form>
+              <fieldset data-wf-fieldset>
+                <legend class="fx-sr">Datos de la solicitud de compra</legend>
+                <div class="wf-form__grid">
+                  <div class="wf-form__field"><div class="wf-form__labelrow"><label class="wf-form__label" for="codigo">Número de solicitud</label><span class="wf-ok"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>Correcto</span></div><input class="fx-input wf-input--locked" id="codigo" name="codigo" type="text" value="SOL-2026-0148" readonly data-wf-field /><p class="wf-form__hint">Asignado automáticamente por el sistema.</p><p class="wf-form__error" id="codigo-error"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5 14.5 13.5h-13z"/><path d="M8 6.5v3M8 11.6v.1"/></svg><span data-wf-error-text>Este campo es obligatorio.</span></p></div>
+                  <div class="wf-form__field"><div class="wf-form__labelrow"><label class="wf-form__label" for="solicitante">Solicitante<span class="wf-req" aria-hidden="true"> *</span></label><span class="wf-ok"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>Correcto</span></div><input class="fx-input" id="solicitante" name="solicitante" type="text" value="Alejandro Rivera" required data-wf-field /><p class="wf-form__error" id="solicitante-error"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5 14.5 13.5h-13z"/><path d="M8 6.5v3M8 11.6v.1"/></svg><span data-wf-error-text>El nombre del solicitante es requerido.</span></p></div>
+                  <div class="wf-form__field"><div class="wf-form__labelrow"><label class="wf-form__label" for="area">Área<span class="wf-req" aria-hidden="true"> *</span></label><span class="wf-ok"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>Correcto</span></div><span class="fx-select"><select class="fx-input" id="area" name="area" required data-wf-field><option value="Administración" selected>Administración</option><option value="Planificación">Planificación</option><option value="Tecnología">Tecnología</option><option value="Servicios Generales">Servicios Generales</option><option value="Estadística">Estadística</option><option value="Comunicación">Comunicación</option></select></span><p class="wf-form__error" id="area-error"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5 14.5 13.5h-13z"/><path d="M8 6.5v3M8 11.6v.1"/></svg><span data-wf-error-text>Este campo es obligatorio.</span></p></div>
+                  <div class="wf-form__field"><div class="wf-form__labelrow"><label class="wf-form__label" for="cargo">Cargo</label><span class="wf-ok"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>Correcto</span></div><input class="fx-input" id="cargo" name="cargo" type="text" value="Coordinación Administrativa" data-wf-field /><p class="wf-form__hint">Determina el nivel de jefatura que resuelve el visto bueno.</p><p class="wf-form__error" id="cargo-error"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5 14.5 13.5h-13z"/><path d="M8 6.5v3M8 11.6v.1"/></svg><span data-wf-error-text>Este campo es obligatorio.</span></p></div>
+                  <div class="wf-form__field"><div class="wf-form__labelrow"><label class="wf-form__label" for="tipo">Tipo<span class="wf-req" aria-hidden="true"> *</span></label><span class="wf-ok"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>Correcto</span></div><span class="fx-select"><select class="fx-input" id="tipo" name="tipo" required data-wf-field><option value="Compra de bienes" selected>Compra de bienes</option><option value="Compra de servicios">Compra de servicios</option><option value="Suministros">Suministros</option><option value="Mantenimiento">Mantenimiento</option></select></span><p class="wf-form__error" id="tipo-error"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5 14.5 13.5h-13z"/><path d="M8 6.5v3M8 11.6v.1"/></svg><span data-wf-error-text>Este campo es obligatorio.</span></p></div>
+                  <div class="wf-form__field"><div class="wf-form__labelrow"><label class="wf-form__label" for="concepto">Concepto<span class="wf-req" aria-hidden="true"> *</span></label><span class="wf-ok"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>Correcto</span></div><input class="fx-input" id="concepto" name="concepto" type="text" value="" required placeholder="Qué se solicita" data-wf-field /><p class="wf-form__error" id="concepto-error"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5 14.5 13.5h-13z"/><path d="M8 6.5v3M8 11.6v.1"/></svg><span data-wf-error-text>El concepto es requerido.</span></p></div>
+                  <div class="wf-form__field"><div class="wf-form__labelrow"><label class="wf-form__label" for="monto">Monto estimado (L)<span class="wf-req" aria-hidden="true"> *</span></label><span class="wf-ok"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>Correcto</span></div><input class="fx-input" id="monto" name="monto" type="text" value="" required placeholder="0.00" inputmode="decimal" data-wf-field /><p class="wf-form__hint">El monto decide cuántas autorizaciones necesita la solicitud.</p><p class="wf-form__error" id="monto-error"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5 14.5 13.5h-13z"/><path d="M8 6.5v3M8 11.6v.1"/></svg><span data-wf-error-text>El monto estimado es requerido.</span></p></div>
+                  <div class="wf-form__field"><div class="wf-form__labelrow"><label class="wf-form__label" for="centro">Centro de costo<span class="wf-req" aria-hidden="true"> *</span></label><span class="wf-ok"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>Correcto</span></div><span class="fx-select"><select class="fx-input" id="centro" name="centro" required data-wf-field><option value="Administración General" selected>Administración General</option><option value="Secretaría Técnica">Secretaría Técnica</option><option value="Tecnología">Tecnología</option><option value="Servicios Generales">Servicios Generales</option><option value="Planificación">Planificación</option></select></span><p class="wf-form__error" id="centro-error"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5 14.5 13.5h-13z"/><path d="M8 6.5v3M8 11.6v.1"/></svg><span data-wf-error-text>Este campo es obligatorio.</span></p></div>
+                  <div class="wf-form__field"><div class="wf-form__labelrow"><label class="wf-form__label" for="prioridad">Prioridad</label><span class="wf-ok"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>Correcto</span></div><span class="fx-select"><select class="fx-input" id="prioridad" name="prioridad" data-wf-field><option value="Baja">Baja</option><option value="Normal" selected>Normal</option><option value="Alta">Alta</option></select></span><p class="wf-form__error" id="prioridad-error"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5 14.5 13.5h-13z"/><path d="M8 6.5v3M8 11.6v.1"/></svg><span data-wf-error-text>Este campo es obligatorio.</span></p></div>
+                  <div class="wf-form__field"><div class="wf-form__labelrow"><label class="wf-form__label" for="proveedor">Proveedor sugerido</label><span class="wf-ok"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>Correcto</span></div><input class="fx-input" id="proveedor" name="proveedor" type="text" value="" placeholder="Opcional" data-wf-field /><p class="wf-form__error" id="proveedor-error"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5 14.5 13.5h-13z"/><path d="M8 6.5v3M8 11.6v.1"/></svg><span data-wf-error-text>Este campo es obligatorio.</span></p></div>
+                  <div class="wf-form__field wf-form__field--wide"><div class="wf-form__labelrow"><label class="wf-form__label" for="justificacion">Justificación<span class="wf-req" aria-hidden="true"> *</span></label><span class="wf-ok"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>Correcto</span></div><textarea class="fx-input" id="justificacion" name="justificacion" rows="3" required data-wf-field>Renovación de equipo utilizado por el personal administrativo.</textarea><p class="wf-form__error" id="justificacion-error"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5 14.5 13.5h-13z"/><path d="M8 6.5v3M8 11.6v.1"/></svg><span data-wf-error-text>La justificación es requerida.</span></p></div>
+                </div>
+
+                <div class="wf-form__field wf-form__field--wide" style="margin-top:1rem">
+                  <span class="wf-form__label">Adjunto</span>
+                  <div class="wf-file">
+                    <span class="wf-file__mark" aria-hidden="true">PDF</span>
+                    <span>
+                      <span class="wf-file__name">Cotizacion_Equipos.pdf</span>
+                      <span class="wf-file__meta">412 KB · adjunto simulado</span>
+                    </span>
+                    <span class="wf-sim">Sin carga real</span>
+                  </div>
+                </div>
+              </fieldset>
+
+              <div class="wf-form__foot">
+                <p class="fx-note">
+                  Ningún dato se transmite. La solicitud se procesa en su navegador y se conserva
+                  únicamente en este equipo.
+                </p>
+                <button class="fx-btn fx-btn--solid" type="submit" data-wf-submit data-when-scripted>
+                  Enviar solicitud
+                </button>
+                <span class="wf-sim" data-when-static>Envío no disponible sin JavaScript</span>
+              </div>
+            </form>
+              </div>
+              <div class="wf-run" data-wf-stage="run" hidden>
+              <div class="wf-run__head">
+                <p class="fx-label"><span>Automatización</span></p>
+                <h3 class="wf-run__title">Procesando solicitud</h3>
+                <div class="wf-progress"><span class="wf-progress__fill" data-wf-runbar></span></div>
+              </div>
+
+              <ol class="wf-run__steps">
+                <li class="wf-step" data-state="idle" data-wf-step="1"><span class="wf-step__mark">1</span><div class="wf-step__body"><p class="wf-step__title">Solicitud recibida</p><ul class="wf-checks"><li class="wf-check"><span class="wf-check__tick"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg></span><span>Información registrada</span></li></ul></div></li>
+                <li class="wf-step" data-state="idle" data-wf-step="2"><span class="wf-step__mark">2</span><div class="wf-step__body"><p class="wf-step__title">Validando información</p><ul class="wf-checks"><li class="wf-check"><span class="wf-check__tick"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg></span><span>Campos completos</span></li><li class="wf-check"><span class="wf-check__tick"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg></span><span>Documento adjunto</span></li><li class="wf-check"><span class="wf-check__tick"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg></span><span>Centro de costo identificado</span></li><li class="wf-check"><span class="wf-check__tick"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg></span><span>Monto detectado</span></li></ul></div></li>
+                <li class="wf-step" data-state="idle" data-wf-step="3"><span class="wf-step__mark">3</span><div class="wf-step__body"><p class="wf-step__title">Aplicando reglas administrativas</p><div class="wf-rulecard">
+                     <p class="wf-rulecard__row">Monto solicitado:
+                       <b data-wf-run-amount>L 58,500.00</b></p>
+                     <p class="wf-rulecard__text" data-wf-run-rule>«Solicitudes superiores a L 25,000 requieren aprobación de Administración y Finanzas.»</p>
+                     <p class="wf-rulecard__result"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.4v3.2M8 10.4v3.2"/><rect x="4.6" y="5.6" width="6.8" height="4.8" rx="1"/></svg>
+                       <span data-wf-run-result>2 aprobaciones requeridas</span></p>
+                     <p class="fx-note" data-wf-run-band>El visto bueno de jefatura se resuelve en el registro; autorizan Administración y Finanzas.</p>
+                   </div></div></li>
+                <li class="wf-step" data-state="idle" data-wf-step="4"><span class="wf-step__mark">4</span><div class="wf-step__body"><p class="wf-step__title">Asignando responsables</p><ul class="wf-assignees" data-wf-run-assignees><li class="wf-person"><span class="wf-person__avatar" aria-hidden="true">ML</span><span><span class="wf-person__name">María López</span><span class="wf-person__role">Administración · Dirección Administrativa</span></span></li><li class="wf-person"><span class="wf-person__avatar" aria-hidden="true">CM</span><span><span class="wf-person__name">Carlos Mejía</span><span class="wf-person__role">Finanzas · Jefatura de Finanzas</span></span></li></ul></div></li>
+                <li class="wf-step" data-state="idle" data-wf-step="5"><span class="wf-step__mark">5</span><div class="wf-step__body"><p class="wf-step__title">Flujo iniciado</p><div data-wf-run-track><ol class="wf-track wf-track--wide" data-wf-track><li class="wf-track__node" data-state="done" data-step="submitted"><span class="wf-track__dot"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg></span><span><span class="wf-track__label">Solicitud creada</span><span class="wf-track__meta">Alejandro Rivera</span></span></li><li class="wf-track__node" data-state="done" data-step="validation"><span class="wf-track__dot"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg></span><span><span class="wf-track__label">Validación automática</span><span class="wf-track__meta">Automática</span></span></li><li class="wf-track__node" data-state="current" data-step="administrationApproval"><span class="wf-track__dot"></span><span><span class="wf-track__label">Administración</span><span class="wf-track__meta">María López</span></span></li><li class="wf-track__node" data-state="pending" data-step="financeApproval"><span class="wf-track__dot"></span><span><span class="wf-track__label">Finanzas</span><span class="wf-track__meta">Carlos Mejía</span></span></li><li class="wf-track__node" data-state="pending" data-step="completed"><span class="wf-track__dot"></span><span><span class="wf-track__label">Finalización</span><span class="wf-track__meta">Documento y archivo</span></span></li></ol></div></div></li>
+              </ol>
+            </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="fx-section fx-section--surface" id="seguimiento" aria-labelledby="h-seguimiento">
+        <div class="fx-shell">
+          <header class="fx-head fx-head--split" id="h-seguimiento"><p class="fx-label"><span class="fx-label__index">03</span><span>Seguimiento</span></p><h2 class="fx-head__title">La solicitud, desde que entra hasta que se archiva.</h2><div class="fx-head__aside"><p>El expediente completo en una sola pantalla: en qué paso está, quién debe resolver, cuánto tiempo queda, qué se aprobó y qué documento produjo.</p></div></header>
+
+          <div class="wf-panel">
+            <div class="wf-panel__head">
+              <div>
+                <p class="wf-panel__title" data-wf-code>Solicitud SOL-2026-0148</p>
+                <p class="wf-panel__meta">Solicitud de compra ·
+                  Administración · 30 de agosto de 2026</p>
+              </div>
+              <span data-wf-state><span class="fx-state fx-state--info"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h11M9.5 4.5 13 8l-3.5 3.5"/></svg>En aprobación</span></span>
+            </div>
+
+            <div class="wf-panel__body wf-stack">
+              <div data-wf-track-box><ol class="wf-track wf-track--wide" data-wf-track><li class="wf-track__node" data-state="done" data-step="submitted"><span class="wf-track__dot"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg></span><span><span class="wf-track__label">Solicitud creada</span><span class="wf-track__meta">Alejandro Rivera</span></span></li><li class="wf-track__node" data-state="done" data-step="validation"><span class="wf-track__dot"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg></span><span><span class="wf-track__label">Validación automática</span><span class="wf-track__meta">Automática</span></span></li><li class="wf-track__node" data-state="current" data-step="administrationApproval"><span class="wf-track__dot"></span><span><span class="wf-track__label">Administración</span><span class="wf-track__meta">María López</span></span></li><li class="wf-track__node" data-state="pending" data-step="financeApproval"><span class="wf-track__dot"></span><span><span class="wf-track__label">Finanzas</span><span class="wf-track__meta">Carlos Mejía</span></span></li><li class="wf-track__node" data-state="pending" data-step="completed"><span class="wf-track__dot"></span><span><span class="wf-track__label">Finalización</span><span class="wf-track__meta">Documento y archivo</span></span></li></ol></div>
+
+              <div class="wf-approval" data-wf-approval>
+                <div class="wf-approval__top">
+                  <div>
+                    <p class="fx-label"><span>Pendiente de aprobación</span></p>
+                    <p class="wf-approval__title" data-wf-approver>María López</p>
+                    <p class="wf-panel__meta" data-wf-approver-area>Dirección Administrativa</p>
+                  </div>
+                  <span class="wf-flag">Turno actual</span>
+                </div>
+
+                <dl class="wf-approval__facts">
+                  <div><dt>Monto</dt><dd data-wf-amount>L 58,500.00</dd></div>
+                  <div><dt>Paso</dt><dd data-wf-step-label>Administración</dd></div>
+                  <div><dt>Tiempo objetivo</dt><dd>24h 00m</dd></div>
+                </dl>
+
+                <div class="wf-approval__actions" data-when-scripted>
+                  <button class="fx-btn fx-btn--solid" type="button" data-wf-decide="aprobada">
+                    <svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>Aprobar
+                  </button>
+                  <button class="fx-btn fx-btn--ghost" type="button" data-wf-decide="cambios">
+                    <svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11.2 2.8 13.2 4.8 5.5 12.5 2.8 13.2l.7-2.7z"/></svg>Solicitar cambios
+                  </button>
+                  <button class="fx-btn wf-btn--danger" type="button" data-wf-decide="rechazada">
+                    <svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M5.5 8h5"/></svg>Rechazar
+                  </button>
+                </div>
+              </div>
+
+              <div class="wf-stack" data-wf-closing hidden>
+                <div class="wf-subhead">
+                  <h3 class="wf-subhead__title" data-wf-closing-title>Solicitud aprobada</h3>
+                  <p class="wf-subhead__note">SOL-2026-0148</p>
+                </div>
+                <ul class="wf-closing">
+                  <li class="wf-closing__row"><span class="wf-closing__tick"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg></span><span>Actualización de estado</span><span class="wf-closing__detail">En aprobación → Aprobada</span></li><li class="wf-closing__row"><span class="wf-closing__tick"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg></span><span>Generación de documento</span><span class="wf-closing__detail">SOL-2026-0148.pdf</span></li><li class="wf-closing__row"><span class="wf-closing__tick"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg></span><span>Registro en bitácora</span><span class="wf-closing__detail">10 asientos de auditoría</span></li><li class="wf-closing__row"><span class="wf-closing__tick"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg></span><span>Preparación de notificación</span><span class="wf-closing__detail">1 destinatario</span></li><li class="wf-closing__row"><span class="wf-closing__tick"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg></span><span>Archivo</span><span class="wf-closing__detail">Expediente 2026 · Administración</span></li>
+                </ul>
+              </div>
+
+              <div>
+                <div class="wf-tabs" role="tablist" aria-label="Secciones del expediente">
+                  <button class="wf-tab" type="button" role="tab" id="tab-resumen" aria-controls="panel-resumen" aria-selected="true" tabindex="0">Resumen</button>
+                  <button class="wf-tab" type="button" role="tab" id="tab-aprobaciones" aria-controls="panel-aprobaciones" aria-selected="false" tabindex="-1">Aprobaciones</button>
+                  <button class="wf-tab" type="button" role="tab" id="tab-documentos" aria-controls="panel-documentos" aria-selected="false" tabindex="-1">Documentos</button>
+                  <button class="wf-tab" type="button" role="tab" id="tab-historial" aria-controls="panel-historial" aria-selected="false" tabindex="-1">Historial</button>
+                  <button class="wf-tab" type="button" role="tab" id="tab-actividad" aria-controls="panel-actividad" aria-selected="false" tabindex="-1">Actividad</button>
+                </div>
+                <div class="wf-tabpanel" role="tabpanel" id="panel-resumen" aria-labelledby="tab-resumen" tabindex="0"><h3 class="wf-tabpanel__title">Resumen</h3><dl class="wf-fields"><div><dt>Tipo</dt><dd>Solicitud de compra</dd></div><div><dt>Solicitante</dt><dd><span data-wf-sum="solicitante">Alejandro Rivera</span></dd></div><div><dt>Área</dt><dd><span data-wf-sum="area">Administración</span></dd></div><div><dt>Centro de costo</dt><dd><span data-wf-sum="centro">Administración General</span></dd></div><div><dt>Concepto</dt><dd><span data-wf-sum="concepto">3 computadoras portátiles</span></dd></div><div><dt>Monto</dt><dd><span data-wf-sum="monto">L 58,500.00</span></dd></div><div><dt>Proveedor sugerido</dt><dd><span data-wf-sum="proveedor">Tecnología Central S.A.</span></dd></div><div><dt>Prioridad</dt><dd><span data-wf-sum="prioridad">Normal</span></dd></div><div><dt>Adjunto</dt><dd>Cotizacion_Equipos.pdf (412 KB)</dd></div><div><dt>Tiempo objetivo</dt><dd><span class="wf-sla wf-sla--ok" title="Quedan 47h 11m"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M8 4.6V8l2.4 1.6"/></svg>47h 11m</span> <span class="fx-note">de 48 horas</span></dd></div></dl><p class="fx-note" style="margin-top:1rem" data-wf-sum="justificacion">Renovación de equipo utilizado por el personal administrativo.</p></div>
+                <div class="wf-tabpanel" role="tabpanel" id="panel-aprobaciones" aria-labelledby="tab-aprobaciones" tabindex="0" hidden><h3 class="wf-tabpanel__title">Aprobaciones</h3><p class="wf-subhead__note" data-wf-records-empty>Aún no hay autorizaciones registradas. Cada una dejará constancia de responsable, área, fecha, hora, comentario y resultado.</p><ul class="wf-records" data-wf-records></ul></div>
+                <div class="wf-tabpanel" role="tabpanel" id="panel-documentos" aria-labelledby="tab-documentos" tabindex="0" hidden><h3 class="wf-tabpanel__title">Documentos</h3><div class="wf-empty" data-wf-doc-empty data-when-scripted>El documento se genera automáticamente al completar las aprobaciones.</div><div class="wf-stack" data-wf-doc-box data-when-static><div class="wf-doc">
+                <div class="wf-doc__band">
+                  <div>
+                    <p class="wf-doc__org">Documento generado automáticamente</p>
+                    <p class="wf-doc__kind">Solicitud de compra</p>
+                  </div>
+                  <span class="wf-doc__code">SOL-2026-0148</span>
+                </div>
+                <div class="wf-doc__body">
+                  <dl class="wf-doc__facts"><div><dt>Código</dt><dd>SOL-2026-0148</dd></div><div><dt>Solicitante</dt><dd>Alejandro Rivera</dd></div><div><dt>Área</dt><dd>Administración</dd></div><div><dt>Centro de costo</dt><dd>Administración General</dd></div><div><dt>Concepto</dt><dd>Adquisición de tres computadoras portátiles.</dd></div><div><dt>Monto</dt><dd>L 58,500.00</dd></div><div><dt>Proveedor sugerido</dt><dd>Tecnología Central S.A.</dd></div><div><dt>Estado</dt><dd><span class="fx-state fx-state--ok"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>Aprobado</span></dd></div></dl>
+
+                  <div>
+                    <p class="wf-doc__heading">Aprobaciones</p>
+                    <ul class="wf-doc__signs"><li class="wf-doc__sign"><b>Dirección Administrativa</b><span>María López · 30 de agosto de 2026, 10:42</span><i><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>Aprobado</i></li><li class="wf-doc__sign"><b>Jefatura de Finanzas</b><span>Carlos Mejía · 30 de agosto de 2026, 11:18</span><i><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>Aprobado</i></li></ul>
+                  </div>
+
+                  <div class="wf-doc__verify">
+                    <svg class="wf-doc__qr" viewBox="0 0 21 21" role="img" aria-label="Marca de verificación demostrativa. No es un código legible." shape-rendering="crispEdges" fill="#071e4a"><rect x="0" y="0" width="7" height="7"/><rect x="1" y="1" width="5" height="5" fill="#ffffff"/><rect x="2" y="2" width="3" height="3"/><rect x="14" y="0" width="7" height="7"/><rect x="15" y="1" width="5" height="5" fill="#ffffff"/><rect x="16" y="2" width="3" height="3"/><rect x="0" y="14" width="7" height="7"/><rect x="1" y="15" width="5" height="5" fill="#ffffff"/><rect x="2" y="16" width="3" height="3"/><rect x="8" y="0" width="1" height="1"/><rect x="9" y="0" width="1" height="1"/><rect x="11" y="0" width="1" height="1"/><rect x="12" y="0" width="1" height="1"/><rect x="13" y="0" width="1" height="1"/><rect x="8" y="1" width="1" height="1"/><rect x="10" y="1" width="1" height="1"/><rect x="9" y="2" width="1" height="1"/><rect x="11" y="2" width="1" height="1"/><rect x="12" y="2" width="1" height="1"/><rect x="13" y="2" width="1" height="1"/><rect x="8" y="3" width="1" height="1"/><rect x="10" y="3" width="1" height="1"/><rect x="11" y="3" width="1" height="1"/><rect x="12" y="3" width="1" height="1"/><rect x="13" y="3" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="8" y="4" width="1" height="1"/><rect x="10" y="4" width="1" height="1"/><rect x="12" y="4" width="1" height="1"/><rect x="8" y="5" width="1" height="1"/><rect x="9" y="5" width="1" height="1"/><rect x="11" y="5" width="1" height="1"/><rect x="12" y="5" width="1" height="1"/><rect x="7" y="6" width="1" height="1"/><rect x="11" y="6" width="1" height="1"/><rect x="13" y="6" width="1" height="1"/><rect x="1" y="7" width="1" height="1"/><rect x="4" y="7" width="1" height="1"/><rect x="9" y="7" width="1" height="1"/><rect x="11" y="7" width="1" height="1"/><rect x="15" y="7" width="1" height="1"/><rect x="17" y="7" width="1" height="1"/><rect x="20" y="7" width="1" height="1"/><rect x="1" y="8" width="1" height="1"/><rect x="3" y="8" width="1" height="1"/><rect x="4" y="8" width="1" height="1"/><rect x="5" y="8" width="1" height="1"/><rect x="7" y="8" width="1" height="1"/><rect x="9" y="8" width="1" height="1"/><rect x="10" y="8" width="1" height="1"/><rect x="14" y="8" width="1" height="1"/><rect x="17" y="8" width="1" height="1"/><rect x="18" y="8" width="1" height="1"/><rect x="19" y="8" width="1" height="1"/><rect x="0" y="9" width="1" height="1"/><rect x="2" y="9" width="1" height="1"/><rect x="6" y="9" width="1" height="1"/><rect x="7" y="9" width="1" height="1"/><rect x="9" y="9" width="1" height="1"/><rect x="17" y="9" width="1" height="1"/><rect x="19" y="9" width="1" height="1"/><rect x="0" y="10" width="1" height="1"/><rect x="1" y="10" width="1" height="1"/><rect x="4" y="10" width="1" height="1"/><rect x="6" y="10" width="1" height="1"/><rect x="7" y="10" width="1" height="1"/><rect x="8" y="10" width="1" height="1"/><rect x="13" y="10" width="1" height="1"/><rect x="16" y="10" width="1" height="1"/><rect x="0" y="11" width="1" height="1"/><rect x="2" y="11" width="1" height="1"/><rect x="3" y="11" width="1" height="1"/><rect x="4" y="11" width="1" height="1"/><rect x="5" y="11" width="1" height="1"/><rect x="7" y="11" width="1" height="1"/><rect x="10" y="11" width="1" height="1"/><rect x="11" y="11" width="1" height="1"/><rect x="14" y="11" width="1" height="1"/><rect x="19" y="11" width="1" height="1"/><rect x="2" y="12" width="1" height="1"/><rect x="3" y="12" width="1" height="1"/><rect x="4" y="12" width="1" height="1"/><rect x="5" y="12" width="1" height="1"/><rect x="6" y="12" width="1" height="1"/><rect x="7" y="12" width="1" height="1"/><rect x="8" y="12" width="1" height="1"/><rect x="9" y="12" width="1" height="1"/><rect x="11" y="12" width="1" height="1"/><rect x="13" y="12" width="1" height="1"/><rect x="14" y="12" width="1" height="1"/><rect x="16" y="12" width="1" height="1"/><rect x="19" y="12" width="1" height="1"/><rect x="2" y="13" width="1" height="1"/><rect x="6" y="13" width="1" height="1"/><rect x="8" y="13" width="1" height="1"/><rect x="10" y="13" width="1" height="1"/><rect x="12" y="13" width="1" height="1"/><rect x="14" y="13" width="1" height="1"/><rect x="16" y="13" width="1" height="1"/><rect x="17" y="13" width="1" height="1"/><rect x="19" y="13" width="1" height="1"/><rect x="7" y="14" width="1" height="1"/><rect x="8" y="14" width="1" height="1"/><rect x="10" y="14" width="1" height="1"/><rect x="12" y="14" width="1" height="1"/><rect x="13" y="14" width="1" height="1"/><rect x="14" y="14" width="1" height="1"/><rect x="15" y="14" width="1" height="1"/><rect x="16" y="14" width="1" height="1"/><rect x="17" y="14" width="1" height="1"/><rect x="18" y="14" width="1" height="1"/><rect x="19" y="14" width="1" height="1"/><rect x="20" y="14" width="1" height="1"/><rect x="7" y="15" width="1" height="1"/><rect x="8" y="15" width="1" height="1"/><rect x="9" y="15" width="1" height="1"/><rect x="11" y="15" width="1" height="1"/><rect x="14" y="15" width="1" height="1"/><rect x="15" y="15" width="1" height="1"/><rect x="16" y="15" width="1" height="1"/><rect x="17" y="15" width="1" height="1"/><rect x="19" y="15" width="1" height="1"/><rect x="20" y="15" width="1" height="1"/><rect x="9" y="16" width="1" height="1"/><rect x="11" y="16" width="1" height="1"/><rect x="15" y="16" width="1" height="1"/><rect x="16" y="16" width="1" height="1"/><rect x="7" y="17" width="1" height="1"/><rect x="9" y="17" width="1" height="1"/><rect x="10" y="17" width="1" height="1"/><rect x="11" y="17" width="1" height="1"/><rect x="13" y="17" width="1" height="1"/><rect x="14" y="17" width="1" height="1"/><rect x="18" y="17" width="1" height="1"/><rect x="20" y="17" width="1" height="1"/><rect x="9" y="18" width="1" height="1"/><rect x="10" y="18" width="1" height="1"/><rect x="14" y="18" width="1" height="1"/><rect x="16" y="18" width="1" height="1"/><rect x="18" y="18" width="1" height="1"/><rect x="20" y="18" width="1" height="1"/><rect x="9" y="19" width="1" height="1"/><rect x="11" y="19" width="1" height="1"/><rect x="12" y="19" width="1" height="1"/><rect x="15" y="19" width="1" height="1"/><rect x="17" y="19" width="1" height="1"/><rect x="20" y="19" width="1" height="1"/><rect x="9" y="20" width="1" height="1"/><rect x="10" y="20" width="1" height="1"/><rect x="12" y="20" width="1" height="1"/><rect x="13" y="20" width="1" height="1"/><rect x="14" y="20" width="1" height="1"/><rect x="15" y="20" width="1" height="1"/><rect x="16" y="20" width="1" height="1"/><rect x="17" y="20" width="1" height="1"/><rect x="18" y="20" width="1" height="1"/><rect x="20" y="20" width="1" height="1"/></svg>
+                    <div>
+                      <p class="wf-doc__heading">Código de verificación</p>
+                      <p class="wf-doc__verify-code">VFY-260830-0148</p>
+                      <p class="fx-note" style="margin-top:.35rem">
+                        Marca y código demostrativos. No corresponden a ningún registro
+                        y no son legibles por un lector de códigos.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="fx-actions" style="margin-top:1rem">
+                <button class="fx-btn fx-btn--ghost fx-btn--small" type="button" data-wf-download>
+                  <svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5v8M4.8 7.6 8 10.8l3.2-3.2M2.8 13.2h10.4"/></svg>Descargar documento
+                </button>
+                <button class="fx-btn fx-btn--ghost fx-btn--small" type="button" data-wf-print>
+                  <svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4.6 6V2.8h6.8V6"/><path d="M4.6 12h-2V6.8h10.8V12h-2"/><path d="M4.6 9.6h6.8v3.6H4.6z"/></svg>Imprimir
+                </button>
+                <span class="wf-sim" style="align-self:center">SOL-2026-0148.pdf</span>
+              </div><div class="wf-mail">
+                <div class="wf-mail__head">
+                  <span><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.4 4h11.2v8H2.4z"/><path d="m2.4 4.6 5.6 4 5.6-4"/></svg> Notificación al solicitante</span>
+                  <span class="wf-sim">Simulación</span>
+                </div>
+                <dl class="wf-mail__fields">
+                  <div class="wf-mail__row"><dt>Para</dt><dd>alejandro.rivera@demo.local</dd></div>
+                  <div class="wf-mail__row"><dt>Asunto</dt><dd><b>Solicitud SOL-2026-0148 aprobada</b></dd></div>
+                </dl>
+                <div class="wf-mail__body">
+                  <p>Su solicitud ha completado el flujo de aprobación. Puede consultar el expediente completo, las autorizaciones registradas y el documento generado desde el portal.</p>
+                </div>
+              </div>
+              <p class="fx-note" style="margin-top:.75rem">
+                No se envía ningún correo. La vista muestra el mensaje que el flujo prepararía al
+                cerrar el expediente.
+              </p></div></div>
+                <div class="wf-tabpanel" role="tabpanel" id="panel-historial" aria-labelledby="tab-historial" tabindex="0" hidden><h3 class="wf-tabpanel__title">Historial</h3><p class="wf-subhead__note" style="margin-bottom:1rem">Cada acción del expediente
+                     queda registrada con su hora y su responsable.</p><ol class="wf-audit" data-wf-audit><li class="wf-audit__row" data-kind="person"><span class="wf-audit__time">10:31</span><span class="wf-audit__dot"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="5.4" r="2.6"/><path d="M3 13.4c0-2.8 2.2-5 5-5s5 2.2 5 5"/></svg></span><span><span class="wf-audit__title">Solicitud creada</span><span class="wf-audit__text">Registro de la solicitud SOL-2026-0148 con un documento adjunto.</span><span class="wf-audit__actor">Alejandro Rivera</span></span></li><li class="wf-audit__row" data-kind="system"><span class="wf-audit__time">10:31</span><span class="wf-audit__dot"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="2.2"/><path d="M8 1.8v1.6M8 12.6v1.6M14.2 8h-1.6M3.4 8H1.8M12.4 3.6l-1.1 1.1M4.7 11.3l-1.1 1.1M12.4 12.4l-1.1-1.1M4.7 4.7 3.6 3.6"/></svg></span><span><span class="wf-audit__title">Validación automática completada</span><span class="wf-audit__text">Campos obligatorios, adjunto, centro de costo y monto verificados.</span><span class="wf-audit__actor">Sistema</span></span></li><li class="wf-audit__row" data-kind="rule"><span class="wf-audit__time">10:31</span><span class="wf-audit__dot"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.4v3.2M8 10.4v3.2"/><rect x="4.6" y="5.6" width="6.8" height="4.8" rx="1"/></svg></span><span><span class="wf-audit__title">Regla de monto aplicada</span><span class="wf-audit__text">L 58,500.00 supera el umbral de L 25,000: se requieren dos autorizaciones.</span><span class="wf-audit__actor">Sistema</span></span></li><li class="wf-audit__row" data-kind="system"><span class="wf-audit__time">10:32</span><span class="wf-audit__dot"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="2.2"/><path d="M8 1.8v1.6M8 12.6v1.6M14.2 8h-1.6M3.4 8H1.8M12.4 3.6l-1.1 1.1M4.7 11.3l-1.1 1.1M12.4 12.4l-1.1-1.1M4.7 4.7 3.6 3.6"/></svg></span><span><span class="wf-audit__title">Asignada a Administración</span><span class="wf-audit__text">Responsable: María López · tiempo objetivo 24 horas.</span><span class="wf-audit__actor">Sistema</span></span></li></ol></div>
+                <div class="wf-tabpanel" role="tabpanel" id="panel-actividad" aria-labelledby="tab-actividad" tabindex="0" hidden><h3 class="wf-tabpanel__title">Actividad</h3><ul class="wf-assignees" style="grid-template-columns:minmax(0,1fr)">
+                     <li class="wf-person"><span class="wf-person__avatar" aria-hidden="true">AR</span><span><span class="wf-person__name">Alejandro Rivera</span><span class="wf-person__role">Solicitante · Coordinación Administrativa</span></span></li><li class="wf-person"><span class="wf-person__avatar" aria-hidden="true">ML</span><span><span class="wf-person__name">María López</span><span class="wf-person__role">Administración · Dirección Administrativa</span></span></li><li class="wf-person"><span class="wf-person__avatar" aria-hidden="true">CM</span><span><span class="wf-person__name">Carlos Mejía</span><span class="wf-person__role">Finanzas · Jefatura de Finanzas</span></span></li>
+                   </ul>
+                   <p class="fx-note" style="margin-top:1rem">
+                     Personas asignadas al expediente. Todas son ficticias y existen únicamente
+                     para demostrar el circuito de responsabilidades.
+                   </p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="fx-section" id="panel" aria-labelledby="h-panel">
+        <div class="fx-shell">
+          <header class="fx-head fx-head--split" id="h-panel"><p class="fx-label"><span class="fx-label__index">04</span><span>Panel administrativo</span></p><h2 class="fx-head__title">Cuántas, de quién, en qué estado y en cuánto tiempo.</h2><div class="fx-head__aside"><p>Las cuatro cifras que una jefatura administrativa revisa cada lunes, calculadas sobre el registro y no sobre una hoja de cálculo que alguien recuerda actualizar.</p><div class="fx-actions" style="margin-top:1rem"><span class="fx-demo">Datos demostrativos</span></div></div></header>
+
+          <div class="fx-figures fx-figures--4"><div class="fx-figure"><p class="fx-figure__label">Solicitudes del mes</p><p class="fx-figure__value">148</p><p class="fx-figure__note">Agosto de 2026</p></div><div class="fx-figure"><p class="fx-figure__label">Pendientes</p><p class="fx-figure__value">12</p><p class="fx-figure__note">Con responsable asignado</p></div><div class="fx-figure"><p class="fx-figure__label">Tiempo medio de resolución</p><p class="fx-figure__value">1.8<sup>días</sup></p><p class="fx-figure__note">Media de las 136 resueltas</p></div><div class="fx-figure"><p class="fx-figure__label">Dentro del tiempo objetivo</p><p class="fx-figure__value">94<sup>%</sup></p><p class="fx-figure__note">Nueve excedieron el plazo</p></div></div>
+
+          <div class="wf-split" style="margin-top:2rem">
+            <div>
+              <div class="wf-subhead">
+                <h3 class="wf-subhead__title">Solicitudes por estado</h3>
+                <p class="wf-subhead__note">148 solicitudes del mes</p>
+              </div>
+              <div class="wf-bars"><div class="wf-bar" data-tone="ok"><div class="wf-bar__top"><span class="wf-bar__label"><span class="fx-state fx-state--ok"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>Aprobada</span><span class="fx-note">Aprobadas</span></span><span class="wf-bar__value">92</span></div><div class="wf-bar__track"><span class="wf-bar__fill" style="width:62%"></span></div></div><div class="wf-bar" data-tone="info"><div class="wf-bar__top"><span class="wf-bar__label"><span class="fx-state fx-state--info"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h11M9.5 4.5 13 8l-3.5 3.5"/></svg>En aprobación</span><span class="fx-note">En proceso</span></span><span class="wf-bar__value">31</span></div><div class="wf-bar__track"><span class="wf-bar__fill" style="width:21%"></span></div></div><div class="wf-bar" data-tone="mute"><div class="wf-bar__top"><span class="wf-bar__label"><span class="fx-state fx-state--mute"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v6M5 8h6"/></svg>Recibida</span><span class="fx-note">Pendientes</span></span><span class="wf-bar__value">12</span></div><div class="wf-bar__track"><span class="wf-bar__fill" style="width:8%"></span></div></div><div class="wf-bar" data-tone="bad"><div class="wf-bar__top"><span class="wf-bar__label"><span class="fx-state fx-state--bad"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M5.5 8h5"/></svg>Rechazada</span><span class="fx-note">Rechazadas</span></span><span class="wf-bar__value">13</span></div><div class="wf-bar__track"><span class="wf-bar__fill" style="width:9%"></span></div></div></div>
+            </div>
+            <p class="fx-note fx-note--boxed">Todos los valores de este panel son demostrativos. En una implementación real provienen del mismo registro que alimenta la tabla de solicitudes, de modo que el indicador y el expediente nunca discrepan.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="fx-section fx-section--surface" id="solicitudes" aria-labelledby="h-solicitudes">
+        <div class="fx-shell">
+          <header class="fx-head fx-head--split" id="h-solicitudes"><p class="fx-label"><span class="fx-label__index">05</span><span>Registro</span></p><h2 class="fx-head__title">Todas las solicitudes, buscables por cualquier campo.</h2><div class="fx-head__aside"><p>Quince expedientes demostrativos. Cada código abre su ficha completa con resumen, aprobaciones, documentos, historial y actividad.</p></div></header>
+
+          <div class="fx-toolbar" data-wf-filters>
+            <div class="fx-toolbar__row">
+              <div class="fx-field">
+                <label class="fx-field__label" for="f-q">Buscar</label>
+                <input class="fx-input" id="f-q" type="search" data-wf-search
+                  placeholder="Código, concepto o solicitante" autocomplete="off" />
+              </div>
+              <div class="fx-field">
+                <label class="fx-field__label" for="f-state">Estado</label>
+                <span class="fx-select"><select class="fx-input" id="f-state" data-wf-filter="state">
+                  <option value="all">Todos los estados</option>
+                  <option value="recibida">Recibida</option><option value="validacion">En validación</option><option value="aprobacion">En aprobación</option><option value="aprobada">Aprobada</option><option value="cambios">Cambios solicitados</option><option value="rechazada">Rechazada</option><option value="finalizada">Finalizada</option><option value="vencida">Vencida</option>
+                </select></span>
+              </div>
+              <div class="fx-field">
+                <label class="fx-field__label" for="f-type">Tipo</label>
+                <span class="fx-select"><select class="fx-input" id="f-type" data-wf-filter="type">
+                  <option value="all">Todos los tipos</option><option value="Administrativa">Administrativa</option><option value="Compra">Compra</option><option value="Mantenimiento">Mantenimiento</option><option value="Permisos">Permisos</option><option value="Proveedores">Proveedores</option><option value="Viáticos">Viáticos</option>
+                </select></span>
+              </div>
+              <div class="fx-field">
+                <label class="fx-field__label" for="f-area">Área</label>
+                <span class="fx-select"><select class="fx-input" id="f-area" data-wf-filter="area">
+                  <option value="all">Todas las áreas</option><option value="Administración">Administración</option><option value="Comunicación">Comunicación</option><option value="Estadística">Estadística</option><option value="Planificación">Planificación</option><option value="Servicios Generales">Servicios Generales</option><option value="Tecnología">Tecnología</option>
+                </select></span>
+              </div>
+              <div class="fx-field">
+                <label class="fx-field__label" for="f-day">Fecha</label>
+                <span class="fx-select"><select class="fx-input" id="f-day" data-wf-filter="day">
+                  <option value="all">Todas las fechas</option>
+                  <option value="2026-08-30">30 de agosto de 2026</option><option value="2026-08-29">29 de agosto de 2026</option><option value="2026-08-28">28 de agosto de 2026</option><option value="2026-08-26">26 de agosto de 2026</option><option value="2026-08-25">25 de agosto de 2026</option><option value="2026-08-24">24 de agosto de 2026</option><option value="2026-08-23">23 de agosto de 2026</option>
+                </select></span>
+              </div>
+            </div>
+            <div class="fx-toolbar__foot">
+              <span data-wf-count>15 solicitudes</span>
+              <button class="fx-btn fx-btn--ghost fx-btn--small" type="button" data-wf-clear>
+                Limpiar filtros
+              </button>
+            </div>
+          </div>
+
+          <div data-wf-register>
+            <div class="fx-tablewrap"><table class="fx-table fx-table--stack"><caption>Registro demostrativo de solicitudes administrativas. Personas, montos y códigos ficticios.</caption><thead><tr><th scope="col">Código</th><th scope="col">Tipo</th><th scope="col">Solicitante</th><th scope="col">Área</th><th scope="col">Fecha</th><th scope="col" class="fx-num">Monto</th><th scope="col">Responsable</th><th scope="col">Estado</th><th scope="col">Tiempo</th></tr></thead><tbody><tr data-state="aprobacion" data-type="Compra" data-area="Administración" data-day="2026-08-30" data-text="sol-2026-0148 3 computadoras portátiles alejandro rivera administración compra en aprobación"><td class="fx-table__name" data-label="Código"><a class="wf-code" href="solicitudes/SOL-2026-0148.html">SOL-2026-0148</a><span class="wf-audit__text">3 computadoras portátiles</span></td><td data-label="Tipo">Compra</td><td data-label="Solicitante">Alejandro Rivera</td><td data-label="Área">Administración</td><td data-label="Fecha">30 ago 2026</td><td class="fx-num" data-label="Monto">L 58,500</td><td data-label="Responsable">Administración</td><td data-label="Estado"><span class="fx-state fx-state--info"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h11M9.5 4.5 13 8l-3.5 3.5"/></svg>En aprobación</span></td><td data-label="Tiempo"><span class="wf-sla wf-sla--ok" title="Quedan 47h 11m"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M8 4.6V8l2.4 1.6"/></svg>47h 11m</span></td></tr><tr data-state="aprobada" data-type="Viáticos" data-area="Planificación" data-day="2026-08-29" data-text="sol-2026-0147 misión técnica a comayagua lucía fernández planificación viáticos aprobada"><td class="fx-table__name" data-label="Código"><a class="wf-code" href="solicitudes/SOL-2026-0147.html">SOL-2026-0147</a><span class="wf-audit__text">Misión técnica a Comayagua</span></td><td data-label="Tipo">Viáticos</td><td data-label="Solicitante">Lucía Fernández</td><td data-label="Área">Planificación</td><td data-label="Fecha">29 ago 2026</td><td class="fx-num" data-label="Monto">L 8,200</td><td data-label="Responsable">Finanzas</td><td data-label="Estado"><span class="fx-state fx-state--ok"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>Aprobada</span></td><td data-label="Tiempo"><span class="wf-sla" title="Resuelta en 19h 30m"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>19h 30m</span></td></tr><tr data-state="recibida" data-type="Mantenimiento" data-area="Servicios Generales" data-day="2026-08-30" data-text="sol-2026-0146 reparación de aire acondicionado óscar padilla servicios generales mantenimiento recibida"><td class="fx-table__name" data-label="Código"><a class="wf-code" href="solicitudes/SOL-2026-0146.html">SOL-2026-0146</a><span class="wf-audit__text">Reparación de aire acondicionado</span></td><td data-label="Tipo">Mantenimiento</td><td data-label="Solicitante">Óscar Padilla</td><td data-label="Área">Servicios Generales</td><td data-label="Fecha">30 ago 2026</td><td class="fx-num" data-label="Monto">L 12,400</td><td data-label="Responsable">Jefatura inmediata</td><td data-label="Estado"><span class="fx-state fx-state--mute"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v6M5 8h6"/></svg>Recibida</span></td><td data-label="Tiempo"><span class="wf-sla wf-sla--ok" title="Quedan 17h 32m"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M8 4.6V8l2.4 1.6"/></svg>17h 32m</span></td></tr><tr data-state="aprobada" data-type="Permisos" data-area="Comunicación" data-day="2026-08-28" data-text="sol-2026-0145 vacaciones del 12 al 23 de octubre daniela cruz comunicación permisos aprobada"><td class="fx-table__name" data-label="Código"><a class="wf-code" href="solicitudes/SOL-2026-0145.html">SOL-2026-0145</a><span class="wf-audit__text">Vacaciones del 12 al 23 de octubre</span></td><td data-label="Tipo">Permisos</td><td data-label="Solicitante">Daniela Cruz</td><td data-label="Área">Comunicación</td><td data-label="Fecha">28 ago 2026</td><td class="fx-num" data-label="Monto">—</td><td data-label="Responsable">RR. HH.</td><td data-label="Estado"><span class="fx-state fx-state--ok"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>Aprobada</span></td><td data-label="Tiempo"><span class="wf-sla" title="Resuelta en 13h 12m"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>13h 12m</span></td></tr><tr data-state="aprobacion" data-type="Compra" data-area="Tecnología" data-day="2026-08-28" data-text="sol-2026-0144 licencias ofimáticas (25 puestos) marcela zúniga tecnología compra en aprobación"><td class="fx-table__name" data-label="Código"><a class="wf-code" href="solicitudes/SOL-2026-0144.html">SOL-2026-0144</a><span class="wf-audit__text">Licencias ofimáticas (25 puestos)</span></td><td data-label="Tipo">Compra</td><td data-label="Solicitante">Marcela Zúniga</td><td data-label="Área">Tecnología</td><td data-label="Fecha">28 ago 2026</td><td class="fx-num" data-label="Monto">L 104,300</td><td data-label="Responsable">Dirección Ejecutiva</td><td data-label="Estado"><span class="fx-state fx-state--info"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h11M9.5 4.5 13 8l-3.5 3.5"/></svg>En aprobación</span></td><td data-label="Tiempo"><span class="wf-sla wf-sla--warn" title="Quedan 4h 02m"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M8 4.6V8l2.4 1.6"/></svg>4h 02m</span></td></tr><tr data-state="validacion" data-type="Proveedores" data-area="Administración" data-day="2026-08-29" data-text="sol-2026-0143 alta de proveedor de imprenta rodrigo salgado administración proveedores en validación"><td class="fx-table__name" data-label="Código"><a class="wf-code" href="solicitudes/SOL-2026-0143.html">SOL-2026-0143</a><span class="wf-audit__text">Alta de proveedor de imprenta</span></td><td data-label="Tipo">Proveedores</td><td data-label="Solicitante">Rodrigo Salgado</td><td data-label="Área">Administración</td><td data-label="Fecha">29 ago 2026</td><td class="fx-num" data-label="Monto">—</td><td data-label="Responsable">Administración</td><td data-label="Estado"><span class="fx-state fx-state--info"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M8 4.6V8l2.4 1.6"/></svg>En validación</span></td><td data-label="Tiempo"><span class="wf-sla wf-sla--ok" title="Quedan 53h 28m"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M8 4.6V8l2.4 1.6"/></svg>53h 28m</span></td></tr><tr data-state="vencida" data-type="Compra" data-area="Estadística" data-day="2026-08-28" data-text="sol-2026-0142 mobiliario de archivo karla núñez estadística compra vencida"><td class="fx-table__name" data-label="Código"><a class="wf-code" href="solicitudes/SOL-2026-0142.html">SOL-2026-0142</a><span class="wf-audit__text">Mobiliario de archivo</span></td><td data-label="Tipo">Compra</td><td data-label="Solicitante">Karla Núñez</td><td data-label="Área">Estadística</td><td data-label="Fecha">28 ago 2026</td><td class="fx-num" data-label="Monto">L 31,900</td><td data-label="Responsable">Administración</td><td data-label="Estado"><span class="fx-state fx-state--bad"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5 14.5 13.5h-13z"/><path d="M8 6.5v3M8 11.6v.1"/></svg>Vencida</span></td><td data-label="Tiempo"><span class="wf-sla wf-sla--over" title="Excedido por 1h 12m"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5 14.5 13.5h-13z"/><path d="M8 6.5v3M8 11.6v.1"/></svg>+1h 12m</span></td></tr><tr data-state="aprobada" data-type="Viáticos" data-area="Estadística" data-day="2026-08-26" data-text="sol-2026-0141 taller regional en choluteca iván bustillo estadística viáticos aprobada"><td class="fx-table__name" data-label="Código"><a class="wf-code" href="solicitudes/SOL-2026-0141.html">SOL-2026-0141</a><span class="wf-audit__text">Taller regional en Choluteca</span></td><td data-label="Tipo">Viáticos</td><td data-label="Solicitante">Iván Bustillo</td><td data-label="Área">Estadística</td><td data-label="Fecha">26 ago 2026</td><td class="fx-num" data-label="Monto">L 6,450</td><td data-label="Responsable">Administración</td><td data-label="Estado"><span class="fx-state fx-state--ok"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>Aprobada</span></td><td data-label="Tiempo"><span class="wf-sla" title="Resuelta en 15h 48m"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>15h 48m</span></td></tr><tr data-state="finalizada" data-type="Compra" data-area="Servicios Generales" data-day="2026-08-26" data-text="sol-2026-0140 suministros de oficina del trimestre patricia andino servicios generales compra finalizada"><td class="fx-table__name" data-label="Código"><a class="wf-code" href="solicitudes/SOL-2026-0140.html">SOL-2026-0140</a><span class="wf-audit__text">Suministros de oficina del trimestre</span></td><td data-label="Tipo">Compra</td><td data-label="Solicitante">Patricia Andino</td><td data-label="Área">Servicios Generales</td><td data-label="Fecha">26 ago 2026</td><td class="fx-num" data-label="Monto">L 18,700</td><td data-label="Responsable">Jefatura inmediata</td><td data-label="Estado"><span class="fx-state fx-state--ok"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>Finalizada</span></td><td data-label="Tiempo"><span class="wf-sla" title="Resuelta en 21h 24m"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>21h 24m</span></td></tr><tr data-state="finalizada" data-type="Mantenimiento" data-area="Servicios Generales" data-day="2026-08-25" data-text="sol-2026-0139 cambio de luminarias del segundo nivel óscar padilla servicios generales mantenimiento finalizada"><td class="fx-table__name" data-label="Código"><a class="wf-code" href="solicitudes/SOL-2026-0139.html">SOL-2026-0139</a><span class="wf-audit__text">Cambio de luminarias del segundo nivel</span></td><td data-label="Tipo">Mantenimiento</td><td data-label="Solicitante">Óscar Padilla</td><td data-label="Área">Servicios Generales</td><td data-label="Fecha">25 ago 2026</td><td class="fx-num" data-label="Monto">L 9,800</td><td data-label="Responsable">Administración</td><td data-label="Estado"><span class="fx-state fx-state--ok"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>Finalizada</span></td><td data-label="Tiempo"><span class="wf-sla" title="Resuelta en 18h 54m"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>18h 54m</span></td></tr><tr data-state="finalizada" data-type="Administrativa" data-area="Planificación" data-day="2026-08-25" data-text="sol-2026-0138 constancia laboral jorge medina planificación administrativa finalizada"><td class="fx-table__name" data-label="Código"><a class="wf-code" href="solicitudes/SOL-2026-0138.html">SOL-2026-0138</a><span class="wf-audit__text">Constancia laboral</span></td><td data-label="Tipo">Administrativa</td><td data-label="Solicitante">Jorge Medina</td><td data-label="Área">Planificación</td><td data-label="Fecha">25 ago 2026</td><td class="fx-num" data-label="Monto">—</td><td data-label="Responsable">RR. HH.</td><td data-label="Estado"><span class="fx-state fx-state--ok"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>Finalizada</span></td><td data-label="Tiempo"><span class="wf-sla" title="Resuelta en 4h 36m"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>4h 36m</span></td></tr><tr data-state="cambios" data-type="Compra" data-area="Tecnología" data-day="2026-08-29" data-text="sol-2026-0137 servidor de respaldo y almacenamiento marcela zúniga tecnología compra cambios solicitados"><td class="fx-table__name" data-label="Código"><a class="wf-code" href="solicitudes/SOL-2026-0137.html">SOL-2026-0137</a><span class="wf-audit__text">Servidor de respaldo y almacenamiento</span></td><td data-label="Tipo">Compra</td><td data-label="Solicitante">Marcela Zúniga</td><td data-label="Área">Tecnología</td><td data-label="Fecha">29 ago 2026</td><td class="fx-num" data-label="Monto">L 147,000</td><td data-label="Responsable">Administración</td><td data-label="Estado"><span class="fx-state fx-state--warn"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11.2 2.8 13.2 4.8 5.5 12.5 2.8 13.2l.7-2.7z"/></svg>Cambios solicitados</span></td><td data-label="Tiempo"><span class="wf-sla wf-sla--ok" title="Quedan 21h 52m"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M8 4.6V8l2.4 1.6"/></svg>21h 52m</span></td></tr><tr data-state="aprobada" data-type="Permisos" data-area="Comunicación" data-day="2026-08-24" data-text="sol-2026-0136 permiso por estudio andrea lagos comunicación permisos aprobada"><td class="fx-table__name" data-label="Código"><a class="wf-code" href="solicitudes/SOL-2026-0136.html">SOL-2026-0136</a><span class="wf-audit__text">Permiso por estudio</span></td><td data-label="Tipo">Permisos</td><td data-label="Solicitante">Andrea Lagos</td><td data-label="Área">Comunicación</td><td data-label="Fecha">24 ago 2026</td><td class="fx-num" data-label="Monto">—</td><td data-label="Responsable">Jefatura inmediata</td><td data-label="Estado"><span class="fx-state fx-state--ok"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>Aprobada</span></td><td data-label="Tiempo"><span class="wf-sla" title="Resuelta en 9h 06m"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>9h 06m</span></td></tr><tr data-state="rechazada" data-type="Proveedores" data-area="Administración" data-day="2026-08-23" data-text="sol-2026-0135 renovación de contrato de limpieza rodrigo salgado administración proveedores rechazada"><td class="fx-table__name" data-label="Código"><a class="wf-code" href="solicitudes/SOL-2026-0135.html">SOL-2026-0135</a><span class="wf-audit__text">Renovación de contrato de limpieza</span></td><td data-label="Tipo">Proveedores</td><td data-label="Solicitante">Rodrigo Salgado</td><td data-label="Área">Administración</td><td data-label="Fecha">23 ago 2026</td><td class="fx-num" data-label="Monto">L 42,000</td><td data-label="Responsable">Finanzas</td><td data-label="Estado"><span class="fx-state fx-state--bad"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M5.5 8h5"/></svg>Rechazada</span></td><td data-label="Tiempo"><span class="wf-sla" title="Resuelta en 44h 12m"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>44h 12m</span></td></tr><tr data-state="finalizada" data-type="Viáticos" data-area="Planificación" data-day="2026-08-23" data-text="sol-2026-0134 sesión de consejo en san pedro sula lucía fernández planificación viáticos finalizada"><td class="fx-table__name" data-label="Código"><a class="wf-code" href="solicitudes/SOL-2026-0134.html">SOL-2026-0134</a><span class="wf-audit__text">Sesión de Consejo en San Pedro Sula</span></td><td data-label="Tipo">Viáticos</td><td data-label="Solicitante">Lucía Fernández</td><td data-label="Área">Planificación</td><td data-label="Fecha">23 ago 2026</td><td class="fx-num" data-label="Monto">L 5,300</td><td data-label="Responsable">Liquidación</td><td data-label="Estado"><span class="fx-state fx-state--ok"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>Finalizada</span></td><td data-label="Tiempo"><span class="wf-sla" title="Resuelta en 16h 18m"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>16h 18m</span></td></tr></tbody></table></div>
+          </div>
+          <p class="wf-empty" data-wf-noresults hidden>
+            Ninguna solicitud coincide con los filtros aplicados.
+          </p>
+        </div>
+      </section>
+
+      <section class="fx-section" id="tiempos" aria-labelledby="h-tiempos">
+        <div class="fx-shell">
+          <header class="fx-head fx-head--split" id="h-tiempos"><p class="fx-label"><span class="fx-label__index">06</span><span>Tiempo objetivo</span></p><h2 class="fx-head__title">Cada tipo de solicitud tiene un plazo, y el plazo se vigila solo.</h2><div class="fx-head__aside"><p>El motor cuenta las horas desde el registro. Al acercarse al límite avisa; al superarlo, escala la solicitud sin que nadie tenga que reclamarla.</p></div></header>
+
+          <div class="wf-split">
+            <div>
+              <div class="fx-tablewrap"><table class="fx-table fx-table--stack"><caption>Tiempos objetivo demostrativos por tipo de proceso.</caption><thead><tr><th scope="col">Proceso</th><th scope="col">Tiempo objetivo</th><th scope="col">Criterio</th></tr></thead><tbody><tr><td class="fx-table__name" data-label="Proceso">Compras</td><td data-label="Tiempo objetivo">48 horas</td><td data-label="Criterio">Desde el registro hasta la última autorización.</td></tr><tr><td class="fx-table__name" data-label="Proceso">Viáticos</td><td data-label="Tiempo objetivo">24 horas</td><td data-label="Criterio">El anticipo debe resolverse antes de la misión.</td></tr><tr><td class="fx-table__name" data-label="Proceso">Permisos y vacaciones</td><td data-label="Tiempo objetivo">24 horas</td><td data-label="Criterio">Jefatura y Recursos Humanos en el mismo día hábil.</td></tr><tr><td class="fx-table__name" data-label="Proceso">Proveedores</td><td data-label="Tiempo objetivo">72 horas</td><td data-label="Criterio">Incluye la revisión del expediente documental.</td></tr><tr><td class="fx-table__name" data-label="Proceso">Mantenimiento</td><td data-label="Tiempo objetivo">24 horas</td><td data-label="Criterio">La prioridad alta escala a las 8 horas.</td></tr></tbody></table></div>
+            </div>
+
+            <div class="wf-stack">
+              <div>
+                <div class="wf-subhead">
+                  <h3 class="wf-subhead__title">En vigilancia ahora</h3>
+                  <p class="wf-subhead__note">Ordenadas por tiempo restante</p>
+                </div>
+                <ul class="wf-records" style="gap:.5rem">
+                  <li class="wf-person" style="grid-template-columns:minmax(0,1fr) auto"><span><span class="wf-person__name">SOL-2026-0142</span><span class="wf-person__role">Mobiliario de archivo · Administración</span></span><span><span class="wf-sla wf-sla--over" title="Excedido por 1h 12m"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5 14.5 13.5h-13z"/><path d="M8 6.5v3M8 11.6v.1"/></svg>+1h 12m</span></span></li><li class="fx-note" style="padding-left:.25rem">SLA excedido · escalada automáticamente</li><li class="wf-person" style="grid-template-columns:minmax(0,1fr) auto"><span><span class="wf-person__name">SOL-2026-0144</span><span class="wf-person__role">Licencias ofimáticas (25 puestos) · Dirección Ejecutiva</span></span><span><span class="wf-sla wf-sla--warn" title="Quedan 4h 02m"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M8 4.6V8l2.4 1.6"/></svg>4h 02m</span></span></li><li class="fx-note" style="padding-left:.25rem">Atención · próxima a vencer</li><li class="wf-person" style="grid-template-columns:minmax(0,1fr) auto"><span><span class="wf-person__name">SOL-2026-0146</span><span class="wf-person__role">Reparación de aire acondicionado · Jefatura inmediata</span></span><span><span class="wf-sla wf-sla--ok" title="Quedan 17h 32m"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M8 4.6V8l2.4 1.6"/></svg>17h 32m</span></span></li><li class="wf-person" style="grid-template-columns:minmax(0,1fr) auto"><span><span class="wf-person__name">SOL-2026-0137</span><span class="wf-person__role">Servidor de respaldo y almacenamiento · Administración</span></span><span><span class="wf-sla wf-sla--ok" title="Quedan 21h 52m"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M8 4.6V8l2.4 1.6"/></svg>21h 52m</span></span></li>
+                </ul>
+              </div>
+
+              <div class="wf-escalation">
+                <p class="wf-escalation__title"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5 14.5 13.5h-13z"/><path d="M8 6.5v3M8 11.6v.1"/></svg>Escalamiento automático</p>
+                <dl class="wf-escalation__facts">
+                  <div><dt>Solicitud</dt><dd>SOL-2026-0142</dd></div>
+                  <div><dt>Responsable</dt><dd>Administración</dd></div>
+                  <div><dt>Tiempo objetivo</dt><dd>48 horas</dd></div>
+                  <div><dt>Transcurrido</dt><dd>49h 12m</dd></div>
+                </dl>
+                <p class="fx-note" style="color:var(--ink)"><b>Dirección Administrativa notificada.</b></p>
+                <p class="fx-note">Cuando una solicitud supera su tiempo objetivo, el motor la eleva al siguiente nivel de responsabilidad y deja constancia del escalamiento en el historial del expediente.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="fx-section fx-section--sunken" id="reglas" aria-labelledby="h-reglas">
+        <div class="fx-shell">
+          <header class="fx-head fx-head--split" id="h-reglas"><p class="fx-label"><span class="fx-label__index">07</span><span>Reglas</span></p><h2 class="fx-head__title">Automatización basada en reglas, no en criterio.</h2><div class="fx-head__aside"><p>El circuito de autorización se decide por el contenido de la solicitud. Estas tres reglas son las que acaba de ejecutar el formulario de arriba: la misma definición gobierna el diagrama y el motor.</p></div></header>
+
+          <div class="wf-rules"><div class="wf-rule"><div><span class="wf-rule__if">Si</span><p class="wf-rule__cond">Monto menor a L 25,000</p></div><div><span class="wf-rule__if">Entonces</span><ol class="wf-chain"><li class="wf-chain__step wf-chain__step--start">Solicitante</li><li class="wf-chain__arrow" aria-hidden="true"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v10M4 9l4 4 4-4"/></svg></li><li class="wf-chain__step">Jefatura inmediata</li><li class="wf-chain__arrow" aria-hidden="true"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v10M4 9l4 4 4-4"/></svg></li><li class="wf-chain__step wf-chain__step--end">Aprobada</li></ol></div><p class="wf-rule__note">Una sola autorización: la jefatura inmediata del área solicitante.</p></div><div class="wf-rule"><div><span class="wf-rule__if">Si</span><p class="wf-rule__cond">Monto igual o mayor a L 25,000</p></div><div><span class="wf-rule__if">Entonces</span><ol class="wf-chain"><li class="wf-chain__step wf-chain__step--start">Solicitante</li><li class="wf-chain__arrow" aria-hidden="true"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v10M4 9l4 4 4-4"/></svg></li><li class="wf-chain__step">Administración</li><li class="wf-chain__arrow" aria-hidden="true"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v10M4 9l4 4 4-4"/></svg></li><li class="wf-chain__step">Finanzas</li><li class="wf-chain__arrow" aria-hidden="true"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v10M4 9l4 4 4-4"/></svg></li><li class="wf-chain__step wf-chain__step--end">Aprobada</li></ol></div><p class="wf-rule__note">El visto bueno de jefatura se resuelve en el registro; autorizan Administración y Finanzas.</p></div><div class="wf-rule"><div><span class="wf-rule__if">Si</span><p class="wf-rule__cond">Monto igual o mayor a L 100,000</p></div><div><span class="wf-rule__if">Entonces</span><ol class="wf-chain"><li class="wf-chain__step wf-chain__step--start">Solicitante</li><li class="wf-chain__arrow" aria-hidden="true"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v10M4 9l4 4 4-4"/></svg></li><li class="wf-chain__step">Administración</li><li class="wf-chain__arrow" aria-hidden="true"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v10M4 9l4 4 4-4"/></svg></li><li class="wf-chain__step">Finanzas</li><li class="wf-chain__arrow" aria-hidden="true"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v10M4 9l4 4 4-4"/></svg></li><li class="wf-chain__step">Dirección Ejecutiva</li><li class="wf-chain__arrow" aria-hidden="true"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v10M4 9l4 4 4-4"/></svg></li><li class="wf-chain__step wf-chain__step--end">Aprobada</li></ol></div><p class="wf-rule__note">Además de Administración y Finanzas, la Dirección Ejecutiva autoriza el gasto.</p></div></div>
+
+          <p class="fx-note fx-note--boxed" style="margin-top:1.5rem">
+            <b>Los flujos pueden configurarse de acuerdo con los procedimientos internos de cada organización.</b> Las reglas mostradas son ficticias y sirven para
+            ilustrar el mecanismo: umbrales, responsables y número de niveles se definen en la
+            implementación.
+          </p>
+        </div>
+      </section>
+
+      <section class="fx-section" id="motor" aria-labelledby="h-motor">
+        <div class="fx-shell">
+          <header class="fx-head fx-head--split" id="h-motor"><p class="fx-label"><span class="fx-label__index">08</span><span>El motor</span></p><h2 class="fx-head__title">Un motor. Diferentes procesos.</h2><div class="fx-head__aside"><p>Cambiar de proceso no es cambiar de sistema: es cambiar la definición del flujo. Vacaciones y viáticos abren su ejemplo para mostrarlo.</p></div></header>
+          <div class="wf-engine"><div class="wf-engine__item"><span class="wf-engine__title">Compras</span><span class="wf-engine__text">Requerimiento, cotización y autorización de gasto.</span></div><button class="wf-engine__item" type="button" data-wf-mini="vacaciones"><span class="wf-engine__title">Vacaciones<svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h11M9.5 4.5 13 8l-3.5 3.5"/></svg></span><span class="wf-engine__text">Saldo de días, reemplazo y constancia.</span></button><button class="wf-engine__item" type="button" data-wf-mini="viaticos"><span class="wf-engine__title">Viáticos<svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h11M9.5 4.5 13 8l-3.5 3.5"/></svg></span><span class="wf-engine__text">Anticipo, misión y liquidación.</span></button><div class="wf-engine__item"><span class="wf-engine__title">Reembolsos</span><span class="wf-engine__text">Comprobantes, revisión y pago.</span></div><div class="wf-engine__item"><span class="wf-engine__title">Proveedores</span><span class="wf-engine__text">Alta, expediente y renovación.</span></div><div class="wf-engine__item"><span class="wf-engine__title">Mantenimiento</span><span class="wf-engine__text">Reporte, asignación y cierre técnico.</span></div><div class="wf-engine__item"><span class="wf-engine__title">Tecnología</span><span class="wf-engine__text">Accesos, equipos e incidencias.</span></div><div class="wf-engine__item"><span class="wf-engine__title">Correspondencia</span><span class="wf-engine__text">Recepción, derivación y respuesta.</span></div><div class="wf-engine__item"><span class="wf-engine__title">Documentos</span><span class="wf-engine__text">Elaboración, revisión y firma.</span></div><div class="wf-engine__item"><span class="wf-engine__title">Contratación</span><span class="wf-engine__text">Requerimiento de personal y selección.</span></div><div class="wf-engine__item"><span class="wf-engine__title">Constancias</span><span class="wf-engine__text">Solicitud, emisión y verificación.</span></div><div class="wf-engine__item"><span class="wf-engine__title">Autorizaciones</span><span class="wf-engine__text">Permisos internos y excepciones.</span></div></div>
+        </div>
+      </section>
+
+      <section class="fx-section fx-section--surface" id="documental" aria-labelledby="h-documental">
+        <div class="fx-shell">
+          <header class="fx-head fx-head--split" id="h-documental"><p class="fx-label"><span class="fx-label__index">09</span><span>Procesos documentales</span></p><h2 class="fx-head__title">De expediente a documento final.</h2><div class="fx-head__aside"><p>La misma arquitectura puede utilizarse para expedientes, correspondencia, resoluciones, constancias y otros procesos documentales.</p></div></header>
+          <ol class="wf-pipeline"><li class="wf-pipeline__stage"><span class="wf-pipeline__index">01</span><p class="wf-pipeline__label">Recibir</p><p class="wf-pipeline__text">Entrada por formulario, correo o ventanilla.</p></li><li class="wf-pipeline__stage"><span class="wf-pipeline__index">02</span><p class="wf-pipeline__label">Registrar</p><p class="wf-pipeline__text">Número único, fecha y responsable.</p></li><li class="wf-pipeline__stage"><span class="wf-pipeline__index">03</span><p class="wf-pipeline__label">Asignar</p><p class="wf-pipeline__text">Derivación por regla, no por criterio.</p></li><li class="wf-pipeline__stage"><span class="wf-pipeline__index">04</span><p class="wf-pipeline__label">Revisar</p><p class="wf-pipeline__text">Observaciones dentro del expediente.</p></li><li class="wf-pipeline__stage"><span class="wf-pipeline__index">05</span><p class="wf-pipeline__label">Aprobar</p><p class="wf-pipeline__text">Autorización con constancia nominal.</p></li><li class="wf-pipeline__stage"><span class="wf-pipeline__index">06</span><p class="wf-pipeline__label">Generar</p><p class="wf-pipeline__text">Documento final con código de verificación.</p></li><li class="wf-pipeline__stage"><span class="wf-pipeline__index">07</span><p class="wf-pipeline__label">Archivar</p><p class="wf-pipeline__text">Expediente cerrado y consultable.</p></li></ol>
+        </div>
+      </section>
+
+      <section class="fx-section" id="comparacion" aria-labelledby="h-comparacion">
+        <div class="fx-shell">
+          <header class="fx-head fx-head--split" id="h-comparacion"><p class="fx-label"><span class="fx-label__index">10</span><span>El cambio</span></p><h2 class="fx-head__title">Del seguimiento manual al control digital.</h2><div class="fx-head__aside"><p>La columna de la izquierda no es un error de nadie: es lo que ocurre cuando un proceso crece sin una herramienta que lo sostenga.</p></div></header>
+          <div class="wf-compare">
+            <div class="wf-compare__side"><p class="wf-compare__label">Antes</p><ul class="wf-compare__list"><li><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M5.5 8h5"/></svg><span>Correos</span></li><li><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M5.5 8h5"/></svg><span>WhatsApp</span></li><li><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M5.5 8h5"/></svg><span>Excel</span></li><li><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M5.5 8h5"/></svg><span>Documentos dispersos</span></li><li><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M5.5 8h5"/></svg><span>Seguimiento manual</span></li><li><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M5.5 8h5"/></svg><span>Sin trazabilidad</span></li></ul></div>
+            <div class="wf-compare__side wf-compare__side--after"><p class="wf-compare__label">Después</p><ul class="wf-compare__list"><li><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg><span>Formulario centralizado</span></li><li><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg><span>Responsables automáticos</span></li><li><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg><span>Aprobaciones con constancia</span></li><li><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg><span>Control de tiempos</span></li><li><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg><span>Documentos generados</span></li><li><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg><span>Historial completo</span></li></ul></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="fx-section fx-section--dark fx-dark" id="impacto" aria-labelledby="h-impacto">
+        <div class="fx-shell">
+          <header class="fx-head fx-head--split" id="h-impacto">
+            <p class="fx-label"><span class="fx-label__index">11</span><span>Impacto potencial</span>
+            </p>
+            <h2 class="fx-head__title">Impacto potencial</h2>
+            <div class="fx-head__aside">
+              <p>Ejemplo ilustrativo del tipo de indicadores que una organización podría medir tras digitalizar sus procesos.</p>
+              <div class="fx-actions" style="margin-top:1rem"><span class="fx-demo fx-demo--onDark">Simulación</span></div>
+            </div>
+          </header>
+          <div class="wf-impact"><div class="wf-impact__item"><p class="wf-impact__value">−65 %</p><p class="wf-impact__label">Tiempo de procesamiento</p></div><div class="wf-impact__item"><p class="wf-impact__value">−80 %</p><p class="wf-impact__label">Seguimiento manual</p></div><div class="wf-impact__item"><p class="wf-impact__value">100 %</p><p class="wf-impact__label">Solicitudes trazables</p></div><div class="wf-impact__item"><p class="wf-impact__value">24/7</p><p class="wf-impact__label">Consulta de estado</p></div></div>
+        </div>
+      </section>
+
+      <section class="fx-cta fx-dark">
+        <div class="fx-shell fx-cta__inner">
+          <div>
+            <p class="fx-label"><span>Adaptable</span></p>
+            <h2 class="fx-cta__title">Cada organización tiene procesos diferentes.</h2>
+          </div>
+          <div>
+            <p class="fx-cta__text">
+              Los flujos de solicitud, aprobación, documentación y seguimiento pueden adaptarse a
+              las reglas, responsables y niveles de autorización de cada institución.
+            </p>
+            <div class="fx-actions" style="margin-top:1.5rem">
+              <a class="fx-btn fx-btn--solid" href="#motor">Explorar otro proceso<svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h11M9.5 4.5 13 8l-3.5 3.5"/></svg></a>
+              <a class="fx-btn fx-btn--onDark" href="../../index.html#proyectos">
+                Volver al portafolio
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    <div class="wf-guide" data-wf-guidebar role="status" aria-live="polite">
+      <p class="wf-guide__text">
+        <span class="wf-guide__step" data-wf-guide-step>Demo guiada</span>
+        <span data-wf-guide-text>Preparando la demostración…</span>
+      </p>
+      <div class="wf-guide__actions">
+        <button class="wf-guide__btn" type="button" data-wf-guide-pause>Pausar</button>
+        <button class="wf-guide__btn" type="button" data-wf-guide-skip>Salir</button>
+      </div>
+    </div>
+
+    <dialog class="wf-modal" id="mini-vacaciones" data-wf-modal="vacaciones"
+      aria-labelledby="mini-vacaciones-title">
+      <div class="wf-modal__head">
+        <div>
+          <h2 class="wf-modal__title" id="mini-vacaciones-title">Solicitud de vacaciones</h2>
+          <p class="wf-modal__lead">El mismo motor, otro formulario y otra cadena de autorización.</p>
+        </div>
+        <button class="wf-modal__close" type="button" data-wf-modal-close
+          aria-label="Cerrar">&times;</button>
+      </div>
+      <div class="wf-modal__body">
+        <dl class="wf-fields"><div><dt>Empleado</dt><dd>Daniela Cruz</dd></div><div><dt>Fecha de inicio</dt><dd>12 de octubre de 2026</dd></div><div><dt>Fecha final</dt><dd>23 de octubre de 2026</dd></div><div><dt>Días solicitados</dt><dd>10 días hábiles</dd></div><div><dt>Reemplazo</dt><dd>Andrea Lagos</dd></div><div><dt>Comentario</dt><dd>Saldo disponible: 18 días.</dd></div></dl>
+        <div>
+          <p class="wf-doc__heading">Flujo de autorización</p>
+          <div style="margin-top:.75rem"><ol class="wf-chain"><li class="wf-chain__step wf-chain__step--start">Empleado</li><li class="wf-chain__arrow" aria-hidden="true"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v10M4 9l4 4 4-4"/></svg></li><li class="wf-chain__step">Jefatura</li><li class="wf-chain__arrow" aria-hidden="true"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v10M4 9l4 4 4-4"/></svg></li><li class="wf-chain__step">RR. HH.</li><li class="wf-chain__arrow" aria-hidden="true"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v10M4 9l4 4 4-4"/></svg></li><li class="wf-chain__step wf-chain__step--end">Aprobado</li></ol></div>
+        </div>
+        <p class="fx-note">
+          Ejemplo de reutilización del motor: mismo formulario, misma bitácora, misma pantalla de
+          seguimiento — otra definición de pasos y responsables. Datos ficticios.
+        </p>
+      </div>
+      <div class="wf-modal__foot">
+        <span class="wf-sim">Ejemplo demostrativo</span>
+        <button class="fx-btn fx-btn--ghost fx-btn--small" type="button" data-wf-modal-close>
+          Cerrar
+        </button>
+      </div>
+    </dialog>
+
+    <dialog class="wf-modal" id="mini-viaticos" data-wf-modal="viaticos"
+      aria-labelledby="mini-viaticos-title">
+      <div class="wf-modal__head">
+        <div>
+          <h2 class="wf-modal__title" id="mini-viaticos-title">Solicitud de viáticos</h2>
+          <p class="wf-modal__lead">Cinco pasos, y dos de ellos ocurren después del viaje.</p>
+        </div>
+        <button class="wf-modal__close" type="button" data-wf-modal-close
+          aria-label="Cerrar">&times;</button>
+      </div>
+      <div class="wf-modal__body">
+        <dl class="wf-fields"><div><dt>Destino</dt><dd>Comayagua</dd></div><div><dt>Fecha</dt><dd>9 y 10 de septiembre de 2026</dd></div><div><dt>Motivo</dt><dd>Levantamiento de información en centros educativos</dd></div><div><dt>Monto</dt><dd>L 8,200.00</dd></div><div><dt>Proyecto</dt><dd>Serie estadística 2026</dd></div><div><dt>Adjuntos</dt><dd>Agenda_Mision.pdf</dd></div></dl>
+        <div>
+          <p class="wf-doc__heading">Flujo de autorización</p>
+          <div style="margin-top:.75rem"><ol class="wf-chain"><li class="wf-chain__step wf-chain__step--start">Solicitante</li><li class="wf-chain__arrow" aria-hidden="true"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v10M4 9l4 4 4-4"/></svg></li><li class="wf-chain__step">Jefatura</li><li class="wf-chain__arrow" aria-hidden="true"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v10M4 9l4 4 4-4"/></svg></li><li class="wf-chain__step">Administración</li><li class="wf-chain__arrow" aria-hidden="true"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v10M4 9l4 4 4-4"/></svg></li><li class="wf-chain__step">Finanzas</li><li class="wf-chain__arrow" aria-hidden="true"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v10M4 9l4 4 4-4"/></svg></li><li class="wf-chain__step wf-chain__step--end">Liquidación</li></ol></div>
+        </div>
+        <p class="fx-note">
+          Ejemplo de reutilización del motor: mismo formulario, misma bitácora, misma pantalla de
+          seguimiento — otra definición de pasos y responsables. Datos ficticios.
+        </p>
+      </div>
+      <div class="wf-modal__foot">
+        <span class="wf-sim">Ejemplo demostrativo</span>
+        <button class="fx-btn fx-btn--ghost fx-btn--small" type="button" data-wf-modal-close>
+          Cerrar
+        </button>
+      </div>
+    </dialog>
+    </main>
+
+      <footer class="fx-footer fx-dark">
+        <div class="fx-shell">
+          <div class="fx-footer__top">
+            <div>
+<a class="fx-logo" href="index.html" aria-label="Flujo, inicio"><svg class="fx-logo__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="0.75" y="0.75" width="30.5" height="30.5" rx="3" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.4"/><rect x="7" y="8" width="12" height="3" rx="1.5" fill="currentColor"/><rect x="10" y="14.5" width="12" height="3" rx="1.5" fill="currentColor" opacity="0.75"/><rect x="13" y="21" width="12" height="3" rx="1.5" fill="currentColor" opacity="0.5"/></svg><span class="fx-logo__type"><span class="fx-logo__name">Flujo</span><span class="fx-logo__sub">Gestión administrativa</span></span></a>
+              <p class="fx-footer__pitch">Solicitudes, aprobaciones y seguimiento en un solo flujo. Un motor de flujos configurable: formularios, reglas de aprobación, responsables, tiempos de respuesta, documentos y trazabilidad.</p>
+            </div>
+            <div><p class="fx-footer__heading">La demostración</p><a class="fx-footer__link" href="index.html#proceso">El proceso completo</a><a class="fx-footer__link" href="index.html#panel">Panel administrativo</a><a class="fx-footer__link" href="index.html#solicitudes">Registro de solicitudes</a><a class="fx-footer__link" href="index.html#tiempos">Tiempos de respuesta</a></div>
+            <div><p class="fx-footer__heading">El motor</p><a class="fx-footer__link" href="index.html#reglas">Reglas de aprobación</a><a class="fx-footer__link" href="index.html#motor">Un motor, distintos procesos</a><a class="fx-footer__link" href="index.html#documental">Procesos documentales</a><a class="fx-footer__link" href="../../index.html#proyectos">Volver al portafolio</a></div>
+          </div>
+
+          <div class="fx-footer__notice">
+            <p>Demostración de portafolio. Los nombres, métricas, personas y procesos mostrados son ficticios y se utilizan exclusivamente para demostrar las capacidades de la plataforma.</p>
+            <p>&copy; <span data-current-year>2026</span> CoreStruct</p>
+          </div>
+        </div>
+      </footer>
+
+    <div class="fx-toast" data-toast role="status" aria-live="polite"></div>
+
+    <script type="module" src="../../src/scripts/flujo/main.js"></script>
+  </body>
+</html>

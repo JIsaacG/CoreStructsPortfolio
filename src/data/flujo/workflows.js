@@ -78,9 +78,6 @@ export function duration(hours) {
   return `${Math.floor(total / 60)}h ${String(total % 60).padStart(2, "0")}m`;
 }
 
-/** `43.2` → `1.8 días`. */
-export const inDays = (hours) => `${(hours / 24).toFixed(1)} días`;
-
 /* ------------------------------------------------------------------ states */
 
 /**
@@ -488,7 +485,6 @@ export const requestBy = (code) => requests.find((item) => item.code === code);
 
 export const requestTypes = [...new Set(requests.map((item) => item.type))].sort();
 export const requestAreas = [...new Set(requests.map((item) => item.area))].sort();
-export const requestDays = [...new Set(requests.map((item) => item.opened.slice(0, 10)))].sort().reverse();
 
 /* --------------------------------------------------------------- dashboard */
 

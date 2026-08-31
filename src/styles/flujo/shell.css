@@ -122,12 +122,6 @@
   }
 }
 
-@media (max-width: 34rem) {
-  .fx-header__end .fx-btn {
-    display: none;
-  }
-}
-
 /* --- Hero --------------------------------------------------------------------
    The page's one dark band. It carries the module name, the promise, the two
    calls to action and — in the same block, never in a footnote — the sentence

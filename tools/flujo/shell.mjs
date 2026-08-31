@@ -13,7 +13,7 @@ import { fileURLToPath } from "node:url";
 
 import { escape } from "../../src/data/flujo/format.js";
 import { moduleInfo } from "../../src/data/flujo/workflows.js";
-import { asset, button, icon, page } from "./blocks.mjs";
+import { asset, icon, page } from "./blocks.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 
@@ -106,6 +106,16 @@ export function documentHead(ctx, meta) {
 
     <script type="application/ld+json">
 ${JSON.stringify(schema, null, 6).replace(/^/gm, "      ")}
+    </script>
+
+    <!-- Runs before first paint. The workflow has stages that only exist once
+         the engine can drive them — a document that has not been generated yet,
+         a reset control with nothing to reset. Marking the document scripted
+         here means those are hidden from the start instead of appearing and
+         then vanishing, and it means a reader without JavaScript still gets the
+         complete, already-finished version of every one of them. -->
+    <script>
+      document.documentElement.classList.add("js");
     </script>`;
 }
 
@@ -158,7 +168,9 @@ ${logo(ctx)}
         <nav class="fx-nav" aria-label="Secciones de la demostración">${links}</nav>
         <div class="fx-header__end">
           <span class="wf-flag wf-flag--onDark">${escape(moduleInfo.tag)}</span>
-          ${button("Reiniciar demo", "#", { onDark: true, small: true, className: "js-only", })}
+          <button class="fx-btn fx-btn--onDark fx-btn--small" type="button" data-wf-reset hidden>
+            Reiniciar demo
+          </button>
         </div>
       </div>
     </header>`;

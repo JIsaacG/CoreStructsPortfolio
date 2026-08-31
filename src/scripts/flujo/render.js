@@ -172,14 +172,33 @@ export const personRow = (person, roleKey) =>
 
 /* ------------------------------------------------------------ a register row */
 
-/** One row of the request table, as cells. Shared so filtering never redraws
-    a row differently from the way the build wrote it. */
-export const registerCells = (request, href) => [
-  `<a class="wf-code" href="${escape(href)}">${escape(request.code)}</a>`,
+export const REGISTER_COLUMNS = [
+  { label: "Código", key: "code" },
+  { label: "Tipo", key: "type" },
+  { label: "Solicitante", key: "requester" },
+  { label: "Área", key: "area" },
+  { label: "Fecha", key: "date" },
+  { label: "Monto", key: "amount", numeric: true },
+  { label: "Responsable", key: "responsible" },
+  { label: "Estado", key: "state" },
+  { label: "Tiempo", key: "sla" },
+];
+
+/**
+ * One row of the register, as cells.
+ *
+ * Shared with the build so a row re-rendered after a filter cannot come out
+ * different from the row the build wrote. The code cell carries the subject
+ * underneath it: nine columns is already the most a register can hold, and
+ * "SOL-2026-0148" on its own tells a reader nothing about what it is for.
+ */
+export const registerCells = (request, href, date) => [
+  `<a class="wf-code" href="${escape(href)}">${escape(request.code)}</a>` +
+    `<span class="wf-audit__text">${escape(request.concept)}</span>`,
   escape(request.type),
   escape(request.requester),
   escape(request.area),
-  escape(request.concept),
+  escape(date),
   money(request.amount, { cents: false }),
   escape(roleName(request.responsible)),
   statePill(request.state),

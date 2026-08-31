@@ -11,6 +11,12 @@
    about purchase orders looking like one system rather than eleven widgets.
    ========================================================================== */
 
+/* Several components below stack a name over a detail inside one grid cell.
+   Grid blockifies its own children but not their contents, so each of those
+   pairs is a `<span>` that has to be told to be a block — otherwise "Solicitud
+   creada" and "Alejandro Rivera" render as one run of text. Every such pair in
+   this file carries an explicit `display: block` for that reason. */
+
 /* --- The two labels the fiction is carried by -------------------------------- */
 
 .wf-flag {
@@ -273,6 +279,7 @@
 }
 
 .wf-file__name {
+  display: block;
   margin: 0;
   font-size: var(--t-sm);
   font-weight: 600;
@@ -281,6 +288,7 @@
 }
 
 .wf-file__meta {
+  display: block;
   margin: 0;
   font-size: var(--t-xs);
   color: var(--ink-muted);
@@ -691,6 +699,7 @@
 }
 
 .wf-person__name {
+  display: block;
   margin: 0;
   font-size: var(--t-sm);
   font-weight: 600;
@@ -698,6 +707,7 @@
 }
 
 .wf-person__role {
+  display: block;
   margin: 0;
   font-size: var(--t-xs);
   color: var(--ink-muted);
@@ -783,6 +793,7 @@
 }
 
 .wf-track__label {
+  display: block;
   margin: 0;
   font-size: var(--t-sm);
   font-weight: 600;
@@ -796,6 +807,7 @@
 }
 
 .wf-track__meta {
+  display: block;
   margin: 0.1rem 0 0;
   font-size: var(--t-xs);
   color: var(--ink-muted);
@@ -948,6 +960,7 @@
 }
 
 .wf-record__name {
+  display: block;
   margin: 0;
   font-size: var(--t-sm);
   font-weight: 600;
@@ -955,12 +968,14 @@
 }
 
 .wf-record__area {
+  display: block;
   margin: 0;
   font-size: var(--t-xs);
   color: var(--ink-muted);
 }
 
 .wf-record__when {
+  display: block;
   font-size: var(--t-xs);
   font-variant-numeric: tabular-nums;
   color: var(--ink-muted);
@@ -1328,6 +1343,7 @@
 }
 
 .wf-audit__title {
+  display: block;
   margin: 0;
   font-size: var(--t-sm);
   font-weight: 600;
@@ -1335,6 +1351,7 @@
 }
 
 .wf-audit__text {
+  display: block;
   margin: 0.15rem 0 0;
   font-size: var(--t-sm);
   line-height: 1.5;
@@ -1342,6 +1359,7 @@
 }
 
 .wf-audit__actor {
+  display: block;
   margin: 0.2rem 0 0;
   font-size: var(--t-2xs);
   font-weight: 600;
@@ -1360,6 +1378,11 @@
 
 .wf-tabs {
   display: flex;
+  /* `min-width: 0` is not optional here. A horizontal scroller inside a grid
+     item still contributes the full width of its content as that item's
+     min-content size, so without this the five tabs push the whole follow-up
+     panel — and with it the page — wider than a phone. */
+  min-width: 0;
   overflow-x: auto;
   border-bottom: 1px solid var(--border);
   scrollbar-width: none;
@@ -1398,6 +1421,16 @@
 .wf-tabpanel { padding-top: var(--s-md); }
 
 .wf-tabpanel:focus { outline: none; }
+
+/* The tab already names its panel, so this heading is redundant — until the
+   strip cannot work, at which point it is the only thing telling five stacked
+   panels apart. */
+.wf-tabpanel__title {
+  display: none;
+  margin-bottom: var(--s-sm);
+  font-size: var(--t-md);
+  color: var(--navy-900);
+}
 
 /* -----------------------------------------------------------------------------
    The state distribution
@@ -1840,6 +1873,7 @@ button.wf-engine__item:focus-visible {
    -------------------------------------------------------------------------- */
 
 .wf-code {
+  display: block;
   font-variant-numeric: tabular-nums;
   font-weight: 600;
   white-space: nowrap;
@@ -2062,6 +2096,16 @@ button.wf-engine__item:focus-visible {
    Shared layout helpers
    -------------------------------------------------------------------------- */
 
+/* Grid children default to `min-width: auto`, which means "never narrower than
+   my contents" — and a table, a scroller or a long code is happy to declare
+   that it needs 480px. Every grid in this module that holds one of those says
+   so explicitly. */
+.wf-stack > *,
+.wf-split > *,
+.wf-panel__body > * {
+  min-width: 0;
+}
+
 .wf-split {
   display: grid;
   gap: var(--s-md);
@@ -2102,3 +2146,31 @@ button.wf-engine__item:focus-visible {
 /* Anything the engine hides is hidden because it has not happened yet, not
    because it is waiting to animate. */
 [hidden] { display: none !important; }
+
+/* Without JavaScript the engine never runs, so the stages it would have
+   revealed are shown in their finished state instead, and the placeholders that
+   only make sense while waiting for it are taken away. A reader with no script
+   still gets the generated document, the recorded approvals and the complete
+   trail — they simply get them already finished.
+
+   The polarity is deliberate: the static version is what is IN the markup, and
+   the script hides it rather than the other way round, so nothing depends on
+   JavaScript arriving in order to become visible. */
+html.js [data-when-static] { display: none; }
+
+html:not(.js) [data-when-scripted] { display: none; }
+
+/* With no script the tab strip cannot switch anything, so it goes and all five
+   panels stack under their own headings. A reader gets the summary, the
+   approvals, the document, the trail and the activity in one column — the whole
+   expediente, in the order a case file is read. */
+html:not(.js) .wf-tabs { display: none; }
+
+html:not(.js) .wf-tabpanel[hidden] { display: block !important; }
+
+html:not(.js) .wf-tabpanel + .wf-tabpanel {
+  margin-top: var(--s-md);
+  border-top: 1px solid var(--border);
+}
+
+html:not(.js) .wf-tabpanel__title { display: block; }

@@ -54,6 +54,7 @@ npm run build:content  # src/data/*.js        ->  index.html
 npm run build:demos    # src/data/demos.js    ->  demos/verbena.html
 npm run build:aurelis  # src/data/aurelis/*   ->  demos/aurelis/*.html
 npm run build:cede     # src/data/cede/*      ->  demos/cede/*.html
+npm run build:flujo    # src/data/flujo/*     ->  demos/flujo/*.html
 npm run check          # validación previa a publicar
 ```
 
@@ -118,6 +119,7 @@ tools/                     scripts de compilación (Node, sin dependencias)
   build-brand.mjs  build-css.mjs  build-content.mjs  build-demos.mjs
   build-aurelis.mjs  aurelis/    el portal corporativo
   build-cede.mjs     cede/       el portal gubernamental
+  build-flujo.mjs    flujo/      la demo de automatización administrativa
   build-map.mjs              GeoJSON -> src/data/cede/geography.js
   check.mjs  serve.mjs
 
@@ -133,6 +135,7 @@ dist/corestruct.css        hoja de estilos compilada del portfolio
 dist/demo.css              hoja de estilos compilada de los sitios de ejemplo
 dist/aurelis.css           la del portal corporativo
 dist/cede.css              la del portal gubernamental
+dist/flujo.css             la de la demo de automatización
 ```
 
 El portal gubernamental sigue la misma división, en su propio espacio de nombres:
@@ -148,6 +151,18 @@ src/scripts/cede/    main, nav, a11y, observatory, render, search, forms,
                      charts.js y table-render.js son PUROS: los usan la
                      compilación y el navegador
 tools/cede/          blocks, shell, home, observatory, pages
+```
+
+La demo de automatización ocupa su propio espacio de nombres y no comparte nada
+en tiempo de ejecución con los anteriores:
+
+```
+src/data/flujo/      workflows.js  (el modelo entero: procesos, reglas,
+                     personas, solicitudes, SLA, bitácora)  format.js
+src/styles/flujo/    tokens, fonts, base, shell, workflow
+src/scripts/flujo/   main, engine, form, state, tour, ui
+                     render.js es PURO: lo usan la compilación y el navegador
+tools/flujo/         blocks, shell, page
 ```
 
 ---
@@ -261,6 +276,69 @@ atribución aparece en el pie de todas las páginas del portal y en su página d
 metodología. El encuadre es continental: Islas del Cisne quedaría a 250 km de la
 costa y añadiría un tercio de océano vacío a la página, así que se omite del
 dibujo (en un despliegue real iría en un recuadro).
+
+---
+
+### Flujo — la demo de automatización administrativa
+
+La tarjeta **07 · Automatización** abre `demos/flujo/`: 16 páginas que
+demuestran, de principio a fin, un proceso administrativo interno. No es un ERP
+ni pretende serlo. Es una sola solicitud de compra recorriendo el circuito
+completo —solicitud, validación, reglas, asignación, aprobación, documento,
+notificación, archivo— para que un director administrativo entienda en menos de
+un minuto qué trabajo dejaría de hacer por correo, Excel y WhatsApp.
+
+Es un demo **aparte**: no vive dentro del portal gubernamental, tiene su marca,
+su bundle y su propio espacio de nombres.
+
+Lo que trae:
+
+- **El motor.** `src/data/flujo/workflows.js` define los pasos de forma
+  declarativa —`id`, `label`, `type`, `responsibleRole`, `sla`, `next`,
+  `condition`, `when`— y `routeFor()` filtra por la condición. Los mismos diez
+  pasos producen un circuito de una aprobación para una compra pequeña y de tres
+  para una grande, sin una segunda definición y sin una bifurcación en la
+  interfaz. Cambiar de institución es cambiar la definición, que es exactamente
+  el argumento comercial de la sección «Automatización basada en reglas».
+- **Formulario con sus siete estados** (normal, foco, válido, error,
+  deshabilitado, cargando, éxito), validación en `blur` y en vivo solo mientras
+  se corrige, y el error como frase junto al campo.
+- **Secuencia de automatización** de unos seis segundos: valida, cita la regla
+  que aplicó, asigna a las personas que la regla eligió y arranca el flujo.
+- **Aprobación interactiva** con tres salidas —aprobar, solicitar cambios,
+  rechazar— porque una demo que solo deja decir que sí no está enseñando un
+  flujo, está enseñando una animación.
+- **Documento generado** con código de verificación, **notificación simulada**,
+  **bitácora completa**, **panel** de cuatro indicadores, **registro** de 15
+  expedientes con filtros y búsqueda, **SLA** con escalamiento automático y una
+  **ficha por expediente** en `/solicitudes/SOL-2026-0148.html`.
+- **Demo guiada** de unos 16 segundos que conduce el flujo entero sin que nadie
+  toque nada, con pausa y salida siempre en pantalla.
+
+Tres decisiones que conviene conocer:
+
+**El reloj está congelado.** `DEMO_NOW` fija el instante contra el que se miden
+todos los SLA. Con `Date.now()` cada solicitud aparecería vencida una semana
+después de grabar la demo, y la compilación y el navegador discreparían sobre el
+mismo número. Con un instante fijo, el registro muestra siempre lo mismo: una
+solicitud pasada de plazo, una a punto de vencer y el resto holgadas — el reparto
+que tiene un registro real.
+
+**La página está completa antes de que corra un script.** El registro, las
+reglas, los plazos, la bitácora y el documento están en el HTML que se descarga;
+`render.js` es puro y lo usan las dos partes, así que una aprobación que añade el
+navegador sale idéntica a una que escribió la compilación. Sin JavaScript se ve
+el expediente ya terminado en lugar de una pantalla en blanco.
+
+**Todo es ficticio y lo dice en voz alta.** Las personas, los montos, los
+códigos y el documento están inventados; el correo no se envía, el archivo no se
+descarga y la marca de verificación no es un código legible. Las páginas son
+`noindex` y el `schema.org` es `SoftwareApplication` con
+`disambiguatingDescription` explícito.
+
+```bash
+npm run build:flujo    # regenera demos/flujo/*.html
+```
 
 ---
 

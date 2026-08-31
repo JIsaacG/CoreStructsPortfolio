@@ -83,8 +83,9 @@ export const projects = [
     category: "Integración",
     title: "Automatización",
     description:
-      "APIs, generación de documentos, notificaciones y workflows que eliminan el trabajo manual repetido.",
+      "Solicitudes, reglas de aprobación, documentos generados y trazabilidad: los procesos internos que hoy viven en correos y hojas de cálculo.",
     mockup: "automation",
+    href: "demos/flujo/index.html",
     size: "half",
     offset: true,
     reveal: "rise",

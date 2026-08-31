@@ -629,6 +629,9 @@ textarea.fx-input {
 
 .fx-table .fx-num {
   text-align: right;
+  /* An amount that wraps is an amount nobody can scan down the column:
+     "L 104,300" breaking after the L reads as two different figures. */
+  white-space: nowrap;
 }
 
 @media (max-width: 52rem) {
@@ -673,6 +676,14 @@ textarea.fx-input {
 
   .fx-table--stack tbody tr:hover td {
     background: transparent;
+  }
+
+  /* A pill is a grid item here, and a grid item stretches. Left unfixed, the
+     state badge runs the whole width of the card row and stops reading as a
+     badge at all. */
+  .fx-table--stack td > .fx-state,
+  .fx-table--stack td > .wf-sla {
+    justify-self: start;
   }
 }
 
