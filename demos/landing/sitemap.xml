@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Demostración. Cierzo y Lumen son marcas ficticias y sus páginas son noindex. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://corestruct.example/demos/landing/servicios.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://corestruct.example/demos/landing/evento.html</loc>
+    <priority>0.8</priority>
+  </url>
+</urlset>

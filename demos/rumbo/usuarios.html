@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Usuarios — Rumbo · Demo de CoreStruct</title>
+    <meta name="description" content="Personal de Rumbo con acceso al panel interno, sus roles y permisos." />
+    <!-- An invented company must never turn up in a search result as a real one. -->
+    <meta name="robots" content="noindex, follow" />
+    <meta name="theme-color" content="#080b12" />
+    <meta name="color-scheme" content="dark" />
+
+    <link rel="icon" href="../../favicon.ico" sizes="32x32" />
+    <link rel="icon" href="../../assets/brand/isotipo.svg" type="image/svg+xml" />
+
+    <link
+      rel="preload"
+      href="../../assets/fonts/manrope-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <link rel="stylesheet" href="../../dist/demo.css" />
+
+    <!-- Rumbo's jade, in place of CoreStruct's navy and cyan. Every shared
+         component below reads these four values rather than a hard-coded
+         colour, so the whole panel re-tints from here. -->
+    <style>
+      :root {
+        --brand-primary: #0c2a20;
+        --brand-secondary: #2fae7a;
+        --brand-primary-rgb: 12 42 32;
+        --brand-secondary-rgb: 47 174 122;
+      }
+    </style>
+
+    <script>
+      document.documentElement.classList.add("js");
+      setTimeout(function () {
+        if (!document.documentElement.dataset.revealsReady) {
+          document.documentElement.classList.remove("js");
+        }
+      }, 2500);
+    </script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+    <a class="dm-badge" href="../../index.html#proyectos">
+      <svg class="dm-badge__mark" viewBox="0 0 362 422" aria-hidden="true" focusable="false">
+        <path fill="#2c6fb2" d="M10 98L17 92L181 1L188 3L354 96L353 99L200 186L185 179L173 181L166 186L11 98Z"/>
+        <path fill="#3898d4" d="M188 421L188 373L190 371L320 295L320 248L318 248L188 324L188 217L198 211L202 203L202 197L358 111L361 109L361 165L233 234L233 275L361 200L361 321L189 421Z"/>
+        <path fill="#253880" d="M1 107L160 195L166 210L176 216L176 252L174 252L42 176L42 294L114 336L154 359L154 297L176 309L176 422L2 321L1 108Z"/>
+      </svg>
+      <span class="dm-badge__tag">Demo</span>
+      <span class="dm-badge__label">Sitio de ejemplo · CoreStruct</span>
+    </a>
+
+    <header class="dm-header" data-header>
+      <div class="dm-header__inner">
+        <a class="dm-wordmark" href="index.html">
+          <span class="dm-wordmark__name">Rumbo</span>
+          <span class="dm-wordmark__mark">Distribución mayorista</span>
+        </a>
+
+        <nav class="dm-nav" aria-label="Secciones">
+            <a class="dm-nav__link" href="index.html">Panel</a>
+            <a class="dm-nav__link" href="expedientes.html">Expedientes</a>
+            <a class="dm-nav__link" href="usuarios.html" aria-current="page">Usuarios</a>
+            <a class="dm-nav__link" href="operaciones.html">Operaciones</a>
+        </nav>
+
+        <div class="dm-header__actions">
+          <a class="button button--primary" href="../../index.html#contacto">Hablemos de tu proyecto</a>
+          <button
+            class="dm-burger"
+            type="button"
+            aria-expanded="false"
+            aria-controls="dm-menu"
+            aria-label="Abrir el menú"
+            data-menu-toggle
+          >
+            <span class="dm-burger__bar"></span>
+            <span class="dm-burger__bar"></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="dm-menu" id="dm-menu" data-mobile-nav>
+      <a class="dm-menu__link" href="index.html">Panel</a>
+      <a class="dm-menu__link" href="expedientes.html">Expedientes</a>
+      <a class="dm-menu__link" href="usuarios.html">Usuarios</a>
+      <a class="dm-menu__link" href="operaciones.html">Operaciones</a>
+      <a class="dm-menu__link" href="../../index.html#contacto">Hablemos de tu proyecto</a>
+    </div>
+
+    <main class="dm" id="contenido">
+      <div class="dm-page-head dm-shell">
+        <h1 class="dm-page-head__title" data-reveal="fade">Usuarios</h1>
+        <p class="dm-page-head__text" data-reveal="fade">
+          Personal con acceso al panel, su rol y su último ingreso.
+        </p>
+      </div>
+
+      <div class="dm-section dm-shell" data-table>
+        <div class="dm-toolbar">
+          <div class="dm-filterbar" data-filter-group>
+            <button type="button" class="dm-filter" data-filter="all" aria-pressed="true">Todos</button>
+            <button type="button" class="dm-filter" data-filter="activo" aria-pressed="false">Activo</button>
+            <button type="button" class="dm-filter" data-filter="invitado" aria-pressed="false">Invitado</button>
+            <button type="button" class="dm-filter" data-filter="suspendido" aria-pressed="false">Suspendido</button>
+          </div>
+        </div>
+
+        <div class="dm-table-wrap">
+          <table class="dm-table">
+            <thead>
+              <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Rol</th>
+                <th scope="col">Área</th>
+                <th scope="col">Último acceso</th>
+                <th scope="col">Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr data-row data-filterval="activo" data-search="marlon estrada">
+              <td>Marlon Estrada<span class="dm-table__sub">marlon.estrada@rumbo-demo.hn</span></td>
+              <td>Administrador</td>
+              <td>Dirección</td>
+              <td>24 ago 2026</td>
+              <td><span class="dm-pill dm-pill--ok">Activo</span></td>
+            </tr>
+            <tr data-row data-filterval="activo" data-search="fabiola núñez">
+              <td>Fabiola Núñez<span class="dm-table__sub">fabiola.nunez@rumbo-demo.hn</span></td>
+              <td>Supervisor de ventas</td>
+              <td>Valle de Sula</td>
+              <td>24 ago 2026</td>
+              <td><span class="dm-pill dm-pill--ok">Activo</span></td>
+            </tr>
+            <tr data-row data-filterval="activo" data-search="óscar reyes">
+              <td>Óscar Reyes<span class="dm-table__sub">oscar.reyes@rumbo-demo.hn</span></td>
+              <td>Vendedor</td>
+              <td>San Pedro Sula, Choloma, Puerto Cortés</td>
+              <td>23 ago 2026</td>
+              <td><span class="dm-pill dm-pill--ok">Activo</span></td>
+            </tr>
+            <tr data-row data-filterval="activo" data-search="katherine suazo">
+              <td>Katherine Suazo<span class="dm-table__sub">katherine.suazo@rumbo-demo.hn</span></td>
+              <td>Vendedor</td>
+              <td>El Progreso, Villanueva, La Lima</td>
+              <td>24 ago 2026</td>
+              <td><span class="dm-pill dm-pill--ok">Activo</span></td>
+            </tr>
+            <tr data-row data-filterval="activo" data-search="julio cálix">
+              <td>Julio Cálix<span class="dm-table__sub">julio.calix@rumbo-demo.hn</span></td>
+              <td>Bodega</td>
+              <td>Centro de distribución</td>
+              <td>22 ago 2026</td>
+              <td><span class="dm-pill dm-pill--ok">Activo</span></td>
+            </tr>
+            <tr data-row data-filterval="activo" data-search="wendy paz">
+              <td>Wendy Paz<span class="dm-table__sub">wendy.paz@rumbo-demo.hn</span></td>
+              <td>Cobranza</td>
+              <td>Cartera vencida</td>
+              <td>24 ago 2026</td>
+              <td><span class="dm-pill dm-pill--ok">Activo</span></td>
+            </tr>
+            <tr data-row data-filterval="invitado" data-search="diego handal">
+              <td>Diego Handal<span class="dm-table__sub">diego.handal@rumbo-demo.hn</span></td>
+              <td>Vendedor</td>
+              <td>Zona norte — en incorporación</td>
+              <td>—</td>
+              <td><span class="dm-pill dm-pill--info">Invitado</span></td>
+            </tr>
+            <tr data-row data-filterval="suspendido" data-search="sandra bustillo">
+              <td>Sandra Bustillo<span class="dm-table__sub">sandra.bustillo@rumbo-demo.hn</span></td>
+              <td>Bodega</td>
+              <td>Centro de distribución</td>
+              <td>30 jun 2026</td>
+              <td><span class="dm-pill dm-pill--bad">Suspendido</span></td>
+            </tr>
+            </tbody>
+          </table>
+          <p class="dm-table-empty" data-table-empty>Ningún usuario coincide con ese filtro.</p>
+        </div>
+
+        <div class="dm-panel" data-reveal="rise" style="margin-block-start: var(--space-lg)">
+          <h2 class="dm-panel__title">Roles y permisos</h2>
+          <div class="dm-table-wrap">
+            <table class="dm-roles">
+              <thead>
+                <tr>
+                  <th scope="col">Rol</th>
+                <th scope="col">Ver expedientes</th>
+                <th scope="col">Editar expedientes</th>
+                <th scope="col">Aprobar crédito</th>
+                <th scope="col">Gestionar usuarios</th>
+                <th scope="col">Ver reportes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Administrador</th>
+                  <td><span data-yes>✓</span></td>
+                  <td><span data-yes>✓</span></td>
+                  <td><span data-yes>✓</span></td>
+                  <td><span data-yes>✓</span></td>
+                  <td><span data-yes>✓</span></td>
+                </tr>
+                <tr>
+                  <th scope="row">Supervisor de ventas</th>
+                  <td><span data-yes>✓</span></td>
+                  <td><span data-yes>✓</span></td>
+                  <td><span data-yes>✓</span></td>
+                  <td><span data-no>—</span></td>
+                  <td><span data-yes>✓</span></td>
+                </tr>
+                <tr>
+                  <th scope="row">Vendedor</th>
+                  <td><span data-yes>✓</span></td>
+                  <td><span data-yes>✓</span></td>
+                  <td><span data-no>—</span></td>
+                  <td><span data-no>—</span></td>
+                  <td><span data-no>—</span></td>
+                </tr>
+                <tr>
+                  <th scope="row">Cobranza</th>
+                  <td><span data-yes>✓</span></td>
+                  <td><span data-no>—</span></td>
+                  <td><span data-no>—</span></td>
+                  <td><span data-no>—</span></td>
+                  <td><span data-yes>✓</span></td>
+                </tr>
+                <tr>
+                  <th scope="row">Bodega</th>
+                  <td><span data-yes>✓</span></td>
+                  <td><span data-no>—</span></td>
+                  <td><span data-no>—</span></td>
+                  <td><span data-no>—</span></td>
+                  <td><span data-no>—</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <footer class="dm-footer">
+        <div class="dm-shell dm-footer__inner">
+          <div class="dm-footer__brand">
+            <p class="dm-footer__name">Rumbo</p>
+            <p class="dm-footer__line">Rumbo Distribución, S. de R.L. · Distribuidora de consumo masivo — ficticia</p>
+            <p class="dm-footer__credit">
+              Marca ficticia. Sitio de ejemplo construido por
+              <a href="../../index.html">CoreStruct</a> &copy; <span data-current-year>2026</span>.
+            </p>
+          </div>
+          <nav class="dm-footer__nav" aria-label="Pie">
+            <a href="index.html">Panel</a>
+            <a href="expedientes.html">Expedientes</a>
+            <a href="operaciones.html">Operaciones</a>
+            <a href="../../index.html#contacto">Contacto</a>
+          </nav>
+        </div>
+      </footer>
+    </main>
+
+    <script type="module" src="../../src/scripts/demo/shell.js"></script>
+    <script type="module" src="../../src/scripts/rumbo/filters.js"></script>
+  </body>
+</html>

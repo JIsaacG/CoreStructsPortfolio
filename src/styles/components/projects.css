@@ -250,6 +250,68 @@
   --mk-text-strong: rgb(255 255 255 / 0.38);
 }
 
+/* --- The systems card ---------------------------------------------------------
+   Opens Rumbo, an internal business system, so it borrows that demo's jade
+   instead of the portfolio's cyan — green reads as "operational" the way the
+   amber and bronze above read as "product" and "institution".
+   -------------------------------------------------------------------------- */
+
+.project-card--systems .project-card__link {
+  --brand-secondary: var(--systems-jade);
+  --brand-secondary-rgb: var(--systems-jade-rgb);
+  --card-border: rgb(var(--systems-jade-rgb) / 0.18);
+  --card-surface: rgb(10 24 19 / 0.55);
+}
+
+.project-card--systems .project-card__link:hover,
+.project-card--systems .project-card__link:focus-visible {
+  --card-border: rgb(var(--systems-jade-rgb) / 0.48);
+  --card-surface: rgb(15 34 27 / 0.72);
+}
+
+.project-card--systems .project-card__visual {
+  background:
+    radial-gradient(90% 116% at 50% 0%, rgb(var(--systems-jade-rgb) / 0.18), transparent 64%),
+    linear-gradient(180deg, rgb(255 255 255 / 0.045), transparent 45%),
+    #081812;
+  border-bottom-color: rgb(var(--systems-jade-rgb) / 0.16);
+}
+
+.project-card--systems .mk {
+  --mk-accent-deep: var(--systems-deep);
+}
+
+/* --- The landing card ----------------------------------------------------------
+   Opens the Cierzo landing, so it borrows that page's violet instead of the
+   portfolio's cyan. The other landing, Lumen, keeps its own teal — the card
+   can only preview one of the two.
+   -------------------------------------------------------------------------- */
+
+.project-card--landing .project-card__link {
+  --brand-secondary: var(--landing-violet);
+  --brand-secondary-rgb: var(--landing-violet-rgb);
+  --card-border: rgb(var(--landing-violet-rgb) / 0.18);
+  --card-surface: rgb(20 13 30 / 0.55);
+}
+
+.project-card--landing .project-card__link:hover,
+.project-card--landing .project-card__link:focus-visible {
+  --card-border: rgb(var(--landing-violet-rgb) / 0.48);
+  --card-surface: rgb(29 19 43 / 0.72);
+}
+
+.project-card--landing .project-card__visual {
+  background:
+    radial-gradient(90% 116% at 50% 0%, rgb(var(--landing-violet-rgb) / 0.2), transparent 64%),
+    linear-gradient(180deg, rgb(255 255 255 / 0.045), transparent 45%),
+    #120b1b;
+  border-bottom-color: rgb(var(--landing-violet-rgb) / 0.16);
+}
+
+.project-card--landing .mk {
+  --mk-accent-deep: var(--landing-deep);
+}
+
 /* --- Desktop composition ---------------------------------------------------- */
 
 @media (min-width: 48rem) {

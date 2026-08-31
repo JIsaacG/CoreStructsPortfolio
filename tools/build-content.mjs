@@ -113,6 +113,8 @@ const SIZE_CLASS = {
 const VARIANT_CLASS = {
   brand: "project-card--brand",
   corporate: "project-card--corporate",
+  systems: "project-card--systems",
+  landing: "project-card--landing",
 };
 
 function renderProject(project) {

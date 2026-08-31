@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Panel — Rumbo · Demo de CoreStruct</title>
+    <meta name="description" content="Panel interno de Rumbo Distribución, S. de R.L.: pedidos, cartera por cobrar, clientes activos y entregas del día." />
+    <!-- An invented company must never turn up in a search result as a real one. -->
+    <meta name="robots" content="noindex, follow" />
+    <meta name="theme-color" content="#080b12" />
+    <meta name="color-scheme" content="dark" />
+
+    <link rel="icon" href="../../favicon.ico" sizes="32x32" />
+    <link rel="icon" href="../../assets/brand/isotipo.svg" type="image/svg+xml" />
+
+    <link
+      rel="preload"
+      href="../../assets/fonts/manrope-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <link rel="stylesheet" href="../../dist/demo.css" />
+
+    <!-- Rumbo's jade, in place of CoreStruct's navy and cyan. Every shared
+         component below reads these four values rather than a hard-coded
+         colour, so the whole panel re-tints from here. -->
+    <style>
+      :root {
+        --brand-primary: #0c2a20;
+        --brand-secondary: #2fae7a;
+        --brand-primary-rgb: 12 42 32;
+        --brand-secondary-rgb: 47 174 122;
+      }
+    </style>
+
+    <script>
+      document.documentElement.classList.add("js");
+      setTimeout(function () {
+        if (!document.documentElement.dataset.revealsReady) {
+          document.documentElement.classList.remove("js");
+        }
+      }, 2500);
+    </script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+    <a class="dm-badge" href="../../index.html#proyectos">
+      <svg class="dm-badge__mark" viewBox="0 0 362 422" aria-hidden="true" focusable="false">
+        <path fill="#2c6fb2" d="M10 98L17 92L181 1L188 3L354 96L353 99L200 186L185 179L173 181L166 186L11 98Z"/>
+        <path fill="#3898d4" d="M188 421L188 373L190 371L320 295L320 248L318 248L188 324L188 217L198 211L202 203L202 197L358 111L361 109L361 165L233 234L233 275L361 200L361 321L189 421Z"/>
+        <path fill="#253880" d="M1 107L160 195L166 210L176 216L176 252L174 252L42 176L42 294L114 336L154 359L154 297L176 309L176 422L2 321L1 108Z"/>
+      </svg>
+      <span class="dm-badge__tag">Demo</span>
+      <span class="dm-badge__label">Sitio de ejemplo · CoreStruct</span>
+    </a>
+
+    <header class="dm-header" data-header>
+      <div class="dm-header__inner">
+        <a class="dm-wordmark" href="index.html">
+          <span class="dm-wordmark__name">Rumbo</span>
+          <span class="dm-wordmark__mark">Distribución mayorista</span>
+        </a>
+
+        <nav class="dm-nav" aria-label="Secciones">
+            <a class="dm-nav__link" href="index.html" aria-current="page">Panel</a>
+            <a class="dm-nav__link" href="expedientes.html">Expedientes</a>
+            <a class="dm-nav__link" href="usuarios.html">Usuarios</a>
+            <a class="dm-nav__link" href="operaciones.html">Operaciones</a>
+        </nav>
+
+        <div class="dm-header__actions">
+          <a class="button button--primary" href="../../index.html#contacto">Hablemos de tu proyecto</a>
+          <button
+            class="dm-burger"
+            type="button"
+            aria-expanded="false"
+            aria-controls="dm-menu"
+            aria-label="Abrir el menú"
+            data-menu-toggle
+          >
+            <span class="dm-burger__bar"></span>
+            <span class="dm-burger__bar"></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="dm-menu" id="dm-menu" data-mobile-nav>
+      <a class="dm-menu__link" href="index.html">Panel</a>
+      <a class="dm-menu__link" href="expedientes.html">Expedientes</a>
+      <a class="dm-menu__link" href="usuarios.html">Usuarios</a>
+      <a class="dm-menu__link" href="operaciones.html">Operaciones</a>
+      <a class="dm-menu__link" href="../../index.html#contacto">Hablemos de tu proyecto</a>
+    </div>
+
+    <main class="dm" id="contenido">
+      <div class="dm-page-head dm-shell">
+        <div class="dm-page-head__row">
+          <div>
+            <h1 class="dm-page-head__title" data-reveal="fade">Panel</h1>
+            <p class="dm-page-head__text" data-reveal="fade">
+              Rumbo Distribución, S. de R.L. · hoy es 24 de agosto de 2026
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="dm-section dm-shell">
+        <div class="dm-stats" data-reveal-group="80">
+          <div class="dm-stat">
+            <p class="dm-stat__label">Pedidos hoy</p>
+            <p class="dm-stat__value">27</p>
+            <p class="dm-stat__delta dm-stat__delta--up">+4 vs. semana pasada</p>
+          </div>
+          <div class="dm-stat">
+            <p class="dm-stat__label">Cartera por cobrar</p>
+            <p class="dm-stat__value">L 486,200</p>
+            <p class="dm-stat__delta dm-stat__delta--down">12 clientes en mora</p>
+          </div>
+          <div class="dm-stat">
+            <p class="dm-stat__label">Clientes activos</p>
+            <p class="dm-stat__value">184</p>
+            <p class="dm-stat__delta dm-stat__delta--up">+6 este mes</p>
+          </div>
+          <div class="dm-stat">
+            <p class="dm-stat__label">Entregas en ruta</p>
+            <p class="dm-stat__value">9</p>
+            <p class="dm-stat__delta dm-stat__delta--up">3 rutas, 2 zonas</p>
+          </div>
+        </div>
+
+        <div class="dm-panels dm-panels--split" style="margin-block-start: var(--space-lg)">
+          <div class="dm-panel" data-reveal="rise">
+            <h2 class="dm-panel__title">Ventas de las últimas 6 semanas</h2>
+          <div class="dm-chart">
+            <div class="dm-chart__bar" title="Sem. 1: L 612,000">
+              <div class="dm-chart__fill" style="--bar-height:82%"></div>
+              <span class="dm-chart__label">Sem. 1</span>
+            </div>
+            <div class="dm-chart__bar" title="Sem. 2: L 588,000">
+              <div class="dm-chart__fill" style="--bar-height:79%"></div>
+              <span class="dm-chart__label">Sem. 2</span>
+            </div>
+            <div class="dm-chart__bar" title="Sem. 3: L 671,000">
+              <div class="dm-chart__fill" style="--bar-height:90%"></div>
+              <span class="dm-chart__label">Sem. 3</span>
+            </div>
+            <div class="dm-chart__bar" title="Sem. 4: L 705,000">
+              <div class="dm-chart__fill" style="--bar-height:95%"></div>
+              <span class="dm-chart__label">Sem. 4</span>
+            </div>
+            <div class="dm-chart__bar" title="Sem. 5: L 664,000">
+              <div class="dm-chart__fill" style="--bar-height:89%"></div>
+              <span class="dm-chart__label">Sem. 5</span>
+            </div>
+            <div class="dm-chart__bar" title="Sem. 6: L 742,000">
+              <div class="dm-chart__fill" style="--bar-height:100%"></div>
+              <span class="dm-chart__label">Sem. 6</span>
+            </div>
+          </div>
+          </div>
+          <div class="dm-panel" data-reveal="rise">
+            <h2 class="dm-panel__title">Actividad reciente</h2>
+          <ul class="dm-feed">
+            <li class="dm-feed__item">
+              <span class="dm-feed__dot" aria-hidden="true"></span>
+              <span class="dm-feed__body">
+                <span class="dm-feed__text">Pedido — <a class="dm-table__link" href="expedientes/minimarket-la-terminal.html">Minimarket La Terminal</a></span>
+                <span class="dm-feed__meta">Óscar Reyes · L 9,800</span>
+              </span>
+              <span class="dm-feed__when">24 ago 2026</span>
+            </li>
+            <li class="dm-feed__item">
+              <span class="dm-feed__dot" aria-hidden="true"></span>
+              <span class="dm-feed__body">
+                <span class="dm-feed__text">Pago — <a class="dm-table__link" href="expedientes/abarroteria-puerto.html">Abarrotería Puerto</a></span>
+                <span class="dm-feed__meta">Wendy Paz · L 5,000</span>
+              </span>
+              <span class="dm-feed__when">24 ago 2026</span>
+            </li>
+            <li class="dm-feed__item">
+              <span class="dm-feed__dot" aria-hidden="true"></span>
+              <span class="dm-feed__body">
+                <span class="dm-feed__text">Entrega — <a class="dm-table__link" href="expedientes/super-la-economia.html">Súper La Economía</a></span>
+                <span class="dm-feed__meta">Julio Cálix · L 22,800</span>
+              </span>
+              <span class="dm-feed__when">24 ago 2026</span>
+            </li>
+            <li class="dm-feed__item">
+              <span class="dm-feed__dot" aria-hidden="true"></span>
+              <span class="dm-feed__body">
+                <span class="dm-feed__text">Pedido — <a class="dm-table__link" href="expedientes/minimarket-villanueva.html">Minimarket Villanueva</a></span>
+                <span class="dm-feed__meta">Katherine Suazo · L 6,700</span>
+              </span>
+              <span class="dm-feed__when">23 ago 2026</span>
+            </li>
+            <li class="dm-feed__item">
+              <span class="dm-feed__dot" aria-hidden="true"></span>
+              <span class="dm-feed__body">
+                <span class="dm-feed__text">Ajuste — <a class="dm-table__link" href="expedientes/pulperia-el-progreso.html">Pulpería El Progreso</a></span>
+                <span class="dm-feed__meta">Wendy Paz · -L 1,200</span>
+              </span>
+              <span class="dm-feed__when">23 ago 2026</span>
+            </li>
+            <li class="dm-feed__item">
+              <span class="dm-feed__dot" aria-hidden="true"></span>
+              <span class="dm-feed__body">
+                <span class="dm-feed__text">Entrega — <a class="dm-table__link" href="expedientes/minimarket-la-terminal.html">Minimarket La Terminal</a></span>
+                <span class="dm-feed__meta">Julio Cálix · L 9,800</span>
+              </span>
+              <span class="dm-feed__when">23 ago 2026</span>
+            </li>
+          </ul>
+          </div>
+        </div>
+      </div>
+
+      <footer class="dm-footer">
+        <div class="dm-shell dm-footer__inner">
+          <div class="dm-footer__brand">
+            <p class="dm-footer__name">Rumbo</p>
+            <p class="dm-footer__line">Rumbo Distribución, S. de R.L. · Distribuidora de consumo masivo — ficticia</p>
+            <p class="dm-footer__credit">
+              Marca ficticia. Sitio de ejemplo construido por
+              <a href="../../index.html">CoreStruct</a> &copy; <span data-current-year>2026</span>.
+            </p>
+          </div>
+          <nav class="dm-footer__nav" aria-label="Pie">
+            <a href="index.html">Panel</a>
+            <a href="expedientes.html">Expedientes</a>
+            <a href="operaciones.html">Operaciones</a>
+            <a href="../../index.html#contacto">Contacto</a>
+          </nav>
+        </div>
+      </footer>
+    </main>
+
+    <script type="module" src="../../src/scripts/demo/shell.js"></script>
+    <script type="module" src="../../src/scripts/rumbo/filters.js"></script>
+  </body>
+</html>

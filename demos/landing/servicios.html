@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Cierzo — Consultoría estratégica · Demo de CoreStruct</title>
+    <meta name="description" content="Consultoría de negocio — marca ficticia. Trabajamos con pymes que crecieron más rápido que sus procesos. Encontramos dónde se pierde el tiempo y el margen, y salimos con un plan que tu equipo puede ejecutar sin contratar a nadie más." />
+    <!-- An invented brand must never turn up in a search result as a real one. -->
+    <meta name="robots" content="noindex, follow" />
+    <meta name="theme-color" content="#080b12" />
+    <meta name="color-scheme" content="dark" />
+
+    <link rel="icon" href="../../favicon.ico" sizes="32x32" />
+    <link rel="icon" href="../../assets/brand/isotipo.svg" type="image/svg+xml" />
+
+    <link
+      rel="preload"
+      href="../../assets/fonts/manrope-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <link rel="stylesheet" href="../../dist/demo.css" />
+
+    <style>
+      :root {
+        --brand-primary: #1b0f2e;
+        --brand-secondary: #8b5cf6;
+        --brand-primary-rgb: 27 15 46;
+        --brand-secondary-rgb: 139 92 246;
+      }
+    </style>
+
+    <script>
+      document.documentElement.classList.add("js");
+      setTimeout(function () {
+        if (!document.documentElement.dataset.revealsReady) {
+          document.documentElement.classList.remove("js");
+        }
+      }, 2500);
+    </script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+    <a class="dm-badge" href="../../index.html#proyectos">
+      <svg class="dm-badge__mark" viewBox="0 0 362 422" aria-hidden="true" focusable="false">
+        <path fill="#2c6fb2" d="M10 98L17 92L181 1L188 3L354 96L353 99L200 186L185 179L173 181L166 186L11 98Z"/>
+        <path fill="#3898d4" d="M188 421L188 373L190 371L320 295L320 248L318 248L188 324L188 217L198 211L202 203L202 197L358 111L361 109L361 165L233 234L233 275L361 200L361 321L189 421Z"/>
+        <path fill="#253880" d="M1 107L160 195L166 210L176 216L176 252L174 252L42 176L42 294L114 336L154 359L154 297L176 309L176 422L2 321L1 108Z"/>
+      </svg>
+      <span class="dm-badge__tag">Demo</span>
+      <span class="dm-badge__label">Sitio de ejemplo · CoreStruct</span>
+    </a>
+
+    <header class="dm-header" data-header>
+      <div class="dm-header__inner">
+        <a class="dm-wordmark" href="#inicio">
+          <span class="dm-wordmark__name">Cierzo</span>
+          <span class="dm-wordmark__mark">Consultoría estratégica</span>
+        </a>
+
+        <nav class="dm-nav" aria-label="Secciones">
+            <a class="dm-nav__link" href="#porque" data-nav-link>Por qué Cierzo</a>
+            <a class="dm-nav__link" href="#metodo" data-nav-link>Método</a>
+            <a class="dm-nav__link" href="#testimonios" data-nav-link>Testimonios</a>
+            <a class="dm-nav__link" href="#faq" data-nav-link>Preguntas</a>
+        </nav>
+
+        <div class="dm-header__actions">
+          <a class="button button--primary" href="#contacto">Agenda tu diagnóstico gratuito</a>
+          <button
+            class="dm-burger"
+            type="button"
+            aria-expanded="false"
+            aria-controls="dm-menu"
+            aria-label="Abrir el menú"
+            data-menu-toggle
+          >
+            <span class="dm-burger__bar"></span>
+            <span class="dm-burger__bar"></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="dm-menu" id="dm-menu" data-mobile-nav>
+      <a class="dm-menu__link" href="#porque">Por qué Cierzo</a>
+      <a class="dm-menu__link" href="#metodo">Método</a>
+      <a class="dm-menu__link" href="#testimonios">Testimonios</a>
+      <a class="dm-menu__link" href="#faq">Preguntas</a>
+      <a class="dm-menu__link" href="#contacto">Agenda tu diagnóstico gratuito</a>
+    </div>
+
+    <main class="dm" id="contenido">
+      <section class="dm-land-hero dm-shell" id="inicio">
+        <div class="dm-land-hero__inner">
+          <span class="dm-chip" data-reveal="fade">Consultoría estratégica y operativa</span>
+          <h1 class="dm-land-hero__title" data-reveal="rise">Un diagnóstico claro de tu operación, en dos semanas</h1>
+          <p class="dm-land-hero__lead" data-reveal="rise">Trabajamos con pymes que crecieron más rápido que sus procesos. Encontramos dónde se pierde el tiempo y el margen, y salimos con un plan que tu equipo puede ejecutar sin contratar a nadie más.</p>
+          <div class="dm-land-hero__actions" data-reveal="rise">
+            <a class="button button--primary button--large button--pulse" href="#contacto">
+              Agenda tu diagnóstico gratuito
+              <span class="button__arrow" aria-hidden="true">&rarr;</span>
+            </a>
+            <a class="button button--ghost button--large" href="#metodo">Ver cómo trabajamos</a>
+          </div>
+          <div class="dm-land-hero__meta" data-reveal="fade">
+            <span class="dm-chip"><span class="dm-chip__mark" aria-hidden="true"></span>Sin costo · 45 minutos</span>
+            <span class="dm-chip"><span class="dm-chip__mark" aria-hidden="true"></span>100% en línea</span>
+            <span class="dm-chip"><span class="dm-chip__mark" aria-hidden="true"></span>Respuesta en 24 horas</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="dm-section dm-shell" id="porque">
+        <div class="dm-land-head">
+          <h2 class="dm-land-head__title" data-reveal="fade">¿Por qué Cierzo?</h2>
+        </div>
+        <div class="dm-features" data-reveal-group="90">
+          <div class="dm-feature" data-reveal="rise">
+            <h3 class="dm-feature__title">Diagnóstico sin compromiso</h3>
+            <p class="dm-feature__text">Una sesión de 45 minutos para entender el problema real, no el síntoma que se ve primero.</p>
+          </div>
+          <div class="dm-feature" data-reveal="rise">
+            <h3 class="dm-feature__title">Plan accionable en 15 días</h3>
+            <p class="dm-feature__text">Nada de informes de cien páginas: un plan corto, priorizado y con dueño para cada tarea.</p>
+          </div>
+          <div class="dm-feature" data-reveal="rise">
+            <h3 class="dm-feature__title">Acompañamiento hasta implementar</h3>
+            <p class="dm-feature__text">Nos quedamos hasta que el cambio funciona en la operación diaria, no solo en la presentación.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="dm-section dm-shell" id="metodo">
+        <div class="dm-land-head">
+          <h2 class="dm-land-head__title" data-reveal="fade">Cómo trabajamos</h2>
+        </div>
+        <div class="dm-steps" data-reveal-group="90">
+          <div class="dm-step" data-reveal="rise">
+            <p class="dm-step__index" aria-hidden="true">01</p>
+            <h3 class="dm-step__title">Diagnóstico</h3>
+            <p class="dm-step__text">Revisamos procesos, números y conversaciones con tu equipo para mapear dónde se atora la operación.</p>
+          </div>
+          <div class="dm-step" data-reveal="rise">
+            <p class="dm-step__index" aria-hidden="true">02</p>
+            <h3 class="dm-step__title">Plan de acción</h3>
+            <p class="dm-step__text">Entregamos un plan corto y priorizado: qué cambiar primero, quién lo hace y qué se mide.</p>
+          </div>
+          <div class="dm-step" data-reveal="rise">
+            <p class="dm-step__index" aria-hidden="true">03</p>
+            <h3 class="dm-step__title">Acompañamiento</h3>
+            <p class="dm-step__text">Trabajamos junto a tu equipo en la implementación, con revisiones quincenales hasta que el cambio se sostiene solo.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="dm-section dm-shell" id="testimonios">
+        <div class="dm-land-head">
+          <h2 class="dm-land-head__title" data-reveal="fade">Lo que dicen quienes ya trabajaron con nosotros</h2>
+        </div>
+        <div class="dm-testimonials" data-reveal-group="90">
+          <div class="dm-testimonial" data-reveal="rise">
+            <p class="dm-testimonial__quote">Llegamos con un problema de entregas tardías y salimos con un proceso que redujo el retraso promedio a la mitad.</p>
+            <span class="dm-testimonial__author">Gerente de operaciones</span>
+            <span class="dm-testimonial__role">Distribuidora de repuestos, San Pedro Sula</span>
+          </div>
+          <div class="dm-testimonial" data-reveal="rise">
+            <p class="dm-testimonial__quote">El plan era corto a propósito. Pudimos ejecutarlo con el equipo que ya teníamos, sin contratar a nadie.</p>
+            <span class="dm-testimonial__author">Dueña de negocio</span>
+            <span class="dm-testimonial__role">Cadena de clínicas dentales</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="dm-section dm-shell" id="faq">
+        <div class="dm-land-head">
+          <h2 class="dm-land-head__title" data-reveal="fade">Preguntas frecuentes</h2>
+        </div>
+        <div class="dm-faq" data-reveal="rise">
+          <details class="dm-faq__item">
+            <summary>¿El diagnóstico tiene algún costo?</summary>
+            <p class="dm-faq__answer">No. La primera sesión de 45 minutos es gratuita y no implica ningún compromiso posterior.</p>
+          </details>
+          <details class="dm-faq__item">
+            <summary>¿Trabajan con negocios de cualquier tamaño?</summary>
+            <p class="dm-faq__answer">Trabajamos mejor con equipos de 5 a 80 personas, donde los procesos ya no caben en la cabeza de una sola persona.</p>
+          </details>
+          <details class="dm-faq__item">
+            <summary>¿Qué pasa después del plan de acción?</summary>
+            <p class="dm-faq__answer">Si quieres acompañamiento en la implementación lo conversamos aparte; el plan es tuyo de todas formas.</p>
+          </details>
+          <details class="dm-faq__item">
+            <summary>¿Es una consultoría real?</summary>
+            <p class="dm-faq__answer">No. Cierzo es una marca ficticia construida para mostrar cómo luce una landing de servicios — no puedes contratarla.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="dm-section dm-shell" id="contacto">
+        <div class="dm-cta-band" data-reveal="scale">
+          <h2 class="dm-cta-band__title">¿Listo para ver dónde se está yendo el margen?</h2>
+          <p class="dm-cta-band__text">Cuéntanos brevemente tu operación y te confirmamos un horario en menos de un día.</p>
+          <div class="dm-cta-band__actions">
+            <a class="button button--primary button--large button--pulse" href="mailto:hola@cierzo-demo.hn">
+              Agenda tu diagnóstico gratuito
+              <span class="button__arrow" aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </div>
+
+        <p class="dm-crosslink" data-reveal="fade" style="margin-block-start: var(--space-lg)">
+          ¿Buscas algo distinto? Mira el otro ejemplo:
+          <a href="evento.html">Lumen</a>, una landing de lanzamiento.
+        </p>
+      </section>
+
+      <footer class="dm-footer">
+        <div class="dm-shell dm-footer__inner">
+          <div class="dm-footer__brand">
+            <p class="dm-footer__name">Cierzo</p>
+            <p class="dm-footer__line">Consultoría estratégica</p>
+            <p class="dm-footer__credit">
+              Marca ficticia. Sitio de ejemplo construido por
+              <a href="../../index.html">CoreStruct</a> &copy; <span data-current-year>2026</span>.
+            </p>
+          </div>
+          <nav class="dm-footer__nav" aria-label="Pie">
+            <a href="#inicio">Inicio</a>
+            <a href="#faq">Preguntas</a>
+            <a href="#contacto">Contacto</a>
+            <a href="../../index.html#proyectos">Volver al portafolio</a>
+          </nav>
+        </div>
+      </footer>
+    </main>
+
+    <script type="module" src="../../src/scripts/demo/shell.js"></script>
+  </body>
+</html>

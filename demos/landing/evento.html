@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Lumen — Encuentro de Innovación 2026 · Demo de CoreStruct</title>
+    <meta name="description" content="Conferencia de un día — marca ficticia. Seis conversaciones, cuatro industrias, un mismo lugar. Lumen reúne a quienes ya están construyendo lo que el resto va a copiar en dos años — y te sientas en la misma mesa que ellos." />
+    <!-- An invented brand must never turn up in a search result as a real one. -->
+    <meta name="robots" content="noindex, follow" />
+    <meta name="theme-color" content="#080b12" />
+    <meta name="color-scheme" content="dark" />
+
+    <link rel="icon" href="../../favicon.ico" sizes="32x32" />
+    <link rel="icon" href="../../assets/brand/isotipo.svg" type="image/svg+xml" />
+
+    <link
+      rel="preload"
+      href="../../assets/fonts/manrope-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <link rel="stylesheet" href="../../dist/demo.css" />
+
+    <style>
+      :root {
+        --brand-primary: #04211f;
+        --brand-secondary: #22d3c7;
+        --brand-primary-rgb: 4 33 31;
+        --brand-secondary-rgb: 34 211 199;
+      }
+    </style>
+
+    <script>
+      document.documentElement.classList.add("js");
+      setTimeout(function () {
+        if (!document.documentElement.dataset.revealsReady) {
+          document.documentElement.classList.remove("js");
+        }
+      }, 2500);
+    </script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+    <a class="dm-badge" href="../../index.html#proyectos">
+      <svg class="dm-badge__mark" viewBox="0 0 362 422" aria-hidden="true" focusable="false">
+        <path fill="#2c6fb2" d="M10 98L17 92L181 1L188 3L354 96L353 99L200 186L185 179L173 181L166 186L11 98Z"/>
+        <path fill="#3898d4" d="M188 421L188 373L190 371L320 295L320 248L318 248L188 324L188 217L198 211L202 203L202 197L358 111L361 109L361 165L233 234L233 275L361 200L361 321L189 421Z"/>
+        <path fill="#253880" d="M1 107L160 195L166 210L176 216L176 252L174 252L42 176L42 294L114 336L154 359L154 297L176 309L176 422L2 321L1 108Z"/>
+      </svg>
+      <span class="dm-badge__tag">Demo</span>
+      <span class="dm-badge__label">Sitio de ejemplo · CoreStruct</span>
+    </a>
+
+    <header class="dm-header" data-header>
+      <div class="dm-header__inner">
+        <a class="dm-wordmark" href="#inicio">
+          <span class="dm-wordmark__name">Lumen</span>
+          <span class="dm-wordmark__mark">Encuentro de Innovación 2026</span>
+        </a>
+
+        <nav class="dm-nav" aria-label="Secciones">
+            <a class="dm-nav__link" href="#porque" data-nav-link>Por qué asistir</a>
+            <a class="dm-nav__link" href="#agenda" data-nav-link>Agenda</a>
+            <a class="dm-nav__link" href="#speakers" data-nav-link>Speakers</a>
+            <a class="dm-nav__link" href="#faq" data-nav-link>Preguntas</a>
+        </nav>
+
+        <div class="dm-header__actions">
+          <a class="button button--primary" href="#contacto">Reservar mi lugar</a>
+          <button
+            class="dm-burger"
+            type="button"
+            aria-expanded="false"
+            aria-controls="dm-menu"
+            aria-label="Abrir el menú"
+            data-menu-toggle
+          >
+            <span class="dm-burger__bar"></span>
+            <span class="dm-burger__bar"></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="dm-menu" id="dm-menu" data-mobile-nav>
+      <a class="dm-menu__link" href="#porque">Por qué asistir</a>
+      <a class="dm-menu__link" href="#agenda">Agenda</a>
+      <a class="dm-menu__link" href="#speakers">Speakers</a>
+      <a class="dm-menu__link" href="#faq">Preguntas</a>
+      <a class="dm-menu__link" href="#contacto">Reservar mi lugar</a>
+    </div>
+
+    <main class="dm" id="contenido">
+      <section class="dm-land-hero dm-shell" id="inicio">
+        <div class="dm-land-hero__inner">
+          <span class="dm-chip" data-reveal="fade">Encuentro anual · Estudio Lumen</span>
+          <h1 class="dm-land-hero__title" data-reveal="rise">Un día completo sobre el futuro de tu industria</h1>
+          <p class="dm-land-hero__lead" data-reveal="rise">Seis conversaciones, cuatro industrias, un mismo lugar. Lumen reúne a quienes ya están construyendo lo que el resto va a copiar en dos años — y te sientas en la misma mesa que ellos.</p>
+          <div class="dm-land-hero__actions" data-reveal="rise">
+            <a class="button button--primary button--large button--pulse" href="#contacto">
+              Reservar mi lugar
+              <span class="button__arrow" aria-hidden="true">&rarr;</span>
+            </a>
+            <a class="button button--ghost button--large" href="#agenda">Ver la agenda</a>
+          </div>
+          <div class="dm-land-hero__meta" data-reveal="fade">
+            <span class="dm-chip"><span class="dm-chip__mark" aria-hidden="true"></span>14 de noviembre de 2026</span>
+            <span class="dm-chip"><span class="dm-chip__mark" aria-hidden="true"></span>San Pedro Sula, Honduras</span>
+            <span class="dm-chip"><span class="dm-chip__mark" aria-hidden="true"></span>Cupo limitado a 200 personas</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="dm-section dm-shell" id="porque">
+        <div class="dm-land-head">
+          <h2 class="dm-land-head__title" data-reveal="fade">Por qué asistir</h2>
+        </div>
+        <div class="dm-features" data-reveal-group="90">
+          <div class="dm-feature" data-reveal="rise">
+            <h3 class="dm-feature__title">Casos, no teoría</h3>
+            <p class="dm-feature__text">Cada charla parte de una decisión real que alguien tomó, con los números de lo que salió bien y mal.</p>
+          </div>
+          <div class="dm-feature" data-reveal="rise">
+            <h3 class="dm-feature__title">Una sola sala</h3>
+            <p class="dm-feature__text">Sin tracks paralelos: todos ven las mismas seis conversaciones y las comentan en los mismos descansos.</p>
+          </div>
+          <div class="dm-feature" data-reveal="rise">
+            <h3 class="dm-feature__title">Networking con intención</h3>
+            <p class="dm-feature__text">Las mesas del almuerzo se arman por industria, no al azar, para que la conversación siga donde se quedó.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="dm-section dm-shell" id="agenda">
+        <div class="dm-land-head">
+          <h2 class="dm-land-head__title" data-reveal="fade">Agenda del día</h2>
+          <p class="dm-land-head__text">14 de noviembre de 2026 — San Pedro Sula</p>
+        </div>
+        <div class="dm-agenda" data-reveal="rise">
+          <div class="dm-agenda__item">
+            <span class="dm-agenda__time">08:30</span>
+            <div>
+              <p class="dm-agenda__title">Registro y café</p>
+              
+            </div>
+          </div>
+          <div class="dm-agenda__item">
+            <span class="dm-agenda__time">09:00</span>
+            <div>
+              <p class="dm-agenda__title">Apertura: el próximo salto no se ve venir</p>
+              <p class="dm-agenda__speaker">Renata Ibarra, Estudio Lumen</p>
+            </div>
+          </div>
+          <div class="dm-agenda__item">
+            <span class="dm-agenda__time">10:00</span>
+            <div>
+              <p class="dm-agenda__title">De hoja de cálculo a plataforma: un año después</p>
+              <p class="dm-agenda__speaker">Mario Villatoro, Grupo Andina</p>
+            </div>
+          </div>
+          <div class="dm-agenda__item">
+            <span class="dm-agenda__time">12:30</span>
+            <div>
+              <p class="dm-agenda__title">Almuerzo por industria</p>
+              
+            </div>
+          </div>
+          <div class="dm-agenda__item">
+            <span class="dm-agenda__time">14:00</span>
+            <div>
+              <p class="dm-agenda__title">Automatizar sin perder el criterio humano</p>
+              <p class="dm-agenda__speaker">Cecilia Reyes, Puerto Norte Logística</p>
+            </div>
+          </div>
+          <div class="dm-agenda__item">
+            <span class="dm-agenda__time">16:30</span>
+            <div>
+              <p class="dm-agenda__title">Cierre y mesa de preguntas</p>
+              <p class="dm-agenda__speaker">Todos los ponentes</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="dm-section dm-shell" id="speakers">
+        <div class="dm-land-head">
+          <h2 class="dm-land-head__title" data-reveal="fade">Quiénes hablan</h2>
+        </div>
+        <div class="dm-speakers" data-reveal-group="90">
+          <div class="dm-speaker" data-reveal="rise">
+            <span class="dm-speaker__mark" aria-hidden="true">RI</span>
+            <div>
+              <p class="dm-speaker__name">Renata Ibarra</p>
+              <p class="dm-speaker__role">Directora, Estudio Lumen</p>
+            </div>
+          </div>
+          <div class="dm-speaker" data-reveal="rise">
+            <span class="dm-speaker__mark" aria-hidden="true">MV</span>
+            <div>
+              <p class="dm-speaker__name">Mario Villatoro</p>
+              <p class="dm-speaker__role">VP de Tecnología, Grupo Andina</p>
+            </div>
+          </div>
+          <div class="dm-speaker" data-reveal="rise">
+            <span class="dm-speaker__mark" aria-hidden="true">CR</span>
+            <div>
+              <p class="dm-speaker__name">Cecilia Reyes</p>
+              <p class="dm-speaker__role">COO, Puerto Norte Logística</p>
+            </div>
+          </div>
+          <div class="dm-speaker" data-reveal="rise">
+            <span class="dm-speaker__mark" aria-hidden="true">AF</span>
+            <div>
+              <p class="dm-speaker__name">Adrián Funes</p>
+              <p class="dm-speaker__role">Fundador, Tejido Textil</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="dm-section dm-shell" id="faq">
+        <div class="dm-land-head">
+          <h2 class="dm-land-head__title" data-reveal="fade">Preguntas frecuentes</h2>
+        </div>
+        <div class="dm-faq" data-reveal="rise">
+          <details class="dm-faq__item">
+            <summary>¿Cuánto cuesta el boleto?</summary>
+            <p class="dm-faq__answer">El cupo es limitado a 200 personas; reserva tu lugar y te confirmamos el costo y las formas de pago por correo.</p>
+          </details>
+          <details class="dm-faq__item">
+            <summary>¿Hay transmisión en línea?</summary>
+            <p class="dm-faq__answer">No. Lumen es una experiencia presencial de un solo día, en una sola sala, sin transmisión.</p>
+          </details>
+          <details class="dm-faq__item">
+            <summary>¿Qué incluye el boleto?</summary>
+            <p class="dm-faq__answer">Acceso a las seis conversaciones, almuerzo por industria, materiales y los recesos de café.</p>
+          </details>
+          <details class="dm-faq__item">
+            <summary>¿Es un evento real?</summary>
+            <p class="dm-faq__answer">No. Lumen es una marca ficticia construida para mostrar cómo luce una landing de lanzamiento — no puedes reservar un lugar de verdad.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="dm-section dm-shell" id="contacto">
+        <div class="dm-cta-band" data-reveal="scale">
+          <h2 class="dm-cta-band__title">El cupo es de 200 personas y se llena rápido</h2>
+          <p class="dm-cta-band__text">Reserva tu lugar y te escribimos con los detalles finales un mes antes del evento.</p>
+          <div class="dm-cta-band__actions">
+            <a class="button button--primary button--large button--pulse" href="mailto:reservas@lumen-demo.hn">
+              Reservar mi lugar
+              <span class="button__arrow" aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </div>
+
+        <p class="dm-crosslink" data-reveal="fade" style="margin-block-start: var(--space-lg)">
+          ¿Buscas algo distinto? Mira el otro ejemplo:
+          <a href="servicios.html">Cierzo</a>, una landing de servicios.
+        </p>
+      </section>
+
+      <footer class="dm-footer">
+        <div class="dm-shell dm-footer__inner">
+          <div class="dm-footer__brand">
+            <p class="dm-footer__name">Lumen</p>
+            <p class="dm-footer__line">Encuentro de Innovación 2026</p>
+            <p class="dm-footer__credit">
+              Marca ficticia. Sitio de ejemplo construido por
+              <a href="../../index.html">CoreStruct</a> &copy; <span data-current-year>2026</span>.
+            </p>
+          </div>
+          <nav class="dm-footer__nav" aria-label="Pie">
+            <a href="#inicio">Inicio</a>
+            <a href="#faq">Preguntas</a>
+            <a href="#contacto">Contacto</a>
+            <a href="../../index.html#proyectos">Volver al portafolio</a>
+          </nav>
+        </div>
+      </footer>
+    </main>
+
+    <script type="module" src="../../src/scripts/demo/shell.js"></script>
+  </body>
+</html>

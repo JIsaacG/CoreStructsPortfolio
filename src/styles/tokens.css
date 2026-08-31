@@ -35,6 +35,22 @@
   --corporate-paper: #f5f4f0;
   --corporate-ink: #101827;
 
+  /* --- Systems accent ------------------------------------------------------ */
+  /* The jade the Rumbo demo is built on, borrowed by the one portfolio card
+     that opens an internal business system: records, users, operations. Green
+     reads as "on track" against a page otherwise navy, amber and bronze. */
+  --systems-jade: #2fae7a;
+  --systems-jade-rgb: 47 174 122;
+  --systems-deep: #0c2a20;
+
+  /* --- Landing accent ------------------------------------------------------- */
+  /* The violet the Cierzo landing is built on, borrowed by the one portfolio
+     card that opens a campaign page. Each landing still sets its own pair —
+     Lumen's teal is not this — but the card can only preview one. */
+  --landing-violet: #8b5cf6;
+  --landing-violet-rgb: 139 92 246;
+  --landing-deep: #1b0f2e;
+
   /* --- Surfaces ---------------------------------------------------------- */
   --background: #080b12;
   --surface: #0d1220;
