@@ -46,6 +46,18 @@ export function initRoute(root = document) {
   const list = panel.querySelector("[data-wf-route-list]");
   const presets = [...root.querySelectorAll("[data-wf-preset]")];
 
+  let flashTimer = 0;
+  const flash = () => {
+    delete panel.dataset.changed;
+    /* Forcing layout between the two writes is what lets the animation restart
+       when the band changes twice in a row; without it the class is removed and
+       re-added inside one frame and the browser sees no change at all. */
+    void panel.offsetWidth;
+    panel.dataset.changed = "";
+    window.clearTimeout(flashTimer);
+    flashTimer = window.setTimeout(() => delete panel.dataset.changed, 1000);
+  };
+
   const sync = () => {
     const parsed = parseAmount(input.value);
     const amount = Number.isFinite(parsed) && parsed > 0 ? parsed : 0;
@@ -59,8 +71,15 @@ export function initRoute(root = document) {
        on every keystroke would restart their entrance animation while someone
        is still typing the number that caused it. */
     if (list.dataset.band !== rule.band.id) {
+      const first = list.dataset.band === undefined;
       list.dataset.band = rule.band.id;
       list.innerHTML = approvalsFor("compra", { amount }).map(stopRow).join("");
+
+      /* Crossing a threshold is the moment the demonstration exists for, and
+         the panel is off to the side of the field someone is typing in. One
+         brief lift is what connects the two. Not on the first paint: nothing
+         changed, the page just arrived. */
+      if (!first) flash();
     }
 
     for (const preset of presets) {

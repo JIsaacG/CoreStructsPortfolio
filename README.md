@@ -301,12 +301,26 @@ decisiones que la cierran. El registro no desapareció —los 15 expedientes sig
 teniendo su URL— pero pasó a ser una búsqueda (`Buscar expediente`, o `⌘K`) en
 lugar de una tabla en medio del camino.
 
-**Glasswing.** Fondo oscuro con tres cuerpos de color desenfocados detrás, y
-sobre él paneles de vidrio: translúcidos, con `backdrop-filter` y un hilo de luz
-en el borde superior. `glasswing.css` solo cambia el material —los tokens, no la
+**Glasswing, en grafito.** Fondo oscuro neutro con tres pozos de luz
+desenfocados detrás, y sobre él paneles de vidrio: translúcidos, con
+`backdrop-filter` y un hilo de luz en el borde superior. La paleta es acromática
+a propósito — no hay ningún tono de marca en la interfaz, así que el único color
+que ve un visitante es un estado (aprobado, en riesgo, rechazado) y significa
+exactamente eso. `glasswing.css` solo cambia el material —los tokens, no la
 maquetación— y `console.css` añade los componentes que solo tiene la consola. La
 única superficie opaca de la página es el documento que genera el flujo, porque
 un PDF que brilla es un PDF que nadie se cree.
+
+**Tres pasos numerados, y solo uno encendido.** La consola muestra a la vez
+`1 Complete la solicitud`, `2 Resuelva` y `3 Lo que produjo`, y en cada momento
+exactamente uno lleva `is-active`: los otros bajan a 0,76 de opacidad y vuelven
+al pasar el ratón o al recibir el foco. `stages.js` no sabe nada del flujo —
+observa el atributo `hidden` del panel de decisión, que es la misma señal que
+lee una persona, y por eso aciertan todos los caminos (enviar, aprobar,
+rechazar, la demo guiada y una sesión restaurada) sin que ninguno tenga que
+avisar. El paso 2 existe desde el primer fotograma como un marco punteado que
+dice cuándo aparecerá, porque un `1` y un `3` sin `2` se leen como una pieza que
+falta, no como una que viene después.
 
 Lo que trae:
 
@@ -321,11 +335,13 @@ Lo que trae:
   `approvalsFor()` que usan la compilación y el motor. Tres atajos de monto
   cubren las tres bandas, así que ver la tercera no cuesta teclear 240000. Es la
   sección de reglas de antes, convertida en algo que se mira en lugar de leerse.
-- **Formulario de cuatro campos.** Tenía once; siete no cambiaban nada de lo que
-  el motor hacía con la solicitud, así que se siguen enviando, siguen en el
-  documento y siguen en la bitácora, pero ya no son once cajas entre el visitante
-  y el botón. Validación en `blur` y en vivo solo mientras se corrige, con el
-  error como frase junto al campo.
+- **Formulario de cuatro campos, ya rellenos.** Tenía once; siete no cambiaban
+  nada de lo que el motor hacía con la solicitud, así que se siguen enviando,
+  siguen en el documento y siguen en la bitácora, pero ya no son once cajas entre
+  el visitante y el botón. Llegan completos a propósito: antes el concepto estaba
+  vacío y era obligatorio, así que la primera pulsación del botón principal
+  devolvía un error en lugar de la demostración. Validación en `blur` y en vivo
+  solo mientras se corrige, con el error como frase junto al campo.
 - **Secuencia de automatización** de unos seis segundos: valida, cita la regla
   que aplicó, asigna a las personas que la regla eligió y arranca el flujo.
 - **Aprobación interactiva** con tres salidas —aprobar, solicitar cambios,
@@ -352,6 +368,15 @@ bitácora y el documento están en el HTML que se descarga;
 `render.js` es puro y lo usan las dos partes, así que una aprobación que añade el
 navegador sale idéntica a una que escribió la compilación. Sin JavaScript se ve
 el expediente ya terminado en lugar de una pantalla en blanco.
+
+**El contraste está medido, no estimado.** El fondo bajo cualquier texto es un
+panel de vidrio desenfocado sobre un degradado sobre una retícula, así que
+ningún valor de la hoja de estilos lo predice. `tools/` no lo comprueba, pero el
+procedimiento sí está fijado: se pinta una plancha del mismo fotograma con todos
+los glifos en `transparent`, se muestrea el píxel real bajo cada etiqueta y se
+compone encima el color propio del texto con su alfa y la cadena de `opacity` de
+sus ancestros. Con eso se fijaron los valores atenuados de la consola; el peor
+de la página queda en 5,4:1.
 
 **Todo es ficticio y lo dice en voz alta.** Las personas, los montos, los
 códigos y el documento están inventados; el correo no se envía, el archivo no se

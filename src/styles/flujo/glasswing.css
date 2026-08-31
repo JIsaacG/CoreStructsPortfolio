@@ -2,20 +2,23 @@
    Flujo — Glasswing
 
    The demo's second skin, and the one it now wears. Everything below this
-   comment re-grounds the module in the dark: a deep field with three slow
-   aurora bodies behind it, and every surface above that field made of glass —
+   comment re-grounds the module in the dark: a graphite field with three slow
+   pools of light behind it, and every surface above that field made of glass —
    translucent, blurred, edged with one hairline of light along the top the way
    a glasswing's wing is edged where the transparency ends.
+
+   The palette is achromatic on purpose. There is no brand hue anywhere in the
+   interface, so the only colour a visitor ever sees is a status — approved,
+   at risk, rejected — and it means exactly that. A grey console makes the four
+   moments that are not grey impossible to miss.
 
    It is loaded last on purpose. The light stylesheet underneath it still owns
    every layout decision — the grids, the rhythm, the component structure — and
    this file changes only what colour and material those decisions are made of.
    That split is what makes the retheme reviewable: nothing here moves anything.
 
-   Two things deliberately stay opaque. The document the workflow generates is
-   paper, because a generated PDF that glows is a PDF nobody believes; and the
-   status colours keep their four reserved meanings, lifted to the luminance a
-   dark ground needs rather than reassigned.
+   One thing deliberately stays opaque: the document the workflow generates is
+   paper, because a generated PDF that glows is a PDF nobody believes.
    ========================================================================== */
 
 /* --- The palette -------------------------------------------------------------
@@ -30,19 +33,20 @@
   color-scheme: dark;
 
   /* The field itself. */
-  --gw-void: #04060f;
-  --gw-deep: #080d20;
+  --gw-void: #0d0e11;
+  --gw-deep: #16181d;
 
-  /* Iridescence. Three hues, and no fourth: the wing edge of a glasswing runs
-     cyan → blue → violet, and the whole interface accents from that ramp. */
-  --gw-cyan: #4fe3d8;
-  --gw-blue: #5b8cff;
-  --gw-violet: #a07cff;
+  /* The accent, which is light rather than colour. Three steps of the same
+     neutral: the marker on the current step, the primary action, and the ring
+     around whichever panel it is your turn to use. */
+  --gw-accent: #e2e6ec;
+  --gw-accent-soft: rgb(226 230 236 / 0.55);
+  --gw-accent-ink: #14161b;
 
   /* Glass. Three densities: the page's panels, the controls inside them, and
      the one raised layer (bar, dialog, toast) that sits above everything. */
-  --gw-glass: rgb(255 255 255 / 0.045);
-  --gw-glass-2: rgb(255 255 255 / 0.075);
+  --gw-glass: rgb(255 255 255 / 0.058);
+  --gw-glass-2: rgb(255 255 255 / 0.085);
   --gw-glass-3: rgb(255 255 255 / 0.11);
   --gw-edge: rgb(255 255 255 / 0.11);
   --gw-edge-lit: rgb(255 255 255 / 0.30);
@@ -56,25 +60,28 @@
   --border: var(--gw-edge);
   --border-strong: rgb(255 255 255 / 0.19);
 
-  --ink: #e9eeff;
-  --ink-soft: rgb(226 233 255 / 0.82);
-  --ink-muted: rgb(198 210 240 / 0.66);  /* 5.6:1 on the field */
+  --ink: #e7eaef;
+  --ink-soft: rgb(228 232 239 / 0.82);
+  --ink-muted: rgb(212 218 228 / 0.80);  /* 7:1 on glass, measured */
 
-  --navy-900: #f4f7ff;   /* was the ground; is now the title ink */
-  --navy-800: #b9d0ff;
-  --navy: #93b8ff;       /* links and secondary marks */
+  --navy-900: #f3f5f8;   /* was the ground; is now the title ink */
+  --navy-800: #d7dce4;
+  --navy: #c3c9d4;       /* links and secondary marks */
   --navy-600: rgb(255 255 255 / 0.24);
-  --navy-200: rgb(147 184 255 / 0.34);
-  --navy-100: rgb(122 162 255 / 0.13);
+  --navy-200: rgb(255 255 255 / 0.26);
+  --navy-100: rgb(255 255 255 / 0.07);
 
-  --ok: #63e6a8;
-  --info: #93b8ff;
-  --warn: #ffc978;
-  --bad: #ff9187;
-  --ok-bg: rgb(99 230 168 / 0.12);
-  --info-bg: rgb(147 184 255 / 0.12);
-  --warn-bg: rgb(255 201 120 / 0.12);
-  --bad-bg: rgb(255 145 135 / 0.12);
+  /* Three statuses and one neutral. `info` is deliberately grey: "in progress"
+     is the ordinary case, and a colour spent on the ordinary case is a colour
+     that no longer marks anything. */
+  --ok: #7fd3a2;
+  --info: #c3c9d4;
+  --warn: #dfb673;
+  --bad: #df8f86;
+  --ok-bg: rgb(127 211 162 / 0.13);
+  --info-bg: rgb(255 255 255 / 0.07);
+  --warn-bg: rgb(223 182 115 / 0.13);
+  --bad-bg: rgb(223 143 134 / 0.13);
 
   /* Glass is a soft material and reads wrong with a 2px corner. */
   --r-xs: 8px;
@@ -108,7 +115,7 @@ body {
   overflow: hidden;
   pointer-events: none;
   background:
-    radial-gradient(120% 80% at 50% -10%, rgb(20 34 84 / 0.85), transparent 62%),
+    radial-gradient(120% 80% at 50% -10%, rgb(46 50 58 / 0.8), transparent 62%),
     linear-gradient(180deg, var(--gw-deep), var(--gw-void) 55%);
 }
 
@@ -125,7 +132,7 @@ body {
   left: -8vw;
   width: 62vw;
   height: 62vw;
-  background: radial-gradient(circle, rgb(79 227 216 / 0.42), transparent 68%);
+  background: radial-gradient(circle, rgb(198 206 220 / 0.20), transparent 68%);
   animation: gw-drift-a 34s var(--ease-out) infinite alternate;
 }
 
@@ -134,7 +141,7 @@ body {
   right: -14vw;
   width: 58vw;
   height: 58vw;
-  background: radial-gradient(circle, rgb(91 140 255 / 0.5), transparent 68%);
+  background: radial-gradient(circle, rgb(226 222 214 / 0.15), transparent 68%);
   animation: gw-drift-b 41s var(--ease-out) infinite alternate;
 }
 
@@ -143,7 +150,7 @@ body {
   left: 24vw;
   width: 66vw;
   height: 66vw;
-  background: radial-gradient(circle, rgb(160 124 255 / 0.38), transparent 68%);
+  background: radial-gradient(circle, rgb(172 180 196 / 0.18), transparent 68%);
   animation: gw-drift-c 47s var(--ease-out) infinite alternate;
 }
 
@@ -157,8 +164,10 @@ body {
   to { transform: translate3d(7vw, -9vh, 0) scale(1.14); }
 }
 
-/* The grid the glass refracts. Masked to a soft vignette so it never reads as
-   a wireframe at the edges of the viewport. */
+/* The grid the glass refracts. It is the only reason a blurred pane over a
+   near-flat grey reads as glass rather than as a lighter rectangle, so it
+   matters more here than it did over colour. Masked to a soft vignette so it
+   never reads as a wireframe at the edges of the viewport. */
 .gw-field__grid {
   position: absolute;
   inset: -1px;
@@ -269,7 +278,7 @@ body {
 }
 
 .fx-badge__tag {
-  color: var(--gw-cyan);
+  color: var(--gw-accent);
 }
 
 .wf-guide {
@@ -307,17 +316,19 @@ body {
 .fx-btn--solid,
 .fx-btn--solid:hover {
   border-color: transparent;
-  background-image: linear-gradient(120deg, var(--gw-cyan), var(--gw-blue) 62%, var(--gw-violet));
-  color: #051029;
+  background-image: none;
+  background-color: var(--gw-accent);
+  color: var(--gw-accent-ink);
   font-weight: 700;
 }
 
 .fx-btn--solid {
-  box-shadow: 0 6px 22px rgb(91 140 255 / 0.34);
+  box-shadow: 0 6px 20px rgb(0 0 0 / 0.45);
 }
 
 .fx-btn--solid:hover {
-  box-shadow: 0 10px 30px rgb(91 140 255 / 0.46);
+  background-color: #ffffff;
+  box-shadow: 0 10px 28px rgb(0 0 0 / 0.55);
   transform: translateY(-1px);
 }
 
@@ -363,10 +374,10 @@ body {
 .fx-input:focus,
 .fx-input:focus-visible,
 .fx-select select:focus-visible {
-  border-color: rgb(91 140 255 / 0.75);
+  border-color: var(--gw-accent-soft);
   outline: none;
-  background: rgb(255 255 255 / 0.08);
-  box-shadow: 0 0 0 3px rgb(91 140 255 / 0.22);
+  background: rgb(255 255 255 / 0.09);
+  box-shadow: 0 0 0 3px rgb(226 230 236 / 0.18);
 }
 
 .fx-select::after {
@@ -374,7 +385,7 @@ body {
 }
 
 :focus-visible {
-  outline-color: var(--gw-cyan);
+  outline-color: var(--gw-accent);
 }
 
 /* --- Small type -------------------------------------------------------------- */
@@ -395,8 +406,7 @@ body {
 }
 
 .fx-demo::before {
-  background: var(--gw-cyan);
-  box-shadow: 0 0 8px var(--gw-cyan);
+  background: var(--gw-accent);
 }
 
 .fx-link {
@@ -432,18 +442,18 @@ body {
 
 .wf-doc {
   --surface: #ffffff;
-  --surface-sunken: #eff3f9;
-  --border: #dce3ee;
-  --border-strong: #bcc7d8;
-  --ink: #172033;
-  --ink-soft: #3b475c;
-  --ink-muted: #5d6878;
-  --navy-900: #071e4a;
-  --navy: #0d3b99;
-  --navy-100: #eaf0fa;
-  --navy-200: #c3d4ee;
-  --ok: #0f6b3f;
-  --ok-bg: #e8f3ec;
+  --surface-sunken: #f2f4f7;
+  --border: #e2e5ea;
+  --border-strong: #c4c9d2;
+  --ink: #1b1e24;
+  --ink-soft: #444a55;
+  --ink-muted: #626873;
+  --navy-900: #1b1e24;
+  --navy: #3d4450;
+  --navy-100: #f1f3f6;
+  --navy-200: #d5d9e0;
+  --ok: #1e6b45;
+  --ok-bg: #eaf2ed;
   --r-xs: 3px;
 
   color: var(--ink);
@@ -455,7 +465,7 @@ body {
 }
 
 .wf-doc__band {
-  background: #071e4a;
+  background: #1b1e24;
   color: #ffffff;
 }
 

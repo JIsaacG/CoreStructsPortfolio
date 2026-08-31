@@ -14,6 +14,7 @@
 import { createEngine } from "./engine.js";
 import { initCapture, initForm } from "./form.js";
 import { initRoute } from "./route.js";
+import { initStages } from "./stages.js";
 import { clear, load, save } from "./state.js";
 import { createTour } from "./tour.js";
 import {
@@ -63,6 +64,11 @@ if (formElement) {
      that produces a live request retires it. */
   const route = initRoute(document);
 
+  /* Which of the three numbered zones is lit. Moved here rather than inside the
+     engine because it is a statement about the page, not about the workflow:
+     the engine's job is to be right, and this one's is to be followable. */
+  const stages = initStages(document);
+
   const form = initForm(formElement, {
     onSubmit: (request) => {
       route.hide();
@@ -80,6 +86,7 @@ if (formElement) {
   const restored = engine.restore();
   if (restored) {
     route.hide();
+    stages.sync();
     toast("Se restauró la solicitud de esta demostración desde su navegador.");
   }
 
@@ -91,6 +98,8 @@ if (formElement) {
      than making the visitor press the button a second time. */
   const RESUME = "flujo:tour";
 
+  /* Starting the guided demo puts the light back at the top, because the tour
+     drives the console from the beginning. */
   const startFresh = () => {
     try {
       sessionStorage.setItem(RESUME, "1");

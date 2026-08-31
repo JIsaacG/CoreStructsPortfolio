@@ -1,0 +1,628 @@
+/* =============================================================================
+   CEDE — the drawn imagery
+
+   `tools/cede/art.mjs` emits the geometry; this file decides what it looks
+   like. Same contract as the charts: not one colour literal in the emitter,
+   every mark on a class, so the high-contrast theme repaints ten plates and
+   forty covers without a single re-render.
+
+   Two tones, and the whole palette of each one lives in the `.cd-art--*` block
+   below as local custom properties. Every rule after that reads a token and
+   nothing else, which is why a plate can move from a navy band to a white card
+   by changing one class.
+   ========================================================================== */
+
+.cd-art {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* --- The deep tone ---------------------------------------------------------
+   On the navy grounds. Built from white at six alphas, exactly as the hero map
+   is: it is the same drawing language, and it inherits the same property that
+   the ground can change tint without a single mark being re-specified.
+   -------------------------------------------------------------------------- */
+
+.cd-art--deep {
+  --art-ground: var(--navy-800);
+  --art-ink: rgb(255 255 255 / 0.92);
+  --art-line: rgb(255 255 255 / 0.62);
+  --art-soft: rgb(255 255 255 / 0.34);
+  --art-faint: rgb(255 255 255 / 0.16);
+  --art-hairline: rgb(255 255 255 / 0.22);
+  --art-dot: rgb(255 255 255 / 0.11);
+  --art-wash: rgb(255 255 255 / 0.1);
+  --art-sheet: rgb(49 95 172 / 0.5);
+  --art-accent-mark: var(--art-accent);
+
+  --art-s0: rgb(255 255 255 / 0.08);
+  --art-s1: rgb(255 255 255 / 0.14);
+  --art-s2: rgb(255 255 255 / 0.22);
+  --art-s3: rgb(255 255 255 / 0.32);
+  --art-s4: rgb(255 255 255 / 0.46);
+  --art-snone: rgb(255 255 255 / 0.04);
+}
+
+/* --- The light tone --------------------------------------------------------
+   On paper: card covers and document thumbnails. Here the sequential ramp is
+   the real one, because a cover sits next to charts that use it and the two
+   must agree about what "more" looks like.
+   -------------------------------------------------------------------------- */
+
+.cd-art--light {
+  --art-ground: var(--navy-100);
+  --art-ink: var(--navy);
+  --art-line: var(--navy-600);
+  --art-soft: var(--navy-200);
+  --art-faint: rgb(49 95 172 / 0.22);
+  --art-hairline: rgb(13 59 153 / 0.22);
+  --art-dot: rgb(13 59 153 / 0.13);
+  --art-wash: rgb(36 86 206 / 0.14);
+  --art-sheet: var(--white);
+  --art-accent-mark: var(--art-accent-ink);
+
+  --art-s0: var(--step-0);
+  --art-s1: var(--step-1);
+  --art-s2: var(--step-2);
+  --art-s3: var(--step-3);
+  --art-s4: var(--step-4);
+  --art-snone: var(--step-none);
+}
+
+/* --- The marks ------------------------------------------------------------- */
+
+.cd-art__ground { fill: var(--art-ground); }
+.cd-art__dot { fill: var(--art-dot); }
+
+.cd-art__rule,
+.cd-art__grid,
+.cd-art__dim,
+.cd-art__link {
+  fill: none;
+  stroke: var(--art-hairline);
+  stroke-width: 1;
+}
+
+.cd-art__rule { stroke: var(--art-soft); stroke-width: 1.4; }
+
+.cd-art__accent-line {
+  fill: none;
+  stroke: var(--art-accent-mark);
+  stroke-width: 2.6;
+}
+
+.cd-art__accent-fill { fill: var(--art-accent-mark); }
+
+.cd-art__slab { fill: var(--art-soft); }
+
+/* Seats, people, nodes and bars all say the same thing — a countable unit,
+   either counted or not — so they share one pair of fills. */
+.cd-art__seat,
+.cd-art__person,
+.cd-art__node,
+.cd-art__bar,
+.cd-art__node-dot,
+.cd-art__seat-dot {
+  fill: var(--art-faint);
+}
+
+.cd-art__seat.is-on,
+.cd-art__seat-dot.is-on {
+  fill: var(--art-line);
+}
+
+.cd-art__person.is-on,
+.cd-art__node.is-on,
+.cd-art__bar.is-on,
+.cd-art__node-dot.is-on {
+  fill: var(--art-accent-mark);
+}
+
+/* --- Territory ------------------------------------------------------------- */
+
+.cd-art__dep,
+.cd-art__outline {
+  stroke: var(--art-hairline);
+  stroke-width: 1;
+  stroke-linejoin: round;
+  /* The map is drawn inside a 0.29 scale. Without this the hairline that
+     separates two departments would arrive a quarter of a pixel wide. */
+  vector-effect: non-scaling-stroke;
+}
+
+.cd-art__outline { fill: none; stroke: var(--art-line); stroke-width: 1.3; }
+
+.cd-art__dep--0 { fill: var(--art-s0); }
+.cd-art__dep--1 { fill: var(--art-s1); }
+.cd-art__dep--2 { fill: var(--art-s2); }
+.cd-art__dep--3 { fill: var(--art-s3); }
+.cd-art__dep--4 { fill: var(--art-s4); }
+
+.cd-art__pin { fill: var(--art-ink); }
+.cd-art__pin-halo { fill: var(--art-faint); }
+
+/* --- The matrix ------------------------------------------------------------ */
+
+.cd-art__cell--0 { fill: var(--art-s0); }
+.cd-art__cell--1 { fill: var(--art-s1); }
+.cd-art__cell--2 { fill: var(--art-s2); }
+.cd-art__cell--3 { fill: var(--art-s3); }
+.cd-art__cell--4 { fill: var(--art-s4); }
+.cd-art__cell--none { fill: var(--art-snone); }
+
+/* --- Signal ---------------------------------------------------------------- */
+
+.cd-art__arc {
+  fill: none;
+  stroke: var(--art-line);
+  stroke-width: 1.6;
+  opacity: calc(0.7 - var(--i, 0) * 0.14);
+}
+
+.cd-art__source { fill: var(--art-ink); }
+
+/* --- Sheets ---------------------------------------------------------------- */
+
+.cd-art__sheet {
+  fill: var(--art-sheet);
+  stroke: var(--art-hairline);
+  stroke-width: 1;
+}
+
+.cd-art__sheet--back { opacity: 0.4; }
+.cd-art__sheet--mid { opacity: 0.66; }
+
+.cd-art__hatch {
+  fill: none;
+  stroke: var(--art-soft);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+}
+
+/* --- The schematic --------------------------------------------------------- */
+
+.cd-art__wheel {
+  fill: none;
+  stroke: var(--art-line);
+  stroke-width: 1.7;
+  stroke-linecap: round;
+}
+
+.cd-art__wheel--accent { stroke: var(--art-accent-mark); }
+.cd-art__wheel-hub { fill: var(--art-faint); }
+
+.cd-art__construction {
+  fill: none;
+  stroke: var(--art-hairline);
+  stroke-width: 1;
+  stroke-dasharray: 3 6;
+}
+
+.cd-art__mark {
+  fill: none;
+  stroke: var(--art-accent-mark);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+
+/* --- The series ------------------------------------------------------------ */
+
+.cd-art__area { fill: var(--art-wash); }
+
+.cd-art__series {
+  fill: none;
+  stroke: var(--art-ink);
+  stroke-width: 2.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cd-art__projection {
+  fill: none;
+  stroke: var(--art-accent-mark);
+  stroke-width: 2.2;
+  stroke-dasharray: 6 6;
+  stroke-linecap: round;
+}
+
+.cd-art__point {
+  fill: var(--art-ink);
+  stroke: var(--art-ground);
+  stroke-width: 2.4;
+}
+
+/* --- The register ---------------------------------------------------------- */
+
+.cd-art__entry {
+  fill: var(--art-faint);
+}
+
+.cd-art__entry.is-on { fill: var(--art-soft); }
+.cd-art__entry-tag { fill: var(--art-accent-mark); }
+
+.cd-art__seal {
+  fill: none;
+  stroke: var(--art-accent-mark);
+  stroke-width: 2;
+}
+
+.cd-art__seal-inner {
+  fill: none;
+  stroke: var(--art-hairline);
+  stroke-width: 1;
+}
+
+/* =============================================================================
+   The gallery band
+
+   Five plates on the institutional navy, in a mosaic rather than a row: two of
+   them large enough to be read as pictures and three at the size of a caption.
+   It is the one place in the portal where an image outranks a number, and it
+   earns that by sitting between the six doors and the six figures — the reader
+   has just been told where to go and is about to be given the year in numbers.
+   ========================================================================== */
+
+.cd-gallery {
+  padding-block: var(--s-3xl);
+  background: var(--navy-900);
+  color: var(--white);
+}
+
+/* The head is the portal's, on a dark ground: only the three colours change. */
+.cd-gallery .cd-label { color: rgb(255 255 255 / 0.62); }
+.cd-gallery .cd-label__index { color: var(--art-accent); }
+.cd-gallery .cd-label::after { background: rgb(255 255 255 / 0.24); }
+.cd-gallery .cd-head__title { color: var(--white); }
+.cd-gallery .cd-head__aside p { color: rgb(255 255 255 / 0.72); }
+
+.cd-gallery__grid {
+  display: grid;
+  gap: var(--s-sm);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 44rem) {
+  .cd-gallery__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 68rem) {
+  .cd-gallery__grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+
+  /* Two wide plates over three narrow ones. The spans are declared on the
+     figure rather than on `:nth-child` so the order of the plates is a
+     decision the page makes, not one the stylesheet makes for it. */
+  .cd-plate--wide { grid-column: span 3; }
+  .cd-plate--third { grid-column: span 2; }
+}
+
+.cd-plate {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  border: 1px solid rgb(255 255 255 / 0.16);
+  border-radius: var(--r-sm);
+  background: var(--navy-800);
+  overflow: hidden;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.cd-plate:hover { border-color: rgb(255 255 255 / 0.4); }
+
+.cd-plate__art {
+  position: relative;
+  aspect-ratio: 16 / 9;
+}
+
+@media (min-width: 68rem) {
+  /* The wide plates are the picture; the narrow ones are nearer a thumbnail,
+     and a 16/9 crop at that width would leave them showing almost nothing. */
+  .cd-plate--wide .cd-plate__art { aspect-ratio: 16 / 10; }
+  .cd-plate--third .cd-plate__art { aspect-ratio: 4 / 3; }
+}
+
+.cd-plate__caption {
+  display: grid;
+  gap: var(--s-3xs);
+  padding: var(--s-sm) var(--s-md) var(--s-md);
+  border-top: 1px solid rgb(255 255 255 / 0.14);
+}
+
+.cd-plate__value {
+  font-size: var(--t-xl);
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--white);
+  font-variant-numeric: tabular-nums;
+}
+
+.cd-plate__value sup {
+  font-size: 0.55em;
+  font-weight: 500;
+  margin-left: 0.1em;
+  vertical-align: super;
+}
+
+.cd-plate__title {
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--art-accent);
+}
+
+.cd-plate__text {
+  font-size: var(--t-sm);
+  line-height: 1.5;
+  color: rgb(255 255 255 / 0.68);
+}
+
+.cd-gallery__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-sm);
+  margin-top: var(--s-md);
+  font-size: var(--t-xs);
+  color: rgb(255 255 255 / 0.6);
+}
+
+/* =============================================================================
+   Covers
+
+   A band of drawing at the head of a card. It is deliberately shallow: the
+   card is still ranked by its title, and a cover that competed with one would
+   have made the grid harder to scan rather than easier.
+   ========================================================================== */
+
+.cd-cover {
+  position: relative;
+  display: block;
+  aspect-ratio: 320 / 104;
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.cd-card--art {
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.cd-card--art .cd-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2xs);
+  flex: 1;
+  padding: var(--s-md);
+}
+
+/* The cover leans in a little when its card does. Two pixels of scale is the
+   whole gesture: any more and a page of twelve cards starts breathing. */
+a.cd-card--art .cd-art {
+  transition: transform var(--duration) var(--ease-out);
+}
+
+a.cd-card--art:hover .cd-art {
+  transform: scale(1.03);
+}
+
+/* --- Illustrated quick access ---------------------------------------------
+   The six doors keep their numbered-index construction — the index is how a
+   reader tells door four from door five — and gain a plate above it.
+   -------------------------------------------------------------------------- */
+
+.cd-access--art .cd-access__item {
+  display: block;
+  padding: 0;
+}
+
+.cd-access__cover {
+  display: block;
+  aspect-ratio: 320 / 96;
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.cd-access--art .cd-access__body {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0 var(--s-sm);
+  padding: var(--s-md);
+}
+
+.cd-access--art .cd-access__item .cd-art {
+  transition: transform var(--duration) var(--ease-out);
+}
+
+.cd-access--art .cd-access__item:hover .cd-art,
+.cd-access--art .cd-access__item:focus-visible .cd-art {
+  transform: scale(1.04);
+}
+
+/* --- Axis cards ------------------------------------------------------------
+   The five strategic axes, each with its emblem and its own progress. The
+   emblem is `aria-hidden`: it repeats the axis name, it does not add to it.
+   -------------------------------------------------------------------------- */
+
+.cd-axiscard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2xs);
+  padding: var(--s-md);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--navy);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+a.cd-axiscard:hover { border-color: var(--navy); }
+
+.cd-axiscard__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--s-sm);
+}
+
+.cd-art__emblem {
+  flex: none;
+  width: 3.25rem;
+  height: 3.25rem;
+  color: var(--navy);
+}
+
+.cd-art__emblem-dot {
+  fill: currentColor;
+  stroke: none;
+}
+
+.cd-art__emblem-accent { stroke: var(--art-accent-ink); }
+
+.cd-axiscard__kicker {
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: var(--navy);
+}
+
+.cd-axiscard__title {
+  font-family: var(--font-serif);
+  font-size: var(--t-lg);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--navy-900);
+}
+
+.cd-axiscard__text {
+  font-size: var(--t-sm);
+  color: var(--ink-muted);
+}
+
+.cd-axiscard__foot {
+  display: grid;
+  gap: var(--s-2xs);
+  margin-top: auto;
+  padding-top: var(--s-sm);
+}
+
+.cd-axiscard__numbers {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-2xs);
+  font-size: var(--t-xs);
+  color: var(--ink-muted);
+}
+
+.cd-axiscard__value {
+  font-weight: 600;
+  color: var(--navy);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- The lead article ------------------------------------------------------
+   One picture in the newsroom block, on the piece that leads it. Giving all
+   five a cover would have made the section a gallery, and the section is a
+   record.
+   -------------------------------------------------------------------------- */
+
+.cd-article__cover {
+  aspect-ratio: 320 / 116;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  margin-bottom: var(--s-xs);
+}
+
+@media (min-width: 56rem) {
+  .cd-news__lead .cd-article {
+    grid-column: 1 / -1;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    gap: 0 var(--s-lg);
+    align-items: center;
+  }
+
+  .cd-news__lead .cd-article__cover {
+    grid-row: span 3;
+    aspect-ratio: 4 / 3;
+    margin-bottom: 0;
+  }
+}
+
+/* --- The participation plate ----------------------------------------------- */
+
+.cd-sideplate {
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  margin-bottom: var(--s-sm);
+}
+
+/* -----------------------------------------------------------------------------
+   High contrast
+
+   The plates are the one thing here that cannot simply inherit the re-cut
+   tokens: the deep tone is built from alpha whites, and on the black ground
+   the high-contrast theme paints, six alphas of white is six greys. So the
+   deep tone is re-declared at full separation, and the textures that exist to
+   soften a picture are removed rather than darkened.
+   -------------------------------------------------------------------------- */
+
+[data-contrast="high"] .cd-art--deep {
+  --art-ground: #000000;
+  --art-ink: #ffffff;
+  --art-line: #ffffff;
+  --art-soft: rgb(255 255 255 / 0.75);
+  --art-faint: rgb(255 255 255 / 0.35);
+  --art-hairline: rgb(255 255 255 / 0.6);
+  --art-dot: rgb(255 255 255 / 0.3);
+  --art-wash: rgb(255 255 255 / 0.2);
+  --art-sheet: #11224a;
+
+  --art-s0: rgb(255 255 255 / 0.16);
+  --art-s1: rgb(255 255 255 / 0.3);
+  --art-s2: rgb(255 255 255 / 0.46);
+  --art-s3: rgb(255 255 255 / 0.66);
+  --art-s4: rgb(255 255 255 / 0.88);
+  --art-snone: rgb(255 255 255 / 0.06);
+}
+
+[data-contrast="high"] .cd-art--light {
+  --art-ground: #ffffff;
+  --art-dot: rgb(0 0 0 / 0.25);
+  --art-faint: rgb(0 41 122 / 0.35);
+  --art-hairline: #000000;
+  --art-sheet: #ffffff;
+}
+
+[data-contrast="high"] .cd-plate,
+[data-contrast="high"] .cd-cover,
+[data-contrast="high"] .cd-access__cover,
+[data-contrast="high"] .cd-article__cover,
+[data-contrast="high"] .cd-sideplate {
+  border-color: #ffffff;
+}
+
+[data-contrast="high"] .cd-cover,
+[data-contrast="high"] .cd-access__cover,
+[data-contrast="high"] .cd-article__cover,
+[data-contrast="high"] .cd-sideplate {
+  border-color: #000000;
+}
+
+/* A drawing is not an interface. Under forced colours the plates keep their
+   own fills rather than collapsing into two system tokens, which would turn
+   every one of them into a solid rectangle. */
+@media (forced-colors: active) {
+  .cd-art {
+    forced-color-adjust: none;
+  }
+}

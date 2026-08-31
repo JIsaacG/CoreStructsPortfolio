@@ -78,7 +78,7 @@ export function documentHead(ctx, meta) {
          invented. A screen full of approvals that look like real authorisations
          must never surface in a search result, so every page is noindex. -->
     <meta name="robots" content="noindex, nofollow" />
-    <meta name="theme-color" content="#04060f" />
+    <meta name="theme-color" content="#0d0e11" />
     <meta name="color-scheme" content="dark" />
 
     <meta property="og:type" content="website" />

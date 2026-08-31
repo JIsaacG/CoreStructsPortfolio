@@ -185,16 +185,24 @@ function intro() {
  */
 function rail() {
   const chips = processes
-    .map(
-      (process) =>
+    .map((process) => {
+      /* Three grades of chip, so a visitor can see what each one will do before
+         pressing it: the one that runs end to end, the two that open a worked
+         example, and the three that only name a process the engine would run.
+         A row of six identical chips where half of them do nothing much is the
+         opposite of intuitive. */
+      const kind = process.full ? "full" : process.mini ? "example" : "soon";
+
+      return (
         `<button class="gw-chip" type="button" data-wf-process="${escape(process.id)}"` +
-        `${process.full ? " data-full" : ""} aria-pressed="${process.full ? "true" : "false"}" ` +
-        `title="${escape(process.text)}">` +
+        ` data-kind="${kind}"${process.full ? " data-full" : ""}` +
+        ` aria-pressed="${process.full ? "true" : "false"}" title="${escape(process.text)}">` +
         icon(process.icon) +
         `<span class="gw-chip__name">${escape(process.title)}</span>` +
-        (process.mini ? `<span class="gw-chip__dot" aria-hidden="true"></span>` : "") +
-        `</button>`,
-    )
+        (kind === "example" ? `<span class="gw-chip__dot" aria-hidden="true"></span>` : "") +
+        `</button>`
+      );
+    })
     .join("");
 
   return `        <div class="gw-rail" id="proceso" role="group" aria-label="Procesos que corre el motor">
@@ -209,8 +217,11 @@ function rail() {
  *
  * The one component that never changes place across the four stages, because it
  * is the answer to the only question a visitor carries from stage to stage.
- * Painted at build time with nothing done yet — the route exists before the
- * request does, which is the point of a workflow engine.
+ * Painted at build time with every stop still pending — not one of them
+ * "current", because nothing has been sent yet and a lit first marker over the
+ * word "Sin enviar" is the interface contradicting itself. The route exists
+ * before the request does, which is the point of a workflow engine; being able
+ * to see it has not started is the point of drawing it this way.
  */
 function spine() {
   return `        <div class="gw-pane gw-lit gw-spine">
@@ -218,13 +229,39 @@ function spine() {
             <p class="gw-spine__code" data-wf-code>Solicitud ${escape(featured.code)}</p>
             <span data-wf-state><span class="fx-state fx-state--mute">${icon("open")}Sin enviar</span></span>
           </div>
-          <div data-wf-track-box>${track(trackNodes(featured, 0))}</div>
+          <div data-wf-track-box>${track(trackNodes(featured, -1))}</div>
         </div>`;
 }
 
+/* ------------------------------------------------------------ panel heads */
+
+/**
+ * The head every zone of the console wears.
+ *
+ * A number, a name, and one line saying what to do with it. The number is the
+ * whole reason it exists: three panels that each look equally important give a
+ * first-time visitor nothing to start from, and "1 · Complete la solicitud"
+ * answers the question before it is asked.
+ */
+const zoneHead = (step, title, hint, aside = "") =>
+  `<div class="gw-panel__head">` +
+  `<span class="gw-panel__lead">` +
+  `<span class="gw-step" aria-hidden="true">${step}</span>` +
+  `<span><span class="gw-panel__title">${escape(title)}</span>` +
+  `<span class="gw-panel__hint">${escape(hint)}</span></span>` +
+  `</span>` +
+  aside +
+  `</div>`;
+
 /* ================================================== 04 · the capture action */
 
-/** Read the attachment, propose the fields. Two presses, three visible beats. */
+/**
+ * Read the attachment, propose the fields. Two presses, three visible beats.
+ *
+ * It is an alternative to typing, not a prerequisite for it — the form arrives
+ * already complete — so it introduces itself as one rather than sitting at the
+ * top of the panel looking like step zero.
+ */
 function captureAssistant() {
   const fields = extraction.fields
     .map(
@@ -235,6 +272,7 @@ function captureAssistant() {
     .join("");
 
   return `            <div class="wf-capture" data-wf-capture data-when-scripted>
+              <p class="wf-capture__lead">Opcional: en vez de escribirlo, léalo del adjunto.</p>
               <div class="wf-file">
                 <span class="wf-file__mark" aria-hidden="true">PDF</span>
                 <span>
@@ -273,10 +311,16 @@ function captureAssistant() {
  * boxes between a visitor and the button. What is left is what routes: the
  * concept, the amount, the cost centre and the priority.
  *
- * The amount opens pre-filled and carries three presets, because the whole
- * demonstration turns on watching the route change when it changes, and making
- * someone type 240000 to see the third band is a toll on the best moment in the
- * page.
+ * Every field arrives filled in. That is a deliberate reversal: the concept
+ * used to be empty and required, so a visitor's first press of the primary
+ * button was an error message rather than the demonstration. A demo whose main
+ * action fails the first time you take it has taught you one thing, and it is
+ * not about workflow engines. The form is now correct on arrival and everything
+ * in it is still editable — the point is what changing it does.
+ *
+ * The amount carries three presets, because the whole demonstration turns on
+ * watching the route change when it changes, and making someone type 240000 to
+ * see the third band is a toll on the best moment in the page.
  */
 function requestForm() {
   const presets = [18000, featured.amount, 240000]
@@ -317,7 +361,7 @@ function requestForm() {
                   ${field({
                     id: "concepto",
                     label: "Concepto",
-                    value: "",
+                    value: featured.concept,
                     required: true,
                     wide: true,
                     placeholder: "Qué se solicita",
@@ -332,7 +376,9 @@ function requestForm() {
                     </div>
                     <input class="fx-input gw-amount__input" id="monto" name="monto" type="text"
                       inputmode="decimal" value="${featured.amount}" required data-wf-field />
-                    <div class="gw-presets" data-wf-presets>${presets}</div>
+                    <div class="gw-presets" data-wf-presets>
+                      <span class="gw-presets__label">Pruebe:</span>${presets}
+                    </div>
                     <p class="wf-form__error" id="monto-error">${icon("alert")}
                       <span data-wf-error-text>El monto estimado es requerido.</span></p>
                   </div>
@@ -354,7 +400,7 @@ function requestForm() {
               </fieldset>
 
               <div class="wf-form__foot">
-                <p class="fx-note">Nada se transmite: la solicitud se procesa en su navegador.</p>
+                <p class="fx-note">Nada se transmite: todo ocurre en su navegador.</p>
                 <button class="fx-btn fx-btn--solid" type="submit" data-wf-submit data-when-scripted>
                   Ejecutar automatización${icon("arrow")}
                 </button>
@@ -391,10 +437,7 @@ function runSequence() {
 
   return `          <div class="wf-run" data-wf-stage="run" hidden>
             <div class="wf-run__head">
-              <div class="gw-panel__head">
-                <p class="gw-panel__title">${icon("cog")}Automatización</p>
-                ${simTag("5 pasos")}
-              </div>
+              ${zoneHead(1, "Automatización", "Lo que el motor hace solo.", simTag("5 pasos"))}
               <div class="wf-progress"><span class="wf-progress__fill" data-wf-runbar></span></div>
             </div>
 
@@ -449,7 +492,11 @@ function runSequence() {
 function closingRun() {
   return `          <div class="gw-pane gw-lit gw-panel" data-wf-closing hidden>
             <div class="gw-panel__head">
-              <p class="gw-panel__title" data-wf-closing-title>Solicitud aprobada</p>
+              <span class="gw-panel__lead">
+                <span class="gw-step gw-step--done" aria-hidden="true">${icon("check")}</span>
+                <span><span class="gw-panel__title" data-wf-closing-title>Solicitud aprobada</span>
+                <span class="gw-panel__hint">Cierre automático, sin intervención.</span></span>
+              </span>
               ${simTag("Automático")}
             </div>
             <ul class="wf-closing">
@@ -493,7 +540,11 @@ function routePreview() {
 
   return `          <div class="gw-pane gw-lit gw-panel" data-wf-preview>
             <div class="gw-panel__head">
-              <p class="gw-panel__title">${icon("rule")}Ruta de autorización</p>
+              <span class="gw-panel__lead">
+                <span class="gw-step gw-step--live" aria-hidden="true">${icon("rule")}</span>
+                <span><span class="gw-panel__title">¿Quién debe autorizar?</span>
+                <span class="gw-panel__hint">Lo decide el monto. Se recalcula al escribir.</span></span>
+              </span>
               ${simTag("En vivo")}
             </div>
             <div class="gw-route">
@@ -504,6 +555,23 @@ function routePreview() {
               <p class="gw-route__rule" data-wf-route-rule>${escape(rule.text)}</p>
               <ul class="gw-route__list" data-wf-route-list>${stops}</ul>
             </div>
+          </div>`;
+}
+
+/* ==================================================== 08b · the empty step */
+
+/**
+ * Step two, before it exists.
+ *
+ * The decision panel is hidden until there is something to decide, which left
+ * the console showing a step 1 and a step 3 and no step 2 at all — a gap that
+ * reads as a missing piece rather than as a later one. This stands in its place
+ * and says when it will arrive, so the shape of the whole demonstration is
+ * legible in the first second.
+ */
+function waitingStep() {
+  return `          <div class="gw-pane gw-panel gw-waiting" data-wf-waiting>
+            ${zoneHead(2, "Resuelva", "Aparece en cuanto ejecute la automatización.")}
           </div>`;
 }
 
@@ -521,11 +589,14 @@ function decisionPanel() {
   const pendingStep = approvalsFor(featured.workflow, featured)[0];
   const pending = userFor(pendingStep.role);
 
-  return `          <div class="gw-pane gw-lit gw-panel" data-wf-approval hidden>
-            <div class="gw-panel__head">
-              <p class="gw-panel__title">${icon("user")}Le toca resolver</p>
-              ${flag("Turno actual")}
-            </div>
+  return `          <div class="gw-pane gw-lit gw-panel gw-zone" data-gw-zone="decide"
+            data-wf-approval hidden>
+            ${zoneHead(
+              2,
+              "Resuelva",
+              "Usted decide en nombre de esta persona.",
+              flag("Turno actual"),
+            )}
 
             <div class="gw-decide__who">
               <span class="wf-person__avatar" aria-hidden="true">${escape(pending.initials)}</span>
@@ -683,7 +754,8 @@ function detail() {
       .join("") +
     `</ol>`;
 
-  return `        <div class="gw-pane gw-lit gw-detail">
+  return `        <div class="gw-pane gw-lit gw-detail gw-zone" data-gw-zone="result">
+          ${zoneHead(3, "Lo que produjo", "Se llena solo, a medida que el flujo avanza.")}
           <div class="gw-tabs" role="tablist" aria-label="Resultado del expediente">
             ${tab("aprobaciones", "Aprobaciones", true)}
             ${tab("documentos", "Documento")}
@@ -763,7 +835,10 @@ function tourBar() {
  *
  * One section, four blocks, and every one of them something a visitor can act
  * on: the processes, the request, the route it produces, and the decisions that
- * close it. The fourteen sections this page used to have are down to this
+ * close it. Three of those blocks are numbered `gw-zone`s, and exactly one of
+ * them carries `is-active` at any moment — the build hands the visitor the
+ * first one already lit, and `main.js` moves the light along as the workflow
+ * advances. It is the cheapest possible answer to "what do I do now". The fourteen sections this page used to have are down to this
  * because everything removed was the product describing itself — a dashboard of
  * invented figures, a register of fifteen rows, a table of response targets, a
  * before-and-after column, a panel of impact percentages — and none of it could
@@ -778,12 +853,15 @@ ${rail()}
 ${spine()}
 
         <div class="gw-deck" id="seguimiento">
-          <div class="gw-pane gw-lit gw-panel gw-deck__main" id="solicitud">
+          <div class="gw-pane gw-lit gw-panel gw-deck__main gw-zone is-active"
+            data-gw-zone="form" id="solicitud">
             <div data-wf-stage="form">
-              <div class="gw-panel__head">
-                <p class="gw-panel__title">${icon("doc")}Nueva solicitud de compra</p>
-                ${flag(featured.code)}
-              </div>
+              ${zoneHead(
+                1,
+                "Complete la solicitud",
+                "Cambie el monto y mire cómo cambia la ruta de la derecha.",
+                flag(featured.code),
+              )}
 ${captureAssistant()}
 ${requestForm()}
             </div>
@@ -793,6 +871,8 @@ ${runSequence()}
 
           <aside class="gw-side" aria-label="Ruta, decisión y cierre">
 ${routePreview()}
+
+${waitingStep()}
 
 ${decisionPanel()}
 

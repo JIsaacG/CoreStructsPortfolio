@@ -59,8 +59,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--gw-cyan);
-  box-shadow: 0 0 10px var(--gw-cyan);
+  background: var(--gw-accent);
 }
 
 .gw-intro__title {
@@ -74,12 +73,12 @@
   max-width: 18ch;
 }
 
+/* The second half of the title recedes instead of lighting up: on an achromatic
+   page the way to make one phrase secondary is to spend less light on it. */
 .gw-intro__title em {
   font-style: normal;
-  background: linear-gradient(105deg, var(--gw-cyan), var(--gw-blue) 55%, var(--gw-violet));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  font-weight: 400;
+  color: var(--ink-muted);
 }
 
 .gw-intro__actions {
@@ -140,10 +139,10 @@
 }
 
 .gw-chip[aria-pressed="true"] {
-  color: #051029;
+  color: var(--gw-accent-ink);
   border-color: transparent;
-  background-image: linear-gradient(120deg, var(--gw-cyan), var(--gw-blue) 70%);
-  box-shadow: 0 6px 20px rgb(91 140 255 / 0.32);
+  background: var(--gw-accent);
+  box-shadow: 0 4px 16px rgb(0 0 0 / 0.4);
 }
 
 .gw-chip[aria-pressed="true"] .fx-icon {
@@ -156,8 +155,7 @@
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: var(--gw-violet);
-  box-shadow: 0 0 8px var(--gw-violet);
+  background: var(--ink-muted);
 }
 
 /* --- The spine ---------------------------------------------------------------
@@ -212,7 +210,7 @@
 }
 
 .gw-panel__title .fx-icon {
-  color: var(--gw-cyan);
+  color: var(--ink-muted);
 }
 
 .gw-side {
@@ -273,8 +271,8 @@
 .gw-preset:hover,
 .gw-preset[aria-pressed="true"] {
   color: var(--ink);
-  border-color: rgb(147 184 255 / 0.6);
-  background: rgb(91 140 255 / 0.14);
+  border-color: var(--gw-accent-soft);
+  background: rgb(255 255 255 / 0.1);
 }
 
 /* --- The live route ---------------------------------------------------------- */
@@ -296,11 +294,7 @@
   font-weight: 600;
   line-height: 1;
   letter-spacing: -0.03em;
-  background: linear-gradient(120deg, var(--gw-cyan), var(--gw-blue) 70%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  transition: opacity var(--duration-fast) var(--ease-out);
+  color: var(--navy-900);
 }
 
 .gw-route__word {
@@ -310,9 +304,9 @@
 
 .gw-route__rule {
   padding: 0.6rem 0.75rem;
-  border-left: 2px solid rgb(147 184 255 / 0.55);
+  border-left: 2px solid var(--gw-accent-soft);
   border-radius: 0 var(--r-xs) var(--r-xs) 0;
-  background: rgb(91 140 255 / 0.09);
+  background: rgb(255 255 255 / 0.05);
   font-size: var(--t-xs);
   line-height: 1.5;
   color: var(--ink-soft);
@@ -349,8 +343,8 @@
   width: 1.9rem;
   height: 1.9rem;
   border-radius: 50%;
-  border: 1px solid rgb(147 184 255 / 0.4);
-  background: rgb(91 140 255 / 0.18);
+  border: 1px solid rgb(255 255 255 / 0.18);
+  background: rgb(255 255 255 / 0.08);
   font-size: var(--t-2xs);
   font-weight: 700;
   letter-spacing: 0.02em;
@@ -497,8 +491,8 @@
 
 .gw-tab[aria-selected="true"],
 .wf-tab[aria-selected="true"] {
-  color: #051029;
-  background: linear-gradient(120deg, var(--gw-cyan), var(--gw-blue) 75%);
+  color: var(--gw-accent-ink);
+  background: var(--gw-accent);
 }
 
 /* The underline the light stylesheet drew under the strip; the pill carries the
@@ -702,17 +696,17 @@
 /* The current stop is the one thing on the spine that should catch an eye
    crossing the page, so it is the only marker that is allowed to glow. */
 .wf-track__node[data-state="current"] .wf-track__dot {
-  border-color: var(--gw-cyan);
-  color: var(--gw-cyan);
-  box-shadow: 0 0 0 4px rgb(79 227 216 / 0.12), 0 0 18px rgb(79 227 216 / 0.35);
+  border-color: var(--gw-accent);
+  color: var(--gw-accent);
+  box-shadow: 0 0 0 4px rgb(226 230 236 / 0.12);
 }
 
 .wf-track__node[data-state="current"] .wf-track__dot::before {
-  background: var(--gw-cyan);
+  background: var(--gw-accent);
 }
 
 .wf-track__node[data-state="done"]:not(:last-child)::after {
-  background: rgb(99 230 168 / 0.55);
+  background: rgb(127 211 162 / 0.55);
 }
 
 /* --- The capture strip -------------------------------------------------------- */
@@ -749,9 +743,9 @@
 }
 
 .wf-file__mark {
-  border-color: rgb(147 184 255 / 0.35);
-  background: rgb(91 140 255 / 0.16);
-  color: var(--navy);
+  border-color: rgb(255 255 255 / 0.16);
+  background: rgb(255 255 255 / 0.07);
+  color: var(--ink-soft);
 }
 
 /* --- The run sequence --------------------------------------------------------- */
@@ -769,7 +763,7 @@
 }
 
 .wf-progress__fill {
-  background: linear-gradient(90deg, var(--gw-cyan), var(--gw-blue));
+  background: linear-gradient(90deg, rgb(226 230 236 / 0.45), var(--gw-accent));
 }
 
 .wf-step__mark {
@@ -778,18 +772,18 @@
 }
 
 .wf-step[data-state="running"] .wf-step__mark {
-  border-color: var(--gw-cyan);
-  color: var(--gw-cyan);
-  box-shadow: 0 0 16px rgb(79 227 216 / 0.32);
+  border-color: var(--gw-accent);
+  color: var(--gw-accent);
+  box-shadow: 0 0 0 4px rgb(226 230 236 / 0.1);
 }
 
 .wf-step[data-state="running"] .wf-step__mark::after {
-  border-color: var(--gw-cyan);
+  border-color: var(--gw-accent);
 }
 
 .wf-rulecard {
   border-color: var(--gw-edge);
-  background: rgb(91 140 255 / 0.08);
+  background: rgb(255 255 255 / 0.045);
 }
 
 /* --- The closing run -----------------------------------------------------------
@@ -829,8 +823,8 @@
 }
 
 .wf-person__avatar {
-  border: 1px solid rgb(147 184 255 / 0.4);
-  background: rgb(91 140 255 / 0.18);
+  border: 1px solid rgb(255 255 255 / 0.18);
+  background: rgb(255 255 255 / 0.08);
   color: var(--ink);
 }
 
@@ -853,4 +847,201 @@
 .wf-chain__step {
   border-color: var(--gw-edge);
   background: rgb(255 255 255 / 0.045);
+}
+
+/* =============================================================================
+   Following the console
+
+   Three things a first-time visitor needs, none of which is more prose: a
+   number on each zone so the order is visible, a light on the zone that is
+   currently theirs, and a chip row where the six processes do not all look
+   equally clickable.
+   ========================================================================== */
+
+/* --- The numbered heads ------------------------------------------------------ */
+
+.gw-panel__lead {
+  display: flex;
+  align-items: start;
+  gap: 0.7rem;
+  min-width: 0;
+}
+
+.gw-step {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  margin-top: 0.1rem;
+  border: 1px solid var(--gw-edge);
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.05);
+  color: var(--ink-muted);
+  font-size: var(--t-xs);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+/* The two heads that are consequences rather than steps carry a glyph instead
+   of a number: numbering something a visitor cannot do would be a lie about
+   the order. */
+.gw-step--live,
+.gw-step--done {
+  border-style: dashed;
+}
+
+.gw-step--done {
+  border-style: solid;
+  border-color: rgb(127 211 162 / 0.5);
+  color: var(--ok);
+}
+
+.gw-panel__hint {
+  display: block;
+  margin-top: 0.1rem;
+  font-size: var(--t-xs);
+  line-height: 1.45;
+  color: var(--ink-muted);
+  text-wrap: pretty;
+}
+
+/* --- The lit zone -------------------------------------------------------------
+   Not a colour and not a border that moves the layout — a step marker that
+   fills in, a slightly brighter pane, and a soft ring. Everything else drops to
+   two thirds, which is enough to recede and not enough to look disabled.
+   -------------------------------------------------------------------------- */
+
+.gw-zone {
+  transition:
+    opacity var(--duration) var(--ease-out),
+    border-color var(--duration) var(--ease-out),
+    box-shadow var(--duration) var(--ease-out);
+}
+
+/* Enough to recede, not enough to stop being readable. Every value in this
+   file that dims something was set by measuring the rendered pixels, not by
+   eye: a receded panel is still a panel someone is allowed to read. */
+html.js .gw-zone:not(.is-active) {
+  opacity: 0.76;
+}
+
+html.js .gw-zone.is-active {
+  opacity: 1;
+  border-color: rgb(255 255 255 / 0.2);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.12),
+    0 0 0 1px rgb(226 230 236 / 0.06),
+    0 18px 44px rgb(0 0 0 / 0.35);
+}
+
+html.js .gw-zone.is-active > .gw-panel__head .gw-step,
+html.js .gw-zone.is-active [data-wf-stage]:not([hidden]) .gw-panel__head .gw-step {
+  background: var(--gw-accent);
+  border-color: transparent;
+  color: var(--gw-accent-ink);
+}
+
+/* Hovering or focusing inside a receded zone brings it back: the light is a
+   suggestion about what to do next, never a lock on what may be touched. */
+html.js .gw-zone:not(.is-active):hover,
+html.js .gw-zone:not(.is-active):focus-within {
+  opacity: 1;
+}
+
+/* --- The graded chips ---------------------------------------------------------
+   `full` runs end to end, `example` opens a worked case, `soon` names a process
+   the same engine would run. Three weights, so the difference is visible before
+   the press rather than explained after it.
+   -------------------------------------------------------------------------- */
+
+.gw-chip[data-kind="soon"] {
+  opacity: 0.76;
+  border-style: dashed;
+}
+
+.gw-chip[data-kind="soon"]:hover {
+  opacity: 1;
+}
+
+.gw-chip__dot {
+  background: var(--ink-muted);
+}
+
+/* --- The presets get a label --------------------------------------------------
+   Three amounts in a row read as filters until something says what pressing one
+   does. One word is cheaper than a tooltip nobody hovers.
+   -------------------------------------------------------------------------- */
+
+.gw-presets {
+  align-items: center;
+}
+
+.gw-presets__label {
+  font-size: var(--t-xs);
+  color: var(--ink-muted);
+}
+
+/* --- The assistant introduces itself ------------------------------------------ */
+
+.wf-capture__lead {
+  margin-bottom: 0.6rem;
+  font-size: var(--t-xs);
+  color: var(--ink-soft);
+}
+
+/* --- The route panel reacts ---------------------------------------------------
+   When the amount crosses a threshold the circuit changes underneath, and a
+   number that silently becomes a different number is a change nobody notices.
+   One brief lift ties the effect to the cause. Motion-sensitive visitors get
+   the new number without the flash, which is the part that carries the meaning.
+   -------------------------------------------------------------------------- */
+
+[data-wf-preview][data-changed] {
+  animation: gw-attend 900ms var(--ease-out);
+}
+
+@keyframes gw-attend {
+  0%,
+  100% { box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.09); }
+  22% {
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.2),
+      0 0 0 3px rgb(226 230 236 / 0.14);
+  }
+}
+
+/* --- Step two, before it exists ------------------------------------------------
+   Shown only while the decision panel has nothing in it. Without JavaScript it
+   simply stays, which is honest: nothing on that page is ever going to be
+   resolvable.
+   -------------------------------------------------------------------------- */
+
+.gw-waiting {
+  border-style: dashed;
+  opacity: 0.86;
+}
+
+.gw-waiting .gw-panel__head {
+  margin-bottom: 0;
+}
+
+html.js body[data-wf-stage="decide"] .gw-waiting,
+html.js body[data-wf-stage="result"] .gw-waiting {
+  display: none;
+}
+
+/* --- The live-route marker ----------------------------------------------------- */
+
+.gw-step--live {
+  color: var(--ink-soft);
+}
+
+.gw-step--live .fx-icon {
+  width: 14px;
+  height: 14px;
 }
