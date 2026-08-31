@@ -1,0 +1,470 @@
+/* =============================================================================
+   Flujo — Glasswing
+
+   The demo's second skin, and the one it now wears. Everything below this
+   comment re-grounds the module in the dark: a deep field with three slow
+   aurora bodies behind it, and every surface above that field made of glass —
+   translucent, blurred, edged with one hairline of light along the top the way
+   a glasswing's wing is edged where the transparency ends.
+
+   It is loaded last on purpose. The light stylesheet underneath it still owns
+   every layout decision — the grids, the rhythm, the component structure — and
+   this file changes only what colour and material those decisions are made of.
+   That split is what makes the retheme reviewable: nothing here moves anything.
+
+   Two things deliberately stay opaque. The document the workflow generates is
+   paper, because a generated PDF that glows is a PDF nobody believes; and the
+   status colours keep their four reserved meanings, lifted to the luminance a
+   dark ground needs rather than reassigned.
+   ========================================================================== */
+
+/* --- The palette -------------------------------------------------------------
+   Tokens are overridden rather than renamed, so the components underneath keep
+   working untouched. The one that changes meaning is `--navy-900`: it was the
+   deepest ground and it is now the brightest ink, because on this field the
+   thing a title needs is light. The ten rules that used it as a background are
+   re-pointed by hand further down.
+   -------------------------------------------------------------------------- */
+
+:root {
+  color-scheme: dark;
+
+  /* The field itself. */
+  --gw-void: #04060f;
+  --gw-deep: #080d20;
+
+  /* Iridescence. Three hues, and no fourth: the wing edge of a glasswing runs
+     cyan → blue → violet, and the whole interface accents from that ramp. */
+  --gw-cyan: #4fe3d8;
+  --gw-blue: #5b8cff;
+  --gw-violet: #a07cff;
+
+  /* Glass. Three densities: the page's panels, the controls inside them, and
+     the one raised layer (bar, dialog, toast) that sits above everything. */
+  --gw-glass: rgb(255 255 255 / 0.045);
+  --gw-glass-2: rgb(255 255 255 / 0.075);
+  --gw-glass-3: rgb(255 255 255 / 0.11);
+  --gw-edge: rgb(255 255 255 / 0.11);
+  --gw-edge-lit: rgb(255 255 255 / 0.30);
+  --gw-blur: saturate(165%) blur(22px);
+
+  /* --- Re-pointed tokens ------------------------------------------------- */
+  --white: #ffffff;
+  --page: var(--gw-void);
+  --surface: var(--gw-glass);
+  --surface-sunken: rgb(255 255 255 / 0.025);
+  --border: var(--gw-edge);
+  --border-strong: rgb(255 255 255 / 0.19);
+
+  --ink: #e9eeff;
+  --ink-soft: rgb(226 233 255 / 0.82);
+  --ink-muted: rgb(198 210 240 / 0.66);  /* 5.6:1 on the field */
+
+  --navy-900: #f4f7ff;   /* was the ground; is now the title ink */
+  --navy-800: #b9d0ff;
+  --navy: #93b8ff;       /* links and secondary marks */
+  --navy-600: rgb(255 255 255 / 0.24);
+  --navy-200: rgb(147 184 255 / 0.34);
+  --navy-100: rgb(122 162 255 / 0.13);
+
+  --ok: #63e6a8;
+  --info: #93b8ff;
+  --warn: #ffc978;
+  --bad: #ff9187;
+  --ok-bg: rgb(99 230 168 / 0.12);
+  --info-bg: rgb(147 184 255 / 0.12);
+  --warn-bg: rgb(255 201 120 / 0.12);
+  --bad-bg: rgb(255 145 135 / 0.12);
+
+  /* Glass is a soft material and reads wrong with a 2px corner. */
+  --r-xs: 8px;
+  --r-sm: 12px;
+  --r-md: 16px;
+  --r-lg: 22px;
+
+  --shadow-menu: 0 24px 60px rgb(0 0 0 / 0.55), 0 2px 10px rgb(0 0 0 / 0.35);
+  --shadow-panel: 0 30px 70px rgb(0 0 0 / 0.42);
+
+  --layer-field: -1;
+}
+
+/* --- The field ---------------------------------------------------------------
+   Fixed behind everything, and the only place in the module where a colour is
+   allowed to be large and soft. Three orbs drift on long, offset cycles so the
+   ground is never quite the same twice, and a hairline grid over them gives the
+   glass something to refract — a blurred panel over a flat colour just looks
+   grey.
+   -------------------------------------------------------------------------- */
+
+body {
+  background: var(--gw-void);
+  color: var(--ink);
+}
+
+.gw-field {
+  position: fixed;
+  inset: 0;
+  z-index: var(--layer-field);
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 80% at 50% -10%, rgb(20 34 84 / 0.85), transparent 62%),
+    linear-gradient(180deg, var(--gw-deep), var(--gw-void) 55%);
+}
+
+.gw-field__orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.5;
+  will-change: transform;
+}
+
+.gw-field__orb--a {
+  top: -18vh;
+  left: -8vw;
+  width: 62vw;
+  height: 62vw;
+  background: radial-gradient(circle, rgb(79 227 216 / 0.42), transparent 68%);
+  animation: gw-drift-a 34s var(--ease-out) infinite alternate;
+}
+
+.gw-field__orb--b {
+  top: 6vh;
+  right: -14vw;
+  width: 58vw;
+  height: 58vw;
+  background: radial-gradient(circle, rgb(91 140 255 / 0.5), transparent 68%);
+  animation: gw-drift-b 41s var(--ease-out) infinite alternate;
+}
+
+.gw-field__orb--c {
+  bottom: -26vh;
+  left: 24vw;
+  width: 66vw;
+  height: 66vw;
+  background: radial-gradient(circle, rgb(160 124 255 / 0.38), transparent 68%);
+  animation: gw-drift-c 47s var(--ease-out) infinite alternate;
+}
+
+@keyframes gw-drift-a {
+  to { transform: translate3d(9vw, 7vh, 0) scale(1.12); }
+}
+@keyframes gw-drift-b {
+  to { transform: translate3d(-11vw, 10vh, 0) scale(1.08); }
+}
+@keyframes gw-drift-c {
+  to { transform: translate3d(7vw, -9vh, 0) scale(1.14); }
+}
+
+/* The grid the glass refracts. Masked to a soft vignette so it never reads as
+   a wireframe at the edges of the viewport. */
+.gw-field__grid {
+  position: absolute;
+  inset: -1px;
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(120% 90% at 50% 20%, #000 20%, transparent 78%);
+}
+
+/* --- Glass, as a material ----------------------------------------------------
+   One declaration block, applied by every surface that is meant to be glass.
+   The second background layer is the wing edge: a one-pixel gradient along the
+   top that catches the light, which is the whole difference between "a panel
+   with some transparency" and "a pane of glass".
+   -------------------------------------------------------------------------- */
+
+.gw-pane,
+.wf-panel,
+.fx-toolbar,
+.fx-tablewrap,
+.fx-figure,
+.wf-capture,
+.wf-approval,
+.wf-rule,
+.wf-escalation,
+.wf-mail,
+.fx-note--boxed {
+  position: relative;
+  background: var(--gw-glass);
+  border: 1px solid var(--gw-edge);
+  border-radius: var(--r-md);
+  backdrop-filter: var(--gw-blur);
+  -webkit-backdrop-filter: var(--gw-blur);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.09);
+}
+
+/* The lit edge. A pseudo-element rather than a border so it can fade out along
+   its own length instead of ringing the whole box in white. */
+.gw-lit::before {
+  content: "";
+  position: absolute;
+  inset-inline: 12%;
+  top: -1px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gw-edge-lit), transparent);
+  pointer-events: none;
+}
+
+/* --- The ten grounds that were navy-900 --------------------------------------
+   Each one is now either glass or nothing at all. The hero and the closing call
+   are gone from the module page entirely; the rules stay for the fifteen
+   request files, which still open with one.
+   -------------------------------------------------------------------------- */
+
+.fx-header,
+.fx-hero,
+.fx-footer,
+.fx-cta,
+.fx-section--dark {
+  background: transparent;
+  color: var(--ink);
+}
+
+.fx-header {
+  border-bottom: 1px solid var(--gw-edge);
+  background: rgb(6 9 22 / 0.55);
+  backdrop-filter: var(--gw-blur);
+  -webkit-backdrop-filter: var(--gw-blur);
+}
+
+.fx-hero {
+  border-bottom: 1px solid var(--gw-edge);
+}
+
+.fx-footer {
+  border-top: 1px solid var(--gw-edge);
+  color: var(--ink-muted);
+}
+
+.fx-skip,
+.fx-toast {
+  background: rgb(10 14 32 / 0.94);
+  border: 1px solid var(--gw-edge);
+  backdrop-filter: var(--gw-blur);
+  -webkit-backdrop-filter: var(--gw-blur);
+  color: var(--ink);
+}
+
+.wf-impact__item {
+  background: var(--gw-glass);
+  border: 1px solid var(--gw-edge);
+  border-radius: var(--r-md);
+}
+
+/* The credit badge, which is the one element on the page that is not part of
+   the fiction and so is the one element allowed to look like a sticker. */
+.fx-badge {
+  border-color: var(--gw-edge);
+  background: rgb(9 13 30 / 0.82);
+  backdrop-filter: var(--gw-blur);
+  -webkit-backdrop-filter: var(--gw-blur);
+  color: var(--ink-muted);
+}
+
+.fx-badge:hover {
+  border-color: rgb(255 255 255 / 0.3);
+}
+
+.fx-badge__tag {
+  color: var(--gw-cyan);
+}
+
+.wf-guide {
+  background: rgb(10 14 32 / 0.88);
+  border-color: var(--gw-edge);
+  backdrop-filter: var(--gw-blur);
+  -webkit-backdrop-filter: var(--gw-blur);
+}
+
+/* --- Controls ----------------------------------------------------------------
+   The primary action is the only saturated thing on the page, and it is the
+   wing ramp: cyan into blue, with ink dark enough to read on it. Everything
+   else is a glass chip that lights up on hover.
+   -------------------------------------------------------------------------- */
+
+.fx-btn {
+  border-color: var(--gw-edge);
+  border-radius: var(--r-sm);
+  background: var(--gw-glass-2);
+  color: var(--ink);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.fx-btn:hover {
+  background: var(--gw-glass-3);
+  border-color: rgb(255 255 255 / 0.26);
+}
+
+.fx-btn--solid,
+.fx-btn--solid:hover {
+  border-color: transparent;
+  background-image: linear-gradient(120deg, var(--gw-cyan), var(--gw-blue) 62%, var(--gw-violet));
+  color: #051029;
+  font-weight: 700;
+}
+
+.fx-btn--solid {
+  box-shadow: 0 6px 22px rgb(91 140 255 / 0.34);
+}
+
+.fx-btn--solid:hover {
+  box-shadow: 0 10px 30px rgb(91 140 255 / 0.46);
+  transform: translateY(-1px);
+}
+
+.fx-btn--ghost,
+.fx-btn--onDark {
+  border-color: var(--gw-edge);
+  color: var(--ink);
+  background: transparent;
+}
+
+.fx-btn--ghost:hover,
+.fx-btn--onDark:hover {
+  color: var(--ink);
+  background: var(--gw-glass-2);
+  border-color: rgb(255 255 255 / 0.28);
+}
+
+.fx-btn[disabled] {
+  opacity: 0.42;
+}
+
+/* --- Fields ------------------------------------------------------------------ */
+
+.fx-input,
+.fx-select select {
+  border-color: var(--gw-edge);
+  border-radius: var(--r-sm);
+  background: rgb(255 255 255 / 0.05);
+  color: var(--ink);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    background var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.fx-input:hover,
+.fx-select select:hover {
+  border-color: rgb(255 255 255 / 0.24);
+}
+
+.fx-input:focus,
+.fx-input:focus-visible,
+.fx-select select:focus-visible {
+  border-color: rgb(91 140 255 / 0.75);
+  outline: none;
+  background: rgb(255 255 255 / 0.08);
+  box-shadow: 0 0 0 3px rgb(91 140 255 / 0.22);
+}
+
+.fx-select::after {
+  border-color: var(--ink-muted);
+}
+
+:focus-visible {
+  outline-color: var(--gw-cyan);
+}
+
+/* --- Small type -------------------------------------------------------------- */
+
+.fx-label::after {
+  background: var(--gw-edge);
+}
+
+.fx-label__index,
+.fx-demo,
+.fx-demo--onDark {
+  color: var(--ink-muted);
+}
+
+.fx-demo {
+  border-color: var(--gw-edge);
+  background: var(--gw-glass);
+}
+
+.fx-demo::before {
+  background: var(--gw-cyan);
+  box-shadow: 0 0 8px var(--gw-cyan);
+}
+
+.fx-link {
+  color: var(--navy);
+  border-bottom-color: var(--navy-200);
+}
+
+/* --- Tables ------------------------------------------------------------------ */
+
+.fx-table thead th {
+  background: rgb(255 255 255 / 0.04);
+  border-bottom-color: var(--gw-edge);
+  color: var(--ink-muted);
+}
+
+.fx-table tbody tr + tr td {
+  border-top-color: rgb(255 255 255 / 0.07);
+}
+
+.fx-table tbody tr:hover td {
+  background: rgb(255 255 255 / 0.05);
+}
+
+.fx-table caption {
+  border-bottom-color: var(--gw-edge);
+}
+
+/* --- Paper -------------------------------------------------------------------
+   The one thing on the page that is not glass. The workflow's output is a
+   document, and a document is white — so `.wf-doc` keeps the light palette in
+   a local scope, floating on the field as a sheet rather than a pane.
+   -------------------------------------------------------------------------- */
+
+.wf-doc {
+  --surface: #ffffff;
+  --surface-sunken: #eff3f9;
+  --border: #dce3ee;
+  --border-strong: #bcc7d8;
+  --ink: #172033;
+  --ink-soft: #3b475c;
+  --ink-muted: #5d6878;
+  --navy-900: #071e4a;
+  --navy: #0d3b99;
+  --navy-100: #eaf0fa;
+  --navy-200: #c3d4ee;
+  --ok: #0f6b3f;
+  --ok-bg: #e8f3ec;
+  --r-xs: 3px;
+
+  color: var(--ink);
+  background: #ffffff;
+  border: 1px solid rgb(255 255 255 / 0.5);
+  border-radius: var(--r-sm);
+  box-shadow: var(--shadow-panel);
+  overflow: hidden;
+}
+
+.wf-doc__band {
+  background: #071e4a;
+  color: #ffffff;
+}
+
+/* --- Motion ------------------------------------------------------------------
+   The field is ambience, not information, so it is the first thing to stop.
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .gw-field__orb {
+    animation: none !important;
+  }
+}

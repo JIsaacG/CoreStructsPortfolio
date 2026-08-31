@@ -53,12 +53,12 @@ export function createTour({ engine, form, capture, toast, clock }) {
       await clock.sleep(300);
     }),
 
-    step("Formulario", "Aplicamos la información extraída: proveedor, concepto y monto.", async () => {
+    step("Formulario", "Aplicamos lo extraído. El monto reescribe la ruta de autorización al instante.", async () => {
       capture.use();
       await clock.sleep(700);
     }),
 
-    step("Automatización", "Enviamos la solicitud. El motor valida, aplica la regla de monto y asigna.", async () => {
+    step("Automatización", "Ejecutamos. El motor valida, aplica la regla de monto y asigna responsables.", async () => {
       await engine.run(form.read());
       await clock.sleep(200);
     }),

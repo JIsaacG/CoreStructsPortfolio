@@ -153,6 +153,12 @@ export function initForm(form, { onSubmit }) {
       if (!control) continue;
       control.value = value;
       mark(control, problem(control));
+      /* Setting `.value` fires nothing. The route panel beside the amount is
+         listening for `input`, so a field written by the assistant has to
+         announce itself the way a field written by a person does — otherwise
+         the assistant fills in 58,500 and the circuit beside it goes on
+         describing whatever was there before. */
+      control.dispatchEvent(new Event("input", { bubbles: true }));
     }
   };
 

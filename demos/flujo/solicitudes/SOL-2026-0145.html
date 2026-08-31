@@ -12,8 +12,8 @@
          invented. A screen full of approvals that look like real authorisations
          must never surface in a search result, so every page is noindex. -->
     <meta name="robots" content="noindex, nofollow" />
-    <meta name="theme-color" content="#071e4a" />
-    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#04060f" />
+    <meta name="color-scheme" content="dark" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Flujo · Gestión administrativa" />
@@ -59,7 +59,7 @@
       }
     </script>
 
-    <!-- Runs before first paint. The workflow has stages that only exist once
+    <!-- Runs before first paint. The console has stages that only exist once
          the engine can drive them — a document that has not been generated yet,
          a reset control with nothing to reset. Marking the document scripted
          here means those are hidden from the start instead of appearing and
@@ -73,6 +73,13 @@
   <body>
     <a class="fx-skip" href="#contenido">Saltar al contenido</a>
 
+    <div class="gw-field" aria-hidden="true">
+      <span class="gw-field__orb gw-field__orb--a"></span>
+      <span class="gw-field__orb gw-field__orb--b"></span>
+      <span class="gw-field__orb gw-field__orb--c"></span>
+      <span class="gw-field__grid"></span>
+    </div>
+
     <svg aria-hidden="true" focusable="false" width="0" height="0" style="position:absolute">
       <defs><linearGradient id="cs-face-top" gradientUnits="userSpaceOnUse" x1="33.3" y1="8.9" x2="353.6" y2="94.7"><stop offset="0%" stop-color="#140538"/><stop offset="16.7%" stop-color="#191754"/><stop offset="33.3%" stop-color="#223e81"/><stop offset="50%" stop-color="#2c6fb2"/><stop offset="66.7%" stop-color="#359dda"/><stop offset="83.3%" stop-color="#3bbaf1"/><stop offset="100%" stop-color="#3eccfb"/></linearGradient></defs>
     </svg>
@@ -83,21 +90,15 @@
       <span class="fx-badge__label">Módulo demostrativo de CoreStruct</span>
     </a>
 
-    <header class="fx-header fx-dark">
-      <div class="fx-shell fx-header__inner">
-<a class="fx-logo" href="../index.html" aria-label="Flujo, inicio"><svg class="fx-logo__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="0.75" y="0.75" width="30.5" height="30.5" rx="3" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.4"/><rect x="7" y="8" width="12" height="3" rx="1.5" fill="currentColor"/><rect x="10" y="14.5" width="12" height="3" rx="1.5" fill="currentColor" opacity="0.75"/><rect x="13" y="21" width="12" height="3" rx="1.5" fill="currentColor" opacity="0.5"/></svg><span class="fx-logo__type"><span class="fx-logo__name">Flujo</span><span class="fx-logo__sub">Gestión administrativa</span></span></a>
-        <nav class="fx-nav" aria-label="Secciones de la demostración"><a class="fx-nav__link" href="../index.html#proceso">El proceso</a><a class="fx-nav__link" href="../index.html#panel">Panel</a><a class="fx-nav__link" href="../index.html#solicitudes">Solicitudes</a><a class="fx-nav__link" href="../index.html#reglas">Reglas</a><a class="fx-nav__link" href="../index.html#motor">Procesos</a></nav>
-        <div class="fx-header__end">
-          <span class="wf-flag wf-flag--onDark">Módulo demostrativo</span>
-          <button class="fx-btn fx-btn--onDark fx-btn--small" type="button" data-wf-reset hidden>
-            Reiniciar demo
-          </button>
-        </div>
+    <header class="fx-header">
+      <div class="gw-shell fx-header__inner">
+<a class="fx-logo" href="../index.html" aria-label="Flujo, inicio"><svg class="fx-logo__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="0.75" y="0.75" width="30.5" height="30.5" rx="6" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.4"/><rect x="7" y="8" width="12" height="3" rx="1.5" fill="currentColor"/><rect x="10" y="14.5" width="12" height="3" rx="1.5" fill="currentColor" opacity="0.75"/><rect x="13" y="21" width="12" height="3" rx="1.5" fill="currentColor" opacity="0.5"/></svg><span class="fx-logo__type"><span class="fx-logo__name">Flujo</span><span class="fx-logo__sub">Gestión administrativa</span></span></a>
+        <div class="fx-header__end"><button class="fx-btn fx-btn--ghost fx-btn--small" type="button" data-wf-palette-open><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.2" cy="7.2" r="4.4"/><path d="m10.6 10.6 3 3"/></svg><span class="gw-bar__wide">Buscar expediente</span></button><a class="fx-btn fx-btn--ghost fx-btn--small" href="../index.html">Ir a la consola</a></div>
       </div>
     </header>
 
     <main id="contenido">
-<section class="fx-hero fx-dark"><div class="fx-shell fx-hero__inner"><nav class="fx-hero__crumbs" aria-label="Ruta"><ol class="fx-crumbs"><li><a href="../../../index.html#proyectos">CoreStruct</a></li><li><a href="../index.html">Gestión administrativa</a></li><li aria-current="page">SOL-2026-0145</li></ol></nav><div><p class="fx-label"><span>Expediente · Solicitud de vacaciones</span></p><h1 class="fx-hero__title">SOL-2026-0145</h1></div><div><p class="fx-hero__lead">Vacaciones del 12 al 23 de octubre. Solicitado por Daniela Cruz, Comunicación.</p><p class="fx-hero__fine">Los nombres, métricas, personas y procesos mostrados son ficticios y se utilizan exclusivamente para demostrar las capacidades de la plataforma.</p></div><dl class="fx-hero__meta"><div><dt>Estado</dt><dd>Aprobada</dd></div><div><dt>Monto</dt><dd>—</dd></div><div><dt>Responsable</dt><dd>RR. HH.</dd></div><div><dt>Resolución</dt><dd>13h 12m</dd></div></dl></div></section>
+<section class="fx-hero"><div class="fx-shell fx-hero__inner"><nav class="fx-hero__crumbs" aria-label="Ruta"><ol class="fx-crumbs"><li><a href="../../../index.html#proyectos">CoreStruct</a></li><li><a href="../index.html">Gestión administrativa</a></li><li aria-current="page">SOL-2026-0145</li></ol></nav><div><p class="fx-label"><span>Expediente · Solicitud de vacaciones</span></p><h1 class="fx-hero__title">SOL-2026-0145</h1></div><div><p class="fx-hero__lead">Vacaciones del 12 al 23 de octubre. Solicitado por Daniela Cruz, Comunicación.</p><p class="fx-hero__fine">Los nombres, métricas, personas y procesos mostrados son ficticios y se utilizan exclusivamente para demostrar las capacidades de la plataforma.</p></div><dl class="fx-hero__meta"><div><dt>Estado</dt><dd>Aprobada</dd></div><div><dt>Monto</dt><dd>—</dd></div><div><dt>Responsable</dt><dd>RR. HH.</dd></div><div><dt>Resolución</dt><dd>13h 12m</dd></div></dl></div></section>
 
       <section class="fx-section fx-section--tight">
         <div class="fx-shell">
@@ -160,29 +161,30 @@
           </div>
 
           <div class="fx-actions" style="margin-top:1.5rem">
-            <a class="fx-link" href="../index.html#solicitudes">Volver al registro de solicitudes<svg width="14" height="10" viewBox="0 0 14 10" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 5h12M8.5 1.5 12 5l-3.5 3.5"/></svg></a>
+            <a class="fx-link" href="../index.html">Volver a la consola<svg width="14" height="10" viewBox="0 0 14 10" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 5h12M8.5 1.5 12 5l-3.5 3.5"/></svg></a>
           </div>
         </div>
       </section>
     </main>
 
-      <footer class="fx-footer fx-dark">
-        <div class="fx-shell">
-          <div class="fx-footer__top">
-            <div>
-<a class="fx-logo" href="../index.html" aria-label="Flujo, inicio"><svg class="fx-logo__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="0.75" y="0.75" width="30.5" height="30.5" rx="3" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.4"/><rect x="7" y="8" width="12" height="3" rx="1.5" fill="currentColor"/><rect x="10" y="14.5" width="12" height="3" rx="1.5" fill="currentColor" opacity="0.75"/><rect x="13" y="21" width="12" height="3" rx="1.5" fill="currentColor" opacity="0.5"/></svg><span class="fx-logo__type"><span class="fx-logo__name">Flujo</span><span class="fx-logo__sub">Gestión administrativa</span></span></a>
-              <p class="fx-footer__pitch">Solicitudes, aprobaciones y seguimiento en un solo flujo. Un motor de flujos configurable: formularios, reglas de aprobación, responsables, tiempos de respuesta, documentos y trazabilidad.</p>
-            </div>
-            <div><p class="fx-footer__heading">La demostración</p><a class="fx-footer__link" href="../index.html#proceso">El proceso completo</a><a class="fx-footer__link" href="../index.html#panel">Panel administrativo</a><a class="fx-footer__link" href="../index.html#solicitudes">Registro de solicitudes</a><a class="fx-footer__link" href="../index.html#tiempos">Tiempos de respuesta</a></div>
-            <div><p class="fx-footer__heading">El motor</p><a class="fx-footer__link" href="../index.html#reglas">Reglas de aprobación</a><a class="fx-footer__link" href="../index.html#motor">Un motor, distintos procesos</a><a class="fx-footer__link" href="../index.html#documental">Procesos documentales</a><a class="fx-footer__link" href="../../../index.html#proyectos">Volver al portafolio</a></div>
-          </div>
-
-          <div class="fx-footer__notice">
-            <p>Demostración de portafolio. Los nombres, métricas, personas y procesos mostrados son ficticios y se utilizan exclusivamente para demostrar las capacidades de la plataforma.</p>
-            <p>&copy; <span data-current-year>2026</span> CoreStruct</p>
-          </div>
-        </div>
+      <footer class="gw-foot">
+        <p>Demostración de portafolio · CoreStruct. Los nombres, métricas, personas y procesos mostrados son ficticios y se utilizan exclusivamente para demostrar las capacidades de la plataforma.</p>
+        <p><a href="../../../index.html#proyectos">Volver al portafolio</a> ·
+          &copy; <span data-current-year>2026</span></p>
       </footer>
+
+    <dialog class="gw-palette" data-wf-palette aria-label="Buscar expediente">
+      <div class="gw-palette__head">
+        <svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.2" cy="7.2" r="4.4"/><path d="m10.6 10.6 3 3"/></svg>
+        <input class="gw-palette__input" type="search" data-wf-palette-input autocomplete="off"
+          placeholder="Buscar por código, concepto, solicitante o estado" aria-label="Buscar expediente" />
+        <span class="gw-palette__hint">Esc</span>
+      </div>
+      <ul class="gw-palette__list" data-wf-palette-list><li data-text="SOL-2026-0148 3 computadoras portátiles Alejandro Rivera Administración compra administración"><a class="gw-hit" href="../solicitudes/SOL-2026-0148.html"><span><span class="gw-hit__code">SOL-2026-0148</span><span class="gw-hit__what">3 computadoras portátiles · Alejandro Rivera</span></span><span class="fx-state fx-state--info"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h11M9.5 4.5 13 8l-3.5 3.5"/></svg>En aprobación</span></a></li><li data-text="SOL-2026-0147 Misión técnica a Comayagua Lucía Fernández Planificación viáticos finanzas"><a class="gw-hit" href="../solicitudes/SOL-2026-0147.html"><span><span class="gw-hit__code">SOL-2026-0147</span><span class="gw-hit__what">Misión técnica a Comayagua · Lucía Fernández</span></span><span class="fx-state fx-state--ok"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>Aprobada</span></a></li><li data-text="SOL-2026-0146 Reparación de aire acondicionado Óscar Padilla Servicios Generales mantenimiento jefatura inmediata"><a class="gw-hit" href="../solicitudes/SOL-2026-0146.html"><span><span class="gw-hit__code">SOL-2026-0146</span><span class="gw-hit__what">Reparación de aire acondicionado · Óscar Padilla</span></span><span class="fx-state fx-state--mute"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v6M5 8h6"/></svg>Recibida</span></a></li><li data-text="SOL-2026-0145 Vacaciones del 12 al 23 de octubre Daniela Cruz Comunicación permisos rr. hh."><a class="gw-hit" href="../solicitudes/SOL-2026-0145.html"><span><span class="gw-hit__code">SOL-2026-0145</span><span class="gw-hit__what">Vacaciones del 12 al 23 de octubre · Daniela Cruz</span></span><span class="fx-state fx-state--ok"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>Aprobada</span></a></li><li data-text="SOL-2026-0144 Licencias ofimáticas (25 puestos) Marcela Zúniga Tecnología compra dirección ejecutiva"><a class="gw-hit" href="../solicitudes/SOL-2026-0144.html"><span><span class="gw-hit__code">SOL-2026-0144</span><span class="gw-hit__what">Licencias ofimáticas (25 puestos) · Marcela Zúniga</span></span><span class="fx-state fx-state--info"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h11M9.5 4.5 13 8l-3.5 3.5"/></svg>En aprobación</span></a></li><li data-text="SOL-2026-0143 Alta de proveedor de imprenta Rodrigo Salgado Administración proveedores administración"><a class="gw-hit" href="../solicitudes/SOL-2026-0143.html"><span><span class="gw-hit__code">SOL-2026-0143</span><span class="gw-hit__what">Alta de proveedor de imprenta · Rodrigo Salgado</span></span><span class="fx-state fx-state--info"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M8 4.6V8l2.4 1.6"/></svg>En validación</span></a></li><li data-text="SOL-2026-0142 Mobiliario de archivo Karla Núñez Estadística compra administración"><a class="gw-hit" href="../solicitudes/SOL-2026-0142.html"><span><span class="gw-hit__code">SOL-2026-0142</span><span class="gw-hit__what">Mobiliario de archivo · Karla Núñez</span></span><span class="fx-state fx-state--bad"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5 14.5 13.5h-13z"/><path d="M8 6.5v3M8 11.6v.1"/></svg>Vencida</span></a></li><li data-text="SOL-2026-0141 Taller regional en Choluteca Iván Bustillo Estadística viáticos administración"><a class="gw-hit" href="../solicitudes/SOL-2026-0141.html"><span><span class="gw-hit__code">SOL-2026-0141</span><span class="gw-hit__what">Taller regional en Choluteca · Iván Bustillo</span></span><span class="fx-state fx-state--ok"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>Aprobada</span></a></li><li data-text="SOL-2026-0140 Suministros de oficina del trimestre Patricia Andino Servicios Generales compra jefatura inmediata"><a class="gw-hit" href="../solicitudes/SOL-2026-0140.html"><span><span class="gw-hit__code">SOL-2026-0140</span><span class="gw-hit__what">Suministros de oficina del trimestre · Patricia Andino</span></span><span class="fx-state fx-state--ok"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>Finalizada</span></a></li><li data-text="SOL-2026-0139 Cambio de luminarias del segundo nivel Óscar Padilla Servicios Generales mantenimiento administración"><a class="gw-hit" href="../solicitudes/SOL-2026-0139.html"><span><span class="gw-hit__code">SOL-2026-0139</span><span class="gw-hit__what">Cambio de luminarias del segundo nivel · Óscar Padilla</span></span><span class="fx-state fx-state--ok"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>Finalizada</span></a></li><li data-text="SOL-2026-0138 Constancia laboral Jorge Medina Planificación administrativa rr. hh."><a class="gw-hit" href="../solicitudes/SOL-2026-0138.html"><span><span class="gw-hit__code">SOL-2026-0138</span><span class="gw-hit__what">Constancia laboral · Jorge Medina</span></span><span class="fx-state fx-state--ok"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>Finalizada</span></a></li><li data-text="SOL-2026-0137 Servidor de respaldo y almacenamiento Marcela Zúniga Tecnología compra administración"><a class="gw-hit" href="../solicitudes/SOL-2026-0137.html"><span><span class="gw-hit__code">SOL-2026-0137</span><span class="gw-hit__what">Servidor de respaldo y almacenamiento · Marcela Zúniga</span></span><span class="fx-state fx-state--warn"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11.2 2.8 13.2 4.8 5.5 12.5 2.8 13.2l.7-2.7z"/></svg>Cambios solicitados</span></a></li><li data-text="SOL-2026-0136 Permiso por estudio Andrea Lagos Comunicación permisos jefatura inmediata"><a class="gw-hit" href="../solicitudes/SOL-2026-0136.html"><span><span class="gw-hit__code">SOL-2026-0136</span><span class="gw-hit__what">Permiso por estudio · Andrea Lagos</span></span><span class="fx-state fx-state--ok"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>Aprobada</span></a></li><li data-text="SOL-2026-0135 Renovación de contrato de limpieza Rodrigo Salgado Administración proveedores finanzas"><a class="gw-hit" href="../solicitudes/SOL-2026-0135.html"><span><span class="gw-hit__code">SOL-2026-0135</span><span class="gw-hit__what">Renovación de contrato de limpieza · Rodrigo Salgado</span></span><span class="fx-state fx-state--bad"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M5.5 8h5"/></svg>Rechazada</span></a></li><li data-text="SOL-2026-0134 Sesión de Consejo en San Pedro Sula Lucía Fernández Planificación viáticos liquidación"><a class="gw-hit" href="../solicitudes/SOL-2026-0134.html"><span><span class="gw-hit__code">SOL-2026-0134</span><span class="gw-hit__what">Sesión de Consejo en San Pedro Sula · Lucía Fernández</span></span><span class="fx-state fx-state--ok"><svg class="fx-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3.2L13 5"/></svg>Finalizada</span></a></li></ul>
+      <p class="gw-palette__empty" data-wf-palette-empty hidden>
+        Ningún expediente coincide con la búsqueda.
+      </p>
+    </dialog>
 
     <div class="fx-toast" data-toast role="status" aria-live="polite"></div>
 

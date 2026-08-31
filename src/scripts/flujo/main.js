@@ -6,20 +6,21 @@
  * the fifteen request files can share a bundle with the module page without
  * paying for the workflow engine they have no use for.
  *
- * Nothing here supplies content. The register, the rules, the targets, the
- * trail and the document are all in the HTML before this runs; these modules
- * make a page that already reads into a page you can drive.
+ * Nothing here supplies content. The route, the rule, the trail and the
+ * document are all in the HTML before this runs; these modules make a page that
+ * already reads into a page you can drive.
  */
 
 import { createEngine } from "./engine.js";
 import { initCapture, initForm } from "./form.js";
+import { initRoute } from "./route.js";
 import { clear, load, save } from "./state.js";
 import { createTour } from "./tour.js";
 import {
   initChooser,
   initDialogs,
   initDocumentActions,
-  initRegister,
+  initPalette,
   initReset,
   initTabs,
   initToast,
@@ -29,7 +30,7 @@ const toast = initToast();
 const showTab = initTabs();
 const openDialog = initDialogs();
 
-initRegister();
+initPalette();
 initDocumentActions(toast);
 initChooser({ openDialog, toast });
 
@@ -56,8 +57,17 @@ if (formElement) {
     showTab,
   });
 
+  /* The panel beside the amount field previews the circuit the rule will pick.
+     Once a request has actually been submitted it stops being a preview — the
+     decision panel underneath it now says who is resolving it — so every path
+     that produces a live request retires it. */
+  const route = initRoute(document);
+
   const form = initForm(formElement, {
-    onSubmit: (request) => void engine.run(request),
+    onSubmit: (request) => {
+      route.hide();
+      void engine.run(request);
+    },
   });
 
   const capture = initCapture(document.querySelector("[data-wf-capture]"), {
@@ -69,6 +79,7 @@ if (formElement) {
      replaying seven seconds of processing they have already watched. */
   const restored = engine.restore();
   if (restored) {
+    route.hide();
     toast("Se restauró la solicitud de esta demostración desde su navegador.");
   }
 

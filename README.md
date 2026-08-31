@@ -281,15 +281,32 @@ dibujo (en un despliegue real iría en un recuadro).
 
 ### Flujo — la demo de automatización administrativa
 
-La tarjeta **07 · Automatización** abre `demos/flujo/`: 16 páginas que
-demuestran, de principio a fin, un proceso administrativo interno. No es un ERP
-ni pretende serlo. Es una sola solicitud de compra recorriendo el circuito
-completo —solicitud, validación, reglas, asignación, aprobación, documento,
-notificación, archivo— para que un director administrativo entienda en menos de
-un minuto qué trabajo dejaría de hacer por correo, Excel y WhatsApp.
+La tarjeta **07 · Automatización** abre `demos/flujo/`: una consola y 15 fichas
+de expediente. No es un ERP ni pretende serlo. Es una sola solicitud de compra
+recorriendo el circuito completo —solicitud, validación, reglas, asignación,
+aprobación, documento, notificación, archivo— para que un director
+administrativo entienda en menos de un minuto qué trabajo dejaría de hacer por
+correo, Excel y WhatsApp.
 
 Es un demo **aparte**: no vive dentro del portal gubernamental, tiene su marca,
 su bundle y su propio espacio de nombres.
+
+**La página es la consola.** La versión anterior tenía catorce secciones: un
+héroe, un panel de indicadores, un registro de nueve columnas, una tabla de
+plazos, tres tarjetas de reglas, un antes/después, un bloque de impacto y un
+cierre. Todo eso era el producto describiéndose a sí mismo, y nada de eso se
+podía pulsar. Ahora hay una sola sección con cuatro bloques y todos son
+accionables: el riel de procesos, la solicitud, la ruta que produce y las
+decisiones que la cierran. El registro no desapareció —los 15 expedientes siguen
+teniendo su URL— pero pasó a ser una búsqueda (`Buscar expediente`, o `⌘K`) en
+lugar de una tabla en medio del camino.
+
+**Glasswing.** Fondo oscuro con tres cuerpos de color desenfocados detrás, y
+sobre él paneles de vidrio: translúcidos, con `backdrop-filter` y un hilo de luz
+en el borde superior. `glasswing.css` solo cambia el material —los tokens, no la
+maquetación— y `console.css` añade los componentes que solo tiene la consola. La
+única superficie opaca de la página es el documento que genera el flujo, porque
+un PDF que brilla es un PDF que nadie se cree.
 
 Lo que trae:
 
@@ -298,20 +315,26 @@ Lo que trae:
   `condition`, `when`— y `routeFor()` filtra por la condición. Los mismos diez
   pasos producen un circuito de una aprobación para una compra pequeña y de tres
   para una grande, sin una segunda definición y sin una bifurcación en la
-  interfaz. Cambiar de institución es cambiar la definición, que es exactamente
-  el argumento comercial de la sección «Automatización basada en reglas».
-- **Formulario con sus siete estados** (normal, foco, válido, error,
-  deshabilitado, cargando, éxito), validación en `blur` y en vivo solo mientras
-  se corrige, y el error como frase junto al campo.
+  interfaz. Cambiar de institución es cambiar la definición.
+- **La regla, en vivo.** El panel «Ruta de autorización» se vuelve a dibujar en
+  cada pulsación del campo de monto, con las mismas `ruleFor()` y
+  `approvalsFor()` que usan la compilación y el motor. Tres atajos de monto
+  cubren las tres bandas, así que ver la tercera no cuesta teclear 240000. Es la
+  sección de reglas de antes, convertida en algo que se mira en lugar de leerse.
+- **Formulario de cuatro campos.** Tenía once; siete no cambiaban nada de lo que
+  el motor hacía con la solicitud, así que se siguen enviando, siguen en el
+  documento y siguen en la bitácora, pero ya no son once cajas entre el visitante
+  y el botón. Validación en `blur` y en vivo solo mientras se corrige, con el
+  error como frase junto al campo.
 - **Secuencia de automatización** de unos seis segundos: valida, cita la regla
   que aplicó, asigna a las personas que la regla eligió y arranca el flujo.
 - **Aprobación interactiva** con tres salidas —aprobar, solicitar cambios,
   rechazar— porque una demo que solo deja decir que sí no está enseñando un
   flujo, está enseñando una animación.
 - **Documento generado** con código de verificación, **notificación simulada**,
-  **bitácora completa**, **panel** de cuatro indicadores, **registro** de 15
-  expedientes con filtros y búsqueda, **SLA** con escalamiento automático y una
-  **ficha por expediente** en `/solicitudes/SOL-2026-0148.html`.
+  **bitácora completa** y una **ficha por expediente** en
+  `/solicitudes/SOL-2026-0148.html`, detrás de tres pestañas que solo se llenan
+  cuando algo ha ocurrido en ellas.
 - **Demo guiada** de unos 16 segundos que conduce el flujo entero sin que nadie
   toque nada, con pausa y salida siempre en pantalla.
 
@@ -324,8 +347,8 @@ mismo número. Con un instante fijo, el registro muestra siempre lo mismo: una
 solicitud pasada de plazo, una a punto de vencer y el resto holgadas — el reparto
 que tiene un registro real.
 
-**La página está completa antes de que corra un script.** El registro, las
-reglas, los plazos, la bitácora y el documento están en el HTML que se descarga;
+**La página está completa antes de que corra un script.** La ruta, la regla, la
+bitácora y el documento están en el HTML que se descarga;
 `render.js` es puro y lo usan las dos partes, así que una aprobación que añade el
 navegador sale idéntica a una que escribió la compilación. Sin JavaScript se ve
 el expediente ya terminado en lugar de una pantalla en blanco.

@@ -1,10 +1,15 @@
 /**
  * The chrome every Flujo page carries.
  *
- * Document head, the slim top bar, the hero, the footer and the badge that
- * credits the demonstration. All of it emitted at build time: a visitor gets
- * real HTML with the navigation, the register and the workflow already in it,
+ * Document head, the glass bar, the field behind everything, the one-line
+ * footer and the expediente search. All of it emitted at build time: a visitor
+ * gets real HTML with the workflow, the route and the register already in it,
  * and JavaScript only adds behaviour on top of a page that already reads.
+ *
+ * The chrome is deliberately thin. The module page is a console now — the
+ * demonstration is the page — so the bar carries three controls and no
+ * navigation, and the footer is one line rather than three columns of links to
+ * sections that no longer exist.
  */
 
 import { readFileSync } from "node:fs";
@@ -12,8 +17,9 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { escape } from "../../src/data/flujo/format.js";
-import { moduleInfo } from "../../src/data/flujo/workflows.js";
-import { asset, icon, page } from "./blocks.mjs";
+import { moduleInfo, requests, roleName } from "../../src/data/flujo/workflows.js";
+import { asset, icon, page, requestHref } from "./blocks.mjs";
+import { statePill } from "../../src/scripts/flujo/render.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 
@@ -72,8 +78,8 @@ export function documentHead(ctx, meta) {
          invented. A screen full of approvals that look like real authorisations
          must never surface in a search result, so every page is noindex. -->
     <meta name="robots" content="noindex, nofollow" />
-    <meta name="theme-color" content="#071e4a" />
-    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#04060f" />
+    <meta name="color-scheme" content="dark" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="${escape(`${product.name} · ${product.descriptor}`)}" />
@@ -108,7 +114,7 @@ export function documentHead(ctx, meta) {
 ${JSON.stringify(schema, null, 6).replace(/^/gm, "      ")}
     </script>
 
-    <!-- Runs before first paint. The workflow has stages that only exist once
+    <!-- Runs before first paint. The console has stages that only exist once
          the engine can drive them — a document that has not been generated yet,
          a reset control with nothing to reset. Marking the document scripted
          here means those are hidden from the start instead of appearing and
@@ -131,7 +137,7 @@ ${JSON.stringify(schema, null, 6).replace(/^/gm, "      ")}
 function logoMark() {
   return (
     `<svg class="fx-logo__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">` +
-    `<rect x="0.75" y="0.75" width="30.5" height="30.5" rx="3" fill="none" stroke="currentColor" ` +
+    `<rect x="0.75" y="0.75" width="30.5" height="30.5" rx="6" fill="none" stroke="currentColor" ` +
     `stroke-width="1.5" opacity="0.4"/>` +
     `<rect x="7" y="8" width="12" height="3" rx="1.5" fill="currentColor"/>` +
     `<rect x="10" y="14.5" width="12" height="3" rx="1.5" fill="currentColor" opacity="0.75"/>` +
@@ -148,30 +154,33 @@ export const logo = (ctx) =>
 
 /* ------------------------------------------------------------------ header */
 
-const NAV = [
-  { label: "El proceso", hash: "proceso" },
-  { label: "Panel", hash: "panel" },
-  { label: "Solicitudes", hash: "solicitudes" },
-  { label: "Reglas", hash: "reglas" },
-  { label: "Procesos", hash: "motor" },
-];
+/**
+ * The bar.
+ *
+ * Three controls and a mark. The five section anchors it used to carry are gone
+ * with the five sections: there is nowhere to navigate to on a page that is one
+ * console, and an anchor list that scrolls you 200px is navigation theatre.
+ *
+ * `console` gates the two controls that only mean something where an engine is
+ * running — the guided demo, and the reset that undoes it.
+ */
+export function header(ctx, { console: isConsole = false } = {}) {
+  const search =
+    `<button class="fx-btn fx-btn--ghost fx-btn--small" type="button" data-wf-palette-open>` +
+    `${icon("search")}<span class="gw-bar__wide">Buscar expediente</span></button>`;
 
-export function header(ctx) {
-  const links = NAV.map(
-    (item) =>
-      `<a class="fx-nav__link" href="${page(ctx, "index.html")}#${escape(item.hash)}">${escape(item.label)}</a>`,
-  ).join("");
+  const drive = isConsole
+    ? `<button class="fx-btn fx-btn--solid fx-btn--small" type="button" data-wf-tour>` +
+      `Demo guiada${icon("arrow")}</button>` +
+      `<button class="fx-btn fx-btn--ghost fx-btn--small" type="button" data-wf-reset hidden>` +
+      `Reiniciar</button>`
+    : `<a class="fx-btn fx-btn--ghost fx-btn--small" href="${page(ctx, "index.html")}">` +
+      `Ir a la consola</a>`;
 
-  return `    <header class="fx-header fx-dark">
-      <div class="fx-shell fx-header__inner">
+  return `    <header class="fx-header">
+      <div class="gw-shell fx-header__inner">
 ${logo(ctx)}
-        <nav class="fx-nav" aria-label="Secciones de la demostración">${links}</nav>
-        <div class="fx-header__end">
-          <span class="wf-flag wf-flag--onDark">${escape(moduleInfo.tag)}</span>
-          <button class="fx-btn fx-btn--onDark fx-btn--small" type="button" data-wf-reset hidden>
-            Reiniciar demo
-          </button>
-        </div>
+        <div class="fx-header__end">${search}${drive}</div>
       </div>
     </header>`;
 }
@@ -179,12 +188,11 @@ ${logo(ctx)}
 /* -------------------------------------------------------------------- hero */
 
 /**
- * The page opening.
+ * The page opening, for the fifteen request files.
  *
- * Breadcrumb, label, title, lead, the two calls to action, the sentence that
- * declares the fiction, and a four-item metadata strip. Every interior page of
- * the demo opens the same way, which is what makes three kinds of page feel
- * like one product.
+ * The console has no hero any more — it opens on its controls. This stays for
+ * an expediente, where a reader arriving from a link does need to be told which
+ * request they are looking at before anything else.
  */
 export function hero({ ctx, trail, label, title, lead, actions = "", fine, meta = [] }) {
   const crumbs = trail
@@ -196,7 +204,7 @@ export function hero({ ctx, trail, label, title, lead, actions = "", fine, meta 
     .join("");
 
   return (
-    `<section class="fx-hero fx-dark">` +
+    `<section class="fx-hero">` +
     `<div class="fx-shell fx-hero__inner">` +
     `<nav class="fx-hero__crumbs" aria-label="Ruta"><ol class="fx-crumbs">${crumbs}</ol></nav>` +
     `<div><p class="fx-label"><span>${escape(label)}</span></p>` +
@@ -214,49 +222,75 @@ export function hero({ ctx, trail, label, title, lead, actions = "", fine, meta 
   );
 }
 
+/* -------------------------------------------------------------------- field */
+
+/**
+ * What everything else floats on.
+ *
+ * Three blurred bodies of colour and a hairline grid, fixed behind the document.
+ * It is decoration and nothing else, so it is `aria-hidden` and it is the first
+ * thing `prefers-reduced-motion` switches off.
+ */
+export const field = () =>
+  `    <div class="gw-field" aria-hidden="true">
+      <span class="gw-field__orb gw-field__orb--a"></span>
+      <span class="gw-field__orb gw-field__orb--b"></span>
+      <span class="gw-field__orb gw-field__orb--c"></span>
+      <span class="gw-field__grid"></span>
+    </div>`;
+
 /* ------------------------------------------------------------------ footer */
 
+/** One line. Everything it used to link to is on the page you are already on. */
 export function siteFooter(ctx) {
-  const column = (heading, links) =>
-    `<div><p class="fx-footer__heading">${escape(heading)}</p>` +
-    links
-      .map(
-        (link) =>
-          `<a class="fx-footer__link" href="${escape(link.href)}">${escape(link.label)}</a>`,
-      )
-      .join("") +
-    `</div>`;
-
-  return `      <footer class="fx-footer fx-dark">
-        <div class="fx-shell">
-          <div class="fx-footer__top">
-            <div>
-${logo(ctx)}
-              <p class="fx-footer__pitch">${escape(product.tagline)} ${escape(
-                "Un motor de flujos configurable: formularios, reglas de aprobación, responsables, " +
-                  "tiempos de respuesta, documentos y trazabilidad.",
-              )}</p>
-            </div>
-            ${column("La demostración", [
-              { label: "El proceso completo", href: `${page(ctx, "index.html")}#proceso` },
-              { label: "Panel administrativo", href: `${page(ctx, "index.html")}#panel` },
-              { label: "Registro de solicitudes", href: `${page(ctx, "index.html")}#solicitudes` },
-              { label: "Tiempos de respuesta", href: `${page(ctx, "index.html")}#tiempos` },
-            ])}
-            ${column("El motor", [
-              { label: "Reglas de aprobación", href: `${page(ctx, "index.html")}#reglas` },
-              { label: "Un motor, distintos procesos", href: `${page(ctx, "index.html")}#motor` },
-              { label: "Procesos documentales", href: `${page(ctx, "index.html")}#documental` },
-              { label: "Volver al portafolio", href: `${asset(ctx, "index.html")}#proyectos` },
-            ])}
-          </div>
-
-          <div class="fx-footer__notice">
-            <p>Demostración de portafolio. ${escape(moduleInfo.disclaimer)}</p>
-            <p>&copy; <span data-current-year>2026</span> CoreStruct</p>
-          </div>
-        </div>
+  return `      <footer class="gw-foot">
+        <p>Demostración de portafolio · CoreStruct. ${escape(moduleInfo.disclaimer)}</p>
+        <p><a href="${asset(ctx, "index.html")}#proyectos">Volver al portafolio</a> ·
+          &copy; <span data-current-year>2026</span></p>
       </footer>`;
+}
+
+/* ----------------------------------------------------------------- palette */
+
+/**
+ * The register, as a search.
+ *
+ * Fifteen expedientes used to be a nine-column table with five filter controls
+ * in the middle of the demonstration. They are still all here, still
+ * addressable, still findable by code, concept, requester, area or state — they
+ * simply are not in the way any more. One control opens it, typing filters it,
+ * Escape closes it.
+ */
+export function palette(ctx) {
+  const hits = requests
+    .map((request) => {
+      const text =
+        `${request.code} ${request.concept} ${request.requester} ${request.area} ` +
+        `${request.type} ${roleName(request.responsible)}`.toLowerCase();
+
+      return (
+        `<li data-text="${escape(text)}">` +
+        `<a class="gw-hit" href="${requestHref(ctx, request.code)}">` +
+        `<span><span class="gw-hit__code">${escape(request.code)}</span>` +
+        `<span class="gw-hit__what">${escape(request.concept)} · ${escape(request.requester)}</span></span>` +
+        statePill(request.state) +
+        `</a></li>`
+      );
+    })
+    .join("");
+
+  return `    <dialog class="gw-palette" data-wf-palette aria-label="Buscar expediente">
+      <div class="gw-palette__head">
+        ${icon("search")}
+        <input class="gw-palette__input" type="search" data-wf-palette-input autocomplete="off"
+          placeholder="Buscar por código, concepto, solicitante o estado" aria-label="Buscar expediente" />
+        <span class="gw-palette__hint">Esc</span>
+      </div>
+      <ul class="gw-palette__list" data-wf-palette-list>${hits}</ul>
+      <p class="gw-palette__empty" data-wf-palette-empty hidden>
+        Ningún expediente coincide con la búsqueda.
+      </p>
+    </dialog>`;
 }
 
 /* ------------------------------------------------------------------- badge */
@@ -288,7 +322,7 @@ export function badge(ctx) {
 /* -------------------------------------------------------------------- page */
 
 /** Assemble a complete document. */
-export function document_({ ctx, meta, body }) {
+export function document_({ ctx, meta, body, console: isConsole = false }) {
   return `<!doctype html>
 <html lang="es">
   <head>
@@ -298,15 +332,19 @@ ${documentHead(ctx, meta)}
   <body>
     <a class="fx-skip" href="#contenido">Saltar al contenido</a>
 
+${field()}
+
 ${badge(ctx)}
 
-${header(ctx)}
+${header(ctx, { console: isConsole })}
 
-    <main id="contenido">
+    <main id="contenido"${isConsole ? ' class="gw-main"' : ""}>
 ${body}
     </main>
 
 ${siteFooter(ctx)}
+
+${palette(ctx)}
 
     <div class="fx-toast" data-toast role="status" aria-live="polite"></div>
 
