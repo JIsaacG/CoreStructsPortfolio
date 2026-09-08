@@ -23,6 +23,7 @@ import { articles, announcements } from "../../src/data/aurea/news.js";
 import { clubs, sports, supportServices } from "../../src/data/aurea/life.js";
 import { spaces } from "../../src/data/aurea/campus.js";
 import { assistant } from "../../src/data/aurea/resources.js";
+import { gallery, featuredGallery, byId as galleryById } from "../../src/data/aurea/gallery.js";
 import { model } from "../../src/data/aurea/story.js";
 import {
   actions,
@@ -38,8 +39,11 @@ import {
   grid,
   head,
   icon,
+  lightbox,
+  mosaic,
   note,
   page,
+  strip,
   sub,
 } from "./blocks.mjs";
 import { heroScene, plate } from "./art.mjs";
@@ -367,6 +371,36 @@ function life(ctx) {
   });
 }
 
+/* ---------------------------------------------------------------- gallery */
+
+/**
+ * “AUREA en imágenes” — the visual break the homepage needs.
+ *
+ * Seven tiles from the gallery, in the same dense mosaic the full page uses,
+ * with the same lightbox. It sits between student life and the calendar
+ * because that is where a page of argument has been going for a while and
+ * needs to stop talking.
+ */
+function galleryBand(ctx) {
+  const items = featuredGallery.map((id) => galleryById(id)).filter(Boolean);
+
+  return band({
+    tone: "sunken",
+    body:
+      head({
+        index: "06",
+        label: "Galería",
+        title: "AUREA en imágenes.",
+        body:
+          `${gallery.length} escenas del campus, las aulas, la cancha, el escenario y el ` +
+          "laboratorio. Todas dibujadas: AUREA no existe y no hay nada que fotografiar.",
+        action: arrowLink("Ver la galería completa", page(ctx, "galeria")),
+      }) +
+      mosaic(items) +
+      lightbox(),
+  });
+}
+
 /* ----------------------------------------------------------------- events */
 
 function events(ctx) {
@@ -374,7 +408,7 @@ function events(ctx) {
     tone: "sunken",
     body:
       head({
-        index: "06",
+        index: "07",
         label: "Próximos eventos",
         title: "Lo que está pasando en AUREA.",
         action: actions([button("Ver todos los eventos", page(ctx, "calendario"), { ghost: true })]),
@@ -406,7 +440,7 @@ function news(ctx) {
     id: "noticias",
     body:
       head({
-        index: "07",
+        index: "08",
         label: "Actualidad",
         title: "AUREA hoy.",
         body: "Noticias de la institución y comunicados administrativos, que no son lo mismo y no se mezclan.",
@@ -463,7 +497,7 @@ function campus(ctx) {
     tone: "dark",
     body:
       head({
-        index: "08",
+        index: "09",
         label: "El campus",
         title: "Conoce dónde vas a aprender.",
         body:
@@ -485,7 +519,10 @@ function campus(ctx) {
           }),
         ),
         4,
-      ),
+      ) +
+      `<div style="margin-top:clamp(1.5rem,3vw,2.5rem)">` +
+      strip(["biblioteca", "auditorio", "taller", "jardin"]) +
+      `</div>`,
   });
 }
 
@@ -526,6 +563,8 @@ function assistantPanel(ctx) {
 
 function cta(ctx) {
   return `      <section class="au-cta">
+        <div class="au-cta__art">${plate("graduacion")}</div>
+        <div class="au-cta__veil"></div>
         <div class="au-shell au-cta__inner">
           <div>
             <p class="au-label"><span>Admisiones 2027</span></p>
@@ -560,6 +599,7 @@ export function homeBody(ctx) {
     why(ctx),
     admissions(ctx),
     life(ctx),
+    galleryBand(ctx),
     events(ctx),
     news(ctx),
     campus(ctx),

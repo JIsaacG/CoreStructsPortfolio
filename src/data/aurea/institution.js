@@ -89,6 +89,7 @@ export const routes = {
   calendario: "calendario.html",
   noticias: "noticias.html",
   vida: "vida-estudiantil.html",
+  galeria: "galeria.html",
   campus: "campus.html",
   investigacion: "investigacion.html",
   docentes: "docentes.html",
@@ -287,18 +288,19 @@ export const navigation = [
         ],
       },
       {
-        heading: "Agenda",
+        heading: "Ver y escuchar",
         links: [
+          { label: "Galería", route: "galeria" },
           { label: "Calendario institucional", route: "calendario" },
           { label: "Próximos eventos", route: "calendario", hash: "proximos" },
+          { label: "Conoce el campus", route: "campus" },
         ],
       },
     ],
     feature: {
-      title: "42 clubes y organizaciones",
-      text: "Robótica, debate, fotografía, emprendimiento y lo que aún no existe.",
-      route: "vida",
-      hash: "clubes",
+      title: "AUREA en imágenes",
+      text: "La galería recorre el campus, las aulas, la cancha, el escenario y el laboratorio.",
+      route: "galeria",
     },
   },
   {
@@ -357,6 +359,7 @@ export const audiences = [
       { label: "Becas disponibles", route: "becas" },
       { label: "Calculadora de matrícula", route: "costos", hash: "calculadora" },
       { label: "Visitar el campus", route: "campus", hash: "visita" },
+      { label: "Galería", route: "galeria" },
     ],
   },
   {
@@ -490,6 +493,7 @@ export const footer = {
     { label: "Preguntas frecuentes", route: "faq" },
     { label: "Buscar en el portal", route: "buscar" },
     { label: "Accesibilidad", route: "apoyo", hash: "inclusion" },
+    { label: "Galería", route: "galeria" },
     { label: "Directorio", route: "directorio" },
   ],
   updated: "7 de septiembre de 2026",

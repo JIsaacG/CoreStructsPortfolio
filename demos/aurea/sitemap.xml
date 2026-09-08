@@ -11,6 +11,7 @@
   <url><loc>https://www.aurea.example/calendario.html</loc><priority>0.8</priority></url>
   <url><loc>https://www.aurea.example/noticias.html</loc><priority>0.8</priority></url>
   <url><loc>https://www.aurea.example/vida-estudiantil.html</loc><priority>0.8</priority></url>
+  <url><loc>https://www.aurea.example/galeria.html</loc><priority>0.8</priority></url>
   <url><loc>https://www.aurea.example/campus.html</loc><priority>0.8</priority></url>
   <url><loc>https://www.aurea.example/investigacion.html</loc><priority>0.8</priority></url>
   <url><loc>https://www.aurea.example/docentes.html</loc><priority>0.8</priority></url>

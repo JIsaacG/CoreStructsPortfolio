@@ -351,7 +351,7 @@ dibujo (en un despliegue real iría en un recuadro).
 
 ### AUREA — el portal educativo
 
-La tarjeta **05 · Portales educativos** abre `demos/aurea/`: 41 páginas del
+La tarjeta **05 · Portales educativos** abre `demos/aurea/`: 42 páginas del
 ecosistema digital completo de **AUREA · Instituto & Universidad**, una
 institución **ficticia** que imparte educación media y educación superior en un
 mismo campus. Es el demo pensado para que un director, un rector o un propietario
@@ -372,6 +372,9 @@ Lo que trae:
 - **Calendario institucional** con dos taxonomías cruzadas (tipo de actividad y
   audiencia), vista de mes y de lista, y **exportación real** a `.ics`, Google
   Calendar y Outlook.
+- **Galería** de treinta y dos escenas en mosaico, filtrable por área, con
+  visor a tamaño completo que se recorre con las flechas del teclado. La misma
+  pieza aparece recortada en la portada, en vida estudiantil y en campus.
 - **Vida estudiantil** con explorador de clubes, deportes y arte; **campus** con
   tour de plano interactivo y reserva de visitas; **investigación**, **docentes**,
   **directorio**, **biblioteca**, **documentos**, **egresados**,
@@ -382,7 +385,7 @@ Lo que trae:
   después de ver la portada: «¿y también hacen la parte en la que entran los
   estudiantes?».
 
-Cuatro decisiones que conviene conocer antes de tocarlo:
+Cinco decisiones que conviene conocer antes de tocarlo:
 
 **Un solo motor de filtrado para siete catálogos.** El buscador de programas, el
 explorador de clubes, la biblioteca, el centro de documentos, las preguntas
@@ -402,9 +405,24 @@ alguien escribe «psicologia» y la fila que decía «Psicología» deja de apar
 **Las imágenes están dibujadas.** AUREA no existe: no hay campus que fotografiar
 ni estudiantes que retratar, y una fotografía de archivo de personas reales sería
 el único elemento deshonesto de un sitio cuyo argumento entero es que todo en él
-es ficción declarada. Así que `tools/aurea/art.mjs` dibuja veinte láminas —aulas,
-laboratorios, estanterías, canchas, pantallas, patios— con la misma lógica que
-`cede/art.mjs`: datos entran, SVG sale, y ni un solo literal de color.
+es ficción declarada. Así que `tools/aurea/art.mjs` dibuja treinta y seis láminas
+—aulas, laboratorios, estanterías, canchas, escenarios, pentagramas, piscinas,
+birretes, patios— con la misma lógica que `cede/art.mjs`: datos entran, SVG sale,
+y ni un solo literal de color.
+
+Todas comparten el mismo vocabulario gráfico: fondo, retícula de puntos, masa,
+línea, figura y **un solo acento por lámina**. Esa restricción es lo que hace que
+treinta y seis dibujos se lean como una galería y no como una carpeta de
+clip-art. Cada lámina se dibuja en dos tonos —`deep` sobre el azul institucional
+y `paper` sobre papel— y el mosaico alterna los dos, porque treinta y dos piezas
+en azul son un rectángulo oscuro enorme, no una galería.
+
+**El visor no duplica nada.** Las láminas ya están en el mosaico, así que
+`src/scripts/aurea/gallery.js` clona el SVG de la ficha en la que se hizo clic en
+lugar de renderizar treinta y dos dibujos por segunda vez: la mitad del peso, y
+la garantía de que lo que se abre es exactamente lo que estaba en pantalla. Sin
+JavaScript el mosaico sigue siendo un mosaico de treinta y dos figuras
+etiquetadas; el visor es aumento, no contenido.
 
 **Nada se envía y la interfaz lo dice.** Los simuladores, la reserva de visita,
 el formulario de contacto y las descargas son demostraciones de flujo; cada

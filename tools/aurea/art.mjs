@@ -581,6 +581,405 @@ function comunidad() {
   );
 }
 
+/* ------------------------------------------------------ the gallery plates
+
+   Sixteen more scenes, drawn for the gallery rather than for a card cover.
+   They carry the same vocabulary as the first twenty — ground, lattice, mass,
+   line, figure, one accent — because a gallery of thirty-six drawings only
+   works as a gallery if every one of them is recognisably the same hand.
+   -------------------------------------------------------------------------- */
+
+/** Música — a staff, its notes, and the stand they are read from. */
+function musica() {
+  const notes = [
+    [72, 118], [104, 106], [132, 124], [166, 100], [196, 112], [226, 94], [256, 118],
+  ];
+
+  return (
+    ground() +
+    [0, 1, 2, 3, 4]
+      .map((i) => `<path class="au-art__line au-art__line--faint" d="M44 ${94 + i * 12}h232"/>`)
+      .join("") +
+    notes
+      .map(
+        ([x, y], index) =>
+          `<g class="${index === 3 ? "au-art__accent" : "au-art__mass-2"}">` +
+          `<ellipse cx="${x}" cy="${y}" rx="7" ry="5.2" transform="rotate(-18 ${x} ${y})"/>` +
+          `<rect x="${x + 5}" y="${y - 26}" width="2.2" height="26" rx="1"/></g>`,
+      )
+      .join("") +
+    /* The stand: three legs and a lectern, the only thing at human scale. */
+    `<path class="au-art__line" d="M160 152v46M138 198h44M160 152l-30-8M160 152l30-8"/>` +
+    `<rect class="au-art__mass" x="118" y="138" width="84" height="9" rx="2" transform="rotate(-6 160 142)"/>`
+  );
+}
+
+/** Teatro — the proscenium, its curtains and one lit figure. */
+function teatro() {
+  return (
+    ground() +
+    `<path class="au-art__mass" d="M34 44h252v14H34z"/>` +
+    /* Two curtains, drawn as folds rather than as drapes. */
+    `<path class="au-art__mass-2" d="M34 58h58l-10 118H34z"/>` +
+    `<path class="au-art__mass-2" d="M286 58h-58l10 118h48z"/>` +
+    [0, 1, 2]
+      .map(
+        (i) =>
+          `<path class="au-art__line au-art__line--faint" d="M${46 + i * 14} 58l-${4 + i * 2} 118` +
+          `M${274 - i * 14} 58l${4 + i * 2} 118"/>`,
+      )
+      .join("") +
+    /* The spotlight: a cone, and the only accent on the plate. */
+    `<path class="au-art__glass" d="M160 58 214 176h-108z"/>` +
+    `<rect class="au-art__mass" x="90" y="176" width="140" height="6" rx="2"/>` +
+    figure(160, 176, 1.5) +
+    `<circle class="au-art__gold" cx="160" cy="52" r="5"/>`
+  );
+}
+
+/** Danza — three figures and the arcs their movement leaves behind. */
+function danza() {
+  return (
+    ground() +
+    `<path class="au-art__line au-art__line--faint" d="M40 186h240"/>` +
+    `<path class="au-art__accent-line" d="M62 152c26-44 62-52 96-30"/>` +
+    `<path class="au-art__line" d="M112 168c34-52 78-56 112-24"/>` +
+    `<path class="au-art__gold-line" d="M172 178c28-36 56-42 82-22"/>` +
+    figure(88, 186, 1.7) +
+    figure(158, 186, 2.05) +
+    figure(232, 186, 1.6) +
+    `<circle class="au-art__accent" cx="158" cy="128" r="4.5"/>`
+  );
+}
+
+/** Natación — the pool from above: lanes, blocks and one swimmer. */
+function natacion() {
+  const lanes = [];
+  for (let i = 0; i < 6; i++) {
+    const y = 76 + i * 20;
+    lanes.push(`<path class="au-art__line au-art__line--faint" d="M44 ${y}h232"/>`);
+  }
+
+  return (
+    ground() +
+    `<rect class="au-art__glass" x="44" y="66" width="232" height="120" rx="3"/>` +
+    lanes.join("") +
+    /* The starting blocks, along the near edge. */
+    [0, 1, 2, 3, 4, 5, 6]
+      .map((i) => `<rect class="au-art__mass" x="${40 + i * 33.4}" y="188" width="20" height="9" rx="2"/>`)
+      .join("") +
+    /* One swimmer, and the wake behind them. */
+    `<path class="au-art__accent-line" d="M60 126c18-8 30 8 46 0s28 8 44 0"/>` +
+    `<circle class="au-art__accent" cx="160" cy="126" r="6"/>` +
+    `<path class="au-art__gold-line" d="M44 66h232"/>`
+  );
+}
+
+/** Baloncesto — the key, the hoop and the shot. */
+function baloncesto() {
+  return (
+    ground() +
+    `<path class="au-art__line" d="M40 190h240"/>` +
+    `<rect class="au-art__mass" x="112" y="46" width="96" height="58" rx="3"/>` +
+    `<rect class="au-art__mass-2" x="140" y="74" width="40" height="30" rx="2"/>` +
+    /* Hoop and net. */
+    `<path class="au-art__gold-line" d="M144 108h32"/>` +
+    [0, 1, 2, 3]
+      .map((i) => `<path class="au-art__line au-art__line--faint" d="M${146 + i * 9} 108l${4 - i * 2.5} 16"/>`)
+      .join("") +
+    /* The arc of the shot. */
+    `<path class="au-art__accent-line" d="M236 168C224 96 190 86 162 104" fill="none"/>` +
+    `<circle class="au-art__accent" cx="238" cy="172" r="8"/>` +
+    figure(238, 196, 1.5) +
+    figure(96, 196, 1.35)
+  );
+}
+
+/** Graduación — a field of caps, and one of them in the air. */
+function graduacion() {
+  const caps = [];
+  for (let row = 0; row < 4; row++) {
+    for (let col = 0; col < 6; col++) {
+      const x = 52 + col * 44 + (row % 2) * 12;
+      const y = 118 + row * 26;
+      caps.push(
+        `<g class="au-art__mass-2"><path d="M${x} ${y}l18-8 18 8-18 8z"/>` +
+          `<path d="M${x + 8} ${y + 3.5}v7h20v-7"/></g>`,
+      );
+    }
+  }
+
+  return (
+    ground() +
+    caps.join("") +
+    /* The one that is not in formation. */
+    `<g class="au-art__accent"><path d="M186 52l22-10 22 10-22 10z" transform="rotate(-16 208 52)"/></g>` +
+    `<path class="au-art__gold-line" d="M208 68c-4 18-2 30 6 40" fill="none"/>` +
+    `<path class="au-art__line au-art__line--faint" d="M40 106h240"/>`
+  );
+}
+
+/** Feria — a row of stands under their canopies. */
+function feria() {
+  const stalls = [];
+  for (let i = 0; i < 4; i++) {
+    const x = 40 + i * 62;
+    const accent = i === 2;
+    stalls.push(
+      `<g class="${accent ? "au-art__accent" : "au-art__mass-2"}">` +
+        `<path d="M${x} ${86}l26-22 26 22z"/></g>` +
+        `<rect class="au-art__mass" x="${x + 4}" y="86" width="44" height="56" rx="2"/>` +
+        `<path class="au-art__line au-art__line--faint" d="M${x + 12} 100h28M${x + 12} 112h20"/>` +
+        `<rect class="au-art__mass-2" x="${x + 2}" y="142" width="48" height="5" rx="2"/>`,
+    );
+  }
+
+  return (
+    ground() +
+    `<path class="au-art__gold-line" d="M34 60h252"/>` +
+    stalls.join("") +
+    `<path class="au-art__line" d="M34 176h252"/>` +
+    figure(74, 176, 1.2) +
+    figure(126, 180, 1.1) +
+    figure(190, 176, 1.25) +
+    figure(240, 180, 1.05)
+  );
+}
+
+/** Robótica — an arm, its joints, and what it is holding. */
+function robotica() {
+  return (
+    ground() +
+    `<rect class="au-art__mass" x="52" y="176" width="72" height="16" rx="3"/>` +
+    /* Three segments, three joints. */
+    `<path class="au-art__line" d="M88 176V126l58-32 46 34" stroke-width="7" stroke-linecap="round"/>` +
+    `<circle class="au-art__mass-2" cx="88" cy="176" r="11"/>` +
+    `<circle class="au-art__mass-2" cx="88" cy="126" r="9"/>` +
+    `<circle class="au-art__mass-2" cx="146" cy="94" r="9"/>` +
+    /* The gripper and the cube it has picked up. */
+    `<path class="au-art__accent-line" d="M186 122v18M204 122v18"/>` +
+    `<rect class="au-art__accent" x="182" y="140" width="26" height="26" rx="3"/>` +
+    /* The bench it works over, and the parts waiting on it. */
+    `<rect class="au-art__mass" x="150" y="176" width="118" height="6" rx="2"/>` +
+    `<rect class="au-art__mass-2" x="222" y="158" width="18" height="18" rx="2"/>` +
+    `<rect class="au-art__mass-2" x="246" y="164" width="14" height="12" rx="2"/>` +
+    `<path class="au-art__gold-line" d="M52 62h60"/>`
+  );
+}
+
+/** Fotografía — a contact sheet, with one frame chosen. */
+function fotografia() {
+  const frames = [];
+  for (let row = 0; row < 3; row++) {
+    for (let col = 0; col < 4; col++) {
+      const x = 54 + col * 56;
+      const y = 62 + row * 44;
+      const chosen = row === 1 && col === 2;
+      frames.push(
+        `<rect class="${chosen ? "au-art__glass" : "au-art__mass-2"}" x="${x}" y="${y}" ` +
+          `width="46" height="34" rx="2"/>`,
+      );
+      if (chosen) {
+        frames.push(
+          `<rect class="au-art__accent-line" x="${x - 3}" y="${y - 3}" width="52" height="40" rx="3" fill="none"/>`,
+        );
+      }
+    }
+  }
+
+  return (
+    ground() +
+    `<rect class="au-art__mass" x="42" y="50" width="236" height="146" rx="3"/>` +
+    frames.join("") +
+    /* The sprocket holes down both edges: what says "film" in two marks. */
+    [0, 1, 2, 3, 4, 5, 6]
+      .map(
+        (i) =>
+          `<rect class="au-art__dot" x="46" y="${58 + i * 20}" width="5" height="8" rx="1"/>` +
+          `<rect class="au-art__dot" x="269" y="${58 + i * 20}" width="5" height="8" rx="1"/>`,
+      )
+      .join("") +
+    `<circle class="au-art__gold" cx="160" cy="212" r="4"/>`
+  );
+}
+
+/** Jardín — the green areas: a path, trees and a bench. */
+function jardin() {
+  return (
+    ground() +
+    `<path class="au-plan-art__green" d="M0 150h320v90H0z" opacity="0.5"/>` +
+    `<path class="au-art__line" d="M0 176c58-26 104-26 160 0s102 26 160 0"/>` +
+    `<path class="au-art__line au-art__line--faint" d="M0 196c58-26 104-26 160 0s102 26 160 0"/>` +
+    tree(52, 168, 1.9) +
+    tree(104, 176, 1.4) +
+    tree(258, 166, 2.1) +
+    tree(216, 174, 1.5) +
+    /* The bench: the one built object, and the accent. */
+    `<g class="au-art__accent"><rect x="140" y="152" width="52" height="5" rx="2"/>` +
+    `<rect x="140" y="136" width="52" height="4" rx="2"/></g>` +
+    `<path class="au-art__line" d="M146 157v14M186 157v14"/>` +
+    figure(96, 208, 1.1) +
+    figure(118, 212, 1)
+  );
+}
+
+/** Cafetería — tables from above, and the counter they queue at. */
+function cafeteria() {
+  const tables = [];
+  for (let row = 0; row < 3; row++) {
+    for (let col = 0; col < 4; col++) {
+      const x = 72 + col * 58;
+      const y = 108 + row * 40;
+      const accent = row === 1 && col === 1;
+      tables.push(
+        `<circle class="${accent ? "au-art__accent" : "au-art__mass-2"}" cx="${x}" cy="${y}" r="13"/>` +
+          [0, 1, 2, 3]
+            .map((i) => {
+              const angle = (i / 4) * Math.PI * 2 + Math.PI / 4;
+              return (
+                `<circle class="au-art__mass" cx="${n(x + Math.cos(angle) * 21)}" ` +
+                `cy="${n(y + Math.sin(angle) * 21)}" r="5"/>`
+              );
+            })
+            .join(""),
+      );
+    }
+  }
+
+  return (
+    ground() +
+    `<rect class="au-art__mass" x="34" y="46" width="252" height="26" rx="4"/>` +
+    `<path class="au-art__gold-line" d="M46 59h60M120 59h40"/>` +
+    tables.join("") +
+    `<path class="au-art__line au-art__line--faint" d="M34 84h252"/>`
+  );
+}
+
+/** Ceremonia — the podium, the banners and the hall in front of it. */
+function ceremonia() {
+  const seats = [];
+  for (let row = 0; row < 4; row++) {
+    for (let col = 0; col < 9; col++) {
+      seats.push(
+        `<rect class="au-art__mass-2" x="${38 + col * 28}" y="${142 + row * 18}" ` +
+          `width="19" height="10" rx="2"/>`,
+      );
+    }
+  }
+
+  return (
+    ground() +
+    /* Three banners, the middle one accented. */
+    [0, 1, 2]
+      .map(
+        (i) =>
+          `<path class="${i === 1 ? "au-art__gold" : "au-art__mass-2"}" ` +
+          `d="M${106 + i * 54} 34h30v56l-15-10-15 10z"/>`,
+      )
+      .join("") +
+    `<rect class="au-art__mass" x="132" y="104" width="56" height="30" rx="3"/>` +
+    figure(160, 104, 1.4) +
+    `<path class="au-art__line" d="M34 138h252"/>` +
+    seats.join("")
+  );
+}
+
+/** Microscopio — the instrument, and what it is looking at. */
+function microscopio() {
+  return (
+    ground() +
+    /* The instrument, left. */
+    `<path class="au-art__mass" d="M62 194h76v8H62z"/>` +
+    `<path class="au-art__line" d="M100 194v-34" stroke-width="6" stroke-linecap="round"/>` +
+    `<path class="au-art__mass-2" d="M86 160h28l-4-52a10 10 0 0 0-20 0z"/>` +
+    `<rect class="au-art__mass" x="72" y="150" width="56" height="6" rx="2"/>` +
+    `<rect class="au-art__accent" x="88" y="146" width="24" height="5" rx="2"/>` +
+    `<circle class="au-art__mass-2" cx="130" cy="82" r="10"/>` +
+    /* The field of view, right: the same accent, magnified. */
+    `<circle class="au-art__glass" cx="222" cy="126" r="52"/>` +
+    `<circle class="au-art__line" cx="222" cy="126" r="52" fill="none"/>` +
+    [
+      [206, 108, 9], [236, 116, 7], [214, 142, 8], [242, 148, 6], [196, 132, 5],
+    ]
+      .map(
+        ([x, y, r], index) =>
+          `<circle class="${index === 0 ? "au-art__accent" : "au-art__mass-2"}" cx="${x}" cy="${y}" r="${r}"/>`,
+      )
+      .join("") +
+    `<path class="au-art__gold-line" d="M164 126h6"/>`
+  );
+}
+
+/** Ajedrez — the board, and the two pieces still on it. */
+function ajedrez() {
+  const squares = [];
+  for (let row = 0; row < 8; row++) {
+    for (let col = 0; col < 8; col++) {
+      if ((row + col) % 2 === 0) continue;
+      squares.push(
+        `<rect class="au-art__mass-2" x="${52 + col * 27}" y="${58 + row * 17}" width="27" height="17"/>`,
+      );
+    }
+  }
+
+  const piece = (x, y, cls) =>
+    `<g class="${cls}"><ellipse cx="${x}" cy="${y}" rx="10" ry="4"/>` +
+    `<path d="M${x - 6} ${y}c0-14 12-14 12 0z"/><circle cx="${x}" cy="${y - 18}" r="6"/></g>`;
+
+  return (
+    ground() +
+    `<rect class="au-art__mass" x="52" y="58" width="216" height="136" rx="2"/>` +
+    squares.join("") +
+    `<rect class="au-art__line" x="52" y="58" width="216" height="136" rx="2" fill="none"/>` +
+    piece(120, 142, "au-art__figure") +
+    piece(201, 108, "au-art__accent") +
+    `<path class="au-art__gold-line" d="M52 202h216"/>`
+  );
+}
+
+/** Examen — desks, spaced, and the one paper already turned over. */
+function examen() {
+  const desks = [];
+  for (let row = 0; row < 4; row++) {
+    for (let col = 0; col < 5; col++) {
+      const x = 44 + col * 50;
+      const y = 82 + row * 32;
+      const marked = row === 2 && col === 1;
+      desks.push(
+        `<rect class="au-art__mass-2" x="${x}" y="${y}" width="38" height="18" rx="2"/>` +
+          `<rect class="${marked ? "au-art__accent" : "au-art__mass"}" x="${x + 9}" y="${y + 4}" ` +
+          `width="20" height="11" rx="1"/>`,
+      );
+    }
+  }
+
+  return (
+    ground() +
+    `<rect class="au-art__mass" x="112" y="40" width="96" height="26" rx="2"/>` +
+    `<path class="au-art__gold-line" d="M124 53h34"/>` +
+    desks.join("") +
+    `<path class="au-art__line au-art__line--faint" d="M34 214h252"/>`
+  );
+}
+
+/** Tutoría — two people, one table, one open book. */
+function tutoria() {
+  return (
+    ground() +
+    `<ellipse class="au-art__mass" cx="160" cy="150" rx="86" ry="30"/>` +
+    /* The book, open, at the centre — the accent and the subject. */
+    `<path class="au-art__accent" d="M124 146c14-8 26-8 34 0v14c-8-8-20-8-34 0z"/>` +
+    `<path class="au-art__accent" d="M196 146c-14-8-26-8-34 0v14c8-8 20-8 34 0z"/>` +
+    `<path class="au-art__line" d="M160 146v14"/>` +
+    figure(96, 148, 1.7) +
+    figure(226, 148, 1.7) +
+    `<path class="au-art__line au-art__line--faint" d="M40 190h240"/>` +
+    `<rect class="au-art__mass-2" x="222" y="60" width="56" height="44" rx="3"/>` +
+    `<path class="au-art__line au-art__line--faint" d="M232 74h36M232 84h26"/>` +
+    `<path class="au-art__gold-line" d="M42 66h44"/>`
+  );
+}
+
 /* ----------------------------------------------------------- the registry */
 
 const PLATES = {
@@ -588,6 +987,22 @@ const PLATES = {
   computo,
   carpeta,
   laboratorio,
+  musica,
+  teatro,
+  danza,
+  natacion,
+  baloncesto,
+  graduacion,
+  feria,
+  robotica,
+  fotografia,
+  jardin,
+  cafeteria,
+  ceremonia,
+  microscopio,
+  ajedrez,
+  examen,
+  tutoria,
   oficina,
   codigo,
   campana,
@@ -627,6 +1042,22 @@ const LABELS = {
   debate: "Ilustración: dos atriles enfrentados y los turnos de palabra entre ellos",
   mapa: "Ilustración: rutas trazadas entre varios puntos",
   comunidad: "Ilustración: viviendas conectadas entre sí y personas alrededor",
+  musica: "Ilustración: un pentagrama con notas y un atril",
+  teatro: "Ilustración: un escenario con telones, un cono de luz y una figura",
+  danza: "Ilustración: tres figuras en movimiento y los arcos que trazan",
+  natacion: "Ilustración: una piscina vista desde arriba, con carriles y poyetes",
+  baloncesto: "Ilustración: un tablero de baloncesto y la trayectoria de un tiro",
+  graduacion: "Ilustración: birretes en formación y uno lanzado al aire",
+  feria: "Ilustración: una fila de puestos bajo sus toldos, con visitantes",
+  robotica: "Ilustración: un brazo robótico sujetando una pieza sobre un banco",
+  fotografia: "Ilustración: una hoja de contactos con un fotograma seleccionado",
+  jardin: "Ilustración: áreas verdes con árboles, un sendero y una banca",
+  cafeteria: "Ilustración: mesas redondas vistas desde arriba y un mostrador",
+  ceremonia: "Ilustración: un podio con estandartes frente a filas de sillas",
+  microscopio: "Ilustración: un microscopio y el campo de visión que produce",
+  ajedrez: "Ilustración: un tablero de ajedrez con dos piezas en juego",
+  examen: "Ilustración: pupitres separados con una hoja sobre cada uno",
+  tutoria: "Ilustración: dos personas frente a una mesa con un libro abierto",
 };
 
 /** One plate, by key. Unknown keys fall back rather than throwing: a plate is

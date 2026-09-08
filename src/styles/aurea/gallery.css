@@ -1,0 +1,383 @@
+/* =============================================================================
+   AUREA — the gallery, the lightbox and the editorial figures
+
+   The visual half of the portal. Three components:
+
+     .au-gallery   the mosaic — a dense-packed grid where a few tiles take two
+                   columns or two rows, so thirty drawings read as a composed
+                   page rather than as a contact sheet.
+     .au-lightbox  one tile, full size, with its caption and keyboard nav.
+     .au-feature   a plate at editorial scale beside its text, for the pages
+                   that would otherwise be a column of prose.
+   ========================================================================== */
+
+/* ----------------------------------------------------------- the mosaic */
+
+/**
+ * Explicit column counts, not `auto-fill`.
+ *
+ * A tile that spans two columns needs there to BE two columns. With
+ * `auto-fill` a narrow phone resolves to a single track and every `span 2`
+ * silently creates an implicit second column wider than the screen. Two
+ * columns is therefore the floor, and the tiles that span are safe at every
+ * width.
+ */
+.au-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: 8rem;
+  grid-auto-flow: dense;
+  gap: clamp(0.35rem, 0.9vw, 0.75rem);
+}
+
+@media (min-width: 40rem) {
+  .au-gallery {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-auto-rows: 9.5rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  .au-gallery {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-rows: 11rem;
+  }
+}
+
+/**
+ * The frame is painted the same colour as the plate that sits in it.
+ *
+ * A drawing is `slice`d into its tile, so normally nothing shows through —
+ * but at the extreme aspect ratios of a two-column tile the difference between
+ * the frame and the ground would appear as a seam the moment either one
+ * changed. `--au-frame` keeps the two in step, and it is the only thing the
+ * paper variant has to override.
+ */
+.au-frame--deep { --au-frame: var(--navy-900); }
+.au-frame--paper { --au-frame: var(--navy-100); }
+
+.au-tile {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: var(--au-frame, var(--navy-900));
+  color: var(--white);
+  text-align: left;
+  cursor: zoom-in;
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+
+.au-tile[hidden] {
+  display: none;
+}
+
+.au-tile:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.au-tile__art {
+  position: absolute;
+  inset: 0;
+}
+
+.au-tile__art svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* The plate drifts in a little on hover. Sixteen pixels of scale is enough to
+   register as alive and not enough to reveal the edges of the drawing. */
+.au-tile__art {
+  transition: transform 0.5s var(--ease-out);
+}
+
+.au-tile:hover .au-tile__art,
+.au-tile:focus-visible .au-tile__art {
+  transform: scale(1.04);
+}
+
+/**
+ * The caption sits on the tile, always — not on hover.
+ *
+ * A mosaic where the labels only appear under the pointer is unusable on a
+ * phone, unreadable to a screen reader that has no pointer, and a guessing
+ * game for everyone else. The scrim is what makes it legible over any plate.
+ */
+.au-tile__meta {
+  position: absolute;
+  inset: auto 0 0 0;
+  display: grid;
+  gap: 0.15rem;
+  padding: 2.2rem 0.85rem 0.75rem;
+  background: linear-gradient(to top, rgb(6 16 26 / 0.92) 22%, rgb(6 16 26 / 0) 100%);
+}
+
+.au-tile__title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.au-tile__cat {
+  color: var(--gold);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* The zoom affordance: a corner mark that only the pointer needs. */
+.au-tile__zoom {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  display: grid;
+  place-items: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 50%;
+  background: rgb(6 16 26 / 0.72);
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 0.2s var(--ease), transform 0.2s var(--ease);
+}
+
+.au-tile:hover .au-tile__zoom,
+.au-tile:focus-visible .au-tile__zoom {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.au-tile--wide { grid-column: span 2; }
+.au-tile--tall { grid-row: span 2; }
+.au-tile--big { grid-column: span 2; grid-row: span 2; }
+
+/* At two columns a `big` tile would be the whole width and half the page, so
+   it drops to a wide one and the mosaic stays a mosaic. */
+@media (max-width: 39.99rem) {
+  .au-tile--big {
+    grid-row: span 1;
+  }
+
+  .au-tile--tall {
+    grid-row: span 1;
+  }
+}
+
+/* ---------------------------------------------------------- the lightbox */
+
+.au-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  display: grid;
+  place-items: center;
+  padding: clamp(0.75rem, 3vw, 2rem);
+  /* Nearly opaque, and blurred: at 0.94 the mosaic behind stayed legible and
+     competed with the picture the reader had just asked to see. */
+  background: rgb(6 16 26 / 0.975);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.24s var(--ease), visibility 0s linear 0.24s;
+}
+
+.au-lightbox[data-open] {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.24s var(--ease), visibility 0s;
+}
+
+.au-lightbox__frame {
+  /* Tied to the viewport HEIGHT as well as its width: the stage is 16:10 and
+     the caption bar sits under it, so on a short window a frame sized only by
+     width pushes its own caption off the screen. */
+  width: min(100%, 64rem, 112vh);
+  transform: scale(0.98);
+  transition: transform 0.28s var(--ease-out);
+}
+
+.au-lightbox[data-open] .au-lightbox__frame {
+  transform: scale(1);
+}
+
+.au-lightbox__stage {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--navy-900);
+}
+
+.au-lightbox__stage svg {
+  width: 100%;
+  height: 100%;
+}
+
+.au-lightbox__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.8rem 1.5rem;
+  padding-top: 1rem;
+  color: var(--ink-onDark);
+}
+
+.au-lightbox__text {
+  max-width: 56ch;
+}
+
+.au-lightbox__cat {
+  color: var(--gold);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.au-lightbox__title {
+  margin: 0.2rem 0 0.3rem;
+  color: var(--white);
+  font-family: var(--serif);
+  font-size: var(--step-2);
+}
+
+.au-lightbox__caption {
+  margin: 0;
+  color: var(--ink-onDark-muted);
+  font-size: var(--step--1);
+  line-height: 1.55;
+}
+
+.au-lightbox__nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.au-lightbox__count {
+  margin: 0 0.4rem 0 0;
+  color: var(--ink-onDark-muted);
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.au-lightbox__btn {
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border: 1px solid rgb(255 255 255 / 0.28);
+  border-radius: 50%;
+  background: none;
+  color: var(--white);
+  font-family: var(--sans);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.16s var(--ease), border-color 0.16s var(--ease);
+}
+
+.au-lightbox__btn:hover {
+  background: var(--white);
+  border-color: var(--white);
+  color: var(--navy-900);
+}
+
+/* Solid rather than outlined: the stage behind it may be navy or paper, and a
+   translucent white ring disappears against the second one. */
+.au-lightbox__close {
+  position: absolute;
+  top: clamp(0.6rem, 2vw, 1.2rem);
+  right: clamp(0.6rem, 2vw, 1.2rem);
+  z-index: 1;
+  border-color: transparent;
+  background: rgb(6 16 26 / 0.8);
+}
+
+/* -------------------------------------------------- the editorial figure */
+
+/**
+ * A plate at the scale the brief calls “fotografía grande”.
+ *
+ * Used on the pages that would otherwise be a column of prose: the purpose
+ * statement, the educational model, employability, the alumni network. The
+ * image is a real figure with a caption, not a decorative background, so it
+ * carries the same weight as the text beside it.
+ */
+.au-feature {
+  display: grid;
+  gap: clamp(1.2rem, 3vw, 3rem);
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  align-items: center;
+}
+
+.au-feature--flip > figure {
+  order: 2;
+}
+
+.au-feature figure {
+  margin: 0;
+}
+
+.au-feature__frame {
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--au-frame, var(--navy-900));
+}
+
+.au-feature__frame svg {
+  width: 100%;
+  height: 100%;
+}
+
+.au-feature figcaption {
+  margin-top: 0.7rem;
+  color: var(--ink-muted);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.au-band--dark .au-feature figcaption {
+  color: var(--ink-onDark-muted);
+}
+
+@media (max-width: 52rem) {
+  .au-feature {
+    grid-template-columns: 1fr;
+  }
+
+  .au-feature--flip > figure {
+    order: 0;
+  }
+}
+
+/**
+ * A strip of three or four plates, full width, between two text sections.
+ *
+ * The cheapest way to give a long page a breath of image without inventing a
+ * new layout for it.
+ */
+.au-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  gap: clamp(0.4rem, 1vw, 0.8rem);
+}
+
+.au-strip__frame {
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--au-frame, var(--navy-900));
+}
+
+.au-strip__frame svg {
+  width: 100%;
+  height: 100%;
+}

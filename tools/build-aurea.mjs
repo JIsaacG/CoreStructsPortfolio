@@ -37,6 +37,7 @@ import {
   employabilityPage,
   facultyPage,
   faqPage,
+  galleryPage,
   institutionPage,
   internationalPage,
   libraryPage,
@@ -97,6 +98,7 @@ emit("costos.html", costsPage);
 emit("calendario.html", calendarPage);
 emit("noticias.html", newsroomPage);
 emit("vida-estudiantil.html", lifePage);
+emit("galeria.html", galleryPage);
 emit("campus.html", campusPage);
 emit("investigacion.html", researchPage);
 emit("docentes.html", facultyPage);

@@ -29,7 +29,7 @@ import { allEvents } from "../../src/data/aurea/calendar.js";
 import { faculty, offices } from "../../src/data/aurea/people.js";
 import { documents } from "../../src/data/aurea/resources.js";
 import { asset, icon, page, sub } from "./blocks.mjs";
-import { bandArt, isotype } from "./art.mjs";
+import { bandArt, isotype, plate } from "./art.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 
@@ -539,6 +539,7 @@ export function searchIndex(ctx) {
     ["Calendario", "Eventos por categoría y por audiencia", "calendario"],
     ["Noticias y comunicados", "Actualidad de la institución", "noticias"],
     ["Vida estudiantil", "Clubes, deportes, arte y voluntariado", "vida"],
+    ["Galería", "El campus, las aulas y la vida estudiantil en imágenes", "galeria"],
     ["Campus", "Espacios, tour virtual y visitas", "campus"],
     ["Investigación", "Centros, proyectos y publicaciones", "investigacion"],
     ["Docentes", "Directorio de la planta docente", "docentes"],
@@ -725,17 +726,23 @@ ${scripts}
 
 /* --------------------------------------------------------------- page head */
 
-/** The navy band that opens every interior page. */
-export function pageHead({ crumbs: crumbsHtml, label, title, lead, aside }) {
+/**
+ * The navy band that opens every interior page.
+ *
+ * `art` names a plate, and every interior page names one: the band behind the
+ * title is then a scene from that part of the institution rather than the same
+ * abstract lattice twenty times. Pages that do not name one fall back to the
+ * lattice, which is what the lattice is for.
+ */
+export function pageHead({ crumbs: crumbsHtml, label, title, lead, aside, art }) {
   return `      <section class="au-pagehead">
-        <div class="au-pagehead__art">${bandArt()}</div>
+        <div class="au-pagehead__art">${art ? plate(art) : bandArt()}</div>
+        <div class="au-pagehead__veil"></div>
         <div class="au-shell au-pagehead__inner">
-          <div>
+          <div class="au-pagehead__text">
             ${crumbsHtml}
             <p class="au-label">${label ? `<span>${escape(label)}</span>` : ""}</p>
             <h1 class="au-pagehead__title">${escape(title)}</h1>
-          </div>
-          <div>
             ${lead ? `<p class="au-pagehead__lead">${escape(lead)}</p>` : ""}
             ${aside ?? ""}
           </div>

@@ -61,6 +61,7 @@ import {
 } from "../../src/data/aurea/life.js";
 import { centers, projects, publications, researchFacts, stateLabel } from "../../src/data/aurea/research.js";
 import { alumni, employability, international } from "../../src/data/aurea/network.js";
+import { gallery, galleryCategories, featuredGallery, byId as galleryById } from "../../src/data/aurea/gallery.js";
 import {
   documentCategories,
   documents,
@@ -80,6 +81,11 @@ import {
   callout,
   card,
   crumbs,
+  feature,
+  lightbox,
+  mosaic,
+  strip,
+  tile,
   dateChip,
   demoTag,
   empty,
@@ -115,13 +121,14 @@ const trailOf = (label) => [{ label: "Inicio", route: "home" }, { label }];
  * titles are whole sentences (“Lo que está pasando en AUREA.”) and a sentence
  * in a breadcrumb is unreadable at the top of a page.
  */
-const opener = (ctx, { label, title, lead, crumbLabel, aside }) =>
+const opener = (ctx, { label, title, lead, crumbLabel, aside, art }) =>
   pageHead({
     crumbs: crumbs(ctx, trailOf(crumbLabel ?? label ?? title)),
     label,
     title,
     lead,
     aside,
+    art,
   });
 
 /** A programme has a laboratory unless it is a pure business programme. */
@@ -137,6 +144,7 @@ export function institutionPage(ctx) {
   const body = [
     opener(ctx, {
       label: "La institución",
+      art: "graduacion",
       crumbLabel: "Institución",
       title: purpose.title,
       lead: purpose.lead,
@@ -153,6 +161,12 @@ export function institutionPage(ctx) {
           .map((pillar) => card({ kicker: pillar.label, title: pillar.text, className: "au-card--flat", level: 3 }))
           .join("") +
         `</div></div></div>`,
+    }),
+
+    band({
+      tone: "sunken",
+      body: strip(["aula", "laboratorio", "biblioteca", "patio"]),
+      tight: true,
     }),
 
     band({
@@ -193,6 +207,17 @@ export function institutionPage(ctx) {
           title: model.title,
           body: model.lead,
         }) +
+        `<div style="margin-bottom:clamp(2rem,4vw,3rem)">` +
+        feature({
+          plate: "taller",
+          caption: "Centro de Innovación. Ilustración demostrativa.",
+          body:
+            `<p class="au-lead" style="color:var(--ink-onDark)">Un modelo educativo se demuestra en el ` +
+            `horario, no en el folleto. Estos cuatro pilares tienen horas, espacios y evaluación ` +
+            `asignados, y la sección de abajo dice exactamente cuántas.</p>` +
+            `<div style="margin-top:1.2rem">${arrowLink("Cómo se reparte una semana", page(ctx, "institucion", "modelo"))}</div>`,
+        }) +
+        `</div>` +
         grid(
           model.pillars.map((pillar) =>
             card({
@@ -308,6 +333,7 @@ export function offerPage(ctx) {
   const body = [
     opener(ctx, {
       label: "Oferta académica",
+      art: "aula",
       title: "Encuentra tu camino.",
       lead:
         "Tres bachilleratos de educación media y seis licenciaturas, en un mismo campus. " +
@@ -472,6 +498,7 @@ export function admissionsPage(ctx) {
   const body = [
     opener(ctx, {
       label: "Admisiones 2027",
+      art: "examen",
       crumbLabel: "Admisiones",
       title: "Tu camino a AUREA comienza aquí.",
       lead:
@@ -661,12 +688,30 @@ export function scholarshipsPage(ctx) {
   const body = [
     opener(ctx, {
       label: "Becas y financiamiento",
+      art: "ceremonia",
       crumbLabel: "Becas",
       title: "Que el costo no detenga tu talento.",
       lead:
         "Cinco programas de beca, del 25 % al 80 % del arancel, más descuentos por pago " +
         "anticipado, por hermanos y por convenio empresarial.",
       aside: `<div class="au-actions" style="margin-top:1.4rem">${button("Simular mi beca", "#simulador", { gold: true })}${button("Calcular costos", page(ctx, "costos", "calculadora"), { onDark: true })}</div>`,
+    }),
+
+    band({
+      tone: "tint",
+      tight: true,
+      body: feature({
+        plate: "graduacion",
+        caption: "Promoción 2026. Ilustración demostrativa.",
+        flip: true,
+        body:
+          `<p class="au-label"><span>El fondo de becas</span></p>` +
+          `<h2 style="margin-bottom:0.8rem">Uno de cada tres estudiantes tiene beca.</h2>` +
+          `<p class="au-lead">El sistema existe para que el ingreso familiar no decida quién ` +
+          `estudia. Cinco programas, del 25 % al 80 % del arancel, acumulables con los ` +
+          `descuentos por hermanos y por convenio hasta un tope del 80 %.</p>` +
+          `<div style="margin-top:1.2rem">${demoTag("Cifra demostrativa")}</div>`,
+      }),
     }),
 
     band({
@@ -807,6 +852,7 @@ export function costsPage(ctx) {
   const body = [
     opener(ctx, {
       label: "Costos",
+      art: "series",
       title: "Lo que cuesta, publicado.",
       lead:
         "Educación media se cobra por mensualidad y educación superior por asignatura. Los dos " +
@@ -957,6 +1003,7 @@ export function calendarPage(ctx) {
   const body = [
     opener(ctx, {
       label: "Calendario institucional",
+      art: "auditorio",
       crumbLabel: "Calendario",
       title: "Lo que está pasando en AUREA.",
       lead:
@@ -1101,6 +1148,7 @@ export function newsroomPage(ctx) {
   const body = [
     opener(ctx, {
       label: "Actualidad",
+      art: "campana",
       crumbLabel: "Noticias",
       title: "AUREA hoy.",
       lead:
@@ -1154,6 +1202,21 @@ export function newsroomPage(ctx) {
   };
 }
 
+/**
+ * The band behind a headline gets a different drawing from the one in the
+ * article, so the page carries two images instead of the same one twice.
+ */
+const ARTICLE_HEAD_ART = {
+  investigacion: "microscopio",
+  institucional: "ceremonia",
+  estudiantes: "feria",
+  deportes: "baloncesto",
+  comunidad: "jardin",
+  internacional: "mapa",
+};
+
+const plateForArticle = (article) => ARTICLE_HEAD_ART[article.category] ?? "campana";
+
 export function articlePage(ctx, article) {
   const trail = [
     { label: "Inicio", route: "home" },
@@ -1165,13 +1228,15 @@ export function articlePage(ctx, article) {
 
   const body = [
     `      <section class="au-pagehead">
-        <div class="au-shell au-pagehead__inner" style="grid-template-columns:1fr">
-          <div>
+        <div class="au-pagehead__art">${plate(plateForArticle(article))}</div>
+        <div class="au-pagehead__veil"></div>
+        <div class="au-shell au-pagehead__inner">
+          <div class="au-pagehead__text">
             ${crumbs(ctx, trail)}
             <p class="au-label"><span>${escape(labelOf(newsCategories, article.category))}</span></p>
-            <h1 class="au-pagehead__title" style="max-width:24ch">${escape(article.title)}</h1>
-            <p class="au-pagehead__lead" style="margin-top:1.2rem">${escape(article.summary)}</p>
-            <p class="au-note" style="color:var(--ink-onDark-muted)">
+            <h1 class="au-pagehead__title" style="max-width:22ch">${escape(article.title)}</h1>
+            <p class="au-pagehead__lead">${escape(article.summary)}</p>
+            <p class="au-note" style="color:var(--ink-onDark-muted);margin:0">
               ${escape(longDate(article.date))} · ${escape(article.author)} ·
               ${escape(`${Math.max(2, Math.round(article.words / 200))} min de lectura`)}
             </p>
@@ -1253,6 +1318,7 @@ export function lifePage(ctx) {
   const body = [
     opener(ctx, {
       label: "Vida estudiantil",
+      art: "danza",
       title: "Aquí también sucede la educación.",
       lead:
         "Cuarenta y dos clubes, cinco disciplinas federadas, cinco elencos artísticos y un " +
@@ -1335,6 +1401,9 @@ export function lifePage(ctx) {
           action: arrowLink("Ver la agenda cultural", page(ctx, "calendario")),
           ui: true,
         }) +
+        `<div style="margin-bottom:clamp(1.5rem,3vw,2.5rem)">` +
+        strip(["teatro", "musica", "danza", "fotografia"]) +
+        `</div>` +
         grid(
           arts.map((art) => card({ title: art.name, text: art.text, className: "au-card--flat" })),
           5,
@@ -1367,9 +1436,30 @@ export function lifePage(ctx) {
     }),
 
     band({
+      tone: "sunken",
+      id: "galeria",
       body:
         head({
           index: "05",
+          label: "Galería",
+          title: "Aquí es donde pasa.",
+          body:
+            `${gallery.length} escenas del campus, las aulas, la cancha y el escenario. Se ` +
+            "filtran por área y se abren a tamaño completo.",
+          action: arrowLink("Ver la galería completa", page(ctx, "galeria")),
+        }) +
+        mosaic(
+          ["explanada", "teatro-montaje", "cancha-futbol", "orquesta", "graduacion-2026", "piscina", "compania-danza"]
+            .map((id) => galleryById(id))
+            .filter(Boolean),
+        ) +
+        lightbox(),
+    }),
+
+    band({
+      body:
+        head({
+          index: "06",
           label: "Acompañamiento",
           title: "No tienes que hacerlo solo.",
           body: "Ocho servicios, todos sin costo para el estudiante.",
@@ -1491,6 +1581,7 @@ export function campusPage(ctx) {
   const body = [
     opener(ctx, {
       label: "El campus",
+      art: "jardin",
       crumbLabel: "Campus",
       title: "Conoce dónde vas a aprender.",
       lead:
@@ -1502,7 +1593,20 @@ export function campusPage(ctx) {
     band({
       id: "espacios",
       body:
-        head({ index: "01", label: "Espacios", title: "Ocho lugares que vas a usar." }) +
+        head({
+          index: "01",
+          label: "Espacios",
+          title: "Ocho lugares que vas a usar.",
+          body: "Cada uno con lo que de verdad importa saber de él: cuántos caben y hasta qué hora abre.",
+        }) +
+        `<div style="margin-bottom:clamp(1.5rem,3vw,2.5rem)">` +
+        mosaic(
+          ["explanada", "biblioteca-niveles", "auditorio-lleno", "laboratorio-computo", "areas-verdes", "comedor", "salas-abiertas"]
+            .map((id) => galleryById(id))
+            .filter(Boolean),
+        ) +
+        lightbox() +
+        `</div>` +
         grid(
           spaces.map((space) =>
             card({
@@ -1580,6 +1684,7 @@ export function researchPage(ctx) {
   const body = [
     opener(ctx, {
       label: "Investigación e innovación",
+      art: "microscopio",
       crumbLabel: "Investigación",
       title: "Conocimiento que sale del aula.",
       lead:
@@ -1593,7 +1698,9 @@ export function researchPage(ctx) {
           researchFacts.map((fact) =>
             figure({ value: fact.value, label: fact.label, count: Number(fact.value) || undefined }),
           ),
-        ) + note(notice.dataShort),
+        ) +
+        note(notice.dataShort) +
+        `<div style="margin-top:clamp(2rem,4vw,3rem)">${strip(["microscopio", "robotica", "energia", "codigo"])}</div>`,
     }),
 
     band({
@@ -1742,6 +1849,7 @@ export function facultyPage(ctx) {
   const body = [
     opener(ctx, {
       label: "Docentes",
+      art: "tutoria",
       title: "Quién enseña en AUREA.",
       lead:
         "Doce perfiles demostrativos de una planta de ciento cuarenta docentes. Busca por " +
@@ -1814,6 +1922,7 @@ export function directoryPage(ctx) {
   const body = [
     opener(ctx, {
       label: "Directorio institucional",
+      art: "oficina",
       crumbLabel: "Directorio",
       title: "A quién escribirle.",
       lead:
@@ -1878,6 +1987,7 @@ export function libraryPage(ctx) {
   const body = [
     opener(ctx, {
       label: "Biblioteca y repositorio",
+      art: "biblioteca",
       crumbLabel: "Biblioteca",
       title: "Busca libros, artículos y recursos.",
       lead:
@@ -1947,10 +2057,16 @@ export function supportPage(ctx) {
   const body = [
     opener(ctx, {
       label: "Apoyo al estudiante",
+      art: "circulo",
       title: "No tienes que hacerlo solo.",
       lead:
         "Ocho servicios de acompañamiento, todos sin costo para el estudiante. Cada uno declara " +
         "dónde está, cuándo abre y qué resuelve.",
+    }),
+
+    band({
+      tight: true,
+      body: strip(["tutoria", "circulo", "biblioteca", "computo"]),
     }),
 
     band({
@@ -2026,6 +2142,7 @@ export function employabilityPage(ctx) {
   const body = [
     opener(ctx, {
       label: "Empleabilidad",
+      art: "feria",
       title: employability.title,
       lead: employability.lead,
     }),
@@ -2033,7 +2150,8 @@ export function employabilityPage(ctx) {
     band({
       body:
         figureRow(employability.facts.map((fact) => figure(fact))) +
-        note(`${notice.dataShort}. Los indicadores no corresponden a ninguna medición real.`),
+        note(`${notice.dataShort}. Los indicadores no corresponden a ninguna medición real.`) +
+        `<div style="margin-top:clamp(2rem,4vw,3rem)">${strip(["feria", "oficina", "carpeta", "graduacion"])}</div>`,
     }),
 
     band({
@@ -2109,9 +2227,24 @@ export function employabilityPage(ctx) {
 
 export function alumniPage(ctx) {
   const body = [
-    opener(ctx, { label: "Egresados", title: alumni.title, lead: alumni.lead }),
+    opener(ctx, { label: "Egresados",
+      art: "comunidad", title: alumni.title, lead: alumni.lead }),
 
     band({ tight: true, body: figureRow(alumni.facts.map((fact) => figure(fact))) + note(notice.dataShort) }),
+
+    band({
+      tight: true,
+      body: feature({
+        plate: "ceremonia",
+        caption: "Encuentro anual de egresados. Ilustración demostrativa.",
+        body:
+          `<p class="au-label"><span>La red</span></p>` +
+          `<h2 style="margin-bottom:0.8rem">No es una lista de correo.</h2>` +
+          `<p class="au-lead">Acceso vitalicio a la biblioteca y a las bases de datos, 40 % de ` +
+          `descuento en educación continua, bolsa de empleo permanente y un directorio ` +
+          `profesional que se usa.</p>`,
+      }),
+    }),
 
     band({
       tone: "tint",
@@ -2187,7 +2320,8 @@ export function alumniPage(ctx) {
 
 export function internationalPage(ctx) {
   const body = [
-    opener(ctx, { label: "Internacional", title: international.title, lead: international.lead }),
+    opener(ctx, { label: "Internacional",
+      art: "mapa", title: international.title, lead: international.lead }),
 
     band({ tight: true, body: figureRow(international.facts.map((fact) => figure(fact))) + note(notice.dataShort) }),
 
@@ -2278,6 +2412,7 @@ export function documentsPage(ctx) {
   const body = [
     opener(ctx, {
       label: "Documentos y recursos",
+      art: "carpeta",
       crumbLabel: "Documentos",
       title: "El centro documental.",
       lead:
@@ -2353,6 +2488,7 @@ export function faqPage(ctx) {
   const body = [
     opener(ctx, {
       label: "Preguntas frecuentes",
+      art: "debate",
       title: "Lo que más nos preguntan.",
       lead:
         "Veinticuatro respuestas agrupadas por audiencia. Busca por palabra o filtra por el " +
@@ -2430,6 +2566,7 @@ export function contactPage(ctx) {
   const body = [
     opener(ctx, {
       label: "Contacto",
+      art: "colab",
       title: "Dónde estamos y a quién escribir.",
       lead: `${contact.campus}. ${contact.hours}. Todos los datos de contacto son demostrativos.`,
     }),
@@ -2503,6 +2640,73 @@ export function contactPage(ctx) {
 }
 
 /* ===========================================================================
+   GALERÍA
+   ======================================================================== */
+
+/**
+ * “AUREA en imágenes.”
+ *
+ * The page a prospective family looks at before it reads anything. Thirty
+ * drawn scenes in a dense mosaic, filterable by the six areas of institutional
+ * life, with a lightbox that walks them with the arrow keys.
+ *
+ * It reuses the collection engine that drives the seven catalogues, so the
+ * filter behaves exactly like the programme finder — and, like every other
+ * catalogue in this portal, all thirty tiles are in the HTML before a script
+ * runs. With JavaScript off the page is still a composed grid of thirty
+ * labelled figures.
+ */
+export function galleryPage(ctx) {
+  const body = [
+    opener(ctx, {
+      label: "Galería",
+      crumbLabel: "Galería",
+      title: "AUREA en imágenes.",
+      lead:
+        `${gallery.length} escenas del campus, las aulas, la cancha, el escenario y el ` +
+        "laboratorio. Todas dibujadas: AUREA no existe y no hay nada que fotografiar.",
+      art: "patio",
+      aside: `<div class="au-actions" style="margin-top:1.4rem">${button("Conocer el campus", page(ctx, "campus"), { gold: true })}${button("Vida estudiantil", page(ctx, "vida"), { onDark: true })}</div>`,
+    }),
+
+    band({
+      body:
+        `<div data-collection data-noun="imágenes" data-noun-one="imagen">` +
+        filters({
+          searchLabel: "Buscar en la galería",
+          searchPlaceholder: "Biblioteca, laboratorio, teatro, cancha…",
+          groups: [{ key: "categoria", label: "Área", options: galleryCategories }],
+          countLabel: `${gallery.length} imágenes`,
+        }) +
+        `<div style="margin-top:1.6rem">${mosaic(gallery)}</div>` +
+        empty("Ninguna imagen coincide con esa búsqueda.") +
+        `</div>` +
+        lightbox() +
+        note(
+          "Todas las escenas están dibujadas con el mismo vocabulario gráfico —fondo, retícula, " +
+            "masa, línea, figura y un solo acento— porque una galería solo funciona como galería " +
+            "si sus piezas se reconocen como la misma mano. Una fotografía de archivo de personas " +
+            "reales sería el único elemento deshonesto de un sitio cuyo argumento entero es que " +
+            "todo en él es ficción declarada.",
+        ),
+    }),
+  ].join("\n\n");
+
+  return {
+    meta: {
+      title: "Galería",
+      description:
+        "Treinta escenas del campus, las aulas, el deporte, el arte, la comunidad y la " +
+        "investigación en AUREA, institución ficticia. Galería filtrable con visor.",
+      canonical: "galeria.html",
+      schema: [breadcrumbSchema(trailOf("Galería"))],
+    },
+    current: "vida",
+    body,
+  };
+}
+
+/* ===========================================================================
    BUSCAR · 404
    ======================================================================== */
 
@@ -2510,6 +2714,7 @@ export function searchPage(ctx) {
   const body = [
     opener(ctx, {
       label: "Búsqueda",
+      art: "computo",
       crumbLabel: "Buscar",
       title: "¿Qué estás buscando?",
       lead:

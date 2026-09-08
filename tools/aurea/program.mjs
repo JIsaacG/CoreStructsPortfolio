@@ -158,6 +158,9 @@ export function programPage(ctx, program) {
     crumbs: crumbs(ctx, trail),
     label: levelText,
     title: program.name,
+    /* The same drawing the card uses, at page scale: arriving from the finder,
+       the cover the reader clicked is the band they land on. */
+    art: program.plate,
     aside,
   });
 

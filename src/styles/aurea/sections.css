@@ -209,10 +209,16 @@
 .au-tag--warn { background: var(--warn-100); color: var(--warn); }
 .au-tag--alert { background: var(--alert-100); color: var(--alert); }
 
+/* Often rendered as a <ul>, so it resets the list: without this the tags come
+   with bullets and a left indent, which is what happened to the pillars of the
+   educational model. */
 .au-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 /* --------------------------------------------------------------- section head */
@@ -1068,9 +1074,26 @@
 .au-cta__art {
   position: absolute;
   inset: 0;
-  opacity: 0.5;
   pointer-events: none;
 }
+
+.au-cta__art svg {
+  width: 100%;
+  height: 100%;
+}
+
+.au-cta__veil {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgb(16 42 67 / 0.97) 0%, rgb(16 42 67 / 0.9) 50%, rgb(16 42 67 / 0.5) 100%);
+}
+
+.au-cta__art .au-art__dot { fill: rgb(255 255 255 / 0.08); }
+.au-cta__art .au-art__mass { fill: rgb(255 255 255 / 0.12); }
+.au-cta__art .au-art__mass-2 { fill: rgb(255 255 255 / 0.18); }
+.au-cta__art .au-art__line { stroke: rgb(160 196 228 / 0.7); }
+.au-cta__art .au-art__figure { fill: rgb(255 255 255 / 0.55); }
 
 @media (max-width: 52rem) {
   .au-cta__inner {
@@ -1115,10 +1138,20 @@
 
 /* ----------------------------------------------------------------- page head */
 
+/**
+ * The interior page head: text on the left, a drawing on the right.
+ *
+ * The first version put the plate full-bleed behind everything, and it read as
+ * texture rather than as a picture — a 1440 × 290 band can only ever show a
+ * fifth of a 4:3 drawing, so what survived the crop was a horizontal sliver.
+ * Anchoring the art to the right at roughly half the width gives it a 1.7:1
+ * frame, which shows almost the whole plate, and moving the lead under the
+ * title frees that half of the band for it.
+ */
 .au-pagehead {
   position: relative;
   overflow: hidden;
-  padding-block: clamp(2.6rem, 2rem + 3.6vw, 5rem);
+  padding-block: clamp(2.8rem, 2rem + 4.4vw, 5.5rem);
   background: var(--navy-800);
   color: var(--ink-onDark);
 }
@@ -1126,19 +1159,29 @@
 .au-pagehead__inner {
   position: relative;
   display: grid;
-  gap: clamp(1rem, 3vw, 3rem);
-  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
-  align-items: end;
+  align-items: center;
+  min-height: clamp(11rem, 9rem + 8vw, 17rem);
+}
+
+.au-pagehead__text {
+  display: grid;
+  gap: 0.9rem;
+  justify-items: start;
+  max-width: min(100%, 36rem);
+}
+
+.au-pagehead__text > * {
+  margin: 0;
 }
 
 .au-pagehead__title {
-  max-width: 20ch;
+  max-width: 18ch;
   color: var(--white);
 }
 
 .au-pagehead__lead {
   margin: 0;
-  max-width: 54ch;
+  max-width: 50ch;
   color: var(--ink-onDark);
   font-size: var(--step-1);
   line-height: 1.5;
@@ -1157,17 +1200,59 @@
   color: var(--navy-600);
 }
 
+/**
+ * The page head carries a drawing, not a texture.
+ *
+ * Every interior page names a plate, so the band behind its title is a scene
+ * from that part of the institution — the library above the library page, the
+ * pitch above student life. The plate is full-bleed and full strength; the
+ * veil over it is what keeps the title readable, and it is angled so the
+ * image survives on the side the text does not occupy.
+ */
 .au-pagehead__art {
   position: absolute;
-  inset: 0;
-  opacity: 0.4;
+  inset: 0 0 0 auto;
+  width: min(52%, 40rem);
   pointer-events: none;
 }
 
+.au-pagehead__art svg {
+  width: 100%;
+  height: 100%;
+}
+
+.au-pagehead__veil {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  /* Opaque across the text, then a fast fade so the drawing arrives without a
+     visible edge where the panel starts. */
+  background:
+    linear-gradient(90deg, var(--navy-800) 0%, var(--navy-800) 44%, rgb(16 42 67 / 0.62) 66%, rgb(16 42 67 / 0.18) 100%),
+    linear-gradient(to top, rgb(16 42 67 / 0.6) 0%, transparent 62%);
+}
+
+/* Behind a veil this heavy, card-cover weights vanish. Same treatment the
+   hero gets, for the same reason. */
+.au-pagehead__art .au-art__dot { fill: rgb(255 255 255 / 0.08); }
+.au-pagehead__art .au-art__mass { fill: rgb(255 255 255 / 0.12); }
+.au-pagehead__art .au-art__mass-2 { fill: rgb(255 255 255 / 0.18); }
+.au-pagehead__art .au-art__line { stroke: rgb(160 196 228 / 0.75); }
+.au-pagehead__art .au-art__figure { fill: rgb(255 255 255 / 0.6); }
+.au-pagehead__art .au-art__glass { fill: rgb(20 121 255 / 0.45); }
+
+/* On a phone there is no room beside the text, so the drawing goes back behind
+   it — full width, and veiled hard enough that the title never fights it. */
 @media (max-width: 52rem) {
-  .au-pagehead__inner {
-    grid-template-columns: 1fr;
-    align-items: start;
+  .au-pagehead__art {
+    inset: 0;
+    width: 100%;
+  }
+
+  .au-pagehead__veil {
+    background:
+      linear-gradient(105deg, rgb(16 42 67 / 0.96) 0%, rgb(16 42 67 / 0.88) 55%, rgb(16 42 67 / 0.6) 100%),
+      linear-gradient(to top, rgb(16 42 67 / 0.85) 0%, transparent 60%);
   }
 }
 

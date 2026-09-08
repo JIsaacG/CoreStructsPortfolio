@@ -14,6 +14,8 @@
 
 import { escape, fold, slugify, dateParts } from "../../src/data/aurea/format.js";
 import { routes } from "../../src/data/aurea/institution.js";
+import { galleryCategories } from "../../src/data/aurea/gallery.js";
+import { plate } from "./art.mjs";
 
 export { escape, fold, slugify, dateParts };
 
@@ -366,6 +368,97 @@ export function table({ caption, columns, rows, className = "" }) {
     `</tbody></table></div>`
   );
 }
+
+/* ----------------------------------------------------------- the mosaic */
+
+/**
+ * One gallery tile.
+ *
+ * A `<button>`, not a link: it opens the same page's lightbox rather than
+ * navigating, and a link that does not navigate is a lie told to the keyboard.
+ * The caption is on the tile at all times — a mosaic whose labels appear only
+ * under a pointer is unusable on a phone and invisible to a screen reader.
+ *
+ * The whole record travels in data attributes so the lightbox can read the
+ * title and the caption off the tile it was given, without a second copy of
+ * the collection in the page.
+ */
+export function tile(item) {
+  const categoryLabel = galleryCategories.find((entry) => entry.id === item.category)?.label ?? "";
+
+  return (
+    `<button class="au-tile au-frame--${item.tone ?? "deep"}` +
+    `${item.size ? ` au-tile--${item.size}` : ""}" type="button" data-tile ` +
+    `data-item data-categoria="${escape(item.category)}" ` +
+    `data-haystack="${escape(fold(`${item.title} ${item.caption} ${categoryLabel}`))}" ` +
+    `data-title="${escape(item.title)}" data-cat-label="${escape(categoryLabel)}" ` +
+    `data-caption="${escape(item.caption)}">` +
+    `<span class="au-tile__art">${plate(item.plate, { tone: item.tone ?? "deep" })}</span>` +
+    `<span class="au-tile__zoom" aria-hidden="true">` +
+    icon("search", "", 16) +
+    `</span>` +
+    `<span class="au-tile__meta">` +
+    `<span class="au-tile__cat">${escape(categoryLabel)}</span>` +
+    `<span class="au-tile__title">${escape(item.title)}</span>` +
+    `</span></button>`
+  );
+}
+
+export const mosaic = (items) =>
+  `<div class="au-gallery" data-gallery>${items.map((item) => tile(item)).join("")}</div>`;
+
+/**
+ * The lightbox shell.
+ *
+ * Emitted empty: `scripts/aurea/gallery.js` clones the drawing out of the tile
+ * that was clicked rather than rendering thirty plates a second time.
+ */
+export const lightbox = () =>
+  `<div class="au-lightbox" data-lightbox role="dialog" aria-modal="true" aria-label="Galería de AUREA">` +
+  `<div class="au-lightbox__frame">` +
+  `<div class="au-lightbox__stage" data-lightbox-stage></div>` +
+  `<button class="au-lightbox__btn au-lightbox__close" type="button" data-lightbox-close ` +
+  `aria-label="Cerrar la galería">✕</button>` +
+  `<div class="au-lightbox__bar">` +
+  `<div class="au-lightbox__text">` +
+  `<p class="au-lightbox__cat" data-lightbox-cat></p>` +
+  `<p class="au-lightbox__title" data-lightbox-title></p>` +
+  `<p class="au-lightbox__caption" data-lightbox-caption></p>` +
+  `</div>` +
+  `<div class="au-lightbox__nav">` +
+  `<p class="au-lightbox__count" data-lightbox-count aria-live="polite"></p>` +
+  `<button class="au-lightbox__btn" type="button" data-lightbox-prev aria-label="Imagen anterior">←</button>` +
+  `<button class="au-lightbox__btn" type="button" data-lightbox-next aria-label="Imagen siguiente">→</button>` +
+  `</div></div></div></div>`;
+
+/**
+ * A plate at editorial scale, beside its text.
+ *
+ * For the pages that would otherwise be a column of prose. The drawing is a
+ * real `<figure>` with a caption, so it carries the same weight as the words.
+ */
+export const feature = ({ plate: name, caption, body, flip = false, tone = "deep" }) =>
+  `<div class="au-feature${flip ? " au-feature--flip" : ""}" data-reveal="fade">` +
+  `<figure><div class="au-feature__frame au-frame--${tone}">${plate(name, { tone })}</div>` +
+  (caption ? `<figcaption>${escape(caption)}</figcaption>` : "") +
+  `</figure><div>${body}</div></div>`;
+
+/** A row of plates, full width, between two text sections. */
+/**
+ * A row of plates, full width, between two text sections.
+ *
+ * The tones alternate. Four navy frames in a row is a black bar across the
+ * page; navy, paper, navy, paper is a strip of pictures.
+ */
+export const strip = (names) =>
+  `<div class="au-strip" data-reveal-group>` +
+  names
+    .map((name, index) => {
+      const tone = index % 2 === 1 ? "paper" : "deep";
+      return `<div class="au-strip__frame au-frame--${tone}">${plate(name, { tone })}</div>`;
+    })
+    .join("") +
+  `</div>`;
 
 /* ------------------------------------------------------------- breadcrumbs */
 

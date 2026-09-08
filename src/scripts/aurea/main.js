@@ -39,6 +39,11 @@ if (document.querySelector("[data-calendar], [data-export]")) {
   import("./calendar.js").then((module) => module.initCalendar());
 }
 
+/* The lightbox, only on the pages that carry a mosaic. */
+if (document.querySelector("[data-gallery]")) {
+  import("./gallery.js").then((module) => module.initGallery());
+}
+
 /* Last, so the observers are attached after every other module has finished
    changing the layout they measure against. */
 initReveal();
