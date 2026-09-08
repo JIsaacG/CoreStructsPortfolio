@@ -1,0 +1,214 @@
+/* =============================================================================
+   Nexora — trust strip, results band and the services grid
+   ========================================================================== */
+
+/* --- Trust ---------------------------------------------------------------------
+   A quiet row between the hero and the argument. The logotypes are inert marks
+   at rest and only take ink on hover, so the strip reads as a texture rather
+   than as a second navigation.
+   ------------------------------------------------------------------------------ */
+
+.nx-trust {
+  padding-block: clamp(3rem, 2rem + 3vw, 5rem);
+  border-block: 1px solid var(--rule-soft);
+  background: var(--surface-sunken);
+}
+
+.nx-trust__title {
+  max-width: 26ch;
+  font-size: var(--t-xl);
+  font-weight: 500;
+  color: var(--text-soft);
+}
+
+.nx-trust__logos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: var(--s-md) var(--s-lg);
+  margin-block: var(--s-lg) var(--s-md);
+}
+
+.nx-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--text-muted);
+  transition: color var(--duration-base) var(--ease-out-quart);
+}
+
+.nx-logo:hover {
+  color: var(--text);
+}
+
+.nx-logo__mark {
+  width: 1.5rem;
+  height: 1.5rem;
+  flex: none;
+}
+
+.nx-logo__name {
+  font-family: var(--font-display);
+  font-size: var(--t-lg);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.nx-trust__note {
+  font-family: var(--font-body);
+  font-size: var(--t-2xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* --- Results -------------------------------------------------------------------
+   The one inverted band on the page. Four figures, set in the serif at a size
+   that is meant to be read across a room.
+   ------------------------------------------------------------------------------ */
+
+.nx-results {
+  display: grid;
+  gap: var(--s-lg) var(--gutter);
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  padding-top: var(--s-lg);
+  border-top: 1px solid var(--rule);
+}
+
+.nx-result {
+  display: grid;
+  gap: var(--s-2xs);
+  align-content: start;
+}
+
+.nx-result__value {
+  font-family: var(--font-display);
+  font-size: var(--t-metric);
+  font-weight: 500;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+  color: #ffffff;
+}
+
+.nx-result__label {
+  max-width: 20ch;
+  font-family: var(--font-body);
+  font-size: var(--t-sm);
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+/* --- Services ------------------------------------------------------------------
+   Four columns, two rows, two double-width tiles set diagonally: a bento that
+   is actually composed rather than a grid of six identical boxes. The wide
+   tiles lay their drawing beside the copy, the narrow ones above it, so no two
+   neighbours share a silhouette.
+   ------------------------------------------------------------------------------ */
+
+.nx-bento {
+  display: grid;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+
+@media (min-width: 44rem) {
+  .nx-bento {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .nx-tile--wide {
+    grid-column: span 2;
+  }
+}
+
+@media (min-width: 68rem) {
+  .nx-bento {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.nx-tile {
+  position: relative;
+  display: grid;
+  gap: var(--s-sm);
+  align-content: start;
+  padding: clamp(1.25rem, 0.9rem + 1.2vw, 2rem);
+  background: var(--page);
+  transition: background-color var(--duration-base) var(--ease-out-quart);
+}
+
+.nx-tile:hover {
+  background: var(--surface);
+}
+
+.nx-tile__visual {
+  color: var(--text-muted);
+  transition:
+    color var(--duration-slow) var(--ease-out-quart),
+    transform var(--duration-slow) var(--ease-out-expo);
+}
+
+.nx-tile:hover .nx-tile__visual {
+  color: var(--accent-ink);
+  transform: translateY(-3px);
+}
+
+.nx-tile__art {
+  width: 100%;
+  max-width: 11rem;
+  height: auto;
+}
+
+.nx-tile__name {
+  font-size: var(--t-xl);
+  font-weight: 500;
+}
+
+.nx-tile__text {
+  font-family: var(--font-body);
+  font-size: var(--t-sm);
+  line-height: 1.6;
+  color: var(--text-soft);
+}
+
+.nx-tile__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: auto;
+  padding-top: var(--s-2xs);
+}
+
+.nx-tile__meta li {
+  padding: 0.25rem 0.6rem;
+  border: 1px solid var(--rule);
+  font-family: var(--font-body);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* The wide tiles get a different internal composition, not just more room. */
+@media (min-width: 44rem) {
+  .nx-tile--wide {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    align-items: center;
+    column-gap: var(--s-lg);
+  }
+
+  .nx-tile--wide .nx-tile__visual {
+    grid-row: span 2;
+  }
+
+  .nx-tile--wide .nx-tile__art {
+    max-width: 100%;
+  }
+
+  .nx-tile--wide .nx-tile__meta {
+    grid-column: 2;
+  }
+}

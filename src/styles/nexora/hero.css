@@ -1,0 +1,331 @@
+/* =============================================================================
+   Nexora — hero and the transformation panel
+
+   An editorial opening: the headline sits on the left half of a twelve-column
+   grid and the reading of a client's year sits on the right. The panel is a
+   real chart with real (invented) numbers rather than a picture of one — the
+   same figures the case studies report further down the page.
+   ========================================================================== */
+
+.nx-hero {
+  padding-block-start: calc(var(--header-h) + clamp(3rem, 1.5rem + 6vw, 7rem));
+  padding-block-end: var(--s-xl);
+}
+
+.nx-hero__grid {
+  display: grid;
+  gap: clamp(2.5rem, 1.5rem + 4vw, 4.5rem) var(--gutter);
+}
+
+@media (min-width: 64rem) {
+  .nx-hero__grid {
+    grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+    align-items: center;
+  }
+}
+
+.nx-hero__copy {
+  display: grid;
+  gap: var(--s-md);
+  align-content: start;
+}
+
+.nx-hero__title {
+  font-size: var(--t-4xl);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+/* The last line turns; the change of voice is what makes the sentence land. */
+.nx-hero__title em {
+  font-style: italic;
+  color: var(--green);
+}
+
+.nx-hero__lead {
+  max-width: 42ch;
+  font-family: var(--font-body);
+  font-size: var(--t-lg);
+  line-height: var(--lead-loose);
+  color: var(--text-soft);
+}
+
+.nx-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-md);
+  margin-top: var(--s-2xs);
+}
+
+/* --- The three stamps under the fold ------------------------------------------ */
+
+.nx-hero__stamps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: var(--s-md) var(--gutter);
+  margin-top: clamp(3rem, 2rem + 4vw, 5.5rem);
+  padding-top: var(--s-md);
+  border-top: 1px solid var(--rule);
+}
+
+.nx-stamp {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.nx-stamp__value {
+  font-family: var(--font-display);
+  font-size: var(--t-2xl);
+  font-weight: 500;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.nx-stamp__label {
+  font-family: var(--font-body);
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* =============================================================================
+   The panel
+   ========================================================================== */
+
+.nx-panel {
+  display: grid;
+  gap: var(--s-md);
+  padding: clamp(1.1rem, 0.7rem + 1.4vw, 1.75rem);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: 0 24px 60px rgb(20 22 26 / 0.07);
+}
+
+.nx-panel__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-2xs);
+  padding-bottom: var(--s-xs);
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.nx-panel__title {
+  font-family: var(--font-body);
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+}
+
+.nx-panel__meta {
+  font-family: var(--font-body);
+  font-size: var(--t-2xs);
+  color: var(--text-muted);
+}
+
+/* --- Chart ---------------------------------------------------------------------- */
+
+.nx-panel__caption {
+  margin-bottom: var(--s-2xs);
+  font-family: var(--font-body);
+  font-size: var(--t-xs);
+  color: var(--text-muted);
+}
+
+.nx-panel__chart {
+  width: 100%;
+  height: clamp(7rem, 5rem + 9vw, 10rem);
+  overflow: visible;
+}
+
+.nx-panel__grid line {
+  stroke: var(--rule-soft);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.nx-panel__area {
+  fill: rgb(var(--accent-rgb) / 0.08);
+}
+
+.nx-panel__line {
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.nx-panel__line--before {
+  stroke: var(--rule-strong);
+  stroke-dasharray: 4 5;
+}
+
+.nx-panel__line--after {
+  stroke: var(--green);
+}
+
+/* The measured line draws itself once the panel arrives. `pathLength` is not
+   set, so the dash values are generous on purpose: any value above the real
+   length simply starts the stroke fully hidden. */
+.js .nx-panel__line--after {
+  stroke-dasharray: 900;
+  stroke-dashoffset: 900;
+}
+
+.js .nx-panel.is-revealed .nx-panel__line--after {
+  transition: stroke-dashoffset 1.8s var(--ease-out-expo) 250ms;
+  stroke-dashoffset: 0;
+}
+
+.nx-panel__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-sm);
+  margin-top: var(--s-2xs);
+}
+
+.nx-panel__key {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-body);
+  font-size: var(--t-2xs);
+  color: var(--text-muted);
+}
+
+.nx-panel__key::before {
+  content: "";
+  width: 1rem;
+  height: 2px;
+  border-radius: 2px;
+}
+
+.nx-panel__key--before::before {
+  background: repeating-linear-gradient(
+    90deg,
+    var(--rule-strong) 0 3px,
+    transparent 3px 6px
+  );
+}
+
+.nx-panel__key--after::before {
+  background: var(--green);
+}
+
+/* --- Work split ------------------------------------------------------------------ */
+
+.nx-panel__split {
+  display: grid;
+  gap: var(--s-2xs);
+  padding-block: var(--s-xs);
+  border-block: 1px solid var(--rule-soft);
+}
+
+.nx-panel__bar {
+  /* Both are written per bar by the renderer; the defaults are here so the
+     component is valid on its own and the bundle has no dangling var(). */
+  --bar: 0%;
+  --bar-index: 0;
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr) 3rem;
+  align-items: center;
+  gap: var(--s-2xs);
+  font-family: var(--font-body);
+  font-size: var(--t-2xs);
+}
+
+.nx-panel__bar-label {
+  color: var(--text-muted);
+}
+
+.nx-panel__bar-track {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--surface-sunken);
+  overflow: hidden;
+}
+
+.nx-panel__bar-fill {
+  display: block;
+  width: var(--bar);
+  height: 100%;
+  border-radius: inherit;
+  background: var(--green);
+  opacity: calc(1 - var(--bar-index) * 0.32);
+  transform-origin: left;
+}
+
+.js .nx-panel__bar-fill {
+  transform: scaleX(0);
+}
+
+.js .nx-panel.is-revealed .nx-panel__bar-fill {
+  transition: transform var(--duration-slow) var(--ease-out-expo)
+    calc(400ms + var(--bar-index) * 110ms);
+  transform: scaleX(1);
+}
+
+.nx-panel__bar-value {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+/* --- Indicator tiles --------------------------------------------------------------- */
+
+.nx-panel__tiles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--rule-soft);
+  border: 1px solid var(--rule-soft);
+}
+
+@media (min-width: 30rem) {
+  .nx-panel__tiles {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.nx-panel__tile {
+  display: grid;
+  gap: 0.15rem;
+  padding: var(--s-2xs) 0.6rem;
+  background: var(--surface);
+}
+
+.nx-panel__tile-label {
+  font-family: var(--font-body);
+  font-size: 0.625rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.nx-panel__tile-value {
+  font-family: var(--font-display);
+  font-size: var(--t-lg);
+  font-weight: 600;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.nx-panel__tile-delta {
+  font-family: var(--font-body);
+  font-size: 0.625rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.nx-panel__tile-delta.is-positive {
+  color: var(--green);
+}

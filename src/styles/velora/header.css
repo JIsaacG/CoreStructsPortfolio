@@ -1,0 +1,211 @@
+/* =============================================================================
+   Velora — header and mobile menu
+
+   The wordmark is set wide and light; the navigation is small and letterspaced.
+   Nothing here is bold, which is the point.
+   ========================================================================== */
+
+.ve-header {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline: 0;
+  z-index: var(--layer-header);
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  transition:
+    background-color var(--duration-base) var(--ease-out-quart),
+    box-shadow var(--duration-base) var(--ease-out-quart);
+}
+
+.ve-header.is-stuck {
+  background: rgb(250 247 242 / 0.9);
+  backdrop-filter: blur(16px) saturate(150%);
+  box-shadow: 0 1px 0 var(--rule-soft);
+}
+
+.ve-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-md);
+  width: var(--shell);
+}
+
+.ve-brand {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.ve-brand__name {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 500;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  /* The tracking pushes the word right; pulling the last gap back re-centres it
+     against the mark underneath. */
+  margin-right: -0.34em;
+}
+
+.ve-brand__mark {
+  font-family: var(--font-display);
+  font-size: 0.5625rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* --- Navigation --------------------------------------------------------------- */
+
+.ve-nav {
+  display: none;
+  gap: clamp(1.25rem, 0.5rem + 1.7vw, 2.25rem);
+}
+
+.ve-nav__link {
+  position: relative;
+  font-family: var(--font-display);
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color var(--duration-base) var(--ease-out-quart);
+}
+
+.ve-nav__link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -0.45rem;
+  width: 0.3rem;
+  height: 0.3rem;
+  border-radius: 50%;
+  background: var(--champagne);
+  transform: translate(-50%, 0.3rem) scale(0);
+  transition: transform var(--duration-base) var(--ease-out-expo);
+}
+
+.ve-nav__link:hover,
+.ve-nav__link[aria-current="true"] {
+  color: var(--text);
+}
+
+.ve-nav__link:hover::after,
+.ve-nav__link[aria-current="true"]::after {
+  transform: translate(-50%, 0) scale(1);
+}
+
+.ve-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--s-sm);
+}
+
+.ve-header__cta {
+  display: none;
+  min-height: 2.6rem;
+  padding: 0.55rem 1.35rem;
+  font-size: 0.6875rem;
+}
+
+@media (min-width: 62rem) {
+  .ve-nav,
+  .ve-header__cta {
+    display: flex;
+  }
+}
+
+/* --- Burger ---------------------------------------------------------------------- */
+
+.ve-burger {
+  display: grid;
+  place-content: center;
+  gap: 7px;
+  width: 44px;
+  height: 44px;
+  margin-inline-end: -0.5rem;
+}
+
+.ve-burger__bar {
+  display: block;
+  width: 20px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: var(--text);
+  transition: transform var(--duration-base) var(--ease-out-expo);
+}
+
+.ve-burger[aria-expanded="true"] .ve-burger__bar:first-child {
+  transform: translateY(4.25px) rotate(45deg);
+}
+
+.ve-burger[aria-expanded="true"] .ve-burger__bar:last-child {
+  transform: translateY(-4.25px) rotate(-45deg);
+}
+
+@media (min-width: 62rem) {
+  .ve-burger {
+    display: none;
+  }
+}
+
+/* --- Mobile menu -------------------------------------------------------------------- */
+
+.ve-menu {
+  position: fixed;
+  inset: 0;
+  z-index: var(--layer-menu);
+  display: grid;
+  align-content: center;
+  padding: var(--s-xl) var(--gutter);
+  background: var(--beige);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--duration-base) var(--ease-out-quart),
+    visibility var(--duration-base);
+}
+
+.ve-menu.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.ve-menu__inner {
+  display: grid;
+  gap: var(--s-xs);
+  width: var(--shell);
+  margin-inline: auto;
+  text-align: center;
+}
+
+.ve-menu__link {
+  padding-block: var(--s-sm);
+  font-family: var(--font-display);
+  font-size: var(--t-2xl);
+  font-weight: 300;
+  letter-spacing: 0.06em;
+}
+
+.ve-menu__cta {
+  justify-self: center;
+  margin-top: var(--s-md);
+  padding: 1rem 2rem;
+  border-radius: 999px;
+  background: var(--soft-black);
+  color: var(--ivory);
+  font-family: var(--font-display);
+  font-size: var(--t-xs);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+@media (min-width: 62rem) {
+  .ve-menu {
+    display: none;
+  }
+}

@@ -1,0 +1,457 @@
+/* =============================================================================
+   Orbita — the comparison table and the B2B configurator
+
+   The two pieces that show a catalogue site can do more than list things. Both
+   keep their state in the DOM: the comparison hides columns with `hidden`, the
+   configurator reads its arithmetic off data attributes on the checkboxes.
+   ========================================================================== */
+
+/* --- Comparison ------------------------------------------------------------------ */
+
+.ob-compare {
+  display: grid;
+  gap: var(--s-md);
+}
+
+.ob-compare__hint {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: var(--s-2xs);
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.ob-compare__count {
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: var(--surface-muted);
+  font-family: var(--font-data);
+  color: var(--text);
+}
+
+.ob-picks {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 0.5rem;
+}
+
+.ob-pick input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ob-pick__body {
+  display: grid;
+  gap: 0.25rem;
+  justify-items: center;
+  padding: 0.75rem 0.5rem;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--surface);
+  text-align: center;
+  cursor: pointer;
+  transition:
+    border-color var(--duration-fast) var(--ease-out-quart),
+    background-color var(--duration-fast) var(--ease-out-quart),
+    transform var(--duration-fast) var(--ease-out-expo);
+}
+
+.ob-pick:hover .ob-pick__body {
+  transform: translateY(-2px);
+}
+
+.ob-pick input:checked + .ob-pick__body {
+  border-color: var(--blue);
+  background: var(--blue-wash);
+}
+
+.ob-pick input:focus-visible + .ob-pick__body {
+  outline: 2px solid var(--accent-ink);
+  outline-offset: 2px;
+}
+
+/* A checkbox that would take the selection past the limit is disabled rather
+   than silently ignored, so the rule is visible before it is hit. */
+.ob-pick input:disabled + .ob-pick__body {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.ob-pick__art {
+  display: block;
+  width: 100%;
+  max-width: 4.5rem;
+}
+
+.ob-pick__name {
+  font-family: var(--font-display);
+  font-size: var(--t-2xs);
+  font-weight: 700;
+}
+
+/* --- The table ---------------------------------------------------------------------
+   On a phone it scrolls sideways with the specification column pinned, which is
+   the one comparison layout that stays readable at 360px.
+   ---------------------------------------------------------------------------------- */
+
+.ob-table__scroll {
+  overflow-x: auto;
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.ob-table {
+  min-width: 34rem;
+  font-family: var(--font-data);
+  font-size: var(--t-sm);
+}
+
+.ob-table th,
+.ob-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.ob-table thead th {
+  padding-block: var(--s-sm);
+  border-bottom-color: var(--rule);
+  vertical-align: bottom;
+}
+
+.ob-table thead th:first-child,
+.ob-table tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  width: 9rem;
+  background: var(--surface);
+  font-family: var(--font-display);
+  font-size: var(--t-2xs);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.ob-table__art {
+  display: block;
+  width: 100%;
+  max-width: 5rem;
+  margin-bottom: 0.35rem;
+}
+
+.ob-table__name {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--t-sm);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.ob-table tbody tr:last-child th,
+.ob-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.ob-table__row--price td {
+  font-size: var(--t-lg);
+  font-weight: 700;
+  color: var(--text);
+}
+
+.ob-table tbody tr:hover td,
+.ob-table tbody tr:hover th {
+  background: var(--surface-muted);
+}
+
+/* --- Configurator -------------------------------------------------------------------- */
+
+.ob-cfg {
+  display: grid;
+  gap: clamp(1.5rem, 1rem + 2.5vw, 3rem) var(--gutter);
+  align-items: start;
+}
+
+@media (min-width: 68rem) {
+  .ob-cfg {
+    grid-template-columns: minmax(0, 4fr) minmax(0, 5fr) minmax(0, 4fr);
+  }
+}
+
+.ob-cfg__intro {
+  display: grid;
+  gap: var(--s-xs);
+  align-content: start;
+}
+
+.ob-cfg__panel {
+  display: grid;
+  gap: var(--s-md);
+  padding: clamp(1.25rem, 1rem + 1.2vw, 1.75rem);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+}
+
+.ob-cfg__group {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-inline-size: 0;
+}
+
+.ob-cfg__legend {
+  padding: 0;
+  margin-bottom: var(--s-2xs);
+  font-family: var(--font-display);
+  font-size: var(--t-2xs);
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.ob-spaces {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 0.5rem;
+}
+
+.ob-space input,
+.ob-need input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ob-space__body {
+  display: grid;
+  gap: 0.1rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition:
+    border-color var(--duration-fast) var(--ease-out-quart),
+    background-color var(--duration-fast) var(--ease-out-quart);
+}
+
+.ob-space input:checked + .ob-space__body {
+  border-color: var(--blue);
+  background: var(--blue-wash);
+}
+
+.ob-space input:focus-visible + .ob-space__body {
+  outline: 2px solid var(--accent-ink);
+  outline-offset: 2px;
+}
+
+.ob-space__name {
+  font-family: var(--font-display);
+  font-size: var(--t-sm);
+  font-weight: 700;
+}
+
+.ob-space__note {
+  font-family: var(--font-data);
+  font-size: var(--t-2xs);
+  color: var(--text-muted);
+}
+
+/* --- Stepper ---------------------------------------------------------------------------- */
+
+.ob-stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+}
+
+.ob-stepper__button {
+  display: grid;
+  place-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--surface-muted);
+  font-size: 1.15rem;
+  line-height: 1;
+  color: var(--text);
+  transition: background-color var(--duration-fast) var(--ease-out-quart);
+}
+
+.ob-stepper__button:hover {
+  background: var(--blue-wash);
+  color: var(--accent-ink);
+}
+
+.ob-stepper__input {
+  width: 4.5rem;
+  border: 0;
+  background: transparent;
+  font-family: var(--font-data);
+  font-size: var(--t-xl);
+  font-weight: 700;
+  text-align: center;
+  outline: none;
+  /* The two arrows would sit next to two buttons that do the same thing. */
+  appearance: textfield;
+}
+
+.ob-stepper__input::-webkit-outer-spin-button,
+.ob-stepper__input::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+/* --- Needs ---------------------------------------------------------------------------- */
+
+.ob-needs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 0.4rem;
+}
+
+.ob-need__body {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-display);
+  font-size: var(--t-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    border-color var(--duration-fast) var(--ease-out-quart),
+    background-color var(--duration-fast) var(--ease-out-quart);
+}
+
+.ob-need__check {
+  display: grid;
+  place-content: center;
+  flex: none;
+  width: 1.15rem;
+  height: 1.15rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: 4px;
+  transition:
+    background-color var(--duration-fast) var(--ease-out-quart),
+    border-color var(--duration-fast) var(--ease-out-quart);
+}
+
+.ob-need input:checked + .ob-need__body {
+  border-color: var(--blue);
+  background: var(--blue-wash);
+}
+
+.ob-need input:checked + .ob-need__body .ob-need__check {
+  background: var(--blue) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12.5l5 5L20 6.5'/%3E%3C/svg%3E")
+    center / 0.75rem no-repeat;
+  border-color: var(--blue);
+}
+
+.ob-need input:focus-visible + .ob-need__body {
+  outline: 2px solid var(--accent-ink);
+  outline-offset: 2px;
+}
+
+.ob-cfg__submit {
+  justify-self: start;
+}
+
+/* --- The generated configuration ---------------------------------------------------- */
+
+.ob-cfg__result {
+  display: grid;
+  gap: var(--s-2xs);
+  justify-items: start;
+  padding: clamp(1.25rem, 1rem + 1.2vw, 1.75rem);
+  border: 1px solid var(--blue);
+  border-radius: var(--radius-lg);
+  background: var(--blue-wash);
+}
+
+.ob-cfg__result-title {
+  font-family: var(--font-display);
+  font-size: var(--t-xl);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
+
+.ob-cfg__result-for {
+  font-family: var(--font-data);
+  font-size: var(--t-2xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+}
+
+.ob-cfg__lines {
+  display: grid;
+  gap: 0.35rem;
+  width: 100%;
+  margin-block: var(--s-2xs);
+}
+
+.ob-cfg__lines li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid rgb(10 92 255 / 0.18);
+  font-family: var(--font-data);
+  font-size: var(--t-sm);
+}
+
+.ob-cfg__lines b {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.ob-cfg__total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  margin-bottom: var(--s-2xs);
+  font-family: var(--font-data);
+  font-size: var(--t-2xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+}
+
+.ob-cfg__total strong {
+  font-size: var(--t-xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.ob-cfg__note {
+  font-size: var(--t-2xs);
+  color: var(--text-soft);
+}

@@ -1,0 +1,297 @@
+/* =============================================================================
+   Landing demos — the CoreStruct furniture
+
+   Three things that belong to the studio rather than to the invented brands:
+   the corner badge that keeps the fiction honest, the discreet mid-page pitch,
+   and the closing signature band. They look the same on all three pages on
+   purpose — they are the frame around the work, not part of it — so they run on
+   their own fixed palette instead of the host page's tokens.
+
+   The floating action button is the one piece that does take the host accent:
+   it belongs to the demo being demonstrated.
+   ========================================================================== */
+
+:root {
+  --kit-ink: #080b12;
+  --kit-surface: #0e1424;
+  --kit-line: rgb(255 255 255 / 0.14);
+  --kit-text: #ffffff;
+  --kit-muted: rgb(255 255 255 / 0.62);
+  --kit-brand: #3898d4;
+}
+
+/* --- Corner badge ------------------------------------------------------------
+   Fixed, low, and out of the reading column. It states what the page is before
+   anyone has to wonder: an invented company, built by a real one.
+   -------------------------------------------------------------------------- */
+
+.lp-badge {
+  position: fixed;
+  left: max(var(--s-sm), env(safe-area-inset-left));
+  bottom: max(var(--s-sm), env(safe-area-inset-bottom));
+  z-index: var(--layer-badge);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.9rem 0.5rem 0.6rem;
+  border: 1px solid var(--kit-line);
+  border-radius: 999px;
+  background: rgb(8 11 18 / 0.84);
+  backdrop-filter: blur(10px);
+  color: var(--kit-text);
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition:
+    border-color var(--duration-base) var(--ease-out-quart),
+    transform var(--duration-base) var(--ease-out-expo);
+}
+
+.lp-badge:hover,
+.lp-badge:focus-visible {
+  border-color: rgb(56 152 212 / 0.7);
+  transform: translateY(-2px);
+}
+
+.lp-badge__mark {
+  width: 1.15rem;
+  height: 1.35rem;
+  flex: none;
+}
+
+.lp-badge__label {
+  color: var(--kit-muted);
+}
+
+/* The wording collapses to the essentials where there is no room for it. */
+@media (max-width: 46rem) {
+  .lp-badge__label {
+    display: none;
+  }
+}
+
+/* --- Mid-page pitch ----------------------------------------------------------
+   One line, once, at the point where a visitor has seen enough to want it.
+   -------------------------------------------------------------------------- */
+
+.lp-pitch {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-sm) var(--s-md);
+  padding: var(--s-md) var(--s-lg);
+  border-radius: var(--radius);
+  background: linear-gradient(115deg, var(--kit-ink), var(--kit-surface));
+  color: var(--kit-text);
+}
+
+.lp-pitch__text {
+  max-width: 44ch;
+  font-family: var(--font-body);
+  font-size: var(--t-base);
+  line-height: 1.5;
+  color: var(--kit-text);
+}
+
+.lp-pitch__text b {
+  font-weight: 700;
+}
+
+.lp-pitch__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65em;
+  min-height: 44px;
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
+  background: var(--kit-brand);
+  color: #06121d;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition:
+    background-color var(--duration-base) var(--ease-out-quart),
+    transform var(--duration-base) var(--ease-out-expo);
+}
+
+.lp-pitch__link:hover,
+.lp-pitch__link:focus-visible {
+  background: #6fc2f0;
+  transform: translateY(-2px);
+}
+
+.lp-pitch__link span {
+  transition: transform var(--duration-base) var(--ease-out-expo);
+}
+
+.lp-pitch__link:hover span {
+  transform: translateX(0.25rem);
+}
+
+/* --- Closing signature -------------------------------------------------------
+   The last thing on every landing. Same band, same words, three pages: it is
+   the studio signing the work.
+   -------------------------------------------------------------------------- */
+
+.lp-outro {
+  background: var(--kit-ink);
+  color: var(--kit-text);
+  padding-block: clamp(3.5rem, 2rem + 6vw, 6.5rem);
+}
+
+.lp-outro__inner {
+  display: grid;
+  gap: var(--s-md);
+  justify-items: center;
+  text-align: center;
+}
+
+.lp-outro__mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--kit-muted);
+}
+
+.lp-outro__mark svg {
+  width: 1.35rem;
+  height: 1.6rem;
+}
+
+.lp-outro__title {
+  max-width: 22ch;
+  font-family: var(--font-body);
+  font-size: clamp(1.5rem, 1.1rem + 1.8vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.lp-outro__text {
+  max-width: 54ch;
+  font-family: var(--font-body);
+  color: var(--kit-muted);
+}
+
+.lp-outro__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--s-sm);
+  margin-top: var(--s-xs);
+}
+
+.lp-outro__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65em;
+  min-height: 48px;
+  padding: 0.85rem 1.75rem;
+  border-radius: 999px;
+  background: linear-gradient(120deg, #253880, #3898d4);
+  background-size: 170% 100%;
+  color: #ffffff;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition:
+    background-position var(--duration-slow) var(--ease-out-expo),
+    transform var(--duration-base) var(--ease-out-expo);
+}
+
+.lp-outro__cta:hover,
+.lp-outro__cta:focus-visible {
+  background-position: 100% 50%;
+  transform: translateY(-2px);
+}
+
+.lp-outro__ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65em;
+  min-height: 48px;
+  padding: 0.85rem 1.6rem;
+  border: 1px solid var(--kit-line);
+  border-radius: 999px;
+  color: var(--kit-text);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition:
+    border-color var(--duration-base) var(--ease-out-quart),
+    transform var(--duration-base) var(--ease-out-expo);
+}
+
+.lp-outro__ghost:hover,
+.lp-outro__ghost:focus-visible {
+  border-color: rgb(255 255 255 / 0.4);
+  transform: translateY(-2px);
+}
+
+.lp-outro__note {
+  margin-top: var(--s-sm);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  /* Small print is still print: this is the lightest value that clears 4.5:1
+     on the band behind it. */
+  color: rgb(255 255 255 / 0.6);
+}
+
+/* --- Floating action ---------------------------------------------------------
+   Velora and Orbita both ask for one. Demonstrative only: it opens the page's
+   own contact section, never a real number.
+   -------------------------------------------------------------------------- */
+
+.lp-float {
+  position: fixed;
+  right: max(var(--s-sm), env(safe-area-inset-right));
+  bottom: max(var(--s-sm), env(safe-area-inset-bottom));
+  z-index: var(--layer-badge);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 48px;
+  padding: 0.75rem 1.15rem;
+  border-radius: 999px;
+  background: #1faf54;
+  color: #04220e;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  box-shadow: 0 14px 34px rgb(12 60 30 / 0.32);
+  transition:
+    transform var(--duration-base) var(--ease-out-expo),
+    box-shadow var(--duration-base) var(--ease-out-quart);
+}
+
+.lp-float:hover,
+.lp-float:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 44px rgb(12 60 30 / 0.42);
+}
+
+.lp-float svg {
+  width: 1.15rem;
+  height: 1.15rem;
+  flex: none;
+}
+
+/* The badge sits bottom-left and the action bottom-right, so they never meet;
+   below the badge's own breakpoint the action keeps its label because that is
+   the control the brief asks to be unmissable on a phone. */

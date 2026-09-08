@@ -1,0 +1,22 @@
+/* =============================================================================
+   Velora — stylesheet entry point
+
+   The second landing demo. Same foundation as Nexora — reset, faces, reveals,
+   CoreStruct furniture — and a deliberately opposite surface: ivory instead of
+   paper, pills instead of squares, arches instead of rules, and the type
+   pairing turned around so the sans leads and the serif reads.
+
+   `npm run build:css` flattens this into `dist/velora.css`.
+   ========================================================================== */
+
+@import "./velora/tokens.css";
+@import "./lp/fonts.css";
+@import "./lp/reset.css";
+@import "./motion.css";
+@import "./lp/kit.css";
+
+@import "./velora/base.css";
+@import "./velora/header.css";
+@import "./velora/hero.css";
+@import "./velora/booking.css";
+@import "./velora/sections.css";

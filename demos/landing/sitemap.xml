@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Demostración. Cierzo y Lumen son marcas ficticias y sus páginas son noindex. -->
+<!-- Demostración. Nexora, Velora y Orbita Supply son marcas ficticias y sus páginas son noindex. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://corestruct.example/demos/landing/servicios.html</loc>
+    <loc>https://corestruct.example/demos/landing/index.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://corestruct.example/demos/landing/evento.html</loc>
+    <loc>https://corestruct.example/demos/landing/nexora.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://corestruct.example/demos/landing/velora.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://corestruct.example/demos/landing/orbita.html</loc>
     <priority>0.8</priority>
   </url>
 </urlset>

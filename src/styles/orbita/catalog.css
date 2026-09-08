@@ -1,0 +1,606 @@
+/* =============================================================================
+   Orbita — search, categories, the product grid and the product sheet
+   ========================================================================== */
+
+/* --- Search ---------------------------------------------------------------------
+   It sits directly under the hero, where the brief asks for it, and it drives
+   the catalogue further down: typing filters the grid and takes the reader
+   there, with the active term shown above the results.
+   -------------------------------------------------------------------------------- */
+
+.ob-search {
+  padding-block: clamp(2rem, 1.5rem + 2vw, 3.25rem);
+  background: var(--white);
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.ob-search__inner {
+  display: grid;
+  gap: var(--s-sm);
+}
+
+.ob-search__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-2xs) var(--s-md);
+}
+
+.ob-search__title {
+  font-size: var(--t-xl);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.ob-search__hint {
+  font-size: var(--t-2xs);
+  color: var(--text-muted);
+}
+
+.ob-search__field {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.4rem 0.4rem 1rem;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--surface);
+  transition:
+    border-color var(--duration-base) var(--ease-out-quart),
+    box-shadow var(--duration-base) var(--ease-out-quart);
+}
+
+.ob-search__field:focus-within {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 4px rgb(10 92 255 / 0.14);
+}
+
+.ob-search__icon {
+  width: 1.15rem;
+  height: 1.15rem;
+  flex: none;
+  color: var(--text-muted);
+}
+
+.ob-search__input {
+  flex: 1;
+  min-width: 0;
+  min-height: 2.75rem;
+  border: 0;
+  background: transparent;
+  font-size: var(--t-base);
+  outline: none;
+}
+
+.ob-search__input::placeholder {
+  color: var(--text-muted);
+}
+
+.ob-search__go {
+  flex: none;
+  border-radius: 999px;
+}
+
+.ob-search__terms {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.ob-search__terms-label {
+  margin-right: 0.25rem;
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* --- Categories ---------------------------------------------------------------- */
+
+.ob-categories {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-sm);
+}
+
+@media (min-width: 44rem) {
+  .ob-categories {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.ob-category {
+  display: grid;
+  gap: 0.2rem;
+  justify-items: start;
+  padding: var(--s-sm);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius);
+  background: var(--surface-muted);
+  text-align: left;
+  transition:
+    border-color var(--duration-base) var(--ease-out-quart),
+    background-color var(--duration-base) var(--ease-out-quart),
+    transform var(--duration-base) var(--ease-out-expo);
+}
+
+.ob-category:hover,
+.ob-category:focus-visible {
+  border-color: var(--blue);
+  background: var(--blue-wash);
+  transform: translateY(-3px);
+}
+
+.ob-category__art {
+  display: block;
+  width: 100%;
+  max-width: 6.5rem;
+  margin-bottom: var(--s-2xs);
+  transition: transform var(--duration-slow) var(--ease-out-expo);
+}
+
+.ob-category:hover .ob-category__art {
+  transform: scale(1.05);
+}
+
+.ob-category__name {
+  font-family: var(--font-display);
+  font-size: var(--t-sm);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.ob-category__count {
+  font-family: var(--font-data);
+  font-size: var(--t-2xs);
+  color: var(--text-muted);
+}
+
+/* --- Active filter ---------------------------------------------------------------- */
+
+.ob-filter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: var(--s-md);
+  padding: 0.6rem 0.9rem;
+  border-radius: 999px;
+  background: var(--blue-wash);
+  font-size: var(--t-xs);
+}
+
+.ob-filter__label {
+  font-weight: 700;
+  color: var(--accent-ink);
+}
+
+.ob-filter__value {
+  font-family: var(--font-data);
+  color: var(--text);
+}
+
+.ob-filter__clear {
+  margin-left: auto;
+  font-family: var(--font-display);
+  font-size: var(--t-2xs);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* --- Product grid ------------------------------------------------------------------ */
+
+.ob-products {
+  display: grid;
+  gap: var(--s-sm);
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+}
+
+.ob-product {
+  position: relative;
+  display: grid;
+  gap: 0.35rem;
+  align-content: start;
+  padding: var(--s-sm);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius);
+  background: var(--surface);
+  transition:
+    transform var(--duration-base) var(--ease-out-expo),
+    box-shadow var(--duration-base) var(--ease-out-quart),
+    border-color var(--duration-base) var(--ease-out-quart);
+}
+
+.ob-product:hover,
+.ob-product:focus-within {
+  transform: translateY(-4px);
+  border-color: var(--rule);
+  box-shadow: var(--shadow-lift);
+}
+
+.ob-product__visual {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: var(--s-sm);
+  margin-bottom: var(--s-2xs);
+  border-radius: var(--radius-sm);
+  background: var(--surface-muted);
+  transition: background-color var(--duration-base) var(--ease-out-quart);
+}
+
+/* The light changes on hover rather than the product growing: a catalogue photo
+   that jumps under the cursor is a catalogue photo you cannot read. */
+.ob-product:hover .ob-product__visual {
+  background:
+    radial-gradient(70% 70% at 50% 30%, rgb(10 92 255 / 0.12), transparent 70%),
+    var(--surface-muted);
+}
+
+.ob-render--card {
+  max-width: 11rem;
+  transition: transform var(--duration-slow) var(--ease-out-expo);
+}
+
+.ob-product:hover .ob-render--card {
+  transform: scale(1.04) translateY(-2px);
+}
+
+.ob-product__flag {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.6rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #ffffff;
+  font-size: 0.5625rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ob-product__category {
+  font-family: var(--font-data);
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.ob-product__name {
+  font-size: var(--t-lg);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
+
+.ob-product__specs {
+  display: grid;
+  gap: 0.1rem;
+  margin-top: 0.15rem;
+  font-family: var(--font-data);
+  font-size: var(--t-2xs);
+  color: var(--text-soft);
+}
+
+.ob-product__price {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  margin-top: var(--s-2xs);
+}
+
+.ob-product__price-note {
+  font-family: var(--font-data);
+  font-size: var(--t-2xs);
+  color: var(--text-muted);
+}
+
+.ob-product__price-value {
+  font-family: var(--font-data);
+  font-size: var(--t-lg);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.ob-product__stock {
+  font-family: var(--font-data);
+  font-size: var(--t-2xs);
+  color: var(--accent-ink);
+}
+
+.ob-product__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 2.75rem;
+  margin-top: var(--s-2xs);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-display);
+  font-size: var(--t-2xs);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text);
+  transition:
+    background-color var(--duration-base) var(--ease-out-quart),
+    border-color var(--duration-base) var(--ease-out-quart),
+    color var(--duration-base) var(--ease-out-quart);
+}
+
+.ob-product:hover .ob-product__cta,
+.ob-product__cta:focus-visible {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: #ffffff;
+}
+
+.ob-product__cta span {
+  transition: transform var(--duration-base) var(--ease-out-expo);
+}
+
+.ob-product:hover .ob-product__cta span {
+  transform: translateX(0.25rem);
+}
+
+.ob-products__empty {
+  margin-top: var(--s-md);
+  padding: var(--s-md);
+  border: 1px dashed var(--rule);
+  border-radius: var(--radius);
+  text-align: center;
+  color: var(--text-muted);
+}
+
+/* --- The product sheet -------------------------------------------------------------
+   A native <dialog>. The platform gives the modal its focus trap, its Escape
+   handling and its inert background; all that is styled here is the surface.
+   ----------------------------------------------------------------------------------- */
+
+.ob-sheet {
+  width: min(100% - 2rem, 62rem);
+  max-height: min(90dvh, 52rem);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  color: var(--text);
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.ob-sheet::backdrop {
+  background: rgb(11 13 18 / 0.55);
+  backdrop-filter: blur(3px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ob-sheet[open] {
+    animation: ob-sheet-in 320ms var(--ease-out-expo);
+  }
+}
+
+@keyframes ob-sheet-in {
+  from {
+    opacity: 0;
+    transform: translateY(1.5rem) scale(0.98);
+  }
+}
+
+.ob-sheet__close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 2;
+  display: grid;
+  place-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--surface-muted);
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--text-soft);
+  transition: background-color var(--duration-fast) var(--ease-out-quart);
+}
+
+.ob-sheet__close:hover {
+  background: var(--mist-deep);
+}
+
+.ob-sheet__grid {
+  display: grid;
+}
+
+@media (min-width: 52rem) {
+  .ob-sheet__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  }
+}
+
+.ob-sheet__gallery {
+  display: grid;
+  gap: var(--s-sm);
+  align-content: center;
+  padding: var(--s-lg) var(--s-md);
+  background:
+    radial-gradient(70% 60% at 50% 35%, rgb(10 92 255 / 0.1), transparent 70%),
+    var(--surface-muted);
+}
+
+.ob-sheet__stage {
+  display: grid;
+  place-items: center;
+}
+
+.ob-render--sheet {
+  max-width: 22rem;
+}
+
+.ob-sheet__thumbs {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.ob-sheet__thumb {
+  display: grid;
+  place-items: center;
+  width: 4rem;
+  padding: 0.35rem;
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+
+.ob-sheet__thumb.is-current {
+  border-color: var(--blue);
+}
+
+.ob-sheet__body {
+  display: grid;
+  gap: var(--s-2xs);
+  align-content: start;
+  padding: clamp(1.25rem, 1rem + 1.5vw, 2rem);
+}
+
+.ob-sheet__category {
+  font-family: var(--font-data);
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.ob-sheet__name {
+  font-size: var(--t-2xl);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+}
+
+.ob-sheet__summary {
+  color: var(--text-soft);
+}
+
+.ob-sheet__specs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-block: var(--s-2xs);
+}
+
+.ob-sheet__spec {
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--radius-sm);
+  background: var(--surface-muted);
+  font-family: var(--font-data);
+  font-size: var(--t-2xs);
+  font-weight: 600;
+}
+
+.ob-sheet__block-title,
+.ob-sheet__facts dt {
+  font-family: var(--font-display);
+  font-size: var(--t-2xs);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.ob-sheet__features {
+  display: grid;
+  gap: 0.3rem;
+  margin-top: 0.4rem;
+}
+
+.ob-sheet__features li {
+  position: relative;
+  padding-left: 1.2rem;
+  font-size: var(--t-sm);
+  color: var(--text-soft);
+}
+
+.ob-sheet__features li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 1px;
+  background: var(--blue);
+}
+
+.ob-sheet__facts {
+  display: grid;
+  gap: 0.5rem;
+  margin-block: var(--s-2xs);
+  padding-block: var(--s-2xs);
+  border-block: 1px solid var(--rule-soft);
+}
+
+.ob-sheet__facts div {
+  display: grid;
+  gap: 0.1rem;
+}
+
+.ob-sheet__facts dd {
+  margin: 0;
+  font-family: var(--font-data);
+  font-size: var(--t-sm);
+  color: var(--text);
+}
+
+.ob-sheet__price {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.ob-sheet__price-note {
+  font-family: var(--font-data);
+  font-size: var(--t-xs);
+  color: var(--text-muted);
+}
+
+.ob-sheet__price-value {
+  font-family: var(--font-data);
+  font-size: var(--t-2xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.ob-sheet__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: var(--s-2xs);
+}
+
+.ob-sheet__note {
+  font-size: var(--t-2xs);
+  color: var(--text-muted);
+}
+
+.ob-sheet__added {
+  position: sticky;
+  bottom: 0;
+  padding: 0.75rem var(--s-md);
+  background: var(--blue);
+  color: #ffffff;
+  font-size: var(--t-xs);
+  font-weight: 700;
+  text-align: center;
+}

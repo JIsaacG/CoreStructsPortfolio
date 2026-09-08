@@ -1,0 +1,405 @@
+/* =============================================================================
+   Velora — the booking widget
+
+   The one control the whole page is built around. Four steps, native radio
+   groups underneath, and a summary line that fills in as the choice is made.
+
+   Every panel is present in the markup. The `.js` guard is what hides the ones
+   that are not current, so with scripting off the widget degrades into a plain,
+   fully readable form rather than into an empty box.
+   ========================================================================== */
+
+.ve-book__layout {
+  display: grid;
+  gap: clamp(2rem, 1.5rem + 3vw, 3.5rem) var(--gutter);
+  align-items: start;
+}
+
+@media (min-width: 64rem) {
+  .ve-book__layout {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  }
+
+  .ve-book__intro {
+    position: sticky;
+    top: calc(var(--header-h) + var(--s-lg));
+  }
+}
+
+.ve-book__intro {
+  display: grid;
+  gap: var(--s-sm);
+}
+
+.ve-book__hint {
+  margin-top: var(--s-2xs);
+  padding-left: var(--s-sm);
+  border-left: 2px solid var(--champagne);
+  font-size: var(--t-sm);
+  color: var(--text-muted);
+}
+
+/* --- The card ------------------------------------------------------------------- */
+
+.ve-book {
+  position: relative;
+  display: grid;
+  gap: var(--s-md);
+  padding: clamp(1.25rem, 0.9rem + 1.6vw, 2rem);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-soft);
+}
+
+/* --- Step rail --------------------------------------------------------------------- */
+
+.ve-book__steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.4rem;
+}
+
+.ve-book__step {
+  padding-top: 0.6rem;
+  border-top: 2px solid var(--rule-soft);
+  transition: border-color var(--duration-base) var(--ease-out-quart);
+}
+
+/* A step is a button so that going back to an answered one is possible from the
+   keyboard; it is disabled — and therefore inert and unfocusable — while it
+   leads nowhere, which is every step from the current one onward. */
+.ve-book__step-button {
+  display: grid;
+  gap: 0.3rem;
+  width: 100%;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+}
+
+.ve-book__step-button:disabled {
+  cursor: default;
+}
+
+.ve-book__step.is-done,
+.ve-book__step.is-current {
+  border-top-color: var(--champagne);
+}
+
+.ve-book__step-index {
+  font-family: var(--font-display);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.ve-book__step.is-current .ve-book__step-index {
+  color: var(--champagne-ink);
+}
+
+.ve-book__step-label {
+  font-family: var(--font-display);
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.ve-book__step.is-current .ve-book__step-label {
+  color: var(--text);
+}
+
+/* The labels are the first thing to go when the card gets narrow: the index and
+   the rule already say where you are. */
+@media (max-width: 26rem) {
+  .ve-book__step-label {
+    display: none;
+  }
+}
+
+/* --- Panels ------------------------------------------------------------------------- */
+
+.ve-book__panel {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-inline-size: 0;
+}
+
+.js .ve-book__panel:not(.is-current) {
+  display: none;
+}
+
+.ve-book__legend {
+  padding: 0;
+  margin-bottom: var(--s-sm);
+  font-family: var(--font-display);
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* Panels change height between steps; the stage keeps a floor so the card does
+   not jump under the pointer when a shorter panel takes over. */
+.ve-book__stage {
+  min-height: 17rem;
+}
+
+/* --- Options ------------------------------------------------------------------------
+   Every option is a real radio input, made invisible rather than removed, so
+   arrow-key navigation inside the group and screen-reader semantics are the
+   platform's rather than ours.
+   ----------------------------------------------------------------------------------- */
+
+.ve-options {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.ve-option input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ve-option__body {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition:
+    border-color var(--duration-fast) var(--ease-out-quart),
+    background-color var(--duration-fast) var(--ease-out-quart),
+    transform var(--duration-fast) var(--ease-out-expo);
+}
+
+.ve-option:hover .ve-option__body {
+  border-color: var(--champagne);
+  transform: translateY(-1px);
+}
+
+.ve-option input:checked + .ve-option__body {
+  border-color: var(--soft-black);
+  background: var(--surface-warm);
+}
+
+.ve-option input:focus-visible + .ve-option__body {
+  outline: 2px solid var(--accent-ink);
+  outline-offset: 2px;
+}
+
+.ve-option__name {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--text);
+}
+
+.ve-option__meta {
+  display: block;
+  font-size: var(--t-2xs);
+  color: var(--text-muted);
+}
+
+/* A treatment row puts its price on the right; a person row leads with a
+   monogram. Same primitive, two compositions. */
+.ve-option--treatment .ve-option__body {
+  justify-content: space-between;
+}
+
+.ve-option--treatment .ve-option__meta {
+  text-align: right;
+}
+
+@media (min-width: 30rem) {
+  .ve-option--treatment .ve-option__body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+  }
+}
+
+.ve-option__avatar {
+  display: grid;
+  place-content: center;
+  flex: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--beige-deep);
+  color: var(--champagne-ink);
+  font-family: var(--font-display);
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+/* --- Days ----------------------------------------------------------------------------- */
+
+.ve-options--days {
+  grid-template-columns: repeat(auto-fit, minmax(4.25rem, 1fr));
+  gap: 0.4rem;
+}
+
+.ve-option--day .ve-option__body {
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.75rem 0.4rem;
+  text-align: center;
+}
+
+.ve-option__weekday {
+  font-family: var(--font-display);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.ve-option__date {
+  font-family: var(--font-display);
+  font-size: var(--t-lg);
+  font-weight: 600;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.ve-option__free {
+  font-size: 0.625rem;
+  color: var(--champagne-ink);
+}
+
+/* --- Slots -------------------------------------------------------------------------- */
+
+.ve-options--slots {
+  grid-template-columns: repeat(auto-fit, minmax(5.5rem, 1fr));
+  gap: 0.5rem;
+}
+
+.ve-option--slot .ve-option__body {
+  justify-content: center;
+  padding: 0.8rem 0.5rem;
+  font-family: var(--font-display);
+  font-size: var(--t-sm);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* A taken slot stays in the grid rather than disappearing: an agenda with gaps
+   in it is what makes the remaining times feel real. */
+.ve-option--slot[data-taken] .ve-option__body {
+  border-style: dashed;
+  color: var(--text-muted);
+  text-decoration: line-through;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.ve-option--slot[data-taken]:hover .ve-option__body {
+  border-color: var(--rule);
+  transform: none;
+}
+
+.ve-book__empty {
+  margin-top: var(--s-sm);
+  font-size: var(--t-sm);
+  color: var(--text-muted);
+}
+
+/* --- Footer of the card --------------------------------------------------------------- */
+
+.ve-book__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-sm);
+  padding-top: var(--s-md);
+  border-top: 1px solid var(--rule-soft);
+}
+
+.ve-book__summary {
+  display: grid;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.ve-book__summary-label {
+  font-family: var(--font-display);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.ve-book__summary-value {
+  font-size: var(--t-sm);
+  color: var(--text);
+}
+
+.ve-book__controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+/* --- Confirmation ----------------------------------------------------------------------
+   It covers the card rather than replacing it, so the choice behind stays put
+   and "reservar otra fecha" is a step back rather than a reset.
+   -------------------------------------------------------------------------------------- */
+
+.ve-book__done {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: var(--s-xs);
+  padding: var(--s-lg) var(--s-md);
+  border-radius: var(--radius-lg);
+  background: rgb(255 253 250 / 0.97);
+  backdrop-filter: blur(6px);
+  text-align: center;
+}
+
+.ve-book__done-title {
+  font-family: var(--font-display);
+  font-size: var(--t-2xl);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.ve-book__done-title::before {
+  content: "";
+  display: block;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin: 0 auto var(--s-sm);
+  border-radius: 50%;
+  background: var(--champagne) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fffdfa' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12.5l5 5L20 6.5'/%3E%3C/svg%3E")
+    center / 1.4rem no-repeat;
+}
+
+.ve-book__done-detail {
+  max-width: 32ch;
+  font-size: var(--t-base);
+  color: var(--text);
+}
+
+.ve-book__done-text {
+  max-width: 34ch;
+  font-size: var(--t-sm);
+  color: var(--text-muted);
+}

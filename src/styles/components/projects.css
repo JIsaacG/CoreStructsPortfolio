@@ -282,9 +282,9 @@
 }
 
 /* --- The landing card ----------------------------------------------------------
-   Opens the Cierzo landing, so it borrows that page's violet instead of the
-   portfolio's cyan. The other landing, Lumen, keeps its own teal — the card
-   can only preview one of the two.
+   Opens the index of the three landing demos, so it takes the neutral violet
+   from tokens.css rather than the portfolio's cyan: no one of the three
+   palettes behind it could stand for the other two.
    -------------------------------------------------------------------------- */
 
 .project-card--landing .project-card__link {

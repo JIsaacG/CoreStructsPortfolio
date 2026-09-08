@@ -56,7 +56,7 @@ npm run build:aurelis  # src/data/aurelis/*   ->  demos/aurelis/*.html
 npm run build:cede     # src/data/cede/*      ->  demos/cede/*.html
 npm run build:flujo    # src/data/flujo/*     ->  demos/flujo/*.html
 npm run build:rumbo    # src/data/rumbo/*     ->  demos/rumbo/*.html
-npm run build:landing  # src/data/landings.js ->  demos/landing/*.html
+npm run build:landing  # src/data/landings/*  ->  demos/landing/*.html
 npm run check          # validación previa a publicar
 ```
 
@@ -87,10 +87,14 @@ src/
     bottle.js              la botella SVG que protagoniza el demo Verbena
     rumbo/                 company.js, clients.js, users.js, operations.js,
                            format.js — el modelo del panel interno de Rumbo
-    landings.js             el contenido de las dos landings, Cierzo y Lumen
+    landings/              nexora.js, velora.js, orbita.js, showcase.js — el
+                           contenido de las tres landing pages y del índice
+                           que las presenta
   styles/
     main.css               punto de entrada del portfolio (orden de la cascada)
     demo.css               punto de entrada de los sitios de ejemplo
+    nexora.css  velora.css  orbita.css   una por landing page
+    showcase.css           el índice de las tres landings (identidad CoreStruct)
     tokens.css             color, tipografía, espacio, motion — fuente única
     fonts.css              @font-face de Manrope y de Quantify (la de marca)
     base.css               reset, fondo ambiental, foco, helpers
@@ -100,8 +104,14 @@ src/
                            mockup, alliances, manifesto, contact
     demo/                  shell, header, stage (la botella), hero, sections,
                            shop, footer, dashboard (paneles, tablas, pills de
-                           Rumbo), landing (hero, pasos, agenda, FAQ de Cierzo
-                           y Lumen) — solo para las páginas de demos/
+                           Rumbo) — solo para las páginas de demos/
+    lp/                    lo único que comparten las tres landings: fonts
+                           (Manrope, Source Serif 4, IBM Plex Sans), reset
+                           dirigido por tokens y kit (badge, pitch, firma de
+                           cierre, botón flotante)
+    nexora/ velora/ orbita/  la identidad de cada landing: tokens propios,
+                           header, hero y secciones
+    showcase/              la galería de las tres landings
   scripts/
     main.js                arranque
     modules/
@@ -117,8 +127,18 @@ src/
                            al hacer clic o tocarlo
     demo/
       main.js              arranque de Verbena (suma la botella, el fizz, el sabor)
-      shell.js             arranque de Rumbo y las landings: header + reveal, sin
-                           la maquinaria de la botella
+      shell.js             arranque de Rumbo: header + reveal, sin la maquinaria
+                           de la botella
+    lp/                    lo que comparten las tres landings: counters.js
+                           (contadores animados), track.js (progreso de scroll
+                           como custom property) y demo-form.js (formularios sin
+                           backend, con confirmación anunciada)
+    nexora/main.js         header, reveals, contadores y el track del método
+    velora/                booking.js (el widget de reserva de cuatro pasos),
+                           compare.js (el antes/después) y main.js
+    orbita/                parallax.js, search.js, sheet.js (el <dialog> de la
+                           ficha), compare.js (la tabla) y configurator.js
+    showcase/main.js       la transición de tarjeta a proyecto
       stage.js             la botella pineada: keyframes medidos del layout
       flavours.js          el sabor en pantalla retiñe la botella y la página
     rumbo/
@@ -134,7 +154,7 @@ tools/                     scripts de compilación (Node, sin dependencias)
   build-cede.mjs     cede/       el portal gubernamental
   build-flujo.mjs    flujo/      la demo de automatización administrativa
   build-rumbo.mjs    rumbo/      el sistema interno de una distribuidora
-  build-landings.mjs             las dos landings, Cierzo y Lumen
+  build-landings.mjs landings/  las tres landing pages y su índice
   build-map.mjs              GeoJSON -> src/data/cede/geography.js
   check.mjs  serve.mjs
 
@@ -151,14 +171,23 @@ dist/demo.css              hoja de estilos compilada de los sitios de ejemplo
 dist/aurelis.css           la del portal corporativo
 dist/cede.css              la del portal gubernamental
 dist/flujo.css             la de la demo de automatización
+dist/nexora.css            la de la landing corporativa
+dist/velora.css            la de la landing de conversión
+dist/orbita.css            la de la landing comercial
+dist/showcase.css          la del índice de las tres landings
 ```
 
-Rumbo y las landings no suman un `dist/*.css` propio: comparten `dist/demo.css` con
-Verbena, igual que comparten `src/scripts/demo/shell.js` en vez de `main.js`. A
-diferencia de Aurelis, CEDE y Flujo —que abren una identidad visual completa y por
-eso cargan su propia base— Rumbo y las landings son del mismo tamaño que Verbena:
-les basta con retintar `--brand-primary` / `--brand-secondary` y sumar los
-componentes que les faltan (`demo/dashboard.css`, `demo/landing.css`).
+Rumbo no suma un `dist/*.css` propio: comparte `dist/demo.css` con Verbena, igual
+que comparte `src/scripts/demo/shell.js` en vez de `main.js`. Le basta con
+retintar `--brand-primary` / `--brand-secondary` y sumar el componente que le
+falta (`demo/dashboard.css`).
+
+Las tres landings van al otro extremo, y por la misma razón que Aurelis, CEDE y
+Flujo: son tres empresas distintas, no tres esquemas de color. Cada una abre su
+propia paleta, su propio emparejamiento tipográfico y sus propias piezas
+interactivas, así que cada una carga su bundle. Lo único que comparten está en
+`src/styles/lp/` — el reset, las declaraciones de tipografía y el marco de
+CoreStruct — y en `src/scripts/lp/`.
 
 El portal gubernamental sigue la misma división, en su propio espacio de nombres:
 
@@ -504,30 +533,43 @@ npm run build:rumbo    # regenera demos/rumbo/*.html
 
 ---
 
-### Cierzo y Lumen — las landing pages
+### Nexora, Velora y Orbita — las landing pages
 
-La tarjeta **04 · Landing pages** abre `demos/landing/servicios.html`: dos
-ejemplos, no uno, porque una landing se juzga por qué tan bien se compromete
-con un solo objetivo, y eso solo se nota comparándola con otra que persigue un
-objetivo distinto.
+La tarjeta **04 · Landing pages** abre `demos/landing/index.html`, un índice que
+presenta tres proyectos. Tres y no uno porque una landing se juzga por qué tan
+bien se compromete con un solo objetivo, y eso solo se nota comparándola con
+otras que persiguen objetivos distintos — y porque tres identidades visuales
+separadas dicen algo que una sola no puede decir.
 
-- **Cierzo** vende una consultoría: el objetivo es agendar un diagnóstico
-  gratuito. Trae propuesta de valor, método en tres pasos, testimonios y
-  preguntas frecuentes.
-- **Lumen** vende un lugar en un evento: el objetivo es reservar un cupo. Trae
-  agenda del día, ponentes y las mismas preguntas frecuentes con otras
-  respuestas.
+- **Nexora Group** (`nexora.html`) — *Corporate Experience*. Una consultoría.
+  Estética editorial sobre papel cálido, titulares en Source Serif 4 e interfaz
+  en Manrope, un verde petróleo que nunca ocupa una superficie grande. Trae un
+  panel de datos animado, contadores, un bento de servicios donde cada tarjeta
+  dibuja algo distinto, la narración *antes → transformación → después* ligada
+  al scroll, tres casos y un formulario corto.
+- **Velora** (`velora.html`) — *Conversion Experience*. Una clínica estética. Marfil,
+  negro suave y champán; el emparejamiento tipográfico invertido (Manrope de
+  display, Source Serif 4 de lectura) y el arco como motivo. Trae el widget de
+  reserva de cuatro pasos, el comparador antes/después arrastrable, el protocolo
+  animado con el scroll y CTAs contextuales.
+- **Orbita Supply** (`orbita.html`) — *Commerce Experience*. Una distribuidora de
+  equipo. Blanco, azul eléctrico y dos zonas negras; Manrope para lo que se lee
+  e IBM Plex Sans para lo que se verifica. Trae buscador que filtra el catálogo,
+  ficha de producto en `<dialog>`, comparador de hasta tres equipos y un
+  configurador B2B que convierte una plantilla en una cotización.
 
-Cada página cierra con un enlace cruzado a la otra — «¿buscas algo distinto?»
-— porque la manera más honesta de mostrar dos landings es dejar que el
-visitante compare.
+Cada demo cierra con la misma firma —«Project by CoreStruct»— y lleva una línea
+discreta a media página que devuelve al contacto del portafolio: son piezas
+comerciales además de piezas de portafolio.
 
-Ninguna de las dos carga la maquinaria de Verbena (botella, fizz, sabores):
-usan `src/scripts/demo/shell.js`, el mismo arranque liviano de Rumbo, y el
-llamado a la acción es un `mailto:` — no hay backend detrás de ningún demo del
-repositorio, y esta es la única página del sitio donde eso importa, porque
-"agenda tu consulta" sin un lugar real donde escribir sería la única mentira
-del conjunto.
+Ninguna tiene backend, y las tres lo dicen donde importa: la agenda de Velora
+avisa que los horarios son ficticios, la ficha de Orbita avisa que no hay
+checkout, y los formularios confirman en la página en vez de fingir un envío.
+Es la única parte del repositorio donde eso importa, porque «reserva tu cita»
+sin un lugar real donde escribir sería la única mentira del conjunto.
+
+Los productos, precios, marcas, testimonios, credenciales y cifras son
+inventados. Las tres páginas son `noindex`, y cada una lo declara en la esquina.
 
 ```bash
 npm run build:landing  # regenera demos/landing/*.html

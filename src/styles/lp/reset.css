@@ -1,0 +1,169 @@
+/* =============================================================================
+   Landing demos — shared reset
+
+   The only thing the three landings agree on. Every declaration below reads a
+   token, so the same reset produces a warm ivory page for Velora and a hard
+   white one for Orbita without a single override. Nothing here may name a
+   colour, a family or a size: those belong to each page's `tokens.css`.
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  /* `clip` rather than `hidden`: it stops horizontal overflow without turning
+     the root into a scroll container, which would break every sticky section. */
+  overflow-x: clip;
+  scroll-behavior: smooth;
+  /* Anchor targets clear the fixed header. */
+  scroll-padding-top: calc(var(--header-h) + var(--s-md));
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  overflow-x: clip;
+  min-height: 100svh;
+  background-color: var(--page);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--t-base);
+  font-weight: 400;
+  line-height: var(--lead-body);
+  font-synthesis-weight: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* The mobile menu locks the page behind it. */
+body.has-open-menu {
+  overflow: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: var(--font-display);
+  font-weight: var(--weight-display);
+  line-height: var(--lead-title);
+  letter-spacing: var(--track-display);
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+svg,
+picture,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+}
+
+/* `hidden` has to beat every `display` a component sets on itself, or a panel
+   toggled with `el.hidden` stays on screen. The UA rule loses to a class
+   selector; this one does not. */
+[hidden] {
+  display: none !important;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+::selection {
+  background: rgb(var(--accent-rgb) / 0.24);
+}
+
+/* --- Focus ------------------------------------------------------------------
+   One ring for all three pages. `--accent-ink` is the contrast-safe form of the
+   accent, so the ring stays visible on the lightest surface each page has. */
+
+:focus-visible {
+  outline: 2px solid var(--accent-ink);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* --- Layout primitives ------------------------------------------------------ */
+
+.lp-shell {
+  width: var(--shell);
+  margin-inline: auto;
+}
+
+.lp-shell--narrow {
+  width: min(100% - var(--gutter) * 2, 60rem);
+  margin-inline: auto;
+}
+
+.lp-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.lp-skip {
+  position: fixed;
+  top: var(--s-sm);
+  left: var(--s-sm);
+  z-index: var(--layer-skip);
+  padding: var(--s-xs) var(--s-md);
+  border-radius: var(--radius-sm);
+  background: var(--text);
+  color: var(--page);
+  font-size: var(--t-sm);
+  font-weight: 600;
+  transform: translateY(-200%);
+  transition: transform var(--duration-base) var(--ease-out-expo);
+}
+
+.lp-skip:focus-visible {
+  transform: translateY(0);
+}

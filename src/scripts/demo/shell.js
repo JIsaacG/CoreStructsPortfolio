@@ -1,9 +1,11 @@
 /**
- * Entry point shared by the demos that are not Verbena: Rumbo and the two
- * Cierzo/Lumen landings. They get the same header and reveal behaviour the
- * portfolio and Verbena run — a demo is a real page, not a mock-up — but none
- * of them pin a bottle, so `stage.js`, `fizz.js`, `flavours.js`, `kinetic.js`
- * and `places.js` stay out of their bundle entirely.
+ * Entry point for the Rumbo demo. It gets the same header and reveal behaviour
+ * the portfolio and Verbena run — a demo is a real page, not a mock-up — but it
+ * pins no bottle, so `stage.js`, `fizz.js`, `flavours.js`, `kinetic.js` and
+ * `places.js` stay out of its bundle entirely.
+
+ * The three landing demos used to share this file; they now carry their own
+ * entry points, because each of them has interface of its own to run.
  */
 
 import { initHeader } from "../modules/header.js";

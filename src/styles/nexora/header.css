@@ -1,0 +1,218 @@
+/* =============================================================================
+   Nexora — header and mobile menu
+
+   A single hairline across the top of the page. It gains a paper background
+   only once content has passed underneath it, so the hero reads as full-bleed.
+   ========================================================================== */
+
+.nx-header {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline: 0;
+  z-index: var(--layer-header);
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid transparent;
+  transition:
+    background-color var(--duration-base) var(--ease-out-quart),
+    border-color var(--duration-base) var(--ease-out-quart);
+}
+
+.nx-header.is-stuck {
+  background: rgb(246 244 239 / 0.88);
+  backdrop-filter: blur(14px) saturate(150%);
+  border-bottom-color: var(--rule);
+}
+
+.nx-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-md);
+  width: var(--shell);
+}
+
+/* --- Wordmark ----------------------------------------------------------------
+   The name in the serif, the division in the sans: the pairing the whole page
+   is built on, stated once in the corner.
+   ---------------------------------------------------------------------------- */
+
+.nx-brand {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.nx-brand__name {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.nx-brand__suffix {
+  font-family: var(--font-body);
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* --- Navigation ---------------------------------------------------------------- */
+
+.nx-nav {
+  display: none;
+  gap: clamp(1.25rem, 0.5rem + 1.8vw, 2.5rem);
+}
+
+.nx-nav__link {
+  position: relative;
+  padding-block: 0.35rem;
+  font-family: var(--font-body);
+  font-size: var(--t-xs);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color var(--duration-base) var(--ease-out-quart);
+}
+
+.nx-nav__link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--accent-ink);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--duration-base) var(--ease-out-expo);
+}
+
+.nx-nav__link:hover,
+.nx-nav__link[aria-current="true"] {
+  color: var(--text);
+}
+
+.nx-nav__link:hover::after,
+.nx-nav__link[aria-current="true"]::after {
+  transform: scaleX(1);
+}
+
+.nx-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--s-sm);
+}
+
+.nx-header__cta {
+  display: none;
+  min-height: 2.6rem;
+  padding: 0.6rem 1.25rem;
+}
+
+@media (min-width: 62rem) {
+  .nx-nav,
+  .nx-header__cta {
+    display: flex;
+  }
+}
+
+/* --- Burger --------------------------------------------------------------------
+   Two bars that cross. No third bar: with two, the closed and open states are
+   the same two elements, so the transform is the whole animation.
+   ------------------------------------------------------------------------------ */
+
+.nx-burger {
+  display: grid;
+  place-content: center;
+  gap: 6px;
+  width: 44px;
+  height: 44px;
+  margin-inline-end: -0.5rem;
+}
+
+.nx-burger__bar {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: var(--text);
+  transition: transform var(--duration-base) var(--ease-out-expo);
+}
+
+.nx-burger[aria-expanded="true"] .nx-burger__bar:first-child {
+  transform: translateY(3.75px) rotate(45deg);
+}
+
+.nx-burger[aria-expanded="true"] .nx-burger__bar:last-child {
+  transform: translateY(-3.75px) rotate(-45deg);
+}
+
+@media (min-width: 62rem) {
+  .nx-burger {
+    display: none;
+  }
+}
+
+/* --- Mobile menu ----------------------------------------------------------------- */
+
+.nx-menu {
+  position: fixed;
+  inset: 0;
+  z-index: var(--layer-menu);
+  display: grid;
+  align-content: center;
+  padding: var(--s-xl) var(--gutter);
+  background: var(--paper);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-1.5rem);
+  transition:
+    opacity var(--duration-base) var(--ease-out-quart),
+    transform var(--duration-slow) var(--ease-out-expo),
+    visibility var(--duration-base);
+}
+
+.nx-menu.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.nx-menu__inner {
+  display: grid;
+  gap: var(--s-sm);
+  width: var(--shell);
+  margin-inline: auto;
+}
+
+.nx-menu__link {
+  padding-block: var(--s-sm);
+  border-bottom: 1px solid var(--rule-soft);
+  font-family: var(--font-display);
+  font-size: var(--t-2xl);
+  font-weight: 500;
+  letter-spacing: var(--track-display);
+}
+
+.nx-menu__cta {
+  justify-self: start;
+  margin-top: var(--s-md);
+  padding: 0.9rem 1.75rem;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-body);
+  font-size: var(--t-xs);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+}
+
+@media (min-width: 62rem) {
+  .nx-menu {
+    display: none;
+  }
+}

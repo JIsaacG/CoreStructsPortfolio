@@ -1,0 +1,818 @@
+/* =============================================================================
+   Velora — treatments, results, protocol, voices, the nudge, the doctor,
+   the closing call and the footer.
+   ========================================================================== */
+
+/* --- Treatment cards ------------------------------------------------------------
+   Three across, and each one lifts and warms on hover. The arch appears again,
+   quietly, as the shape of the icon plate.
+   -------------------------------------------------------------------------------- */
+
+.ve-cards {
+  display: grid;
+  gap: var(--s-md);
+}
+
+/* Two rows of three, never four and a stranded pair. */
+@media (min-width: 40rem) {
+  .ve-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 64rem) {
+  .ve-cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.ve-card {
+  display: grid;
+  gap: var(--s-xs);
+  align-content: start;
+  padding: var(--s-md);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  border: 1px solid var(--rule-soft);
+  transition:
+    transform var(--duration-base) var(--ease-out-expo),
+    box-shadow var(--duration-base) var(--ease-out-quart),
+    border-color var(--duration-base) var(--ease-out-quart);
+}
+
+.ve-card:hover,
+.ve-card:focus-within {
+  transform: translateY(-4px);
+  border-color: rgb(var(--champagne-rgb) / 0.6);
+  box-shadow: var(--shadow-lift);
+}
+
+.ve-card__icon {
+  display: grid;
+  place-content: center;
+  width: 3.25rem;
+  height: 3.75rem;
+  margin-bottom: var(--s-2xs);
+  border-radius: 999px 999px 6px 6px;
+  background: var(--surface-warm);
+  color: var(--champagne-ink);
+  transition: background-color var(--duration-base) var(--ease-out-quart);
+}
+
+.ve-card:hover .ve-card__icon {
+  background: var(--beige-deep);
+}
+
+.ve-card__art {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.ve-card__name {
+  font-family: var(--font-display);
+  font-size: var(--t-xl);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.ve-card__text {
+  font-size: var(--t-sm);
+  line-height: 1.62;
+  color: var(--text-soft);
+}
+
+.ve-card__detail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: var(--s-2xs);
+}
+
+.ve-card__detail li {
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: var(--surface-warm);
+  font-family: var(--font-display);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+.ve-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: var(--s-2xs);
+  font-family: var(--font-display);
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--champagne-ink);
+}
+
+.ve-card__link span {
+  transition: transform var(--duration-base) var(--ease-out-expo);
+}
+
+.ve-card:hover .ve-card__link span {
+  transform: translateX(0.3rem);
+}
+
+/* --- Results and the comparison ---------------------------------------------------- */
+
+.ve-results {
+  display: grid;
+  gap: clamp(2rem, 1.5rem + 3vw, 3.5rem) var(--gutter);
+  align-items: center;
+}
+
+@media (min-width: 62rem) {
+  .ve-results {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+.ve-results__copy {
+  display: grid;
+  gap: var(--s-sm);
+}
+
+.ve-figures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+  gap: var(--s-md);
+  margin-top: var(--s-sm);
+  padding-top: var(--s-md);
+  border-top: 1px solid var(--rule);
+}
+
+.ve-figure {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.ve-figure__value {
+  font-family: var(--font-display);
+  font-size: var(--t-2xl);
+  font-weight: 300;
+  line-height: 1;
+  color: var(--text);
+}
+
+.ve-figure__label {
+  font-size: var(--t-2xs);
+  color: var(--text-muted);
+}
+
+/* The comparison itself. `--split` is the single value the range input writes;
+   the clip and the handle both read it, so the two can never disagree. */
+.ve-compare {
+  --split: 52%;
+  display: grid;
+  gap: var(--s-xs);
+  margin: 0;
+}
+
+.ve-compare__frame {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-lg) var(--radius-lg) var(--radius) var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  touch-action: pan-y;
+}
+
+.ve-compare__layer {
+  position: absolute;
+  inset: 0;
+}
+
+.ve-compare__layer--before {
+  clip-path: inset(0 calc(100% - var(--split)) 0 0);
+}
+
+.ve-compare__art {
+  width: 100%;
+  height: 100%;
+}
+
+.ve-compare__tag {
+  position: absolute;
+  top: var(--s-sm);
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  background: rgb(31 26 22 / 0.72);
+  color: var(--ivory);
+  font-family: var(--font-display);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  backdrop-filter: blur(4px);
+}
+
+.ve-compare__tag--before {
+  left: var(--s-sm);
+}
+
+.ve-compare__tag--after {
+  right: var(--s-sm);
+}
+
+.ve-compare__handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--split);
+  width: 2px;
+  margin-left: -1px;
+  background: rgb(255 253 250 / 0.9);
+  pointer-events: none;
+}
+
+.ve-compare__handle-grip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2.75rem;
+  height: 2.75rem;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: rgb(255 253 250 / 0.95);
+  box-shadow: 0 6px 20px rgb(31 26 22 / 0.25);
+}
+
+/* The two arrows on the grip, drawn with borders so the handle stays one node. */
+.ve-compare__handle-grip::before,
+.ve-compare__handle-grip::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 0.4rem;
+  height: 0.4rem;
+  border: 1.5px solid var(--soft-black);
+  border-width: 1.5px 1.5px 0 0;
+}
+
+.ve-compare__handle-grip::before {
+  left: 0.75rem;
+  transform: translateY(-50%) rotate(-135deg);
+}
+
+.ve-compare__handle-grip::after {
+  right: 0.75rem;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+/* The range input is the control: invisible, full-bleed, and the only thing
+   that takes focus. Keyboard, touch and mouse all come from the platform. */
+.ve-compare__range {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: ew-resize;
+  appearance: none;
+  background: transparent;
+}
+
+.ve-compare__range::-webkit-slider-thumb {
+  appearance: none;
+  width: 3rem;
+  height: 100%;
+}
+
+.ve-compare__range::-moz-range-thumb {
+  width: 3rem;
+  height: 100%;
+  border: 0;
+  background: transparent;
+}
+
+.ve-compare__range:focus-visible {
+  outline: none;
+}
+
+/* Focus has to land somewhere visible, and the invisible input cannot carry it,
+   so the frame takes the ring instead. */
+.ve-compare__frame:focus-within {
+  outline: 2px solid var(--accent-ink);
+  outline-offset: 3px;
+}
+
+.ve-compare__caption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: var(--t-2xs);
+  color: var(--text-muted);
+}
+
+.ve-compare__hint {
+  font-family: var(--font-display);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* --- Protocol ---------------------------------------------------------------------
+   Four visits on a rail that fills as the section is read. Same mechanism as
+   Nexora's method zone, a completely different shape on screen.
+   ---------------------------------------------------------------------------------- */
+
+.ve-protocol {
+  --track: 1;
+  display: grid;
+  gap: clamp(2rem, 1.5rem + 3vw, 4rem) var(--gutter);
+  align-items: start;
+}
+
+@media (min-width: 62rem) {
+  .ve-protocol {
+    grid-template-columns: minmax(0, 4fr) minmax(0, 6fr);
+  }
+
+  .ve-protocol__aside {
+    position: sticky;
+    top: calc(var(--header-h) + var(--s-lg));
+  }
+}
+
+.ve-protocol__aside {
+  display: grid;
+  gap: var(--s-sm);
+  justify-items: start;
+}
+
+.ve-protocol__track {
+  position: relative;
+  padding-left: 3.25rem;
+}
+
+.ve-protocol__rail {
+  position: absolute;
+  left: 1.1rem;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  width: 2px;
+  background: var(--rule);
+  border-radius: 2px;
+}
+
+.ve-protocol__rail-fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(var(--champagne), var(--terracotta));
+  transform: scaleY(var(--track));
+  transform-origin: top;
+}
+
+.ve-protocol__steps {
+  display: grid;
+  gap: clamp(1.75rem, 1rem + 2vw, 3rem);
+}
+
+/* A visit the reader has not reached yet is dimmed by colour rather than by
+   opacity — a paragraph at 42% opacity is under 2.5:1 and stops being readable
+   exactly when someone is reading it. */
+.ve-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--s-sm);
+  transition: transform var(--duration-slow) var(--ease-out-expo);
+}
+
+.ve-step__index {
+  display: grid;
+  place-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  margin-left: -3.25rem;
+  border: 1px solid var(--rule);
+  border-radius: 50%;
+  background: var(--page);
+  font-family: var(--font-display);
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  transition:
+    background-color var(--duration-base) var(--ease-out-quart),
+    border-color var(--duration-base) var(--ease-out-quart),
+    color var(--duration-base) var(--ease-out-quart);
+}
+
+.ve-step.is-active .ve-step__index {
+  background: var(--soft-black);
+  border-color: var(--soft-black);
+  color: var(--ivory);
+}
+
+.ve-step__body {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.ve-step__name {
+  font-family: var(--font-display);
+  font-size: var(--t-xl);
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: color var(--duration-slow) var(--ease-out-quart);
+}
+
+.ve-step.is-active .ve-step__name {
+  color: var(--text);
+}
+
+.ve-step__text {
+  max-width: 46ch;
+  font-size: var(--t-base);
+  line-height: var(--lead-body);
+  color: var(--text-muted);
+  transition: color var(--duration-slow) var(--ease-out-quart);
+}
+
+.ve-step.is-active .ve-step__text {
+  color: var(--text-soft);
+}
+
+.ve-step__meta {
+  font-family: var(--font-display);
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color var(--duration-slow) var(--ease-out-quart);
+}
+
+.ve-step.is-active .ve-step__meta {
+  color: var(--champagne-ink);
+}
+
+/* --- Voices ------------------------------------------------------------------------
+   One long testimonial anchors the block and three short ones sit beside it. A
+   wall of equal quotes reads as filler; an asymmetric one reads as editing.
+   ---------------------------------------------------------------------------------- */
+
+.ve-voices {
+  display: grid;
+  gap: var(--s-md);
+}
+
+@media (min-width: 62rem) {
+  .ve-voices {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.ve-voices__feature {
+  display: grid;
+  gap: var(--s-sm);
+  margin: 0;
+  padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+  border-radius: var(--radius-lg);
+  background: var(--soft-black);
+  color: var(--ivory);
+}
+
+.ve-voices__quote {
+  margin: 0;
+  font-size: var(--t-xl);
+  line-height: 1.5;
+}
+
+.ve-voices__feature .ve-quote__detail,
+.ve-voices__feature .ve-quote__score span {
+  color: rgb(250 247 242 / 0.68);
+}
+
+.ve-voices__feature .ve-quote__avatar {
+  background: rgb(250 247 242 / 0.14);
+  color: var(--ivory);
+}
+
+.ve-voices__list {
+  display: grid;
+  gap: var(--s-sm);
+}
+
+.ve-quote {
+  display: grid;
+  gap: var(--s-2xs);
+  margin: 0;
+  padding: var(--s-md);
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--rule-soft);
+}
+
+.ve-quote__score {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-display);
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.ve-quote__text {
+  margin: 0;
+  font-size: var(--t-base);
+  line-height: 1.6;
+  color: var(--text-soft);
+}
+
+.ve-quote__by {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.ve-quote__avatar {
+  display: grid;
+  place-content: center;
+  flex: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--surface-warm);
+  color: var(--champagne-ink);
+  font-family: var(--font-display);
+  font-size: var(--t-2xs);
+  font-weight: 700;
+}
+
+.ve-quote__name {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--t-sm);
+  font-weight: 600;
+}
+
+.ve-quote__detail {
+  display: block;
+  font-size: var(--t-2xs);
+  color: var(--text-muted);
+}
+
+/* --- The contextual nudge ------------------------------------------------------------ */
+
+.ve-nudge {
+  padding-block: clamp(2.5rem, 2rem + 2vw, 4rem);
+  background: var(--page);
+}
+
+.ve-nudge__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-md);
+  padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgb(var(--champagne-rgb) / 0.5);
+  background:
+    radial-gradient(90% 140% at 8% 0%, rgb(201 168 124 / 0.22), transparent 70%),
+    var(--surface);
+}
+
+.ve-nudge__title {
+  font-family: var(--font-display);
+  font-size: var(--t-2xl);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.ve-nudge__text {
+  max-width: 46ch;
+  margin-top: 0.35rem;
+  color: var(--text-soft);
+}
+
+/* --- The doctor ----------------------------------------------------------------------- */
+
+.ve-doctor {
+  display: grid;
+  gap: clamp(2rem, 1.5rem + 3vw, 4rem) var(--gutter);
+  align-items: start;
+}
+
+@media (min-width: 62rem) {
+  .ve-doctor {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  }
+}
+
+.ve-doctor__portrait {
+  border-radius: var(--arch);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  aspect-ratio: 19 / 24;
+}
+
+.ve-doctor__art {
+  width: 100%;
+  height: 100%;
+}
+
+.ve-doctor__copy {
+  display: grid;
+  gap: var(--s-sm);
+}
+
+.ve-doctor__role {
+  font-family: var(--font-display);
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--champagne-ink);
+}
+
+.ve-doctor__story {
+  max-width: var(--measure);
+  line-height: var(--lead-loose);
+  color: var(--text-soft);
+}
+
+.ve-doctor__credentials {
+  display: grid;
+  gap: 0.4rem;
+  margin-top: var(--s-2xs);
+}
+
+.ve-doctor__credentials li {
+  position: relative;
+  padding-left: 1.4rem;
+  font-size: var(--t-sm);
+  color: var(--text-soft);
+}
+
+.ve-doctor__credentials li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--champagne);
+}
+
+.ve-doctor__stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+  gap: var(--s-md);
+  margin-top: var(--s-sm);
+  padding-top: var(--s-md);
+  border-top: 1px solid var(--rule);
+}
+
+.ve-doctor__stat-value {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--t-xl);
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.ve-doctor__stat-label {
+  display: block;
+  font-size: var(--t-2xs);
+  color: var(--text-muted);
+}
+
+.ve-doctor__disclaimer {
+  font-size: var(--t-2xs);
+  color: var(--text-muted);
+}
+
+.ve-doctor + .lp-pitch {
+  width: var(--shell);
+  margin-inline: auto;
+  margin-top: clamp(3rem, 2rem + 3vw, 5rem);
+}
+
+/* --- Closing call ---------------------------------------------------------------------- */
+
+.ve-cta {
+  padding-block: clamp(4rem, 3rem + 5vw, 8rem);
+  background:
+    radial-gradient(70% 120% at 50% 0%, rgb(201 168 124 / 0.3), transparent 70%),
+    var(--surface-warm);
+  text-align: center;
+}
+
+.ve-cta__inner {
+  display: grid;
+  justify-items: center;
+  gap: var(--s-sm);
+}
+
+.ve-cta__title {
+  max-width: 18ch;
+  font-family: var(--font-display);
+  font-size: var(--t-3xl);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.ve-cta__text {
+  max-width: 46ch;
+  font-size: var(--t-lg);
+  line-height: var(--lead-loose);
+  color: var(--text-soft);
+}
+
+.ve-cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--s-sm);
+  margin-top: var(--s-2xs);
+}
+
+/* --- Footer ------------------------------------------------------------------------------ */
+
+.ve-foot {
+  padding-block: var(--s-xl) var(--s-lg);
+  background: var(--page);
+  border-top: 1px solid var(--rule-soft);
+}
+
+.ve-foot__inner {
+  display: grid;
+  gap: var(--s-lg) var(--gutter);
+}
+
+@media (min-width: 52rem) {
+  .ve-foot__inner {
+    grid-template-columns: minmax(0, 2fr) repeat(2, minmax(0, 1fr));
+  }
+
+  .ve-foot__credit {
+    grid-column: 1 / -1;
+  }
+}
+
+.ve-foot__name {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  margin-bottom: var(--s-2xs);
+}
+
+.ve-foot__line {
+  font-size: var(--t-sm);
+  color: var(--text-muted);
+}
+
+.ve-foot__col-title {
+  margin-bottom: var(--s-2xs);
+  font-family: var(--font-display);
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.ve-foot__col li + li {
+  margin-top: 0.35rem;
+}
+
+.ve-foot__col a {
+  font-size: var(--t-sm);
+  color: var(--text-soft);
+  transition: color var(--duration-base) var(--ease-out-quart);
+}
+
+.ve-foot__col a:hover {
+  color: var(--champagne-ink);
+}
+
+.ve-foot__credit {
+  padding-top: var(--s-md);
+  border-top: 1px solid var(--rule-soft);
+  font-size: var(--t-2xs);
+  color: var(--text-muted);
+}
+
+.ve-foot__credit a {
+  color: var(--champagne-ink);
+  font-weight: 700;
+}

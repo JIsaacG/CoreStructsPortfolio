@@ -1,0 +1,120 @@
+/* =============================================================================
+   Velora — design tokens
+
+   The opposite temperature to Nexora in every axis that matters. Ivory instead
+   of paper-white, soft black instead of carbon, generous radii instead of
+   square corners, and a champagne metal that does the work an accent colour
+   usually does.
+
+   The type pairing is inverted too: here the sans is the display face — light,
+   wide-tracked, the way a beauty brand sets a name — and the serif carries the
+   body copy, which is what makes the page read as warm rather than as an app.
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  /* --- Palette -------------------------------------------------------------- */
+  --ivory: #faf7f2;          /* the page                                       */
+  --ivory-raised: #fffdfa;
+  --beige: #f1e9de;          /* the second surface, and every warm band        */
+  --beige-deep: #e6d9c8;
+  --champagne: #c9a87c;      /* the metal: rules, marks, the ring on a chip    */
+  --champagne-ink: #7a5628;  /* the same metal, dark enough to set as text     */
+  --terracotta: #a8724f;     /* used at the size of a word, never of a panel   */
+  --soft-black: #1f1a16;
+  --soft-black-deep: #16120f;
+
+  --accent-rgb: 168 114 79;
+  --champagne-rgb: 201 168 124;
+
+  /* --- Semantic surfaces ------------------------------------------------------ */
+  --page: var(--ivory);
+  --surface: var(--ivory-raised);
+  --surface-warm: var(--beige);
+  --text: var(--soft-black);
+  --text-soft: #4a423b;
+  --text-muted: #6d635a;      /* 5.0:1 on ivory                                */
+  --rule: rgb(31 26 22 / 0.12);
+  --rule-soft: rgb(31 26 22 / 0.07);
+  --rule-strong: rgb(31 26 22 / 0.24);
+  --accent: var(--terracotta);
+  --accent-ink: var(--champagne-ink);
+
+  /* --- Typography --------------------------------------------------------------- */
+  --font-display:
+    "Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-body:
+    "Source Serif 4", ui-serif, Georgia, "Times New Roman", serif;
+
+  /* The display face is set light and open: 400 with positive tracking is what
+     separates "clinic" from "software". */
+  --weight-display: 400;
+  --track-display: -0.005em;
+
+  --t-2xs: clamp(0.6875rem, 0.66rem + 0.12vw, 0.75rem);
+  --t-xs: clamp(0.75rem, 0.72rem + 0.14vw, 0.8125rem);
+  --t-sm: clamp(0.875rem, 0.85rem + 0.12vw, 0.9375rem);
+  --t-base: clamp(1.0625rem, 1.02rem + 0.2vw, 1.1875rem);
+  --t-lg: clamp(1.1875rem, 1.11rem + 0.34vw, 1.4375rem);
+  --t-xl: clamp(1.375rem, 1.24rem + 0.6vw, 1.75rem);
+  --t-2xl: clamp(1.75rem, 1.48rem + 1.2vw, 2.625rem);
+  --t-3xl: clamp(2.125rem, 1.65rem + 2.1vw, 3.75rem);
+  --t-4xl: clamp(2.5rem, 1.7rem + 3.6vw, 5.25rem);
+
+  --lead-title: 1.1;
+  --lead-body: 1.68;
+  --lead-loose: 1.78;
+
+  --track-label: 0.22em;
+  --track-wide: 0.3em;
+
+  /* --- Rhythm ----------------------------------------------------------------- */
+  --s-3xs: 0.25rem;
+  --s-2xs: 0.5rem;
+  --s-xs: 0.75rem;
+  --s-sm: 1rem;
+  --s-md: 1.5rem;
+  --s-lg: 2.5rem;
+  --s-xl: 4rem;
+  --s-2xl: 6rem;
+
+  --gutter: clamp(1.25rem, 0.9rem + 1.8vw, 3rem);
+  --shell-max: 78rem;
+  --shell: min(100% - var(--gutter) * 2, var(--shell-max));
+  --measure: 56ch;
+  --section-y: clamp(4rem, 2.5rem + 6vw, 8.5rem);
+  --header-h: 4.5rem;
+
+  /* Soft, generous corners — and one arch, which is the page's whole motif. */
+  --radius-sm: 10px;
+  --radius: 18px;
+  --radius-lg: 28px;
+  --arch: 999px 999px 0 0;
+
+  --shadow-soft: 0 24px 60px rgb(90 62 40 / 0.1);
+  --shadow-lift: 0 30px 70px rgb(90 62 40 / 0.16);
+
+  /* --- Motion -------------------------------------------------------------------- */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --duration-fast: 180ms;
+  --duration-base: 320ms;
+  --duration-slow: 620ms;
+  --duration-reveal: 900ms;
+
+  /* --- Layers ---------------------------------------------------------------------- */
+  --layer-header: 50;
+  --layer-badge: 60;
+  --layer-menu: 70;
+  --layer-skip: 100;
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --header-h: 5rem;
+  }
+}

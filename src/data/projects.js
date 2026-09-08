@@ -53,10 +53,11 @@ export const projects = [
     category: "Conversión",
     title: "Landing pages",
     description:
-      "Páginas de campaña enfocadas en un único objetivo: que la persona correcta dé el siguiente paso.",
+      "Tres páginas construidas para tres negocios distintos, cada una enfocada en un único " +
+      "objetivo: que la persona correcta dé el siguiente paso.",
     mockup: "landing",
     variant: "landing",
-    href: "demos/landing/servicios.html",
+    href: "demos/landing/index.html",
     size: "major",
     reveal: "far",
   },

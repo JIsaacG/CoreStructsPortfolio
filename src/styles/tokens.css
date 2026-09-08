@@ -44,9 +44,10 @@
   --systems-deep: #0c2a20;
 
   /* --- Landing accent ------------------------------------------------------- */
-  /* The violet the Cierzo landing is built on, borrowed by the one portfolio
-     card that opens a campaign page. Each landing still sets its own pair —
-     Lumen's teal is not this — but the card can only preview one. */
+  /* The card at 04 opens an index of three landings, each with a palette of its
+     own — deep green, champagne, electric blue. No single one of them can stand
+     for all three, so the card keeps a neutral violet: it says "campaign page"
+     without pretending to preview a particular one. */
   --landing-violet: #8b5cf6;
   --landing-violet-rgb: 139 92 246;
   --landing-deep: #1b0f2e;

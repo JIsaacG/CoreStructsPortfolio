@@ -8,6 +8,10 @@
 const REVEAL_SELECTOR = "[data-reveal], .reveal-lines, .reveal-words";
 const STAGGER_MS = 90;
 const MAX_STAGGER_STEPS = 6;
+/* How far above the fold an element has to be before it counts as arrived. It
+   is one constant because two places need it — the observer's root margin and
+   the immediate-reveal check below — and they must agree. */
+const VIEWPORT_INSET = 0.12;
 
 /**
  * Cascade a group's children instead of revealing them all at once.
@@ -68,16 +72,21 @@ export function initScrollReveal(root = document) {
     {
       // Fire a little before the element is fully on screen so the motion
       // finishes about when the element reaches a comfortable reading position.
-      rootMargin: "0px 0px -12% 0px",
+      rootMargin: `0px 0px -${VIEWPORT_INSET * 100}% 0px`,
       threshold: 0.12,
     },
   );
 
+  // Anything already inside the observer's root at load is shown immediately —
+  // no entrance animation should gate content the user can already see. The
+  // bound is the SAME one the observer uses, deliberately: a narrower one leaves
+  // a band just above the fold where an element is on screen, is not revealed
+  // here, and has to wait for the observer's first delivery to appear.
+  const inset = window.innerHeight * (1 - VIEWPORT_INSET);
+
   for (const element of targets) {
-    // Anything already on screen at load is shown immediately — no entrance
-    // animation should gate content the user can already see.
     const box = element.getBoundingClientRect();
-    if (box.top < window.innerHeight * 0.85 && box.bottom > 0) {
+    if (box.top < inset && box.bottom > 0) {
       element.classList.add("is-revealed");
       continue;
     }

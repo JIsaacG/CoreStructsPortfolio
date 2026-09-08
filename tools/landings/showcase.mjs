@@ -1,0 +1,267 @@
+/**
+ * The landing-pages index: `demos/landing/index.html`.
+ *
+ * The portfolio card for "Landing pages" opens here, and here the three demos
+ * are introduced as three featured projects. It is CoreStruct's own page, so it
+ * keeps the portfolio's dark identity and borrows nothing from the three
+ * landings except their accent — which each card and the opening transition
+ * are tinted with, so a click feels like entering the page you were looking at.
+ *
+ * Each card carries a drawn miniature of the landing behind it, in that
+ * landing's own palette. It is a wireframe rather than a screenshot: a
+ * screenshot goes stale the first time the page changes, and this one cannot.
+ */
+
+import { showcase } from "../../src/data/landings/showcase.js";
+import { escape, rgbTriple } from "./shell.mjs";
+
+/* --------------------------------------------------------------- miniatures */
+
+/**
+ * A simplified drawing of each landing, in that landing's colours. Three
+ * different compositions, because three identical wireframes would say the
+ * opposite of what this page is claiming.
+ */
+const PREVIEWS = {
+  /* Nexora: editorial split, a chart panel, a row of figures. */
+  editorial: `
+    <rect x="18" y="20" width="104" height="9" rx="2" fill="var(--pv-ink)" opacity="0.85"/>
+    <rect x="18" y="33" width="78" height="9" rx="2" fill="var(--pv-ink)" opacity="0.85"/>
+    <rect x="18" y="46" width="60" height="9" rx="2" fill="var(--pv-accent)"/>
+    <rect x="18" y="64" width="88" height="4" rx="2" fill="var(--pv-ink)" opacity="0.28"/>
+    <rect x="18" y="72" width="70" height="4" rx="2" fill="var(--pv-ink)" opacity="0.28"/>
+    <rect x="18" y="86" width="46" height="12" rx="2" fill="var(--pv-ink)"/>
+    <rect x="140" y="18" width="122" height="98" rx="3" fill="#ffffff" stroke="var(--pv-ink)" stroke-opacity="0.14"/>
+    <path d="M150 96c14-4 22-14 34-22s24-16 40-30 18-12 28-16" fill="none" stroke="var(--pv-accent)" stroke-width="2.4"/>
+    <path d="M150 100c14-2 22-8 34-12s24-8 40-16 18-8 28-10" fill="none" stroke="var(--pv-ink)" stroke-opacity="0.25" stroke-width="1.6" stroke-dasharray="4 4"/>
+    <rect x="150" y="26" width="40" height="4" rx="2" fill="var(--pv-ink)" opacity="0.3"/>
+    <g fill="var(--pv-ink)" opacity="0.12">
+      <rect x="18" y="112" width="52" height="26" rx="2"/>
+      <rect x="80" y="112" width="52" height="26" rx="2"/>
+      <rect x="142" y="112" width="52" height="26" rx="2"/>
+      <rect x="204" y="112" width="52" height="26" rx="2"/>
+    </g>`,
+
+  /* Velora: an arch, a soft headline, the booking card. */
+  arch: `
+    <path d="M22 122V64c0-19 15-34 34-34s34 15 34 34v58Z" fill="var(--pv-accent)" opacity="0.34"/>
+    <path d="M22 122V64c0-19 15-34 34-34s34 15 34 34v58Z" fill="none" stroke="var(--pv-accent)" stroke-opacity="0.5"/>
+    <rect x="108" y="30" width="96" height="8" rx="4" fill="var(--pv-ink)" opacity="0.85"/>
+    <rect x="108" y="44" width="70" height="8" rx="4" fill="var(--pv-accent)"/>
+    <rect x="108" y="62" width="110" height="4" rx="2" fill="var(--pv-ink)" opacity="0.25"/>
+    <rect x="108" y="70" width="88" height="4" rx="2" fill="var(--pv-ink)" opacity="0.25"/>
+    <rect x="108" y="86" width="52" height="14" rx="7" fill="var(--pv-ink)"/>
+    <rect x="166" y="86" width="52" height="14" rx="7" fill="none" stroke="var(--pv-ink)" stroke-opacity="0.3"/>
+    <rect x="212" y="24" width="60" height="98" rx="8" fill="#ffffff" stroke="var(--pv-accent)" stroke-opacity="0.35"/>
+    <g fill="var(--pv-accent)" opacity="0.55">
+      <rect x="222" y="36" width="40" height="6" rx="3"/>
+      <rect x="222" y="50" width="40" height="10" rx="5"/>
+      <rect x="222" y="64" width="40" height="10" rx="5"/>
+      <rect x="222" y="78" width="40" height="10" rx="5"/>
+    </g>
+    <rect x="222" y="96" width="40" height="12" rx="6" fill="var(--pv-ink)"/>`,
+
+  /* Orbita: a product grid under a black band. */
+  catalog: `
+    <rect x="16" y="16" width="120" height="10" rx="2" fill="var(--pv-ink)" opacity="0.9"/>
+    <rect x="16" y="32" width="86" height="10" rx="2" fill="var(--pv-ink)" opacity="0.9"/>
+    <rect x="16" y="54" width="104" height="16" rx="8" fill="#ffffff" stroke="var(--pv-ink)" stroke-opacity="0.2"/>
+    <circle cx="28" cy="62" r="4" fill="none" stroke="var(--pv-ink)" stroke-opacity="0.4"/>
+    <rect x="94" y="57" width="22" height="10" rx="5" fill="var(--pv-accent)"/>
+    <g>
+      <rect x="152" y="16" width="120" height="54" rx="4" fill="var(--pv-ink)" opacity="0.06"/>
+      <rect x="176" y="28" width="72" height="28" rx="3" fill="var(--pv-accent)"/>
+      <rect x="168" y="58" width="88" height="4" rx="2" fill="var(--pv-ink)" opacity="0.3"/>
+    </g>
+    <g>
+      <rect x="16" y="84" width="60" height="54" rx="4" fill="#ffffff" stroke="var(--pv-ink)" stroke-opacity="0.14"/>
+      <rect x="26" y="92" width="40" height="20" rx="2" fill="var(--pv-accent)" opacity="0.8"/>
+      <rect x="26" y="118" width="30" height="4" rx="2" fill="var(--pv-ink)" opacity="0.3"/>
+      <rect x="26" y="126" width="20" height="4" rx="2" fill="var(--pv-ink)" opacity="0.18"/>
+
+      <rect x="84" y="84" width="60" height="54" rx="4" fill="#ffffff" stroke="var(--pv-ink)" stroke-opacity="0.14"/>
+      <rect x="94" y="92" width="40" height="20" rx="2" fill="var(--pv-accent)" opacity="0.55"/>
+      <rect x="94" y="118" width="30" height="4" rx="2" fill="var(--pv-ink)" opacity="0.3"/>
+      <rect x="94" y="126" width="20" height="4" rx="2" fill="var(--pv-ink)" opacity="0.18"/>
+
+      <rect x="152" y="84" width="60" height="54" rx="4" fill="#ffffff" stroke="var(--pv-ink)" stroke-opacity="0.14"/>
+      <rect x="162" y="92" width="40" height="20" rx="2" fill="var(--pv-accent)" opacity="0.35"/>
+      <rect x="162" y="118" width="30" height="4" rx="2" fill="var(--pv-ink)" opacity="0.3"/>
+      <rect x="162" y="126" width="20" height="4" rx="2" fill="var(--pv-ink)" opacity="0.18"/>
+
+      <rect x="220" y="84" width="52" height="54" rx="4" fill="var(--pv-ink)"/>
+      <rect x="230" y="96" width="32" height="6" rx="3" fill="#ffffff" opacity="0.85"/>
+      <rect x="230" y="108" width="24" height="4" rx="2" fill="#ffffff" opacity="0.4"/>
+      <rect x="230" y="120" width="32" height="10" rx="5" fill="var(--pv-accent)"/>
+    </g>`,
+};
+
+/** The browser frame the miniature sits in. */
+function preview(project) {
+  return `            <div class="sc-preview" aria-hidden="true">
+              <div class="sc-preview__chrome">
+                <span></span><span></span><span></span>
+                <em>${escape(project.slug)}.html</em>
+              </div>
+              <svg class="sc-preview__art" viewBox="0 0 288 152" preserveAspectRatio="xMidYMin slice">
+                <rect width="288" height="152" fill="var(--pv-paper)"/>${PREVIEWS[project.preview]}
+              </svg>
+            </div>`;
+}
+
+/* -------------------------------------------------------------------- cards */
+
+function card(project) {
+  const features = project.features
+    .map((feature) => `                <li>${escape(feature)}</li>`)
+    .join("\n");
+
+  return `        <article
+          class="sc-card"
+          data-reveal="far"
+          style="
+            --accent: ${project.accent};
+            --accent-rgb: ${rgbTriple(project.accent)};
+            --pv-paper: ${project.paper};
+            --pv-ink: ${project.ink};
+            --pv-accent: ${project.accent};
+          "
+        >
+          <div class="sc-card__visual">
+${preview(project)}
+          </div>
+
+          <div class="sc-card__body">
+            <p class="sc-card__meta">
+              <span class="sc-card__index">${escape(project.number)}</span>
+              <span class="sc-card__category">${escape(project.category)}</span>
+            </p>
+            <h2 class="sc-card__name">
+              <a class="sc-card__link" href="${escape(project.slug)}.html" data-open-project>
+                ${escape(project.name)}
+              </a>
+            </h2>
+            <p class="sc-card__text">${escape(project.description)}</p>
+            <ul class="sc-card__features">
+${features}
+            </ul>
+            <p class="sc-card__cta" aria-hidden="true">
+              Explorar proyecto
+              <span class="sc-card__arrow">&rarr;</span>
+            </p>
+          </div>
+        </article>`;
+}
+
+/* --------------------------------------------------------------------- page */
+
+export function buildShowcase() {
+  const cards = showcase.projects.map(card).join("\n\n");
+
+  return `<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Landing pages — Tres proyectos de CoreStruct</title>
+    <meta
+      name="description"
+      content="Tres landing pages de demostración construidas por CoreStruct: una firma corporativa, una clínica orientada a la reserva y un catálogo comercial con comparador y configurador."
+    />
+    <!-- The three demos invent companies; the index that lists them stays out of
+         the results with them. -->
+    <meta name="robots" content="noindex, follow" />
+    <meta name="theme-color" content="#080b12" />
+    <meta name="color-scheme" content="dark" />
+
+    <link rel="icon" href="../../favicon.ico" sizes="32x32" />
+    <link rel="icon" href="../../assets/brand/isotipo.svg" type="image/svg+xml" />
+
+    <link
+      rel="preload"
+      href="../../assets/fonts/manrope-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <link rel="stylesheet" href="../../dist/showcase.css" />
+
+    <script>
+      document.documentElement.classList.add("js");
+      setTimeout(function () {
+        if (!document.documentElement.dataset.revealsReady) {
+          document.documentElement.classList.remove("js");
+        }
+      }, 2500);
+    </script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+    <header class="sc-header">
+      <div class="shell sc-header__inner">
+        <a class="sc-back" href="../../index.html#proyectos">
+          <span class="sc-back__arrow" aria-hidden="true">&larr;</span>
+          Volver al portafolio
+        </a>
+        <a class="sc-mark" href="../../index.html">
+          <svg viewBox="0 0 362 422" aria-hidden="true" focusable="false">
+            <path fill="#2c6fb2" d="M10 98L17 92L181 1L188 3L354 96L353 99L200 186L185 179L173 181L166 186L11 98Z"/>
+            <path fill="#3898d4" d="M188 421L188 373L190 371L320 295L320 248L318 248L188 324L188 217L198 211L202 203L202 197L358 111L361 109L361 165L233 234L233 275L361 200L361 321L189 421Z"/>
+            <path fill="#253880" d="M1 107L160 195L166 210L176 216L176 252L174 252L42 176L42 294L114 336L154 359L154 297L176 309L176 422L2 321L1 108Z"/>
+          </svg>
+          CoreStruct
+        </a>
+      </div>
+    </header>
+
+    <main id="contenido">
+      <section class="sc-intro">
+        <div class="shell">
+          <p class="eyebrow" data-reveal="fade">
+            <span class="eyebrow__index">04</span>
+            ${escape(showcase.eyebrow)}
+          </p>
+          <h1 class="sc-intro__title" data-reveal="rise">${escape(showcase.title)}</h1>
+          <p class="sc-intro__lead" data-reveal="rise">${escape(showcase.lead)}</p>
+          <p class="sc-intro__note" data-reveal="fade">${escape(showcase.note)}</p>
+        </div>
+      </section>
+
+      <section class="sc-projects shell" aria-label="Proyectos">
+${cards}
+      </section>
+
+      <section class="sc-cta">
+        <div class="shell sc-cta__inner">
+          <h2 class="sc-cta__title" data-reveal="rise">${escape(showcase.cta.title)}</h2>
+          <p class="sc-cta__text" data-reveal="rise">${escape(showcase.cta.text)}</p>
+          <a class="button button--primary button--large" href="${escape(showcase.cta.action.href)}" data-reveal="fade">
+            ${escape(showcase.cta.action.label)}
+            <span class="button__arrow" aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+      </section>
+
+      <footer class="sc-foot">
+        <div class="shell sc-foot__inner">
+          <p>
+            &copy; <span data-current-year>2026</span> CoreStruct ·
+            <a href="../../index.html">Volver al inicio</a>
+          </p>
+          <p>Nexora, Velora y Orbita Supply son marcas ficticias creadas para esta demostración.</p>
+        </div>
+      </footer>
+    </main>
+
+    <!-- The opening transition paints here: one element, one transform. -->
+    <div class="sc-veil" data-veil aria-hidden="true"></div>
+
+    <script type="module" src="../../src/scripts/showcase/main.js"></script>
+  </body>
+</html>
+`;
+}

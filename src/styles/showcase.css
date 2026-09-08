@@ -1,0 +1,18 @@
+/* =============================================================================
+   Landing pages index — stylesheet entry point
+
+   This page belongs to CoreStruct rather than to any of the three invented
+   brands, so it runs on the portfolio's own foundation — tokens, typeface,
+   reset, reveal system and buttons — and adds only the gallery on top.
+
+   `npm run build:css` flattens this into `dist/showcase.css`.
+   ========================================================================== */
+
+@import "./tokens.css";
+@import "./fonts.css";
+@import "./base.css";
+@import "./motion.css";
+
+@import "./components/button.css";
+
+@import "./showcase/gallery.css";

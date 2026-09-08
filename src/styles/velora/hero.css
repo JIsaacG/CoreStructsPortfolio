@@ -1,0 +1,153 @@
+/* =============================================================================
+   Velora — hero
+
+   Copy on the left, an arch of warm light on the right, and two small cards
+   floating over its edge carrying the only two facts a first-time visitor
+   actually wants: when you could come, and what the first visit costs.
+   ========================================================================== */
+
+.ve-hero {
+  padding-block: calc(var(--header-h) + clamp(2.5rem, 1.5rem + 5vw, 6rem))
+    clamp(3rem, 2rem + 4vw, 6rem);
+  background:
+    radial-gradient(60% 55% at 78% 18%, rgb(201 168 124 / 0.22), transparent 70%),
+    var(--page);
+}
+
+.ve-hero__grid {
+  display: grid;
+  gap: clamp(2.5rem, 1.5rem + 5vw, 5rem) var(--gutter);
+  align-items: center;
+}
+
+@media (min-width: 62rem) {
+  .ve-hero__grid {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  }
+}
+
+.ve-hero__copy {
+  display: grid;
+  gap: var(--s-md);
+  align-content: start;
+}
+
+.ve-hero__title {
+  font-family: var(--font-display);
+  font-size: var(--t-4xl);
+  font-weight: 300;
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+}
+
+/* The second line takes the metal. One word of colour in the whole opening. */
+.ve-hero__title .reveal-lines__line:last-child > span {
+  color: var(--champagne-ink);
+}
+
+.ve-hero__lead {
+  max-width: 40ch;
+  font-size: var(--t-lg);
+  line-height: var(--lead-loose);
+  color: var(--text-soft);
+}
+
+.ve-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-sm);
+}
+
+/* --- The plate -------------------------------------------------------------------- */
+
+.ve-hero__visual {
+  position: relative;
+  justify-self: center;
+  width: min(100%, 30rem);
+}
+
+.ve-plate {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  border-radius: var(--arch);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+}
+
+.ve-plate__art {
+  width: 100%;
+  height: 100%;
+}
+
+/* A slow drift, a couple of pixels wide. It is there to keep the arch from
+   feeling printed, and it stops the moment someone asks for less motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .ve-plate {
+    animation: ve-breathe 14s var(--ease-in-out) infinite;
+  }
+}
+
+@keyframes ve-breathe {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, -8px, 0);
+  }
+}
+
+/* --- Floating cards ----------------------------------------------------------------- */
+
+.ve-float-card {
+  position: absolute;
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.85rem 1.15rem;
+  border-radius: var(--radius);
+  background: rgb(255 253 250 / 0.92);
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow-soft);
+}
+
+.ve-float-card:nth-child(2) {
+  top: 16%;
+  left: clamp(-2.5rem, -4vw, -1rem);
+}
+
+.ve-float-card:nth-child(3) {
+  bottom: 9%;
+  right: clamp(-2rem, -3vw, -0.5rem);
+}
+
+.ve-float-card__label {
+  font-family: var(--font-display);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.ve-float-card__value {
+  font-family: var(--font-display);
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+/* On a narrow screen the cards stop floating over the arch's edge — there is no
+   margin left to float into — and sit inside it instead. */
+@media (max-width: 40rem) {
+  .ve-float-card:nth-child(2) {
+    top: 8%;
+    left: 4%;
+  }
+
+  .ve-float-card:nth-child(3) {
+    bottom: 5%;
+    right: 4%;
+  }
+}

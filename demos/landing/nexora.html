@@ -1,0 +1,754 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Nexora Group — Consultoría y transformación · Demo de CoreStruct</title>
+    <meta name="description" content="Consultoría empresarial y transformación digital. Landing corporativa de demostración: estrategia, procesos y tecnología para organizaciones que necesitan operar de forma más simple." />
+    <!-- An invented company must never turn up in a search result as a real one. -->
+    <meta name="robots" content="noindex, follow" />
+    <meta name="theme-color" content="#f6f4ef" />
+    <meta name="color-scheme" content="light" />
+
+    <link rel="icon" href="../../favicon.ico" sizes="32x32" />
+    <link rel="icon" href="../../assets/brand/isotipo.svg" type="image/svg+xml" />
+
+    <link
+      rel="preload"
+      href="../../assets/fonts/source-serif-4-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="../../assets/fonts/manrope-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <link rel="stylesheet" href="../../dist/nexora.css" />
+
+    <style>
+      :root {
+        --accent: #12463c;
+        --accent-rgb: 18 70 60;
+      }
+    </style>
+
+    <script>
+      /* Hides the reveal targets before first paint, and gives up on its own if
+         the module never arrives — an entrance animation must not be able to
+         swallow the content it animates. */
+      document.documentElement.classList.add("js");
+      setTimeout(function () {
+        if (!document.documentElement.dataset.revealsReady) {
+          document.documentElement.classList.remove("js");
+        }
+      }, 2500);
+    </script>
+  </head>
+
+  <body>
+    <a class="lp-skip" href="#contenido">Saltar al contenido</a>
+
+    <header class="nx-header" data-header>
+      <div class="nx-header__inner lp-shell">
+        <a class="nx-brand" href="#inicio">
+          <span class="nx-brand__name">Nexora</span>
+          <span class="nx-brand__suffix">Group</span>
+        </a>
+
+        <nav class="nx-nav" aria-label="Secciones">
+            <a class="nx-nav__link" href="#resultados" data-nav-link>Resultados</a>
+            <a class="nx-nav__link" href="#servicios" data-nav-link>Servicios</a>
+            <a class="nx-nav__link" href="#metodo" data-nav-link>Método</a>
+            <a class="nx-nav__link" href="#casos" data-nav-link>Casos</a>
+        </nav>
+
+        <div class="nx-header__actions">
+          <a class="nx-btn nx-btn--solid nx-header__cta" href="#contacto">Solicitar consultoría</a>
+          <button
+            class="nx-burger"
+            type="button"
+            aria-expanded="false"
+            aria-controls="nx-menu"
+            aria-label="Abrir el menú"
+            data-menu-toggle
+          >
+            <span class="nx-burger__bar"></span>
+            <span class="nx-burger__bar"></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="nx-menu" id="nx-menu" data-mobile-nav>
+      <nav class="nx-menu__inner" aria-label="Menú">
+        <a class="nx-menu__link" href="#resultados">Resultados</a>
+        <a class="nx-menu__link" href="#servicios">Servicios</a>
+        <a class="nx-menu__link" href="#metodo">Método</a>
+        <a class="nx-menu__link" href="#casos">Casos</a>
+        <a class="nx-menu__cta" href="#contacto">Solicitar consultoría</a>
+      </nav>
+    </div>
+
+    <main id="contenido">
+      <section class="nx-hero" id="inicio">
+        <div class="lp-shell nx-hero__grid">
+          <div class="nx-hero__copy">
+            <p class="nx-eyebrow" data-reveal="fade">Estrategia · Tecnología · Crecimiento</p>
+            <h1 class="nx-hero__title reveal-lines" data-stagger="120">
+              <span class="reveal-lines__line"><span>Transformamos empresas</span></span>
+              <span class="reveal-lines__line"><span>que están listas</span></span>
+              <span class="reveal-lines__line"><span><em>para avanzar.</em></span></span>
+            </h1>
+            <p class="nx-hero__lead" data-reveal="rise">Alineamos estrategia, procesos y tecnología para convertir organizaciones complejas en operaciones más simples, eficientes y escalables.</p>
+            <div class="nx-hero__actions" data-reveal="rise">
+              <a class="nx-btn nx-btn--solid" href="#contacto">
+                Solicitar consultoría
+              </a>
+              <a class="nx-link" href="#metodo">
+                Ver cómo trabajamos
+                <span class="nx-link__arrow" aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="nx-hero__visual">
+      <figure class="nx-panel" data-reveal="scale">
+        <figcaption class="nx-panel__head">
+          <span class="nx-panel__title">Panel de transformación</span>
+          <span class="nx-panel__meta">Cliente · Manufactura · Ene – Dic</span>
+        </figcaption>
+
+        <div class="nx-panel__plot">
+          <p class="nx-panel__caption">Capacidad operativa disponible</p>
+          <svg
+            class="nx-panel__chart"
+            viewBox="0 0 320 132"
+            preserveAspectRatio="none"
+            role="img"
+            aria-label="Capacidad operativa disponible: la línea proyectada sin intervención llega a 71 %, la observada con la transformación llega a 94 %."
+          >
+            <g class="nx-panel__grid" aria-hidden="true"><line x1="0" y1="10.0" x2="320" y2="10.0" /><line x1="0" y1="47.3" x2="320" y2="47.3" /><line x1="0" y1="84.7" x2="320" y2="84.7" /><line x1="0" y1="122.0" x2="320" y2="122.0" /></g>
+            <path class="nx-panel__area" d="M6.0 79.4 C20.0 79.4 20.0 72.7 34.0 72.7 C48.0 72.7 48.0 66.0 62.0 66.0 C76.0 66.0 76.0 57.0 90.0 57.0 C104.0 57.0 104.0 50.3 118.0 50.3 C132.0 50.3 132.0 42.5 146.0 42.5 C160.0 42.5 160.0 36.9 174.0 36.9 C188.0 36.9 188.0 32.4 202.0 32.4 C216.0 32.4 216.0 27.9 230.0 27.9 C244.0 27.9 244.0 23.4 258.0 23.4 C272.0 23.4 272.0 20.1 286.0 20.1 C300.0 20.1 300.0 16.7 314.0 16.7 L314.0 132 L6.0 132 Z" />
+            <path class="nx-panel__line nx-panel__line--before" d="M6.0 79.4 C20.0 79.4 20.0 76.1 34.0 76.1 C48.0 76.1 48.0 78.3 62.0 78.3 C76.0 78.3 76.0 72.7 90.0 72.7 C104.0 72.7 104.0 69.4 118.0 69.4 C132.0 69.4 132.0 70.5 146.0 70.5 C160.0 70.5 160.0 63.8 174.0 63.8 C188.0 63.8 188.0 60.4 202.0 60.4 C216.0 60.4 216.0 57.0 230.0 57.0 C244.0 57.0 244.0 51.4 258.0 51.4 C272.0 51.4 272.0 48.1 286.0 48.1 C300.0 48.1 300.0 42.5 314.0 42.5" />
+            <path class="nx-panel__line nx-panel__line--after" d="M6.0 79.4 C20.0 79.4 20.0 72.7 34.0 72.7 C48.0 72.7 48.0 66.0 62.0 66.0 C76.0 66.0 76.0 57.0 90.0 57.0 C104.0 57.0 104.0 50.3 118.0 50.3 C132.0 50.3 132.0 42.5 146.0 42.5 C160.0 42.5 160.0 36.9 174.0 36.9 C188.0 36.9 188.0 32.4 202.0 32.4 C216.0 32.4 216.0 27.9 230.0 27.9 C244.0 27.9 244.0 23.4 258.0 23.4 C272.0 23.4 272.0 20.1 286.0 20.1 C300.0 20.1 300.0 16.7 314.0 16.7" />
+          </svg>
+          <div class="nx-panel__legend">
+            <span class="nx-panel__key nx-panel__key--before">Sin intervención</span>
+            <span class="nx-panel__key nx-panel__key--after">Con transformación</span>
+          </div>
+        </div>
+
+        <div class="nx-panel__split">
+        <div class="nx-panel__bar" style="--bar: 68%; --bar-index: 0">
+          <span class="nx-panel__bar-label">Automatizado</span>
+          <span class="nx-panel__bar-track"><span class="nx-panel__bar-fill"></span></span>
+          <span class="nx-panel__bar-value">68&thinsp;%</span>
+        </div>
+        <div class="nx-panel__bar" style="--bar: 22%; --bar-index: 1">
+          <span class="nx-panel__bar-label">Asistido</span>
+          <span class="nx-panel__bar-track"><span class="nx-panel__bar-fill"></span></span>
+          <span class="nx-panel__bar-value">22&thinsp;%</span>
+        </div>
+        <div class="nx-panel__bar" style="--bar: 10%; --bar-index: 2">
+          <span class="nx-panel__bar-label">Manual</span>
+          <span class="nx-panel__bar-track"><span class="nx-panel__bar-fill"></span></span>
+          <span class="nx-panel__bar-value">10&thinsp;%</span>
+        </div>
+        </div>
+
+        <div class="nx-panel__tiles">
+        <div class="nx-panel__tile">
+          <span class="nx-panel__tile-label">Ciclo de pedido</span>
+          <span class="nx-panel__tile-value">4.2 d</span>
+          <span class="nx-panel__tile-delta is-positive">-46 %</span>
+        </div>
+        <div class="nx-panel__tile">
+          <span class="nx-panel__tile-label">Retrabajo</span>
+          <span class="nx-panel__tile-value">1.8 %</span>
+          <span class="nx-panel__tile-delta is-positive">-62 %</span>
+        </div>
+        <div class="nx-panel__tile">
+          <span class="nx-panel__tile-label">Adopción</span>
+          <span class="nx-panel__tile-value">93 %</span>
+          <span class="nx-panel__tile-delta is-positive">+28 pts</span>
+        </div>
+        <div class="nx-panel__tile">
+          <span class="nx-panel__tile-label">Costo por unidad</span>
+          <span class="nx-panel__tile-value">L 214</span>
+          <span class="nx-panel__tile-delta is-positive">-19 %</span>
+        </div>
+        </div>
+      </figure>
+          </div>
+        </div>
+
+        <div class="lp-shell nx-hero__stamps" data-reveal-group="110">
+          <div class="nx-stamp">
+            <span class="nx-stamp__value">24</span>
+            <span class="nx-stamp__label">Transformaciones implementadas</span>
+          </div>
+          <div class="nx-stamp">
+            <span class="nx-stamp__value">11</span>
+            <span class="nx-stamp__label">Industrias atendidas</span>
+          </div>
+          <div class="nx-stamp">
+            <span class="nx-stamp__value">2016</span>
+            <span class="nx-stamp__label">Operando desde</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="nx-trust" aria-labelledby="trust-title">
+        <div class="lp-shell">
+          <h2 class="nx-trust__title" id="trust-title" data-reveal="fade">Equipos que confían en mejores decisiones.</h2>
+          <ul class="nx-trust__logos" data-reveal-group="70">
+          <li class="nx-logo">
+            <svg class="nx-logo__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 17a9 9 0 0 1 18 0" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="17" r="2" fill="currentColor"/></svg>
+            <span class="nx-logo__name">Halden</span>
+          </li>
+          <li class="nx-logo">
+            <svg class="nx-logo__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="12" width="3.6" height="9" fill="currentColor"/><rect x="8.6" y="7" width="3.6" height="14" fill="currentColor"/><rect x="14.2" y="3" width="3.6" height="18" fill="currentColor" opacity="0.55"/></svg>
+            <span class="nx-logo__name">Coventra</span>
+          </li>
+          <li class="nx-logo">
+            <svg class="nx-logo__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2.5 21.5 12 12 21.5 2.5 12Z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7.5 16.5 12 12 16.5 7.5 12Z" fill="currentColor"/></svg>
+            <span class="nx-logo__name">Meridia</span>
+          </li>
+          <li class="nx-logo">
+            <svg class="nx-logo__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3a9 9 0 0 1 0 18Z" fill="currentColor"/></svg>
+            <span class="nx-logo__name">Klarvo</span>
+          </li>
+          <li class="nx-logo">
+            <svg class="nx-logo__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="4" rx="1" fill="currentColor"/><rect x="3" y="10" width="13" height="4" rx="1" fill="currentColor" opacity="0.6"/><rect x="3" y="16" width="8" height="4" rx="1" fill="currentColor" opacity="0.35"/></svg>
+            <span class="nx-logo__name">Serrano &amp; Co.</span>
+          </li>
+          <li class="nx-logo">
+            <svg class="nx-logo__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="7.5" height="7.5" fill="currentColor"/><rect x="13.5" y="3" width="7.5" height="7.5" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="3" y="13.5" width="7.5" height="7.5" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="13.5" y="13.5" width="7.5" height="7.5" fill="currentColor" opacity="0.5"/></svg>
+            <span class="nx-logo__name">Atlantiq</span>
+          </li>
+          </ul>
+          <p class="nx-trust__note">Marcas ficticias creadas para esta demostración.</p>
+        </div>
+      </section>
+
+      <section class="nx-section nx-section--dark" id="resultados" aria-labelledby="results-title">
+        <div class="lp-shell">
+          <div class="nx-head">
+            <p class="nx-label" data-reveal="fade"><span class="nx-label__index">01</span>Resultados</p>
+            <h2 class="nx-h2" id="results-title" data-reveal="rise">Lo que cambia cuando la operación deja de improvisar.</h2>
+            <p class="nx-lead" data-reveal="rise">Promedios de los proyectos cerrados en los últimos tres años, medidos doce meses después de la implementación.</p>
+          </div>
+
+          <div class="nx-results" data-reveal-group="120">
+            <div class="nx-result" data-reveal="rise">
+              <p class="nx-result__value">
+                <span
+                  data-count-to="38"
+                  data-count-prefix="+"
+                  data-count-suffix="%"
+                >+38%</span>
+              </p>
+              <p class="nx-result__label">Eficiencia operativa</p>
+            </div>
+            <div class="nx-result" data-reveal="rise">
+              <p class="nx-result__value">
+                <span
+                  data-count-to="-52"
+                  
+                  data-count-suffix="%"
+                >-52%</span>
+              </p>
+              <p class="nx-result__label">Procesos manuales</p>
+            </div>
+            <div class="nx-result" data-reveal="rise">
+              <p class="nx-result__value">
+                <span
+                  data-count-to="24"
+                  data-count-prefix="+"
+                  
+                >+24</span>
+              </p>
+              <p class="nx-result__label">Transformaciones implementadas</p>
+            </div>
+            <div class="nx-result" data-reveal="rise">
+              <p class="nx-result__value">
+                <span
+                  data-count-to="98"
+                  
+                  data-count-suffix="%"
+                >98%</span>
+              </p>
+              <p class="nx-result__label">Proyectos entregados según planificación</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="nx-section" id="servicios" aria-labelledby="services-title">
+        <div class="lp-shell">
+          <div class="nx-head nx-head--split">
+            <p class="nx-label" data-reveal="fade"><span class="nx-label__index">02</span>Servicios</p>
+            <h2 class="nx-h2" id="services-title" data-reveal="rise">Seis frentes, un mismo objetivo: que la operación se sostenga sola.</h2>
+            <p class="nx-lead" data-reveal="rise">No entregamos un diagnóstico y nos vamos. Cada frente termina cuando el equipo del cliente puede operarlo sin nosotros.</p>
+          </div>
+
+          <div class="nx-bento">
+            <article class="nx-tile nx-tile--wide" data-reveal="rise">
+              <div class="nx-tile__visual" aria-hidden="true"><svg class="nx-tile__art" viewBox="0 0 120 80" aria-hidden="true" focusable="false"><circle cx="60" cy="40" r="27" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.35"/>
+    <circle cx="60" cy="40" r="17" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.2"/>
+    <path d="M60 40 78 22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="60" cy="40" r="3" fill="currentColor"/>
+    <circle cx="78" cy="22" r="3.5" fill="currentColor"/>
+    <path d="M18 62h22M18 68h34" stroke="currentColor" stroke-width="1.4" opacity="0.35" stroke-linecap="round"/></svg></div>
+              <div class="nx-tile__body">
+                <h3 class="nx-tile__name">Estrategia empresarial</h3>
+                <p class="nx-tile__text">Dónde compite la empresa, con qué margen y contra quién. Salimos con tres decisiones priorizadas, no con un plan de cien páginas.</p>
+              </div>
+              <ul class="nx-tile__meta">
+                <li>Diagnóstico competitivo</li>
+                <li>Modelo de negocio</li>
+                <li>Plan a 18 meses</li>
+              </ul>
+            </article>
+            <article class="nx-tile" data-reveal="rise">
+              <div class="nx-tile__visual" aria-hidden="true"><svg class="nx-tile__art" viewBox="0 0 120 80" aria-hidden="true" focusable="false"><path d="M60 12 96 30 60 48 24 30Z" fill="none" stroke="currentColor" stroke-width="1.4"/>
+    <path d="M24 42 60 60 96 42" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.55"/>
+    <path d="M24 54 60 72 96 54" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.28"/></svg></div>
+              <div class="nx-tile__body">
+                <h3 class="nx-tile__name">Transformación digital</h3>
+                <p class="nx-tile__text">El sistema que la operación necesita, elegido por lo que resuelve y no por su marca.</p>
+              </div>
+              <ul class="nx-tile__meta">
+                <li>Arquitectura</li>
+                <li>Selección</li>
+                <li>Adopción</li>
+              </ul>
+            </article>
+            <article class="nx-tile" data-reveal="rise">
+              <div class="nx-tile__visual" aria-hidden="true"><svg class="nx-tile__art" viewBox="0 0 120 80" aria-hidden="true" focusable="false"><rect x="12" y="30" width="24" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"/>
+    <rect x="48" y="14" width="24" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.5"/>
+    <rect x="48" y="46" width="24" height="20" rx="3" fill="currentColor" opacity="0.12"/>
+    <rect x="48" y="46" width="24" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"/>
+    <rect x="84" y="30" width="24" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"/>
+    <path d="M36 40h12M72 24h6a6 6 0 0 1 6 6v4M72 56h6a6 6 0 0 0 6-6v-4" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.7"/></svg></div>
+              <div class="nx-tile__body">
+                <h3 class="nx-tile__name">Optimización de procesos</h3>
+                <p class="nx-tile__text">Mapeamos el proceso real —no el documentado— y quitamos los pasos que nadie defiende.</p>
+              </div>
+              <ul class="nx-tile__meta">
+                <li>Mapa de valor</li>
+                <li>Rediseño</li>
+                <li>Estandarización</li>
+              </ul>
+            </article>
+            <article class="nx-tile" data-reveal="rise">
+              <div class="nx-tile__visual" aria-hidden="true"><svg class="nx-tile__art" viewBox="0 0 120 80" aria-hidden="true" focusable="false"><path d="M14 66h92" stroke="currentColor" stroke-width="1.2" opacity="0.3"/>
+    <rect x="20" y="44" width="10" height="22" fill="currentColor" opacity="0.25"/>
+    <rect x="36" y="34" width="10" height="32" fill="currentColor" opacity="0.4"/>
+    <rect x="52" y="48" width="10" height="18" fill="currentColor" opacity="0.25"/>
+    <rect x="68" y="24" width="10" height="42" fill="currentColor" opacity="0.6"/>
+    <rect x="84" y="16" width="10" height="50" fill="currentColor"/>
+    <path d="M25 40 41 30 57 44 73 20 89 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div class="nx-tile__body">
+                <h3 class="nx-tile__name">Análisis de datos</h3>
+                <p class="nx-tile__text">Un tablero por comité, con las cinco cifras que gobiernan la decisión de esa mesa.</p>
+              </div>
+              <ul class="nx-tile__meta">
+                <li>Modelo de datos</li>
+                <li>Indicadores</li>
+                <li>Tableros</li>
+              </ul>
+            </article>
+            <article class="nx-tile" data-reveal="rise">
+              <div class="nx-tile__visual" aria-hidden="true"><svg class="nx-tile__art" viewBox="0 0 120 80" aria-hidden="true" focusable="false"><rect x="16" y="14" width="26" height="26" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"/>
+    <rect x="50" y="14" width="26" height="26" rx="3" fill="currentColor" opacity="0.14"/>
+    <rect x="84" y="14" width="20" height="26" rx="3" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.45"/>
+    <rect x="16" y="48" width="26" height="22" rx="3" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.45"/>
+    <rect x="50" y="48" width="54" height="22" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"/>
+    <path d="M56 59h10M70 59h14M88 59h10" stroke="currentColor" stroke-width="1.4" opacity="0.5" stroke-linecap="round"/></svg></div>
+              <div class="nx-tile__body">
+                <h3 class="nx-tile__name">Implementación tecnológica</h3>
+                <p class="nx-tile__text">Acompañamos la puesta en marcha: migración, integración y el primer trimestre de operación.</p>
+              </div>
+              <ul class="nx-tile__meta">
+                <li>Migración</li>
+                <li>Integración</li>
+                <li>Soporte</li>
+              </ul>
+            </article>
+            <article class="nx-tile nx-tile--wide" data-reveal="rise">
+              <div class="nx-tile__visual" aria-hidden="true"><svg class="nx-tile__art" viewBox="0 0 120 80" aria-hidden="true" focusable="false"><path d="M22 58h76" stroke="currentColor" stroke-width="1.4" opacity="0.4"/>
+    <circle cx="34" cy="40" r="7" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.5"/>
+    <circle cx="52" cy="40" r="7" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.5"/>
+    <circle cx="70" cy="40" r="7" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.5"/>
+    <circle cx="88" cy="40" r="7" fill="currentColor"/>
+    <path d="M88 20v9M84 24l4-4 4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div class="nx-tile__body">
+                <h3 class="nx-tile__name">Consultoría ejecutiva</h3>
+                <p class="nx-tile__text">Una silla externa en el comité de dirección. Preparamos la decisión, discutimos el riesgo y damos seguimiento a lo acordado.</p>
+              </div>
+              <ul class="nx-tile__meta">
+                <li>Comité mensual</li>
+                <li>Preparación de decisiones</li>
+                <li>Seguimiento de acuerdos</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="nx-section nx-section--flush" id="metodo" aria-labelledby="shift-title" data-track>
+        <div class="lp-shell">
+          <div class="nx-head nx-head--split">
+            <p class="nx-label" data-reveal="fade"><span class="nx-label__index">03</span>Método</p>
+            <h2 class="nx-h2" id="shift-title" data-reveal="rise">De procesos complejos a operaciones claras.</h2>
+            <p class="nx-lead" data-reveal="rise">El cambio no ocurre el día de la presentación final. Ocurre en las ocho semanas en las que el equipo empieza a trabajar distinto.</p>
+          </div>
+        </div>
+
+        <div class="lp-shell nx-shift">
+          <div class="nx-shift__col nx-shift__col--before">
+            <p class="nx-shift__note">Lo que encontramos el primer día</p>
+            <h3 class="nx-shift__title">Antes</h3>
+            <ul class="nx-shift__list">
+              <li class="nx-shift__item" style="--item: 0">
+                <span class="nx-shift__dot" aria-hidden="true"></span>
+                <span class="nx-shift__label">Procesos manuales</span>
+              </li>
+              <li class="nx-shift__item" style="--item: 1">
+                <span class="nx-shift__dot" aria-hidden="true"></span>
+                <span class="nx-shift__label">Datos dispersos</span>
+              </li>
+              <li class="nx-shift__item" style="--item: 2">
+                <span class="nx-shift__dot" aria-hidden="true"></span>
+                <span class="nx-shift__label">Falta de visibilidad</span>
+              </li>
+              <li class="nx-shift__item" style="--item: 3">
+                <span class="nx-shift__dot" aria-hidden="true"></span>
+                <span class="nx-shift__label">Retrasos operativos</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="nx-shift__bridge">
+            <p class="nx-shift__bridge-title">Transformación</p>
+            <div class="nx-shift__rail" aria-hidden="true"><span class="nx-shift__rail-fill"></span></div>
+            <ol class="nx-shift__steps">
+              <li class="nx-step" data-track-step>
+                <span class="nx-step__stamp">S 1–2</span>
+                <div>
+                  <h4 class="nx-step__title">Diagnóstico</h4>
+                  <p class="nx-step__text">Entrevistas, observación en piso y lectura de los números reales.</p>
+                </div>
+              </li>
+              <li class="nx-step" data-track-step>
+                <span class="nx-step__stamp">S 3–4</span>
+                <div>
+                  <h4 class="nx-step__title">Rediseño</h4>
+                  <p class="nx-step__text">El proceso objetivo, acordado con quienes lo van a ejecutar.</p>
+                </div>
+              </li>
+              <li class="nx-step" data-track-step>
+                <span class="nx-step__stamp">S 5–6</span>
+                <div>
+                  <h4 class="nx-step__title">Implementación</h4>
+                  <p class="nx-step__text">Sistemas, reglas y responsables. Se opera en paralelo.</p>
+                </div>
+              </li>
+              <li class="nx-step" data-track-step>
+                <span class="nx-step__stamp">S 7–8</span>
+                <div>
+                  <h4 class="nx-step__title">Transferencia</h4>
+                  <p class="nx-step__text">El equipo interno queda al mando; nosotros medimos y salimos.</p>
+                </div>
+              </li>
+            </ol>
+          </div>
+
+          <div class="nx-shift__col nx-shift__col--after">
+            <p class="nx-shift__note">Lo que queda instalado</p>
+            <h3 class="nx-shift__title">Después</h3>
+            <ul class="nx-shift__list">
+              <li class="nx-shift__item" style="--item: 0">
+                <span class="nx-shift__dot" aria-hidden="true"></span>
+                <span class="nx-shift__label">Procesos automatizados</span>
+              </li>
+              <li class="nx-shift__item" style="--item: 1">
+                <span class="nx-shift__dot" aria-hidden="true"></span>
+                <span class="nx-shift__label">Información centralizada</span>
+              </li>
+              <li class="nx-shift__item" style="--item: 2">
+                <span class="nx-shift__dot" aria-hidden="true"></span>
+                <span class="nx-shift__label">Indicadores en tiempo real</span>
+              </li>
+              <li class="nx-shift__item" style="--item: 3">
+                <span class="nx-shift__dot" aria-hidden="true"></span>
+                <span class="nx-shift__label">Decisiones más rápidas</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="nx-section" id="casos" aria-labelledby="cases-title">
+        <div class="lp-shell">
+          <div class="nx-head nx-head--split">
+            <p class="nx-label" data-reveal="fade"><span class="nx-label__index">04</span>Casos</p>
+            <h2 class="nx-h2" id="cases-title" data-reveal="rise">Tres operaciones, tres problemas distintos.</h2>
+            <p class="nx-lead" data-reveal="rise">Casos ficticios construidos para esta demostración a partir de proyectos de este tipo.</p>
+          </div>
+
+          <div class="nx-cases">
+            <article class="nx-case" data-reveal="rise">
+              <header class="nx-case__head">
+                <span class="nx-case__index">01</span>
+                <div>
+                  <h3 class="nx-case__sector">Manufactura</h3>
+                  <p class="nx-case__company">Planta de empaque · 340 personas</p>
+                </div>
+                <p class="nx-case__metric">
+                  <span class="nx-case__metric-value">-46%</span>
+                  <span class="nx-case__metric-label">Ciclo de pedido</span>
+                </p>
+              </header>
+              <div class="nx-case__body">
+                <div class="nx-case__part">
+                  <p class="nx-case__part-label">Problema</p>
+                  <p class="nx-case__text">Cada pedido pasaba por cuatro hojas de cálculo y dos personas que las conciliaban de memoria. El ciclo de pedido tardaba 7.8 días y nadie sabía dónde se detenía.</p>
+                </div>
+                <div class="nx-case__part">
+                  <p class="nx-case__part-label">Intervención</p>
+                  <p class="nx-case__text">Mapeamos el flujo real, eliminamos once pasos de doble captura y conectamos producción con el sistema de pedidos. Un solo registro, un solo dueño por etapa.</p>
+                </div>
+                <div class="nx-case__part nx-case__part--result">
+                  <p class="nx-case__part-label">Resultado</p>
+                  <p class="nx-case__text">Ciclo de pedido de 7.8 a 4.2 días, retrabajo del 4.7 % al 1.8 %.</p>
+                </div>
+              </div>
+            </article>
+            <article class="nx-case" data-reveal="rise">
+              <header class="nx-case__head">
+                <span class="nx-case__index">02</span>
+                <div>
+                  <h3 class="nx-case__sector">Servicios financieros</h3>
+                  <p class="nx-case__company">Financiera regional · 12 sucursales</p>
+                </div>
+                <p class="nx-case__metric">
+                  <span class="nx-case__metric-value">-78%</span>
+                  <span class="nx-case__metric-label">Tiempo de aprobación</span>
+                </p>
+              </header>
+              <div class="nx-case__body">
+                <div class="nx-case__part">
+                  <p class="nx-case__part-label">Problema</p>
+                  <p class="nx-case__text">La aprobación de crédito dependía del criterio de cada sucursal. Las carteras no eran comparables y el comité decidía con información de dos semanas atrás.</p>
+                </div>
+                <div class="nx-case__part">
+                  <p class="nx-case__part-label">Intervención</p>
+                  <p class="nx-case__text">Estandarizamos el expediente, definimos un modelo de riesgo común y montamos el tablero que el comité revisa cada lunes con datos del cierre anterior.</p>
+                </div>
+                <div class="nx-case__part nx-case__part--result">
+                  <p class="nx-case__part-label">Resultado</p>
+                  <p class="nx-case__text">Tiempo de aprobación de 9 a 2 días y mora temprana un tercio menor.</p>
+                </div>
+              </div>
+            </article>
+            <article class="nx-case" data-reveal="rise">
+              <header class="nx-case__head">
+                <span class="nx-case__index">03</span>
+                <div>
+                  <h3 class="nx-case__sector">Educación</h3>
+                  <p class="nx-case__company">Institución privada · 4 200 estudiantes</p>
+                </div>
+                <p class="nx-case__metric">
+                  <span class="nx-case__metric-value">+22 pts</span>
+                  <span class="nx-case__metric-label">Conversión a matrícula</span>
+                </p>
+              </header>
+              <div class="nx-case__body">
+                <div class="nx-case__part">
+                  <p class="nx-case__part-label">Problema</p>
+                  <p class="nx-case__text">Admisiones, matrícula y cobranza vivían en tres sistemas que no se hablaban. Cada ciclo se perdían aspirantes entre el interés y la inscripción.</p>
+                </div>
+                <div class="nx-case__part">
+                  <p class="nx-case__part-label">Intervención</p>
+                  <p class="nx-case__text">Unificamos el expediente del aspirante de punta a punta y automatizamos el seguimiento de los que quedaban a medio proceso.</p>
+                </div>
+                <div class="nx-case__part nx-case__part--result">
+                  <p class="nx-case__part-label">Resultado</p>
+                  <p class="nx-case__text">Conversión de aspirante a matriculado del 41 % al 63 %.</p>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <aside class="lp-pitch" data-reveal="fade">
+            <p class="lp-pitch__text">Esta página es una demostración construida por CoreStruct. <b>Nexora no existe</b> — la arquitectura, la tipografía y las animaciones que estás viendo, sí.</p>
+            <a class="lp-pitch__link" href="../../index.html#contacto">
+              Crear mi proyecto
+              <span aria-hidden="true">&rarr;</span>
+            </a>
+          </aside>
+        </div>
+      </section>
+
+      <section class="nx-cta" id="contacto" aria-labelledby="cta-title">
+        <div class="lp-shell nx-cta__grid">
+          <div class="nx-cta__copy">
+            <h2 class="nx-cta__title" id="cta-title" data-reveal="rise">Las empresas no necesitan más complejidad. Necesitan mejores sistemas.</h2>
+            <p class="nx-cta__text" data-reveal="rise">Una conversación de 45 minutos basta para saber si hay un problema que vale la pena resolver. Si no lo hay, lo decimos.</p>
+          </div>
+
+          <form class="nx-form" data-demo-form data-reveal="rise">
+            <div class="nx-form__fields">
+              <p class="nx-field">
+                <label class="nx-field__label" for="nx-nombre">Nombre</label>
+                <input
+                  class="nx-field__input"
+                  id="nx-nombre"
+                  name="nombre"
+                  type="text"
+                  autocomplete="name"
+                  required
+                />
+              </p>
+              <p class="nx-field">
+                <label class="nx-field__label" for="nx-empresa">Empresa</label>
+                <input
+                  class="nx-field__input"
+                  id="nx-empresa"
+                  name="empresa"
+                  type="text"
+                  autocomplete="organization"
+                  required
+                />
+              </p>
+              <p class="nx-field">
+                <label class="nx-field__label" for="nx-correo">Correo corporativo</label>
+                <input
+                  class="nx-field__input"
+                  id="nx-correo"
+                  name="correo"
+                  type="email"
+                  autocomplete="email"
+                  required
+                />
+              </p>
+            </div>
+
+            <fieldset class="nx-form__focus">
+              <legend class="nx-field__label">¿Qué quieres resolver?</legend>
+              <div class="nx-choices">
+                <label class="nx-choice">
+                  <input type="radio" name="foco" value="Estrategia" checked />
+                  <span>Estrategia</span>
+                </label>
+                <label class="nx-choice">
+                  <input type="radio" name="foco" value="Procesos" />
+                  <span>Procesos</span>
+                </label>
+                <label class="nx-choice">
+                  <input type="radio" name="foco" value="Tecnología" />
+                  <span>Tecnología</span>
+                </label>
+                <label class="nx-choice">
+                  <input type="radio" name="foco" value="Datos" />
+                  <span>Datos</span>
+                </label>
+                <label class="nx-choice">
+                  <input type="radio" name="foco" value="Aún no lo sé" />
+                  <span>Aún no lo sé</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <button class="nx-btn nx-btn--solid nx-form__submit" type="submit">
+              Solicitar consultoría
+              <span aria-hidden="true">&rarr;</span>
+            </button>
+
+            <p class="nx-form__note">Formulario de demostración: no envía información a ningún servidor ni guarda lo que escribes.</p>
+            <p class="nx-form__done" data-form-done role="status" hidden>
+              Solicitud registrada. En una implementación real, esta consulta llegaría al equipo
+              de Nexora en menos de un minuto.
+            </p>
+          </form>
+        </div>
+      </section>
+
+      <footer class="nx-foot">
+        <div class="lp-shell nx-foot__inner">
+          <div class="nx-foot__brand">
+            <p class="nx-foot__name">Nexora Group</p>
+            <p class="nx-foot__line">Tegucigalpa · San Pedro Sula</p>
+            <p class="nx-foot__line">Consultoría empresarial y transformación digital</p>
+          </div>
+
+            <div class="nx-foot__col">
+              <p class="nx-foot__col-title">Firma</p>
+              <ul>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#metodo">Método</a></li>
+              </ul>
+            </div>
+            <div class="nx-foot__col">
+              <p class="nx-foot__col-title">Trabajo</p>
+              <ul>
+                <li><a href="#resultados">Resultados</a></li>
+                <li><a href="#casos">Casos</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+              </ul>
+            </div>
+
+          <p class="nx-foot__credit">
+            Marca ficticia. Demostración construida por
+            <a href="../../index.html">CoreStruct</a> &copy; <span data-current-year>2026</span>.
+          </p>
+        </div>
+      </footer>
+
+      <section class="lp-outro" aria-labelledby="outro-title">
+        <div class="lp-shell lp-outro__inner">
+          <p class="lp-outro__mark" data-reveal="fade">
+            <svg viewBox="0 0 362 422" aria-hidden="true" focusable="false"><path fill="#2c6fb2" d="M10 98L17 92L181 1L188 3L354 96L353 99L200 186L185 179L173 181L166 186L11 98Z"/><path fill="#3898d4" d="M188 421L188 373L190 371L320 295L320 248L318 248L188 324L188 217L198 211L202 203L202 197L358 111L361 109L361 165L233 234L233 275L361 200L361 321L189 421Z"/><path fill="#253880" d="M1 107L160 195L166 210L176 216L176 252L174 252L42 176L42 294L114 336L154 359L154 297L176 309L176 422L2 321L1 108Z"/></svg>
+            Project by CoreStruct
+          </p>
+          <h2 class="lp-outro__title" id="outro-title" data-reveal="rise">
+            ¿Te gustaría una experiencia como esta para tu empresa?
+          </h2>
+          <p class="lp-outro__text" data-reveal="rise">
+            Esta es una demostración de las experiencias digitales que diseñamos y
+            desarrollamos. La misma calidad se adapta a una firma de consultoría, ingeniería o servicios profesionales — o a cualquier
+            otra industria.
+          </p>
+          <div class="lp-outro__actions" data-reveal="rise">
+            <a class="lp-outro__cta" href="../../index.html#contacto">
+              Quiero algo así
+              <span aria-hidden="true">&rarr;</span>
+            </a>
+            <a class="lp-outro__ghost" href="index.html">Ver las otras demos</a>
+          </div>
+          <p class="lp-outro__note" data-reveal="fade">
+            Marca, cifras, testimonios y precios son ficticios y existen solo para esta demostración.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <aside class="lp-aside" aria-label="Sobre esta demostración">
+      <a class="lp-badge" href="index.html">
+        <svg class="lp-badge__mark" viewBox="0 0 362 422" aria-hidden="true" focusable="false"><path fill="#2c6fb2" d="M10 98L17 92L181 1L188 3L354 96L353 99L200 186L185 179L173 181L166 186L11 98Z"/><path fill="#3898d4" d="M188 421L188 373L190 371L320 295L320 248L318 248L188 324L188 217L198 211L202 203L202 197L358 111L361 109L361 165L233 234L233 275L361 200L361 321L189 421Z"/><path fill="#253880" d="M1 107L160 195L166 210L176 216L176 252L174 252L42 176L42 294L114 336L154 359L154 297L176 309L176 422L2 321L1 108Z"/></svg>
+        <span class="lp-badge__tag">Demo</span>
+        <span class="lp-badge__label">Sitio ficticio · CoreStruct</span>
+      </a>
+    </aside>
+
+    <script type="module" src="../../src/scripts/nexora/main.js"></script>
+  </body>
+</html>

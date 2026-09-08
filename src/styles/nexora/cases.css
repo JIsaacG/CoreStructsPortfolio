@@ -1,0 +1,136 @@
+/* =============================================================================
+   Nexora — case records
+
+   Three records, each read as problem → intervention → result. They are laid
+   out as documents rather than as cards: a head rule, an index, and three
+   columns of prose with the outcome column lifted.
+   ========================================================================== */
+
+.nx-cases {
+  display: grid;
+  gap: var(--s-lg);
+}
+
+.nx-case {
+  border-top: 1px solid var(--rule-strong);
+  padding-top: var(--s-md);
+}
+
+.nx-case__head {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  gap: var(--s-sm) var(--s-md);
+  align-items: start;
+  margin-bottom: var(--s-md);
+}
+
+.nx-case__index {
+  font-family: var(--font-body);
+  font-size: var(--t-xs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--accent-ink);
+  font-variant-numeric: tabular-nums;
+  padding-top: 0.35rem;
+}
+
+.nx-case__sector {
+  font-size: var(--t-2xl);
+  font-weight: 500;
+}
+
+.nx-case__company {
+  margin-top: 0.15rem;
+  font-family: var(--font-body);
+  font-size: var(--t-sm);
+  color: var(--text-muted);
+}
+
+/* The headline figure of the record. It sits on the same rule as the sector on
+   wide screens and drops below it on narrow ones. */
+.nx-case__metric {
+  grid-column: 2;
+  display: grid;
+  gap: 0.15rem;
+}
+
+.nx-case__metric-value {
+  font-family: var(--font-display);
+  font-size: var(--t-2xl);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--green);
+  font-variant-numeric: tabular-nums;
+}
+
+.nx-case__metric-label {
+  font-family: var(--font-body);
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+@media (min-width: 52rem) {
+  .nx-case__head {
+    grid-template-columns: 2.5rem minmax(0, 1fr) auto;
+    align-items: center;
+  }
+
+  .nx-case__metric {
+    grid-column: 3;
+    text-align: right;
+    justify-items: end;
+  }
+}
+
+.nx-case__body {
+  display: grid;
+  gap: var(--s-md);
+}
+
+@media (min-width: 52rem) {
+  .nx-case__body {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--gutter);
+  }
+}
+
+.nx-case__part-label {
+  margin-bottom: 0.4rem;
+  font-family: var(--font-body);
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.nx-case__text {
+  font-family: var(--font-body);
+  font-size: var(--t-sm);
+  line-height: 1.65;
+  color: var(--text-soft);
+}
+
+/* The outcome is the only column that gets a surface: it is what the record is
+   for, and one filled panel per case is enough to say so. */
+.nx-case__part--result {
+  padding: var(--s-sm);
+  margin: calc(var(--s-sm) * -1);
+  background: var(--surface);
+  border-left: 2px solid var(--green);
+}
+
+.nx-case__part--result .nx-case__text {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* --- The studio's line, once ------------------------------------------------- */
+
+.nx-cases + .lp-pitch {
+  margin-top: clamp(3rem, 2rem + 3vw, 5rem);
+}

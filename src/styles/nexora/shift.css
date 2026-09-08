@@ -1,0 +1,259 @@
+/* =============================================================================
+   Nexora — "De procesos complejos a operaciones claras"
+
+   Three columns that are read as one sentence: what we find, what we do, what
+   is left behind. The whole zone is driven by a single custom property —
+   `--track`, written by `lp/track.js` as the section crosses the viewport — so
+   the storytelling costs one scroll listener and no per-element JavaScript.
+
+   `--track` defaults to 1 here: with scripting off the finished state is what
+   renders, which is the only honest fallback for a story about an outcome.
+   ========================================================================== */
+
+.nx-shift {
+  --track: 1;
+  display: grid;
+  gap: var(--s-lg);
+  padding-block: clamp(2rem, 1rem + 4vw, 4rem) var(--section-y);
+}
+
+@media (min-width: 62rem) {
+  .nx-shift {
+    grid-template-columns: minmax(0, 4fr) minmax(0, 5fr) minmax(0, 4fr);
+    align-items: start;
+    gap: var(--gutter);
+  }
+}
+
+/* --- The two states ------------------------------------------------------------- */
+
+.nx-shift__col {
+  padding: var(--s-md);
+  border: 1px solid var(--rule);
+}
+
+.nx-shift__col--after {
+  background: var(--surface);
+  border-color: rgb(var(--accent-rgb) / 0.28);
+}
+
+.nx-shift__note {
+  font-family: var(--font-body);
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.nx-shift__title {
+  margin-top: 0.35rem;
+  font-size: var(--t-2xl);
+  font-weight: 500;
+}
+
+.nx-shift__col--after .nx-shift__title {
+  color: var(--green);
+}
+
+.nx-shift__list {
+  display: grid;
+  gap: var(--s-2xs);
+  margin-top: var(--s-md);
+}
+
+.nx-shift__item {
+  /* The renderer numbers the lines; this is the value for an unnumbered one. */
+  --item: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-block: 0.55rem;
+  border-top: 1px solid var(--rule-soft);
+  font-family: var(--font-body);
+  font-size: var(--t-base);
+  color: var(--text-soft);
+}
+
+.nx-shift__dot {
+  flex: none;
+  width: 0.5rem;
+  height: 0.5rem;
+  border: 1px solid currentcolor;
+  border-radius: 50%;
+}
+
+/* The old state is crossed out as the reader moves through the transformation,
+   rather than faded away. Fading is the obvious move and the wrong one: text at
+   a third of its opacity fails contrast, and a "before" nobody can read is a
+   "before" that cannot make the "after" mean anything. The rule is drawn on top
+   at full strength instead, and the words stay legible the whole way. */
+.nx-shift__col--before .nx-shift__item {
+  color: var(--text-muted);
+}
+
+.nx-shift__label {
+  position: relative;
+}
+
+.nx-shift__col--before .nx-shift__label::after {
+  content: "";
+  position: absolute;
+  left: -0.15rem;
+  right: -0.15rem;
+  top: 55%;
+  height: 1px;
+  background: currentcolor;
+  transform: scaleX(clamp(0, calc((var(--track) - 0.3) * 2.6 - var(--item) * 0.25), 1));
+  transform-origin: left;
+}
+
+.nx-shift__col--before .nx-shift__dot {
+  border-style: dashed;
+}
+
+/* …and the new one arrives, one line at a time, keyed off the same value. */
+.nx-shift__col--after .nx-shift__item {
+  --appear: calc((var(--track) - 0.3) * 3.4 - var(--item) * 0.4);
+  opacity: clamp(0.14, var(--appear), 1);
+  transform: translate3d(0, calc((1 - clamp(0, var(--appear), 1)) * 0.7rem), 0);
+}
+
+.nx-shift__col--after .nx-shift__dot {
+  background: var(--green);
+  border-color: var(--green);
+}
+
+/* --- The bridge -------------------------------------------------------------------
+   A rail that fills as the section is read, with the four weeks hung off it.
+   ---------------------------------------------------------------------------------- */
+
+.nx-shift__bridge {
+  position: relative;
+  padding: var(--s-md) 0 var(--s-md) var(--s-lg);
+}
+
+.nx-shift__bridge-title {
+  margin-bottom: var(--s-md);
+  font-family: var(--font-body);
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--accent-ink);
+}
+
+.nx-shift__rail {
+  position: absolute;
+  left: 0.4rem;
+  top: calc(var(--s-md) + 2.5rem);
+  bottom: var(--s-md);
+  width: 1px;
+  background: var(--rule);
+}
+
+.nx-shift__rail-fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--green);
+  transform: scaleY(var(--track));
+  transform-origin: top;
+}
+
+.nx-shift__steps {
+  display: grid;
+  gap: var(--s-md);
+}
+
+/* A step that has not been reached yet is dimmed by COLOUR, not by opacity.
+   Fading a paragraph to a third of its opacity is the obvious way to do this
+   and it drops the text under 2:1 — unreadable for anyone the moment they look
+   at it, which is exactly when a scroll story is being read. Muted-to-full is
+   just as clear and stays above 5:1 the whole way. */
+.nx-step {
+  display: grid;
+  grid-template-columns: 4.25rem minmax(0, 1fr);
+  gap: var(--s-sm);
+  align-items: start;
+  transition: transform var(--duration-slow) var(--ease-out-expo);
+}
+
+.nx-step.is-current {
+  transform: translateX(0.25rem);
+}
+
+.nx-step__stamp {
+  position: relative;
+  padding-left: 1.1rem;
+  font-family: var(--font-body);
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  line-height: 1.7;
+  transition: color var(--duration-slow) var(--ease-out-quart);
+}
+
+.nx-step.is-active .nx-step__stamp {
+  color: var(--text-soft);
+}
+
+/* The node that sits on the rail. It is drawn on the stamp rather than on the
+   rail so it inherits the step's own active state. */
+.nx-step__stamp::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--s-lg) * -1 + 0.15rem);
+  top: 0.5rem;
+  width: 0.55rem;
+  height: 0.55rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: 50%;
+  background: var(--page);
+  transition:
+    background-color var(--duration-base) var(--ease-out-quart),
+    border-color var(--duration-base) var(--ease-out-quart);
+}
+
+.nx-step.is-active .nx-step__stamp::before {
+  background: var(--green);
+  border-color: var(--green);
+}
+
+.nx-step__title {
+  font-size: var(--t-lg);
+  font-weight: 600;
+  color: var(--text-muted);
+  transition: color var(--duration-slow) var(--ease-out-quart);
+}
+
+.nx-step.is-active .nx-step__title {
+  color: var(--text);
+}
+
+.nx-step__text {
+  margin-top: 0.2rem;
+  font-family: var(--font-body);
+  font-size: var(--t-sm);
+  line-height: 1.55;
+  color: var(--text-muted);
+  transition: color var(--duration-slow) var(--ease-out-quart);
+}
+
+.nx-step.is-active .nx-step__text {
+  color: var(--text-soft);
+}
+
+/* On a phone the three columns become one vertical reading, and the bridge
+   keeps its rail — the story is still sequential, it just runs downward. */
+@media (max-width: 61.99rem) {
+  .nx-shift__col--after {
+    order: 3;
+  }
+
+  .nx-shift__bridge {
+    order: 2;
+  }
+}

@@ -1,0 +1,193 @@
+/* =============================================================================
+   Nexora — the primitives every zone composes with
+
+   Section rhythm, the indexed label, the two heading sizes, and exactly two
+   controls. A firm this quiet does not need a third button style.
+   ========================================================================== */
+
+.nx-section {
+  position: relative;
+  padding-block: var(--section-y);
+  background-color: var(--page);
+  color: var(--text);
+}
+
+/* Two zones of the same colour meet on a hairline, never on a shadow. */
+.nx-section + .nx-section:not(.nx-section--dark):not(.nx-section--flush) {
+  border-top: 1px solid var(--rule-soft);
+}
+
+.nx-section--flush {
+  padding-block-end: 0;
+}
+
+/* --- Section head ------------------------------------------------------------ */
+
+.nx-head {
+  display: grid;
+  gap: var(--s-md);
+  margin-bottom: clamp(2.5rem, 1.5rem + 3.5vw, 5rem);
+}
+
+@media (min-width: 60rem) {
+  .nx-head--split {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    align-items: end;
+    column-gap: var(--gutter);
+  }
+
+  .nx-head--split .nx-label {
+    grid-column: 1 / -1;
+  }
+
+  .nx-head--split .nx-lead {
+    padding-bottom: 0.4rem;
+  }
+}
+
+/* --- Labels -------------------------------------------------------------------
+   `01  SERVICIOS`, with a rule between the index and the word. The index is the
+   only routine appearance of the accent on paper.
+   ---------------------------------------------------------------------------- */
+
+.nx-label,
+.nx-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  font-family: var(--font-body);
+  font-size: var(--t-xs);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.nx-label__index {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  color: var(--accent-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.nx-label__index::after {
+  content: "";
+  width: 1.75rem;
+  height: 1px;
+  background: currentcolor;
+  opacity: 0.55;
+}
+
+.nx-eyebrow::before {
+  content: "";
+  flex: none;
+  width: 2.25rem;
+  height: 1px;
+  background: var(--accent-ink);
+}
+
+/* --- Headings and copy --------------------------------------------------------- */
+
+.nx-h2 {
+  max-width: 18ch;
+  font-size: var(--t-3xl);
+}
+
+.nx-lead {
+  max-width: 46ch;
+  font-family: var(--font-body);
+  font-size: var(--t-lg);
+  line-height: var(--lead-loose);
+  color: var(--text-soft);
+}
+
+.nx-note {
+  font-family: var(--font-body);
+  font-size: var(--t-sm);
+  color: var(--text-muted);
+}
+
+/* --- Controls -------------------------------------------------------------------
+   One solid button for the action the page is asking for, one arrow link for
+   everything else. Square, uppercase, letterspaced.
+   ------------------------------------------------------------------------------ */
+
+.nx-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75em;
+  min-height: 3rem;
+  padding: 0.9rem 1.75rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--t-xs);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition:
+    background-color var(--duration-base) var(--ease-out-quart),
+    border-color var(--duration-base) var(--ease-out-quart),
+    color var(--duration-base) var(--ease-out-quart);
+}
+
+.nx-btn--solid {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+
+.nx-btn--solid:hover,
+.nx-btn--solid:focus-visible {
+  background: var(--green);
+  border-color: var(--green);
+  color: #ffffff;
+}
+
+.nx-section--dark .nx-btn--solid {
+  background: #ffffff;
+  border-color: #ffffff;
+  color: var(--ink);
+}
+
+.nx-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  font-family: var(--font-body);
+  font-size: var(--t-xs);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text);
+  transition: color var(--duration-base) var(--ease-out-quart);
+}
+
+.nx-link::before {
+  content: "";
+  flex: none;
+  width: 1.75rem;
+  height: 1px;
+  background: var(--accent-ink);
+  transition: width var(--duration-base) var(--ease-out-expo);
+}
+
+.nx-link:hover {
+  color: var(--accent-ink);
+}
+
+.nx-link:hover::before {
+  width: 2.75rem;
+}
+
+.nx-link__arrow {
+  transition: transform var(--duration-base) var(--ease-out-expo);
+}
+
+.nx-link:hover .nx-link__arrow {
+  transform: translateX(0.3rem);
+}

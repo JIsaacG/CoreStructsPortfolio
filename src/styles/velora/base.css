@@ -1,0 +1,185 @@
+/* =============================================================================
+   Velora — primitives
+
+   Sections, labels, headings and three controls. The buttons are pill-shaped
+   and the labels are widely letterspaced: the two decisions that make the page
+   read as a clinic rather than as a product.
+   ========================================================================== */
+
+.ve-section {
+  position: relative;
+  padding-block: var(--section-y);
+  background: var(--page);
+}
+
+/* The warm bands. Alternating them is what gives the page its rhythm, so the
+   surface change carries no border — the colour is the seam. */
+.ve-section--warm {
+  background: var(--surface-warm);
+}
+
+/* --- Section head ------------------------------------------------------------- */
+
+.ve-head {
+  display: grid;
+  gap: var(--s-sm);
+  max-width: 46rem;
+  margin-bottom: clamp(2.5rem, 1.5rem + 3vw, 4.5rem);
+}
+
+@media (min-width: 60rem) {
+  .ve-head--split {
+    max-width: none;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: var(--s-md) var(--gutter);
+  }
+}
+
+.ve-label,
+.ve-eyebrow {
+  font-family: var(--font-display);
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--champagne-ink);
+}
+
+.ve-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.ve-eyebrow::before {
+  content: "";
+  width: 1.75rem;
+  height: 1px;
+  background: var(--champagne);
+}
+
+.ve-h2 {
+  max-width: 20ch;
+  font-family: var(--font-display);
+  font-size: var(--t-3xl);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+}
+
+.ve-lead {
+  max-width: var(--measure);
+  font-size: var(--t-lg);
+  line-height: var(--lead-loose);
+  color: var(--text-soft);
+}
+
+.ve-note {
+  font-family: var(--font-display);
+  font-size: var(--t-2xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* --- Controls -------------------------------------------------------------------
+   Pills. One filled with soft black for the action the page wants, one outlined
+   for the alternative, one quiet ghost for the widget's own navigation.
+   ------------------------------------------------------------------------------ */
+
+.ve-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  min-height: 3rem;
+  padding: 0.85rem 1.6rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: var(--t-xs);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition:
+    background-color var(--duration-base) var(--ease-out-quart),
+    border-color var(--duration-base) var(--ease-out-quart),
+    color var(--duration-base) var(--ease-out-quart),
+    transform var(--duration-base) var(--ease-out-expo),
+    box-shadow var(--duration-base) var(--ease-out-quart);
+}
+
+.ve-btn--lg {
+  min-height: 3.5rem;
+  padding: 1rem 2rem;
+}
+
+.ve-btn--solid {
+  background: var(--soft-black);
+  color: var(--ivory);
+  box-shadow: 0 10px 24px rgb(31 26 22 / 0.16);
+}
+
+.ve-btn--solid:hover,
+.ve-btn--solid:focus-visible {
+  background: var(--terracotta);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 34px rgb(168 114 79 / 0.32);
+}
+
+.ve-btn--outline {
+  border-color: var(--rule-strong);
+  color: var(--text);
+}
+
+.ve-btn--outline:hover,
+.ve-btn--outline:focus-visible {
+  border-color: var(--soft-black);
+  background: rgb(255 255 255 / 0.6);
+  transform: translateY(-2px);
+}
+
+.ve-btn--ghost {
+  color: var(--text-muted);
+  padding-inline: 1rem;
+}
+
+.ve-btn--ghost:hover {
+  color: var(--text);
+}
+
+.ve-btn[disabled] {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* --- Rating ------------------------------------------------------------------------ */
+
+.ve-stars {
+  display: inline-flex;
+  gap: 0.15rem;
+  color: var(--champagne);
+}
+
+.ve-stars svg {
+  width: 0.95rem;
+  height: 0.95rem;
+}
+
+.ve-rating {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--t-sm);
+  color: var(--text-muted);
+}
+
+.ve-rating__score {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--t-base);
+  color: var(--text);
+}

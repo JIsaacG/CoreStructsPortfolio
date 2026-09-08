@@ -30,6 +30,15 @@ const BUNDLES = [
      engine, a register and a generated document, and none of the four bundles
      above has a component it could borrow. */
   { entry: join(ROOT, "src", "styles", "flujo.css"), output: join(ROOT, "dist", "flujo.css") },
+  /* The three landing demos. They share a reset, the font declarations, the
+     reveal system and the CoreStruct furniture (`src/styles/lp/`), and part
+     company on everything a visitor can see — which is the whole point of
+     shipping three of them. The gallery that introduces them is a CoreStruct
+     page rather than a client one, so it keeps the portfolio's identity. */
+  { entry: join(ROOT, "src", "styles", "nexora.css"), output: join(ROOT, "dist", "nexora.css") },
+  { entry: join(ROOT, "src", "styles", "velora.css"), output: join(ROOT, "dist", "velora.css") },
+  { entry: join(ROOT, "src", "styles", "orbita.css"), output: join(ROOT, "dist", "orbita.css") },
+  { entry: join(ROOT, "src", "styles", "showcase.css"), output: join(ROOT, "dist", "showcase.css") },
 ];
 
 const IMPORT = /@import\s+(?:url\()?["']([^"']+)["']\)?\s*;/g;

@@ -1,0 +1,153 @@
+/* =============================================================================
+   Orbita — design tokens
+
+   A catalogue has to make a product legible before it makes it beautiful, so
+   the ground is near-white, the type is carbon, and one electric blue carries
+   every action, every state and every screen in a product render. Two zones go
+   black — the B2B band and the quote — and they are the only places the page
+   raises its voice.
+
+   Type: Manrope for everything a person reads, IBM Plex Sans for everything a
+   person *checks* — specifications, comparison tables, prices. A slightly
+   engineered face on data is what makes a spec sheet feel accurate.
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  /* --- Palette --------------------------------------------------------------- */
+  --white: #ffffff;
+  --mist: #f4f6f9;           /* the second surface: bands, cards, renders      */
+  --mist-deep: #e7ebf1;
+  --ink: #0b0d12;
+  --ink-soft: #171b22;
+  --blue: #0a5cff;
+  --blue-deep: #0842b8;      /* the blue, dark enough to set as text on white  */
+  --blue-wash: #e8f0ff;
+
+  --accent-rgb: 10 92 255;
+  --ink-rgb: 11 13 18;
+
+  /* --- Semantic surfaces ------------------------------------------------------- */
+  --page: var(--white);
+  --surface: var(--white);
+  --surface-muted: var(--mist);
+  --text: var(--ink);
+  --text-soft: #39404d;
+  --text-muted: #5c6473;      /* 5.4:1 on white                                 */
+  --rule: rgb(11 13 18 / 0.12);
+  --rule-soft: rgb(11 13 18 / 0.07);
+  --rule-strong: rgb(11 13 18 / 0.26);
+  --accent: var(--blue);
+  --accent-ink: var(--blue-deep);
+
+  /* --- Product renders ----------------------------------------------------------
+     The twelve drawings read these four values, so the same render works on the
+     white catalogue, on the mist cards and on the black band. */
+  --render-body: #eef1f6;
+  --render-deep: #dfe4ec;
+  --render-line: #7c8698;
+  --render-screen: var(--blue);
+  --render-paper: #ffffff;
+  --render-soft: rgb(124 134 152 / 0.55);
+
+  /* --- Typography ----------------------------------------------------------------- */
+  --font-display:
+    "Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-body: var(--font-display);
+  --font-data:
+    "IBM Plex Sans", ui-sans-serif, system-ui, "Segoe UI", Roboto, sans-serif;
+
+  --weight-display: 800;
+  --track-display: -0.03em;
+
+  --t-2xs: clamp(0.6875rem, 0.66rem + 0.12vw, 0.75rem);
+  --t-xs: clamp(0.75rem, 0.72rem + 0.14vw, 0.8125rem);
+  --t-sm: clamp(0.8125rem, 0.79rem + 0.13vw, 0.875rem);
+  --t-base: clamp(0.9375rem, 0.9rem + 0.2vw, 1.0625rem);
+  --t-lg: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+  --t-xl: clamp(1.1875rem, 1.09rem + 0.44vw, 1.5rem);
+  --t-2xl: clamp(1.5rem, 1.28rem + 0.94vw, 2.125rem);
+  --t-3xl: clamp(1.875rem, 1.45rem + 1.9vw, 3.25rem);
+  --t-4xl: clamp(2.375rem, 1.6rem + 3.4vw, 4.75rem);
+  --t-metric: clamp(2.25rem, 1.5rem + 3.2vw, 4rem);
+
+  --lead-title: 1.06;
+  --lead-body: 1.6;
+  --lead-loose: 1.7;
+
+  --track-label: 0.14em;
+  --track-wide: 0.2em;
+
+  /* --- Rhythm ------------------------------------------------------------------- */
+  --s-3xs: 0.25rem;
+  --s-2xs: 0.5rem;
+  --s-xs: 0.75rem;
+  --s-sm: 1rem;
+  --s-md: 1.5rem;
+  --s-lg: 2.5rem;
+  --s-xl: 4rem;
+  --s-2xl: 6rem;
+
+  --gutter: clamp(1.25rem, 0.85rem + 1.9vw, 3rem);
+  --shell-max: 84rem;
+  --shell: min(100% - var(--gutter) * 2, var(--shell-max));
+  --measure: 58ch;
+  --section-y: clamp(3.5rem, 2.5rem + 5vw, 7rem);
+  --header-h: 4.25rem;
+
+  /* Rounded, but not soft: the radius of a device, not of a spa. */
+  --radius-sm: 8px;
+  --radius: 14px;
+  --radius-lg: 22px;
+
+  --shadow-card: 0 2px 6px rgb(11 13 18 / 0.05);
+  --shadow-lift: 0 22px 48px rgb(11 13 18 / 0.14);
+
+  /* --- Motion ----------------------------------------------------------------------- */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --duration-fast: 160ms;
+  --duration-base: 280ms;
+  --duration-slow: 560ms;
+  --duration-reveal: 850ms;
+
+  /* --- Layers ------------------------------------------------------------------------ */
+  --layer-header: 50;
+  --layer-badge: 60;
+  --layer-menu: 70;
+  --layer-skip: 100;
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --header-h: 4.75rem;
+  }
+}
+
+/* The two black zones. Redefining the semantic tokens — including the four the
+   product renders read — inverts a whole section, drawings included. */
+.ob-b2b,
+.ob-quote,
+.ob-promo,
+.ob-cta {
+  --page: var(--ink);
+  --surface: var(--ink-soft);
+  --surface-muted: #12161d;
+  --text: #ffffff;
+  --text-soft: rgb(255 255 255 / 0.78);
+  --text-muted: rgb(255 255 255 / 0.6);
+  --rule: rgb(255 255 255 / 0.14);
+  --rule-soft: rgb(255 255 255 / 0.08);
+  --rule-strong: rgb(255 255 255 / 0.3);
+  --accent-ink: #6ea2ff;
+
+  --render-body: #1d232d;
+  --render-deep: #161b23;
+  --render-line: #8c98ae;
+  --render-paper: #0b0d12;
+  --render-soft: rgb(140 152 174 / 0.5);
+}

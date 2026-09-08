@@ -12,7 +12,6 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const PAGE = join(ROOT, "index.html");
-const BUNDLE = join(ROOT, "dist", "corestruct.css");
 
 const errors = [];
 const warnings = [];
@@ -130,10 +129,21 @@ function checkBundle(bundle) {
   }
 }
 
-checkBundle(BUNDLE);
-checkBundle(join(ROOT, "dist", "demo.css"));
-checkBundle(join(ROOT, "dist", "aurelis.css"));
-checkBundle(join(ROOT, "dist", "cede.css"));
+/* Every bundle `build-css.mjs` emits. Adding one here is what keeps a new demo
+   from shipping a typo'd custom property that nothing else would catch. */
+for (const name of [
+  "corestruct.css",
+  "demo.css",
+  "aurelis.css",
+  "cede.css",
+  "flujo.css",
+  "nexora.css",
+  "velora.css",
+  "orbita.css",
+  "showcase.css",
+]) {
+  checkBundle(join(ROOT, "dist", name));
+}
 
 /* ------------------------------------------------------------ JS imports */
 

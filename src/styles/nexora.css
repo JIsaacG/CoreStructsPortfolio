@@ -1,0 +1,25 @@
+/* =============================================================================
+   Nexora Group — stylesheet entry point
+
+   The first of the three landing demos. It shares the reset, the typeface
+   declarations, the reveal system and the CoreStruct furniture with its two
+   siblings, and nothing else: palette, grid, type pairing and control shapes
+   are its own, because a consultancy and an aesthetic clinic should not be
+   able to swap stylesheets.
+
+   `npm run build:css` flattens this into `dist/nexora.css`.
+   ========================================================================== */
+
+@import "./nexora/tokens.css";
+@import "./lp/fonts.css";
+@import "./lp/reset.css";
+@import "./motion.css";
+@import "./lp/kit.css";
+
+@import "./nexora/base.css";
+@import "./nexora/header.css";
+@import "./nexora/hero.css";
+@import "./nexora/sections.css";
+@import "./nexora/shift.css";
+@import "./nexora/cases.css";
+@import "./nexora/contact.css";
