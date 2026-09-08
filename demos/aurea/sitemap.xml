@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Demostración. AUREA es una institución educativa ficticia y todas sus
+     páginas son noindex. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://www.aurea.example/</loc><priority>1.0</priority></url>
+  <url><loc>https://www.aurea.example/institucion.html</loc><priority>0.8</priority></url>
+  <url><loc>https://www.aurea.example/oferta-academica.html</loc><priority>0.8</priority></url>
+  <url><loc>https://www.aurea.example/admisiones.html</loc><priority>0.8</priority></url>
+  <url><loc>https://www.aurea.example/becas.html</loc><priority>0.8</priority></url>
+  <url><loc>https://www.aurea.example/costos.html</loc><priority>0.8</priority></url>
+  <url><loc>https://www.aurea.example/calendario.html</loc><priority>0.8</priority></url>
+  <url><loc>https://www.aurea.example/noticias.html</loc><priority>0.8</priority></url>
+  <url><loc>https://www.aurea.example/vida-estudiantil.html</loc><priority>0.8</priority></url>
+  <url><loc>https://www.aurea.example/campus.html</loc><priority>0.8</priority></url>
+  <url><loc>https://www.aurea.example/investigacion.html</loc><priority>0.8</priority></url>
+  <url><loc>https://www.aurea.example/docentes.html</loc><priority>0.8</priority></url>
+  <url><loc>https://www.aurea.example/directorio.html</loc><priority>0.8</priority></url>
+  <url><loc>https://www.aurea.example/biblioteca.html</loc><priority>0.8</priority></url>
+  <url><loc>https://www.aurea.example/apoyo-estudiantil.html</loc><priority>0.8</priority></url>
+  <url><loc>https://www.aurea.example/empleabilidad.html</loc><priority>0.8</priority></url>
+  <url><loc>https://www.aurea.example/egresados.html</loc><priority>0.8</priority></url>
+  <url><loc>https://www.aurea.example/internacional.html</loc><priority>0.8</priority></url>
+  <url><loc>https://www.aurea.example/documentos.html</loc><priority>0.8</priority></url>
+  <url><loc>https://www.aurea.example/preguntas-frecuentes.html</loc><priority>0.8</priority></url>
+  <url><loc>https://www.aurea.example/contacto.html</loc><priority>0.8</priority></url>
+  <url><loc>https://www.aurea.example/buscar.html</loc><priority>0.8</priority></url>
+  <url><loc>https://www.aurea.example/404.html</loc><priority>0.8</priority></url>
+  <url><loc>https://www.aurea.example/demo/portal-estudiantil.html</loc><priority>0.6</priority></url>
+  <url><loc>https://www.aurea.example/demo/portal-padres.html</loc><priority>0.6</priority></url>
+  <url><loc>https://www.aurea.example/demo/campus-virtual.html</loc><priority>0.6</priority></url>
+  <url><loc>https://www.aurea.example/programas/bachillerato-ciencias-humanidades.html</loc><priority>0.6</priority></url>
+  <url><loc>https://www.aurea.example/programas/btp-informatica.html</loc><priority>0.6</priority></url>
+  <url><loc>https://www.aurea.example/programas/btp-administracion.html</loc><priority>0.6</priority></url>
+  <url><loc>https://www.aurea.example/programas/ingenieria-en-sistemas.html</loc><priority>0.6</priority></url>
+  <url><loc>https://www.aurea.example/programas/administracion-de-empresas.html</loc><priority>0.6</priority></url>
+  <url><loc>https://www.aurea.example/programas/mercadotecnia.html</loc><priority>0.6</priority></url>
+  <url><loc>https://www.aurea.example/programas/diseno-digital.html</loc><priority>0.6</priority></url>
+  <url><loc>https://www.aurea.example/programas/finanzas.html</loc><priority>0.6</priority></url>
+  <url><loc>https://www.aurea.example/programas/psicologia.html</loc><priority>0.6</priority></url>
+  <url><loc>https://www.aurea.example/noticias/proyecto-energia-inteligente.html</loc><priority>0.6</priority></url>
+  <url><loc>https://www.aurea.example/noticias/nuevo-laboratorio-innovacion.html</loc><priority>0.6</priority></url>
+  <url><loc>https://www.aurea.example/noticias/equipo-debate-competencia-regional.html</loc><priority>0.6</priority></url>
+  <url><loc>https://www.aurea.example/noticias/convenio-movilidad-academica.html</loc><priority>0.6</priority></url>
+  <url><loc>https://www.aurea.example/noticias/resultados-copa-aurea.html</loc><priority>0.6</priority></url>
+  <url><loc>https://www.aurea.example/noticias/voluntariado-alfabetizacion-digital.html</loc><priority>0.6</priority></url>
+</urlset>

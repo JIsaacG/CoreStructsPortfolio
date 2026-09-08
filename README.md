@@ -54,6 +54,7 @@ npm run build:content  # src/data/*.js        ->  index.html
 npm run build:demos    # src/data/demos.js    ->  demos/verbena.html
 npm run build:aurelis  # src/data/aurelis/*   ->  demos/aurelis/*.html
 npm run build:cede     # src/data/cede/*      ->  demos/cede/*.html
+npm run build:aurea    # src/data/aurea/*     ->  demos/aurea/*.html
 npm run build:flujo    # src/data/flujo/*     ->  demos/flujo/*.html
 npm run build:rumbo    # src/data/rumbo/*     ->  demos/rumbo/*.html
 npm run build:landing  # src/data/landings/*  ->  demos/landing/*.html
@@ -152,6 +153,7 @@ tools/                     scripts de compilación (Node, sin dependencias)
   build-brand.mjs  build-css.mjs  build-content.mjs  build-demos.mjs
   build-aurelis.mjs  aurelis/    el portal corporativo
   build-cede.mjs     cede/       el portal gubernamental
+  build-aurea.mjs    aurea/      el portal educativo
   build-flujo.mjs    flujo/      la demo de automatización administrativa
   build-rumbo.mjs    rumbo/      el sistema interno de una distribuidora
   build-landings.mjs landings/  las tres landing pages y su índice
@@ -170,6 +172,7 @@ dist/corestruct.css        hoja de estilos compilada del portfolio
 dist/demo.css              hoja de estilos compilada de los sitios de ejemplo
 dist/aurelis.css           la del portal corporativo
 dist/cede.css              la del portal gubernamental
+dist/aurea.css             la del portal educativo
 dist/flujo.css             la de la demo de automatización
 dist/nexora.css            la de la landing corporativa
 dist/velora.css            la de la landing de conversión
@@ -202,6 +205,22 @@ src/scripts/cede/    main, nav, a11y, observatory, render, search, forms,
                      charts.js y table-render.js son PUROS: los usan la
                      compilación y el navegador
 tools/cede/          blocks, shell, home, observatory, pages
+```
+
+El portal educativo hace lo mismo, y suma tres interfaces privadas que ninguno
+de los otros necesita:
+
+```
+src/data/aurea/      institution.js  programs.js  admissions.js  calendar.js
+                     news.js  people.js  campus.js  life.js  research.js
+                     network.js  resources.js  portal.js  story.js  format.js
+src/styles/aurea/    tokens, fonts, base, reveal, header, hero, sections,
+                     modules, portal, art, footer
+src/scripts/aurea/   main, nav, search, collections, admissions, calendar,
+                     tour, forms, ui, reveal, dom
+                     collections.js es UN SOLO motor de filtrado para siete
+                     catálogos distintos
+tools/aurea/         blocks, shell, art, home, program, pages, portals
 ```
 
 La demo de automatización ocupa su propio espacio de nombres y no comparte nada
@@ -327,6 +346,82 @@ atribución aparece en el pie de todas las páginas del portal y en su página d
 metodología. El encuadre es continental: Islas del Cisne quedaría a 250 km de la
 costa y añadiría un tercio de océano vacío a la página, así que se omite del
 dibujo (en un despliegue real iría en un recuadro).
+
+---
+
+### AUREA — el portal educativo
+
+La tarjeta **05 · Portales educativos** abre `demos/aurea/`: 41 páginas del
+ecosistema digital completo de **AUREA · Instituto & Universidad**, una
+institución **ficticia** que imparte educación media y educación superior en un
+mismo campus. Es el demo pensado para que un director, un rector o un propietario
+vea el sitio y piense «esto podría ser el portal de nuestra institución».
+
+Lo que trae:
+
+- **Buscador académico** con nueve programas —tres bachilleratos y seis
+  licenciaturas— filtrables por nivel, modalidad y área de interés, y una
+  **página por carrera** con perfil de egreso, plan de estudios completo,
+  requisitos, campo laboral, costos, becas, docentes y preguntas frecuentes.
+- **Admisiones** con los dos procesos separados (media y superior), la
+  documentación de cada uno, las fechas de 2027 y un **checklist de solicitud**
+  que guarda el avance en el navegador.
+- **Simulador de becas** y **calculadora de matrícula**: cinco programas de beca
+  con criterios, y una estimación por período que distingue los dos modelos de
+  cobro reales de la institución —mensualidad en media, asignatura en superior.
+- **Calendario institucional** con dos taxonomías cruzadas (tipo de actividad y
+  audiencia), vista de mes y de lista, y **exportación real** a `.ics`, Google
+  Calendar y Outlook.
+- **Vida estudiantil** con explorador de clubes, deportes y arte; **campus** con
+  tour de plano interactivo y reserva de visitas; **investigación**, **docentes**,
+  **directorio**, **biblioteca**, **documentos**, **egresados**,
+  **empleabilidad**, **internacional** y **preguntas frecuentes**, todos con
+  buscador y filtros.
+- **Tres productos privados**: portal estudiantil, portal de padres y una vista
+  previa del campus virtual. Son la respuesta a la pregunta que hace un director
+  después de ver la portada: «¿y también hacen la parte en la que entran los
+  estudiantes?».
+
+Cuatro decisiones que conviene conocer antes de tocarlo:
+
+**Un solo motor de filtrado para siete catálogos.** El buscador de programas, el
+explorador de clubes, la biblioteca, el centro de documentos, las preguntas
+frecuentes, el directorio de docentes y la sala de noticias son la misma
+interacción, así que `src/scripts/aurea/collections.js` la implementa una vez y
+la gobierna el marcado. La regla que la sostiene: **todos los resultados están
+en el HTML antes de que corra un script.** El filtro oculta filas, nunca las
+pide, y por eso el catálogo funciona sin JavaScript, se imprime completo y lo
+encuentra el buscador del propio navegador.
+
+**El plegado de acentos ocurre dos veces, a propósito.** La compilación escribe
+los `data-haystack` con `fold()` de `src/data/aurea/format.js` y el navegador
+compara con el `fold()` de `src/scripts/aurea/dom.js`. Son la misma función en
+los dos lados porque tienen que coincidir carácter por carácter: si divergen,
+alguien escribe «psicologia» y la fila que decía «Psicología» deja de aparecer.
+
+**Las imágenes están dibujadas.** AUREA no existe: no hay campus que fotografiar
+ni estudiantes que retratar, y una fotografía de archivo de personas reales sería
+el único elemento deshonesto de un sitio cuyo argumento entero es que todo en él
+es ficción declarada. Así que `tools/aurea/art.mjs` dibuja veinte láminas —aulas,
+laboratorios, estanterías, canchas, pantallas, patios— con la misma lógica que
+`cede/art.mjs`: datos entran, SVG sale, y ni un solo literal de color.
+
+**Nada se envía y la interfaz lo dice.** Los simuladores, la reserva de visita,
+el formulario de contacto y las descargas son demostraciones de flujo; cada
+confirmación nombra la ficción en la misma frase en la que anuncia el éxito. Un
+demo que responde «¡Gracias! Te contactaremos pronto» ha mentido sobre un mensaje
+que no llegó a ninguna parte.
+
+La ficción se declara en la barra superior, en la chapa de la esquina, en el pie
+de cada página, junto a cada bloque de cifras y en la franja ámbar que encabeza
+los tres portales privados. Las páginas son `noindex` y el `schema.org` es
+`Organization`, nunca `EducationalOrganization` ni `Course`: una tarjeta de
+carrera inventada en un resultado de búsqueda es exactamente el daño que hay que
+evitar.
+
+```bash
+npm run build:aurea    # regenera demos/aurea/*.html
+```
 
 ---
 

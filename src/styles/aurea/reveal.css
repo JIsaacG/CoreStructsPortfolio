@@ -1,0 +1,145 @@
+/* =============================================================================
+   AUREA — scroll entrance
+
+   Institutional restraint: things arrive, they do not perform. A short fade
+   with a small rise, one stagger inside a group, and nothing that moves more
+   than sixteen pixels. No parallax, no scale, no springs — the portal has to
+   read as a school and not as a product launch.
+
+   Two guards decide whether anything is hidden in the first place, and both
+   have to pass:
+
+     .js               set by the inline script in the head, and removed again
+                       by a timer if the behaviour module never loads, so a
+                       failed script can never leave the page blank.
+     no-preference     `prefers-reduced-motion` is respected as a hard rule.
+                       This portal is an accessibility deliverable; there is no
+                       animation here that is the product, so there is nothing
+                       to exempt. Under `reduce`, the elements are simply
+                       visible and no rule below applies.
+
+   The consequence worth stating: WITH JAVASCRIPT OFF, NOTHING IS HIDDEN. The
+   hiding rule is scoped to `.js`, so a reader without scripts gets the whole
+   page rendered, which is also what a crawler and a print stylesheet get.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal] {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 0.6s var(--ease-out),
+      transform 0.6s var(--ease-out);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .js [data-reveal="fade"] {
+    transform: none;
+  }
+
+  .js [data-reveal="rise"] {
+    transform: translateY(24px);
+  }
+
+  /* The only horizontal variant, and only for the timeline, where the entrance
+     follows the direction the eye is already travelling. */
+  .js [data-reveal="side"] {
+    transform: translateX(-18px);
+  }
+
+  .js [data-reveal].is-in {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/**
+ * The stagger.
+ *
+ * Set by `scripts/aurea/reveal.js` as a custom property on each child of a
+ * `[data-reveal-group]`, capped at eight steps: past that the last card in a
+ * fourteen-card grid arrives a second and a half after the first, which reads
+ * as a slow page rather than as a considered one.
+ */
+[data-reveal-group] > * {
+  --reveal-delay: 0ms;
+}
+
+/* -----------------------------------------------------------------------------
+   Print
+
+   A school portal gets printed — a calendar taped to a fridge, a plan of study
+   taken to a meeting, a list of requirements carried to a photocopier. So the
+   chrome comes off, the links keep their destinations, and nothing arrives
+   invisible because a scroll observer never fired.
+   -------------------------------------------------------------------------- */
+
+@media print {
+  .au-topbar,
+  .au-navband,
+  .au-panel,
+  .au-bar,
+  .au-badge,
+  .au-search,
+  .au-filters,
+  .au-toast,
+  .au-export,
+  .au-hero__actions,
+  .au-cal__views {
+    display: none !important;
+  }
+
+  html,
+  body {
+    background: #ffffff;
+  }
+
+  .au-header {
+    position: static;
+  }
+
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .au-hero,
+  .au-pagehead,
+  .au-cta,
+  .au-band--dark,
+  .au-footer {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .au-hero__title,
+  .au-hero__lead,
+  .au-pagehead__title,
+  .au-pagehead__lead,
+  .au-cta__title,
+  .au-cta__text {
+    color: #000000 !important;
+  }
+
+  .au-hero__scene,
+  .au-hero__veil,
+  .au-pagehead__art,
+  .au-cta__art {
+    display: none !important;
+  }
+
+  .au-card,
+  .au-program,
+  .au-plan__term,
+  .au-news,
+  .au-panelbox {
+    break-inside: avoid;
+    box-shadow: none;
+  }
+
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #444444;
+  }
+}

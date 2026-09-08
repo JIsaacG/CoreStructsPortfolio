@@ -1,0 +1,149 @@
+/* =============================================================================
+   AUREA — the drawn imagery
+
+   The portal's photography. AUREA has no campus to photograph and no students
+   to portrait, and stock imagery of real people standing in for an invented
+   institution would be the one dishonest element on the site — so the pictures
+   are drawn, from the same material the rest of the portal is made of:
+   buildings, benches, lattices, screens, court lines, staves.
+
+   The plates carry classes and nothing else; every colour decision is here, so
+   the same geometry works on the navy grounds and on paper without being
+   re-rendered. See `tools/aurea/art.mjs` for the geometry.
+   ========================================================================== */
+
+.au-art {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* The ground each plate sits on. `deep` is the navy surfaces — hero, page
+   heads, card covers — and `paper` is the light ones. */
+.au-art--deep .au-art__ground { fill: var(--navy-900); }
+.au-art--paper .au-art__ground { fill: var(--navy-100); }
+
+.au-art--deep .au-art__dot { fill: rgb(255 255 255 / 0.07); }
+.au-art--paper .au-art__dot { fill: rgb(16 42 67 / 0.07); }
+
+/* Solid masses: buildings, floors, blocks. */
+.au-art--deep .au-art__mass { fill: rgb(255 255 255 / 0.07); }
+.au-art--paper .au-art__mass { fill: rgb(16 42 67 / 0.07); }
+
+.au-art--deep .au-art__mass-2 { fill: rgb(255 255 255 / 0.12); }
+.au-art--paper .au-art__mass-2 { fill: rgb(16 42 67 / 0.12); }
+
+/* Lines: structure, rules, edges. */
+.au-art__line {
+  fill: none;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.au-art--deep .au-art__line { stroke: rgb(160 196 228 / 0.55); }
+.au-art--paper .au-art__line { stroke: rgb(16 42 67 / 0.35); }
+
+.au-art__line--faint {
+  stroke-width: 1;
+}
+
+.au-art--deep .au-art__line--faint { stroke: rgb(160 196 228 / 0.28); }
+.au-art--paper .au-art__line--faint { stroke: rgb(16 42 67 / 0.18); }
+
+/* Figures — people, always at architectural scale and never with faces. A
+   drawn crowd reads as a campus; a drawn face reads as a cartoon. */
+.au-art--deep .au-art__figure { fill: rgb(255 255 255 / 0.42); }
+.au-art--paper .au-art__figure { fill: rgb(16 42 67 / 0.4); }
+
+/* The single accent. One per plate, never two: it is what the eye lands on. */
+.au-art__accent { fill: var(--art-accent); }
+.au-art__accent-line {
+  fill: none;
+  stroke: var(--art-accent);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.au-art__gold { fill: var(--art-gold); }
+.au-art__gold-line {
+  fill: none;
+  stroke: var(--art-gold);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+/* Glass — windows, screens, water. Reads as a surface rather than a mass. */
+.au-art--deep .au-art__glass { fill: rgb(20 121 255 / 0.22); }
+.au-art--paper .au-art__glass { fill: rgb(20 121 255 / 0.14); }
+
+/* -----------------------------------------------------------------------------
+   The hero, seen through a veil
+
+   The scene sits behind a wash heavy enough to keep the headline readable, and
+   at card-cover weights the campus simply disappears into it. So the hero copy
+   of every mark is drawn heavier: same geometry, same classes, one scoped set
+   of values.
+   -------------------------------------------------------------------------- */
+
+.au-hero__scene .au-art__dot { fill: rgb(255 255 255 / 0.09); }
+.au-hero__scene .au-art__mass { fill: rgb(255 255 255 / 0.11); }
+.au-hero__scene .au-art__mass-2 { fill: rgb(255 255 255 / 0.17); }
+.au-hero__scene .au-art__line { stroke: rgb(160 196 228 / 0.72); }
+.au-hero__scene .au-art__figure { fill: rgb(255 255 255 / 0.58); }
+.au-hero__scene .au-art__glass { fill: rgb(20 121 255 / 0.42); }
+
+/* -----------------------------------------------------------------------------
+   The campus plan
+
+   The one plate that is a diagram rather than a picture: the tour is built on
+   it, so its shapes have to stay legible under eight hotspot pills.
+   -------------------------------------------------------------------------- */
+
+.au-plan-art__ground { fill: var(--navy-900); }
+.au-plan-art__block { fill: rgb(255 255 255 / 0.1); }
+.au-plan-art__block--lit { fill: rgb(20 121 255 / 0.2); }
+.au-plan-art__path {
+  fill: none;
+  stroke: rgb(160 196 228 / 0.4);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+.au-plan-art__green { fill: rgb(28 122 74 / 0.28); }
+.au-plan-art__label {
+  fill: rgb(255 255 255 / 0.5);
+  font-family: var(--sans);
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+/* -----------------------------------------------------------------------------
+   The wordmark
+
+   AUREA is set, not drawn: the serif at a wide track is the mark. The isotype
+   beside it is a keystone arch — the shape an institution uses to say it holds
+   something up — built from an arc and three rules so it stays sharp at 20px
+   in a browser tab.
+   -------------------------------------------------------------------------- */
+
+.au-mark__arc {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3.4;
+}
+
+.au-mark__pillar {
+  fill: currentColor;
+}
+
+.au-mark__key {
+  fill: var(--gold);
+}
+
+/* On the dark bar the keystone would disappear into the navy, so it takes the
+   gold everywhere and the pillars invert instead. */
+.au-app__brand .au-mark__key,
+.au-footer .au-mark__key {
+  fill: var(--gold);
+}

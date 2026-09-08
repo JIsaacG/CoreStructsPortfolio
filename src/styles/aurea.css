@@ -1,0 +1,49 @@
+/* =============================================================================
+   AUREA — stylesheet entry point
+
+   The education portal ships its own bundle and shares nothing with the rest
+   of the site. It is light where the portfolio is dark, editorial where the
+   corporate demo is technical, and it carries three product interfaces — the
+   student portal, the parent portal and the virtual campus — that none of the
+   other bundles has a component for.
+
+   `npm run build:css` flattens this into `dist/aurea.css`.
+   ========================================================================== */
+
+@import "./aurea/tokens.css";
+@import "./aurea/fonts.css";
+@import "./aurea/base.css";
+@import "./aurea/reveal.css";
+
+@import "./aurea/header.css";
+@import "./aurea/hero.css";
+@import "./aurea/sections.css";
+@import "./aurea/modules.css";
+@import "./aurea/portal.css";
+@import "./aurea/art.css";
+@import "./aurea/footer.css";
+
+/* -----------------------------------------------------------------------------
+   Reduced motion
+
+   `aurea/reveal.css` already declines to hide anything under this preference.
+   This block removes what is left: the counters settle at their final value,
+   the meters jump instead of filling, and every transition in the interface
+   becomes instantaneous. Nothing on this portal is an animation that IS the
+   product, so there is nothing here to exempt.
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

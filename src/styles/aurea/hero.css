@@ -1,0 +1,382 @@
+/* =============================================================================
+   AUREA — hero, quick access and the audience switch
+
+   The first screen has to do three jobs at once: say what the institution is,
+   move a prospective family towards admissions, and get everybody else to
+   where they were already going. So it is three layers, in that order, and
+   the third is the one most institutional sites forget.
+   ========================================================================== */
+
+.au-hero {
+  position: relative;
+  overflow: hidden;
+  background: var(--navy-900);
+  color: var(--ink-onDark);
+  isolation: isolate;
+}
+
+/**
+ * The drawn scene.
+ *
+ * AUREA has no campus to photograph. Instead of stock imagery of strangers —
+ * which would be the one dishonest element on a page whose whole argument is
+ * that the institution is invented — the hero carries a drawn composition of
+ * the campus at scale: buildings, a lattice, figures crossing the explanade.
+ * It is `slice`d, so the crop varies with the viewport and the geometry is
+ * built to survive it (see `aurea/art.css`).
+ */
+.au-hero__scene {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+.au-hero__scene svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* The wash that keeps the text readable over the scene, whatever the crop. */
+.au-hero__veil {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(105deg, rgb(10 28 46 / 0.97) 0%, rgb(10 28 46 / 0.9) 38%, rgb(10 28 46 / 0.2) 100%),
+    linear-gradient(to top, rgb(10 28 46 / 0.9) 0%, transparent 45%);
+}
+
+.au-hero__inner {
+  position: relative;
+  display: grid;
+  gap: 2rem;
+  align-content: center;
+  min-height: clamp(30rem, 78vh, 46rem);
+  padding-block: clamp(3rem, 2rem + 6vw, 6rem);
+}
+
+.au-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  /* `justify-self`, not `align-self`: the hero is a grid, and the eyebrow has
+     to stop stretching along the inline axis rather than the block one. */
+  justify-self: start;
+  padding: 0.4rem 0.9rem 0.4rem 0.5rem;
+  border: 1px solid rgb(255 255 255 / 0.22);
+  border-radius: var(--radius-pill);
+  color: var(--white);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.au-hero__pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 4px rgb(213 168 78 / 0.22);
+}
+
+.au-hero__title {
+  max-width: 15ch;
+  color: var(--white);
+  font-size: var(--step-5);
+  line-height: 1.02;
+  letter-spacing: -0.026em;
+}
+
+/* The second line lifts into the live blue: the one place the brief's #1479FF
+   is used at display size, where its contrast is not a text-legibility
+   question. */
+.au-hero__title em {
+  display: block;
+  color: var(--blue);
+  font-style: normal;
+}
+
+.au-hero__lead {
+  max-width: 54ch;
+  color: var(--ink-onDark);
+  font-size: var(--step-1);
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.au-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+/** The tour trigger: a play mark and a word, not a third button. */
+.au-hero__tour {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.5rem 0.4rem;
+  border: 0;
+  background: none;
+  color: var(--white);
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.au-hero__play {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.3rem;
+  height: 2.3rem;
+  border: 1px solid rgb(255 255 255 / 0.35);
+  border-radius: 50%;
+  transition: background 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+
+.au-hero__tour:hover .au-hero__play {
+  background: var(--white);
+  border-color: var(--white);
+  color: var(--navy-900);
+}
+
+/** Three facts along the bottom edge, on the same rule as the scene. */
+.au-hero__facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(1.2rem, 4vw, 3.5rem);
+  margin-top: clamp(1rem, 3vw, 2.5rem);
+  padding-top: 1.4rem;
+  border-top: 1px solid rgb(255 255 255 / 0.16);
+}
+
+.au-hero__fact b {
+  display: block;
+  color: var(--white);
+  font-family: var(--serif);
+  font-size: var(--step-2);
+  font-weight: 600;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.au-hero__fact span {
+  color: var(--ink-onDark-muted);
+  font-size: 0.78rem;
+}
+
+/* Three facts do not fit across a 390px screen, and wrapped into three rows
+   the last one lands under the bottom bar. Two columns, tighter type. */
+@media (max-width: 40rem) {
+  .au-hero__facts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.9rem 1.2rem;
+  }
+
+  .au-hero__fact b {
+    font-size: var(--step-1);
+  }
+
+  .au-hero__fact span {
+    font-size: 0.72rem;
+  }
+}
+
+/* ---------------------------------------------------------- quick access */
+
+/**
+ * “¿Qué necesitas?” — six destinations, immediately under the hero.
+ *
+ * Deliberately the second thing on the page. A prospective family reads the
+ * hero; everybody else scrolls past it, and this is where they land. Six is
+ * the whole set, not a selection: adding a seventh would turn a decision into
+ * a menu.
+ */
+.au-quickaccess {
+  position: relative;
+  z-index: 1;
+  margin-top: calc(var(--section) * -0.5);
+}
+
+.au-quickaccess__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10.5rem), 1fr));
+  gap: 1px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--border);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.au-access {
+  display: grid;
+  gap: 0.55rem;
+  padding: clamp(1.1rem, 2vw, 1.5rem) clamp(0.9rem, 1.6vw, 1.2rem);
+  background: var(--white);
+  color: var(--navy-800);
+  text-decoration: none;
+  transition: background 0.18s var(--ease);
+}
+
+.au-access:hover {
+  background: var(--blue-050);
+  color: var(--blue-deep);
+}
+
+.au-access__icon {
+  width: 26px;
+  height: 26px;
+  color: var(--blue-ink);
+}
+
+.au-access__label {
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.au-access__note {
+  color: var(--ink-muted);
+  font-size: 0.72rem;
+  line-height: 1.35;
+}
+
+/* ------------------------------------------------------- audience switch */
+
+/**
+ * “Soy…” — five audiences, one row of shortcuts.
+ *
+ * The single control that resolves the hardest problem of an institutional
+ * site. It is a real tablist: arrow keys move between the audiences, the
+ * panels are in the HTML before any script runs, and the choice is remembered
+ * in `localStorage` so a parent who comes back is not asked twice.
+ */
+.au-audience {
+  display: grid;
+  gap: clamp(1.2rem, 3vw, 2.4rem);
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr);
+  align-items: start;
+}
+
+.au-audience__tabs {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.au-audience__tab {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--ink-soft);
+  font-family: var(--sans);
+  font-size: var(--step-0);
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s var(--ease), color 0.15s var(--ease);
+}
+
+.au-audience__tab:hover {
+  background: var(--white);
+  color: var(--navy-800);
+}
+
+.au-audience__tab[aria-selected="true"] {
+  border-color: var(--border);
+  background: var(--white);
+  color: var(--navy-800);
+  box-shadow: var(--shadow-sm);
+}
+
+.au-audience__tab[aria-selected="true"]::after {
+  content: "→";
+  color: var(--blue-ink);
+}
+
+.au-audience__panel {
+  display: grid;
+  gap: 1rem;
+}
+
+.au-audience__panel[hidden] {
+  display: none;
+}
+
+.au-audience__lead {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: var(--step-1);
+  font-family: var(--serif);
+}
+
+.au-audience__links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.au-audience__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  color: var(--navy-800);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: border-color 0.15s var(--ease), transform 0.15s var(--ease);
+}
+
+.au-audience__link:hover {
+  border-color: var(--blue-ink);
+  transform: translateX(2px);
+  color: var(--blue-deep);
+}
+
+.au-audience__link::after {
+  content: "→";
+  color: var(--border-strong);
+}
+
+.au-audience__link:hover::after {
+  color: var(--blue-ink);
+}
+
+@media (max-width: 52rem) {
+  .au-audience {
+    grid-template-columns: 1fr;
+  }
+
+  .au-audience__tabs {
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    overflow-x: auto;
+    padding-bottom: 0.4rem;
+    scrollbar-width: thin;
+  }
+
+  .au-audience__tab[aria-selected="true"]::after {
+    content: none;
+  }
+}

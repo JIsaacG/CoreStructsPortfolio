@@ -159,7 +159,7 @@ function renderProject(project) {
                   <p class="project-card__text">${escape(project.description)}</p>
                   <p class="project-card__cta arrow-link">
                     <span class="arrow-link__line" aria-hidden="true"></span>
-                    Explorar
+                    ${escape(project.cta ?? "Explorar")}
                     <span class="arrow-link__arrow" aria-hidden="true">&rarr;</span>
                   </p>
                 </div>

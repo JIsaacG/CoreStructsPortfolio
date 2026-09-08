@@ -26,6 +26,11 @@ const BUNDLES = [
   /* The government portal disagrees with all three: light, square, serif, and
      carrying a statistics interface none of the others need. */
   { entry: join(ROOT, "src", "styles", "cede.css"), output: join(ROOT, "dist", "cede.css") },
+  /* The education portal disagrees with every one of them: ivory rather than
+     white, editorial serif for the institutional voice, and three signed-in
+     product interfaces (student portal, parent portal, virtual campus) that no
+     other bundle has a component for. */
+  { entry: join(ROOT, "src", "styles", "aurea.css"), output: join(ROOT, "dist", "aurea.css") },
   /* The automation demo is a working interface rather than a site: a workflow
      engine, a register and a generated document, and none of the four bundles
      above has a component it could borrow. */

@@ -136,6 +136,7 @@ for (const name of [
   "demo.css",
   "aurelis.css",
   "cede.css",
+  "aurea.css",
   "flujo.css",
   "nexora.css",
   "velora.css",

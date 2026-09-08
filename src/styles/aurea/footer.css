@@ -1,0 +1,190 @@
+/* =============================================================================
+   AUREA — footer
+
+   Wide and useful rather than decorative. Four link columns, the social row,
+   the service row and the fiction notice — which is the last thing on the page
+   because it is the last thing a reader should carry away.
+   ========================================================================== */
+
+.au-footer {
+  background: var(--navy-900);
+  color: var(--ink-onDark-muted);
+}
+
+.au-footer__top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2.2fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  padding-block: clamp(2.5rem, 2rem + 3vw, 4.5rem);
+}
+
+.au-footer__brand .au-logo,
+.au-footer__brand .au-logo__mark {
+  color: var(--white);
+}
+
+.au-footer__brand .au-logo__sub {
+  color: var(--ink-onDark-muted);
+}
+
+.au-footer__pitch {
+  margin: 1.1rem 0 0;
+  max-width: 40ch;
+  font-size: var(--step--1);
+  line-height: 1.6;
+}
+
+.au-footer__contact {
+  margin: 1.1rem 0 0;
+  font-size: 0.8rem;
+  line-height: 1.7;
+}
+
+.au-footer__contact a {
+  color: var(--white);
+}
+
+.au-footer__columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+  gap: clamp(1.2rem, 2.5vw, 2.5rem);
+}
+
+.au-footer__heading {
+  margin: 0 0 0.8rem;
+  color: var(--white);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.au-footer__link {
+  display: block;
+  padding: 0.26rem 0;
+  color: var(--ink-onDark-muted);
+  font-size: 0.84rem;
+  text-decoration: none;
+  transition: color 0.15s var(--ease);
+}
+
+.au-footer__link:hover {
+  color: var(--white);
+}
+
+/* The social row is labels, not links: an invented institution with live
+   social links would be pointing at somebody else's account. */
+.au-footer__social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.4rem;
+  padding: 1.2rem 0;
+  border-top: 1px solid var(--navy-700);
+  font-size: 0.8rem;
+}
+
+.au-footer__social b {
+  color: var(--white);
+  font-weight: 700;
+}
+
+.au-footer__social span {
+  color: var(--ink-onDark-muted);
+}
+
+.au-footer__service {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.6rem;
+  padding: 1.2rem 0;
+  border-top: 1px solid var(--navy-700);
+}
+
+.au-footer__service a {
+  color: var(--ink-onDark-muted);
+  font-size: 0.8rem;
+  text-decoration: none;
+}
+
+.au-footer__service a:hover {
+  color: var(--white);
+  text-decoration: underline;
+}
+
+.au-footer__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2.5rem;
+  margin: 0;
+  padding: 1.2rem 0;
+  border-top: 1px solid var(--navy-700);
+  font-size: 0.76rem;
+}
+
+.au-footer__meta dt {
+  color: var(--ink-onDark-muted);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.au-footer__meta dd {
+  margin: 0.2rem 0 0;
+  color: var(--white);
+}
+
+.au-footer__notice {
+  background: #061422;
+  color: var(--ink-onDark-muted);
+}
+
+.au-footer__notice-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.8rem 2rem;
+  padding-block: 1.2rem;
+  font-size: 0.74rem;
+  line-height: 1.6;
+}
+
+.au-footer__notice p {
+  margin: 0;
+  max-width: 78ch;
+}
+
+/* The portfolio's own line — the one sentence in the footer that is not AUREA
+   speaking. It is the commercial point of the whole demonstration, so it gets
+   a rule and a link rather than being buried in the small print. */
+.au-footer__by {
+  display: grid;
+  gap: 0.5rem;
+  padding-block: 1.6rem;
+  border-top: 1px solid var(--navy-700);
+}
+
+.au-footer__by-label {
+  margin: 0;
+  color: var(--ink-onDark-muted);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.au-footer__by-text {
+  margin: 0;
+  max-width: 62ch;
+  color: var(--white);
+  font-family: var(--serif);
+  font-size: var(--step-1);
+  line-height: 1.45;
+}
+
+@media (max-width: 56rem) {
+  .au-footer__top {
+    grid-template-columns: 1fr;
+  }
+}

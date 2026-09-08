@@ -9,6 +9,8 @@
  * offset  nudges the card down a row so the grid does not march in lockstep
  * reveal  which scroll-entrance variant to use (see motion.css)
  * mockup  key into src/data/mockups.js
+ * cta     overrides the card's "Explorar" label when the demo is a whole
+ *         portal rather than a single page
  */
 
 export const projects = [
@@ -66,8 +68,11 @@ export const projects = [
     category: "Educación",
     title: "Portales educativos",
     description:
-      "Admisiones, preinscripción y gestión académica en un solo flujo, desde el primer clic hasta la inscripción confirmada.",
+      "AUREA: un ecosistema digital que conecta admisiones, oferta académica, información " +
+      "institucional, calendario y servicios para toda la comunidad educativa.",
     mockup: "education",
+    href: "demos/aurea/index.html",
+    cta: "Explorar portal",
     size: "wide",
     reveal: "scale",
   },

@@ -1,0 +1,1373 @@
+/* =============================================================================
+   AUREA — the interactive modules
+
+   Ten tools, each of which a real portal would build against a back end and
+   each of which is here rendered complete at build time and made interactive
+   in the browser: the programme finder, the programme page, the admissions
+   checklist, the scholarship simulator, the tuition calculator, the calendar,
+   the club explorer, the campus tour, the visit form and the filtered
+   catalogues (library, documents, FAQ, directory).
+
+   One rule governs all of them: EVERY RESULT IS IN THE HTML BEFORE ANY SCRIPT
+   RUNS. The filters hide rows; they never fetch them. That is what makes the
+   portal work without JavaScript, print correctly, and be searchable by the
+   browser's own find-in-page.
+   ========================================================================== */
+
+/* -------------------------------------------------------------- filter bar */
+
+.au-filters {
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1rem, 2vw, 1.5rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--white);
+}
+
+.au-filters__row {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.au-filters__legend {
+  color: var(--ink-muted);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.au-filters__search {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0 0.9rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--white);
+}
+
+.au-filters__search:focus-within {
+  border-color: var(--blue-ink);
+  box-shadow: 0 0 0 3px var(--blue-100);
+}
+
+.au-filters__search svg {
+  flex: none;
+  color: var(--ink-muted);
+}
+
+.au-filters__input {
+  flex: 1;
+  min-height: 2.9rem;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: var(--step-0);
+}
+
+.au-filters__input:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+.au-filters__count {
+  color: var(--ink-muted);
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.au-filters__reset {
+  border: 0;
+  background: none;
+  padding: 0;
+  color: var(--blue-ink);
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.au-filters__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  padding-top: 0.4rem;
+  border-top: 1px solid var(--border);
+}
+
+/* ---------------------------------------------------------- programme card */
+
+.au-program {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 0.8rem;
+  height: 100%;
+  padding: clamp(1.1rem, 2vw, 1.5rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--white);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease),
+    transform 0.2s var(--ease);
+}
+
+.au-program:hover {
+  border-color: var(--blue-ink);
+  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+  color: inherit;
+}
+
+.au-program[hidden] {
+  display: none;
+}
+
+.au-program__cover {
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--navy-800);
+}
+
+.au-program__cover svg {
+  width: 100%;
+  height: 100%;
+}
+
+.au-program__level {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--blue-ink);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.au-program__title {
+  margin: 0.15rem 0 0;
+  font-size: var(--step-1);
+  color: var(--navy-800);
+}
+
+.au-program__tagline {
+  margin: 0.4rem 0 0;
+  color: var(--ink-soft);
+  font-family: var(--serif);
+  font-size: var(--step-0);
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+
+.au-program__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.9rem;
+  margin: 0;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--border);
+  color: var(--ink-muted);
+  font-size: 0.74rem;
+}
+
+.au-program__meta b {
+  color: var(--ink-soft);
+  font-weight: 700;
+}
+
+/* ---------------------------------------------------------- programme page */
+
+.au-progpage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 19rem;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: start;
+}
+
+.au-progpage__aside {
+  position: sticky;
+  top: 8rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.au-progpage__box {
+  padding: clamp(1rem, 2vw, 1.4rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--white);
+}
+
+.au-progpage__box--dark {
+  border-color: var(--navy-700);
+  background: var(--navy-800);
+  color: var(--ink-onDark);
+}
+
+.au-progpage__box--dark h2,
+.au-progpage__box--dark h3 {
+  color: var(--white);
+}
+
+.au-facts {
+  display: grid;
+  gap: 0;
+  margin: 0;
+}
+
+.au-facts__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: var(--step--1);
+}
+
+.au-facts__row:last-child {
+  border-bottom: 0;
+}
+
+.au-facts__row dt {
+  color: var(--ink-muted);
+}
+
+.au-facts__row dd {
+  margin: 0;
+  color: var(--navy-800);
+  font-weight: 700;
+  text-align: right;
+}
+
+.au-progpage__box--dark .au-facts__row {
+  border-bottom-color: var(--navy-600);
+}
+
+.au-progpage__box--dark .au-facts__row dt { color: var(--ink-onDark-muted); }
+.au-progpage__box--dark .au-facts__row dd { color: var(--white); }
+
+@media (max-width: 62rem) {
+  .au-progpage {
+    grid-template-columns: 1fr;
+  }
+
+  .au-progpage__aside {
+    position: static;
+    order: -1;
+  }
+}
+
+/* The plan of study: one term per block, courses as rows. */
+.au-plan {
+  display: grid;
+  gap: clamp(0.8rem, 1.6vw, 1.2rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+}
+
+.au-plan__term {
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--white);
+}
+
+.au-plan__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin-bottom: 0.7rem;
+  padding-bottom: 0.55rem;
+  border-bottom: 2px solid var(--navy-800);
+}
+
+.au-plan__term-name {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.au-plan__year {
+  color: var(--ink-muted);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.au-plan__courses {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.au-plan__course {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.8rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px dashed var(--border);
+  font-size: 0.83rem;
+}
+
+.au-plan__course:last-child {
+  border-bottom: 0;
+}
+
+.au-plan__credits {
+  flex: none;
+  color: var(--ink-muted);
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------------------------------- checklist */
+
+/**
+ * The admissions tracker.
+ *
+ * A real progress bar over real checkboxes: the percentage is computed from
+ * what is ticked, announced to assistive technology through a live region,
+ * and persisted so a family that leaves and comes back finds its place.
+ */
+.au-checklist {
+  display: grid;
+  gap: 1.2rem;
+  padding: clamp(1.2rem, 2.4vw, 2rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--white);
+}
+
+.au-checklist__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+
+.au-checklist__pct {
+  color: var(--blue-ink);
+  font-family: var(--serif);
+  font-size: var(--step-2);
+  font-weight: 600;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.au-meter {
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-sunken);
+  overflow: hidden;
+}
+
+.au-meter__fill {
+  height: 100%;
+  width: 0%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--blue-ink), var(--blue));
+  transition: width 0.45s var(--ease-out);
+}
+
+.au-checklist__items {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.au-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+}
+
+.au-check:last-child {
+  border-bottom: 0;
+}
+
+.au-check input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.au-check__box {
+  position: relative;
+  flex: none;
+  width: 1.35rem;
+  height: 1.35rem;
+  margin-top: 0.15rem;
+  border: 1.5px solid var(--border-strong);
+  border-radius: 50%;
+  transition: background 0.18s var(--ease), border-color 0.18s var(--ease);
+}
+
+.au-check__box::after {
+  content: "";
+  position: absolute;
+  left: 0.4rem;
+  top: 0.18rem;
+  width: 0.36rem;
+  height: 0.65rem;
+  border: solid var(--white);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) scale(0.4);
+  opacity: 0;
+  transition: transform 0.18s var(--ease-out), opacity 0.18s var(--ease);
+}
+
+.au-check input:checked + .au-check__box {
+  border-color: var(--ok);
+  background: var(--ok);
+}
+
+.au-check input:checked + .au-check__box::after {
+  transform: rotate(45deg) scale(1);
+  opacity: 1;
+}
+
+.au-check input:focus-visible + .au-check__box {
+  box-shadow: var(--ring);
+}
+
+.au-check__label {
+  display: grid;
+  gap: 0.1rem;
+}
+
+.au-check__label b {
+  color: var(--navy-800);
+  font-size: var(--step-0);
+  font-weight: 700;
+}
+
+.au-check input:checked ~ .au-check__label b {
+  color: var(--ink-muted);
+  text-decoration: line-through;
+}
+
+.au-check__label span {
+  color: var(--ink-muted);
+  font-size: 0.78rem;
+}
+
+/* ------------------------------------------------------------- date strip */
+
+.au-dates {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--border);
+}
+
+.au-date {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr) auto;
+  gap: 0.4rem 1.4rem;
+  align-items: baseline;
+  padding: clamp(0.9rem, 1.6vw, 1.3rem) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.au-date__chip {
+  display: grid;
+  justify-items: center;
+  gap: 0.05rem;
+  padding: 0.45rem 0.3rem;
+  border-radius: var(--radius-sm);
+  background: var(--navy-800);
+  color: var(--white);
+}
+
+.au-date__day {
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-weight: 600;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.au-date__month {
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.au-date__title {
+  margin: 0;
+  font-size: var(--step-0);
+}
+
+.au-date__text {
+  grid-column: 2 / -1;
+  margin: 0.25rem 0 0;
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+  max-width: 68ch;
+}
+
+@media (max-width: 40rem) {
+  .au-date {
+    grid-template-columns: 4.4rem minmax(0, 1fr);
+  }
+
+  .au-date__text {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ---------------------------------------------------------- scholarships */
+
+.au-scholarship {
+  display: grid;
+  gap: 0.8rem;
+  height: 100%;
+  padding: clamp(1.1rem, 2vw, 1.6rem);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--gold);
+  border-radius: var(--radius);
+  background: var(--white);
+}
+
+.au-scholarship__benefit {
+  color: var(--gold-ink);
+  font-family: var(--serif);
+  font-size: var(--step-2);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.au-scholarship__reqs {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+}
+
+.au-scholarship__reqs li {
+  position: relative;
+  padding-left: 1.1rem;
+}
+
+.au-scholarship__reqs li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+.au-scholarship[data-match="yes"] {
+  border-color: var(--ok);
+  border-top-color: var(--ok);
+  box-shadow: 0 0 0 3px var(--ok-100);
+}
+
+.au-scholarship[data-match="no"] {
+  opacity: 0.48;
+}
+
+/* -------------------------------------------------------------- calendar */
+
+.au-cal {
+  display: grid;
+  gap: 1.2rem;
+}
+
+.au-cal__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+.au-cal__nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.au-cal__month {
+  margin: 0;
+  min-width: 11rem;
+  color: var(--navy-800);
+  font-family: var(--serif);
+  font-size: var(--step-2);
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.au-cal__views {
+  display: inline-flex;
+  padding: 0.2rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--white);
+}
+
+.au-cal__view {
+  padding: 0.4rem 1rem;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: none;
+  color: var(--ink-muted);
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.au-cal__view[aria-pressed="true"] {
+  background: var(--navy-800);
+  color: var(--white);
+}
+
+/* The month grid. Seven columns, always — a calendar that reflows to three on
+   a phone stops being a calendar, so on a narrow viewport the grid scrolls
+   inside its frame instead and the list view is offered as the default. */
+.au-cal__grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(6.4rem, 1fr));
+  gap: 1px;
+  min-width: 45rem;
+  border: 1px solid var(--border);
+  background: var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.au-cal__dow {
+  padding: 0.6rem 0.7rem;
+  background: var(--surface-sunken);
+  color: var(--ink-muted);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.au-cal__day {
+  display: grid;
+  gap: 0.3rem;
+  align-content: start;
+  min-height: 6.5rem;
+  padding: 0.5rem 0.55rem;
+  background: var(--white);
+}
+
+.au-cal__day--out {
+  background: var(--surface-sunken);
+  color: var(--ink-muted);
+}
+
+.au-cal__day--today {
+  box-shadow: inset 0 0 0 2px var(--blue);
+}
+
+.au-cal__num {
+  color: var(--ink-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.au-cal__event {
+  display: block;
+  padding: 0.28rem 0.4rem;
+  border-left: 3px solid var(--blue);
+  border-radius: 3px;
+  background: var(--blue-050);
+  color: var(--navy-800);
+  font-size: 0.7rem;
+  line-height: 1.25;
+  text-decoration: none;
+  text-align: left;
+  border-top: 0;
+  border-right: 0;
+  border-bottom: 0;
+  cursor: pointer;
+  width: 100%;
+}
+
+.au-cal__event:hover {
+  background: var(--blue-100);
+}
+
+.au-cal__event[hidden] {
+  display: none;
+}
+
+/* One accent per category, so the month reads at a glance. */
+.au-cal__event[data-cat="academico"] { border-left-color: var(--cal-academico); background: var(--blue-050); }
+.au-cal__event[data-cat="admisiones"] { border-left-color: var(--cal-admisiones); background: var(--gold-100); }
+.au-cal__event[data-cat="deportes"] { border-left-color: var(--cal-deportes); background: var(--ok-100); }
+.au-cal__event[data-cat="arte"] { border-left-color: var(--cal-arte); background: #f2ecfa; }
+.au-cal__event[data-cat="institucional"] { border-left-color: var(--cal-institucional); background: var(--navy-100); }
+.au-cal__event[data-cat="padres"] { border-left-color: var(--cal-padres); background: var(--warn-100); }
+
+.au-cal__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.2rem;
+  font-size: 0.74rem;
+  color: var(--ink-muted);
+}
+
+.au-cal__key {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.au-cal__swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+
+/* The event list — the default on a phone and the accessible twin of the grid. */
+.au-cal__list {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--border);
+}
+
+.au-event {
+  display: grid;
+  grid-template-columns: 4.8rem minmax(0, 1fr) auto;
+  gap: 0.4rem 1.2rem;
+  align-items: start;
+  padding: clamp(0.9rem, 1.6vw, 1.2rem) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.au-event[hidden] {
+  display: none;
+}
+
+.au-event__meta {
+  grid-column: 2 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 0.9rem;
+  color: var(--ink-muted);
+  font-size: 0.76rem;
+}
+
+.au-event__text {
+  grid-column: 2 / -1;
+  margin: 0.3rem 0 0;
+  max-width: 70ch;
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+}
+
+.au-event__actions {
+  grid-column: 2 / -1;
+  margin-top: 0.6rem;
+}
+
+@media (max-width: 44rem) {
+  .au-event {
+    grid-template-columns: 4rem minmax(0, 1fr);
+  }
+}
+
+/** The export menu. A real .ics, built in the browser. */
+.au-export {
+  position: relative;
+  display: inline-block;
+}
+
+.au-export__menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.4rem);
+  z-index: 5;
+  display: grid;
+  min-width: 13rem;
+  padding: 0.35rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+
+.au-export__menu[hidden] {
+  display: none;
+}
+
+.au-export__item {
+  padding: 0.55rem 0.7rem;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.au-export__item:hover {
+  background: var(--blue-050);
+  color: var(--blue-deep);
+}
+
+/* ------------------------------------------------------------ club cards */
+
+.au-club {
+  display: grid;
+  gap: 0.55rem;
+  align-content: start;
+  height: 100%;
+  padding: clamp(1rem, 1.8vw, 1.4rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--white);
+}
+
+.au-club[hidden] {
+  display: none;
+}
+
+.au-club__name {
+  margin: 0;
+  font-size: var(--step-0);
+}
+
+.au-club__meta {
+  display: grid;
+  gap: 0.2rem;
+  color: var(--ink-muted);
+  font-size: 0.74rem;
+}
+
+.au-club__members {
+  color: var(--blue-ink);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* -------------------------------------------------------------- the tour */
+
+/**
+ * The campus tour: a drawn plan with eight hotspots.
+ *
+ * The hotspots are real buttons positioned in percentages, so they follow the
+ * drawing at any width and are reachable with a keyboard in reading order.
+ * Selecting one swaps the panel beside the plan; on a phone the panel moves
+ * under it.
+ */
+.au-tour {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: clamp(1.2rem, 3vw, 2.4rem);
+  align-items: start;
+}
+
+.au-tour__plan {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--navy-800);
+}
+
+.au-tour__plan svg {
+  width: 100%;
+  height: auto;
+}
+
+.au-tour__spot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.7rem 0.3rem 0.35rem;
+  border: 1px solid rgb(255 255 255 / 0.3);
+  border-radius: var(--radius-pill);
+  background: rgb(10 28 46 / 0.82);
+  color: var(--white);
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.18s var(--ease), border-color 0.18s var(--ease);
+}
+
+.au-tour__spot::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 3px rgb(213 168 78 / 0.28);
+}
+
+.au-tour__spot:hover,
+.au-tour__spot[aria-pressed="true"] {
+  border-color: var(--blue);
+  background: var(--blue-ink);
+}
+
+.au-tour__panel {
+  display: grid;
+  gap: 0.8rem;
+  padding: clamp(1rem, 2vw, 1.5rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--white);
+}
+
+.au-tour__cover {
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--navy-800);
+}
+
+.au-tour__cover svg {
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 56rem) {
+  .au-tour {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* On a small screen the hotspot labels collapse to their dots, or eight
+   pills cover the plan they are meant to annotate. */
+@media (max-width: 44rem) {
+  .au-tour__spot {
+    padding: 0.35rem;
+  }
+
+  .au-tour__spot span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+}
+
+/* ----------------------------------------------------------- news cards */
+
+.au-news {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  gap: 0.65rem;
+  height: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--white);
+  overflow: hidden;
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease),
+    transform 0.2s var(--ease);
+}
+
+.au-news:hover {
+  border-color: var(--blue-ink);
+  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+  color: inherit;
+}
+
+.au-news[hidden] {
+  display: none;
+}
+
+.au-news__cover {
+  aspect-ratio: 16 / 9;
+  background: var(--navy-800);
+}
+
+.au-news__cover svg {
+  width: 100%;
+  height: 100%;
+}
+
+.au-news__body {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: 0.5rem;
+  padding: 0 clamp(1rem, 1.8vw, 1.3rem) clamp(1rem, 1.8vw, 1.3rem);
+}
+
+.au-news__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 0.9rem;
+  color: var(--ink-muted);
+  font-size: 0.72rem;
+}
+
+.au-news__title {
+  margin: 0;
+  font-size: var(--step-1);
+  color: var(--navy-800);
+}
+
+.au-news__summary {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+  line-height: 1.55;
+}
+
+/** The featured article: cover on one side, text on the other. */
+.au-news--wide {
+  grid-template-rows: none;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  align-items: stretch;
+}
+
+.au-news--wide .au-news__cover {
+  aspect-ratio: auto;
+  height: 100%;
+  min-height: 16rem;
+}
+
+.au-news--wide .au-news__body {
+  align-content: center;
+  padding: clamp(1.2rem, 2.4vw, 2.2rem);
+}
+
+@media (max-width: 48rem) {
+  .au-news--wide {
+    grid-template-columns: 1fr;
+  }
+
+  .au-news--wide .au-news__cover {
+    aspect-ratio: 16 / 9;
+    min-height: 0;
+  }
+}
+
+/* --------------------------------------------------------- announcements */
+
+.au-ann {
+  display: grid;
+  gap: 0.4rem;
+  padding: clamp(0.9rem, 1.8vw, 1.3rem);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--border-strong);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: var(--white);
+}
+
+.au-ann[hidden] {
+  display: none;
+}
+
+.au-ann--urgente { border-left-color: var(--alert); }
+.au-ann--importante { border-left-color: var(--warn); }
+.au-ann--informativo { border-left-color: var(--blue); }
+
+.au-ann__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--ink-muted);
+  font-size: 0.72rem;
+}
+
+.au-ann__title {
+  margin: 0;
+  font-size: var(--step-0);
+}
+
+.au-ann__text {
+  margin: 0;
+  max-width: 76ch;
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+  line-height: 1.55;
+}
+
+/* --------------------------------------------------------------- people */
+
+.au-person {
+  display: grid;
+  grid-template-columns: 3.6rem minmax(0, 1fr);
+  gap: 0.4rem 1rem;
+  align-items: start;
+  padding: clamp(0.9rem, 1.8vw, 1.3rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--white);
+  height: 100%;
+  align-content: start;
+}
+
+.au-person[hidden] {
+  display: none;
+}
+
+/**
+ * The portrait, drawn.
+ *
+ * There is no photograph of an invented professor that would not be a
+ * photograph of a real person used without their consent. So the directory
+ * shows initials on the institutional navy — which is also, incidentally, what
+ * a real directory shows for the third of its staff who never sent a photo.
+ */
+.au-person__mark {
+  display: grid;
+  place-items: center;
+  width: 3.6rem;
+  height: 3.6rem;
+  border-radius: 50%;
+  background: var(--navy-800);
+  color: var(--white);
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.au-person__name {
+  margin: 0;
+  font-size: var(--step-0);
+}
+
+.au-person__title {
+  color: var(--ink-muted);
+  font-size: 0.76rem;
+}
+
+.au-person__body {
+  grid-column: 2;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.au-person__detail {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--border);
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+}
+
+.au-person__detail[hidden] {
+  display: none;
+}
+
+.au-person__detail h4 {
+  margin: 0 0 0.2rem;
+  color: var(--navy-800);
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.au-person__detail ul {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+/* ---------------------------------------------------------- office cards */
+
+.au-office {
+  display: grid;
+  gap: 0.45rem;
+  align-content: start;
+  height: 100%;
+  padding: clamp(1rem, 1.8vw, 1.4rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--white);
+}
+
+.au-office[hidden] {
+  display: none;
+}
+
+.au-office__name {
+  margin: 0;
+  font-size: var(--step-0);
+}
+
+.au-office__lead {
+  color: var(--ink-muted);
+  font-size: 0.76rem;
+}
+
+.au-office__does {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+  line-height: 1.5;
+}
+
+.au-office__contact {
+  display: grid;
+  gap: 0.2rem;
+  margin: 0.3rem 0 0;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.78rem;
+}
+
+.au-office__contact a {
+  word-break: break-word;
+}
+
+.au-office__contact span {
+  color: var(--ink-muted);
+}
+
+/* --------------------------------------------------------- the assistant */
+
+/**
+ * “¿Tienes una pregunta?” — six buttons, six written answers.
+ *
+ * There is no text input, and that is deliberate: an input is a promise of
+ * understanding that a lookup table cannot keep. Every answer ends in a link
+ * to the page that holds the full version, so the panel is a shortcut and
+ * never a substitute.
+ */
+.au-assistant {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(1.2rem, 3vw, 2.4rem);
+  align-items: start;
+  padding: clamp(1.2rem, 2.4vw, 2rem);
+  border: 1px solid var(--border-blue);
+  border-radius: var(--radius-lg);
+  background: var(--blue-050);
+}
+
+.au-assistant__qs {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.au-assistant__q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--border-blue);
+  border-radius: var(--radius-pill);
+  background: var(--white);
+  color: var(--navy-800);
+  font-family: var(--sans);
+  font-size: 0.86rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s var(--ease), background 0.15s var(--ease);
+}
+
+.au-assistant__q:hover {
+  border-color: var(--blue-ink);
+}
+
+.au-assistant__q[aria-pressed="true"] {
+  border-color: var(--blue-ink);
+  background: var(--blue-ink);
+  color: var(--white);
+}
+
+.au-assistant__answer {
+  display: grid;
+  gap: 0.9rem;
+  align-content: start;
+  min-height: 9rem;
+  padding: clamp(1rem, 2vw, 1.5rem);
+  border-radius: var(--radius);
+  background: var(--white);
+  border: 1px solid var(--border-blue);
+}
+
+.au-assistant__answer p {
+  margin: 0;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+@media (max-width: 52rem) {
+  .au-assistant {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ------------------------------------------------------------------- map */
+
+.au-map {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: clamp(1.2rem, 3vw, 2.4rem);
+  align-items: start;
+}
+
+.au-map__frame {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--navy-800);
+}
+
+.au-map__frame svg {
+  width: 100%;
+  height: auto;
+}
+
+.au-map__note {
+  padding: 0.6rem 0.9rem;
+  background: var(--surface-sunken);
+  color: var(--ink-muted);
+  font-size: 0.74rem;
+}
+
+@media (max-width: 56rem) {
+  .au-map {
+    grid-template-columns: 1fr;
+  }
+}

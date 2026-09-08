@@ -1,0 +1,154 @@
+/* =============================================================================
+   AUREA — design tokens
+
+   One institutional navy, one live blue, one restrained gold, and paper.
+   Nothing outside this file may write a colour literal.
+
+   The brief gives five brand colours; four of them are surfaces and only one
+   of them — the live blue — is ever asked to carry text. #1479FF reaches
+   3.3:1 on white, which is fine for a 4px rule and wrong for a link, so the
+   blue exists twice: `--blue` for marks and grounds, `--blue-ink` for
+   anything a reader has to read. Same rule for the gold. Keeping both members
+   of each pair here, named for their job, is what stops the distinction from
+   being re-litigated in every component.
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  /* --- Institutional navy ------------------------------------------------ */
+  --navy-900: #0a1c2e;   /* deepest ground: hero, footer                     */
+  --navy-800: #102a43;   /* THE institutional colour (brief)                 */
+  --navy-700: #1b3e5e;   /* raised surfaces on dark                          */
+  --navy-600: #2c5580;   /* rules and dividers on dark                       */
+  --navy-200: #c3d6e8;   /* rules on tinted light                            */
+  --navy-100: #e8eff6;   /* tinted surface                                   */
+
+  /* --- Live blue ---------------------------------------------------------- */
+  --blue: #1479ff;       /* the brief's blue: marks, rules, grounds          */
+  --blue-ink: #0a5fd0;   /* the same blue, readable: links, small text       */
+  --blue-deep: #084aa3;  /* hover, pressed, text on very light tints         */
+  --blue-100: #e6f0ff;   /* selected rows, chips, hover surfaces             */
+  --blue-050: #f2f7ff;   /* the faintest tint that is still visible          */
+
+  /* --- Gold, used sparingly ----------------------------------------------- */
+  --gold: #d5a84e;       /* the brief's gold: rules, marks, never text       */
+  --gold-ink: #7d5a12;   /* the readable member of the pair                  */
+  --gold-100: #faf3e3;   /* the tint behind an award or a highlight          */
+
+  /* --- Paper and ink ------------------------------------------------------ */
+  --white: #ffffff;
+  --ivory: #f7f6f2;      /* the brief's marfil: the page ground              */
+  --surface: var(--white);
+  --surface-sunken: #efeeea;
+  --border: #e0ded7;
+  --border-strong: #c8c5bb;
+  --border-blue: #cfe0f6;
+  --carbon: #171717;     /* the brief's carbon                               */
+  --ink: #1c2530;        /* body and headings                                */
+  --ink-soft: #3f4a58;
+  --ink-muted: #616c7a;  /* secondary text — 4.9:1 on --ivory                */
+  --ink-onDark: #f2f5f9;
+  --ink-onDark-muted: #a9bccf; /* 5.2:1 on --navy-800                        */
+
+  /* --- Status ------------------------------------------------------------- */
+  --ok: #1c7a4a;
+  --ok-100: #e4f4ec;
+  --warn: #9a5b06;
+  --warn-100: #fbefdf;
+  --alert: #b3261e;
+  --alert-100: #fbe9e8;
+  --info: var(--blue-ink);
+  --info-100: var(--blue-100);
+
+  /* --- Calendar categories ------------------------------------------------
+     Six accents for the six kinds of event. They are declared here rather than
+     inside the calendar component because the legend and the marks have to
+     agree exactly, and a legend whose swatch is a shade off the thing it
+     labels is worse than no legend. Five are drawn from the palette above; the
+     violet exists only here, because arts and culture had nothing left to
+     borrow that was not already taken by a category next to it. */
+  --cal-academico: var(--blue);
+  --cal-admisiones: var(--gold);
+  --cal-deportes: var(--ok);
+  --cal-arte: #7d4bbd;
+  --cal-institucional: var(--navy-800);
+  --cal-padres: var(--warn);
+
+  /* --- Drawn imagery ------------------------------------------------------
+     AUREA cannot photograph itself, so the pictures are drawn (see
+     `aurea/art.css`). The plates use these three and nothing else: two tones
+     of the ground they sit on, and the one accent that survives both. */
+  --art-ink: #16324c;
+  --art-line: #7fa3c4;
+  --art-accent: var(--blue);
+  --art-gold: var(--gold);
+
+  /* --- Type --------------------------------------------------------------- */
+  --sans: "Manrope", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+
+  /* A single ratio drives the display sizes. Changing it rescales every
+     heading in proportion instead of nudging nine clamps. */
+  --step--1: clamp(0.82rem, 0.79rem + 0.14vw, 0.9rem);
+  --step-0: clamp(0.98rem, 0.95rem + 0.16vw, 1.06rem);
+  --step-1: clamp(1.12rem, 1.05rem + 0.34vw, 1.32rem);
+  --step-2: clamp(1.32rem, 1.18rem + 0.66vw, 1.72rem);
+  --step-3: clamp(1.6rem, 1.32rem + 1.3vw, 2.4rem);
+  --step-4: clamp(1.95rem, 1.44rem + 2.4vw, 3.4rem);
+  --step-5: clamp(2.4rem, 1.5rem + 4.2vw, 4.8rem);
+
+  /* --- Space and shape ---------------------------------------------------- */
+  --shell: 1240px;
+  --shell-narrow: 820px;
+  --gutter: clamp(1.1rem, 0.7rem + 2vw, 2.5rem);
+  --section: clamp(3.5rem, 2.4rem + 4.4vw, 6.5rem);
+
+  --radius-sm: 6px;
+  --radius: 12px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+
+  /* Shadows are the one place an institutional site drifts into SaaS. Two
+     levels, both shallow, both cool rather than neutral so they read as paper
+     rather than as glass. */
+  --shadow-sm: 0 1px 2px rgb(16 42 67 / 0.06), 0 2px 8px rgb(16 42 67 / 0.05);
+  --shadow: 0 2px 4px rgb(16 42 67 / 0.06), 0 12px 32px rgb(16 42 67 / 0.09);
+  --shadow-lift: 0 4px 8px rgb(16 42 67 / 0.08), 0 24px 56px rgb(16 42 67 / 0.14);
+
+  --ring: 0 0 0 3px var(--white), 0 0 0 6px var(--blue-ink);
+  --ring-dark: 0 0 0 3px var(--navy-900), 0 0 0 6px var(--blue);
+
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Layer order, written once. A mega panel must clear the sticky header, the
+     mobile bar must clear the page, and the search overlay must clear both. */
+  --z-bar: 40;
+  --z-header: 50;
+  --z-mega: 60;
+  --z-panel: 70;
+  --z-overlay: 80;
+  --z-badge: 90;
+}
+
+/* -----------------------------------------------------------------------------
+   Forced colours
+
+   Windows high-contrast replaces the palette wholesale, which is correct for
+   text and destroys the drawn plates: every fill becomes `Canvas` and the
+   pictures turn into empty rectangles. The plates opt out of the substitution
+   and keep their own two tones; everything else takes the system palette.
+   -------------------------------------------------------------------------- */
+
+@media (forced-colors: active) {
+  .au-art {
+    forced-color-adjust: none;
+  }
+
+  .au-btn,
+  .au-chip,
+  .au-card {
+    border: 1px solid ButtonText;
+  }
+}

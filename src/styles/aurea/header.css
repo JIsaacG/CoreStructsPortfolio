@@ -1,0 +1,738 @@
+/* =============================================================================
+   AUREA — header, navigation and search
+
+   Three bands on a wide viewport — shortcuts, identity, sections — collapsing
+   to one band plus a task-oriented menu and a bottom bar on a phone.
+
+   The collapse is a restructure, not a shrink. A desktop mega menu holds
+   thirty-eight links across five panels; the same thirty-eight links on a
+   phone would be four screens of scrolling, so the phone gets the five things
+   a phone visit is for in a fixed bar at the bottom, and the full site map
+   behind one disclosure per section in the menu.
+   ========================================================================== */
+
+.au-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+}
+
+/* ------------------------------------------------------------------- band 1 */
+
+.au-topbar {
+  background: var(--navy-900);
+  color: var(--ink-onDark-muted);
+  font-size: 0.76rem;
+}
+
+.au-topbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  min-height: 2.4rem;
+}
+
+.au-topbar__notice {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  letter-spacing: 0.04em;
+}
+
+.au-topbar__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+.au-quick {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.au-quick__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.45rem 0.6rem;
+  color: var(--ink-onDark-muted);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.15s var(--ease);
+}
+
+.au-quick__link:hover {
+  color: var(--white);
+}
+
+.au-quick__link--out {
+  color: var(--white);
+}
+
+.au-quick__out {
+  font-size: 0.9em;
+}
+
+@media (max-width: 64rem) {
+  .au-topbar {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------------- band 2 */
+
+.au-identity__inner {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 2vw, 2rem);
+  min-height: 4.6rem;
+}
+
+.au-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: var(--navy-800);
+  text-decoration: none;
+  flex: none;
+}
+
+.au-logo__mark {
+  width: 40px;
+  height: 40px;
+  flex: none;
+  color: var(--navy-800);
+}
+
+.au-logo__type {
+  display: grid;
+  gap: 0.12rem;
+}
+
+.au-logo__name {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.06em;
+}
+
+.au-logo__sub {
+  color: var(--ink-muted);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.au-identity__end {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+.au-iconbtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-width: 2.7rem;
+  min-height: 2.7rem;
+  padding: 0 0.7rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--white);
+  color: var(--navy-800);
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 0.15s var(--ease), background 0.15s var(--ease);
+}
+
+.au-iconbtn:hover {
+  border-color: var(--navy-800);
+  background: var(--navy-100);
+}
+
+.au-burger {
+  display: none;
+}
+
+@media (max-width: 64rem) {
+  .au-identity__inner {
+    min-height: 3.9rem;
+  }
+
+  .au-logo__mark {
+    width: 34px;
+    height: 34px;
+  }
+
+  .au-logo__name {
+    font-size: 1.25rem;
+  }
+
+  .au-burger {
+    display: inline-flex;
+  }
+
+  /* Two class selectors, because `.au-btn { display: inline-flex }` lives in a
+     later stylesheet and would otherwise win the tie on source order — which
+     is how the call to action survived on a 390px header and pushed the menu
+     button off the edge. */
+  .au-identity .au-identity__cta {
+    display: none;
+  }
+}
+
+/* At 390px — the width of the most common phone — the wordmark, "Buscar" and
+   "Menú" together are about eight pixels wider than the shell, and the menu
+   button loses its right edge. The search control drops its word; the icon
+   plus its `aria-label` say the same thing in a third of the space. */
+@media (max-width: 30rem) {
+  .au-iconbtn[data-search-toggle] span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .au-iconbtn[data-search-toggle] {
+    min-width: 2.7rem;
+    padding: 0;
+  }
+}
+
+/* ------------------------------------------------------------------- band 3 */
+
+.au-navband {
+  position: relative;
+  border-top: 1px solid var(--border);
+  background: var(--white);
+}
+
+.au-navband__inner {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.au-nav__list {
+  display: flex;
+  align-items: stretch;
+  gap: 0.15rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.au-nav__item {
+  display: flex;
+  align-items: stretch;
+}
+
+.au-nav__link {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.85rem 0.85rem;
+  color: var(--navy-800);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s var(--ease), border-color 0.15s var(--ease);
+}
+
+.au-nav__link:hover {
+  color: var(--blue-ink);
+  border-bottom-color: var(--blue);
+}
+
+.au-nav__item[aria-current="true"] .au-nav__link {
+  border-bottom-color: var(--navy-800);
+}
+
+.au-nav__disc {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 0.5rem 0 0;
+  border: 0;
+  background: none;
+  color: var(--ink-muted);
+  cursor: pointer;
+}
+
+.au-nav__disc:hover {
+  color: var(--blue-ink);
+}
+
+.au-nav__caret {
+  transition: transform 0.2s var(--ease);
+}
+
+.au-nav__disc[aria-expanded="true"] .au-nav__caret {
+  transform: rotate(180deg);
+}
+
+.au-navband__end {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+@media (max-width: 64rem) {
+  .au-navband {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------- mega panels */
+
+.au-mega {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: var(--z-mega);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+
+.au-mega[hidden] {
+  display: none;
+}
+
+.au-mega__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) repeat(3, minmax(0, 1fr)) minmax(0, 0.95fr);
+  gap: clamp(1.2rem, 2.5vw, 2.8rem);
+  width: min(100% - var(--gutter) * 2, var(--shell));
+  margin-inline: auto;
+  padding-block: clamp(1.5rem, 3vw, 2.6rem);
+}
+
+.au-mega__title {
+  margin: 0 0 0.4rem;
+  color: var(--navy-800);
+  font-family: var(--serif);
+  font-size: var(--step-1);
+  font-weight: 600;
+}
+
+.au-mega__summary {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.au-mega__heading {
+  margin: 0 0 0.65rem;
+  color: var(--ink-muted);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.au-mega__link {
+  display: block;
+  padding: 0.32rem 0;
+  color: var(--ink);
+  font-size: 0.86rem;
+  line-height: 1.4;
+  text-decoration: none;
+  transition: color 0.14s var(--ease), padding-left 0.16s var(--ease);
+}
+
+.au-mega__link:hover {
+  color: var(--blue-ink);
+  padding-left: 0.3rem;
+}
+
+.au-mega__feature {
+  padding: clamp(0.9rem, 1.6vw, 1.3rem);
+  border-radius: var(--radius);
+  background: var(--navy-800);
+  color: var(--ink-onDark);
+}
+
+.au-mega__feature-title {
+  margin: 0 0 0.4rem;
+  color: var(--white);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.au-mega__feature-text {
+  margin: 0 0 0.9rem;
+  color: var(--ink-onDark-muted);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.au-mega__feature .au-link {
+  color: var(--blue);
+}
+
+/* ------------------------------------------------------------ mobile panel */
+
+.au-panel {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-panel);
+  display: grid;
+  grid-template-rows: auto 1fr;
+  background: var(--white);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  transform: translateY(-100%);
+  visibility: hidden;
+  transition: transform 0.3s var(--ease-out), visibility 0s linear 0.3s;
+}
+
+.au-panel[data-open] {
+  transform: translateY(0);
+  visibility: visible;
+  transition: transform 0.3s var(--ease-out), visibility 0s;
+}
+
+.au-panel__top {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem var(--gutter);
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+}
+
+.au-panel__body {
+  padding: 0 var(--gutter) 6rem;
+}
+
+.au-panel__close {
+  min-height: 2.6rem;
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  background: none;
+  color: var(--navy-800);
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/**
+ * The phone menu leads with tasks, not with the organigram.
+ *
+ * The first thing in it is the audience switch and the six shortcuts, because
+ * a phone visit is almost always one of them. The section tree is underneath,
+ * collapsed, for the visit that is not.
+ */
+.au-panel__tasks {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem;
+  padding: 1.2rem 0;
+}
+
+.au-panel__task {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.85rem 0.95rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-sunken);
+  color: var(--navy-800);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.au-panel__task span {
+  color: var(--ink-muted);
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+.au-panel__group {
+  border-top: 1px solid var(--border);
+}
+
+.au-panel__row {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.au-panel__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex: 1;
+  padding: 1rem 0;
+  color: var(--navy-800);
+  font-size: 1.02rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.au-panel__link b {
+  color: var(--border-strong);
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.au-panel__disc {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.8rem;
+  border: 0;
+  background: none;
+  color: var(--ink-muted);
+  cursor: pointer;
+}
+
+.au-panel__disc[aria-expanded="true"] .au-nav__caret {
+  transform: rotate(180deg);
+}
+
+.au-panel__sub {
+  display: grid;
+  gap: 0.1rem;
+  padding: 0 0 1rem 0.4rem;
+}
+
+.au-panel__sub[hidden] {
+  display: none;
+}
+
+.au-panel__sub a {
+  padding: 0.5rem 0;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.au-panel__sub a:hover {
+  color: var(--blue-ink);
+}
+
+.au-panel__actions {
+  display: grid;
+  gap: 0.6rem;
+  padding: 1.4rem 0 0;
+  border-top: 1px solid var(--border);
+}
+
+/* -------------------------------------------------------- mobile bottom bar */
+
+/**
+ * Five destinations, fixed to the bottom edge.
+ *
+ * This is what makes the portal feel like an application on a phone. It is
+ * hidden above 60rem, where the header already has everything, and it hides
+ * itself while the menu or the search overlay is open so it never sits on top
+ * of them.
+ */
+.au-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--z-bar);
+  display: none;
+  grid-template-columns: repeat(5, 1fr);
+  border-top: 1px solid var(--border);
+  background: rgb(255 255 255 / 0.96);
+  backdrop-filter: blur(10px);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.au-bar__link {
+  display: grid;
+  justify-items: center;
+  gap: 0.15rem;
+  padding: 0.55rem 0.25rem 0.5rem;
+  color: var(--ink-muted);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  transition: color 0.15s var(--ease);
+}
+
+.au-bar__link:hover,
+.au-bar__link[aria-current="page"] {
+  color: var(--blue-ink);
+}
+
+.au-bar__icon {
+  width: 22px;
+  height: 22px;
+}
+
+@media (max-width: 60rem) {
+  .au-bar {
+    display: grid;
+  }
+
+  body {
+    padding-bottom: calc(3.6rem + env(safe-area-inset-bottom));
+  }
+}
+
+.au-bar[data-hidden] {
+  display: none;
+}
+
+/* ---------------------------------------------------------- search overlay */
+
+/**
+ * Global search.
+ *
+ * A full-screen overlay rather than a dropdown: the index covers programmes,
+ * news, events, staff, documents and pages, and the results need room to be
+ * grouped by type. The whole index is built at build time into a JSON island
+ * in the page, so the first keystroke searches instantly and nothing is
+ * fetched.
+ */
+.au-search {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  display: grid;
+  align-content: start;
+  background: rgb(10 28 46 / 0.55);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.22s var(--ease), visibility 0s linear 0.22s;
+}
+
+.au-search[data-open] {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.22s var(--ease), visibility 0s;
+}
+
+.au-search__sheet {
+  width: min(100% - 1.5rem, 46rem);
+  margin: clamp(1rem, 6vh, 5rem) auto 2rem;
+  border-radius: var(--radius-lg);
+  background: var(--white);
+  box-shadow: var(--shadow-lift);
+  overflow: hidden;
+  transform: translateY(-1rem);
+  transition: transform 0.26s var(--ease-out);
+}
+
+.au-search[data-open] .au-search__sheet {
+  transform: translateY(0);
+}
+
+.au-search__form {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1rem 1.2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.au-search__input {
+  flex: 1;
+  min-height: 2.6rem;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: var(--step-1);
+  font-weight: 600;
+}
+
+.au-search__input:focus-visible {
+  box-shadow: none;
+  outline: none;
+}
+
+.au-search__close {
+  flex: none;
+  padding: 0.35rem 0.8rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--ink-muted);
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.au-search__results {
+  max-height: min(60vh, 32rem);
+  overflow-y: auto;
+  padding: 0.6rem 0 1rem;
+}
+
+.au-search__group-title {
+  padding: 0.9rem 1.2rem 0.35rem;
+  color: var(--ink-muted);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.au-search__hit {
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.65rem 1.2rem;
+  color: var(--ink);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+}
+
+.au-search__hit:hover,
+.au-search__hit[data-active] {
+  background: var(--blue-050);
+  border-left-color: var(--blue);
+  color: var(--navy-800);
+}
+
+.au-search__hit b {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.au-search__hit span {
+  color: var(--ink-muted);
+  font-size: 0.78rem;
+}
+
+.au-search__hint {
+  padding: 1.6rem 1.2rem;
+  color: var(--ink-muted);
+  font-size: 0.85rem;
+  text-align: center;
+}

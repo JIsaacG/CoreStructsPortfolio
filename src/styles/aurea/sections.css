@@ -1,0 +1,1205 @@
+/* =============================================================================
+   AUREA — shared components
+
+   Buttons, chips, section heads, cards, figures, timelines, step sequences,
+   accordions, tabs, tables and forms. Every page of the portal is assembled
+   from what is in this file plus one module stylesheet; nothing is styled per
+   page.
+   ========================================================================== */
+
+/* ------------------------------------------------------------------ buttons */
+
+.au-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  min-height: 2.85rem;
+  padding: 0.7rem 1.35rem;
+  border: 1px solid var(--navy-800);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--navy-800);
+  font-family: var(--sans);
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.18s var(--ease), color 0.18s var(--ease),
+    border-color 0.18s var(--ease), transform 0.18s var(--ease);
+}
+
+.au-btn:hover {
+  background: var(--navy-800);
+  color: var(--white);
+  transform: translateY(-1px);
+}
+
+.au-btn--solid {
+  border-color: var(--blue-ink);
+  background: var(--blue-ink);
+  color: var(--white);
+}
+
+.au-btn--solid:hover {
+  border-color: var(--blue-deep);
+  background: var(--blue-deep);
+  color: var(--white);
+}
+
+.au-btn--gold {
+  border-color: var(--gold);
+  background: var(--gold);
+  color: var(--navy-900);
+}
+
+.au-btn--gold:hover {
+  border-color: var(--gold-ink);
+  background: var(--gold-ink);
+  color: var(--white);
+}
+
+.au-btn--ghost {
+  border-color: var(--border-strong);
+  color: var(--ink);
+}
+
+.au-btn--ghost:hover {
+  border-color: var(--navy-800);
+  background: var(--navy-800);
+  color: var(--white);
+}
+
+.au-btn--onDark {
+  border-color: rgb(255 255 255 / 0.4);
+  color: var(--white);
+}
+
+.au-btn--onDark:hover {
+  border-color: var(--white);
+  background: var(--white);
+  color: var(--navy-900);
+}
+
+.au-btn--small {
+  min-height: 2.3rem;
+  padding: 0.4rem 0.95rem;
+  font-size: 0.78rem;
+}
+
+.au-btn--block {
+  width: 100%;
+}
+
+.au-btn[aria-disabled="true"],
+.au-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.au-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+/** The understated alternative to a button: a rule, a word and an arrow. */
+.au-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--blue-ink);
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.au-link::before {
+  content: "";
+  width: 1.5rem;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.22s var(--ease);
+}
+
+.au-link:hover::before {
+  width: 2.4rem;
+}
+
+.au-band--dark .au-link {
+  color: var(--blue);
+}
+
+.au-link__arrow {
+  transition: transform 0.22s var(--ease);
+}
+
+.au-link:hover .au-link__arrow {
+  transform: translateX(3px);
+}
+
+/* -------------------------------------------------------------------- chips */
+
+.au-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.15rem;
+  padding: 0.35rem 0.85rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--white);
+  color: var(--ink-soft);
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s var(--ease), border-color 0.15s var(--ease),
+    color 0.15s var(--ease);
+}
+
+.au-chip:hover {
+  border-color: var(--blue-ink);
+  color: var(--blue-ink);
+}
+
+.au-chip[aria-pressed="true"],
+.au-chip[data-on] {
+  border-color: var(--blue-ink);
+  background: var(--blue-ink);
+  color: var(--white);
+}
+
+.au-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/** A static tag. Not a control — no hover, no cursor. */
+.au-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-sm);
+  background: var(--blue-100);
+  color: var(--blue-deep);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.au-tag--gold {
+  background: var(--gold-100);
+  color: var(--gold-ink);
+}
+
+.au-tag--soft {
+  background: var(--surface-sunken);
+  color: var(--ink-muted);
+}
+
+.au-tag--ok { background: var(--ok-100); color: var(--ok); }
+.au-tag--warn { background: var(--warn-100); color: var(--warn); }
+.au-tag--alert { background: var(--alert-100); color: var(--alert); }
+
+.au-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+/* --------------------------------------------------------------- section head */
+
+.au-head {
+  margin-bottom: clamp(1.8rem, 1.2rem + 2vw, 3rem);
+}
+
+.au-head--split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: clamp(1.2rem, 3vw, 3.5rem);
+  align-items: end;
+}
+
+.au-head--split .au-label {
+  grid-column: 1 / -1;
+}
+
+.au-head__title {
+  max-width: 22ch;
+}
+
+.au-head--split .au-head__title {
+  max-width: none;
+}
+
+.au-head__aside {
+  color: var(--ink-soft);
+}
+
+.au-head__aside p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.au-band--dark .au-head__aside {
+  color: var(--ink-onDark);
+}
+
+@media (max-width: 52rem) {
+  .au-head--split {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+}
+
+/* -------------------------------------------------------------------- cards */
+
+.au-grid {
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.6rem);
+}
+
+.au-grid--2 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); }
+.au-grid--3 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr)); }
+.au-grid--4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 13.5rem), 1fr)); }
+.au-grid--5 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); }
+
+/**
+ * The asymmetric two-column band — prose beside a figure, a form beside its
+ * context, a quote beside its numbers.
+ *
+ * A utility rather than eleven inline `grid-template-columns`, because the
+ * part that matters is the part an inline style cannot carry: the collapse. A
+ * 1.2fr/1fr split on a 360px phone is two columns of 160px, which is not a
+ * layout, so below 56rem it becomes one column everywhere at once.
+ */
+.au-split {
+  display: grid;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  align-items: start;
+}
+
+.au-split--even {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.au-split--center {
+  align-items: center;
+}
+
+@media (max-width: 56rem) {
+  .au-split {
+    grid-template-columns: 1fr;
+  }
+}
+
+.au-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  height: 100%;
+  padding: clamp(1.1rem, 2vw, 1.7rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease),
+    transform 0.2s var(--ease);
+}
+
+.au-card__kicker {
+  color: var(--ink-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.au-card__title {
+  margin: 0;
+}
+
+.au-card__text {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+  line-height: 1.58;
+  text-wrap: pretty;
+}
+
+.au-card__foot {
+  margin-top: auto;
+  padding-top: 0.6rem;
+}
+
+/* A card that is entirely a link gets the lift; a card that merely contains
+   links must not, or the hover promises a click that is not there. */
+.au-card--link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.au-card--link:hover {
+  border-color: var(--blue-ink);
+  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+  color: inherit;
+}
+
+.au-card--flat {
+  border-color: transparent;
+  background: var(--surface-sunken);
+}
+
+.au-card--dark {
+  border-color: var(--navy-600);
+  background: var(--navy-700);
+  color: var(--ink-onDark);
+}
+
+.au-card--dark .au-card__text {
+  color: var(--ink-onDark-muted);
+}
+
+.au-card--accent {
+  border-top: 3px solid var(--gold);
+}
+
+/* ------------------------------------------------------------------ figures */
+
+/**
+ * The number blocks.
+ *
+ * The counter animates from zero on entry (see `scripts/aurea/counters.js`),
+ * but the final value is in the HTML from the start: a reader with JavaScript
+ * off, or one who scrolls past before the observer fires, sees the number and
+ * not a zero.
+ */
+.au-figures {
+  display: grid;
+  gap: clamp(0.9rem, 2vw, 1.4rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+}
+
+.au-figure {
+  padding: clamp(1rem, 1.6vw, 1.4rem) 0 0;
+  border-top: 2px solid var(--blue);
+}
+
+.au-figure__value {
+  margin: 0;
+  color: var(--navy-800);
+  font-family: var(--serif);
+  font-size: var(--step-3);
+  font-weight: 600;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.au-figure__label {
+  margin: 0.5rem 0 0;
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+  line-height: 1.4;
+}
+
+.au-figure__note {
+  margin: 0.3rem 0 0;
+  color: var(--ink-muted);
+  font-size: 0.72rem;
+}
+
+.au-band--dark .au-figure {
+  border-top-color: var(--gold);
+}
+
+.au-band--dark .au-figure__value {
+  color: var(--white);
+}
+
+.au-band--dark .au-figure__label {
+  color: var(--ink-onDark);
+}
+
+.au-band--dark .au-figure__note {
+  color: var(--ink-onDark-muted);
+}
+
+/* --------------------------------------------------------------- step列 flow */
+
+/**
+ * The numbered sequence: admissions, the international intake, the visit.
+ *
+ * A grid rather than a list of cards, with the connecting rule drawn on the
+ * container so it never appears after the last item.
+ */
+.au-steps {
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  counter-reset: step;
+}
+
+.au-step {
+  position: relative;
+  padding-top: 2.6rem;
+}
+
+.au-step::before {
+  content: "";
+  position: absolute;
+  top: 1.05rem;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--border-strong);
+}
+
+.au-step:last-child::before {
+  right: 50%;
+}
+
+.au-step:first-child::before {
+  left: 0;
+}
+
+.au-step__num {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 50%;
+  background: var(--navy-800);
+  color: var(--white);
+  font-size: 0.76rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.au-step__title {
+  margin: 0 0 0.4rem;
+  font-size: var(--step-0);
+}
+
+.au-step__text {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+  line-height: 1.55;
+}
+
+.au-band--dark .au-step::before { background: var(--navy-600); }
+.au-band--dark .au-step__num { background: var(--gold); color: var(--navy-900); }
+.au-band--dark .au-step__text { color: var(--ink-onDark-muted); }
+
+/* On a phone the sequence becomes vertical, and the rule with it. */
+@media (max-width: 46rem) {
+  .au-steps {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .au-step {
+    padding: 0 0 1.5rem 3.2rem;
+  }
+
+  .au-step::before {
+    top: 2.2rem;
+    bottom: 0;
+    left: 1.05rem;
+    right: auto;
+    width: 1px;
+    height: auto;
+  }
+
+  .au-step:last-child::before {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------------ timeline */
+
+.au-timeline {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.au-timeline__item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 7rem minmax(0, 1fr);
+  gap: clamp(1rem, 3vw, 2.4rem);
+  padding: clamp(1.2rem, 2vw, 1.8rem) 0;
+  border-top: 1px solid var(--border);
+}
+
+.au-timeline__item:last-child {
+  border-bottom: 1px solid var(--border);
+}
+
+.au-timeline__year {
+  color: var(--blue-ink);
+  font-family: var(--serif);
+  font-size: var(--step-2);
+  font-weight: 600;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.au-timeline__title {
+  margin: 0 0 0.35rem;
+  font-size: var(--step-1);
+}
+
+.au-timeline__text {
+  margin: 0;
+  max-width: 62ch;
+  color: var(--ink-soft);
+  text-wrap: pretty;
+}
+
+@media (max-width: 40rem) {
+  .au-timeline__item {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+}
+
+/* ----------------------------------------------------------------- accordion */
+
+.au-acc {
+  border-top: 1px solid var(--border);
+}
+
+.au-acc__item {
+  border-bottom: 1px solid var(--border);
+}
+
+.au-acc__btn {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.2rem;
+  width: 100%;
+  padding: 1.1rem 0;
+  border: 0;
+  background: none;
+  color: var(--navy-800);
+  font-family: var(--sans);
+  font-size: var(--step-0);
+  font-weight: 700;
+  line-height: 1.4;
+  text-align: left;
+  cursor: pointer;
+}
+
+.au-acc__btn:hover {
+  color: var(--blue-ink);
+}
+
+.au-acc__sign {
+  position: relative;
+  flex: none;
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-top: 0.25rem;
+}
+
+.au-acc__sign::before,
+.au-acc__sign::after {
+  content: "";
+  position: absolute;
+  inset: 50% 0 auto;
+  height: 1.5px;
+  background: currentColor;
+  transition: transform 0.22s var(--ease), opacity 0.22s var(--ease);
+}
+
+.au-acc__sign::after {
+  transform: rotate(90deg);
+}
+
+.au-acc__btn[aria-expanded="true"] .au-acc__sign::after {
+  transform: rotate(0deg);
+  opacity: 0;
+}
+
+.au-acc__panel {
+  padding: 0 clamp(0, 4vw, 3rem) 1.3rem 0;
+  color: var(--ink-soft);
+  max-width: 74ch;
+}
+
+.au-acc__panel p {
+  margin: 0 0 0.8em;
+}
+
+.au-acc__panel p:last-child {
+  margin-bottom: 0;
+}
+
+/* ---------------------------------------------------------------------- tabs */
+
+.au-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 1.6rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.au-tab {
+  position: relative;
+  padding: 0.7rem 1rem;
+  border: 0;
+  background: none;
+  color: var(--ink-muted);
+  font-family: var(--sans);
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: color 0.15s var(--ease);
+}
+
+.au-tab::after {
+  content: "";
+  position: absolute;
+  left: 0.4rem;
+  right: 0.4rem;
+  bottom: -1px;
+  height: 2px;
+  background: transparent;
+  transition: background 0.18s var(--ease);
+}
+
+.au-tab:hover {
+  color: var(--navy-800);
+}
+
+.au-tab[aria-selected="true"] {
+  color: var(--navy-800);
+}
+
+.au-tab[aria-selected="true"]::after {
+  background: var(--blue);
+}
+
+.au-tabpanel[hidden] {
+  display: none;
+}
+
+/* -------------------------------------------------------------------- tables */
+
+.au-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--step--1);
+}
+
+.au-table caption {
+  margin-bottom: 0.7rem;
+  color: var(--ink-muted);
+  font-size: 0.78rem;
+  text-align: left;
+}
+
+.au-table th,
+.au-table td {
+  padding: 0.7rem 0.9rem;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.au-table th {
+  color: var(--navy-800);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.au-table thead th {
+  border-bottom: 2px solid var(--navy-800);
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.au-table tbody tr:hover {
+  background: var(--blue-050);
+}
+
+.au-table td.au-num,
+.au-table th.au-num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.au-table--plain tbody tr:hover {
+  background: none;
+}
+
+/* --------------------------------------------------------------------- forms */
+
+.au-field {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.au-field__label {
+  color: var(--navy-800);
+  font-size: var(--step--1);
+  font-weight: 700;
+}
+
+.au-field__hint {
+  color: var(--ink-muted);
+  font-size: 0.76rem;
+  line-height: 1.4;
+}
+
+.au-input,
+.au-select,
+.au-textarea {
+  width: 100%;
+  min-height: 2.85rem;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: var(--step-0);
+  transition: border-color 0.15s var(--ease), box-shadow 0.15s var(--ease);
+}
+
+.au-input:hover,
+.au-select:hover,
+.au-textarea:hover {
+  border-color: var(--navy-600);
+}
+
+.au-input::placeholder,
+.au-textarea::placeholder {
+  color: var(--ink-muted);
+}
+
+.au-textarea {
+  min-height: 7rem;
+  line-height: 1.55;
+  resize: vertical;
+}
+
+/* The native arrow differs per platform and per theme; one drawn caret keeps
+   the control identical everywhere. */
+.au-select {
+  appearance: none;
+  padding-right: 2.4rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%23616c7a' stroke-width='1.6'%3E%3Cpath d='m1 2 5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.95rem center;
+}
+
+.au-formgrid {
+  display: grid;
+  gap: clamp(0.9rem, 2vw, 1.3rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+}
+
+.au-formgrid--wide {
+  grid-column: 1 / -1;
+}
+
+/** Radio and checkbox groups, styled as a row of selectable cards. */
+.au-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.au-option {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.6rem;
+  padding: 0.45rem 1rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--white);
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s var(--ease), background 0.15s var(--ease),
+    color 0.15s var(--ease);
+}
+
+.au-option input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  cursor: pointer;
+}
+
+.au-option:hover {
+  border-color: var(--blue-ink);
+}
+
+.au-option:has(input:checked) {
+  border-color: var(--blue-ink);
+  background: var(--blue-ink);
+  color: var(--white);
+}
+
+.au-option:has(input:focus-visible) {
+  box-shadow: var(--ring);
+}
+
+/* -------------------------------------------------------------------- result */
+
+/** What a simulator prints. Always preceded by the fiction notice. */
+.au-result {
+  display: grid;
+  gap: 0.8rem;
+  padding: clamp(1.1rem, 2vw, 1.7rem);
+  border: 1px solid var(--border-blue);
+  border-radius: var(--radius);
+  background: var(--blue-050);
+}
+
+.au-result__value {
+  margin: 0;
+  color: var(--navy-800);
+  font-family: var(--serif);
+  font-size: var(--step-3);
+  font-weight: 600;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.au-result__label {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.au-result__rows {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0;
+}
+
+.au-result__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.42rem 0;
+  border-bottom: 1px dashed var(--border-strong);
+  font-size: var(--step--1);
+}
+
+.au-result__row:last-child {
+  border-bottom: 0;
+}
+
+.au-result__row dt {
+  color: var(--ink-soft);
+}
+
+.au-result__row dd {
+  margin: 0;
+  color: var(--navy-800);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.au-result__row--total {
+  border-bottom: 0;
+  border-top: 2px solid var(--navy-800);
+  margin-top: 0.3rem;
+  padding-top: 0.7rem;
+  font-size: var(--step-0);
+}
+
+/* ------------------------------------------------------------------ listings */
+
+.au-list {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--border);
+}
+
+.au-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.4rem 1.5rem;
+  align-items: center;
+  padding: clamp(0.85rem, 1.6vw, 1.25rem) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.au-row__title {
+  margin: 0;
+  font-size: var(--step-0);
+}
+
+.au-row__meta {
+  grid-column: 1 / -1;
+  color: var(--ink-muted);
+  font-size: 0.78rem;
+}
+
+.au-row__text {
+  grid-column: 1 / -1;
+  margin: 0.25rem 0 0;
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+  max-width: 74ch;
+}
+
+.au-row__end {
+  justify-self: end;
+  text-align: right;
+}
+
+/** The "nothing matched" line every filterable list needs and few have. */
+.au-empty {
+  padding: 2.5rem 0;
+  color: var(--ink-muted);
+  text-align: center;
+}
+
+.au-empty[hidden] {
+  display: none;
+}
+
+/* -------------------------------------------------------------------- callout */
+
+.au-callout {
+  display: grid;
+  gap: 0.6rem;
+  padding: clamp(1.1rem, 2vw, 1.6rem);
+  border-left: 3px solid var(--blue);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: var(--blue-050);
+}
+
+.au-callout--gold {
+  border-left-color: var(--gold);
+  background: var(--gold-100);
+}
+
+.au-callout--warn {
+  border-left-color: var(--warn);
+  background: var(--warn-100);
+}
+
+.au-callout--alert {
+  border-left-color: var(--alert);
+  background: var(--alert-100);
+}
+
+.au-callout__title {
+  margin: 0;
+  font-size: var(--step-0);
+}
+
+.au-callout p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+  line-height: 1.55;
+}
+
+/* ------------------------------------------------------------------ big CTA */
+
+.au-cta {
+  position: relative;
+  overflow: hidden;
+  background: var(--navy-800);
+  color: var(--ink-onDark);
+}
+
+.au-cta__inner {
+  position: relative;
+  display: grid;
+  gap: clamp(1.2rem, 3vw, 3rem);
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  align-items: center;
+  padding-block: clamp(3rem, 2rem + 4vw, 5.5rem);
+}
+
+.au-cta__title {
+  max-width: 18ch;
+  color: var(--white);
+  font-size: var(--step-4);
+}
+
+.au-cta__text {
+  margin: 1rem 0 0;
+  max-width: 52ch;
+  color: var(--ink-onDark);
+}
+
+.au-cta__art {
+  position: absolute;
+  inset: 0;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+@media (max-width: 52rem) {
+  .au-cta__inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* -------------------------------------------------------------- breadcrumbs */
+
+.au-crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0 0 1.2rem;
+  padding: 0;
+  list-style: none;
+  color: var(--ink-muted);
+  font-size: 0.78rem;
+}
+
+.au-crumbs a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.au-crumbs a:hover {
+  color: var(--blue-ink);
+  text-decoration: underline;
+}
+
+.au-crumbs li + li::before {
+  content: "›";
+  margin-right: 0.45rem;
+  color: var(--border-strong);
+}
+
+.au-crumbs [aria-current] {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* ----------------------------------------------------------------- page head */
+
+.au-pagehead {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(2.6rem, 2rem + 3.6vw, 5rem);
+  background: var(--navy-800);
+  color: var(--ink-onDark);
+}
+
+.au-pagehead__inner {
+  position: relative;
+  display: grid;
+  gap: clamp(1rem, 3vw, 3rem);
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  align-items: end;
+}
+
+.au-pagehead__title {
+  max-width: 20ch;
+  color: var(--white);
+}
+
+.au-pagehead__lead {
+  margin: 0;
+  max-width: 54ch;
+  color: var(--ink-onDark);
+  font-size: var(--step-1);
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.au-pagehead .au-crumbs {
+  color: var(--ink-onDark-muted);
+}
+
+.au-pagehead .au-crumbs [aria-current] {
+  color: var(--white);
+}
+
+.au-pagehead .au-crumbs li + li::before {
+  color: var(--navy-600);
+}
+
+.au-pagehead__art {
+  position: absolute;
+  inset: 0;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+@media (max-width: 52rem) {
+  .au-pagehead__inner {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+}
+
+/* ------------------------------------------------------------------ toast */
+
+/** One live region per page, for every simulated action. */
+.au-toast {
+  position: fixed;
+  left: 50%;
+  bottom: clamp(1rem, 4vw, 2.5rem);
+  z-index: var(--z-overlay);
+  max-width: min(92vw, 30rem);
+  padding: 0.8rem 1.2rem;
+  border-radius: var(--radius-pill);
+  background: var(--navy-900);
+  color: var(--white);
+  font-size: var(--step--1);
+  text-align: center;
+  box-shadow: var(--shadow-lift);
+  transform: translate(-50%, 1.5rem);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.24s var(--ease-out), opacity 0.24s var(--ease-out);
+}
+
+.au-toast[data-on] {
+  transform: translate(-50%, 0);
+  opacity: 1;
+}
+
+@media (max-width: 60rem) {
+  .au-toast {
+    bottom: calc(4.8rem + env(safe-area-inset-bottom));
+  }
+}
