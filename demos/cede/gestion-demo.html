@@ -83,6 +83,36 @@
         }, 2500);
       })();
     </script>
+<!--lang-memory-->
+    <script>
+      /* Language preference: written by the ES/EN switch, applied before paint. */
+      (function () {
+        try {
+          var pref = localStorage.getItem("cs-lang");
+          if (pref && pref !== document.documentElement.lang) {
+            if (sessionStorage.getItem("cs-lang-hop") !== location.pathname) {
+              sessionStorage.setItem("cs-lang-hop", location.pathname);
+              location.replace("../../en/demos/cede/gestion-demo.html");
+              return;
+            }
+          } else {
+            sessionStorage.removeItem("cs-lang-hop");
+          }
+        } catch (e) {}
+        document.addEventListener("click", function (event) {
+          var pick = event.target.closest && event.target.closest("[data-lang-pick]");
+          if (pick) {
+            try { localStorage.setItem("cs-lang", pick.getAttribute("data-lang-pick")); } catch (e) {}
+          }
+        }, true);
+      })();
+    </script>
+    <!--/lang-memory-->
+<!--lang-alternates-->
+    <link rel="alternate" hreflang="es" href="https://www.cede.example/gestion-demo.html" />
+    <link rel="alternate" hreflang="en" href="https://www.cede.example/en/gestion-demo.html" />
+    <link rel="alternate" hreflang="x-default" href="https://www.cede.example/gestion-demo.html" />
+    <!--/lang-alternates-->
   </head>
 
   <body>
@@ -93,6 +123,7 @@
           <span class="cd-admin__tag">Backoffice demostrativo</span>
         </p>
         <div class="cd-admin__user">
+          <!--lang-switch--><div class="lang-switch" role="group" aria-label="Idioma · Language"><span class="lang-switch__current" lang="es" aria-current="true">ES</span><a class="lang-switch__link" lang="en" hreflang="en" href="../../en/demos/cede/gestion-demo.html" data-lang-pick="en" title="English">EN</a></div><!--/lang-switch-->
           <span>Sesión de demostración · no hay datos reales</span>
           <span class="cd-admin__avatar" aria-hidden="true">ST</span>
         </div>
@@ -171,5 +202,6 @@
     </div>
 
     <script type="module" src="../../src/scripts/cede/main.js"></script>
+    <script type="module" src="../../src/scripts/cotizador.js"></script>
   </body>
 </html>

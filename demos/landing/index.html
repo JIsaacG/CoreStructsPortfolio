@@ -36,6 +36,31 @@
         }
       }, 2500);
     </script>
+<!--lang-memory-->
+    <script>
+      /* Language preference: written by the ES/EN switch, applied before paint. */
+      (function () {
+        try {
+          var pref = localStorage.getItem("cs-lang");
+          if (pref && pref !== document.documentElement.lang) {
+            if (sessionStorage.getItem("cs-lang-hop") !== location.pathname) {
+              sessionStorage.setItem("cs-lang-hop", location.pathname);
+              location.replace("../../en/demos/landing/index.html");
+              return;
+            }
+          } else {
+            sessionStorage.removeItem("cs-lang-hop");
+          }
+        } catch (e) {}
+        document.addEventListener("click", function (event) {
+          var pick = event.target.closest && event.target.closest("[data-lang-pick]");
+          if (pick) {
+            try { localStorage.setItem("cs-lang", pick.getAttribute("data-lang-pick")); } catch (e) {}
+          }
+        }, true);
+      })();
+    </script>
+    <!--/lang-memory-->
   </head>
 
   <body>
@@ -55,6 +80,7 @@
           </svg>
           CoreStruct
         </a>
+        <!--lang-switch--><div class="lang-switch" role="group" aria-label="Idioma · Language"><span class="lang-switch__current" lang="es" aria-current="true">ES</span><a class="lang-switch__link" lang="en" hreflang="en" href="../../en/demos/landing/index.html" data-lang-pick="en" title="English">EN</a></div><!--/lang-switch-->
       </div>
     </header>
 
@@ -303,5 +329,6 @@
     <div class="sc-veil" data-veil aria-hidden="true"></div>
 
     <script type="module" src="../../src/scripts/showcase/main.js"></script>
+    <script type="module" src="../../src/scripts/cotizador.js"></script>
   </body>
 </html>

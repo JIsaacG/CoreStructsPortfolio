@@ -205,6 +205,7 @@ ${body}
 ${supplementary}
 
     <script type="module" src="${escape(script)}"></script>
+    <script type="module" src="../../src/scripts/cotizador.js"></script>
   </body>
 </html>
 `;

@@ -42,6 +42,7 @@ function appBar(ctx, { productName, userName }) {
         </a>
         <span class="au-app__product">${escape(productName)}</span>
         <div class="au-app__end">
+          <!--lang-switch-->
           <span class="au-app__user">
             <span class="au-app__avatar" aria-hidden="true">${escape(initials(userName))}</span>
             <span>${escape(userName)}</span>

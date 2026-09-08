@@ -338,6 +338,7 @@ ${items}
             </ul>
           </nav>
           <div class="au-navband__end">
+            <!--lang-switch-->
             <a class="au-btn au-btn--small au-btn--ghost" href="${page(ctx, "campus", "visita")}">Visitar el campus</a>
             <a class="au-btn au-btn--small au-btn--ghost" href="${page(ctx, "contacto")}">Contacto</a>
           </div>
@@ -677,7 +678,8 @@ export function badge(ctx) {
 export function document_({ ctx, meta, current, body, bare = false, islands = "" }) {
   const scripts =
     `${islands}\n    <div class="au-toast" data-toast role="status" aria-live="polite"></div>\n` +
-    `    <script type="module" src="${asset(ctx, "src/scripts/aurea/main.js")}"></script>`;
+    `    <script type="module" src="${asset(ctx, "src/scripts/aurea/main.js")}"></script>\n` +
+    `    <script type="module" src="${asset(ctx, "src/scripts/cotizador.js")}"></script>`;
 
   if (bare) {
     return `<!doctype html>

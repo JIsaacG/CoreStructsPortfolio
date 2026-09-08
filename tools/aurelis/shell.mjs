@@ -322,6 +322,7 @@ ${items}
         </nav>
 
         <div class="au-header__end">
+          <!--lang-switch-->
           <a class="au-header__contact" href="${page(ctx, "contacto")}">Contacto</a>
           <a class="au-btn au-btn--gold au-header__cta" href="${page(ctx, "contacto", "formulario")}">
             Hablar con un especialista
@@ -444,6 +445,13 @@ ${columns}
             </div>
           </div>
 
+          <!-- The one line on the page written by the studio rather than by the
+               invented company. data-cotizador hands the click to the quote
+               panel; the href is what a visitor without JavaScript follows. -->
+          <p class="au-footer__cta">
+            <a href="${asset(ctx, "index.html")}#contacto" data-cotizador>Quiero un sitio como este →</a>
+          </p>
+
           <div class="au-footer__bottom">
             <p>&copy; <span data-current-year>2026</span> ${escape(company.legalName)}. Empresa ficticia · demostración.</p>
             <nav class="au-footer__legal" aria-label="Legal">${legalLinks}</nav>
@@ -511,6 +519,7 @@ ${body}
 ${siteFooter(ctx)}
 
     <script type="module" src="${asset(ctx, "src/scripts/aurelis/main.js")}"></script>
+    <script type="module" src="${asset(ctx, "src/scripts/cotizador.js")}"></script>
   </body>
 </html>
 `;

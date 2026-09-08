@@ -95,6 +95,36 @@
         }, 2500);
       })();
     </script>
+<!--lang-memory-->
+    <script>
+      /* Language preference: written by the ES/EN switch, applied before paint. */
+      (function () {
+        try {
+          var pref = localStorage.getItem("cs-lang");
+          if (pref && pref !== document.documentElement.lang) {
+            if (sessionStorage.getItem("cs-lang-hop") !== location.pathname) {
+              sessionStorage.setItem("cs-lang-hop", location.pathname);
+              location.replace("../../en/demos/aurea/calendario.html");
+              return;
+            }
+          } else {
+            sessionStorage.removeItem("cs-lang-hop");
+          }
+        } catch (e) {}
+        document.addEventListener("click", function (event) {
+          var pick = event.target.closest && event.target.closest("[data-lang-pick]");
+          if (pick) {
+            try { localStorage.setItem("cs-lang", pick.getAttribute("data-lang-pick")); } catch (e) {}
+          }
+        }, true);
+      })();
+    </script>
+    <!--/lang-memory-->
+<!--lang-alternates-->
+    <link rel="alternate" hreflang="es" href="https://www.aurea.example/calendario.html" />
+    <link rel="alternate" hreflang="en" href="https://www.aurea.example/en/calendario.html" />
+    <link rel="alternate" hreflang="x-default" href="https://www.aurea.example/calendario.html" />
+    <!--/lang-alternates-->
   </head>
 
   <body>
@@ -165,6 +195,7 @@
             </ul>
           </nav>
           <div class="au-navband__end">
+            <!--lang-switch--><div class="lang-switch" role="group" aria-label="Idioma · Language"><span class="lang-switch__current" lang="es" aria-current="true">ES</span><a class="lang-switch__link" lang="en" hreflang="en" href="../../en/demos/aurea/calendario.html" data-lang-pick="en" title="English">EN</a></div><!--/lang-switch-->
             <a class="au-btn au-btn--small au-btn--ghost" href="campus.html#visita">Visitar el campus</a>
             <a class="au-btn au-btn--small au-btn--ghost" href="contacto.html">Contacto</a>
           </div>
@@ -340,5 +371,6 @@
     <script type="application/json" id="au-events">[{"id":"induccion-primer-ingreso","date":"2026-09-08","time":"7:30 – 12:00","place":"Auditorio Aurea","category":"academico","audience":"todos","title":"Inducción de primer ingreso","text":"Jornada de bienvenida: campus virtual, biblioteca, reglamento y asignación de tutor."},{"id":"reunion-padres-media","date":"2026-09-11","time":"17:00 – 19:00","place":"Auditorio Aurea","category":"padres","audience":"media","title":"Reunión general de padres · Educación Media","text":"Presentación del año lectivo, calendario de evaluaciones y equipo docente por sección."},{"id":"admision-2026-09-15","date":"2026-09-15","time":"Todo el día","place":"En línea y Campus Central","category":"admisiones","audience":"todos","title":"Inicio de admisiones","text":"Abre la solicitud en línea para educación media y superior.","fromAdmissions":true},{"id":"feria-carreras","date":"2026-09-18","time":"9:00 – 16:00","place":"Explanada Central","category":"admisiones","audience":"todos","title":"Feria de Carreras 2027","text":"Las nueve carreras, con docentes y estudiantes de cada programa atendiendo en su propio módulo. Laboratorios abiertos y charlas de veinte minutos cada hora.","featured":true},{"id":"open-campus","date":"2026-09-25","time":"8:30 – 12:30","place":"Campus Central","category":"admisiones","audience":"todos","title":"Open Campus","text":"Recorrido guiado por aulas, laboratorios, biblioteca y centro deportivo, con sesión de admisiones y financiamiento para familias.","featured":true},{"id":"torneo-interclases","date":"2026-09-26","time":"8:00 – 17:00","place":"Centro Deportivo","category":"deportes","audience":"media","title":"Torneo Interclases de Fútbol","text":"Fase de grupos de décimo a duodécimo grado. La final se juega el 10 de octubre."},{"id":"concierto-otono","date":"2026-09-30","time":"19:00","place":"Auditorio Aurea","category":"arte","audience":"todos","title":"Concierto de la Orquesta AUREA","text":"Programa de cuerdas y coro con obras de repertorio latinoamericano. Entrada libre."},{"id":"semana-innovacion","date":"2026-10-03","endDate":"2026-10-07","time":"Todo el día","place":"Centro de Innovación","category":"academico","audience":"superior","title":"Semana de Innovación","text":"Cinco días de talleres, demostraciones y presentación de los proyectos integradores de tercer y cuarto año. Abierta al público.","featured":true},{"id":"examenes-parciales","date":"2026-10-13","endDate":"2026-10-17","time":"Según horario","place":"Aulas asignadas","category":"academico","audience":"todos","title":"Exámenes parciales","text":"Primer parcial de educación media y evaluación de medio período en las licenciaturas."},{"id":"muestra-diseno","date":"2026-10-22","time":"17:00 – 21:00","place":"Galería del Centro de Innovación","category":"arte","audience":"superior","title":"Muestra de Portafolios · Diseño Digital","text":"Revisión abierta de los portafolios de tercer año, con jurado de profesionales invitados."},{"id":"jornada-cientifica","date":"2026-10-29","time":"8:00 – 15:00","place":"Laboratorios A y B","category":"academico","audience":"media","title":"Jornada Científica de Educación Media","text":"Presentación de los proyectos de investigación de undécimo y duodécimo grado."},{"id":"entrega-notas-media","date":"2026-11-06","time":"14:00 – 18:00","place":"Aulas por sección","category":"padres","audience":"media","title":"Entrega de calificaciones · Primer parcial","text":"Atención individual con el docente guía. Cita reservable desde el portal de padres."},{"id":"torneo-baloncesto","date":"2026-11-14","time":"9:00 – 18:00","place":"Gimnasio Central","category":"deportes","audience":"todos","title":"Copa AUREA de Baloncesto","text":"Encuentro interinstitucional con seis centros invitados. Ramas femenina y masculina."},{"id":"aniversario","date":"2026-11-20","time":"10:00","place":"Explanada Central","category":"institucional","audience":"todos","title":"Aniversario institucional · 25 años","text":"Acto conmemorativo, reconocimiento a docentes con más de una década y develación del mural de egresados."},{"id":"foro-empleabilidad","date":"2026-11-27","time":"8:00 – 13:00","place":"Auditorio Aurea","category":"academico","audience":"superior","title":"Foro de Empleabilidad y Feria Laboral","text":"Veintidós empresas aliadas reciben hojas de vida y realizan entrevistas en sitio."},{"id":"admision-2026-11-30","date":"2026-11-30","time":"Todo el día","place":"En línea y Campus Central","category":"admisiones","audience":"todos","title":"Primera fecha prioritaria","text":"Las solicitudes recibidas hasta esta fecha se resuelven primero y compiten por el fondo completo de becas.","fromAdmissions":true},{"id":"examenes-finales","date":"2026-12-01","endDate":"2026-12-09","time":"Según horario","place":"Aulas asignadas","category":"academico","audience":"todos","title":"Exámenes finales del período","text":"Cierre del primer período universitario y del segundo parcial de educación media."},{"id":"festival-navideno","date":"2026-12-11","time":"18:00","place":"Explanada Central","category":"arte","audience":"todos","title":"Festival de Fin de Año","text":"Elencos de danza, teatro y música, con muestra de los clubes y feria gastronómica."},{"id":"receso","date":"2026-12-15","endDate":"2027-01-12","time":"Todo el día","place":"Campus cerrado","category":"institucional","audience":"todos","title":"Receso de fin de año","text":"Actividades administrativas suspendidas. Admisiones atiende en línea del 5 al 12 de enero."},{"id":"admision-2027-01-15","date":"2027-01-15","time":"Todo el día","place":"En línea y Campus Central","category":"admisiones","audience":"todos","title":"Cierre de solicitud de becas","text":"Última fecha para presentar el expediente socioeconómico y las cartas de respaldo.","fromAdmissions":true},{"id":"taller-padres-digital","date":"2027-01-22","time":"17:30 – 19:30","place":"Laboratorio C","category":"padres","audience":"media","title":"Taller para familias · Acompañamiento digital","text":"Cómo leer el portal de padres, configurar alertas y acompañar el uso de tecnología en casa."},{"id":"simulacro-prueba","date":"2027-01-31","time":"8:00 – 11:00","place":"Aulas 201–210","category":"admisiones","audience":"todos","title":"Simulacro de prueba de admisión","text":"Prueba de práctica sin costo para aspirantes, con retroalimentación el mismo día."},{"id":"admision-2027-02-10","date":"2027-02-10","time":"Todo el día","place":"En línea y Campus Central","category":"admisiones","audience":"todos","title":"Prueba de admisión","text":"Jornada única, presencial, en el Campus Central. Segunda convocatoria el 24 de febrero.","fromAdmissions":true},{"id":"natacion","date":"2027-02-20","time":"8:00 – 14:00","place":"Piscina Semiolímpica","category":"deportes","audience":"todos","title":"Festival de Natación","text":"Competencia interna por categorías y exhibición del equipo representativo."},{"id":"admision-2027-02-28","date":"2027-02-28","time":"Todo el día","place":"En línea y Campus Central","category":"admisiones","audience":"todos","title":"Resultados de admisión","text":"Publicación en el portal de la solicitud y envío por correo, con resolución de beca incluida.","fromAdmissions":true},{"id":"admision-2027-03-10","date":"2027-03-10","time":"Todo el día","place":"En línea y Campus Central","category":"admisiones","audience":"todos","title":"Matrícula de primer ingreso","text":"Del 10 al 20 de marzo, con cita asignada. Las clases inician el 5 de abril.","fromAdmissions":true},{"id":"inicio-clases","date":"2027-04-05","time":"7:00","place":"Campus Central","category":"institucional","audience":"todos","title":"Inicio del año lectivo 2027","text":"Primer día de clases para educación media y para el período universitario I-2027."}]</script>
     <div class="au-toast" data-toast role="status" aria-live="polite"></div>
     <script type="module" src="../../src/scripts/aurea/main.js"></script>
+    <script type="module" src="../../src/scripts/cotizador.js"></script>
   </body>
 </html>

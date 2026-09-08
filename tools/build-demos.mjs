@@ -162,6 +162,7 @@ ${links}
         </nav>
 
         <div class="dm-header__actions">
+          <!--lang-switch-->
           <a class="button button--primary" href="#tienda">Comprar</a>
           <button
             class="dm-burger"
@@ -697,6 +698,7 @@ ${renderClosing(demo, isotype)}
     </main>
 
     <script type="module" src="../src/scripts/demo/main.js"></script>
+    <script type="module" src="../src/scripts/cotizador.js"></script>
   </body>
 </html>
 `;

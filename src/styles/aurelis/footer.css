@@ -235,3 +235,26 @@ body.au-locked .au-badge {
   opacity: 0;
   pointer-events: none;
 }
+
+/* --- The studio's own line ------------------------------------------------------------ */
+
+/* Not Aurelis speaking: CoreStruct, in the one place the fiction is already
+   suspended. Gold rather than the muted footer grey, because it is the only
+   thing in the footer that is asking for something. */
+.au-footer__cta {
+  margin: 0;
+  padding-block-start: var(--s-md);
+  border-top: 1px solid rgb(255 255 255 / 0.1);
+  font-size: var(--t-sm);
+}
+
+.au-footer__cta a {
+  color: var(--gold);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.au-footer__cta a:hover,
+.au-footer__cta a:focus-visible {
+  text-decoration: underline;
+}

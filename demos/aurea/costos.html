@@ -95,6 +95,36 @@
         }, 2500);
       })();
     </script>
+<!--lang-memory-->
+    <script>
+      /* Language preference: written by the ES/EN switch, applied before paint. */
+      (function () {
+        try {
+          var pref = localStorage.getItem("cs-lang");
+          if (pref && pref !== document.documentElement.lang) {
+            if (sessionStorage.getItem("cs-lang-hop") !== location.pathname) {
+              sessionStorage.setItem("cs-lang-hop", location.pathname);
+              location.replace("../../en/demos/aurea/costos.html");
+              return;
+            }
+          } else {
+            sessionStorage.removeItem("cs-lang-hop");
+          }
+        } catch (e) {}
+        document.addEventListener("click", function (event) {
+          var pick = event.target.closest && event.target.closest("[data-lang-pick]");
+          if (pick) {
+            try { localStorage.setItem("cs-lang", pick.getAttribute("data-lang-pick")); } catch (e) {}
+          }
+        }, true);
+      })();
+    </script>
+    <!--/lang-memory-->
+<!--lang-alternates-->
+    <link rel="alternate" hreflang="es" href="https://www.aurea.example/costos.html" />
+    <link rel="alternate" hreflang="en" href="https://www.aurea.example/en/costos.html" />
+    <link rel="alternate" hreflang="x-default" href="https://www.aurea.example/costos.html" />
+    <!--/lang-alternates-->
   </head>
 
   <body>
@@ -165,6 +195,7 @@
             </ul>
           </nav>
           <div class="au-navband__end">
+            <!--lang-switch--><div class="lang-switch" role="group" aria-label="Idioma · Language"><span class="lang-switch__current" lang="es" aria-current="true">ES</span><a class="lang-switch__link" lang="en" hreflang="en" href="../../en/demos/aurea/costos.html" data-lang-pick="en" title="English">EN</a></div><!--/lang-switch-->
             <a class="au-btn au-btn--small au-btn--ghost" href="campus.html#visita">Visitar el campus</a>
             <a class="au-btn au-btn--small au-btn--ghost" href="contacto.html">Contacto</a>
           </div>
@@ -344,5 +375,6 @@
     <script type="application/json" id="au-costs">{"programs":{"bachillerato-ciencias-humanidades":{"name":"Bachillerato en Ciencias y Humanidades","kind":"mensual","enrollment":6800,"monthly":3450,"months":10,"perCourse":null,"coursesTypical":null,"lab":true},"btp-informatica":{"name":"Bachillerato Técnico Profesional en Informática","kind":"mensual","enrollment":7400,"monthly":3950,"months":10,"perCourse":null,"coursesTypical":null,"lab":true},"btp-administracion":{"name":"Bachillerato Técnico Profesional en Administración","kind":"mensual","enrollment":7100,"monthly":3750,"months":10,"perCourse":null,"coursesTypical":null,"lab":false},"ingenieria-en-sistemas":{"name":"Ingeniería en Sistemas","kind":"asignatura","enrollment":9800,"monthly":null,"months":null,"perCourse":2850,"coursesTypical":5,"lab":true},"administracion-de-empresas":{"name":"Administración de Empresas","kind":"asignatura","enrollment":8900,"monthly":null,"months":null,"perCourse":2450,"coursesTypical":5,"lab":false},"mercadotecnia":{"name":"Mercadotecnia","kind":"asignatura","enrollment":8600,"monthly":null,"months":null,"perCourse":2380,"coursesTypical":5,"lab":true},"diseno-digital":{"name":"Diseño Digital","kind":"asignatura","enrollment":9200,"monthly":null,"months":null,"perCourse":2620,"coursesTypical":5,"lab":true},"finanzas":{"name":"Finanzas","kind":"asignatura","enrollment":8900,"monthly":null,"months":null,"perCourse":2520,"coursesTypical":5,"lab":false},"psicologia":{"name":"Psicología","kind":"asignatura","enrollment":8700,"monthly":null,"months":null,"perCourse":2480,"coursesTypical":5,"lab":true}},"fees":{"registration":850,"registrationLabel":"Cuota de admisión","registrationNote":"Se paga una sola vez, con la solicitud","extras":[{"id":"laboratorio","label":"Laboratorio y talleres","amount":1450,"note":"Por período · solo programas con laboratorio"},{"id":"tecnologia","label":"Servicios tecnológicos","amount":780,"note":"Por período · campus virtual, correo y biblioteca digital"},{"id":"seguro","label":"Seguro estudiantil","amount":620,"note":"Anual"},{"id":"graduacion","label":"Derechos de graduación","amount":4200,"note":"Último período"}],"plans":[{"id":"contado","label":"Pago de contado","modifier":-0.07,"note":"7 % de descuento sobre el período"},{"id":"mensual","label":"Pago mensual","modifier":0,"note":"Sin recargo"},{"id":"diferido","label":"Diferido a 6 cuotas","modifier":0.04,"note":"4 % de recargo administrativo"}],"discounts":[{"id":"ninguna","label":"Sin beca","rate":0},{"id":"25","label":"Beca del 25 %","rate":0.25},{"id":"40","label":"Beca del 40 %","rate":0.4},{"id":"50","label":"Beca del 50 %","rate":0.5},{"id":"60","label":"Beca del 60 %","rate":0.6}]}}</script>
     <div class="au-toast" data-toast role="status" aria-live="polite"></div>
     <script type="module" src="../../src/scripts/aurea/main.js"></script>
+    <script type="module" src="../../src/scripts/cotizador.js"></script>
   </body>
 </html>

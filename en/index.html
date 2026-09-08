@@ -1,0 +1,698 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>CoreStruct — Software development and digital experiences</title>
+    <meta
+      name="description"
+      content="A technology and software development studio. We build corporate sites, web platforms, business systems and automation shaped around how each operation actually runs."
+    />
+    <link rel="canonical" href="https://corestruct.com/en/" />
+    <meta name="theme-color" content="#080b12" />
+    <meta name="color-scheme" content="dark" />
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="CoreStruct" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://corestruct.com/en/" />
+    <meta property="og:title" content="CoreStruct — Software development and digital experiences" />
+    <meta
+      property="og:description"
+      content="We turn ideas into systems that work: corporate sites, platforms, business systems and automation."
+    />
+    <meta property="og:image" content="https://corestruct.com/assets/brand/og-card.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="CoreStruct" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="CoreStruct — Software development and digital experiences" />
+    <meta
+      name="twitter:description"
+      content="We turn ideas into systems that work: corporate sites, platforms, business systems and automation."
+    />
+    <meta name="twitter:image" content="https://corestruct.com/assets/brand/og-card.png" />
+
+    <!-- Icons -->
+    <link rel="icon" href="../favicon.ico" sizes="32x32" />
+    <link rel="icon" href="../assets/brand/isotipo.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="../assets/brand/apple-touch-icon.png" />
+    <link rel="manifest" href="site.webmanifest" />
+
+    <!-- The latin subset carries every glyph on this page; the extended subset
+         is left to load on demand. -->
+    <link
+      rel="preload"
+      href="../assets/fonts/manrope-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <!-- The logotype is live text in the brand face, so it is in the first
+         paint and blocks on this file (see fonts.css). 12 KB, fetched early. -->
+    <link
+      rel="preload"
+      href="../assets/fonts/quantify.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="../dist/corestruct.css" />
+
+    <!-- Marks the document as scripted before first paint, so the reveal system
+         never hides content from a browser that will not un-hide it.
+
+         The timer is the safety net for the opposite case: scripting is on, but
+         the behaviour module never runs (blocked by CORS on file://, an offline
+         cache miss, a parse error). Reveals are an enhancement and must never be
+         able to swallow the page, so hiding is switched off if nothing claimed
+         it. `main.js` sets the flag as soon as the reveal system is live. -->
+    <script>
+      document.documentElement.classList.add("js");
+      setTimeout(function () {
+        if (!document.documentElement.dataset.revealsReady) {
+          document.documentElement.classList.remove("js");
+        }
+      }, 2500);
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "CoreStruct",
+        "url": "https://corestruct.com/",
+        "logo": "https://corestruct.com/assets/brand/icon-512.png",
+        "image": "https://corestruct.com/assets/brand/og-card.png",
+        "description": "A technology and software development studio: corporate sites, web platforms, business systems, education portals, digital restaurant menus and automation.",
+        "email": "contacto@corestruct.com",
+        "knowsAbout": [
+          "Web development",
+          "Web platforms",
+          "Business systems",
+          "Education portals",
+          "Digital menus for restaurants",
+          "Process automation"
+        ]
+      }
+    </script>
+<!--lang-memory-->
+    <script>
+      /* Language preference: written by the ES/EN switch, applied before paint. */
+      (function () {
+        try {
+          var pref = localStorage.getItem("cs-lang");
+          if (pref && pref !== document.documentElement.lang) {
+            if (sessionStorage.getItem("cs-lang-hop") !== location.pathname) {
+              sessionStorage.setItem("cs-lang-hop", location.pathname);
+              location.replace("../index.html");
+              return;
+            }
+          } else {
+            sessionStorage.removeItem("cs-lang-hop");
+          }
+        } catch (e) {}
+        document.addEventListener("click", function (event) {
+          var pick = event.target.closest && event.target.closest("[data-lang-pick]");
+          if (pick) {
+            try { localStorage.setItem("cs-lang", pick.getAttribute("data-lang-pick")); } catch (e) {}
+          }
+        }, true);
+      })();
+    </script>
+    <!--/lang-memory-->
+<!--lang-alternates-->
+    <link rel="alternate" hreflang="es" href="https://corestruct.com/" />
+    <link rel="alternate" hreflang="en" href="https://corestruct.com/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://corestruct.com/" />
+    <!--/lang-alternates-->
+  </head>
+
+  <body>
+    <a class="skip-link" href="#contenido">Skip to content</a>
+
+    <!-- The ambient field of brand-coloured motes that rises behind the whole
+         page. Purely decorative; painted by starfield.js and empty until it
+         runs, so a browser without JavaScript never sees it. -->
+    <canvas class="starfield" data-starfield aria-hidden="true"></canvas>
+
+    <!-- The page's cyan light: the wake the cursor traces, and the soft head
+         that rides at the front of it. Purely decorative, both driven by
+         pointer-spotlight.js; empty and invisible until a mouse moves. -->
+    <canvas class="spotlight-trail" data-spotlight-trail aria-hidden="true"></canvas>
+    <div class="spotlight" data-spotlight aria-hidden="true"></div>
+
+    <!-- build:sprite -->
+    <svg class="sprite" aria-hidden="true" focusable="false" width="0" height="0">
+      <defs>
+        <linearGradient id="cs-face-top" gradientUnits="userSpaceOnUse" x1="33.3" y1="8.9" x2="353.6" y2="94.7"><stop offset="0%" stop-color="#140538"/><stop offset="16.7%" stop-color="#191754"/><stop offset="33.3%" stop-color="#223e81"/><stop offset="50%" stop-color="#2c6fb2"/><stop offset="66.7%" stop-color="#359dda"/><stop offset="83.3%" stop-color="#3bbaf1"/><stop offset="100%" stop-color="#3eccfb"/></linearGradient>
+        <linearGradient id="mk-brand-gradient" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#253880" />
+          <stop offset="100%" stop-color="#3898d4" />
+        </linearGradient>
+        <symbol id="cs-isotipo" viewBox="0 0 362 422"><path class="cs-face cs-face--top" fill="url(#cs-face-top)" d="M10 98L17 92L181 1L188 3L354 96L353 99L200 186L185 179L173 181L166 186L11 98Z"/><path class="cs-face cs-face--right" fill="#3898d4" d="M188 421L188 373L190 371L320 295L320 248L318 248L188 324L188 217L198 211L202 203L202 197L358 111L361 109L361 165L233 234L233 275L361 200L361 321L189 421Z"/><path class="cs-face cs-face--left" fill="#253880" d="M1 107L160 195L166 210L176 216L176 252L174 252L42 176L42 294L114 336L154 359L154 297L176 309L176 422L2 321L1 108Z"/></symbol>
+      </defs>
+    </svg>
+<!-- /build:sprite -->
+
+    <header class="header" data-header>
+      <div class="header__inner">
+        <a class="brand" href="#inicio" aria-label="CoreStruct — home">
+          <svg class="brand__mark" viewBox="0 0 362 422" aria-hidden="true" focusable="false">
+            <use href="#cs-isotipo" />
+          </svg>
+          <span class="brand__wordmark wordmark">CoreStruct</span>
+        </a>
+
+        <nav class="header__nav" aria-label="Main">
+          <ul class="nav__list">
+            <li><a class="nav__link" href="#proyectos" data-nav-link>Work</a></li>
+            <li><a class="nav__link" href="#alianzas" data-nav-link>Partnerships</a></li>
+            <li><a class="nav__link" href="#contacto" data-nav-link>Contact</a></li>
+          </ul>
+        </nav>
+
+        <div class="header__actions">
+          <!--lang-switch--><div class="lang-switch" role="group" aria-label="Idioma · Language"><span class="lang-switch__current" lang="en" aria-current="true">EN</span><a class="lang-switch__link" lang="es" hreflang="es" href="../index.html" data-lang-pick="es" title="Español">ES</a></div><!--/lang-switch-->
+          <a
+            class="button button--ghost button--compact button--pulse header__cta"
+            href="#contacto"
+            data-cotizador
+          >
+            Let's talk
+            <span class="button__arrow" aria-hidden="true">&rarr;</span>
+          </a>
+          <button
+            class="menu-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="menu-movil"
+            aria-label="Open menu"
+            data-menu-toggle
+          >
+            <span class="menu-toggle__bar" aria-hidden="true"></span>
+            <span class="menu-toggle__bar" aria-hidden="true"></span>
+            <span class="menu-toggle__bar" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+
+      <nav class="mobile-nav" id="menu-movil" aria-label="Menu" data-mobile-nav>
+        <a class="mobile-nav__link" href="#proyectos">
+          <span class="mobile-nav__index">01</span> Work
+        </a>
+        <a class="mobile-nav__link" href="#alianzas">
+          <span class="mobile-nav__index">02</span> Partnerships
+        </a>
+        <a class="mobile-nav__link" href="#contacto">
+          <span class="mobile-nav__index">03</span> Contact
+        </a>
+        <a class="button button--primary mobile-nav__cta" href="#contacto" data-cotizador>
+          Start a project
+          <span class="button__arrow" aria-hidden="true">&rarr;</span>
+        </a>
+      </nav>
+    </header>
+
+    <main id="contenido">
+      <!-- ===================================================== 01 · Hero -->
+      <section class="hero" id="inicio" data-hero>
+        <div class="hero__stage">
+          <div class="hero__content shell">
+            <!-- Pressing the mark throws off a burst of brand-blue sparks,
+                 painted on the canvas below it by logo-burst.js. Decorative:
+                 without JavaScript the canvas simply stays empty. -->
+            <div class="hero__mark" data-logo>
+              <!-- build:hero-mark -->
+              <svg
+                class="hero__mark-svg"
+                viewBox="0 0 362 422"
+                aria-hidden="true"
+                focusable="false"
+              ><path class="cs-face cs-face--top" fill="url(#cs-face-top)" d="M10 98L17 92L181 1L188 3L354 96L353 99L200 186L185 179L173 181L166 186L11 98Z"/><path class="cs-face cs-face--right" fill="#3898d4" d="M188 421L188 373L190 371L320 295L320 248L318 248L188 324L188 217L198 211L202 203L202 197L358 111L361 109L361 165L233 234L233 275L361 200L361 321L189 421Z"/><path class="cs-face cs-face--left" fill="#253880" d="M1 107L160 195L166 210L176 216L176 252L174 252L42 176L42 294L114 336L154 359L154 297L176 309L176 422L2 321L1 108Z"/></svg>
+<!-- /build:hero-mark -->
+              <canvas class="hero__mark-burst" data-logo-burst aria-hidden="true"></canvas>
+            </div>
+
+            <p class="hero__wordmark wordmark">CoreStruct</p>
+
+            <h1 class="hero__headline reveal-lines">
+              <span class="reveal-lines__line"><span>We turn ideas</span></span>
+              <span class="reveal-lines__line"><span>into systems</span></span>
+              <span class="reveal-lines__line"><span><em>that work.</em></span></span>
+            </h1>
+
+            <p class="hero__lede" data-reveal="fade">
+              <span>Web development</span> · <span>Platforms</span> ·
+              <span>Systems</span> · <span>Digital experiences</span>
+            </p>
+
+            <a class="button button--ghost hero__cta" href="#proyectos" data-reveal="fade">
+              See what we can build
+              <span class="button__arrow" aria-hidden="true">&darr;</span>
+            </a>
+          </div>
+
+          <p class="hero__hint" aria-hidden="true">
+            <span class="hero__hint-rail"></span>
+            Scroll
+          </p>
+        </div>
+      </section>
+
+      <!-- =============================================== 02 · Statement -->
+      <section class="statement" aria-labelledby="statement-title">
+        <div class="statement__inner shell">
+          <p class="eyebrow statement__eyebrow" data-reveal="fade">
+            Where it starts <span class="eyebrow__index">/ 01</span>
+          </p>
+
+          <h2 class="statement__title reveal-lines" id="statement-title">
+            <span class="reveal-lines__line"><span>It all begins</span></span>
+            <span class="reveal-lines__line"><span>with <em>an idea.</em></span></span>
+          </h2>
+
+          <p class="statement__body" data-reveal="far">
+            We turn it into a digital experience your team can run and your customers understand from the very first moment.
+          </p>
+        </div>
+      </section>
+
+      <span class="connector" aria-hidden="true"></span>
+
+      <!-- ================================================ 03 · Projects -->
+      <section class="section projects" id="proyectos" aria-labelledby="projects-title">
+        <div class="shell">
+          <header class="projects__head">
+            <p class="eyebrow" data-reveal="fade">
+              Work <span class="eyebrow__index">/ 02</span>
+            </p>
+            <h2 class="section__title" id="projects-title" data-reveal="far">
+              What we can build
+            </h2>
+            <p class="section__lede" data-reveal="far">
+              Eight ways of solving the same problem: technology that follows how your company actually operates, instead of imposing a way of working on it.
+            </p>
+          </header>
+
+          <!-- build:projects -->
+          <div class="projects__grid">
+            <article class="project-card project-card--major project-card--corporate" data-reveal="far">
+              <a
+                class="project-card__link"
+                href="demos/aurelis/index.html"
+                aria-label="Corporate sites — let's talk about your project"
+                data-pointer-glow
+              >
+                <div class="project-card__visual">
+                  <svg
+                    class="mk project-card__mockup"
+                    viewBox="0 0 400 250"
+                    preserveAspectRatio="xMidYMid meet"
+                    aria-hidden="true"
+                    focusable="false"
+                  ><defs> <radialGradient id="mk-plaza" cx="0.5" cy="0.5" r="0.5"> <stop offset="0%" stop-color="var(--mk-accent)" stop-opacity="0.22"/> <stop offset="100%" stop-color="var(--mk-accent)" stop-opacity="0"/> </radialGradient> </defs> <ellipse cx="100" cy="130" rx="96" ry="108" fill="url(#mk-plaza)"/> <g class="mk-float"> <rect class="mk-navy" x="30" y="122" width="40" height="90" rx="1"/> <rect class="mk-line" style="fill:none" x="30" y="122" width="40" height="90" rx="1"/> <g opacity="0.45"><path class="mk-line" d="M43.333333333333336 122v90M56.66666666666667 122v90M30 137h40M30 152h40M30 167h40M30 182h40M30 197h40"/></g> <rect class="mk-navy" x="134" y="102" width="40" height="110" rx="1"/> <rect class="mk-line" style="fill:none" x="134" y="102" width="40" height="110" rx="1"/> <g opacity="0.45"><path class="mk-line" d="M147.33333333333334 102v110M160.66666666666666 102v110M134 117.71428571428571h40M134 133.42857142857142h40M134 149.14285714285714h40M134 164.85714285714286h40M134 180.57142857142856h40M134 196.28571428571428h40"/></g> <rect class="mk-navy" x="78" y="62" width="48" height="150" rx="1"/> <rect class="mk-line" style="fill:none" x="78" y="62" width="48" height="150" rx="1"/> <g opacity="0.45"><path class="mk-line" d="M90 62v150M102 62v150M114 62v150M78 74.5h48M78 87h48M78 99.5h48M78 112h48M78 124.5h48M78 137h48M78 149.5h48M78 162h48M78 174.5h48M78 187h48M78 199.5h48"/></g> <rect class="mk-navy" x="52" y="186" width="100" height="26" rx="1"/> <rect class="mk-line" style="fill:none" x="52" y="186" width="100" height="26" rx="1"/> <g opacity="0.45"><path class="mk-line" d="M64.5 186v26M77 186v26M89.5 186v26M102 186v26M114.5 186v26M127 186v26M139.5 186v26"/></g> <rect class="mk-surface-strong" x="86" y="50" width="32" height="12" rx="1"/> <path class="mk-line" d="M96 50v-9h8v9"/> <path class="mk-line-accent" d="M100 41v-8"/> <path class="mk-line" d="M78 96h48M78 150h48"/> <rect class="mk-surface-strong" x="94" y="196" width="16" height="16" rx="1"/> </g> <path class="mk-line" d="M12 212h176"/> <g opacity="0.4"> <path class="mk-line" d="M12 219h176M12 226h176M12 233h176"/> </g> <g transform="translate(196 56)"> <path class="mk-line-accent" d="M2 20 12 2l10 18M6 15.5h12"/> </g> <text class="mk-wordmark mk-wordmark--caps" x="226" y="74">AURELIS</text> <text class="mk-kicker mk-kicker--tight" x="196" y="92">ENGINEERING · TECHNOLOGY · OPERATIONS</text> <rect class="mk-accent" x="196" y="102" width="32" height="2.5" rx="1.25"/> <text class="mk-figure" x="240" y="132" text-anchor="end">25+</text> <path class="mk-line-soft" d="M250 127h46"/> <rect class="mk-text-strong" x="304" y="123" width="62" height="5" rx="2.5"/> <text class="mk-figure" x="240" y="162" text-anchor="end">12</text> <path class="mk-line-soft" d="M250 157h60"/> <rect class="mk-text-strong" x="318" y="153" width="48" height="5" rx="2.5"/> <text class="mk-figure" x="240" y="192" text-anchor="end">350+</text> <path class="mk-line-soft" d="M250 187h38"/> <rect class="mk-text-strong" x="296" y="183" width="70" height="5" rx="2.5"/></svg>
+                </div>
+                <div class="project-card__body">
+                  <p class="project-card__meta">
+                    <span class="project-card__index">01</span>
+                    <span class="project-card__category">Web development</span>
+                  </p>
+                  <h3 class="project-card__title" id="proyecto-01">Corporate sites</h3>
+                  <p class="project-card__text">A tailored institutional presence: fast, accessible, and built to carry the brand's reputation on any device.</p>
+                  <p class="project-card__cta arrow-link">
+                    <span class="arrow-link__line" aria-hidden="true"></span>
+                    Explore
+                    <span class="arrow-link__arrow" aria-hidden="true">&rarr;</span>
+                  </p>
+                </div>
+              </a>
+            </article>
+            <article class="project-card project-card--minor project-card--offset" data-reveal="rise">
+              <a
+                class="project-card__link"
+                href="demos/cede/index.html"
+                aria-label="Government sites — let's talk about your project"
+                data-pointer-glow
+              >
+                <div class="project-card__visual">
+                  <svg
+                    class="mk project-card__mockup"
+                    viewBox="0 0 400 250"
+                    preserveAspectRatio="xMidYMid meet"
+                    aria-hidden="true"
+                    focusable="false"
+                  ><g class="mk-float"> <rect class="mk-window" x="22" y="24" width="356" height="202" rx="9"/> <path class="mk-line" d="M22 48h356"/> <circle class="mk-text" cx="38" cy="36" r="3"/> <circle class="mk-text" cx="49" cy="36" r="3"/> <circle class="mk-text" cx="60" cy="36" r="3"/> <!-- The institutional bar and the navigation band the portal opens with. --> <rect class="mk-navy" x="22" y="48" width="356" height="15"/> <g opacity="0.55"> <rect class="mk-text" x="36" y="53" width="22" height="5" rx="2.5"/><rect class="mk-text" x="74" y="53" width="22" height="5" rx="2.5"/><rect class="mk-text" x="116" y="53" width="28" height="5" rx="2.5"/><rect class="mk-text" x="152" y="53" width="22" height="5" rx="2.5"/><rect class="mk-text" x="196" y="53" width="22" height="5" rx="2.5"/><rect class="mk-text" x="238" y="53" width="22" height="5" rx="2.5"/> </g> <rect class="mk-accent" x="116" y="61" width="28" height="2"/> <!-- The country, filled and bordered: a choropleth at card size. --> <g transform="translate(36 76) scale(0.74)"> <path class="mk-surface-strong" d="M140 49L140 60L145 57L149 62L156 64L164 59L181 57L187 51L199 51L180 38L183 41L179 45L172 38L168 40L170 34L180 38L162 24L140 19L140 49ZM92 6L89 9L99 4L92 6ZM64 104L60 108L62 113L66 117L75 117L79 108L85 107L83 94L73 100L62 92L64 104ZM140 19L125 23L107 17L114 19L94 27L103 39L118 32L140 49L140 19ZM83 94L85 91L97 92L107 82L116 90L116 85L121 82L119 78L109 80L102 72L94 75L85 70L76 80L79 84L76 91L72 90L69 97L74 100L83 94ZM140 49L118 32L107 39L95 41L93 38L82 42L76 51L85 70L94 75L102 72L109 80L119 78L123 83L135 75L133 72L139 64L140 49ZM61 95L52 89L53 101L50 103L53 105L55 101L58 101L55 105L57 107L61 103L65 103L61 95ZM93 25L56 26L57 21L51 25L56 35L70 37L77 33L95 32L93 25ZM42 63L49 71L56 72L56 75L50 78L55 82L63 77L61 67L69 56L62 54L59 49L53 51L42 63ZM20 42L8 49L5 55L17 68L21 64L19 61L24 60L24 47L20 42ZM53 21L40 29L36 27L29 34L36 35L41 40L40 47L45 58L53 52L53 48L46 43L53 21ZM69 95L72 95L72 90L76 91L79 84L76 80L85 70L75 50L70 51L68 61L61 67L63 77L56 81L55 92L69 95ZM42 63L33 63L33 67L28 69L34 80L29 89L37 86L37 81L49 70L42 63ZM56 90L57 82L50 78L56 75L56 72L46 71L37 84L56 90ZM20 66L21 70L16 71L13 77L29 85L34 80L28 70L33 67L33 57L25 53L24 61L19 61L20 66ZM8 61L1 70L9 71L13 77L22 67L17 68L8 61ZM45 58L40 47L41 40L36 35L31 33L20 42L24 47L22 54L32 57L33 63L42 63L45 58ZM95 32L64 37L61 33L56 35L51 27L46 44L53 51L59 49L62 54L70 55L71 50L80 49L82 42L100 38L100 34L95 32Z"/> <path class="mk-line" style="fill:none" d="M140 49L140 60L145 57L149 62L156 64L164 59L181 57L187 51L199 51L180 38L183 41L179 45L172 38L168 40L170 34L180 38L162 24L140 19L140 49ZM92 6L89 9L99 4L92 6ZM64 104L60 108L62 113L66 117L75 117L79 108L85 107L83 94L73 100L62 92L64 104ZM140 19L125 23L107 17L114 19L94 27L103 39L118 32L140 49L140 19ZM83 94L85 91L97 92L107 82L116 90L116 85L121 82L119 78L109 80L102 72L94 75L85 70L76 80L79 84L76 91L72 90L69 97L74 100L83 94ZM140 49L118 32L107 39L95 41L93 38L82 42L76 51L85 70L94 75L102 72L109 80L119 78L123 83L135 75L133 72L139 64L140 49ZM61 95L52 89L53 101L50 103L53 105L55 101L58 101L55 105L57 107L61 103L65 103L61 95ZM93 25L56 26L57 21L51 25L56 35L70 37L77 33L95 32L93 25ZM42 63L49 71L56 72L56 75L50 78L55 82L63 77L61 67L69 56L62 54L59 49L53 51L42 63ZM20 42L8 49L5 55L17 68L21 64L19 61L24 60L24 47L20 42ZM53 21L40 29L36 27L29 34L36 35L41 40L40 47L45 58L53 52L53 48L46 43L53 21ZM69 95L72 95L72 90L76 91L79 84L76 80L85 70L75 50L70 51L68 61L61 67L63 77L56 81L55 92L69 95ZM42 63L33 63L33 67L28 69L34 80L29 89L37 86L37 81L49 70L42 63ZM56 90L57 82L50 78L56 75L56 72L46 71L37 84L56 90ZM20 66L21 70L16 71L13 77L29 85L34 80L28 70L33 67L33 57L25 53L24 61L19 61L20 66ZM8 61L1 70L9 71L13 77L22 67L17 68L8 61ZM45 58L40 47L41 40L36 35L31 33L20 42L24 47L22 54L32 57L33 63L42 63L45 58ZM95 32L64 37L61 33L56 35L51 27L46 44L53 51L59 49L62 54L70 55L71 50L80 49L82 42L100 38L100 34L95 32Z"/> </g> <!-- Three figures and the eight-year series they come from. --> <text class="mk-figure" x="360" y="96" text-anchor="end" style="font-size:15px">2,381,500</text> <rect class="mk-text" x="212" y="86" width="54" height="5" rx="2.5"/> <path class="mk-line-soft" d="M212 102h148"/> <text class="mk-figure" x="360" y="122" text-anchor="end" style="font-size:15px">23,410</text> <rect class="mk-text" x="212" y="112" width="42" height="5" rx="2.5"/> <path class="mk-line-soft" d="M212 128h148"/> <text class="mk-figure" x="360" y="148" text-anchor="end" style="font-size:15px">78,240</text> <rect class="mk-text" x="212" y="138" width="42" height="5" rx="2.5"/> <path class="mk-line-soft" d="M212 154h148"/> <path class="mk-line-accent" d="M214 196l20-9 18 5 20-14 18 7 22-18 20 6 22-15"/> <circle class="mk-accent" cx="356" cy="158" r="0"/> <circle class="mk-accent" cx="354" cy="158" r="0"/> <rect class="mk-accent-soft" x="212" y="206" width="148" height="1"/> <!-- The register underneath: a public portal is mostly a list. --> <rect class="mk-text" x="36" y="186" width="52" height="5" rx="2.5"/> <rect class="mk-surface" x="98" y="184" width="86" height="8" rx="2"/> <rect class="mk-text" x="36" y="199" width="46" height="5" rx="2.5"/> <rect class="mk-surface" x="98" y="197" width="86" height="8" rx="2"/> <rect class="mk-text" x="36" y="212" width="40" height="5" rx="2.5"/> <rect class="mk-surface" x="98" y="210" width="86" height="8" rx="2"/> </g></svg>
+                </div>
+                <div class="project-card__body">
+                  <p class="project-card__meta">
+                    <span class="project-card__index">02</span>
+                    <span class="project-card__category">Public sector</span>
+                  </p>
+                  <h3 class="project-card__title" id="proyecto-02">Government sites</h3>
+                  <p class="project-card__text">Institutional portals with an indicator observatory, regulations, transparency and public consultation.</p>
+                  <p class="project-card__cta arrow-link">
+                    <span class="arrow-link__line" aria-hidden="true"></span>
+                    Explore
+                    <span class="arrow-link__arrow" aria-hidden="true">&rarr;</span>
+                  </p>
+                </div>
+              </a>
+            </article>
+            <article class="project-card project-card--minor project-card--systems" data-reveal="rise">
+              <a
+                class="project-card__link"
+                href="demos/rumbo/index.html"
+                aria-label="Business systems — let's talk about your project"
+                data-pointer-glow
+              >
+                <div class="project-card__visual">
+                  <svg
+                    class="mk project-card__mockup"
+                    viewBox="0 0 400 250"
+                    preserveAspectRatio="xMidYMid meet"
+                    aria-hidden="true"
+                    focusable="false"
+                  ><g class="mk-float"> <rect class="mk-window" x="36" y="30" width="328" height="190" rx="9"/> <path class="mk-line" d="M36 54h328"/> <circle class="mk-text" cx="52" cy="42" r="3"/> <circle class="mk-text" cx="63" cy="42" r="3"/> <circle class="mk-text" cx="74" cy="42" r="3"/> <path class="mk-line" d="M78 54v166"/> <rect class="mk-accent-soft" x="50" y="66" width="14" height="14" rx="4"/> <rect class="mk-surface-strong" x="50" y="90" width="14" height="14" rx="4"/> <rect class="mk-surface-strong" x="50" y="114" width="14" height="14" rx="4"/> <rect class="mk-surface-strong" x="50" y="138" width="14" height="14" rx="4"/> <rect class="mk-surface" x="92" y="64" width="258" height="18" rx="4"/> <rect class="mk-text-strong" x="102" y="71" width="40" height="4" rx="2"/> <rect class="mk-text-strong" x="178" y="71" width="46" height="4" rx="2"/> <rect class="mk-text-strong" x="254" y="71" width="34" height="4" rx="2"/> <rect class="mk-text-strong" x="310" y="71" width="28" height="4" rx="2"/> <rect class="mk-accent-soft" x="92" y="112" width="258" height="22" rx="4"/> <rect class="mk-accent" x="92" y="112" width="2.5" height="22" rx="1.25"/> <rect class="mk-text" x="102" y="95" width="52" height="5" rx="2.5"/> <rect class="mk-text" x="178" y="95" width="58" height="5" rx="2.5"/> <rect class="mk-text" x="254" y="95" width="42" height="5" rx="2.5"/> <rect class="mk-surface-strong" x="310" y="93" width="30" height="9" rx="4.5"/> <rect class="mk-text" x="102" y="121" width="52" height="5" rx="2.5"/> <rect class="mk-text" x="178" y="121" width="58" height="5" rx="2.5"/> <rect class="mk-text" x="254" y="121" width="42" height="5" rx="2.5"/> <rect class="mk-accent" x="310" y="119" width="30" height="9" rx="4.5"/> <rect class="mk-text" x="102" y="149" width="52" height="5" rx="2.5"/> <rect class="mk-text" x="178" y="149" width="58" height="5" rx="2.5"/> <rect class="mk-text" x="254" y="149" width="42" height="5" rx="2.5"/> <rect class="mk-surface-strong" x="310" y="147" width="30" height="9" rx="4.5"/> <rect class="mk-text" x="102" y="177" width="52" height="5" rx="2.5"/> <rect class="mk-text" x="178" y="177" width="58" height="5" rx="2.5"/> <rect class="mk-text" x="254" y="177" width="42" height="5" rx="2.5"/> <rect class="mk-surface-strong" x="310" y="175" width="30" height="9" rx="4.5"/> <path class="mk-line" d="M92 108h258M92 142h258M92 170h258"/> </g></svg>
+                </div>
+                <div class="project-card__body">
+                  <p class="project-card__meta">
+                    <span class="project-card__index">03</span>
+                    <span class="project-card__category">Bespoke software</span>
+                  </p>
+                  <h3 class="project-card__title" id="proyecto-03">Business systems</h3>
+                  <p class="project-card__text">Records, users and operations in a system that adapts to how the company actually works.</p>
+                  <p class="project-card__cta arrow-link">
+                    <span class="arrow-link__line" aria-hidden="true"></span>
+                    Explore
+                    <span class="arrow-link__arrow" aria-hidden="true">&rarr;</span>
+                  </p>
+                </div>
+              </a>
+            </article>
+            <article class="project-card project-card--major project-card--landing" data-reveal="far">
+              <a
+                class="project-card__link"
+                href="demos/landing/index.html"
+                aria-label="Landing pages — let's talk about your project"
+                data-pointer-glow
+              >
+                <div class="project-card__visual">
+                  <svg
+                    class="mk project-card__mockup"
+                    viewBox="0 0 400 250"
+                    preserveAspectRatio="xMidYMid meet"
+                    aria-hidden="true"
+                    focusable="false"
+                  ><g class="mk-float"> <rect class="mk-window" x="122" y="16" width="156" height="218" rx="10"/> <clipPath id="mk-landing-clip"> <rect x="122" y="16" width="156" height="218" rx="10"/> </clipPath> <g clip-path="url(#mk-landing-clip)"> <rect class="mk-navy" x="122" y="16" width="156" height="86"/> <rect class="mk-gradient" x="122" y="100" width="156" height="2"/> <rect class="mk-text" x="140" y="40" width="110" height="8" rx="4"/><rect class="mk-text" x="140" y="54" width="76" height="8" rx="4"/> <rect class="mk-accent" x="140" y="74" width="58" height="15" rx="7.5"/> <rect class="mk-text-strong" x="140" y="116" width="64" height="6" rx="3"/> <rect class="mk-surface" x="140" y="132" width="54" height="34" rx="4"/> <rect class="mk-surface" x="202" y="132" width="54" height="34" rx="4"/> <rect class="mk-text" x="140" y="178" width="120" height="5" rx="2.5"/><rect class="mk-text" x="140" y="189" width="96" height="5" rx="2.5"/><rect class="mk-text" x="140" y="200" width="108" height="5" rx="2.5"/> <rect class="mk-surface-strong" x="122" y="218" width="156" height="16"/> </g> <rect class="mk-text" x="286" y="40" width="3" height="64" rx="1.5"/> <rect class="mk-accent" x="286" y="40" width="3" height="34" rx="1.5"/> </g></svg>
+                </div>
+                <div class="project-card__body">
+                  <p class="project-card__meta">
+                    <span class="project-card__index">04</span>
+                    <span class="project-card__category">Conversion</span>
+                  </p>
+                  <h3 class="project-card__title" id="proyecto-04">Landing pages</h3>
+                  <p class="project-card__text">Three pages built for three different businesses, each aimed at a single outcome: getting the right person to take the next step.</p>
+                  <p class="project-card__cta arrow-link">
+                    <span class="arrow-link__line" aria-hidden="true"></span>
+                    Explore
+                    <span class="arrow-link__arrow" aria-hidden="true">&rarr;</span>
+                  </p>
+                </div>
+              </a>
+            </article>
+            <article class="project-card project-card--wide" data-reveal="scale">
+              <a
+                class="project-card__link"
+                href="demos/aurea/index.html"
+                aria-label="Education portals — let's talk about your project"
+                data-pointer-glow
+              >
+                <div class="project-card__visual">
+                  <svg
+                    class="mk project-card__mockup"
+                    viewBox="0 0 400 250"
+                    preserveAspectRatio="xMidYMid meet"
+                    aria-hidden="true"
+                    focusable="false"
+                  ><g class="mk-float"> <rect class="mk-window" x="30" y="28" width="340" height="194" rx="9"/> <path class="mk-line" d="M30 52h340"/> <circle class="mk-text" cx="46" cy="40" r="3"/> <circle class="mk-text" cx="57" cy="40" r="3"/> <circle class="mk-text" cx="68" cy="40" r="3"/> <path class="mk-line-soft" d="M70 74h220"/> <circle class="mk-accent" cx="70" cy="74" r="9"/> <circle class="mk-accent" cx="180" cy="74" r="9"/> <circle class="mk-surface-strong" cx="290" cy="74" r="9"/> <path class="mk-line-accent" d="M70 74h110"/> <rect class="mk-text" x="52" y="92" width="36" height="4" rx="2"/> <rect class="mk-text-strong" x="160" y="92" width="42" height="4" rx="2"/> <rect class="mk-text" x="272" y="92" width="38" height="4" rx="2"/> <rect class="mk-surface" x="52" y="118" width="180" height="20" rx="5"/> <rect class="mk-surface" x="52" y="146" width="180" height="20" rx="5"/> <rect class="mk-surface" x="52" y="174" width="86" height="20" rx="5"/> <rect class="mk-surface" x="146" y="174" width="86" height="20" rx="5"/> <rect class="mk-text" x="62" y="125" width="58" height="5" rx="2.5"/> <rect class="mk-text" x="62" y="153" width="72" height="5" rx="2.5"/> <rect class="mk-text" x="62" y="181" width="40" height="5" rx="2.5"/> <rect class="mk-text" x="156" y="181" width="44" height="5" rx="2.5"/> <rect class="mk-accent" x="52" y="118" width="2.5" height="20" rx="1.25"/> <rect class="mk-surface" x="252" y="118" width="96" height="76" rx="6"/> <rect class="mk-gradient" x="252" y="118" width="96" height="2.5" rx="1.25"/> <circle class="mk-accent-soft" cx="300" cy="146" r="16"/> <path class="mk-line-accent" d="M293 146l5 5 11-11" stroke-width="2"/> <rect class="mk-text" x="268" y="172" width="64" height="4" rx="2"/><rect class="mk-text" x="268" y="182" width="44" height="4" rx="2"/> </g></svg>
+                </div>
+                <div class="project-card__body">
+                  <p class="project-card__meta">
+                    <span class="project-card__index">05</span>
+                    <span class="project-card__category">Education</span>
+                  </p>
+                  <h3 class="project-card__title" id="proyecto-05">Education portals</h3>
+                  <p class="project-card__text">AUREA: a digital ecosystem connecting admissions, academic programmes, institutional information, the calendar and services for the whole school community.</p>
+                  <p class="project-card__cta arrow-link">
+                    <span class="arrow-link__line" aria-hidden="true"></span>
+                    Explore the portal
+                    <span class="arrow-link__arrow" aria-hidden="true">&rarr;</span>
+                  </p>
+                </div>
+              </a>
+            </article>
+            <article class="project-card project-card--half project-card--brand" data-reveal="far">
+              <a
+                class="project-card__link"
+                href="demos/verbena.html"
+                aria-label="Restaurants and menus — let's talk about your project"
+                data-pointer-glow
+              >
+                <div class="project-card__visual">
+                  <svg
+                    class="mk project-card__mockup"
+                    viewBox="0 0 400 250"
+                    preserveAspectRatio="xMidYMid meet"
+                    aria-hidden="true"
+                    focusable="false"
+                  ><defs> <radialGradient id="mk-shelf" cx="0.5" cy="0.5" r="0.5"> <stop offset="0%" stop-color="var(--mk-accent)" stop-opacity="0.3"/> <stop offset="100%" stop-color="var(--mk-accent)" stop-opacity="0"/> </radialGradient> <radialGradient id="mk-plinth" cx="0.5" cy="0.5" r="0.5"> <stop offset="0%" stop-color="var(--mk-shadow)" stop-opacity="0.6"/> <stop offset="62%" stop-color="var(--mk-shadow)" stop-opacity="0.26"/> <stop offset="100%" stop-color="var(--mk-shadow)" stop-opacity="0"/> </radialGradient> <linearGradient id="mk-drink" gradientUnits="userSpaceOnUse" x1="0" y1="176" x2="0" y2="646"> <stop offset="0%" stop-color="var(--mk-accent)"/> <stop offset="100%" stop-color="var(--mk-accent-deep)"/> </linearGradient> </defs> <ellipse cx="98" cy="126" rx="92" ry="112" fill="url(#mk-shelf)"/> <ellipse cx="98" cy="229" rx="54" ry="9" fill="url(#mk-plinth)"/> <g class="mk-float"><g transform="translate(57 22) scale(0.315)"> <path class="mk-glass" d="M112 82 L112 176 C112 206 52 232 52 300 L52 618 Q52 646 80 646 L180 646 Q208 646 208 618 L208 300 C208 232 148 206 148 176 L148 82 Z"/> <path fill="url(#mk-drink)" d="M112 176C112 206 52 232 52 300L52 618Q52 646 80 646L180 646Q208 646 208 618L208 300C208 232 148 206 148 176Z"/> <rect class="mk-cap" x="104" y="12" width="52" height="52" rx="7"/> <rect class="mk-collar" x="100" y="60" width="60" height="20" rx="5"/> <path class="mk-outline" d="M112 82 L112 176 C112 206 52 232 52 300 L52 618 Q52 646 80 646 L180 646 Q208 646 208 618 L208 300 C208 232 148 206 148 176 L148 82 Z"/> <rect class="mk-label" x="54" y="366" width="152" height="192" rx="9"/> <text class="mk-label-mark" x="130" y="452" text-anchor="middle">V</text> <path class="mk-label-rule" d="M84 480h92M84 506h60"/> </g></g> <text class="mk-kicker" x="196" y="72">SIGNATURE DRINKS</text> <text class="mk-wordmark" x="196" y="104">VERBENA</text> <rect class="mk-accent" x="196" y="116" width="32" height="2.5" rx="1.25"/> <rect class="mk-text-strong" x="196" y="148" width="82" height="5" rx="2.5"/> <path class="mk-line-soft" d="M282 150.5h60"/> <rect class="mk-text" x="346" y="148" width="20" height="5" rx="2.5"/> <rect class="mk-text-strong" x="196" y="172" width="100" height="5" rx="2.5"/> <path class="mk-line-soft" d="M300 174.5h40"/> <rect class="mk-text" x="344" y="172" width="22" height="5" rx="2.5"/> <rect class="mk-text-strong" x="196" y="196" width="68" height="5" rx="2.5"/> <path class="mk-line-soft" d="M268 198.5h76"/> <rect class="mk-text" x="348" y="196" width="18" height="5" rx="2.5"/></svg>
+                </div>
+                <div class="project-card__body">
+                  <p class="project-card__meta">
+                    <span class="project-card__index">06</span>
+                    <span class="project-card__category">Food and drink</span>
+                  </p>
+                  <h3 class="project-card__title" id="proyecto-06">Restaurants and menus</h3>
+                  <p class="project-card__text">Digital menus, product catalogues and online ordering for restaurants, cafés and drinks brands.</p>
+                  <p class="project-card__cta arrow-link">
+                    <span class="arrow-link__line" aria-hidden="true"></span>
+                    Explore
+                    <span class="arrow-link__arrow" aria-hidden="true">&rarr;</span>
+                  </p>
+                </div>
+              </a>
+            </article>
+            <article class="project-card project-card--half project-card--offset" data-reveal="rise">
+              <a
+                class="project-card__link"
+                href="demos/flujo/index.html"
+                aria-label="Automation — let's talk about your project"
+                data-pointer-glow
+              >
+                <div class="project-card__visual">
+                  <svg
+                    class="mk project-card__mockup"
+                    viewBox="0 0 400 250"
+                    preserveAspectRatio="xMidYMid meet"
+                    aria-hidden="true"
+                    focusable="false"
+                  ><g class="mk-float"> <path class="mk-line-soft" d="M118 125h44M232 96h40M232 154h40"/> <path class="mk-line-accent" d="M162 125h20v-29h50M162 125h20v29h50"/> <rect class="mk-window" x="34" y="102" width="84" height="46" rx="8"/> <circle class="mk-accent" cx="54" cy="125" r="6"/> <rect class="mk-text" x="68" y="116" width="36" height="4" rx="2"/><rect class="mk-text" x="68" y="126" width="24" height="4" rx="2"/> <rect class="mk-window" x="182" y="74" width="90" height="44" rx="8"/> <rect class="mk-gradient" x="182" y="74" width="90" height="2.5" rx="1.25"/> <rect class="mk-text" x="196" y="88" width="42" height="4" rx="2"/><rect class="mk-text" x="196" y="98" width="28" height="4" rx="2"/> <rect class="mk-window" x="182" y="132" width="90" height="44" rx="8"/> <rect class="mk-accent-soft" x="182" y="132" width="90" height="2.5" rx="1.25"/> <rect class="mk-text" x="196" y="146" width="38" height="4" rx="2"/><rect class="mk-text" x="196" y="156" width="34" height="4" rx="2"/> <rect class="mk-window" x="286" y="74" width="80" height="44" rx="8"/> <rect class="mk-text" x="300" y="88" width="34" height="4" rx="2"/><rect class="mk-text" x="300" y="98" width="22" height="4" rx="2"/> <rect class="mk-window" x="286" y="132" width="80" height="44" rx="8"/> <rect class="mk-text" x="300" y="146" width="30" height="4" rx="2"/><rect class="mk-text" x="300" y="156" width="26" height="4" rx="2"/> <circle class="mk-accent" cx="182" cy="96" r="3"/> <circle class="mk-accent" cx="182" cy="154" r="3"/> <circle class="mk-text-strong" cx="286" cy="96" r="3"/> <circle class="mk-text-strong" cx="286" cy="154" r="3"/> </g></svg>
+                </div>
+                <div class="project-card__body">
+                  <p class="project-card__meta">
+                    <span class="project-card__index">07</span>
+                    <span class="project-card__category">Integration</span>
+                  </p>
+                  <h3 class="project-card__title" id="proyecto-07">Automation</h3>
+                  <p class="project-card__text">Requests, approval rules, generated documents and an audit trail: the internal processes that currently live in email threads and spreadsheets.</p>
+                  <p class="project-card__cta arrow-link">
+                    <span class="arrow-link__line" aria-hidden="true"></span>
+                    Explore
+                    <span class="arrow-link__arrow" aria-hidden="true">&rarr;</span>
+                  </p>
+                </div>
+              </a>
+            </article>
+            <article class="project-card project-card--wide" data-reveal="scale">
+              <a
+                class="project-card__link"
+                href="#contacto"
+                aria-label="Bespoke solutions — let's talk about your project"
+                data-pointer-glow
+              >
+                <div class="project-card__visual">
+                  <svg
+                    class="mk project-card__mockup"
+                    viewBox="0 0 400 250"
+                    preserveAspectRatio="xMidYMid meet"
+                    aria-hidden="true"
+                    focusable="false"
+                  ><g class="mk-float"> <path class="mk-line-soft" d="M200 62v26M138 152l-18 10M262 152l18 10"/> <path class="mk-gradient" d="M200 18l72 42-72 42-72-42z" opacity="0.9"/> <path class="mk-line" d="M200 18l72 42-72 42-72-42z"/> <path class="mk-navy" d="M124 106l70 40v82l-70-40z"/> <path class="mk-line" d="M124 106l70 40v82l-70-40z"/> <path class="mk-accent-soft" d="M276 106l-70 40v82l70-40z"/> <path class="mk-line" d="M276 106l-70 40v82l70-40z"/> <circle class="mk-accent" cx="200" cy="102" r="5"/> <circle class="mk-text-strong" cx="124" cy="106" r="3.5"/> <circle class="mk-text-strong" cx="276" cy="106" r="3.5"/> <rect class="mk-text" x="96" y="232" width="56" height="4" rx="2"/> <rect class="mk-text-strong" x="180" y="232" width="40" height="4" rx="2"/> <rect class="mk-text" x="252" y="232" width="52" height="4" rx="2"/> </g></svg>
+                </div>
+                <div class="project-card__body">
+                  <p class="project-card__meta">
+                    <span class="project-card__index">08</span>
+                    <span class="project-card__category">Engineering</span>
+                  </p>
+                  <h3 class="project-card__title" id="proyecto-08">Bespoke solutions</h3>
+                  <p class="project-card__text">When nothing off the shelf fits, we design the software around the client's operation — not the other way round.</p>
+                  <p class="project-card__cta arrow-link">
+                    <span class="arrow-link__line" aria-hidden="true"></span>
+                    Explore
+                    <span class="arrow-link__arrow" aria-hidden="true">&rarr;</span>
+                  </p>
+                </div>
+              </a>
+            </article>
+          </div>
+<!-- /build:projects -->
+        </div>
+      </section>
+
+      <span class="connector" aria-hidden="true"></span>
+
+      <!-- =============================================== 04 · Alliances -->
+      <section class="section alliances" id="alianzas" aria-labelledby="alliances-title">
+        <div class="shell">
+          <header class="alliances__head">
+            <p class="eyebrow" data-reveal="fade">
+              Partnerships <span class="eyebrow__index">/ 03</span>
+            </p>
+            <h2 class="alliances__title" id="alliances-title" data-reveal="far">
+              We don't just build <em>web pages.</em>
+            </h2>
+            <p class="alliances__lede" data-reveal="far">
+              We work with institutions that need a platform, not a page: projects that are maintained, that grow, and that are run from the inside.
+            </p>
+          </header>
+
+          <!-- build:alliances -->
+          <ul class="alliances__list">
+            <li class="alliance" data-reveal="far">
+              <article class="alliance__panel" data-pointer-glow>
+                <div class="alliance__brand">
+                  <div class="alliance__plate">
+                    <img
+                      class="alliance__logo"
+                      src="../assets/alianzas/virginia-sapp.png"
+                      width="202"
+                      height="280"
+                      alt="Virginia Sapp institutional logo"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                </div>
+
+                <span class="alliance__seam" aria-hidden="true"></span>
+
+                <div class="alliance__body">
+                  <p class="alliance__meta">
+                    <span class="alliance__index">01</span>
+                    <span class="alliance__kind">Educational institution</span>
+                  </p>
+                  <h3 class="alliance__name">Virginia Sapp</h3>
+                  <div class="alliance__detail">
+                    <p class="alliance__text">We built Virginia Sapp <strong class="alliance__lift">a digital education platform that goes well beyond a web page</strong>: it brings their institutional presence, admissions, content, academic resources and interactive tools together in one modern experience they can administer themselves and grow with the institution.</p>
+                    <div class="alliance__aside">
+                      <p class="alliance__aside-label">Scope</p>
+                      <ul class="alliance__scope">
+                        <li class="alliance__scope-item">Institutional presence</li>
+                        <li class="alliance__scope-item">Admissions</li>
+                        <li class="alliance__scope-item">Content and resources</li>
+                        <li class="alliance__scope-item">Interactive tools</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </li>
+          </ul>
+<!-- /build:alliances -->
+        </div>
+      </section>
+
+      <!-- ================================================ 05 · Manifesto -->
+      <section class="manifesto" aria-labelledby="manifesto-quote">
+        <div class="manifesto__inner shell">
+          <!-- build:manifesto -->
+          <h2 class="manifesto__quote reveal-words" id="manifesto-quote">
+            <span>Technology</span> <span>should</span> <span>adapt</span> <span>to</span> <span>your</span> <span>company,</span> <span><em>not</em></span> <span><em>your</em></span> <span><em>company</em></span> <span><em>to</em></span> <span><em>the</em></span> <span><em>technology.</em></span>
+          </h2>
+          <p class="manifesto__attribution" data-reveal="fade">
+            CoreStruct · A working principle
+          </p>
+<!-- /build:manifesto -->
+        </div>
+      </section>
+
+      <!-- ================================================== 06 · Contact -->
+      <section class="contact" id="contacto" aria-labelledby="contact-title">
+        <div class="contact__inner shell">
+          <p class="eyebrow" data-reveal="fade">
+            Contact <span class="eyebrow__index">/ 04</span>
+          </p>
+
+          <h2 class="contact__title" id="contact-title" data-reveal="far">
+            Have an idea?
+          </h2>
+          <p class="contact__subtitle" data-reveal="far">
+            We can turn it into a digital solution.
+          </p>
+
+          <div class="contact__actions" data-reveal="far">
+            <!-- build:cta -->
+            <a
+              class="button button--primary button--large button--pulse"
+              href="mailto:contacto@corestruct.com"
+              data-cotizador
+            >
+              Let's talk
+              <span class="button__arrow" aria-hidden="true">&rarr;</span>
+            </a>
+<!-- /build:cta -->
+          </div>
+
+          <!-- build:channels -->
+          <div class="contact__channels" data-reveal="far">
+            <p class="channel">
+              <span class="channel__label">Email</span>
+              <a class="channel__value" href="mailto:contacto@corestruct.com">contacto@corestruct.com</a>
+            </p>
+          </div>
+<!-- /build:channels -->
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer__inner shell">
+        <a class="footer__brand" href="#inicio" aria-label="CoreStruct — home">
+          <svg class="footer__mark" viewBox="0 0 362 422" aria-hidden="true" focusable="false">
+            <use href="#cs-isotipo" />
+          </svg>
+          <span class="footer__wordmark wordmark">CoreStruct</span>
+        </a>
+
+        <!-- build:footer-meta -->
+        <div class="footer__meta">
+          <a class="footer__link" href="#proyectos">Work</a>
+          <a class="footer__link" href="#alianzas">Partnerships</a>
+          <a class="footer__link" href="#contacto">Contact</a>
+          <span class="footer__note">
+            &copy; <span data-current-year>2026</span>
+            CoreStruct
+          </span>
+        </div>
+<!-- /build:footer-meta -->
+      </div>
+    </footer>
+
+    <script type="module" src="../src/scripts/main.js"></script>
+    <script type="module" src="../src/scripts/cotizador.js"></script>
+  </body>
+</html>

@@ -99,6 +99,36 @@
         ]
       }
     </script>
+<!--lang-memory-->
+    <script>
+      /* Language preference: written by the ES/EN switch, applied before paint. */
+      (function () {
+        try {
+          var pref = localStorage.getItem("cs-lang");
+          if (pref && pref !== document.documentElement.lang) {
+            if (sessionStorage.getItem("cs-lang-hop") !== location.pathname) {
+              sessionStorage.setItem("cs-lang-hop", location.pathname);
+              location.replace("en/index.html");
+              return;
+            }
+          } else {
+            sessionStorage.removeItem("cs-lang-hop");
+          }
+        } catch (e) {}
+        document.addEventListener("click", function (event) {
+          var pick = event.target.closest && event.target.closest("[data-lang-pick]");
+          if (pick) {
+            try { localStorage.setItem("cs-lang", pick.getAttribute("data-lang-pick")); } catch (e) {}
+          }
+        }, true);
+      })();
+    </script>
+    <!--/lang-memory-->
+<!--lang-alternates-->
+    <link rel="alternate" hreflang="es" href="https://corestruct.com/" />
+    <link rel="alternate" hreflang="en" href="https://corestruct.com/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://corestruct.com/" />
+    <!--/lang-alternates-->
   </head>
 
   <body>
@@ -146,7 +176,12 @@
         </nav>
 
         <div class="header__actions">
-          <a class="button button--ghost button--compact button--pulse header__cta" href="#contacto">
+          <!--lang-switch--><div class="lang-switch" role="group" aria-label="Idioma · Language"><span class="lang-switch__current" lang="es" aria-current="true">ES</span><a class="lang-switch__link" lang="en" hreflang="en" href="en/index.html" data-lang-pick="en" title="English">EN</a></div><!--/lang-switch-->
+          <a
+            class="button button--ghost button--compact button--pulse header__cta"
+            href="#contacto"
+            data-cotizador
+          >
             Hablemos
             <span class="button__arrow" aria-hidden="true">&rarr;</span>
           </a>
@@ -175,7 +210,7 @@
         <a class="mobile-nav__link" href="#contacto">
           <span class="mobile-nav__index">03</span> Contacto
         </a>
-        <a class="button button--primary mobile-nav__cta" href="#contacto">
+        <a class="button button--primary mobile-nav__cta" href="#contacto" data-cotizador>
           Iniciar un proyecto
           <span class="button__arrow" aria-hidden="true">&rarr;</span>
         </a>
@@ -587,15 +622,14 @@
       <!-- ================================================ 05 · Manifesto -->
       <section class="manifesto" aria-labelledby="manifesto-quote">
         <div class="manifesto__inner shell">
+          <!-- build:manifesto -->
           <h2 class="manifesto__quote reveal-words" id="manifesto-quote">
-            <span>La</span> <span>tecnología</span> <span>debe</span> <span>adaptarse</span>
-            <span>a</span> <span>tu</span> <span>empresa,</span>
-            <span><em>no</em></span> <span><em>tu</em></span> <span><em>empresa</em></span>
-            <span><em>a</em></span> <span><em>la</em></span> <span><em>tecnología.</em></span>
+            <span>La</span> <span>tecnología</span> <span>debe</span> <span>adaptarse</span> <span>a</span> <span>tu</span> <span>empresa,</span> <span><em>no</em></span> <span><em>tu</em></span> <span><em>empresa</em></span> <span><em>a</em></span> <span><em>la</em></span> <span><em>tecnología.</em></span>
           </h2>
           <p class="manifesto__attribution" data-reveal="fade">
             CoreStruct · Principio de trabajo
           </p>
+<!-- /build:manifesto -->
         </div>
       </section>
 
@@ -615,7 +649,11 @@
 
           <div class="contact__actions" data-reveal="far">
             <!-- build:cta -->
-            <a class="button button--primary button--large button--pulse" href="mailto:contacto@corestruct.com">
+            <a
+              class="button button--primary button--large button--pulse"
+              href="mailto:contacto@corestruct.com"
+              data-cotizador
+            >
               Hablemos
               <span class="button__arrow" aria-hidden="true">&rarr;</span>
             </a>
@@ -627,10 +665,6 @@
             <p class="channel">
               <span class="channel__label">Correo</span>
               <a class="channel__value" href="mailto:contacto@corestruct.com">contacto@corestruct.com</a>
-            </p>
-            <p class="channel">
-              <span class="channel__label">Cobertura</span>
-              <span class="channel__value">Servicio remoto · Latinoamérica</span>
             </p>
           </div>
 <!-- /build:channels -->
@@ -662,5 +696,6 @@
     </footer>
 
     <script type="module" src="src/scripts/main.js"></script>
+    <script type="module" src="src/scripts/cotizador.js"></script>
   </body>
 </html>

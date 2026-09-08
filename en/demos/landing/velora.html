@@ -1,0 +1,1123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Velora — Medicina estética y bienestar · Demo de CoreStruct</title>
+    <meta name="description" content="Landing de conversión de demostración para una clínica de medicina estética ficticia: reserva de citas, comparador de resultados y protocolo de atención." />
+    <!-- An invented company must never turn up in a search result as a real one. -->
+    <meta name="robots" content="noindex, follow" />
+    <meta name="theme-color" content="#faf7f2" />
+    <meta name="color-scheme" content="light" />
+
+    <link rel="icon" href="../../../favicon.ico" sizes="32x32" />
+    <link rel="icon" href="../../../assets/brand/isotipo.svg" type="image/svg+xml" />
+
+    <link
+      rel="preload"
+      href="../../../assets/fonts/manrope-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="../../../assets/fonts/source-serif-4-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <link rel="stylesheet" href="../../../dist/velora.css" />
+
+    <style>
+      :root {
+        --accent: #a8724f;
+        --accent-rgb: 168 114 79;
+      }
+    </style>
+
+    <script>
+      /* Hides the reveal targets before first paint, and gives up on its own if
+         the module never arrives — an entrance animation must not be able to
+         swallow the content it animates. */
+      document.documentElement.classList.add("js");
+      setTimeout(function () {
+        if (!document.documentElement.dataset.revealsReady) {
+          document.documentElement.classList.remove("js");
+        }
+      }, 2500);
+    </script>
+<!--lang-memory-->
+    <script>
+      /* Language preference: written by the ES/EN switch, applied before paint. */
+      (function () {
+        try {
+          var pref = localStorage.getItem("cs-lang");
+          if (pref && pref !== document.documentElement.lang) {
+            if (sessionStorage.getItem("cs-lang-hop") !== location.pathname) {
+              sessionStorage.setItem("cs-lang-hop", location.pathname);
+              location.replace("../../../demos/landing/velora.html");
+              return;
+            }
+          } else {
+            sessionStorage.removeItem("cs-lang-hop");
+          }
+        } catch (e) {}
+        document.addEventListener("click", function (event) {
+          var pick = event.target.closest && event.target.closest("[data-lang-pick]");
+          if (pick) {
+            try { localStorage.setItem("cs-lang", pick.getAttribute("data-lang-pick")); } catch (e) {}
+          }
+        }, true);
+      })();
+    </script>
+    <!--/lang-memory-->
+  </head>
+
+  <body>
+    <a class="lp-skip" href="#contenido">Skip to content</a>
+
+    <header class="ve-header" data-header>
+      <div class="ve-header__inner lp-shell">
+        <a class="ve-brand" href="#inicio">
+          <span class="ve-brand__name">Velora</span>
+          <span class="ve-brand__mark">Medicina estética y bienestar</span>
+        </a>
+
+        <nav class="ve-nav" aria-label="Sections">
+            <a class="ve-nav__link" href="#reservar" data-nav-link>Reservar</a>
+            <a class="ve-nav__link" href="#tratamientos" data-nav-link>Tratamientos</a>
+            <a class="ve-nav__link" href="#resultados" data-nav-link>Resultados</a>
+            <a class="ve-nav__link" href="#protocolo" data-nav-link>Protocolo</a>
+            <a class="ve-nav__link" href="#equipo" data-nav-link>Equipo</a>
+        </nav>
+
+        <div class="ve-header__actions">
+          <!--lang-switch--><div class="lang-switch" role="group" aria-label="Idioma · Language"><span class="lang-switch__current" lang="en" aria-current="true">EN</span><a class="lang-switch__link" lang="es" hreflang="es" href="../../../demos/landing/velora.html" data-lang-pick="es" title="Español">ES</a></div><!--/lang-switch-->
+          <a class="ve-btn ve-btn--solid ve-header__cta" href="#reservar">Reservar</a>
+          <button
+            class="ve-burger"
+            type="button"
+            aria-expanded="false"
+            aria-controls="ve-menu"
+            aria-label="Open menu"
+            data-menu-toggle
+          >
+            <span class="ve-burger__bar"></span>
+            <span class="ve-burger__bar"></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="ve-menu" id="ve-menu" data-mobile-nav>
+      <nav class="ve-menu__inner" aria-label="Menu">
+        <a class="ve-menu__link" href="#reservar">Reservar</a>
+        <a class="ve-menu__link" href="#tratamientos">Tratamientos</a>
+        <a class="ve-menu__link" href="#resultados">Resultados</a>
+        <a class="ve-menu__link" href="#protocolo">Protocolo</a>
+        <a class="ve-menu__link" href="#equipo">Equipo</a>
+        <a class="ve-menu__cta" href="#reservar">Reservar valoración</a>
+      </nav>
+    </div>
+
+    <main id="contenido">
+      <section class="ve-hero" id="inicio">
+        <div class="lp-shell ve-hero__grid">
+          <div class="ve-hero__copy">
+            <p class="ve-eyebrow" data-reveal="fade">Medicina estética · Tegucigalpa</p>
+            <h1 class="ve-hero__title reveal-lines" data-stagger="140">
+              <span class="reveal-lines__line"><span>Resultados naturales.</span></span>
+              <span class="reveal-lines__line"><span>Confianza que se nota.</span></span>
+            </h1>
+            <p class="ve-hero__lead" data-reveal="rise">Tratamientos personalizados diseñados para realzar tu belleza sin cambiar lo que te hace única.</p>
+
+            <!-- The proof comes before the ask: 480 patients is the reason to
+                 press the button, so it is read on the way to it. It also keeps
+                 the last line of the hero clear of the fixed demo badge. -->
+            <p class="ve-rating" data-reveal="fade">
+              <span class="ve-stars" role="img" aria-label="4.9 de 5">
+      <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 1.2l2.06 4.18 4.61.67-3.34 3.25.79 4.6L8 11.72l-4.12 2.17.79-4.6L1.33 6.05l4.61-.67Z"/></svg><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 1.2l2.06 4.18 4.61.67-3.34 3.25.79 4.6L8 11.72l-4.12 2.17.79-4.6L1.33 6.05l4.61-.67Z"/></svg><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 1.2l2.06 4.18 4.61.67-3.34 3.25.79 4.6L8 11.72l-4.12 2.17.79-4.6L1.33 6.05l4.61-.67Z"/></svg><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 1.2l2.06 4.18 4.61.67-3.34 3.25.79 4.6L8 11.72l-4.12 2.17.79-4.6L1.33 6.05l4.61-.67Z"/></svg><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 1.2l2.06 4.18 4.61.67-3.34 3.25.79 4.6L8 11.72l-4.12 2.17.79-4.6L1.33 6.05l4.61-.67Z"/></svg>
+    </span>
+              <span class="ve-rating__score">4.9</span>
+              <span class="ve-rating__text">basado en más de 480 pacientes</span>
+            </p>
+
+            <div class="ve-hero__actions" data-reveal="rise">
+              <a class="ve-btn ve-btn--solid ve-btn--lg" href="#reservar">
+                Reservar valoración
+              </a>
+              <a class="ve-btn ve-btn--outline ve-btn--lg" href="#tratamientos">
+                Ver tratamientos
+              </a>
+            </div>
+          </div>
+
+          <div class="ve-hero__visual" data-reveal="scale">
+            <div class="ve-plate">
+              <svg
+                    class="ve-plate__art"
+                    viewBox="0 0 420 560"
+                    preserveAspectRatio="xMidYMid slice"
+                    role="img"
+                    aria-label="Composición abstracta en tonos champán: un arco de luz cálida con trazos finos superpuestos."
+                  >
+                    <defs>
+                    <linearGradient id="ve-field-hero" x1="0" y1="0" x2="0.4" y2="1">
+                      <stop offset="0%" stop-color="#f6e7d4"/>
+                      <stop offset="55%" stop-color="#e6cdb0"/>
+                      <stop offset="100%" stop-color="#d8bda0"/>
+                    </linearGradient>
+                    <radialGradient id="ve-light-hero" cx="0.34" cy="0.24" r="0.62">
+                      <stop offset="0%" stop-color="#fffaf3" stop-opacity="0.92"/>
+                      <stop offset="100%" stop-color="#fffaf3" stop-opacity="0"/>
+                    </radialGradient>
+                  </defs>
+                    <path
+                      d="M0 560V210C0 94 94 0 210 0S420 94 420 210v350Z"
+                      fill="url(#ve-field-hero)"
+                    />
+                    <path
+                      d="M0 560V210C0 94 94 0 210 0S420 94 420 210v350Z"
+                      fill="url(#ve-light-hero)"
+                    />
+                    <g fill="none" stroke="#fdf6ec" stroke-opacity="0.55" stroke-width="1">
+                      <path d="M-40 372C60 322 152 316 250 350s170 40 250 6"/>
+                      <path d="M-40 408C60 358 152 352 250 386s170 40 250 6"/>
+                      <path d="M-40 444C60 394 152 388 250 422s170 40 250 6"/>
+                    </g>
+                    <g fill="none" stroke="#8a5c3c" stroke-opacity="0.28" stroke-width="1.2">
+                      <path d="M210 120v300"/>
+                      <path d="M210 214c-34-28-58-34-92-30"/>
+                      <path d="M210 214c34-28 58-34 92-30"/>
+                      <path d="M210 284c-30-24-52-30-82-27"/>
+                      <path d="M210 284c30-24 52-30 82-27"/>
+                      <path d="M210 352c-26-20-45-26-71-24"/>
+                      <path d="M210 352c26-20 45-26 71-24"/>
+                    </g>
+                    <circle cx="210" cy="120" r="5" fill="#8a5c3c" fill-opacity="0.4"/>
+                    <circle cx="128" cy="188" r="86" fill="none" stroke="#fffaf3" stroke-opacity="0.34" stroke-width="1.4"/>
+                    <circle cx="300" cy="300" r="132" fill="none" stroke="#fffaf3" stroke-opacity="0.22" stroke-width="1.4"/>
+                  </svg>
+            </div>
+            <div class="ve-float-card" style="--card: 0">
+              <span class="ve-float-card__label">Próxima disponibilidad</span>
+              <span class="ve-float-card__value">Jueves · 10:30 a. m.</span>
+            </div>
+            <div class="ve-float-card" style="--card: 1">
+              <span class="ve-float-card__label">Primera valoración</span>
+              <span class="ve-float-card__value">45 min · sin costo</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="ve-section ve-section--warm" id="reservar" aria-labelledby="book-title">
+        <div class="lp-shell ve-book__layout">
+          <div class="ve-book__intro">
+            <p class="ve-label" data-reveal="fade">Reserva</p>
+            <h2 class="ve-h2" id="book-title" data-reveal="rise">Tu cita, en menos de un minuto.</h2>
+            <p class="ve-lead" data-reveal="rise">Elige el tratamiento, con quién y qué día. Te mostramos los horarios reales de la agenda y confirmas en el momento.</p>
+            <p class="ve-book__hint" data-reveal="fade">Agenda de demostración: los horarios son ficticios y no se reserva nada.</p>
+          </div>
+
+          <div class="ve-book" data-booking data-reveal="rise">
+            <ol class="ve-book__steps">
+            <li class="ve-book__step is-current" data-book-step="1">
+              <button class="ve-book__step-button" type="button" data-book-goto="1" disabled>
+                <span class="ve-book__step-index">01</span>
+                <span class="ve-book__step-label">Tratamiento</span>
+              </button>
+            </li>
+            <li class="ve-book__step" data-book-step="2">
+              <button class="ve-book__step-button" type="button" data-book-goto="2" disabled>
+                <span class="ve-book__step-index">02</span>
+                <span class="ve-book__step-label">Profesional</span>
+              </button>
+            </li>
+            <li class="ve-book__step" data-book-step="3">
+              <button class="ve-book__step-button" type="button" data-book-goto="3" disabled>
+                <span class="ve-book__step-index">03</span>
+                <span class="ve-book__step-label">Fecha</span>
+              </button>
+            </li>
+            <li class="ve-book__step" data-book-step="4">
+              <button class="ve-book__step-button" type="button" data-book-goto="4" disabled>
+                <span class="ve-book__step-index">04</span>
+                <span class="ve-book__step-label">Horario</span>
+              </button>
+            </li>
+            </ol>
+
+            <div class="ve-book__stage">
+              <fieldset class="ve-book__panel is-current" data-book-panel="1">
+                <legend class="ve-book__legend">Selecciona tratamiento</legend>
+                <div class="ve-options ve-options--list">
+              <label class="ve-option ve-option--treatment">
+                <input
+                  type="radio"
+                  name="ve-tratamiento"
+                  value="Valoración inicial"
+                  data-book-input="treatment"
+                  checked
+                />
+                <span class="ve-option__body">
+                  <span class="ve-option__name">Valoración inicial</span>
+                  <span class="ve-option__meta">45 min · Sin costo</span>
+                </span>
+              </label>
+              <label class="ve-option ve-option--treatment">
+                <input
+                  type="radio"
+                  name="ve-tratamiento"
+                  value="Armonización facial"
+                  data-book-input="treatment"
+                  
+                />
+                <span class="ve-option__body">
+                  <span class="ve-option__name">Armonización facial</span>
+                  <span class="ve-option__meta">60 min · Desde L 6 900</span>
+                </span>
+              </label>
+              <label class="ve-option ve-option--treatment">
+                <input
+                  type="radio"
+                  name="ve-tratamiento"
+                  value="Láser"
+                  data-book-input="treatment"
+                  
+                />
+                <span class="ve-option__body">
+                  <span class="ve-option__name">Láser</span>
+                  <span class="ve-option__meta">40 min · Desde L 3 400</span>
+                </span>
+              </label>
+              <label class="ve-option ve-option--treatment">
+                <input
+                  type="radio"
+                  name="ve-tratamiento"
+                  value="Cuidado dermatológico"
+                  data-book-input="treatment"
+                  
+                />
+                <span class="ve-option__body">
+                  <span class="ve-option__name">Cuidado dermatológico</span>
+                  <span class="ve-option__meta">50 min · Desde L 2 200</span>
+                </span>
+              </label>
+              <label class="ve-option ve-option--treatment">
+                <input
+                  type="radio"
+                  name="ve-tratamiento"
+                  value="Rejuvenecimiento"
+                  data-book-input="treatment"
+                  
+                />
+                <span class="ve-option__body">
+                  <span class="ve-option__name">Rejuvenecimiento</span>
+                  <span class="ve-option__meta">75 min · Desde L 8 400</span>
+                </span>
+              </label>
+              <label class="ve-option ve-option--treatment">
+                <input
+                  type="radio"
+                  name="ve-tratamiento"
+                  value="Tratamiento corporal"
+                  data-book-input="treatment"
+                  
+                />
+                <span class="ve-option__body">
+                  <span class="ve-option__name">Tratamiento corporal</span>
+                  <span class="ve-option__meta">90 min · Desde L 5 100</span>
+                </span>
+              </label>
+                </div>
+              </fieldset>
+
+              <fieldset class="ve-book__panel" data-book-panel="2">
+                <legend class="ve-book__legend">Selecciona profesional</legend>
+                <div class="ve-options ve-options--list">
+              <label class="ve-option ve-option--person">
+                <input
+                  type="radio"
+                  name="ve-profesional"
+                  value="Dra. Adriana Solís"
+                  data-book-input="professional"
+                  checked
+                />
+                <span class="ve-option__body">
+                  <span class="ve-option__avatar" aria-hidden="true">AS</span>
+                  <span>
+                    <span class="ve-option__name">Dra. Adriana Solís</span>
+                    <span class="ve-option__meta">Medicina estética facial</span>
+                  </span>
+                </span>
+              </label>
+              <label class="ve-option ve-option--person">
+                <input
+                  type="radio"
+                  name="ve-profesional"
+                  value="Dra. Mariel Fonseca"
+                  data-book-input="professional"
+                  
+                />
+                <span class="ve-option__body">
+                  <span class="ve-option__avatar" aria-hidden="true">MF</span>
+                  <span>
+                    <span class="ve-option__name">Dra. Mariel Fonseca</span>
+                    <span class="ve-option__meta">Dermatología clínica</span>
+                  </span>
+                </span>
+              </label>
+              <label class="ve-option ve-option--person">
+                <input
+                  type="radio"
+                  name="ve-profesional"
+                  value="Primera disponible"
+                  data-book-input="professional"
+                  
+                />
+                <span class="ve-option__body">
+                  <span class="ve-option__avatar" aria-hidden="true">VE</span>
+                  <span>
+                    <span class="ve-option__name">Primera disponible</span>
+                    <span class="ve-option__meta">Cualquier profesional del equipo</span>
+                  </span>
+                </span>
+              </label>
+                </div>
+              </fieldset>
+
+              <fieldset class="ve-book__panel" data-book-panel="3">
+                <legend class="ve-book__legend">Selecciona fecha</legend>
+                <div class="ve-options ve-options--days">
+              <label class="ve-option ve-option--day" data-day="0" data-taken="1,3,6">
+                <input
+                  type="radio"
+                  name="ve-dia"
+                  value="0"
+                  data-book-input="day"
+                  checked
+                />
+                <span class="ve-option__body">
+                  <span class="ve-option__weekday" data-day-weekday>Día</span>
+                  <span class="ve-option__date" data-day-number>1</span>
+                  <span class="ve-option__free" data-day-free>4 libres</span>
+                </span>
+              </label>
+              <label class="ve-option ve-option--day" data-day="1" data-taken="0,2">
+                <input
+                  type="radio"
+                  name="ve-dia"
+                  value="1"
+                  data-book-input="day"
+                  
+                />
+                <span class="ve-option__body">
+                  <span class="ve-option__weekday" data-day-weekday>Día</span>
+                  <span class="ve-option__date" data-day-number>2</span>
+                  <span class="ve-option__free" data-day-free>5 libres</span>
+                </span>
+              </label>
+              <label class="ve-option ve-option--day" data-day="2" data-taken="2,4,5">
+                <input
+                  type="radio"
+                  name="ve-dia"
+                  value="2"
+                  data-book-input="day"
+                  
+                />
+                <span class="ve-option__body">
+                  <span class="ve-option__weekday" data-day-weekday>Día</span>
+                  <span class="ve-option__date" data-day-number>3</span>
+                  <span class="ve-option__free" data-day-free>4 libres</span>
+                </span>
+              </label>
+              <label class="ve-option ve-option--day" data-day="3" data-taken="0,1,5,6">
+                <input
+                  type="radio"
+                  name="ve-dia"
+                  value="3"
+                  data-book-input="day"
+                  
+                />
+                <span class="ve-option__body">
+                  <span class="ve-option__weekday" data-day-weekday>Día</span>
+                  <span class="ve-option__date" data-day-number>4</span>
+                  <span class="ve-option__free" data-day-free>3 libres</span>
+                </span>
+              </label>
+              <label class="ve-option ve-option--day" data-day="4" data-taken="3">
+                <input
+                  type="radio"
+                  name="ve-dia"
+                  value="4"
+                  data-book-input="day"
+                  
+                />
+                <span class="ve-option__body">
+                  <span class="ve-option__weekday" data-day-weekday>Día</span>
+                  <span class="ve-option__date" data-day-number>5</span>
+                  <span class="ve-option__free" data-day-free>6 libres</span>
+                </span>
+              </label>
+              <label class="ve-option ve-option--day" data-day="5" data-taken="0,2,4">
+                <input
+                  type="radio"
+                  name="ve-dia"
+                  value="5"
+                  data-book-input="day"
+                  
+                />
+                <span class="ve-option__body">
+                  <span class="ve-option__weekday" data-day-weekday>Día</span>
+                  <span class="ve-option__date" data-day-number>6</span>
+                  <span class="ve-option__free" data-day-free>4 libres</span>
+                </span>
+              </label>
+              <label class="ve-option ve-option--day" data-day="6" data-taken="1,2,3,4,5,6">
+                <input
+                  type="radio"
+                  name="ve-dia"
+                  value="6"
+                  data-book-input="day"
+                  
+                />
+                <span class="ve-option__body">
+                  <span class="ve-option__weekday" data-day-weekday>Día</span>
+                  <span class="ve-option__date" data-day-number>7</span>
+                  <span class="ve-option__free" data-day-free>1 libres</span>
+                </span>
+              </label>
+                </div>
+              </fieldset>
+
+              <fieldset class="ve-book__panel" data-book-panel="4">
+                <legend class="ve-book__legend">Ver disponibilidad</legend>
+                <div class="ve-options ve-options--slots" data-book-slots>
+              <label class="ve-option ve-option--slot">
+                <input
+                  type="radio"
+                  name="ve-hora"
+                  value="09:00"
+                  data-book-input="slot"
+                  
+                />
+                <span class="ve-option__body">09:00</span>
+              </label>
+              <label class="ve-option ve-option--slot" data-taken>
+                <input
+                  type="radio"
+                  name="ve-hora"
+                  value="10:30"
+                  data-book-input="slot"
+                  disabled
+                />
+                <span class="ve-option__body">10:30</span>
+              </label>
+              <label class="ve-option ve-option--slot">
+                <input
+                  type="radio"
+                  name="ve-hora"
+                  value="11:15"
+                  data-book-input="slot"
+                  
+                />
+                <span class="ve-option__body">11:15</span>
+              </label>
+              <label class="ve-option ve-option--slot" data-taken>
+                <input
+                  type="radio"
+                  name="ve-hora"
+                  value="13:00"
+                  data-book-input="slot"
+                  disabled
+                />
+                <span class="ve-option__body">13:00</span>
+              </label>
+              <label class="ve-option ve-option--slot">
+                <input
+                  type="radio"
+                  name="ve-hora"
+                  value="14:45"
+                  data-book-input="slot"
+                  
+                />
+                <span class="ve-option__body">14:45</span>
+              </label>
+              <label class="ve-option ve-option--slot">
+                <input
+                  type="radio"
+                  name="ve-hora"
+                  value="16:00"
+                  data-book-input="slot"
+                  
+                />
+                <span class="ve-option__body">16:00</span>
+              </label>
+              <label class="ve-option ve-option--slot" data-taken>
+                <input
+                  type="radio"
+                  name="ve-hora"
+                  value="17:30"
+                  data-book-input="slot"
+                  disabled
+                />
+                <span class="ve-option__body">17:30</span>
+              </label>
+                </div>
+                <p class="ve-book__empty" data-book-empty hidden>
+                  No queda espacio ese día. Elige otra fecha y volvemos a consultar la agenda.
+                </p>
+              </fieldset>
+            </div>
+
+            <div class="ve-book__foot">
+              <p class="ve-book__summary" data-book-summary aria-live="polite">
+                <span class="ve-book__summary-label">Tu cita</span>
+                <span class="ve-book__summary-value" data-book-summary-value>Elige un tratamiento para empezar</span>
+              </p>
+              <div class="ve-book__controls">
+                <button class="ve-btn ve-btn--ghost" type="button" data-book-back hidden>Atrás</button>
+                <button class="ve-btn ve-btn--solid" type="button" data-book-next>Continuar</button>
+              </div>
+            </div>
+
+            <div class="ve-book__done" data-book-done hidden>
+              <p class="ve-book__done-title">Cita apartada</p>
+              <p class="ve-book__done-detail" data-book-done-detail></p>
+              <p class="ve-book__done-text">Recibirías la confirmación por WhatsApp y un recordatorio el día anterior.</p>
+              <button class="ve-btn ve-btn--outline" type="button" data-book-reset>Reservar otra fecha</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="ve-section" id="tratamientos" aria-labelledby="treatments-title">
+        <div class="lp-shell">
+          <div class="ve-head">
+            <p class="ve-label" data-reveal="fade">Tratamientos</p>
+            <h2 class="ve-h2" id="treatments-title" data-reveal="rise">Lo que hacemos, y para quién.</h2>
+            <p class="ve-lead" data-reveal="rise">Cada tratamiento empieza con una valoración. Si no es lo que necesitas, te lo decimos antes de agendarlo.</p>
+          </div>
+
+          <div class="ve-cards" data-reveal-group="90">
+            <article class="ve-card" data-reveal="rise">
+              <span class="ve-card__icon" aria-hidden="true"><svg class="ve-card__art" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M22 54c0-9 3-14 8-19-5-6-7-12-7-19 0-1 0-2 .1-3" />
+    <path d="M23 13C26 8 32 5 39 5c9 0 16 7 16 16 0 5-2 9-5 12 2 2 3 4 2 6-1 2-3 3-6 3 0 4 0 7 1 9-3 2-7 2-10 1" />
+    <circle cx="41" cy="21" r="1.6" fill="currentColor" stroke="none"/></svg></span>
+              <h3 class="ve-card__name">Armonización facial</h3>
+              <p class="ve-card__text">Proporción antes que volumen. Trabajamos sobre tus rasgos, no sobre una plantilla.</p>
+              <ul class="ve-card__detail">
+                <li>Ácido hialurónico</li>
+                <li>Perfilado</li>
+                <li>60 min</li>
+              </ul>
+              <a class="ve-card__link" href="#reservar">
+                Reservar
+                <span aria-hidden="true">&rarr;</span>
+              </a>
+            </article>
+            <article class="ve-card" data-reveal="rise">
+              <span class="ve-card__icon" aria-hidden="true"><svg class="ve-card__art" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M32 6v12M18 12l6 9M46 12l-6 9M10 24l9 5M54 24l-9 5"/>
+    <circle cx="32" cy="34" r="7"/>
+    <path d="M10 50c8-4 14-6 22-6s14 2 22 6"/>
+    <path d="M10 57c8-4 14-6 22-6s14 2 22 6" opacity="0.45"/></svg></span>
+              <h3 class="ve-card__name">Láser</h3>
+              <p class="ve-card__text">Manchas, rojeces y textura. Sesiones cortas, sin detener tu semana.</p>
+              <ul class="ve-card__detail">
+                <li>Fotorrejuvenecimiento</li>
+                <li>Depilación</li>
+                <li>40 min</li>
+              </ul>
+              <a class="ve-card__link" href="#reservar">
+                Reservar
+                <span aria-hidden="true">&rarr;</span>
+              </a>
+            </article>
+            <article class="ve-card" data-reveal="rise">
+              <span class="ve-card__icon" aria-hidden="true"><svg class="ve-card__art" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M32 6c8 11 13 18 13 25a13 13 0 0 1-26 0c0-7 5-14 13-25Z"/>
+    <path d="M26 32a6 6 0 0 0 6 6"/>
+    <path d="M8 50h48M8 57h34" opacity="0.5"/></svg></span>
+              <h3 class="ve-card__name">Cuidado dermatológico</h3>
+              <p class="ve-card__text">Diagnóstico de piel y una rutina que puedas sostener en casa.</p>
+              <ul class="ve-card__detail">
+                <li>Acné</li>
+                <li>Rosácea</li>
+                <li>50 min</li>
+              </ul>
+              <a class="ve-card__link" href="#reservar">
+                Reservar
+                <span aria-hidden="true">&rarr;</span>
+              </a>
+            </article>
+            <article class="ve-card" data-reveal="rise">
+              <span class="ve-card__icon" aria-hidden="true"><svg class="ve-card__art" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="32" cy="32" r="12"/>
+    <path d="M32 6v6M32 52v6M6 32h6M52 32h6M14 14l4 4M46 46l4 4M50 14l-4 4M18 46l-4 4"/>
+    <path d="M26 32a6 6 0 0 1 6-6" opacity="0.5"/></svg></span>
+              <h3 class="ve-card__name">Rejuvenecimiento</h3>
+              <p class="ve-card__text">Firmeza y luminosidad con protocolos graduales, sin cambios bruscos.</p>
+              <ul class="ve-card__detail">
+                <li>Bioestimulación</li>
+                <li>Peeling</li>
+                <li>75 min</li>
+              </ul>
+              <a class="ve-card__link" href="#reservar">
+                Reservar
+                <span aria-hidden="true">&rarr;</span>
+              </a>
+            </article>
+            <article class="ve-card" data-reveal="rise">
+              <span class="ve-card__icon" aria-hidden="true"><svg class="ve-card__art" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 20c12-7 24-7 32 0s16 7 16 7"/>
+    <path d="M8 32c12-7 24-7 32 0s16 7 16 7" opacity="0.75"/>
+    <path d="M8 44c12-7 24-7 32 0s16 7 16 7" opacity="0.5"/>
+    <circle cx="24" cy="16" r="2.4" fill="currentColor" stroke="none"/></svg></span>
+              <h3 class="ve-card__name">Tratamientos corporales</h3>
+              <p class="ve-card__text">Contorno, textura y drenaje, con un plan medido sesión a sesión.</p>
+              <ul class="ve-card__detail">
+                <li>Radiofrecuencia</li>
+                <li>Drenaje</li>
+                <li>90 min</li>
+              </ul>
+              <a class="ve-card__link" href="#reservar">
+                Reservar
+                <span aria-hidden="true">&rarr;</span>
+              </a>
+            </article>
+            <article class="ve-card" data-reveal="rise">
+              <span class="ve-card__icon" aria-hidden="true"><svg class="ve-card__art" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="12" y="8" width="34" height="44" rx="4"/>
+    <path d="M22 8V5h14v3"/>
+    <path d="M20 24h18M20 32h18M20 40h11" opacity="0.6"/>
+    <path d="M40 46l5 5 9-11" stroke-width="2"/></svg></span>
+              <h3 class="ve-card__name">Valoración personalizada</h3>
+              <p class="ve-card__text">45 minutos para entender tu piel, tus tiempos y tu presupuesto. Sin costo.</p>
+              <ul class="ve-card__detail">
+                <li>Diagnóstico</li>
+                <li>Plan escrito</li>
+                <li>45 min</li>
+              </ul>
+              <a class="ve-card__link" href="#reservar">
+                Reservar
+                <span aria-hidden="true">&rarr;</span>
+              </a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="ve-section ve-section--warm" id="resultados" aria-labelledby="results-title">
+        <div class="lp-shell ve-results">
+          <div class="ve-results__copy">
+            <p class="ve-label" data-reveal="fade">Resultados</p>
+            <h2 class="ve-h2" id="results-title" data-reveal="rise">Antes y después, sin retoques.</h2>
+            <p class="ve-lead" data-reveal="rise">Desliza para comparar. Las imágenes de esta demostración son ilustraciones, no pacientes reales: una clínica en operación mostraría aquí sus propios casos, con consentimiento firmado.</p>
+            <div class="ve-figures" data-reveal="fade">
+              <div class="ve-figure">
+                <span class="ve-figure__value">480+</span>
+                <span class="ve-figure__label">Pacientes atendidas</span>
+              </div>
+              <div class="ve-figure">
+                <span class="ve-figure__value">4.9</span>
+                <span class="ve-figure__label">Calificación promedio</span>
+              </div>
+              <div class="ve-figure">
+                <span class="ve-figure__value">92 %</span>
+                <span class="ve-figure__label">Regresa para un segundo protocolo</span>
+              </div>
+            </div>
+          </div>
+
+          <figure class="ve-compare" data-compare data-reveal="scale">
+            <div class="ve-compare__frame">
+              <div class="ve-compare__layer ve-compare__layer--after">
+                <svg
+                      class="ve-compare__art"
+                      viewBox="0 0 400 520"
+                      preserveAspectRatio="xMidYMid slice"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      <defs>
+                        <linearGradient id="ve-skin-after" x1="0.1" y1="0" x2="0.5" y2="1">
+                          <stop offset="0%" stop-color="#fbeada"/>
+                          <stop offset="60%" stop-color="#f0d9c1"/>
+                          <stop offset="100%" stop-color="#e4c8ad"/>
+                        </linearGradient>
+                        <radialGradient id="ve-glow-after" cx="0.38" cy="0.28" r="0.72">
+                          <stop offset="0%" stop-color="#fffaf4" stop-opacity="0.5"/>
+                          <stop offset="100%" stop-color="#fffaf4" stop-opacity="0"/>
+                        </radialGradient>
+                      </defs>
+                      <rect width="400" height="520" fill="url(#ve-skin-after)"/>
+                      <g><ellipse cx="207.0" cy="296.5" rx="4.0" ry="3.9" fill="#9a6642" fill-opacity="0.074"/><ellipse cx="91.4" cy="230.0" rx="4.1" ry="3.9" fill="#9a6642" fill-opacity="0.053"/><ellipse cx="189.3" cy="187.5" rx="5.6" ry="6.3" fill="#9a6642" fill-opacity="0.070"/><ellipse cx="102.9" cy="331.9" rx="4.4" ry="4.8" fill="#9a6642" fill-opacity="0.069"/><ellipse cx="275.4" cy="466.6" rx="4.0" ry="4.3" fill="#9a6642" fill-opacity="0.070"/><ellipse cx="102.6" cy="80.3" rx="4.0" ry="3.5" fill="#9a6642" fill-opacity="0.057"/><ellipse cx="337.3" cy="223.3" rx="5.0" ry="4.5" fill="#9a6642" fill-opacity="0.069"/><ellipse cx="75.7" cy="376.7" rx="2.7" ry="2.8" fill="#9a6642" fill-opacity="0.074"/><ellipse cx="266.2" cy="217.6" rx="5.4" ry="5.2" fill="#9a6642" fill-opacity="0.070"/><ellipse cx="204.6" cy="169.6" rx="6.1" ry="5.2" fill="#9a6642" fill-opacity="0.032"/><ellipse cx="280.8" cy="344.6" rx="6.0" ry="5.6" fill="#9a6642" fill-opacity="0.080"/><ellipse cx="78.4" cy="461.9" rx="3.2" ry="2.4" fill="#9a6642" fill-opacity="0.052"/><ellipse cx="63.4" cy="152.0" rx="6.2" ry="6.5" fill="#9a6642" fill-opacity="0.031"/><ellipse cx="183.6" cy="260.0" rx="4.5" ry="4.1" fill="#9a6642" fill-opacity="0.068"/></g>
+                      <g fill="none" stroke="#9a6642" stroke-opacity="0.05" stroke-width="1">
+                        <path d="M46 156c58 24 116 28 174 11"/>
+                        <path d="M58 206c58 24 116 28 174 11"/>
+                        <path d="M300 322c-50 21-100 25-150 10"/>
+                        <path d="M292 366c-50 21-100 25-150 10"/>
+                      </g>
+                      <rect width="400" height="520" fill="url(#ve-glow-after)"/>
+                    </svg>
+                <span class="ve-compare__tag ve-compare__tag--after">Después · 8 semanas</span>
+              </div>
+              <div class="ve-compare__layer ve-compare__layer--before">
+                <svg
+                      class="ve-compare__art"
+                      viewBox="0 0 400 520"
+                      preserveAspectRatio="xMidYMid slice"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      <defs>
+                        <linearGradient id="ve-skin-before" x1="0.1" y1="0" x2="0.5" y2="1">
+                          <stop offset="0%" stop-color="#f0dcc6"/>
+                          <stop offset="60%" stop-color="#e2c6a9"/>
+                          <stop offset="100%" stop-color="#d2b092"/>
+                        </linearGradient>
+                        <radialGradient id="ve-glow-before" cx="0.38" cy="0.28" r="0.72">
+                          <stop offset="0%" stop-color="#fffaf4" stop-opacity="0.16"/>
+                          <stop offset="100%" stop-color="#fffaf4" stop-opacity="0"/>
+                        </radialGradient>
+                      </defs>
+                      <rect width="400" height="520" fill="url(#ve-skin-before)"/>
+                      <g><ellipse cx="208.7" cy="388.2" rx="5.9" ry="5.7" fill="#9a6642" fill-opacity="0.197"/><ellipse cx="327.5" cy="127.1" rx="3.5" ry="3.6" fill="#9a6642" fill-opacity="0.146"/><ellipse cx="273.8" cy="171.9" rx="8.5" ry="7.3" fill="#9a6642" fill-opacity="0.088"/><ellipse cx="219.5" cy="223.6" rx="6.3" ry="6.3" fill="#9a6642" fill-opacity="0.172"/><ellipse cx="299.5" cy="471.5" rx="5.5" ry="4.7" fill="#9a6642" fill-opacity="0.257"/><ellipse cx="198.8" cy="141.5" rx="8.6" ry="6.2" fill="#9a6642" fill-opacity="0.238"/><ellipse cx="206.8" cy="259.4" rx="7.8" ry="7.2" fill="#9a6642" fill-opacity="0.178"/><ellipse cx="289.9" cy="407.6" rx="5.4" ry="3.9" fill="#9a6642" fill-opacity="0.153"/><ellipse cx="349.4" cy="135.8" rx="5.3" ry="5.9" fill="#9a6642" fill-opacity="0.238"/><ellipse cx="159.1" cy="57.2" rx="8.9" ry="9.6" fill="#9a6642" fill-opacity="0.174"/><ellipse cx="229.8" cy="341.2" rx="4.6" ry="3.3" fill="#9a6642" fill-opacity="0.135"/><ellipse cx="351.4" cy="171.4" rx="7.8" ry="7.1" fill="#9a6642" fill-opacity="0.096"/><ellipse cx="347.2" cy="257.1" rx="10.2" ry="10.0" fill="#9a6642" fill-opacity="0.227"/><ellipse cx="48.4" cy="259.0" rx="6.3" ry="6.1" fill="#9a6642" fill-opacity="0.153"/><ellipse cx="179.5" cy="399.0" rx="4.4" ry="4.9" fill="#9a6642" fill-opacity="0.211"/><ellipse cx="278.0" cy="65.3" rx="8.8" ry="6.2" fill="#9a6642" fill-opacity="0.232"/><ellipse cx="124.6" cy="292.7" rx="8.4" ry="9.5" fill="#9a6642" fill-opacity="0.254"/><ellipse cx="157.7" cy="365.6" rx="9.3" ry="9.2" fill="#9a6642" fill-opacity="0.166"/><ellipse cx="180.4" cy="235.0" rx="5.9" ry="6.1" fill="#9a6642" fill-opacity="0.232"/><ellipse cx="161.7" cy="249.2" rx="10.2" ry="9.6" fill="#9a6642" fill-opacity="0.192"/><ellipse cx="42.4" cy="99.8" rx="5.7" ry="4.6" fill="#9a6642" fill-opacity="0.203"/><ellipse cx="314.5" cy="71.6" rx="4.7" ry="4.6" fill="#9a6642" fill-opacity="0.164"/><ellipse cx="342.1" cy="412.0" rx="8.4" ry="6.6" fill="#9a6642" fill-opacity="0.149"/><ellipse cx="222.5" cy="275.1" rx="3.6" ry="2.8" fill="#9a6642" fill-opacity="0.119"/><ellipse cx="137.7" cy="392.4" rx="4.6" ry="4.3" fill="#9a6642" fill-opacity="0.145"/><ellipse cx="153.8" cy="153.7" rx="4.4" ry="4.4" fill="#9a6642" fill-opacity="0.200"/><ellipse cx="347.5" cy="380.4" rx="7.2" ry="5.8" fill="#9a6642" fill-opacity="0.214"/><ellipse cx="42.9" cy="204.8" rx="8.8" ry="6.3" fill="#9a6642" fill-opacity="0.186"/><ellipse cx="347.0" cy="277.4" rx="10.0" ry="8.5" fill="#9a6642" fill-opacity="0.112"/><ellipse cx="110.9" cy="181.9" rx="5.1" ry="5.0" fill="#9a6642" fill-opacity="0.151"/><ellipse cx="154.5" cy="422.9" rx="6.9" ry="6.7" fill="#9a6642" fill-opacity="0.240"/><ellipse cx="121.6" cy="100.4" rx="4.9" ry="4.9" fill="#9a6642" fill-opacity="0.104"/><ellipse cx="191.1" cy="98.5" rx="5.0" ry="4.6" fill="#9a6642" fill-opacity="0.178"/><ellipse cx="236.8" cy="148.6" rx="5.9" ry="5.0" fill="#9a6642" fill-opacity="0.099"/><ellipse cx="240.6" cy="84.4" rx="7.8" ry="5.7" fill="#9a6642" fill-opacity="0.231"/><ellipse cx="196.5" cy="314.6" rx="5.2" ry="5.1" fill="#9a6642" fill-opacity="0.105"/><ellipse cx="357.0" cy="327.2" rx="4.6" ry="4.8" fill="#9a6642" fill-opacity="0.152"/><ellipse cx="150.7" cy="137.0" rx="7.1" ry="6.5" fill="#9a6642" fill-opacity="0.155"/></g>
+                      <g fill="none" stroke="#9a6642" stroke-opacity="0.14" stroke-width="1">
+                        <path d="M46 156c58 24 116 28 174 11"/>
+                        <path d="M58 206c58 24 116 28 174 11"/>
+                        <path d="M300 322c-50 21-100 25-150 10"/>
+                        <path d="M292 366c-50 21-100 25-150 10"/>
+                      </g>
+                      <rect width="400" height="520" fill="url(#ve-glow-before)"/>
+                    </svg>
+                <span class="ve-compare__tag ve-compare__tag--before">Antes</span>
+              </div>
+
+              <span class="ve-compare__handle" aria-hidden="true">
+                <span class="ve-compare__handle-grip"></span>
+              </span>
+
+              <input
+                class="ve-compare__range"
+                type="range"
+                min="0"
+                max="100"
+                value="52"
+                step="1"
+                aria-label="Comparar antes y después"
+                data-compare-range
+              />
+            </div>
+            <figcaption class="ve-compare__caption">
+              <span>Protocolo de rejuvenecimiento · 3 sesiones</span>
+              <span class="ve-compare__hint">Arrastra o usa las flechas del teclado</span>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="ve-section" id="protocolo" aria-labelledby="protocol-title" data-track>
+        <div class="lp-shell ve-protocol">
+          <div class="ve-protocol__aside">
+            <p class="ve-label" data-reveal="fade">Protocolo</p>
+            <h2 class="ve-h2" id="protocol-title" data-reveal="rise">Cómo trabajamos contigo.</h2>
+            <p class="ve-lead" data-reveal="rise">Cuatro momentos. Ninguno se salta, y el primero no se cobra.</p>
+            <a class="ve-btn ve-btn--solid" href="#reservar" data-reveal="fade">Empezar por la valoración</a>
+          </div>
+
+          <div class="ve-protocol__track">
+            <span class="ve-protocol__rail" aria-hidden="true"><span class="ve-protocol__rail-fill"></span></span>
+            <ol class="ve-protocol__steps">
+              <li class="ve-step" data-track-step>
+                <span class="ve-step__index">01</span>
+                <div class="ve-step__body">
+                  <h3 class="ve-step__name">Valoración</h3>
+                  <p class="ve-step__text">Revisamos tu piel, escuchamos qué te molesta y qué esperas. Si el tratamiento que viniste a buscar no es el indicado, te lo decimos aquí.</p>
+                  <p class="ve-step__meta">45 minutos · sin costo</p>
+                </div>
+              </li>
+              <li class="ve-step" data-track-step>
+                <span class="ve-step__index">02</span>
+                <div class="ve-step__body">
+                  <h3 class="ve-step__name">Plan personalizado</h3>
+                  <p class="ve-step__text">Recibes por escrito el protocolo completo: sesiones, tiempos, costo total y qué resultado es razonable esperar.</p>
+                  <p class="ve-step__meta">Entregado el mismo día</p>
+                </div>
+              </li>
+              <li class="ve-step" data-track-step>
+                <span class="ve-step__index">03</span>
+                <div class="ve-step__body">
+                  <h3 class="ve-step__name">Tratamiento</h3>
+                  <p class="ve-step__text">Sesiones en consultorio con la misma profesional de principio a fin. Sin sorpresas en el precio ni en el procedimiento.</p>
+                  <p class="ve-step__meta">Según protocolo</p>
+                </div>
+              </li>
+              <li class="ve-step" data-track-step>
+                <span class="ve-step__index">04</span>
+                <div class="ve-step__body">
+                  <h3 class="ve-step__name">Seguimiento</h3>
+                  <p class="ve-step__text">Control a las dos y a las ocho semanas, con fotografía comparativa y ajustes si el resultado lo pide.</p>
+                  <p class="ve-step__meta">Incluido en el plan</p>
+                </div>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <section class="ve-section ve-section--warm" id="pacientes" aria-labelledby="voices-title">
+        <div class="lp-shell">
+          <div class="ve-head ve-head--split">
+            <div>
+              <p class="ve-label" data-reveal="fade">Pacientes</p>
+              <h2 class="ve-h2" id="voices-title" data-reveal="rise">Lo que dicen quienes ya vinieron.</h2>
+            </div>
+            <p class="ve-note" data-reveal="fade">Testimonios ficticios escritos para esta demostración.</p>
+          </div>
+
+          <div class="ve-voices">
+            <figure class="ve-voices__feature" data-reveal="scale">
+              <p class="ve-quote__score"><span class="ve-stars" role="img" aria-label="5.0 de 5">
+      <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 1.2l2.06 4.18 4.61.67-3.34 3.25.79 4.6L8 11.72l-4.12 2.17.79-4.6L1.33 6.05l4.61-.67Z"/></svg><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 1.2l2.06 4.18 4.61.67-3.34 3.25.79 4.6L8 11.72l-4.12 2.17.79-4.6L1.33 6.05l4.61-.67Z"/></svg><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 1.2l2.06 4.18 4.61.67-3.34 3.25.79 4.6L8 11.72l-4.12 2.17.79-4.6L1.33 6.05l4.61-.67Z"/></svg><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 1.2l2.06 4.18 4.61.67-3.34 3.25.79 4.6L8 11.72l-4.12 2.17.79-4.6L1.33 6.05l4.61-.67Z"/></svg><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 1.2l2.06 4.18 4.61.67-3.34 3.25.79 4.6L8 11.72l-4.12 2.17.79-4.6L1.33 6.05l4.61-.67Z"/></svg>
+    </span><span>5.0</span></p>
+              <blockquote class="ve-voices__quote">Llegué pidiendo un tratamiento que había visto en internet y salí con otro, más simple y más barato. Me explicaron por qué. Ocho semanas después entiendo la diferencia.</blockquote>
+              <figcaption class="ve-quote__by">
+                <span class="ve-quote__avatar" aria-hidden="true">AL</span>
+                <span>
+                  <span class="ve-quote__name">Ana Lucía M.</span>
+                  <span class="ve-quote__detail">Rejuvenecimiento · 3 sesiones</span>
+                </span>
+              </figcaption>
+            </figure>
+
+            <div class="ve-voices__list" data-reveal-group="100">
+              <figure class="ve-quote" data-reveal="rise">
+                <p class="ve-quote__score"><span class="ve-stars" role="img" aria-label="5.0 de 5">
+      <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 1.2l2.06 4.18 4.61.67-3.34 3.25.79 4.6L8 11.72l-4.12 2.17.79-4.6L1.33 6.05l4.61-.67Z"/></svg><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 1.2l2.06 4.18 4.61.67-3.34 3.25.79 4.6L8 11.72l-4.12 2.17.79-4.6L1.33 6.05l4.61-.67Z"/></svg><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 1.2l2.06 4.18 4.61.67-3.34 3.25.79 4.6L8 11.72l-4.12 2.17.79-4.6L1.33 6.05l4.61-.67Z"/></svg><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 1.2l2.06 4.18 4.61.67-3.34 3.25.79 4.6L8 11.72l-4.12 2.17.79-4.6L1.33 6.05l4.61-.67Z"/></svg><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 1.2l2.06 4.18 4.61.67-3.34 3.25.79 4.6L8 11.72l-4.12 2.17.79-4.6L1.33 6.05l4.61-.67Z"/></svg>
+    </span><span>5.0</span></p>
+                <blockquote class="ve-quote__text">Es la primera vez que salgo de una consulta con el precio total por escrito.</blockquote>
+                <figcaption class="ve-quote__by">
+                  <span class="ve-quote__avatar" aria-hidden="true">KR</span>
+                  <span>
+                    <span class="ve-quote__name">Karla R.</span>
+                    <span class="ve-quote__detail">Armonización facial</span>
+                  </span>
+                </figcaption>
+              </figure>
+              <figure class="ve-quote" data-reveal="rise">
+                <p class="ve-quote__score"><span class="ve-stars" role="img" aria-label="4.8 de 5">
+      <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 1.2l2.06 4.18 4.61.67-3.34 3.25.79 4.6L8 11.72l-4.12 2.17.79-4.6L1.33 6.05l4.61-.67Z"/></svg><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 1.2l2.06 4.18 4.61.67-3.34 3.25.79 4.6L8 11.72l-4.12 2.17.79-4.6L1.33 6.05l4.61-.67Z"/></svg><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 1.2l2.06 4.18 4.61.67-3.34 3.25.79 4.6L8 11.72l-4.12 2.17.79-4.6L1.33 6.05l4.61-.67Z"/></svg><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 1.2l2.06 4.18 4.61.67-3.34 3.25.79 4.6L8 11.72l-4.12 2.17.79-4.6L1.33 6.05l4.61-.67Z"/></svg><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 1.2l2.06 4.18 4.61.67-3.34 3.25.79 4.6L8 11.72l-4.12 2.17.79-4.6L1.33 6.05l4.61-.67Z"/></svg>
+    </span><span>4.8</span></p>
+                <blockquote class="ve-quote__text">Nadie me notó nada distinto. Solo me preguntaron si había dormido bien. Eso quería.</blockquote>
+                <figcaption class="ve-quote__by">
+                  <span class="ve-quote__avatar" aria-hidden="true">DV</span>
+                  <span>
+                    <span class="ve-quote__name">Daniela V.</span>
+                    <span class="ve-quote__detail">Rejuvenecimiento</span>
+                  </span>
+                </figcaption>
+              </figure>
+              <figure class="ve-quote" data-reveal="rise">
+                <p class="ve-quote__score"><span class="ve-stars" role="img" aria-label="5.0 de 5">
+      <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 1.2l2.06 4.18 4.61.67-3.34 3.25.79 4.6L8 11.72l-4.12 2.17.79-4.6L1.33 6.05l4.61-.67Z"/></svg><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 1.2l2.06 4.18 4.61.67-3.34 3.25.79 4.6L8 11.72l-4.12 2.17.79-4.6L1.33 6.05l4.61-.67Z"/></svg><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 1.2l2.06 4.18 4.61.67-3.34 3.25.79 4.6L8 11.72l-4.12 2.17.79-4.6L1.33 6.05l4.61-.67Z"/></svg><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 1.2l2.06 4.18 4.61.67-3.34 3.25.79 4.6L8 11.72l-4.12 2.17.79-4.6L1.33 6.05l4.61-.67Z"/></svg><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 1.2l2.06 4.18 4.61.67-3.34 3.25.79 4.6L8 11.72l-4.12 2.17.79-4.6L1.33 6.05l4.61-.67Z"/></svg>
+    </span><span>5.0</span></p>
+                <blockquote class="ve-quote__text">Tres sesiones de láser y por fin dejé de usar base todos los días.</blockquote>
+                <figcaption class="ve-quote__by">
+                  <span class="ve-quote__avatar" aria-hidden="true">SA</span>
+                  <span>
+                    <span class="ve-quote__name">Sofía A.</span>
+                    <span class="ve-quote__detail">Láser · manchas</span>
+                  </span>
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="ve-nudge" aria-labelledby="nudge-title">
+        <div class="lp-shell ve-nudge__inner" data-reveal="scale">
+          <div>
+            <h2 class="ve-nudge__title" id="nudge-title">¿No sabes qué tratamiento necesitas?</h2>
+            <p class="ve-nudge__text">Casi nadie lo sabe la primera vez. Para eso existe la valoración: 45 minutos, sin costo.</p>
+          </div>
+          <a class="ve-btn ve-btn--solid ve-btn--lg" href="#reservar">
+            Agenda una valoración
+          </a>
+        </div>
+      </section>
+
+      <section class="ve-section" id="equipo" aria-labelledby="doctor-title">
+        <div class="lp-shell ve-doctor">
+          <div class="ve-doctor__portrait" data-reveal="scale">
+            <svg
+                  class="ve-doctor__art"
+                  viewBox="0 0 380 480"
+                  preserveAspectRatio="xMidYMid slice"
+                  role="img"
+                  aria-label="Retrato ilustrado: un arco en tonos champán con el monograma de la profesional."
+                >
+                  <defs>
+                    <linearGradient id="ve-doc-doc" x1="0.1" y1="0" x2="0.9" y2="1">
+                      <stop offset="0%" stop-color="#efe0cd"/>
+                      <stop offset="100%" stop-color="#cfae8d"/>
+                    </linearGradient>
+                  </defs>
+                  <path d="M0 480V190C0 85 85 0 190 0s190 85 190 190v290Z" fill="url(#ve-doc-doc)"/>
+                  <circle cx="190" cy="196" r="104" fill="#fdf7ee" fill-opacity="0.5"/>
+                  <circle cx="190" cy="196" r="104" fill="none" stroke="#a8724f" stroke-opacity="0.3" stroke-width="1.4"/>
+                  <text
+                    x="190"
+                    y="196"
+                    text-anchor="middle"
+                    dominant-baseline="central"
+                    font-family="Manrope, sans-serif"
+                    font-size="86"
+                    font-weight="300"
+                    letter-spacing="6"
+                    fill="#8a5c3c"
+                  >AS</text>
+                  <g fill="none" stroke="#fdf7ee" stroke-opacity="0.5" stroke-width="1.2">
+                    <path d="M-20 360c90-40 180-40 260-6s110 34 160 10"/>
+                    <path d="M-20 398c90-40 180-40 260-6s110 34 160 10"/>
+                  </g>
+                </svg>
+          </div>
+
+          <div class="ve-doctor__copy">
+            <p class="ve-label" data-reveal="fade">Equipo</p>
+            <h2 class="ve-h2" id="doctor-title" data-reveal="rise">Dra. Adriana Solís</h2>
+            <p class="ve-doctor__role" data-reveal="rise">Directora médica · Medicina estética facial</p>
+
+            <p class="ve-doctor__story" data-reveal="rise">Trabajé nueve años en dermatología clínica antes de dedicarme a la estética, y esa es la razón por la que en Velora se dice que no con frecuencia: la mitad de lo que se pide en la consulta no hace falta.</p>
+            <p class="ve-doctor__story" data-reveal="rise">Abrí la clínica en 2019 con una regla que no ha cambiado — nadie sale de aquí con un tratamiento que no entiende, ni con un precio que no vio antes de empezar.</p>
+
+            <ul class="ve-doctor__credentials" data-reveal="fade">
+              <li>Especialidad en Dermatología · Universidad ficticia</li>
+              <li>Certificación en medicina estética facial</li>
+              <li>Miembro de la asociación (ficticia) de estética clínica</li>
+            </ul>
+
+            <div class="ve-doctor__stats" data-reveal="fade">
+              <div class="ve-doctor__stat">
+                <span class="ve-doctor__stat-value">9</span>
+                <span class="ve-doctor__stat-label">Años en dermatología</span>
+              </div>
+              <div class="ve-doctor__stat">
+                <span class="ve-doctor__stat-value">2019</span>
+                <span class="ve-doctor__stat-label">Velora abre</span>
+              </div>
+              <div class="ve-doctor__stat">
+                <span class="ve-doctor__stat-value">1 200</span>
+                <span class="ve-doctor__stat-label">Protocolos dirigidos</span>
+              </div>
+            </div>
+
+            <p class="ve-doctor__disclaimer">Profesional y credenciales ficticios, creados exclusivamente para esta demostración.</p>
+          </div>
+        </div>
+
+        <aside class="lp-pitch" data-reveal="fade">
+          <p class="lp-pitch__text">Esta clínica no existe: es una demostración de CoreStruct. <b>La reserva, el comparador y la agenda sí funcionan</b> — y así funcionarían con el sistema de tu negocio detrás.</p>
+          <a class="lp-pitch__link" href="../../index.html#contacto">
+            Start my project
+            <span aria-hidden="true">&rarr;</span>
+          </a>
+        </aside>
+      </section>
+
+      <section class="ve-cta" aria-labelledby="cta-title">
+        <div class="lp-shell ve-cta__inner">
+          <h2 class="ve-cta__title" id="cta-title" data-reveal="rise">Tu mejor versión comienza con una conversación.</h2>
+          <p class="ve-cta__text" data-reveal="rise">La valoración dura 45 minutos, no cuesta nada y termina con un plan por escrito. Decidir después es tu parte.</p>
+          <div class="ve-cta__actions" data-reveal="rise">
+            <a class="ve-btn ve-btn--solid ve-btn--lg" href="#reservar">
+              Reservar mi valoración
+            </a>
+            <a class="ve-btn ve-btn--outline ve-btn--lg" href="#reservar">
+              Escribir por WhatsApp
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <footer class="ve-foot">
+        <div class="lp-shell ve-foot__inner">
+          <div class="ve-foot__brand">
+            <p class="ve-foot__name">Velora</p>
+            <p class="ve-foot__line">Colonia Palmira, Tegucigalpa · Honduras</p>
+            <p class="ve-foot__line">Lunes a viernes · 9:00 – 18:00</p>
+            <p class="ve-foot__line">Sábado · 9:00 – 13:00</p>
+          </div>
+
+            <div class="ve-foot__col">
+              <p class="ve-foot__col-title">Clínica</p>
+              <ul>
+                <li><a href="#tratamientos">Tratamientos</a></li>
+                <li><a href="#protocolo">Protocolo</a></li>
+                <li><a href="#equipo">Equipo</a></li>
+              </ul>
+            </div>
+            <div class="ve-foot__col">
+              <p class="ve-foot__col-title">Citas</p>
+              <ul>
+                <li><a href="#reservar">Reservar</a></li>
+                <li><a href="#resultados">Resultados</a></li>
+                <li><a href="#pacientes">Pacientes</a></li>
+              </ul>
+            </div>
+
+          <p class="ve-foot__credit">
+            Marca ficticia. Demostración construida por
+            <a href="../../index.html">CoreStruct</a> &copy; <span data-current-year>2026</span>.
+          </p>
+        </div>
+      </footer>
+
+      <section class="lp-outro" aria-labelledby="outro-title">
+        <div class="lp-shell lp-outro__inner">
+          <p class="lp-outro__mark" data-reveal="fade">
+            <svg viewBox="0 0 362 422" aria-hidden="true" focusable="false"><path fill="#2c6fb2" d="M10 98L17 92L181 1L188 3L354 96L353 99L200 186L185 179L173 181L166 186L11 98Z"/><path fill="#3898d4" d="M188 421L188 373L190 371L320 295L320 248L318 248L188 324L188 217L198 211L202 203L202 197L358 111L361 109L361 165L233 234L233 275L361 200L361 321L189 421Z"/><path fill="#253880" d="M1 107L160 195L166 210L176 216L176 252L174 252L42 176L42 294L114 336L154 359L154 297L176 309L176 422L2 321L1 108Z"/></svg>
+            Project by CoreStruct
+          </p>
+          <h2 class="lp-outro__title" id="outro-title" data-reveal="rise">
+            ¿Te gustaría una experiencia como esta para tu empresa?
+          </h2>
+          <p class="lp-outro__text" data-reveal="rise">
+            Esta es una demostración de las experiencias digitales que diseñamos y
+            desarrollamos. La misma calidad se adapta a una clínica, un estudio, un gimnasio o un restaurante — o a cualquier
+            otra industria.
+          </p>
+          <div class="lp-outro__actions" data-reveal="rise">
+            <a class="lp-outro__cta" href="../../index.html#contacto">
+              Quiero algo así
+              <span aria-hidden="true">&rarr;</span>
+            </a>
+            <a class="lp-outro__ghost" href="index.html">Ver las otras demos</a>
+          </div>
+          <p class="lp-outro__note" data-reveal="fade">
+            Marca, cifras, testimonios y precios son ficticios y existen solo para esta demostración.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <aside class="lp-aside" aria-label="Sobre esta demostración">
+      <a class="lp-badge" href="index.html">
+        <svg class="lp-badge__mark" viewBox="0 0 362 422" aria-hidden="true" focusable="false"><path fill="#2c6fb2" d="M10 98L17 92L181 1L188 3L354 96L353 99L200 186L185 179L173 181L166 186L11 98Z"/><path fill="#3898d4" d="M188 421L188 373L190 371L320 295L320 248L318 248L188 324L188 217L198 211L202 203L202 197L358 111L361 109L361 165L233 234L233 275L361 200L361 321L189 421Z"/><path fill="#253880" d="M1 107L160 195L166 210L176 216L176 252L174 252L42 176L42 294L114 336L154 359L154 297L176 309L176 422L2 321L1 108Z"/></svg>
+        <span class="lp-badge__tag">Demo</span>
+        <span class="lp-badge__label">Fictional site · CoreStruct</span>
+      </a>
+      <a class="lp-float" href="#reservar" data-demo-action>
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path fill="currentColor" d="M12.04 2c-5.5 0-9.96 4.46-9.96 9.96 0 1.76.46 3.48 1.34 5L2 22l5.2-1.36a9.9 9.9 0 0 0 4.84 1.24h.01c5.5 0 9.96-4.46 9.96-9.96 0-2.66-1.04-5.16-2.92-7.04A9.88 9.88 0 0 0 12.04 2Zm0 1.82c2.18 0 4.23.85 5.77 2.39a8.1 8.1 0 0 1 2.39 5.77c0 4.5-3.66 8.15-8.16 8.15a8.2 8.2 0 0 1-4.16-1.14l-.3-.18-3.09.81.82-3.01-.2-.31a8.1 8.1 0 0 1-1.26-4.33c0-4.5 3.66-8.15 8.19-8.15Zm-2.5 4.36c-.19 0-.5.07-.76.35-.26.28-1 .98-1 2.38s1.02 2.76 1.17 2.95c.14.19 2 3.06 4.85 4.17 2.37.92 2.85.74 3.37.69.52-.05 1.67-.68 1.9-1.34.24-.66.24-1.22.17-1.34-.07-.12-.26-.19-.54-.33-.28-.14-1.67-.82-1.93-.92-.26-.09-.45-.14-.64.14-.19.28-.73.92-.9 1.11-.16.19-.33.21-.61.07-.28-.14-1.19-.44-2.27-1.4-.84-.75-1.4-1.67-1.57-1.95-.16-.28-.02-.43.12-.57.13-.13.28-.33.42-.5.14-.16.19-.28.28-.47.09-.19.05-.35-.02-.49-.07-.14-.63-1.52-.86-2.08-.23-.55-.46-.47-.63-.48h-.55Z"/>
+        </svg>
+        Escríbenos
+      </a>
+    </aside>
+
+    <script type="module" src="../../../src/scripts/velora/main.js"></script>
+    <script type="module" src="../../../src/scripts/cotizador.js"></script>
+  </body>
+</html>

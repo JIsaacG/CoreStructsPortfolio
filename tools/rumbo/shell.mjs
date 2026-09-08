@@ -111,6 +111,7 @@ ${links}
         </nav>
 
         <div class="dm-header__actions">
+          <!--lang-switch-->
           <a class="button button--primary" href="${asset(ctx, "index.html")}#contacto">Hablemos de tu proyecto</a>
           <button
             class="dm-burger"
@@ -180,6 +181,7 @@ ${renderFooter(ctx)}
 
     <script type="module" src="${asset(ctx, "src/scripts/demo/shell.js")}"></script>
     <script type="module" src="${asset(ctx, "src/scripts/rumbo/filters.js")}"></script>
+    <script type="module" src="${asset(ctx, "src/scripts/cotizador.js")}"></script>
   </body>
 </html>
 `;

@@ -29,3 +29,10 @@
 @import "./demo/shop.css";
 @import "./demo/dashboard.css";
 @import "./demo/footer.css";
+
+/* The quick-quote panel. CoreStruct furniture rather than this page's, so it
+   is imported last: nothing in the bundle above may reach into it. */
+@import "./components/cotizador.css";
+
+/* The ES/EN switch every header carries. Takes its colour from the header. */
+@import "./components/lang-switch.css";

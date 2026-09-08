@@ -1,0 +1,74 @@
+/* =============================================================================
+   Language switch — ES / EN
+
+   The same control sits in ten headers that agree on nothing: dark and light,
+   serif and grotesque, square and rounded. So it takes no colour of its own.
+   Every surface here is mixed out of `currentColor`, which means it inherits
+   whatever the header around it is already using for text and reads as part of
+   that header rather than as something bolted onto it.
+
+   Sites that need to overrule the result can set `--lang-switch-ink` on any
+   ancestor; nothing else about the control is worth varying.
+   ========================================================================== */
+
+.lang-switch {
+  --lang-switch-ink: currentColor;
+
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  gap: 2px;
+  padding: 2px;
+
+  font-family: inherit;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+
+  color: var(--lang-switch-ink);
+  /* Fallback for anything without color-mix(): a hairline that reads on both
+     a dark and a light header without knowing which one it is on. */
+  border: 1px solid rgb(128 128 128 / 0.35);
+  border-color: color-mix(in srgb, var(--lang-switch-ink) 24%, transparent);
+  border-radius: 999px;
+}
+
+.lang-switch__current,
+.lang-switch__link {
+  display: block;
+  padding: 0.4em 0.62em;
+  border-radius: 999px;
+  color: inherit;
+}
+
+/* The language you are reading. A span, not a link: there is nowhere for it to
+   go, and a dead link is worse than plain text for anyone using a screen
+   reader or a keyboard. */
+.lang-switch__current {
+  background: rgb(128 128 128 / 0.16);
+  background: color-mix(in srgb, var(--lang-switch-ink) 14%, transparent);
+  cursor: default;
+}
+
+.lang-switch__link {
+  opacity: 0.62;
+  text-decoration: none;
+  transition:
+    opacity 160ms ease,
+    background-color 160ms ease;
+}
+
+.lang-switch__link:hover,
+.lang-switch__link:focus-visible {
+  opacity: 1;
+  background: rgb(128 128 128 / 0.16);
+  background: color-mix(in srgb, var(--lang-switch-ink) 12%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lang-switch__link {
+    transition: none;
+  }
+}

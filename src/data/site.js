@@ -15,12 +15,77 @@ export const site = {
     "plataformas web, sistemas empresariales y automatizaciones a la medida de cada operación.",
 
   // TODO: replace with the real channels before going live. Anything left null
-  // is simply not rendered, so the page never shows a placeholder address.
+  // or empty is simply not rendered, so the page never shows a placeholder
+  // address — fill `whatsapp` in and every CTA on the site, portfolio and demos
+  // alike, starts routing to it. Nothing else has to change.
   contact: {
+    // Full international number, digits only, no + and no spaces or dashes:
+    // "50497350903". This one value is the destination of every quote request
+    // the site can produce; until it is set the panel falls back to `email`.
+    whatsapp: null,
+
+    // The address the fallback uses, and the first one shown in the panel.
     email: "contacto@corestruct.com",
+
+    // Any further addresses to list beneath it, e.g. a sales or support inbox.
+    // ["ventas@corestruct.com", "soporte@corestruct.com"]
+    emails: [],
+
     phone: null,        // e.g. "+52 55 1234 5678"
-    whatsapp: null,     // full international number, digits only: "525512345678"
-    location: "Servicio remoto · Latinoamérica",
+
+    // Deliberately unset: the studio works remotely and takes work from
+    // anywhere, so naming a city would narrow the offer rather than qualify it.
+    location: null,
+  },
+
+  /**
+   * The quick-quote panel — the chat-style form behind every "Hablemos" on the
+   * site. `types` populates its one select; they are the portfolio's own eight
+   * cards, so a request arrives already sorted into the kind of work it is.
+   *
+   * Both languages are kept here side by side rather than split between this
+   * file and the panel's own copy table: this is the service catalogue, it
+   * changes when the offer changes, and one list going stale against the other
+   * is exactly what listing them together prevents. Keep them in step, and in
+   * the same order — the two are read positionally by nothing, but a reader
+   * comparing them is.
+   */
+  quote: {
+    types: {
+      es: [
+        "Sitio corporativo o institucional",
+        "Landing page de campaña",
+        "Sistema empresarial a medida",
+        "Portal educativo",
+        "Portal gubernamental o público",
+        "Carta digital / restaurante",
+        "Automatización de procesos",
+        "Aún no lo tengo claro",
+      ],
+      en: [
+        "Corporate or institutional site",
+        "Campaign landing page",
+        "Custom business system",
+        "Education portal",
+        "Government or public portal",
+        "Digital menu / restaurant",
+        "Process automation",
+        "Not sure yet",
+      ],
+    },
+  },
+
+  /**
+   * The closing statement, animated one word at a time.
+   *
+   * It lives here as a sentence rather than as the markup it becomes because
+   * the two languages do not split it into the same number of words. `**…**`
+   * marks the half that is set in the contrasting face.
+   */
+  manifesto: {
+    quote:
+      "La tecnología debe adaptarse a tu empresa, **no tu empresa a la tecnología.**",
+    attribution: "CoreStruct · Principio de trabajo",
   },
 
   // Add entries as they exist; empty means the footer simply omits the list.

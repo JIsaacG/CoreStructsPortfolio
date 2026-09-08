@@ -83,6 +83,36 @@
         }, 2500);
       })();
     </script>
+<!--lang-memory-->
+    <script>
+      /* Language preference: written by the ES/EN switch, applied before paint. */
+      (function () {
+        try {
+          var pref = localStorage.getItem("cs-lang");
+          if (pref && pref !== document.documentElement.lang) {
+            if (sessionStorage.getItem("cs-lang-hop") !== location.pathname) {
+              sessionStorage.setItem("cs-lang-hop", location.pathname);
+              location.replace("../../en/demos/cede/normativa.html");
+              return;
+            }
+          } else {
+            sessionStorage.removeItem("cs-lang-hop");
+          }
+        } catch (e) {}
+        document.addEventListener("click", function (event) {
+          var pick = event.target.closest && event.target.closest("[data-lang-pick]");
+          if (pick) {
+            try { localStorage.setItem("cs-lang", pick.getAttribute("data-lang-pick")); } catch (e) {}
+          }
+        }, true);
+      })();
+    </script>
+    <!--/lang-memory-->
+<!--lang-alternates-->
+    <link rel="alternate" hreflang="es" href="https://www.cede.example/normativa.html" />
+    <link rel="alternate" hreflang="en" href="https://www.cede.example/en/normativa.html" />
+    <link rel="alternate" hreflang="x-default" href="https://www.cede.example/normativa.html" />
+    <!--/lang-alternates-->
   </head>
 
   <body>
@@ -113,7 +143,7 @@
               <button class="cd-tool" type="button" data-contrast aria-pressed="false">Alto contraste</button>
             </div>
             <div class="cd-tools__group">
-              <span class="cd-tool" aria-hidden="true">ES</span>
+              <!--lang-switch--><div class="lang-switch" role="group" aria-label="Idioma · Language"><span class="lang-switch__current" lang="es" aria-current="true">ES</span><a class="lang-switch__link" lang="en" hreflang="en" href="../../en/demos/cede/normativa.html" data-lang-pick="en" title="English">EN</a></div><!--/lang-switch-->
             </div>
           </div>
         </div>
@@ -379,6 +409,9 @@
         <div class="cd-footer__notice">
           <div class="cd-shell cd-footer__notice-inner">
             <p>Concepto de portafolio. Entidad ficticia. Este sitio no representa a ninguna institución gubernamental real. Las cifras presentadas en este prototipo son simulaciones creadas exclusivamente para demostrar las capacidades de la plataforma.</p>
+            <!-- The studio's own line. data-cotizador opens the quote panel
+                 over the page; the href is the no-JavaScript fallback. -->
+            <p class="cd-footer__cta"><a href="../../index.html#contacto" data-cotizador>Quiero un portal como este →</a></p>
             <p>&copy; <span data-current-year>2026</span> Consejo Estratégico para el Desarrollo Educativo</p>
           </div>
         </div>
@@ -387,5 +420,6 @@
     <div class="cd-tip" data-tip-box role="status" aria-live="polite"></div>
 
     <script type="module" src="../../src/scripts/cede/main.js"></script>
+    <script type="module" src="../../src/scripts/cotizador.js"></script>
   </body>
 </html>

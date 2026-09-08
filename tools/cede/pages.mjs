@@ -1918,6 +1918,7 @@ export function backofficePage(ctx) {
           <span class="cd-admin__tag">Backoffice demostrativo</span>
         </p>
         <div class="cd-admin__user">
+          <!--lang-switch-->
           <span>Sesión de demostración · no hay datos reales</span>
           <span class="cd-admin__avatar" aria-hidden="true">ST</span>
         </div>

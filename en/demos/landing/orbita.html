@@ -1,0 +1,2499 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Orbita Supply — Equipos y tecnología para empresas · Demo de CoreStruct</title>
+    <meta name="description" content="Landing comercial de demostración para una distribuidora de equipo ficticia: catálogo, ficha de producto, comparador, configurador B2B y solicitud de cotización." />
+    <!-- An invented company must never turn up in a search result as a real one. -->
+    <meta name="robots" content="noindex, follow" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="color-scheme" content="light" />
+
+    <link rel="icon" href="../../../favicon.ico" sizes="32x32" />
+    <link rel="icon" href="../../../assets/brand/isotipo.svg" type="image/svg+xml" />
+
+    <link
+      rel="preload"
+      href="../../../assets/fonts/manrope-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="../../../assets/fonts/ibm-plex-sans-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <link rel="stylesheet" href="../../../dist/orbita.css" />
+
+    <style>
+      :root {
+        --accent: #0a5cff;
+        --accent-rgb: 10 92 255;
+      }
+    </style>
+
+    <script>
+      /* Hides the reveal targets before first paint, and gives up on its own if
+         the module never arrives — an entrance animation must not be able to
+         swallow the content it animates. */
+      document.documentElement.classList.add("js");
+      setTimeout(function () {
+        if (!document.documentElement.dataset.revealsReady) {
+          document.documentElement.classList.remove("js");
+        }
+      }, 2500);
+    </script>
+<!--lang-memory-->
+    <script>
+      /* Language preference: written by the ES/EN switch, applied before paint. */
+      (function () {
+        try {
+          var pref = localStorage.getItem("cs-lang");
+          if (pref && pref !== document.documentElement.lang) {
+            if (sessionStorage.getItem("cs-lang-hop") !== location.pathname) {
+              sessionStorage.setItem("cs-lang-hop", location.pathname);
+              location.replace("../../../demos/landing/orbita.html");
+              return;
+            }
+          } else {
+            sessionStorage.removeItem("cs-lang-hop");
+          }
+        } catch (e) {}
+        document.addEventListener("click", function (event) {
+          var pick = event.target.closest && event.target.closest("[data-lang-pick]");
+          if (pick) {
+            try { localStorage.setItem("cs-lang", pick.getAttribute("data-lang-pick")); } catch (e) {}
+          }
+        }, true);
+      })();
+    </script>
+    <!--/lang-memory-->
+  </head>
+
+  <body>
+    <a class="lp-skip" href="#contenido">Skip to content</a>
+
+    <header class="ob-header" data-header>
+      <div class="ob-header__inner lp-shell">
+        <a class="ob-brand" href="#inicio">
+          <span class="ob-brand__mark" aria-hidden="true"></span>
+          <span class="ob-brand__name">Orbita<b>Supply</b></span>
+        </a>
+
+        <nav class="ob-nav" aria-label="Sections">
+            <a class="ob-nav__link" href="#catalogo" data-nav-link>Catálogo</a>
+            <a class="ob-nav__link" href="#comparar" data-nav-link>Comparar</a>
+            <a class="ob-nav__link" href="#equipar" data-nav-link>Equipar</a>
+            <a class="ob-nav__link" href="#empresas" data-nav-link>Empresas</a>
+            <a class="ob-nav__link" href="#cotizar" data-nav-link>Cotizar</a>
+        </nav>
+
+        <div class="ob-header__actions">
+          <!--lang-switch--><div class="lang-switch" role="group" aria-label="Idioma · Language"><span class="lang-switch__current" lang="en" aria-current="true">EN</span><a class="lang-switch__link" lang="es" hreflang="es" href="../../../demos/landing/orbita.html" data-lang-pick="es" title="Español">ES</a></div><!--/lang-switch-->
+          <a class="ob-btn ob-btn--solid ob-header__cta" href="#cotizar">Cotizar</a>
+          <button
+            class="ob-burger"
+            type="button"
+            aria-expanded="false"
+            aria-controls="ob-menu"
+            aria-label="Open menu"
+            data-menu-toggle
+          >
+            <span class="ob-burger__bar"></span>
+            <span class="ob-burger__bar"></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="ob-menu" id="ob-menu" data-mobile-nav>
+      <nav class="ob-menu__inner" aria-label="Menu">
+        <a class="ob-menu__link" href="#catalogo">Catálogo</a>
+        <a class="ob-menu__link" href="#comparar">Comparar</a>
+        <a class="ob-menu__link" href="#equipar">Equipar</a>
+        <a class="ob-menu__link" href="#empresas">Empresas</a>
+        <a class="ob-menu__link" href="#cotizar">Cotizar</a>
+        <a class="ob-menu__cta" href="#cotizar">Request a quote</a>
+      </nav>
+    </div>
+
+    <main id="contenido">
+      <section class="ob-hero" id="inicio">
+        <div class="lp-shell ob-hero__grid">
+          <div class="ob-hero__copy">
+            <p class="ob-eyebrow" data-reveal="fade">Tecnología para tu empresa</p>
+            <h1 class="ob-hero__title" data-reveal="rise">El equipo correcto cambia la forma en que trabajas.</h1>
+            <p class="ob-hero__lead" data-reveal="rise">Tecnología, equipos y soluciones seleccionadas para empresas que necesitan rendimiento, confiabilidad y soporte.</p>
+            <div class="ob-hero__actions" data-reveal="rise">
+              <a class="ob-btn ob-btn--solid ob-btn--lg" href="#catalogo">
+                Explorar equipos
+              </a>
+              <a class="ob-btn ob-btn--ghost ob-btn--lg" href="#cotizar">
+                Request a quote
+                <span aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+          </div>
+
+      <div class="ob-showcase" data-parallax>
+        <div class="ob-showcase__stage">
+          <div class="ob-showcase__hero-piece" style="--depth: 1">
+            <svg class="ob-render ob-render--hero" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="34" y="20" width="92" height="58" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="40" y="26" width="80" height="46" rx="2" fill="var(--render-screen)"/>
+    <path d="M46 62h24M46 55h44M46 48h30" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M22 78h116l6 12a3 3 0 0 1-3 4H19a3 3 0 0 1-3-4Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M66 86h28" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/></svg>
+          </div>
+          <div
+            class="ob-showcase__piece ob-showcase__piece--laptop"
+            style="--x: 20%; --y: 22%; --depth: 3"
+          >
+            <svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="34" y="20" width="92" height="58" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="40" y="26" width="80" height="46" rx="2" fill="var(--render-screen)"/>
+    <path d="M46 62h24M46 55h44M46 48h30" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M22 78h116l6 12a3 3 0 0 1-3 4H19a3 3 0 0 1-3-4Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M66 86h28" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/></svg>
+            <span class="ob-showcase__tag">Nuevo</span>
+          </div>
+          <div
+            class="ob-showcase__piece ob-showcase__piece--monitor"
+            style="--x: 72%; --y: 16%; --depth: 2"
+          >
+            <svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="20" y="14" width="120" height="72" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="26" y="20" width="108" height="60" rx="2" fill="var(--render-screen)"/>
+    <path d="M34 68h30M34 58h56M34 48h40" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M72 86h16v10H72Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M56 100h48" stroke-width="4" stroke-linecap="round" fill="none" stroke="var(--render-line)"/></svg>
+            <span class="ob-showcase__tag">Empresarial</span>
+          </div>
+          <div
+            class="ob-showcase__piece ob-showcase__piece--printer"
+            style="--x: 80%; --y: 74%; --depth: 3"
+          >
+            <svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <path d="M40 18h80v22H40Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="26" y="40" width="108" height="44" rx="5" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="96" y="50" width="26" height="12" rx="2" fill="var(--render-screen)"/>
+    <path d="M38 74h44" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M46 84h68v14H46Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M56 18h48v10H56Z" fill="var(--render-paper)" stroke="var(--render-line)" stroke-width="1.4"/></svg>
+            <span class="ob-showcase__tag">Entrega rápida</span>
+          </div>
+          <div
+            class="ob-showcase__piece ob-showcase__piece--phone"
+            style="--x: 15%; --y: 78%; --depth: 1.5"
+          >
+            <svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="58" y="12" width="44" height="86" rx="8" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="63" y="20" width="34" height="70" rx="4" fill="var(--render-screen)"/>
+    <path d="M72 30h16M70 42h20M70 52h14" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M74 16h12" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/></svg>
+            <span class="ob-showcase__tag">Garantía</span>
+          </div>
+        </div>
+      </div>
+        </div>
+      </section>
+
+      <section class="ob-search" aria-labelledby="search-title">
+        <div class="lp-shell ob-search__inner">
+          <div class="ob-search__head">
+            <h2 class="ob-search__title" id="search-title">¿Qué estás buscando?</h2>
+            <p class="ob-search__hint">Buscador de demostración: filtra el catálogo de esta página, sin servidor detrás.</p>
+          </div>
+
+          <div class="ob-search__field">
+            <svg class="ob-search__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/>
+              <path d="M16.5 16.5 21 21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <label class="lp-hidden" for="ob-search-input">Buscar equipos</label>
+            <input
+              class="ob-search__input"
+              id="ob-search-input"
+              type="search"
+              placeholder="Laptop, proyector, impresora, router…"
+              autocomplete="off"
+              data-search-input
+            />
+            <button class="ob-btn ob-btn--solid ob-search__go" type="button" data-search-go>Buscar</button>
+          </div>
+
+          <div class="ob-search__terms">
+            <span class="ob-search__terms-label">Ejemplos</span>
+              <button class="ob-chip" type="button" data-search-term="Laptop empresarial">
+                Laptop empresarial
+              </button>
+              <button class="ob-chip" type="button" data-search-term="Proyector">
+                Proyector
+              </button>
+              <button class="ob-chip" type="button" data-search-term="Impresora">
+                Impresora
+              </button>
+              <button class="ob-chip" type="button" data-search-term="Monitor">
+                Monitor
+              </button>
+              <button class="ob-chip" type="button" data-search-term="Router">
+                Router
+              </button>
+              <button class="ob-chip" type="button" data-search-term="Equipo de oficina">
+                Equipo de oficina
+              </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="ob-section" id="categorias" aria-labelledby="categories-title">
+        <div class="lp-shell">
+          <div class="ob-head">
+            <p class="ob-label" data-reveal="fade">Categorías</p>
+            <h2 class="ob-h2" id="categories-title" data-reveal="rise">Ocho líneas, un solo proveedor.</h2>
+            <p class="ob-lead" data-reveal="rise">Todo lo que una operación necesita para funcionar, cotizado en una sola propuesta.</p>
+          </div>
+
+          <div class="ob-categories" data-reveal-group="70">
+            <button
+              class="ob-category"
+              type="button"
+              data-search-term="Computación"
+              data-reveal="rise"
+            >
+              <span class="ob-category__art" aria-hidden="true"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="34" y="20" width="92" height="58" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="40" y="26" width="80" height="46" rx="2" fill="var(--render-screen)"/>
+    <path d="M46 62h24M46 55h44M46 48h30" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M22 78h116l6 12a3 3 0 0 1-3 4H19a3 3 0 0 1-3-4Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M66 86h28" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+              <span class="ob-category__name">Computación</span>
+              <span class="ob-category__count">48 equipos</span>
+            </button>
+            <button
+              class="ob-category"
+              type="button"
+              data-search-term="Impresión"
+              data-reveal="rise"
+            >
+              <span class="ob-category__art" aria-hidden="true"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <path d="M40 18h80v22H40Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="26" y="40" width="108" height="44" rx="5" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="96" y="50" width="26" height="12" rx="2" fill="var(--render-screen)"/>
+    <path d="M38 74h44" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M46 84h68v14H46Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M56 18h48v10H56Z" fill="var(--render-paper)" stroke="var(--render-line)" stroke-width="1.4"/></svg></span>
+              <span class="ob-category__name">Impresión</span>
+              <span class="ob-category__count">26 equipos</span>
+            </button>
+            <button
+              class="ob-category"
+              type="button"
+              data-search-term="Redes"
+              data-reveal="rise"
+            >
+              <span class="ob-category__art" aria-hidden="true"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="30" y="56" width="100" height="30" rx="6" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M46 46v-18M80 42v-24M114 46v-18" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="46" cy="26" r="3.5" fill="var(--render-line)"/>
+    <circle cx="80" cy="16" r="3.5" fill="var(--render-line)"/>
+    <circle cx="114" cy="26" r="3.5" fill="var(--render-line)"/>
+    <circle cx="46" cy="71" r="4" fill="var(--render-screen)"/>
+    <circle cx="60" cy="71" r="4" fill="var(--render-screen)" opacity="0.55"/>
+    <circle cx="74" cy="71" r="4" fill="var(--render-screen)" opacity="0.3"/>
+    <path d="M96 71h24" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+              <span class="ob-category__name">Social</span>
+              <span class="ob-category__count">31 equipos</span>
+            </button>
+            <button
+              class="ob-category"
+              type="button"
+              data-search-term="Audio y video"
+              data-reveal="rise"
+            >
+              <span class="ob-category__art" aria-hidden="true"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="24" y="34" width="104" height="46" rx="8" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <circle cx="56" cy="57" r="15" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <circle cx="56" cy="57" r="8" fill="var(--render-screen)"/>
+    <path d="M96 48h20M96 58h20M96 68h12" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M136 40l14-10M136 57h18M136 74l14 10" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M46 80v8M112 80v8" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+              <span class="ob-category__name">Audio y video</span>
+              <span class="ob-category__count">22 equipos</span>
+            </button>
+            <button
+              class="ob-category"
+              type="button"
+              data-search-term="Oficina"
+              data-reveal="rise"
+            >
+              <span class="ob-category__art" aria-hidden="true"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <path d="M54 14h50a8 8 0 0 1 8 8v26a8 8 0 0 1-8 8H54a8 8 0 0 1-8-8V22a8 8 0 0 1 8-8Z" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M58 26h42M58 36h28" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M50 58h58a6 6 0 0 1 6 6v6a4 4 0 0 1-4 4H48a4 4 0 0 1-4-4v-6a6 6 0 0 1 6-6Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M79 74v14" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M56 100l23-12 23 12M79 88v10" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="56" cy="101" r="3" fill="var(--render-line)"/>
+    <circle cx="102" cy="101" r="3" fill="var(--render-line)"/>
+</svg></span>
+              <span class="ob-category__name">Oficina</span>
+              <span class="ob-category__count">54 artículos</span>
+            </button>
+            <button
+              class="ob-category"
+              type="button"
+              data-search-term="Energía"
+              data-reveal="rise"
+            >
+              <span class="ob-category__art" aria-hidden="true"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="24" y="34" width="112" height="52" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="34" y="44" width="40" height="22" rx="2" fill="var(--render-screen)"/>
+    <path d="M42 76h22" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="96" cy="55" r="7" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="118" cy="55" r="7" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M92 76h32" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M52 30l-6-14h10l-4-10" fill="none" stroke="var(--render-screen)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="ob-category__name">Energy</span>
+              <span class="ob-category__count">18 equipos</span>
+            </button>
+            <button
+              class="ob-category"
+              type="button"
+              data-search-term="Seguridad"
+              data-reveal="rise"
+            >
+              <span class="ob-category__art" aria-hidden="true"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <path d="M36 74a44 44 0 0 1 88 0Z" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M30 74h100" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="80" cy="56" r="17" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <circle cx="80" cy="56" r="9" fill="var(--render-screen)"/>
+    <circle cx="86" cy="50" r="2.6" fill="var(--render-paper)"/>
+    <path d="M80 74v14" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M62 92h36" stroke-width="4" stroke-linecap="round" fill="none" stroke="var(--render-line)"/></svg></span>
+              <span class="ob-category__name">Seguridad</span>
+              <span class="ob-category__count">29 equipos</span>
+            </button>
+            <button
+              class="ob-category"
+              type="button"
+              data-search-term="Accesorios"
+              data-reveal="rise"
+            >
+              <span class="ob-category__art" aria-hidden="true"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="20" y="52" width="60" height="34" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M28 60h44M28 68h44M28 76h26" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M104 40c10 0 18 9 18 20v14c0 7-8 12-18 12s-18-5-18-12V60c0-11 8-20 18-20Z" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M104 42v16" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="104" cy="64" r="3" fill="var(--render-screen)"/></svg></span>
+              <span class="ob-category__name">Accesorios</span>
+              <span class="ob-category__count">112 artículos</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="ob-section ob-section--muted" id="catalogo" aria-labelledby="catalog-title">
+        <div class="lp-shell">
+          <div class="ob-head ob-head--split">
+            <div>
+              <p class="ob-label" data-reveal="fade">Catálogo</p>
+              <h2 class="ob-h2" id="catalog-title" data-reveal="rise">Equipos seleccionados para trabajar mejor.</h2>
+            </div>
+            <p class="ob-lead" data-reveal="rise">Diez equipos del catálogo, uno por línea, con la ficha completa de cada uno. Toca cualquiera para ver especificaciones, garantía y disponibilidad.</p>
+          </div>
+
+          <p class="ob-filter" data-filter hidden>
+            <span class="ob-filter__label">Filtrando por</span>
+            <span class="ob-filter__value" data-filter-value></span>
+            <button class="ob-filter__clear" type="button" data-filter-clear>
+              Quitar filtro
+            </button>
+          </p>
+
+          <div class="ob-products" data-catalog>
+            <article
+              class="ob-product"
+              data-product="orbitbook-pro-14"
+              data-search="orbitbook pro 14 computación la máquina estándar para equipos que trabajan fuera del escritorio. laptop portátil notebook computadora empresarial intel core ultra 7 16 gb ram 512 gb ssd 14″ 2.8k"
+              data-reveal="rise"
+            >
+              <div class="ob-product__visual">
+                <span class="ob-product__flag">Más vendido</span>
+                <svg class="ob-render ob-render--card" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="34" y="20" width="92" height="58" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="40" y="26" width="80" height="46" rx="2" fill="var(--render-screen)"/>
+    <path d="M46 62h24M46 55h44M46 48h30" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M22 78h116l6 12a3 3 0 0 1-3 4H19a3 3 0 0 1-3-4Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M66 86h28" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/></svg>
+              </div>
+
+              <p class="ob-product__category">Computación</p>
+              <h3 class="ob-product__name">OrbitBook Pro 14</h3>
+              <ul class="ob-product__specs">
+                <li>Intel Core Ultra 7</li>
+                <li>16 GB RAM</li>
+                <li>512 GB SSD</li>
+                <li>14″ 2.8K</li>
+              </ul>
+
+              <p class="ob-product__price">
+                <span class="ob-product__price-note">Desde</span>
+                <span class="ob-product__price-value">L 29,990</span>
+              </p>
+              <p class="ob-product__stock">En existencia</p>
+
+              <button class="ob-product__cta" type="button" data-open-sheet="orbitbook-pro-14">
+                Ver equipo
+                <span aria-hidden="true">&rarr;</span>
+              </button>
+            </article>
+            <article
+              class="ob-product"
+              data-product="orbitbook-air-13"
+              data-search="orbitbook air 13 computación ligera y silenciosa, para trabajo administrativo y equipos remotos. laptop portátil notebook computadora ligera empresarial remoto intel core ultra 5 16 gb ram 512 gb ssd 13.3″ fhd+"
+              data-reveal="rise"
+            >
+              <div class="ob-product__visual">
+                
+                <svg class="ob-render ob-render--card" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="34" y="20" width="92" height="58" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="40" y="26" width="80" height="46" rx="2" fill="var(--render-screen)"/>
+    <path d="M46 62h24M46 55h44M46 48h30" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M22 78h116l6 12a3 3 0 0 1-3 4H19a3 3 0 0 1-3-4Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M66 86h28" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/></svg>
+              </div>
+
+              <p class="ob-product__category">Computación</p>
+              <h3 class="ob-product__name">OrbitBook Air 13</h3>
+              <ul class="ob-product__specs">
+                <li>Intel Core Ultra 5</li>
+                <li>16 GB RAM</li>
+                <li>512 GB SSD</li>
+                <li>13.3″ FHD+</li>
+              </ul>
+
+              <p class="ob-product__price">
+                <span class="ob-product__price-note">Desde</span>
+                <span class="ob-product__price-value">L 22,400</span>
+              </p>
+              <p class="ob-product__stock">En existencia</p>
+
+              <button class="ob-product__cta" type="button" data-open-sheet="orbitbook-air-13">
+                Ver equipo
+                <span aria-hidden="true">&rarr;</span>
+              </button>
+            </article>
+            <article
+              class="ob-product"
+              data-product="orbitview-27"
+              data-search="orbitview 27 computación un cable para video, datos y carga. el monitor que ordena el escritorio. monitor pantalla display escritorio empresarial 27″ qhd ips 100 hz usb-c 90 w base ajustable"
+              data-reveal="rise"
+            >
+              <div class="ob-product__visual">
+                <span class="ob-product__flag">Empresarial</span>
+                <svg class="ob-render ob-render--card" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="20" y="14" width="120" height="72" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="26" y="20" width="108" height="60" rx="2" fill="var(--render-screen)"/>
+    <path d="M34 68h30M34 58h56M34 48h40" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M72 86h16v10H72Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M56 100h48" stroke-width="4" stroke-linecap="round" fill="none" stroke="var(--render-line)"/></svg>
+              </div>
+
+              <p class="ob-product__category">Computación</p>
+              <h3 class="ob-product__name">OrbitView 27</h3>
+              <ul class="ob-product__specs">
+                <li>27″ QHD IPS</li>
+                <li>100 Hz</li>
+                <li>USB-C 90 W</li>
+                <li>Base ajustable</li>
+              </ul>
+
+              <p class="ob-product__price">
+                
+                <span class="ob-product__price-value">L 8,450</span>
+              </p>
+              <p class="ob-product__stock">En existencia</p>
+
+              <button class="ob-product__cta" type="button" data-open-sheet="orbitview-27">
+                Ver equipo
+                <span aria-hidden="true">&rarr;</span>
+              </button>
+            </article>
+            <article
+              class="ob-product"
+              data-product="printcore-m450"
+              data-search="printcore m450 impresión láser monocromática para oficinas que imprimen todos los días. impresora impresoras multifuncional toner láser oficina 45 ppm dúplex automático red y wi-fi bandeja 550 hojas"
+              data-reveal="rise"
+            >
+              <div class="ob-product__visual">
+                
+                <svg class="ob-render ob-render--card" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <path d="M40 18h80v22H40Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="26" y="40" width="108" height="44" rx="5" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="96" y="50" width="26" height="12" rx="2" fill="var(--render-screen)"/>
+    <path d="M38 74h44" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M46 84h68v14H46Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M56 18h48v10H56Z" fill="var(--render-paper)" stroke="var(--render-line)" stroke-width="1.4"/></svg>
+              </div>
+
+              <p class="ob-product__category">Impresión</p>
+              <h3 class="ob-product__name">PrintCore M450</h3>
+              <ul class="ob-product__specs">
+                <li>45 ppm</li>
+                <li>Dúplex automático</li>
+                <li>Red y Wi-Fi</li>
+                <li>Bandeja 550 hojas</li>
+              </ul>
+
+              <p class="ob-product__price">
+                
+                <span class="ob-product__price-value">L 12,300</span>
+              </p>
+              <p class="ob-product__stock">En existencia</p>
+
+              <button class="ob-product__cta" type="button" data-open-sheet="printcore-m450">
+                Ver equipo
+                <span aria-hidden="true">&rarr;</span>
+              </button>
+            </article>
+            <article
+              class="ob-product"
+              data-product="netlink-ax6000"
+              data-search="netlink ax6000 redes cobertura estable para cuarenta dispositivos sin equipo de red dedicado. router wifi inalámbrico access point switch red wi-fi 6 6 gbps 8 puertos gigabit vlan y vpn"
+              data-reveal="rise"
+            >
+              <div class="ob-product__visual">
+                
+                <svg class="ob-render ob-render--card" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="30" y="56" width="100" height="30" rx="6" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M46 46v-18M80 42v-24M114 46v-18" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="46" cy="26" r="3.5" fill="var(--render-line)"/>
+    <circle cx="80" cy="16" r="3.5" fill="var(--render-line)"/>
+    <circle cx="114" cy="26" r="3.5" fill="var(--render-line)"/>
+    <circle cx="46" cy="71" r="4" fill="var(--render-screen)"/>
+    <circle cx="60" cy="71" r="4" fill="var(--render-screen)" opacity="0.55"/>
+    <circle cx="74" cy="71" r="4" fill="var(--render-screen)" opacity="0.3"/>
+    <path d="M96 71h24" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/></svg>
+              </div>
+
+              <p class="ob-product__category">Social</p>
+              <h3 class="ob-product__name">NetLink AX6000</h3>
+              <ul class="ob-product__specs">
+                <li>Wi-Fi 6</li>
+                <li>6 Gbps</li>
+                <li>8 puertos Gigabit</li>
+                <li>VLAN y VPN</li>
+              </ul>
+
+              <p class="ob-product__price">
+                
+                <span class="ob-product__price-value">L 6,900</span>
+              </p>
+              <p class="ob-product__stock">En existencia</p>
+
+              <button class="ob-product__cta" type="button" data-open-sheet="netlink-ax6000">
+                Ver equipo
+                <span aria-hidden="true">&rarr;</span>
+              </button>
+            </article>
+            <article
+              class="ob-product"
+              data-product="visionbeam-4k"
+              data-search="visionbeam 4k audio y video proyección láser para salas de reuniones y aulas con luz de día. proyector proyectores videobeam sala de reuniones aula 4k uhd 3 500 lúmenes láser 20 000 h hdmi · usb-c"
+              data-reveal="rise"
+            >
+              <div class="ob-product__visual">
+                <span class="ob-product__flag">Nuevo</span>
+                <svg class="ob-render ob-render--card" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="24" y="34" width="104" height="46" rx="8" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <circle cx="56" cy="57" r="15" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <circle cx="56" cy="57" r="8" fill="var(--render-screen)"/>
+    <path d="M96 48h20M96 58h20M96 68h12" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M136 40l14-10M136 57h18M136 74l14 10" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M46 80v8M112 80v8" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/></svg>
+              </div>
+
+              <p class="ob-product__category">Audio y video</p>
+              <h3 class="ob-product__name">VisionBeam 4K</h3>
+              <ul class="ob-product__specs">
+                <li>4K UHD</li>
+                <li>3 500 lúmenes</li>
+                <li>Láser 20 000 h</li>
+                <li>HDMI · USB-C</li>
+              </ul>
+
+              <p class="ob-product__price">
+                
+                <span class="ob-product__price-value">L 27,500</span>
+              </p>
+              <p class="ob-product__stock">En existencia</p>
+
+              <button class="ob-product__cta" type="button" data-open-sheet="visionbeam-4k">
+                Ver equipo
+                <span aria-hidden="true">&rarr;</span>
+              </button>
+            </article>
+            <article
+              class="ob-product"
+              data-product="powerhub-pro"
+              data-search="powerhub pro energía respaldo de doble conversión para servidores y equipos críticos. ups respaldo batería regulador energía servidor 3 000 va doble conversión rack 2u gestión snmp"
+              data-reveal="rise"
+            >
+              <div class="ob-product__visual">
+                
+                <svg class="ob-render ob-render--card" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="24" y="34" width="112" height="52" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="34" y="44" width="40" height="22" rx="2" fill="var(--render-screen)"/>
+    <path d="M42 76h22" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="96" cy="55" r="7" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="118" cy="55" r="7" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M92 76h32" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M52 30l-6-14h10l-4-10" fill="none" stroke="var(--render-screen)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+
+              <p class="ob-product__category">Energy</p>
+              <h3 class="ob-product__name">PowerHub Pro</h3>
+              <ul class="ob-product__specs">
+                <li>3 000 VA</li>
+                <li>Doble conversión</li>
+                <li>Rack 2U</li>
+                <li>Gestión SNMP</li>
+              </ul>
+
+              <p class="ob-product__price">
+                
+                <span class="ob-product__price-value">L 18,200</span>
+              </p>
+              <p class="ob-product__stock">En existencia</p>
+
+              <button class="ob-product__cta" type="button" data-open-sheet="powerhub-pro">
+                Ver equipo
+                <span aria-hidden="true">&rarr;</span>
+              </button>
+            </article>
+            <article
+              class="ob-product"
+              data-product="orbitdesk-ergo"
+              data-search="orbitdesk ergo oficina la silla que sostiene ocho horas de trabajo sin convertirse en una queja. silla sillas mobiliario escritorio equipo de oficina ergonómica malla transpirable soporte lumbar brazos 4d hasta 120 kg"
+              data-reveal="rise"
+            >
+              <div class="ob-product__visual">
+                
+                <svg class="ob-render ob-render--card" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <path d="M54 14h50a8 8 0 0 1 8 8v26a8 8 0 0 1-8 8H54a8 8 0 0 1-8-8V22a8 8 0 0 1 8-8Z" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M58 26h42M58 36h28" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M50 58h58a6 6 0 0 1 6 6v6a4 4 0 0 1-4 4H48a4 4 0 0 1-4-4v-6a6 6 0 0 1 6-6Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M79 74v14" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M56 100l23-12 23 12M79 88v10" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="56" cy="101" r="3" fill="var(--render-line)"/>
+    <circle cx="102" cy="101" r="3" fill="var(--render-line)"/>
+</svg>
+              </div>
+
+              <p class="ob-product__category">Oficina</p>
+              <h3 class="ob-product__name">OrbitDesk Ergo</h3>
+              <ul class="ob-product__specs">
+                <li>Malla transpirable</li>
+                <li>Soporte lumbar</li>
+                <li>Brazos 4D</li>
+                <li>Hasta 120 kg</li>
+              </ul>
+
+              <p class="ob-product__price">
+                
+                <span class="ob-product__price-value">L 4,750</span>
+              </p>
+              <p class="ob-product__stock">En existencia</p>
+
+              <button class="ob-product__cta" type="button" data-open-sheet="orbitdesk-ergo">
+                Ver equipo
+                <span aria-hidden="true">&rarr;</span>
+              </button>
+            </article>
+            <article
+              class="ob-product"
+              data-product="orbitkit-esencial"
+              data-search="orbitkit esencial accesorios teclado, mouse y base en un solo código de compra para altas de personal. teclado mouse periféricos accesorios equipo de oficina teclado inalámbrico mouse silencioso base para laptop un receptor"
+              data-reveal="rise"
+            >
+              <div class="ob-product__visual">
+                
+                <svg class="ob-render ob-render--card" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="20" y="52" width="60" height="34" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M28 60h44M28 68h44M28 76h26" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M104 40c10 0 18 9 18 20v14c0 7-8 12-18 12s-18-5-18-12V60c0-11 8-20 18-20Z" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M104 42v16" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="104" cy="64" r="3" fill="var(--render-screen)"/></svg>
+              </div>
+
+              <p class="ob-product__category">Accesorios</p>
+              <h3 class="ob-product__name">OrbitKit Esencial</h3>
+              <ul class="ob-product__specs">
+                <li>Teclado inalámbrico</li>
+                <li>Mouse silencioso</li>
+                <li>Base para laptop</li>
+                <li>Un receptor</li>
+              </ul>
+
+              <p class="ob-product__price">
+                
+                <span class="ob-product__price-value">L 2,180</span>
+              </p>
+              <p class="ob-product__stock">En existencia</p>
+
+              <button class="ob-product__cta" type="button" data-open-sheet="orbitkit-esencial">
+                Ver equipo
+                <span aria-hidden="true">&rarr;</span>
+              </button>
+            </article>
+            <article
+              class="ob-product"
+              data-product="orbitcam-360"
+              data-search="orbitcam 360 seguridad cámara panorámica con analítica local para accesos y bodegas. cámara camara videovigilancia cctv seguridad 360° · 8 mp visión nocturna poe analítica en el borde"
+              data-reveal="rise"
+            >
+              <div class="ob-product__visual">
+                
+                <svg class="ob-render ob-render--card" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <path d="M36 74a44 44 0 0 1 88 0Z" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M30 74h100" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="80" cy="56" r="17" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <circle cx="80" cy="56" r="9" fill="var(--render-screen)"/>
+    <circle cx="86" cy="50" r="2.6" fill="var(--render-paper)"/>
+    <path d="M80 74v14" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M62 92h36" stroke-width="4" stroke-linecap="round" fill="none" stroke="var(--render-line)"/></svg>
+              </div>
+
+              <p class="ob-product__category">Seguridad</p>
+              <h3 class="ob-product__name">OrbitCam 360</h3>
+              <ul class="ob-product__specs">
+                <li>360° · 8 MP</li>
+                <li>Visión nocturna</li>
+                <li>PoE</li>
+                <li>Analítica en el borde</li>
+              </ul>
+
+              <p class="ob-product__price">
+                
+                <span class="ob-product__price-value">Consultar</span>
+              </p>
+              <p class="ob-product__stock">Bajo pedido</p>
+
+              <button class="ob-product__cta" type="button" data-open-sheet="orbitcam-360">
+                Ver equipo
+                <span aria-hidden="true">&rarr;</span>
+              </button>
+            </article>
+          </div>
+
+          <p class="ob-products__empty" data-catalog-empty hidden>No hay equipos que coincidan. Prueba con otra palabra o pide una cotización a medida.</p>
+        </div>
+
+        <dialog class="ob-sheet" data-sheet-dialog aria-label="Ficha del equipo">
+          <button class="ob-sheet__close" type="button" data-sheet-close aria-label="Cerrar la ficha">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <div class="ob-sheet__content" data-sheet-content></div>
+          <p class="ob-sheet__added" data-sheet-added role="status" hidden>Agregado a la cotización</p>
+        </dialog>
+
+        <template data-sheet-for="orbitbook-pro-14">
+          <div class="ob-sheet__grid">
+            <div class="ob-sheet__gallery">
+              <div class="ob-sheet__stage"><svg class="ob-render ob-render--sheet" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="34" y="20" width="92" height="58" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="40" y="26" width="80" height="46" rx="2" fill="var(--render-screen)"/>
+    <path d="M46 62h24M46 55h44M46 48h30" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M22 78h116l6 12a3 3 0 0 1-3 4H19a3 3 0 0 1-3-4Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M66 86h28" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+              <div class="ob-sheet__thumbs" role="group" aria-label="Vistas del equipo">
+                <span class="ob-sheet__thumb is-current"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="34" y="20" width="92" height="58" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="40" y="26" width="80" height="46" rx="2" fill="var(--render-screen)"/>
+    <path d="M46 62h24M46 55h44M46 48h30" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M22 78h116l6 12a3 3 0 0 1-3 4H19a3 3 0 0 1-3-4Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M66 86h28" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+                <span class="ob-sheet__thumb"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="34" y="20" width="92" height="58" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="40" y="26" width="80" height="46" rx="2" fill="var(--render-screen)"/>
+    <path d="M46 62h24M46 55h44M46 48h30" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M22 78h116l6 12a3 3 0 0 1-3 4H19a3 3 0 0 1-3-4Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M66 86h28" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+                <span class="ob-sheet__thumb"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="34" y="20" width="92" height="58" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="40" y="26" width="80" height="46" rx="2" fill="var(--render-screen)"/>
+    <path d="M46 62h24M46 55h44M46 48h30" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M22 78h116l6 12a3 3 0 0 1-3 4H19a3 3 0 0 1-3-4Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M66 86h28" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+              </div>
+            </div>
+
+            <div class="ob-sheet__body">
+              <p class="ob-sheet__category">Computación</p>
+              <h3 class="ob-sheet__name" data-sheet-title>OrbitBook Pro 14</h3>
+              <p class="ob-sheet__summary">La máquina estándar para equipos que trabajan fuera del escritorio.</p>
+
+              <ul class="ob-sheet__specs">
+              <li class="ob-sheet__spec">Intel Core Ultra 7</li>
+              <li class="ob-sheet__spec">16 GB RAM</li>
+              <li class="ob-sheet__spec">512 GB SSD</li>
+              <li class="ob-sheet__spec">14″ 2.8K</li>
+              </ul>
+
+              <div class="ob-sheet__block">
+                <p class="ob-sheet__block-title">Specifications</p>
+                <ul class="ob-sheet__features">
+              <li>Chasis de aluminio de 1.29 kg</li>
+              <li>Batería de 14 horas en uso mixto</li>
+              <li>Lector de huella y cámara con obturador</li>
+              <li>Dos Thunderbolt 4, HDMI y lector SD</li>
+                </ul>
+              </div>
+
+              <dl class="ob-sheet__facts">
+                <div><dt>Disponibilidad</dt><dd>24 unidades disponibles</dd></div>
+                <div><dt>Garantía</dt><dd>2 años</dd></div>
+                <div><dt>Entrega</dt><dd>Entrega en 48 horas en Tegucigalpa y San Pedro Sula</dd></div>
+              </dl>
+
+              <p class="ob-sheet__price">
+                <span class="ob-sheet__price-note">Desde</span>
+                <span class="ob-sheet__price-value">L 29,990</span>
+              </p>
+
+              <div class="ob-sheet__actions">
+                <button class="ob-btn ob-btn--solid" type="button" data-sheet-quote>
+                  Agregar a cotización
+                </button>
+                <a class="ob-btn ob-btn--outline" href="#cotizar" data-sheet-buy>
+                  Comprar ahora
+                </a>
+              </div>
+              <p class="ob-sheet__note">Demostración: no hay carrito ni pasarela de pago detrás de estos botones.</p>
+            </div>
+          </div>
+        </template>
+        <template data-sheet-for="orbitbook-air-13">
+          <div class="ob-sheet__grid">
+            <div class="ob-sheet__gallery">
+              <div class="ob-sheet__stage"><svg class="ob-render ob-render--sheet" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="34" y="20" width="92" height="58" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="40" y="26" width="80" height="46" rx="2" fill="var(--render-screen)"/>
+    <path d="M46 62h24M46 55h44M46 48h30" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M22 78h116l6 12a3 3 0 0 1-3 4H19a3 3 0 0 1-3-4Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M66 86h28" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+              <div class="ob-sheet__thumbs" role="group" aria-label="Vistas del equipo">
+                <span class="ob-sheet__thumb is-current"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="34" y="20" width="92" height="58" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="40" y="26" width="80" height="46" rx="2" fill="var(--render-screen)"/>
+    <path d="M46 62h24M46 55h44M46 48h30" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M22 78h116l6 12a3 3 0 0 1-3 4H19a3 3 0 0 1-3-4Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M66 86h28" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+                <span class="ob-sheet__thumb"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="34" y="20" width="92" height="58" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="40" y="26" width="80" height="46" rx="2" fill="var(--render-screen)"/>
+    <path d="M46 62h24M46 55h44M46 48h30" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M22 78h116l6 12a3 3 0 0 1-3 4H19a3 3 0 0 1-3-4Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M66 86h28" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+                <span class="ob-sheet__thumb"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="34" y="20" width="92" height="58" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="40" y="26" width="80" height="46" rx="2" fill="var(--render-screen)"/>
+    <path d="M46 62h24M46 55h44M46 48h30" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M22 78h116l6 12a3 3 0 0 1-3 4H19a3 3 0 0 1-3-4Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M66 86h28" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+              </div>
+            </div>
+
+            <div class="ob-sheet__body">
+              <p class="ob-sheet__category">Computación</p>
+              <h3 class="ob-sheet__name" data-sheet-title>OrbitBook Air 13</h3>
+              <p class="ob-sheet__summary">Ligera y silenciosa, para trabajo administrativo y equipos remotos.</p>
+
+              <ul class="ob-sheet__specs">
+              <li class="ob-sheet__spec">Intel Core Ultra 5</li>
+              <li class="ob-sheet__spec">16 GB RAM</li>
+              <li class="ob-sheet__spec">512 GB SSD</li>
+              <li class="ob-sheet__spec">13.3″ FHD+</li>
+              </ul>
+
+              <div class="ob-sheet__block">
+                <p class="ob-sheet__block-title">Specifications</p>
+                <ul class="ob-sheet__features">
+              <li>0.99 kg, sin ventilador</li>
+              <li>Batería de 16 horas</li>
+              <li>Teclado retroiluminado</li>
+              <li>Wi-Fi 6E y 5G opcional</li>
+                </ul>
+              </div>
+
+              <dl class="ob-sheet__facts">
+                <div><dt>Disponibilidad</dt><dd>31 unidades disponibles</dd></div>
+                <div><dt>Garantía</dt><dd>2 años</dd></div>
+                <div><dt>Entrega</dt><dd>Entrega en 48 horas</dd></div>
+              </dl>
+
+              <p class="ob-sheet__price">
+                <span class="ob-sheet__price-note">Desde</span>
+                <span class="ob-sheet__price-value">L 22,400</span>
+              </p>
+
+              <div class="ob-sheet__actions">
+                <button class="ob-btn ob-btn--solid" type="button" data-sheet-quote>
+                  Agregar a cotización
+                </button>
+                <a class="ob-btn ob-btn--outline" href="#cotizar" data-sheet-buy>
+                  Comprar ahora
+                </a>
+              </div>
+              <p class="ob-sheet__note">Demostración: no hay carrito ni pasarela de pago detrás de estos botones.</p>
+            </div>
+          </div>
+        </template>
+        <template data-sheet-for="orbitview-27">
+          <div class="ob-sheet__grid">
+            <div class="ob-sheet__gallery">
+              <div class="ob-sheet__stage"><svg class="ob-render ob-render--sheet" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="20" y="14" width="120" height="72" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="26" y="20" width="108" height="60" rx="2" fill="var(--render-screen)"/>
+    <path d="M34 68h30M34 58h56M34 48h40" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M72 86h16v10H72Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M56 100h48" stroke-width="4" stroke-linecap="round" fill="none" stroke="var(--render-line)"/></svg></div>
+              <div class="ob-sheet__thumbs" role="group" aria-label="Vistas del equipo">
+                <span class="ob-sheet__thumb is-current"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="20" y="14" width="120" height="72" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="26" y="20" width="108" height="60" rx="2" fill="var(--render-screen)"/>
+    <path d="M34 68h30M34 58h56M34 48h40" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M72 86h16v10H72Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M56 100h48" stroke-width="4" stroke-linecap="round" fill="none" stroke="var(--render-line)"/></svg></span>
+                <span class="ob-sheet__thumb"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="20" y="14" width="120" height="72" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="26" y="20" width="108" height="60" rx="2" fill="var(--render-screen)"/>
+    <path d="M34 68h30M34 58h56M34 48h40" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M72 86h16v10H72Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M56 100h48" stroke-width="4" stroke-linecap="round" fill="none" stroke="var(--render-line)"/></svg></span>
+                <span class="ob-sheet__thumb"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="20" y="14" width="120" height="72" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="26" y="20" width="108" height="60" rx="2" fill="var(--render-screen)"/>
+    <path d="M34 68h30M34 58h56M34 48h40" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M72 86h16v10H72Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M56 100h48" stroke-width="4" stroke-linecap="round" fill="none" stroke="var(--render-line)"/></svg></span>
+              </div>
+            </div>
+
+            <div class="ob-sheet__body">
+              <p class="ob-sheet__category">Computación</p>
+              <h3 class="ob-sheet__name" data-sheet-title>OrbitView 27</h3>
+              <p class="ob-sheet__summary">Un cable para video, datos y carga. El monitor que ordena el escritorio.</p>
+
+              <ul class="ob-sheet__specs">
+              <li class="ob-sheet__spec">27″ QHD IPS</li>
+              <li class="ob-sheet__spec">100 Hz</li>
+              <li class="ob-sheet__spec">USB-C 90 W</li>
+              <li class="ob-sheet__spec">Base ajustable</li>
+              </ul>
+
+              <div class="ob-sheet__block">
+                <p class="ob-sheet__block-title">Specifications</p>
+                <ul class="ob-sheet__features">
+              <li>Cobertura sRGB del 99 %</li>
+              <li>Hub USB de cuatro puertos</li>
+              <li>Montaje VESA 100</li>
+              <li>Modo de bajo parpadeo</li>
+                </ul>
+              </div>
+
+              <dl class="ob-sheet__facts">
+                <div><dt>Disponibilidad</dt><dd>40 unidades disponibles</dd></div>
+                <div><dt>Garantía</dt><dd>2 años</dd></div>
+                <div><dt>Entrega</dt><dd>Entrega en 72 horas</dd></div>
+              </dl>
+
+              <p class="ob-sheet__price">
+                
+                <span class="ob-sheet__price-value">L 8,450</span>
+              </p>
+
+              <div class="ob-sheet__actions">
+                <button class="ob-btn ob-btn--solid" type="button" data-sheet-quote>
+                  Agregar a cotización
+                </button>
+                <a class="ob-btn ob-btn--outline" href="#cotizar" data-sheet-buy>
+                  Comprar ahora
+                </a>
+              </div>
+              <p class="ob-sheet__note">Demostración: no hay carrito ni pasarela de pago detrás de estos botones.</p>
+            </div>
+          </div>
+        </template>
+        <template data-sheet-for="printcore-m450">
+          <div class="ob-sheet__grid">
+            <div class="ob-sheet__gallery">
+              <div class="ob-sheet__stage"><svg class="ob-render ob-render--sheet" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <path d="M40 18h80v22H40Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="26" y="40" width="108" height="44" rx="5" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="96" y="50" width="26" height="12" rx="2" fill="var(--render-screen)"/>
+    <path d="M38 74h44" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M46 84h68v14H46Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M56 18h48v10H56Z" fill="var(--render-paper)" stroke="var(--render-line)" stroke-width="1.4"/></svg></div>
+              <div class="ob-sheet__thumbs" role="group" aria-label="Vistas del equipo">
+                <span class="ob-sheet__thumb is-current"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <path d="M40 18h80v22H40Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="26" y="40" width="108" height="44" rx="5" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="96" y="50" width="26" height="12" rx="2" fill="var(--render-screen)"/>
+    <path d="M38 74h44" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M46 84h68v14H46Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M56 18h48v10H56Z" fill="var(--render-paper)" stroke="var(--render-line)" stroke-width="1.4"/></svg></span>
+                <span class="ob-sheet__thumb"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <path d="M40 18h80v22H40Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="26" y="40" width="108" height="44" rx="5" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="96" y="50" width="26" height="12" rx="2" fill="var(--render-screen)"/>
+    <path d="M38 74h44" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M46 84h68v14H46Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M56 18h48v10H56Z" fill="var(--render-paper)" stroke="var(--render-line)" stroke-width="1.4"/></svg></span>
+                <span class="ob-sheet__thumb"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <path d="M40 18h80v22H40Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="26" y="40" width="108" height="44" rx="5" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="96" y="50" width="26" height="12" rx="2" fill="var(--render-screen)"/>
+    <path d="M38 74h44" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M46 84h68v14H46Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M56 18h48v10H56Z" fill="var(--render-paper)" stroke="var(--render-line)" stroke-width="1.4"/></svg></span>
+              </div>
+            </div>
+
+            <div class="ob-sheet__body">
+              <p class="ob-sheet__category">Impresión</p>
+              <h3 class="ob-sheet__name" data-sheet-title>PrintCore M450</h3>
+              <p class="ob-sheet__summary">Láser monocromática para oficinas que imprimen todos los días.</p>
+
+              <ul class="ob-sheet__specs">
+              <li class="ob-sheet__spec">45 ppm</li>
+              <li class="ob-sheet__spec">Dúplex automático</li>
+              <li class="ob-sheet__spec">Red y Wi-Fi</li>
+              <li class="ob-sheet__spec">Bandeja 550 hojas</li>
+              </ul>
+
+              <div class="ob-sheet__block">
+                <p class="ob-sheet__block-title">Specifications</p>
+                <ul class="ob-sheet__features">
+              <li>Ciclo mensual de 100 000 páginas</li>
+              <li>Tóner de alto rendimiento (12 000 páginas)</li>
+              <li>Impresión segura con PIN</li>
+              <li>Panel táctil de 4.3″</li>
+                </ul>
+              </div>
+
+              <dl class="ob-sheet__facts">
+                <div><dt>Disponibilidad</dt><dd>12 unidades disponibles</dd></div>
+                <div><dt>Garantía</dt><dd>2 años</dd></div>
+                <div><dt>Entrega</dt><dd>Entrega en 72 horas · instalación incluida</dd></div>
+              </dl>
+
+              <p class="ob-sheet__price">
+                
+                <span class="ob-sheet__price-value">L 12,300</span>
+              </p>
+
+              <div class="ob-sheet__actions">
+                <button class="ob-btn ob-btn--solid" type="button" data-sheet-quote>
+                  Agregar a cotización
+                </button>
+                <a class="ob-btn ob-btn--outline" href="#cotizar" data-sheet-buy>
+                  Comprar ahora
+                </a>
+              </div>
+              <p class="ob-sheet__note">Demostración: no hay carrito ni pasarela de pago detrás de estos botones.</p>
+            </div>
+          </div>
+        </template>
+        <template data-sheet-for="netlink-ax6000">
+          <div class="ob-sheet__grid">
+            <div class="ob-sheet__gallery">
+              <div class="ob-sheet__stage"><svg class="ob-render ob-render--sheet" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="30" y="56" width="100" height="30" rx="6" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M46 46v-18M80 42v-24M114 46v-18" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="46" cy="26" r="3.5" fill="var(--render-line)"/>
+    <circle cx="80" cy="16" r="3.5" fill="var(--render-line)"/>
+    <circle cx="114" cy="26" r="3.5" fill="var(--render-line)"/>
+    <circle cx="46" cy="71" r="4" fill="var(--render-screen)"/>
+    <circle cx="60" cy="71" r="4" fill="var(--render-screen)" opacity="0.55"/>
+    <circle cx="74" cy="71" r="4" fill="var(--render-screen)" opacity="0.3"/>
+    <path d="M96 71h24" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+              <div class="ob-sheet__thumbs" role="group" aria-label="Vistas del equipo">
+                <span class="ob-sheet__thumb is-current"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="30" y="56" width="100" height="30" rx="6" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M46 46v-18M80 42v-24M114 46v-18" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="46" cy="26" r="3.5" fill="var(--render-line)"/>
+    <circle cx="80" cy="16" r="3.5" fill="var(--render-line)"/>
+    <circle cx="114" cy="26" r="3.5" fill="var(--render-line)"/>
+    <circle cx="46" cy="71" r="4" fill="var(--render-screen)"/>
+    <circle cx="60" cy="71" r="4" fill="var(--render-screen)" opacity="0.55"/>
+    <circle cx="74" cy="71" r="4" fill="var(--render-screen)" opacity="0.3"/>
+    <path d="M96 71h24" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+                <span class="ob-sheet__thumb"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="30" y="56" width="100" height="30" rx="6" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M46 46v-18M80 42v-24M114 46v-18" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="46" cy="26" r="3.5" fill="var(--render-line)"/>
+    <circle cx="80" cy="16" r="3.5" fill="var(--render-line)"/>
+    <circle cx="114" cy="26" r="3.5" fill="var(--render-line)"/>
+    <circle cx="46" cy="71" r="4" fill="var(--render-screen)"/>
+    <circle cx="60" cy="71" r="4" fill="var(--render-screen)" opacity="0.55"/>
+    <circle cx="74" cy="71" r="4" fill="var(--render-screen)" opacity="0.3"/>
+    <path d="M96 71h24" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+                <span class="ob-sheet__thumb"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="30" y="56" width="100" height="30" rx="6" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M46 46v-18M80 42v-24M114 46v-18" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="46" cy="26" r="3.5" fill="var(--render-line)"/>
+    <circle cx="80" cy="16" r="3.5" fill="var(--render-line)"/>
+    <circle cx="114" cy="26" r="3.5" fill="var(--render-line)"/>
+    <circle cx="46" cy="71" r="4" fill="var(--render-screen)"/>
+    <circle cx="60" cy="71" r="4" fill="var(--render-screen)" opacity="0.55"/>
+    <circle cx="74" cy="71" r="4" fill="var(--render-screen)" opacity="0.3"/>
+    <path d="M96 71h24" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+              </div>
+            </div>
+
+            <div class="ob-sheet__body">
+              <p class="ob-sheet__category">Social</p>
+              <h3 class="ob-sheet__name" data-sheet-title>NetLink AX6000</h3>
+              <p class="ob-sheet__summary">Cobertura estable para cuarenta dispositivos sin equipo de red dedicado.</p>
+
+              <ul class="ob-sheet__specs">
+              <li class="ob-sheet__spec">Wi-Fi 6</li>
+              <li class="ob-sheet__spec">6 Gbps</li>
+              <li class="ob-sheet__spec">8 puertos Gigabit</li>
+              <li class="ob-sheet__spec">VLAN y VPN</li>
+              </ul>
+
+              <div class="ob-sheet__block">
+                <p class="ob-sheet__block-title">Specifications</p>
+                <ul class="ob-sheet__features">
+              <li>Hasta 120 clientes simultáneos</li>
+              <li>Dos puertos 2.5 GbE</li>
+              <li>Administración en la nube</li>
+              <li>Red de invitados aislada</li>
+                </ul>
+              </div>
+
+              <dl class="ob-sheet__facts">
+                <div><dt>Disponibilidad</dt><dd>27 unidades disponibles</dd></div>
+                <div><dt>Garantía</dt><dd>2 años</dd></div>
+                <div><dt>Entrega</dt><dd>Entrega en 48 horas</dd></div>
+              </dl>
+
+              <p class="ob-sheet__price">
+                
+                <span class="ob-sheet__price-value">L 6,900</span>
+              </p>
+
+              <div class="ob-sheet__actions">
+                <button class="ob-btn ob-btn--solid" type="button" data-sheet-quote>
+                  Agregar a cotización
+                </button>
+                <a class="ob-btn ob-btn--outline" href="#cotizar" data-sheet-buy>
+                  Comprar ahora
+                </a>
+              </div>
+              <p class="ob-sheet__note">Demostración: no hay carrito ni pasarela de pago detrás de estos botones.</p>
+            </div>
+          </div>
+        </template>
+        <template data-sheet-for="visionbeam-4k">
+          <div class="ob-sheet__grid">
+            <div class="ob-sheet__gallery">
+              <div class="ob-sheet__stage"><svg class="ob-render ob-render--sheet" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="24" y="34" width="104" height="46" rx="8" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <circle cx="56" cy="57" r="15" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <circle cx="56" cy="57" r="8" fill="var(--render-screen)"/>
+    <path d="M96 48h20M96 58h20M96 68h12" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M136 40l14-10M136 57h18M136 74l14 10" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M46 80v8M112 80v8" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+              <div class="ob-sheet__thumbs" role="group" aria-label="Vistas del equipo">
+                <span class="ob-sheet__thumb is-current"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="24" y="34" width="104" height="46" rx="8" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <circle cx="56" cy="57" r="15" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <circle cx="56" cy="57" r="8" fill="var(--render-screen)"/>
+    <path d="M96 48h20M96 58h20M96 68h12" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M136 40l14-10M136 57h18M136 74l14 10" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M46 80v8M112 80v8" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+                <span class="ob-sheet__thumb"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="24" y="34" width="104" height="46" rx="8" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <circle cx="56" cy="57" r="15" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <circle cx="56" cy="57" r="8" fill="var(--render-screen)"/>
+    <path d="M96 48h20M96 58h20M96 68h12" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M136 40l14-10M136 57h18M136 74l14 10" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M46 80v8M112 80v8" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+                <span class="ob-sheet__thumb"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="24" y="34" width="104" height="46" rx="8" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <circle cx="56" cy="57" r="15" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <circle cx="56" cy="57" r="8" fill="var(--render-screen)"/>
+    <path d="M96 48h20M96 58h20M96 68h12" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M136 40l14-10M136 57h18M136 74l14 10" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M46 80v8M112 80v8" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+              </div>
+            </div>
+
+            <div class="ob-sheet__body">
+              <p class="ob-sheet__category">Audio y video</p>
+              <h3 class="ob-sheet__name" data-sheet-title>VisionBeam 4K</h3>
+              <p class="ob-sheet__summary">Proyección láser para salas de reuniones y aulas con luz de día.</p>
+
+              <ul class="ob-sheet__specs">
+              <li class="ob-sheet__spec">4K UHD</li>
+              <li class="ob-sheet__spec">3 500 lúmenes</li>
+              <li class="ob-sheet__spec">Láser 20 000 h</li>
+              <li class="ob-sheet__spec">HDMI · USB-C</li>
+              </ul>
+
+              <div class="ob-sheet__block">
+                <p class="ob-sheet__block-title">Specifications</p>
+                <ul class="ob-sheet__features">
+              <li>Corrección de geometría en cuatro esquinas</li>
+              <li>Encendido en ocho segundos</li>
+              <li>Altavoces de 2 × 10 W</li>
+              <li>Control por red</li>
+                </ul>
+              </div>
+
+              <dl class="ob-sheet__facts">
+                <div><dt>Disponibilidad</dt><dd>8 unidades disponibles</dd></div>
+                <div><dt>Garantía</dt><dd>2 años</dd></div>
+                <div><dt>Entrega</dt><dd>Entrega en 5 días · montaje opcional</dd></div>
+              </dl>
+
+              <p class="ob-sheet__price">
+                
+                <span class="ob-sheet__price-value">L 27,500</span>
+              </p>
+
+              <div class="ob-sheet__actions">
+                <button class="ob-btn ob-btn--solid" type="button" data-sheet-quote>
+                  Agregar a cotización
+                </button>
+                <a class="ob-btn ob-btn--outline" href="#cotizar" data-sheet-buy>
+                  Comprar ahora
+                </a>
+              </div>
+              <p class="ob-sheet__note">Demostración: no hay carrito ni pasarela de pago detrás de estos botones.</p>
+            </div>
+          </div>
+        </template>
+        <template data-sheet-for="powerhub-pro">
+          <div class="ob-sheet__grid">
+            <div class="ob-sheet__gallery">
+              <div class="ob-sheet__stage"><svg class="ob-render ob-render--sheet" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="24" y="34" width="112" height="52" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="34" y="44" width="40" height="22" rx="2" fill="var(--render-screen)"/>
+    <path d="M42 76h22" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="96" cy="55" r="7" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="118" cy="55" r="7" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M92 76h32" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M52 30l-6-14h10l-4-10" fill="none" stroke="var(--render-screen)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div class="ob-sheet__thumbs" role="group" aria-label="Vistas del equipo">
+                <span class="ob-sheet__thumb is-current"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="24" y="34" width="112" height="52" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="34" y="44" width="40" height="22" rx="2" fill="var(--render-screen)"/>
+    <path d="M42 76h22" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="96" cy="55" r="7" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="118" cy="55" r="7" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M92 76h32" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M52 30l-6-14h10l-4-10" fill="none" stroke="var(--render-screen)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="ob-sheet__thumb"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="24" y="34" width="112" height="52" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="34" y="44" width="40" height="22" rx="2" fill="var(--render-screen)"/>
+    <path d="M42 76h22" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="96" cy="55" r="7" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="118" cy="55" r="7" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M92 76h32" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M52 30l-6-14h10l-4-10" fill="none" stroke="var(--render-screen)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="ob-sheet__thumb"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="24" y="34" width="112" height="52" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="34" y="44" width="40" height="22" rx="2" fill="var(--render-screen)"/>
+    <path d="M42 76h22" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="96" cy="55" r="7" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="118" cy="55" r="7" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M92 76h32" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M52 30l-6-14h10l-4-10" fill="none" stroke="var(--render-screen)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
+
+            <div class="ob-sheet__body">
+              <p class="ob-sheet__category">Energy</p>
+              <h3 class="ob-sheet__name" data-sheet-title>PowerHub Pro</h3>
+              <p class="ob-sheet__summary">Respaldo de doble conversión para servidores y equipos críticos.</p>
+
+              <ul class="ob-sheet__specs">
+              <li class="ob-sheet__spec">3 000 VA</li>
+              <li class="ob-sheet__spec">Doble conversión</li>
+              <li class="ob-sheet__spec">Rack 2U</li>
+              <li class="ob-sheet__spec">Gestión SNMP</li>
+              </ul>
+
+              <div class="ob-sheet__block">
+                <p class="ob-sheet__block-title">Specifications</p>
+                <ul class="ob-sheet__features">
+              <li>Autonomía de 22 minutos a media carga</li>
+              <li>Baterías reemplazables en caliente</li>
+              <li>Pantalla LCD y apagado programado</li>
+              <li>Ampliable con banco externo</li>
+                </ul>
+              </div>
+
+              <dl class="ob-sheet__facts">
+                <div><dt>Disponibilidad</dt><dd>6 unidades disponibles</dd></div>
+                <div><dt>Garantía</dt><dd>2 años</dd></div>
+                <div><dt>Entrega</dt><dd>Entrega en 5 días</dd></div>
+              </dl>
+
+              <p class="ob-sheet__price">
+                
+                <span class="ob-sheet__price-value">L 18,200</span>
+              </p>
+
+              <div class="ob-sheet__actions">
+                <button class="ob-btn ob-btn--solid" type="button" data-sheet-quote>
+                  Agregar a cotización
+                </button>
+                <a class="ob-btn ob-btn--outline" href="#cotizar" data-sheet-buy>
+                  Comprar ahora
+                </a>
+              </div>
+              <p class="ob-sheet__note">Demostración: no hay carrito ni pasarela de pago detrás de estos botones.</p>
+            </div>
+          </div>
+        </template>
+        <template data-sheet-for="orbitdesk-ergo">
+          <div class="ob-sheet__grid">
+            <div class="ob-sheet__gallery">
+              <div class="ob-sheet__stage"><svg class="ob-render ob-render--sheet" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <path d="M54 14h50a8 8 0 0 1 8 8v26a8 8 0 0 1-8 8H54a8 8 0 0 1-8-8V22a8 8 0 0 1 8-8Z" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M58 26h42M58 36h28" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M50 58h58a6 6 0 0 1 6 6v6a4 4 0 0 1-4 4H48a4 4 0 0 1-4-4v-6a6 6 0 0 1 6-6Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M79 74v14" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M56 100l23-12 23 12M79 88v10" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="56" cy="101" r="3" fill="var(--render-line)"/>
+    <circle cx="102" cy="101" r="3" fill="var(--render-line)"/>
+</svg></div>
+              <div class="ob-sheet__thumbs" role="group" aria-label="Vistas del equipo">
+                <span class="ob-sheet__thumb is-current"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <path d="M54 14h50a8 8 0 0 1 8 8v26a8 8 0 0 1-8 8H54a8 8 0 0 1-8-8V22a8 8 0 0 1 8-8Z" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M58 26h42M58 36h28" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M50 58h58a6 6 0 0 1 6 6v6a4 4 0 0 1-4 4H48a4 4 0 0 1-4-4v-6a6 6 0 0 1 6-6Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M79 74v14" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M56 100l23-12 23 12M79 88v10" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="56" cy="101" r="3" fill="var(--render-line)"/>
+    <circle cx="102" cy="101" r="3" fill="var(--render-line)"/>
+</svg></span>
+                <span class="ob-sheet__thumb"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <path d="M54 14h50a8 8 0 0 1 8 8v26a8 8 0 0 1-8 8H54a8 8 0 0 1-8-8V22a8 8 0 0 1 8-8Z" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M58 26h42M58 36h28" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M50 58h58a6 6 0 0 1 6 6v6a4 4 0 0 1-4 4H48a4 4 0 0 1-4-4v-6a6 6 0 0 1 6-6Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M79 74v14" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M56 100l23-12 23 12M79 88v10" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="56" cy="101" r="3" fill="var(--render-line)"/>
+    <circle cx="102" cy="101" r="3" fill="var(--render-line)"/>
+</svg></span>
+                <span class="ob-sheet__thumb"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <path d="M54 14h50a8 8 0 0 1 8 8v26a8 8 0 0 1-8 8H54a8 8 0 0 1-8-8V22a8 8 0 0 1 8-8Z" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M58 26h42M58 36h28" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M50 58h58a6 6 0 0 1 6 6v6a4 4 0 0 1-4 4H48a4 4 0 0 1-4-4v-6a6 6 0 0 1 6-6Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M79 74v14" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M56 100l23-12 23 12M79 88v10" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="56" cy="101" r="3" fill="var(--render-line)"/>
+    <circle cx="102" cy="101" r="3" fill="var(--render-line)"/>
+</svg></span>
+              </div>
+            </div>
+
+            <div class="ob-sheet__body">
+              <p class="ob-sheet__category">Oficina</p>
+              <h3 class="ob-sheet__name" data-sheet-title>OrbitDesk Ergo</h3>
+              <p class="ob-sheet__summary">La silla que sostiene ocho horas de trabajo sin convertirse en una queja.</p>
+
+              <ul class="ob-sheet__specs">
+              <li class="ob-sheet__spec">Malla transpirable</li>
+              <li class="ob-sheet__spec">Soporte lumbar</li>
+              <li class="ob-sheet__spec">Brazos 4D</li>
+              <li class="ob-sheet__spec">Hasta 120 kg</li>
+              </ul>
+
+              <div class="ob-sheet__block">
+                <p class="ob-sheet__block-title">Specifications</p>
+                <ul class="ob-sheet__features">
+              <li>Ajuste de altura, profundidad e inclinación</li>
+              <li>Base de aluminio pulido</li>
+              <li>Ruedas silenciosas para piso duro</li>
+              <li>Ensamblada y entregada lista para usar</li>
+                </ul>
+              </div>
+
+              <dl class="ob-sheet__facts">
+                <div><dt>Disponibilidad</dt><dd>36 unidades disponibles</dd></div>
+                <div><dt>Garantía</dt><dd>2 años</dd></div>
+                <div><dt>Entrega</dt><dd>Entrega en 72 horas · armado incluido</dd></div>
+              </dl>
+
+              <p class="ob-sheet__price">
+                
+                <span class="ob-sheet__price-value">L 4,750</span>
+              </p>
+
+              <div class="ob-sheet__actions">
+                <button class="ob-btn ob-btn--solid" type="button" data-sheet-quote>
+                  Agregar a cotización
+                </button>
+                <a class="ob-btn ob-btn--outline" href="#cotizar" data-sheet-buy>
+                  Comprar ahora
+                </a>
+              </div>
+              <p class="ob-sheet__note">Demostración: no hay carrito ni pasarela de pago detrás de estos botones.</p>
+            </div>
+          </div>
+        </template>
+        <template data-sheet-for="orbitkit-esencial">
+          <div class="ob-sheet__grid">
+            <div class="ob-sheet__gallery">
+              <div class="ob-sheet__stage"><svg class="ob-render ob-render--sheet" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="20" y="52" width="60" height="34" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M28 60h44M28 68h44M28 76h26" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M104 40c10 0 18 9 18 20v14c0 7-8 12-18 12s-18-5-18-12V60c0-11 8-20 18-20Z" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M104 42v16" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="104" cy="64" r="3" fill="var(--render-screen)"/></svg></div>
+              <div class="ob-sheet__thumbs" role="group" aria-label="Vistas del equipo">
+                <span class="ob-sheet__thumb is-current"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="20" y="52" width="60" height="34" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M28 60h44M28 68h44M28 76h26" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M104 40c10 0 18 9 18 20v14c0 7-8 12-18 12s-18-5-18-12V60c0-11 8-20 18-20Z" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M104 42v16" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="104" cy="64" r="3" fill="var(--render-screen)"/></svg></span>
+                <span class="ob-sheet__thumb"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="20" y="52" width="60" height="34" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M28 60h44M28 68h44M28 76h26" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M104 40c10 0 18 9 18 20v14c0 7-8 12-18 12s-18-5-18-12V60c0-11 8-20 18-20Z" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M104 42v16" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="104" cy="64" r="3" fill="var(--render-screen)"/></svg></span>
+                <span class="ob-sheet__thumb"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="20" y="52" width="60" height="34" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M28 60h44M28 68h44M28 76h26" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M104 40c10 0 18 9 18 20v14c0 7-8 12-18 12s-18-5-18-12V60c0-11 8-20 18-20Z" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M104 42v16" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="104" cy="64" r="3" fill="var(--render-screen)"/></svg></span>
+              </div>
+            </div>
+
+            <div class="ob-sheet__body">
+              <p class="ob-sheet__category">Accesorios</p>
+              <h3 class="ob-sheet__name" data-sheet-title>OrbitKit Esencial</h3>
+              <p class="ob-sheet__summary">Teclado, mouse y base en un solo código de compra para altas de personal.</p>
+
+              <ul class="ob-sheet__specs">
+              <li class="ob-sheet__spec">Teclado inalámbrico</li>
+              <li class="ob-sheet__spec">Mouse silencioso</li>
+              <li class="ob-sheet__spec">Base para laptop</li>
+              <li class="ob-sheet__spec">Un receptor</li>
+              </ul>
+
+              <div class="ob-sheet__block">
+                <p class="ob-sheet__block-title">Specifications</p>
+                <ul class="ob-sheet__features">
+              <li>Un solo receptor para ambos periféricos</li>
+              <li>Autonomía de 18 meses</li>
+              <li>Base con inclinación de seis posiciones</li>
+              <li>Empaque individual, listo para entregar</li>
+                </ul>
+              </div>
+
+              <dl class="ob-sheet__facts">
+                <div><dt>Disponibilidad</dt><dd>84 kits disponibles</dd></div>
+                <div><dt>Garantía</dt><dd>2 años</dd></div>
+                <div><dt>Entrega</dt><dd>Entrega en 24 horas</dd></div>
+              </dl>
+
+              <p class="ob-sheet__price">
+                
+                <span class="ob-sheet__price-value">L 2,180</span>
+              </p>
+
+              <div class="ob-sheet__actions">
+                <button class="ob-btn ob-btn--solid" type="button" data-sheet-quote>
+                  Agregar a cotización
+                </button>
+                <a class="ob-btn ob-btn--outline" href="#cotizar" data-sheet-buy>
+                  Comprar ahora
+                </a>
+              </div>
+              <p class="ob-sheet__note">Demostración: no hay carrito ni pasarela de pago detrás de estos botones.</p>
+            </div>
+          </div>
+        </template>
+        <template data-sheet-for="orbitcam-360">
+          <div class="ob-sheet__grid">
+            <div class="ob-sheet__gallery">
+              <div class="ob-sheet__stage"><svg class="ob-render ob-render--sheet" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <path d="M36 74a44 44 0 0 1 88 0Z" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M30 74h100" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="80" cy="56" r="17" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <circle cx="80" cy="56" r="9" fill="var(--render-screen)"/>
+    <circle cx="86" cy="50" r="2.6" fill="var(--render-paper)"/>
+    <path d="M80 74v14" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M62 92h36" stroke-width="4" stroke-linecap="round" fill="none" stroke="var(--render-line)"/></svg></div>
+              <div class="ob-sheet__thumbs" role="group" aria-label="Vistas del equipo">
+                <span class="ob-sheet__thumb is-current"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <path d="M36 74a44 44 0 0 1 88 0Z" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M30 74h100" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="80" cy="56" r="17" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <circle cx="80" cy="56" r="9" fill="var(--render-screen)"/>
+    <circle cx="86" cy="50" r="2.6" fill="var(--render-paper)"/>
+    <path d="M80 74v14" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M62 92h36" stroke-width="4" stroke-linecap="round" fill="none" stroke="var(--render-line)"/></svg></span>
+                <span class="ob-sheet__thumb"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <path d="M36 74a44 44 0 0 1 88 0Z" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M30 74h100" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="80" cy="56" r="17" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <circle cx="80" cy="56" r="9" fill="var(--render-screen)"/>
+    <circle cx="86" cy="50" r="2.6" fill="var(--render-paper)"/>
+    <path d="M80 74v14" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M62 92h36" stroke-width="4" stroke-linecap="round" fill="none" stroke="var(--render-line)"/></svg></span>
+                <span class="ob-sheet__thumb"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <path d="M36 74a44 44 0 0 1 88 0Z" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M30 74h100" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="80" cy="56" r="17" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <circle cx="80" cy="56" r="9" fill="var(--render-screen)"/>
+    <circle cx="86" cy="50" r="2.6" fill="var(--render-paper)"/>
+    <path d="M80 74v14" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M62 92h36" stroke-width="4" stroke-linecap="round" fill="none" stroke="var(--render-line)"/></svg></span>
+              </div>
+            </div>
+
+            <div class="ob-sheet__body">
+              <p class="ob-sheet__category">Seguridad</p>
+              <h3 class="ob-sheet__name" data-sheet-title>OrbitCam 360</h3>
+              <p class="ob-sheet__summary">Cámara panorámica con analítica local para accesos y bodegas.</p>
+
+              <ul class="ob-sheet__specs">
+              <li class="ob-sheet__spec">360° · 8 MP</li>
+              <li class="ob-sheet__spec">Visión nocturna</li>
+              <li class="ob-sheet__spec">PoE</li>
+              <li class="ob-sheet__spec">Analítica en el borde</li>
+              </ul>
+
+              <div class="ob-sheet__block">
+                <p class="ob-sheet__block-title">Specifications</p>
+                <ul class="ob-sheet__features">
+              <li>Detección de línea y de zona</li>
+              <li>Almacenamiento local en microSD</li>
+              <li>Carcasa IP66</li>
+              <li>Integración con NVR estándar</li>
+                </ul>
+              </div>
+
+              <dl class="ob-sheet__facts">
+                <div><dt>Disponibilidad</dt><dd>Sujeto a proyecto</dd></div>
+                <div><dt>Garantía</dt><dd>2 años</dd></div>
+                <div><dt>Entrega</dt><dd>Bajo pedido · 10 a 15 días</dd></div>
+              </dl>
+
+              <p class="ob-sheet__price">
+                
+                <span class="ob-sheet__price-value">Consultar</span>
+              </p>
+
+              <div class="ob-sheet__actions">
+                <button class="ob-btn ob-btn--solid" type="button" data-sheet-quote>
+                  Agregar a cotización
+                </button>
+                <a class="ob-btn ob-btn--outline" href="#cotizar" data-sheet-buy>
+                  Comprar ahora
+                </a>
+              </div>
+              <p class="ob-sheet__note">Demostración: no hay carrito ni pasarela de pago detrás de estos botones.</p>
+            </div>
+          </div>
+        </template>
+      </section>
+
+      <section class="ob-section" id="comparar" aria-labelledby="compare-title">
+        <div class="lp-shell">
+          <div class="ob-head ob-head--split">
+            <div>
+              <p class="ob-label" data-reveal="fade">Comparador</p>
+              <h2 class="ob-h2" id="compare-title" data-reveal="rise">Compara y elige mejor.</h2>
+            </div>
+            <p class="ob-lead" data-reveal="rise">Elige hasta tres equipos y míralos lado a lado. En móvil se recorre en horizontal.</p>
+          </div>
+
+          <div class="ob-compare" data-compare data-limit="3">
+            <div class="ob-compare__picker">
+              <p class="ob-compare__hint">
+                Selecciona hasta tres equipos
+                <span class="ob-compare__count" data-compare-count aria-live="polite">3 de 3</span>
+              </p>
+              <div class="ob-picks">
+              <label class="ob-pick">
+                <input
+                  type="checkbox"
+                  value="air-13"
+                  data-compare-pick
+                  checked
+                />
+                <span class="ob-pick__body">
+                  <span class="ob-pick__art" aria-hidden="true"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="34" y="20" width="92" height="58" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="40" y="26" width="80" height="46" rx="2" fill="var(--render-screen)"/>
+    <path d="M46 62h24M46 55h44M46 48h30" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M22 78h116l6 12a3 3 0 0 1-3 4H19a3 3 0 0 1-3-4Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M66 86h28" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+                  <span class="ob-pick__name">OrbitBook Air 13</span>
+                </span>
+              </label>
+              <label class="ob-pick">
+                <input
+                  type="checkbox"
+                  value="pro-14"
+                  data-compare-pick
+                  checked
+                />
+                <span class="ob-pick__body">
+                  <span class="ob-pick__art" aria-hidden="true"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="34" y="20" width="92" height="58" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="40" y="26" width="80" height="46" rx="2" fill="var(--render-screen)"/>
+    <path d="M46 62h24M46 55h44M46 48h30" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M22 78h116l6 12a3 3 0 0 1-3 4H19a3 3 0 0 1-3-4Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M66 86h28" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+                  <span class="ob-pick__name">OrbitBook Pro 14</span>
+                </span>
+              </label>
+              <label class="ob-pick">
+                <input
+                  type="checkbox"
+                  value="max-16"
+                  data-compare-pick
+                  checked
+                />
+                <span class="ob-pick__body">
+                  <span class="ob-pick__art" aria-hidden="true"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="34" y="20" width="92" height="58" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="40" y="26" width="80" height="46" rx="2" fill="var(--render-screen)"/>
+    <path d="M46 62h24M46 55h44M46 48h30" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M22 78h116l6 12a3 3 0 0 1-3 4H19a3 3 0 0 1-3-4Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M66 86h28" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+                  <span class="ob-pick__name">OrbitBook Max 16</span>
+                </span>
+              </label>
+              <label class="ob-pick">
+                <input
+                  type="checkbox"
+                  value="desk-mini"
+                  data-compare-pick
+                  
+                />
+                <span class="ob-pick__body">
+                  <span class="ob-pick__art" aria-hidden="true"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="40" y="40" width="80" height="42" rx="6" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <circle cx="56" cy="61" r="5" fill="var(--render-screen)"/>
+    <path d="M72 55h34M72 61h34M72 67h22" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M46 82v8M114 82v8" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M52 30h56" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+                  <span class="ob-pick__name">OrbitDesk Mini</span>
+                </span>
+              </label>
+              <label class="ob-pick">
+                <input
+                  type="checkbox"
+                  value="station-24"
+                  data-compare-pick
+                  
+                />
+                <span class="ob-pick__body">
+                  <span class="ob-pick__art" aria-hidden="true"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="26" y="16" width="108" height="62" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="32" y="22" width="96" height="50" rx="2" fill="var(--render-screen)"/>
+    <path d="M40 60h24M40 50h48M40 40h34" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M62 78h36l10 20H52Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/></svg></span>
+                  <span class="ob-pick__name">OrbitStation 24</span>
+                </span>
+              </label>
+              </div>
+            </div>
+
+            <div class="ob-table__scroll">
+              <table class="ob-table">
+                <caption class="lp-hidden">Comparación de especificaciones entre los equipos seleccionados</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">
+                      <span class="lp-hidden">Especificación</span>
+                    </th>
+                  <th scope="col" data-col="air-13">
+                    <span class="ob-table__art" aria-hidden="true"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="34" y="20" width="92" height="58" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="40" y="26" width="80" height="46" rx="2" fill="var(--render-screen)"/>
+    <path d="M46 62h24M46 55h44M46 48h30" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M22 78h116l6 12a3 3 0 0 1-3 4H19a3 3 0 0 1-3-4Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M66 86h28" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+                    <span class="ob-table__name">OrbitBook Air 13</span>
+                  </th>
+                  <th scope="col" data-col="pro-14">
+                    <span class="ob-table__art" aria-hidden="true"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="34" y="20" width="92" height="58" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="40" y="26" width="80" height="46" rx="2" fill="var(--render-screen)"/>
+    <path d="M46 62h24M46 55h44M46 48h30" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M22 78h116l6 12a3 3 0 0 1-3 4H19a3 3 0 0 1-3-4Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M66 86h28" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+                    <span class="ob-table__name">OrbitBook Pro 14</span>
+                  </th>
+                  <th scope="col" data-col="max-16">
+                    <span class="ob-table__art" aria-hidden="true"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="34" y="20" width="92" height="58" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="40" y="26" width="80" height="46" rx="2" fill="var(--render-screen)"/>
+    <path d="M46 62h24M46 55h44M46 48h30" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M22 78h116l6 12a3 3 0 0 1-3 4H19a3 3 0 0 1-3-4Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M66 86h28" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+                    <span class="ob-table__name">OrbitBook Max 16</span>
+                  </th>
+                  <th scope="col" data-col="desk-mini" hidden>
+                    <span class="ob-table__art" aria-hidden="true"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="40" y="40" width="80" height="42" rx="6" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <circle cx="56" cy="61" r="5" fill="var(--render-screen)"/>
+    <path d="M72 55h34M72 61h34M72 67h22" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M46 82v8M114 82v8" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M52 30h56" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+                    <span class="ob-table__name">OrbitDesk Mini</span>
+                  </th>
+                  <th scope="col" data-col="station-24" hidden>
+                    <span class="ob-table__art" aria-hidden="true"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="26" y="16" width="108" height="62" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="32" y="22" width="96" height="50" rx="2" fill="var(--render-screen)"/>
+    <path d="M40 60h24M40 50h48M40 40h34" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M62 78h36l10 20H52Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/></svg></span>
+                    <span class="ob-table__name">OrbitStation 24</span>
+                  </th>
+                  </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <th scope="row">Pantalla</th>
+                  <td data-col="air-13">13.3″ FHD+</td>
+                  <td data-col="pro-14">14″ 2.8K</td>
+                  <td data-col="max-16">16″ 3.2K</td>
+                  <td data-col="desk-mini" hidden>No incluye</td>
+                  <td data-col="station-24" hidden>24″ FHD</td>
+                </tr>
+                <tr>
+                  <th scope="row">Procesador</th>
+                  <td data-col="air-13">Core Ultra 5</td>
+                  <td data-col="pro-14">Core Ultra 7</td>
+                  <td data-col="max-16">Core Ultra 9</td>
+                  <td data-col="desk-mini" hidden>Core Ultra 5</td>
+                  <td data-col="station-24" hidden>Core Ultra 7</td>
+                </tr>
+                <tr>
+                  <th scope="row">RAM</th>
+                  <td data-col="air-13">16 GB</td>
+                  <td data-col="pro-14">16 GB</td>
+                  <td data-col="max-16">32 GB</td>
+                  <td data-col="desk-mini" hidden>16 GB</td>
+                  <td data-col="station-24" hidden>16 GB</td>
+                </tr>
+                <tr>
+                  <th scope="row">Almacenamiento</th>
+                  <td data-col="air-13">512 GB SSD</td>
+                  <td data-col="pro-14">512 GB SSD</td>
+                  <td data-col="max-16">1 TB SSD</td>
+                  <td data-col="desk-mini" hidden>512 GB SSD</td>
+                  <td data-col="station-24" hidden>1 TB SSD</td>
+                </tr>
+                <tr>
+                  <th scope="row">Peso</th>
+                  <td data-col="air-13">0.99 kg</td>
+                  <td data-col="pro-14">1.29 kg</td>
+                  <td data-col="max-16">1.86 kg</td>
+                  <td data-col="desk-mini" hidden>1.2 kg</td>
+                  <td data-col="station-24" hidden>5.4 kg</td>
+                </tr>
+                <tr>
+                  <th scope="row">Garantía</th>
+                  <td data-col="air-13">2 años</td>
+                  <td data-col="pro-14">2 años</td>
+                  <td data-col="max-16">3 años</td>
+                  <td data-col="desk-mini" hidden>3 años</td>
+                  <td data-col="station-24" hidden>3 años</td>
+                </tr>
+                <tr class="ob-table__row--price">
+                  <th scope="row">Precio</th>
+                  <td data-col="air-13">L 22,400</td>
+                  <td data-col="pro-14">L 29,990</td>
+                  <td data-col="max-16">L 44,900</td>
+                  <td data-col="desk-mini" hidden>L 17,600</td>
+                  <td data-col="station-24" hidden>L 26,800</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="ob-section ob-section--muted" id="equipar" aria-labelledby="cfg-title">
+        <div class="lp-shell ob-cfg">
+          <div class="ob-cfg__intro">
+            <p class="ob-label" data-reveal="fade">Configurador</p>
+            <h2 class="ob-h2" id="cfg-title" data-reveal="rise">Equipa tu empresa.</h2>
+            <p class="ob-lead" data-reveal="rise">Dinos qué vas a equipar y para cuánta gente. Preparamos la configuración y la convertimos en una propuesta.</p>
+          </div>
+
+          <form class="ob-cfg__panel" data-configurator data-reveal="rise">
+            <fieldset class="ob-cfg__group">
+              <legend class="ob-cfg__legend">¿Qué necesitas equipar?</legend>
+              <div class="ob-spaces">
+                <label class="ob-space">
+                  <input type="radio" name="ob-espacio" value="Oficina" data-cfg-space checked />
+                  <span class="ob-space__body">
+                    <span class="ob-space__name">Oficina</span>
+                    <span class="ob-space__note">Puestos de trabajo fijos</span>
+                  </span>
+                </label>
+                <label class="ob-space">
+                  <input type="radio" name="ob-espacio" value="Sala de reuniones" data-cfg-space  />
+                  <span class="ob-space__body">
+                    <span class="ob-space__name">Sala de reuniones</span>
+                    <span class="ob-space__note">Proyección y videollamada</span>
+                  </span>
+                </label>
+                <label class="ob-space">
+                  <input type="radio" name="ob-espacio" value="Laboratorio" data-cfg-space  />
+                  <span class="ob-space__body">
+                    <span class="ob-space__name">Laboratorio</span>
+                    <span class="ob-space__note">Equipo de cómputo intensivo</span>
+                  </span>
+                </label>
+                <label class="ob-space">
+                  <input type="radio" name="ob-espacio" value="Centro educativo" data-cfg-space  />
+                  <span class="ob-space__body">
+                    <span class="ob-space__name">Centro educativo</span>
+                    <span class="ob-space__note">Aulas y laboratorios</span>
+                  </span>
+                </label>
+                <label class="ob-space">
+                  <input type="radio" name="ob-espacio" value="Sucursal" data-cfg-space  />
+                  <span class="ob-space__body">
+                    <span class="ob-space__name">Sucursal</span>
+                    <span class="ob-space__note">Atención y punto de venta</span>
+                  </span>
+                </label>
+                <label class="ob-space">
+                  <input type="radio" name="ob-espacio" value="Equipo remoto" data-cfg-space  />
+                  <span class="ob-space__body">
+                    <span class="ob-space__name">Equipo remoto</span>
+                    <span class="ob-space__note">Entrega a domicilio</span>
+                  </span>
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset class="ob-cfg__group">
+              <legend class="ob-cfg__legend">¿Cuántas personas?</legend>
+              <div class="ob-stepper">
+                <button class="ob-stepper__button" type="button" data-cfg-step="-1" aria-label="Quitar una persona">&minus;</button>
+                <label class="lp-hidden" for="ob-people">Número de personas</label>
+                <input
+                  class="ob-stepper__input"
+                  id="ob-people"
+                  type="number"
+                  inputmode="numeric"
+                  min="1"
+                  max="250"
+                  step="1"
+                  value="20"
+                  data-cfg-people
+                />
+                <button class="ob-stepper__button" type="button" data-cfg-step="1" aria-label="Agregar una persona">+</button>
+              </div>
+            </fieldset>
+
+            <fieldset class="ob-cfg__group">
+              <legend class="ob-cfg__legend">¿Qué necesitas?</legend>
+              <div class="ob-needs">
+                <label class="ob-need">
+                  <input
+                    type="checkbox"
+                    value="computadoras"
+                    data-cfg-need
+                    data-unit="laptops"
+                    data-name="Computadoras"
+                    data-per="1"
+                    
+                    
+                    data-price="25400"
+                    checked
+                  />
+                  <span class="ob-need__body">
+                    <span class="ob-need__check" aria-hidden="true"></span>
+                    Computadoras
+                  </span>
+                </label>
+                <label class="ob-need">
+                  <input
+                    type="checkbox"
+                    value="monitores"
+                    data-cfg-need
+                    data-unit="monitores"
+                    data-name="Monitores"
+                    data-per="1"
+                    
+                    
+                    data-price="8450"
+                    checked
+                  />
+                  <span class="ob-need__body">
+                    <span class="ob-need__check" aria-hidden="true"></span>
+                    Monitores
+                  </span>
+                </label>
+                <label class="ob-need">
+                  <input
+                    type="checkbox"
+                    value="impresoras"
+                    data-cfg-need
+                    data-unit="impresoras"
+                    data-name="Impresoras"
+                    
+                    data-each="10"
+                    
+                    data-price="12300"
+                    checked
+                  />
+                  <span class="ob-need__body">
+                    <span class="ob-need__check" aria-hidden="true"></span>
+                    Impresoras
+                  </span>
+                </label>
+                <label class="ob-need">
+                  <input
+                    type="checkbox"
+                    value="red"
+                    data-cfg-need
+                    data-unit="solución de red"
+                    data-name="Networking"
+                    
+                    
+                    data-fixed="1"
+                    data-price="24900"
+                    checked
+                  />
+                  <span class="ob-need__body">
+                    <span class="ob-need__check" aria-hidden="true"></span>
+                    Networking
+                  </span>
+                </label>
+                <label class="ob-need">
+                  <input
+                    type="checkbox"
+                    value="ups"
+                    data-cfg-need
+                    data-unit="respaldos"
+                    data-name="UPS"
+                    data-per="1"
+                    
+                    
+                    data-price="4200"
+                    checked
+                  />
+                  <span class="ob-need__body">
+                    <span class="ob-need__check" aria-hidden="true"></span>
+                    UPS
+                  </span>
+                </label>
+              </div>
+            </fieldset>
+
+            <button class="ob-btn ob-btn--solid ob-btn--lg ob-cfg__submit" type="submit">
+              Generar cotización
+            </button>
+          </form>
+
+          <aside class="ob-cfg__result" data-cfg-result hidden aria-live="polite">
+            <p class="ob-cfg__result-title">Configuración preparada</p>
+            <p class="ob-cfg__result-for" data-cfg-for></p>
+            <ul class="ob-cfg__lines" data-cfg-lines></ul>
+            <p class="ob-cfg__total">
+              <span>Estimado</span>
+              <strong data-cfg-total></strong>
+            </p>
+            <a class="ob-btn ob-btn--solid" href="#cotizar">Recibir cotización</a>
+            <p class="ob-cfg__note">Estimado de referencia. La propuesta final se ajusta al modelo y al volumen.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="ob-promo" aria-labelledby="promo-title">
+        <div class="lp-shell ob-promo__inner" data-reveal="scale">
+          <div class="ob-promo__copy">
+            <p class="ob-label ob-label--light">Promoción</p>
+            <h2 class="ob-promo__title" id="promo-title">Renueva tu oficina.</h2>
+            <p class="ob-promo__text">Un paquete cerrado para equipos de diez personas: cómputo, pantallas, impresión y red, instalado y funcionando.</p>
+            <ul class="ob-promo__list">
+              <li>10 laptops OrbitBook Pro 14</li>
+              <li>10 monitores OrbitView 27</li>
+              <li>1 impresora empresarial PrintCore M450</li>
+              <li>1 solución Wi-Fi NetLink para toda la planta</li>
+              <li>Instalación y configuración incluidas</li>
+            </ul>
+          </div>
+
+          <div class="ob-promo__price">
+            <span class="ob-promo__price-note">Desde</span>
+            <span class="ob-promo__price-value">L 396,500</span>
+            <span class="ob-promo__price-detail">IVA incluido · financiamiento a 12 meses disponible</span>
+            <a class="ob-btn ob-btn--accent ob-btn--lg" href="#cotizar">
+              Solicitar propuesta
+              <span aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="ob-brands" aria-labelledby="brands-title">
+        <div class="lp-shell">
+          <h2 class="ob-brands__title" id="brands-title" data-reveal="fade">Trabajamos con las marcas que tu empresa ya conoce.</h2>
+          <ul class="ob-brands__list" data-reveal-group="60">
+            <li class="ob-plate">
+              <span class="ob-plate__dot" aria-hidden="true"></span>
+              Nordkil
+            </li>
+            <li class="ob-plate">
+              <span class="ob-plate__dot" aria-hidden="true"></span>
+              Vantec
+            </li>
+            <li class="ob-plate">
+              <span class="ob-plate__dot" aria-hidden="true"></span>
+              Lumidex
+            </li>
+            <li class="ob-plate">
+              <span class="ob-plate__dot" aria-hidden="true"></span>
+              Kestrel
+            </li>
+            <li class="ob-plate">
+              <span class="ob-plate__dot" aria-hidden="true"></span>
+              Arqon
+            </li>
+            <li class="ob-plate">
+              <span class="ob-plate__dot" aria-hidden="true"></span>
+              Bytrix
+            </li>
+          </ul>
+          <p class="ob-brands__note">Marcas ficticias creadas para esta demostración. Un sitio en producción mostraría aquí las marcas que realmente distribuye.</p>
+        </div>
+      </section>
+
+      <section class="ob-section" aria-labelledby="why-title">
+        <div class="lp-shell">
+          <div class="ob-head">
+            <p class="ob-label" data-reveal="fade">Por qué comprar aquí</p>
+            <h2 class="ob-h2" id="why-title" data-reveal="rise">Cuatro razones, todas verificables.</h2>
+          </div>
+
+          <div class="ob-benefits" data-reveal-group="90">
+            <article class="ob-benefit" data-reveal="rise">
+              <span class="ob-benefit__art" aria-hidden="true"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <path d="M80 16l40 14v26c0 22-16 38-40 46-24-8-40-24-40-46V30Z" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M62 60l14 14 24-28" fill="none" stroke="var(--render-screen)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <h3 class="ob-benefit__name">Garantía</h3>
+              <p class="ob-benefit__text">Productos respaldados y soporte posterior a la compra, con reemplazo mientras dura el diagnóstico.</p>
+            </article>
+            <article class="ob-benefit" data-reveal="rise">
+              <span class="ob-benefit__art" aria-hidden="true"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <path d="M14 34h68v40H14Z" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M82 46h26l16 18v10H82Z" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M8 74h140" fill="none" stroke="var(--render-line)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="44" cy="82" r="9" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <circle cx="106" cy="82" r="9" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M22 46h32M22 56h20" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+              <h3 class="ob-benefit__name">Entrega</h3>
+              <p class="ob-benefit__text">Distribución rápida para empresas y proyectos, con despacho promedio en 48 horas.</p>
+            </article>
+            <article class="ob-benefit" data-reveal="rise">
+              <span class="ob-benefit__art" aria-hidden="true"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <path d="M22 22h74a8 8 0 0 1 8 8v34a8 8 0 0 1-8 8H52L34 88V72h-12a8 8 0 0 1-8-8V30a8 8 0 0 1 8-8Z" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M34 40h48M34 52h30" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="122" cy="40" r="18" fill="var(--render-screen)"/>
+    <path d="M116 40l5 5 10-11" fill="none" stroke="var(--render-paper)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <h3 class="ob-benefit__name">Asesoría</h3>
+              <p class="ob-benefit__text">Te ayudamos a elegir el equipo correcto para el trabajo que vas a hacer con él.</p>
+            </article>
+            <article class="ob-benefit" data-reveal="rise">
+              <span class="ob-benefit__art" aria-hidden="true"><svg class="ob-render" viewBox="0 0 160 112" aria-hidden="true" focusable="false">
+    <rect x="16" y="34" width="48" height="52" rx="4" fill="var(--render-body)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <rect x="96" y="20" width="48" height="66" rx="4" fill="var(--render-deep)" stroke="var(--render-line)" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M26 46h12M26 58h12M26 70h12" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M106 32h12M106 44h12M106 56h12M106 68h12" fill="none" stroke="var(--render-soft)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M64 60h32" fill="none" stroke="var(--render-screen)" stroke-width="3" stroke-linecap="round"/>
+    <path d="M88 54l8 6-8 6" fill="none" stroke="var(--render-screen)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <h3 class="ob-benefit__name">Soluciones B2B</h3>
+              <p class="ob-benefit__text">Cotizaciones, licitaciones y proyectos adaptados al tamaño de cada organización.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="ob-b2b" id="empresas" aria-labelledby="b2b-title" data-track>
+        <div class="lp-shell">
+          <div class="ob-b2b__head">
+            <h2 class="ob-b2b__title" id="b2b-title" data-reveal="rise">No vendemos cajas. Equipamos operaciones.</h2>
+            <p class="ob-b2b__text" data-reveal="rise">El equipo es la parte fácil. Lo que hace la diferencia es lo que pasa antes de comprarlo y después de instalarlo.</p>
+          </div>
+
+          <div class="ob-flow">
+            <span class="ob-flow__rail" aria-hidden="true"><span class="ob-flow__rail-fill"></span></span>
+            <ol class="ob-flow__steps">
+              <li class="ob-flow__step" data-track-step>
+                <span class="ob-flow__index">01</span>
+                <h3 class="ob-flow__name">Necesidad</h3>
+                <p class="ob-flow__text">Qué se va a hacer con el equipo, y para cuánta gente.</p>
+              </li>
+              <li class="ob-flow__step" data-track-step>
+                <span class="ob-flow__index">02</span>
+                <h3 class="ob-flow__name">Asesoría</h3>
+                <p class="ob-flow__text">Qué modelo lo resuelve y cuál está de más.</p>
+              </li>
+              <li class="ob-flow__step" data-track-step>
+                <span class="ob-flow__index">03</span>
+                <h3 class="ob-flow__name">Quotation</h3>
+                <p class="ob-flow__text">Propuesta cerrada, con tiempos y condiciones.</p>
+              </li>
+              <li class="ob-flow__step" data-track-step>
+                <span class="ob-flow__index">04</span>
+                <h3 class="ob-flow__name">Suministro</h3>
+                <p class="ob-flow__text">Despacho coordinado, en una sola entrega.</p>
+              </li>
+              <li class="ob-flow__step" data-track-step>
+                <span class="ob-flow__index">05</span>
+                <h3 class="ob-flow__name">Instalación</h3>
+                <p class="ob-flow__text">Puesta en marcha y configuración en sitio.</p>
+              </li>
+              <li class="ob-flow__step" data-track-step>
+                <span class="ob-flow__index">06</span>
+                <h3 class="ob-flow__name">Soporte</h3>
+                <p class="ob-flow__text">Acompañamiento posterior y reposición de garantía.</p>
+              </li>
+            </ol>
+          </div>
+
+          <div class="ob-industries">
+            <p class="ob-industries__text">Soluciones adaptadas al tamaño y operación de cada organización.</p>
+            <ul class="ob-industries__list">
+              <li>Empresas</li>
+              <li>Colegios</li>
+              <li>Universidades</li>
+              <li>Clínicas</li>
+              <li>Hoteles</li>
+              <li>Restaurantes</li>
+              <li>Constructoras</li>
+              <li>Gobierno</li>
+              <li>Pymes</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="ob-section ob-section--muted" aria-labelledby="voices-title">
+        <div class="lp-shell">
+          <div class="ob-head ob-head--split">
+            <div>
+              <p class="ob-label" data-reveal="fade">Clientes</p>
+              <h2 class="ob-h2" id="voices-title" data-reveal="rise">Lo que dicen las operaciones que equipamos.</h2>
+            </div>
+            <p class="ob-note" data-reveal="fade">Testimonios ficticios escritos para esta demostración.</p>
+          </div>
+
+          <div class="ob-voices" data-reveal-group="90">
+            <figure class="ob-voice" data-reveal="rise">
+              <blockquote class="ob-voice__quote">Necesitábamos equipar nuestra nueva oficina sin coordinar cinco proveedores distintos. Llegó todo en una entrega y funcionando el mismo día.</blockquote>
+              <figcaption class="ob-voice__by">
+                <span class="ob-voice__name">Director de Operaciones</span>
+                <span class="ob-voice__company">Grupo Aldeva · 60 puestos</span>
+              </figcaption>
+            </figure>
+            <figure class="ob-voice" data-reveal="rise">
+              <blockquote class="ob-voice__quote">Nos dijeron que el modelo que habíamos pedido era más de lo que necesitábamos. Terminamos gastando menos de lo presupuestado.</blockquote>
+              <figcaption class="ob-voice__by">
+                <span class="ob-voice__name">Gerente Administrativa</span>
+                <span class="ob-voice__company">Colegio San Marcelo</span>
+              </figcaption>
+            </figure>
+            <figure class="ob-voice" data-reveal="rise">
+              <blockquote class="ob-voice__quote">La cotización llegó en menos de un día y con los tiempos de entrega por escrito. Con eso pudimos cerrar la licitación.</blockquote>
+              <figcaption class="ob-voice__by">
+                <span class="ob-voice__name">Jefe de Compras</span>
+                <span class="ob-voice__company">Constructora Perenne</span>
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="ob-metrics" data-reveal-group="110">
+            <div class="ob-metric" data-reveal="rise">
+              <span class="ob-metric__value">
+                <span
+                  data-count-to="2500"
+                  data-count-prefix="+"
+                  
+                >+2,500</span>
+              </span>
+              <span class="ob-metric__label">Equipos entregados</span>
+            </div>
+            <div class="ob-metric" data-reveal="rise">
+              <span class="ob-metric__value">
+                <span
+                  data-count-to="180"
+                  data-count-prefix="+"
+                  
+                >+180</span>
+              </span>
+              <span class="ob-metric__label">Empresas atendidas</span>
+            </div>
+            <div class="ob-metric" data-reveal="rise">
+              <span class="ob-metric__value">
+                <span
+                  data-count-to="48"
+                  
+                  data-count-suffix=" h"
+                >48 h</span>
+              </span>
+              <span class="ob-metric__label">Tiempo promedio de despacho</span>
+            </div>
+            <div class="ob-metric" data-reveal="rise">
+              <span class="ob-metric__value">
+                <span
+                  data-count-to="98"
+                  
+                  data-count-suffix="%"
+                >98%</span>
+              </span>
+              <span class="ob-metric__label">Clientes recurrentes</span>
+            </div>
+          </div>
+
+          <aside class="lp-pitch" data-reveal="fade">
+            <p class="lp-pitch__text">Buscador, ficha de producto, comparador y configurador: <b>todo funciona aquí, sin backend</b>. Con el catálogo y el inventario de tu empresa detrás, funcionaría igual — con datos reales.</p>
+            <a class="lp-pitch__link" href="../../index.html#contacto">
+              Start my project
+              <span aria-hidden="true">&rarr;</span>
+            </a>
+          </aside>
+        </div>
+      </section>
+
+      <section class="ob-quote" id="cotizar" aria-labelledby="quote-title">
+        <div class="lp-shell ob-quote__grid">
+          <div class="ob-quote__copy">
+            <p class="ob-label ob-label--light" data-reveal="fade">Quotation</p>
+            <h2 class="ob-quote__title" id="quote-title" data-reveal="rise">¿Necesitas varios equipos?</h2>
+            <p class="ob-quote__text" data-reveal="rise">Cuéntanos qué necesitas y preparamos una propuesta adaptada a tu empresa.</p>
+            <a class="ob-quote__wa" href="#cotizar" data-demo-action>
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path fill="currentColor" d="M12.04 2C6.54 2 2.08 6.46 2.08 11.96c0 1.76.46 3.48 1.34 5L2 22l5.2-1.36a9.9 9.9 0 0 0 4.84 1.24c5.5 0 9.96-4.46 9.96-9.96 0-2.66-1.04-5.16-2.92-7.04A9.88 9.88 0 0 0 12.04 2Zm0 1.82c2.18 0 4.23.85 5.77 2.39a8.1 8.1 0 0 1 2.39 5.77c0 4.5-3.66 8.15-8.16 8.15a8.2 8.2 0 0 1-4.16-1.14l-.3-.18-3.09.81.82-3.01-.2-.31a8.1 8.1 0 0 1-1.26-4.33c0-4.5 3.66-8.15 8.19-8.15Z"/>
+              </svg>
+              Cotizar por WhatsApp
+            </a>
+          </div>
+
+          <form class="ob-form" data-demo-form data-reveal="rise">
+            <div class="ob-form__fields">
+              <p class="ob-field">
+                <label class="ob-field__label" for="ob-nombre">
+                  Nombre
+                </label>
+                <input
+                  class="ob-field__input"
+                  id="ob-nombre"
+                  name="nombre"
+                  type="text"
+                  autocomplete="name"
+                  required
+                />
+              </p>
+              <p class="ob-field">
+                <label class="ob-field__label" for="ob-empresa">
+                  Empresa
+                </label>
+                <input
+                  class="ob-field__input"
+                  id="ob-empresa"
+                  name="empresa"
+                  type="text"
+                  autocomplete="organization"
+                  required
+                />
+              </p>
+              <p class="ob-field">
+                <label class="ob-field__label" for="ob-correo">
+                  Email
+                </label>
+                <input
+                  class="ob-field__input"
+                  id="ob-correo"
+                  name="correo"
+                  type="email"
+                  autocomplete="email"
+                  required
+                />
+              </p>
+              <p class="ob-field">
+                <label class="ob-field__label" for="ob-telefono">
+                  Phone <span>(opcional)</span>
+                </label>
+                <input
+                  class="ob-field__input"
+                  id="ob-telefono"
+                  name="telefono"
+                  type="tel"
+                  autocomplete="tel"
+                  
+                />
+              </p>
+            </div>
+
+            <p class="ob-field">
+              <label class="ob-field__label" for="ob-necesita">¿Qué necesitas?</label>
+              <select class="ob-field__input" id="ob-necesita" name="necesita">
+                  <option value="Computación">Computación</option>
+                  <option value="Impresión">Impresión</option>
+                  <option value="Redes">Social</option>
+                  <option value="Audio y video">Audio y video</option>
+                  <option value="Energía">Energy</option>
+                  <option value="Proyecto completo">Proyecto completo</option>
+              </select>
+            </p>
+
+            <fieldset class="ob-form__amount">
+              <legend class="ob-field__label">Cantidad aproximada</legend>
+              <div class="ob-radios">
+                <label class="ob-radio">
+                  <input type="radio" name="cantidad" value="1 – 5"  />
+                  <span>1 – 5</span>
+                </label>
+                <label class="ob-radio">
+                  <input type="radio" name="cantidad" value="6 – 20" checked />
+                  <span>6 – 20</span>
+                </label>
+                <label class="ob-radio">
+                  <input type="radio" name="cantidad" value="21 – 50"  />
+                  <span>21 – 50</span>
+                </label>
+                <label class="ob-radio">
+                  <input type="radio" name="cantidad" value="Más de 50"  />
+                  <span>Más de 50</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <button class="ob-btn ob-btn--accent ob-btn--lg" type="submit">
+              Recibir cotización
+              <span aria-hidden="true">&rarr;</span>
+            </button>
+
+            <p class="ob-form__note">Formulario de demostración: no envía nada ni guarda lo que escribes.</p>
+            <p class="ob-form__done" data-form-done role="status" hidden>Solicitud registrada. En una implementación real, esta cotización llegaría al equipo comercial de inmediato.</p>
+          </form>
+        </div>
+      </section>
+
+      <section class="ob-cta" aria-labelledby="cta-title">
+        <div class="lp-shell ob-cta__inner">
+          <h2 class="ob-cta__title" id="cta-title" data-reveal="rise">El equipo que tu empresa necesita. Sin complicaciones.</h2>
+          <p class="ob-cta__text" data-reveal="rise">Desde un dispositivo hasta la implementación tecnológica de toda una operación.</p>
+          <div class="ob-cta__actions" data-reveal="rise">
+            <a class="ob-btn ob-btn--accent ob-btn--lg" href="#catalogo">
+              Explorar catálogo
+            </a>
+            <a class="ob-btn ob-btn--outline ob-btn--lg" href="#cotizar">
+              Request a quote
+              <span aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <footer class="ob-foot">
+        <div class="lp-shell ob-foot__inner">
+          <div class="ob-foot__brand">
+            <p class="ob-foot__name">Orbita Supply</p>
+            <p class="ob-foot__line">Bulevar Morazán, Tegucigalpa · Honduras</p>
+            <p class="ob-foot__line">Lunes a viernes · 8:00 – 17:30</p>
+          </div>
+
+            <div class="ob-foot__col">
+              <p class="ob-foot__col-title">Catálogo</p>
+              <ul>
+                <li><a href="#catalogo">Equipos destacados</a></li>
+                <li><a href="#categorias">Categorías</a></li>
+                <li><a href="#comparar">Comparador</a></li>
+              </ul>
+            </div>
+            <div class="ob-foot__col">
+              <p class="ob-foot__col-title">Empresas</p>
+              <ul>
+                <li><a href="#equipar">Equipar mi empresa</a></li>
+                <li><a href="#empresas">Cómo trabajamos</a></li>
+                <li><a href="#cotizar">Cotizar</a></li>
+              </ul>
+            </div>
+
+          <p class="ob-foot__credit">
+            Marca ficticia. Demostración construida por
+            <a href="../../index.html">CoreStruct</a> &copy; <span data-current-year>2026</span>.
+          </p>
+        </div>
+      </footer>
+
+      <section class="lp-outro" aria-labelledby="outro-title">
+        <div class="lp-shell lp-outro__inner">
+          <p class="lp-outro__mark" data-reveal="fade">
+            <svg viewBox="0 0 362 422" aria-hidden="true" focusable="false"><path fill="#2c6fb2" d="M10 98L17 92L181 1L188 3L354 96L353 99L200 186L185 179L173 181L166 186L11 98Z"/><path fill="#3898d4" d="M188 421L188 373L190 371L320 295L320 248L318 248L188 324L188 217L198 211L202 203L202 197L358 111L361 109L361 165L233 234L233 275L361 200L361 321L189 421Z"/><path fill="#253880" d="M1 107L160 195L166 210L176 216L176 252L174 252L42 176L42 294L114 336L154 359L154 297L176 309L176 422L2 321L1 108Z"/></svg>
+            Project by CoreStruct
+          </p>
+          <h2 class="lp-outro__title" id="outro-title" data-reveal="rise">
+            ¿Te gustaría una experiencia como esta para tu empresa?
+          </h2>
+          <p class="lp-outro__text" data-reveal="rise">
+            Esta es una demostración de las experiencias digitales que diseñamos y
+            desarrollamos. La misma calidad se adapta a una distribuidora, una tienda técnica o un catálogo industrial — o a cualquier
+            otra industria.
+          </p>
+          <div class="lp-outro__actions" data-reveal="rise">
+            <a class="lp-outro__cta" href="../../index.html#contacto">
+              Quiero algo así
+              <span aria-hidden="true">&rarr;</span>
+            </a>
+            <a class="lp-outro__ghost" href="index.html">Ver las otras demos</a>
+          </div>
+          <p class="lp-outro__note" data-reveal="fade">
+            Marca, cifras, testimonios y precios son ficticios y existen solo para esta demostración.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <aside class="lp-aside" aria-label="Sobre esta demostración">
+      <a class="lp-badge" href="index.html">
+        <svg class="lp-badge__mark" viewBox="0 0 362 422" aria-hidden="true" focusable="false"><path fill="#2c6fb2" d="M10 98L17 92L181 1L188 3L354 96L353 99L200 186L185 179L173 181L166 186L11 98Z"/><path fill="#3898d4" d="M188 421L188 373L190 371L320 295L320 248L318 248L188 324L188 217L198 211L202 203L202 197L358 111L361 109L361 165L233 234L233 275L361 200L361 321L189 421Z"/><path fill="#253880" d="M1 107L160 195L166 210L176 216L176 252L174 252L42 176L42 294L114 336L154 359L154 297L176 309L176 422L2 321L1 108Z"/></svg>
+        <span class="lp-badge__tag">Demo</span>
+        <span class="lp-badge__label">Fictional site · CoreStruct</span>
+      </a>
+      <a class="lp-float" href="#cotizar" data-demo-action>
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path fill="currentColor" d="M12.04 2c-5.5 0-9.96 4.46-9.96 9.96 0 1.76.46 3.48 1.34 5L2 22l5.2-1.36a9.9 9.9 0 0 0 4.84 1.24h.01c5.5 0 9.96-4.46 9.96-9.96 0-2.66-1.04-5.16-2.92-7.04A9.88 9.88 0 0 0 12.04 2Zm0 1.82c2.18 0 4.23.85 5.77 2.39a8.1 8.1 0 0 1 2.39 5.77c0 4.5-3.66 8.15-8.16 8.15a8.2 8.2 0 0 1-4.16-1.14l-.3-.18-3.09.81.82-3.01-.2-.31a8.1 8.1 0 0 1-1.26-4.33c0-4.5 3.66-8.15 8.19-8.15Zm-2.5 4.36c-.19 0-.5.07-.76.35-.26.28-1 .98-1 2.38s1.02 2.76 1.17 2.95c.14.19 2 3.06 4.85 4.17 2.37.92 2.85.74 3.37.69.52-.05 1.67-.68 1.9-1.34.24-.66.24-1.22.17-1.34-.07-.12-.26-.19-.54-.33-.28-.14-1.67-.82-1.93-.92-.26-.09-.45-.14-.64.14-.19.28-.73.92-.9 1.11-.16.19-.33.21-.61.07-.28-.14-1.19-.44-2.27-1.4-.84-.75-1.4-1.67-1.57-1.95-.16-.28-.02-.43.12-.57.13-.13.28-.33.42-.5.14-.16.19-.28.28-.47.09-.19.05-.35-.02-.49-.07-.14-.63-1.52-.86-2.08-.23-.55-.46-.47-.63-.48h-.55Z"/>
+        </svg>
+        Cotizar
+      </a>
+    </aside>
+
+    <script type="module" src="../../../src/scripts/orbita/main.js"></script>
+    <script type="module" src="../../../src/scripts/cotizador.js"></script>
+  </body>
+</html>

@@ -1417,3 +1417,13 @@ body[data-tour="running"] .fx-toast {
     bottom: calc(var(--s-md) + 14rem);
   }
 }
+
+/* The studio's line in the one-line footer. Lifted above the demo disclaimer
+   in weight, because it is the only thing down here that is an invitation. */
+.gw-foot__cta {
+  margin: 0;
+}
+
+.gw-foot__cta a {
+  font-weight: 600;
+}

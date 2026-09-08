@@ -40,6 +40,7 @@ ${links}
         </nav>
 
         <div class="nx-header__actions">
+          <!--lang-switch-->
           <a class="nx-btn nx-btn--solid nx-header__cta" href="#contacto">Solicitar consultoría</a>
           <button
             class="nx-burger"

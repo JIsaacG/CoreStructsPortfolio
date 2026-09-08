@@ -1,0 +1,535 @@
+/* =============================================================================
+   Cotizador — the quick-quote panel.
+
+   CoreStruct furniture, not the host page's: it is imported by every bundle
+   (portfolio and all six demo families) and carries its own colour, type and
+   spacing rather than each bundle's tokens. That constancy is deliberate — the
+   same reason the demo corner badge never changes colour. A visitor reading an
+   invented university's ivory portal must be able to tell, the instant the
+   panel opens, that they have stopped talking to the fiction and started
+   talking to the studio.
+
+   Every value below is therefore literal. Nothing here may reference a custom
+   property defined outside this file: `aurea.css` and `cede.css` do not define
+   `--brand-secondary`, and a panel that inherits an undefined colour is an
+   invisible panel.
+
+   For the same reason every text rule restates `font-family: inherit`, and the
+   two headings restate their colour. Declaring the family once on `.cs-quote`
+   and letting it inherit is not enough: `aurea.css` styles the bare element —
+   `h2 { font-family: <serif>; color: <ink> }` — and any matching rule beats an
+   inherited value however specific the ancestor that declared it, so the title
+   arrived on the education portal in the university's serif, in the
+   university's near-black, on this near-black panel. A class (0,1,0) outranks
+   a bare element (0,0,1) and that is all the specificity needed: the panel is
+   appended to <body>, outside every page container, so a host rule scoped to
+   one — `.au-shell h2` and its like — cannot reach it however specific it is.
+   ========================================================================== */
+
+.cs-quote {
+  /* Scoped tokens. Declared on the component rather than :root so a host
+     bundle's own `--surface` (light in three of the seven) cannot reach in. */
+  --csq-navy: #253880;
+  --csq-cyan: #3898d4;
+  --csq-panel: #0e1424;
+  --csq-field: #141c2f;
+  --csq-field-hover: #18223a;
+  --csq-line: rgb(255 255 255 / 0.1);
+  --csq-line-soft: rgb(255 255 255 / 0.06);
+  --csq-text: #ffffff;
+  --csq-muted: rgb(255 255 255 / 0.62);
+  --csq-faint: rgb(255 255 255 / 0.4);
+  --csq-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000; /* above every host overlay: menus, toasts, lightboxes */
+  display: flex;
+  justify-content: flex-end;
+  font-family: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--csq-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* `hidden` alone loses to `display: flex`, so the closed state is spelled out.
+   It is driven by an attribute rather than a class: the panel is injected into
+   pages whose CSS it has never seen, and an attribute cannot be accidentally
+   matched by a host rule the way `.is-open` could. */
+.cs-quote[hidden] {
+  display: none;
+}
+
+/* --------------------------------------------------------------- backdrop */
+
+.cs-quote__veil {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  padding: 0;
+  background: rgb(4 6 12 / 0.66);
+  backdrop-filter: blur(3px);
+  opacity: 0;
+  transition: opacity 0.32s var(--csq-ease);
+  cursor: pointer;
+}
+
+.cs-quote[data-state="open"] .cs-quote__veil {
+  opacity: 1;
+}
+
+/* ------------------------------------------------------------------ panel */
+
+.cs-quote__panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: min(29rem, 100%);
+  max-height: 100%;
+  background-color: var(--csq-panel);
+  /* The gradient wash is what stops a 29rem column of near-black from reading
+     as a browser dialog rather than as part of the brand. */
+  background-image:
+    radial-gradient(90% 42% at 100% 0%, rgb(56 152 212 / 0.16), transparent 70%),
+    radial-gradient(70% 38% at 0% 100%, rgb(37 56 128 / 0.28), transparent 72%);
+  border-left: 1px solid var(--csq-line);
+  box-shadow: -2rem 0 5rem rgb(0 0 0 / 0.55);
+  transform: translateX(100%);
+  transition: transform 0.42s var(--csq-ease);
+}
+
+.cs-quote[data-state="open"] .cs-quote__panel {
+  transform: translateX(0);
+}
+
+/* ----------------------------------------------------------------- header */
+
+.cs-quote__head {
+  flex: none;
+  padding: 1.5rem 1.5rem 1.15rem;
+  border-bottom: 1px solid var(--csq-line-soft);
+}
+
+.cs-quote__eyebrow {
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0.4rem 0.85rem 0.4rem 0.7rem;
+  border: 1px solid rgb(56 152 212 / 0.32);
+  border-radius: 999px;
+  background: rgb(56 152 212 / 0.1);
+  color: var(--csq-cyan);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.cs-quote__eyebrow svg {
+  width: 0.95rem;
+  height: 0.95rem;
+  flex: none;
+}
+
+.cs-quote__title {
+  font-family: inherit;
+  color: var(--csq-text);
+  margin: 0.85rem 0 0.35rem;
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.cs-quote__lead {
+  font-family: inherit;
+  margin: 0;
+  max-width: 24rem;
+  color: var(--csq-muted);
+  font-size: 0.875rem;
+}
+
+/* The close control sits over the header rather than in it, so the title can
+   run the full width on the narrow mobile sheet without wrapping around it. */
+.cs-quote__close {
+  position: absolute;
+  inset-block-start: 0.9rem;
+  inset-inline-end: 0.9rem;
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border: 1px solid var(--csq-line);
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.04);
+  color: var(--csq-muted);
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.cs-quote__close:hover,
+.cs-quote__close:focus-visible {
+  background: rgb(255 255 255 / 0.1);
+  color: var(--csq-text);
+}
+
+.cs-quote__close svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* The mobile grab handle. Hidden on the desktop panel, where there is nothing
+   to drag and a handle would just be a stray line. */
+.cs-quote__grip {
+  display: none;
+}
+
+/* ------------------------------------------------------------------- body */
+
+.cs-quote__body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  padding: 1.25rem 1.5rem 1.5rem;
+}
+
+.cs-quote__field {
+  display: block;
+  margin-block-end: 0.95rem;
+}
+
+.cs-quote__label {
+  font-family: inherit;
+  display: block;
+  margin-block-end: 0.4rem;
+  color: var(--csq-faint);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.cs-quote__req {
+  font-family: inherit;
+  color: var(--csq-cyan);
+}
+
+.cs-quote__input,
+.cs-quote__select,
+.cs-quote__area {
+  display: block;
+  width: 100%;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid var(--csq-line);
+  border-radius: 0.7rem;
+  background: var(--csq-field);
+  color: var(--csq-text);
+  font: inherit;
+  /* 15px. iOS zooms the page when a focused control is under 16px and the
+     component pins its own font-size, so this is as small as it may go. */
+  font-size: 0.9375rem;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.cs-quote__area {
+  min-height: 6.5rem;
+  resize: vertical;
+}
+
+.cs-quote__select {
+  /* The native arrow is drawn in the host page's colour scheme, which on the
+     light bundles is a dark arrow on this dark field. Drawn here instead. */
+  appearance: none;
+  padding-inline-end: 2.4rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 12 8%22 fill=%22none%22 stroke=%22%23ffffff%22 stroke-opacity=%22.55%22 stroke-width=%221.6%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22m1 1.5 5 5 5-5%22/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.95rem center;
+  background-size: 0.7rem;
+}
+
+.cs-quote__select option {
+  /* Windows and Linux render the dropdown list with the control's colours. */
+  background: var(--csq-panel);
+  color: var(--csq-text);
+}
+
+.cs-quote__input:hover,
+.cs-quote__select:hover,
+.cs-quote__area:hover {
+  background-color: var(--csq-field-hover);
+}
+
+.cs-quote__input:focus,
+.cs-quote__select:focus,
+.cs-quote__area:focus {
+  outline: none;
+  border-color: rgb(56 152 212 / 0.7);
+  box-shadow: 0 0 0 3px rgb(56 152 212 / 0.18);
+}
+
+.cs-quote__input::placeholder,
+.cs-quote__area::placeholder {
+  color: rgb(255 255 255 / 0.3);
+}
+
+/* Validity styling waits for a submit attempt: `:invalid` on its own paints
+   every required field red before the visitor has typed a character. */
+.cs-quote[data-touched] .cs-quote__input:invalid,
+.cs-quote[data-touched] .cs-quote__area:invalid {
+  border-color: rgb(240 120 60 / 0.75);
+}
+
+/* ----------------------------------------------------------------- submit */
+
+.cs-quote__submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  width: 100%;
+  margin-block-start: 1.25rem;
+  padding: 0.95rem 1.25rem;
+  border: 0;
+  border-radius: 0.7rem;
+  background: linear-gradient(100deg, var(--csq-cyan), #2f6fe0 55%, var(--csq-navy));
+  color: #ffffff;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 0.75rem 1.75rem rgb(47 111 224 / 0.32);
+  transition:
+    transform 0.2s var(--csq-ease),
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+}
+
+.cs-quote__submit:hover,
+.cs-quote__submit:focus-visible {
+  filter: brightness(1.08);
+  box-shadow: 0 0.9rem 2.1rem rgb(47 111 224 / 0.42);
+  transform: translateY(-1px);
+}
+
+.cs-quote__submit:active {
+  transform: translateY(0);
+}
+
+.cs-quote__submit svg {
+  width: 1.05rem;
+  height: 1.05rem;
+  flex: none;
+}
+
+.cs-quote__note {
+  font-family: inherit;
+  margin: 0.75rem 0 0;
+  color: var(--csq-faint);
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+/* --------------------------------------------------------------- channels */
+
+.cs-quote__channels {
+  flex: none;
+  display: grid;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem 1.25rem;
+  border-top: 1px solid var(--csq-line-soft);
+  background: rgb(0 0 0 / 0.24);
+}
+
+.cs-quote__channel {
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--csq-line-soft);
+  border-radius: 0.65rem;
+  background: rgb(255 255 255 / 0.03);
+  color: inherit;
+  text-decoration: none;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.cs-quote__channel:hover,
+.cs-quote__channel:focus-visible {
+  background: rgb(255 255 255 / 0.07);
+  border-color: var(--csq-line);
+}
+
+.cs-quote__icon {
+  display: grid;
+  place-items: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  flex: none;
+  border-radius: 0.55rem;
+  background: rgb(56 152 212 / 0.12);
+  color: var(--csq-cyan);
+}
+
+.cs-quote__icon svg {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+.cs-quote__icon--wa {
+  background: rgb(37 211 102 / 0.12);
+  color: #25d366;
+}
+
+.cs-quote__channel-label {
+  font-family: inherit;
+  display: block;
+  color: var(--csq-faint);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.cs-quote__channel-value {
+  font-family: inherit;
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+/* --------------------------------------------------------------- feedback */
+
+.cs-quote__done {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0.75rem;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+}
+
+.cs-quote__done-mark {
+  display: grid;
+  place-items: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 50%;
+  background: rgb(37 211 102 / 0.14);
+  color: #25d366;
+}
+
+.cs-quote__done-mark svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.cs-quote__done-title {
+  font-family: inherit;
+  color: var(--csq-text);
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.cs-quote__done-text {
+  font-family: inherit;
+  margin: 0;
+  max-width: 22rem;
+  color: var(--csq-muted);
+  font-size: 0.875rem;
+}
+
+.cs-quote__again {
+  margin-block-start: 0.4rem;
+  padding: 0.6rem 1.1rem;
+  border: 1px solid var(--csq-line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--csq-text);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.cs-quote__again:hover,
+.cs-quote__again:focus-visible {
+  background: rgb(255 255 255 / 0.07);
+}
+
+/* ------------------------------------------------------- the mobile sheet */
+
+/* Below this width the side panel becomes the whole screen. That is what was
+   asked for — and, because a full-screen takeover with no obvious way back is
+   the thing people dislike about them, it ships with three independent ways
+   out: the close button above, a downward drag on the header, and Escape. */
+@media (max-width: 47.5rem) {
+  .cs-quote__panel {
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    border-left: 0;
+    border-top: 1px solid var(--csq-line);
+    border-radius: 1.1rem 1.1rem 0 0;
+    transform: translateY(100%);
+    box-shadow: 0 -1rem 3rem rgb(0 0 0 / 0.5);
+  }
+
+  .cs-quote[data-state="open"] .cs-quote__panel {
+    transform: translateY(0);
+  }
+
+  /* Suppressed for the length of a drag so the sheet tracks the finger
+     instead of easing along a frame behind it. */
+  .cs-quote[data-dragging] .cs-quote__panel {
+    transition: none;
+  }
+
+  .cs-quote__grip {
+    display: block;
+    width: 2.5rem;
+    height: 0.25rem;
+    margin: 0.7rem auto -0.35rem;
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.22);
+  }
+
+  .cs-quote__head {
+    /* The sheet is dragged by its header, so the header must not scroll the
+       page or select its own text while the finger moves. */
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+    padding-block-start: 0.75rem;
+  }
+
+  .cs-quote__close {
+    inset-block-start: 1.15rem;
+  }
+}
+
+/* A slide is decoration here, not content: the panel says the same thing
+   whether it arrives from the edge or simply appears. */
+@media (prefers-reduced-motion: reduce) {
+  .cs-quote__panel,
+  .cs-quote__veil {
+    transition-duration: 0.01ms;
+  }
+
+  .cs-quote__panel {
+    transform: none;
+  }
+}

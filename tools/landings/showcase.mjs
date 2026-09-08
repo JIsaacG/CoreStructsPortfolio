@@ -215,6 +215,7 @@ export function buildShowcase() {
           </svg>
           CoreStruct
         </a>
+        <!--lang-switch-->
       </div>
     </header>
 
@@ -261,6 +262,7 @@ ${cards}
     <div class="sc-veil" data-veil aria-hidden="true"></div>
 
     <script type="module" src="../../src/scripts/showcase/main.js"></script>
+    <script type="module" src="../../src/scripts/cotizador.js"></script>
   </body>
 </html>
 `;

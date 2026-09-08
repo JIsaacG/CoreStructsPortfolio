@@ -240,7 +240,7 @@ function topbar() {
               <button class="cd-tool" type="button" data-contrast aria-pressed="false">Alto contraste</button>
             </div>
             <div class="cd-tools__group">
-              <span class="cd-tool" aria-hidden="true">ES</span>
+              <!--lang-switch-->
             </div>
           </div>
         </div>
@@ -516,6 +516,9 @@ ${columns}
         <div class="cd-footer__notice">
           <div class="cd-shell cd-footer__notice-inner">
             <p>${escape(notice.long)} ${escape(notice.data)}</p>
+            <!-- The studio's own line. data-cotizador opens the quote panel
+                 over the page; the href is the no-JavaScript fallback. -->
+            <p class="cd-footer__cta"><a href="${asset(ctx, "index.html")}#contacto" data-cotizador>Quiero un portal como este →</a></p>
             <p>&copy; <span data-current-year>2026</span> ${escape(institution.full)}</p>
           </div>
         </div>
@@ -563,6 +566,7 @@ ${documentHead(ctx, meta)}
 ${body}
 
     <script type="module" src="${asset(ctx, "src/scripts/cede/main.js")}"></script>
+    <script type="module" src="${asset(ctx, "src/scripts/cotizador.js")}"></script>
   </body>
 </html>
 `;
@@ -590,6 +594,7 @@ ${siteFooter(ctx)}
     <div class="cd-tip" data-tip-box role="status" aria-live="polite"></div>
 
     <script type="module" src="${asset(ctx, "src/scripts/cede/main.js")}"></script>
+    <script type="module" src="${asset(ctx, "src/scripts/cotizador.js")}"></script>
   </body>
 </html>
 `;

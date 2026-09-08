@@ -360,3 +360,23 @@
   font-weight: 600;
   color: var(--navy-900);
 }
+
+/* The studio's line in the closing notice. It sits in the same flex row as the
+   disclaimer, so it takes no max-width and is allowed to stay on one line. */
+.cd-footer__cta {
+  margin: 0;
+  flex: none;
+}
+
+.cd-footer__cta a {
+  color: #ffffff;
+  font-size: var(--t-xs);
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 1px solid rgb(255 255 255 / 0.4);
+}
+
+.cd-footer__cta a:hover,
+.cd-footer__cta a:focus-visible {
+  border-bottom-color: currentColor;
+}

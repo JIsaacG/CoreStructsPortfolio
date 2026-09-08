@@ -249,44 +249,58 @@ const renderAlliances = () =>
 
 const whatsappHref = (number) => `https://wa.me/${String(number).replace(/\D/g, "")}`;
 
+/**
+ * The contact CTA.
+ *
+ * It stays an `<a>` with a real destination rather than becoming a `<button>`,
+ * because the quote panel is an enhancement: `src/scripts/cotizador.js` claims
+ * anything carrying `data-cotizador` and opens the form over the page instead,
+ * and where the script has not run the same click still reaches the studio —
+ * WhatsApp once the number is filled in, the inbox until then.
+ */
 function renderCta() {
   const { email, whatsapp } = site.contact;
-  const buttons = [];
+  const fallback = whatsapp ? whatsappHref(whatsapp) : email ? `mailto:${email}` : null;
+  if (!fallback) return "";
 
-  if (email) {
-    buttons.push(`            <a class="button button--primary button--large button--pulse" href="mailto:${escape(email)}">
+  const external = whatsapp ? `\n              target="_blank"\n              rel="noopener"` : "";
+
+  return `            <a
+              class="button button--primary button--large button--pulse"
+              href="${escape(fallback)}"${external}
+              data-cotizador
+            >
               Hablemos
               <span class="button__arrow" aria-hidden="true">&rarr;</span>
-            </a>`);
-  }
-  if (whatsapp) {
-    buttons.push(`            <a
-              class="button button--ghost button--large"
-              href="${escape(whatsappHref(whatsapp))}"
-              target="_blank"
-              rel="noopener"
-            >
-              WhatsApp
-              <span class="button__arrow" aria-hidden="true">&rarr;</span>
-            </a>`);
-  }
-  return buttons.join("\n");
+            </a>`;
 }
 
 /** Only channels that actually exist are rendered — no placeholder contacts. */
 function renderChannels() {
-  const { email, phone, location } = site.contact;
+  const { email, emails = [], phone, whatsapp, location } = site.contact;
   const channels = [
+    whatsapp && {
+      label: "WhatsApp",
+      value: whatsapp,
+      href: whatsappHref(whatsapp),
+    },
     email && {
       label: "Correo",
       value: email,
       href: `mailto:${email}`,
     },
+    ...emails.map((address) => ({
+      label: "Correo",
+      value: address,
+      href: `mailto:${address}`,
+    })),
     phone && {
       label: "Teléfono",
       value: phone,
       href: `tel:${phone.replace(/[^\d+]/g, "")}`,
     },
+    /* Left unset in `site.js`: the studio takes work from anywhere, and a city
+       in this list reads as the limit of where it will take it. */
     location && { label: "Cobertura", value: location },
   ].filter(Boolean);
 
@@ -329,6 +343,43 @@ ${links
         </div>`;
 }
 
+/* --------------------------------------------------------------- manifesto */
+
+/**
+ * The closing statement, one `<span>` per word so the reveal can bring it in a
+ * word at a time.
+ *
+ * The split happens here rather than in the markup because the sentence is not
+ * the same length in every language: Spanish takes thirteen words to say it and
+ * English eleven, so a hand-written set of spans would have to be maintained
+ * twice and would drift the first time either sentence was edited.
+ */
+function renderManifesto() {
+  const { quote, attribution } = site.manifesto;
+
+  // `**…**` marks the run set in the contrasting face. Splitting on it first
+  // means every word inside the run is lifted, not just the two that carry the
+  // asterisks, and each word still gets its own span for the animation.
+  const words = quote
+    .split(/\*\*(.+?)\*\*/g)
+    .flatMap((part, index) => {
+      const lifted = index % 2 === 1;
+      return part
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean)
+        .map((word) => `<span>${lifted ? `<em>${escape(word)}</em>` : escape(word)}</span>`);
+    })
+    .join(" ");
+
+  return `          <h2 class="manifesto__quote reveal-words" id="manifesto-quote">
+            ${words}
+          </h2>
+          <p class="manifesto__attribution" data-reveal="fade">
+            ${escape(attribution)}
+          </p>`;
+}
+
 /* -------------------------------------------------------------------- main */
 
 const isotype = readIsotype();
@@ -338,6 +389,7 @@ html = fill(html, "sprite", renderSprite(isotype));
 html = fill(html, "hero-mark", renderHeroMark(isotype));
 html = fill(html, "projects", renderProjects());
 html = fill(html, "alliances", renderAlliances());
+html = fill(html, "manifesto", renderManifesto());
 html = fill(html, "cta", renderCta());
 html = fill(html, "channels", renderChannels());
 html = fill(html, "footer-meta", renderFooterMeta());

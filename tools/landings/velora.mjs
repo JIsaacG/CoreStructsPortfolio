@@ -45,6 +45,7 @@ ${links}
         </nav>
 
         <div class="ve-header__actions">
+          <!--lang-switch-->
           <a class="ve-btn ve-btn--solid ve-header__cta" href="#reservar">Reservar</a>
           <button
             class="ve-burger"

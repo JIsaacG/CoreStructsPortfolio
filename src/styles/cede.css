@@ -25,6 +25,13 @@
 @import "./cede/tables.css";
 @import "./cede/footer.css";
 
+/* The quick-quote panel. CoreStruct furniture rather than this page's, so it
+   is imported last: nothing in the bundle above may reach into it. */
+@import "./components/cotizador.css";
+
+/* The ES/EN switch every header carries. Takes its colour from the header. */
+@import "./components/lang-switch.css";
+
 /* -----------------------------------------------------------------------------
    Reduced motion
 

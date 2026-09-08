@@ -180,7 +180,7 @@ export function header(ctx, { console: isConsole = false } = {}) {
   return `    <header class="fx-header">
       <div class="gw-shell fx-header__inner">
 ${logo(ctx)}
-        <div class="fx-header__end">${search}${drive}</div>
+        <div class="fx-header__end"><!--lang-switch-->${search}${drive}</div>
       </div>
     </header>`;
 }
@@ -245,6 +245,7 @@ export const field = () =>
 export function siteFooter(ctx) {
   return `      <footer class="gw-foot">
         <p>Demostración de portafolio · CoreStruct. ${escape(moduleInfo.disclaimer)}</p>
+        <p class="gw-foot__cta"><a href="${asset(ctx, "index.html")}#contacto" data-cotizador>Quiero automatizar mis procesos →</a></p>
         <p><a href="${asset(ctx, "index.html")}#proyectos">Volver al portafolio</a> ·
           &copy; <span data-current-year>2026</span></p>
       </footer>`;
@@ -349,6 +350,7 @@ ${palette(ctx)}
     <div class="fx-toast" data-toast role="status" aria-live="polite"></div>
 
     <script type="module" src="${asset(ctx, "src/scripts/flujo/main.js")}"></script>
+    <script type="module" src="${asset(ctx, "src/scripts/cotizador.js")}"></script>
   </body>
 </html>
 `;

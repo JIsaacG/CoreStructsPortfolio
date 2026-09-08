@@ -159,6 +159,36 @@
         }
       }, 2500);
     </script>
+<!--lang-memory-->
+    <script>
+      /* Language preference: written by the ES/EN switch, applied before paint. */
+      (function () {
+        try {
+          var pref = localStorage.getItem("cs-lang");
+          if (pref && pref !== document.documentElement.lang) {
+            if (sessionStorage.getItem("cs-lang-hop") !== location.pathname) {
+              sessionStorage.setItem("cs-lang-hop", location.pathname);
+              location.replace("../../../en/demos/aurelis/productos/tablero-tc-200.html");
+              return;
+            }
+          } else {
+            sessionStorage.removeItem("cs-lang-hop");
+          }
+        } catch (e) {}
+        document.addEventListener("click", function (event) {
+          var pick = event.target.closest && event.target.closest("[data-lang-pick]");
+          if (pick) {
+            try { localStorage.setItem("cs-lang", pick.getAttribute("data-lang-pick")); } catch (e) {}
+          }
+        }, true);
+      })();
+    </script>
+    <!--/lang-memory-->
+<!--lang-alternates-->
+    <link rel="alternate" hreflang="es" href="https://www.aurelisgroup.example/productos/tablero-tc-200.html" />
+    <link rel="alternate" hreflang="en" href="https://www.aurelisgroup.example/en/productos/tablero-tc-200.html" />
+    <link rel="alternate" hreflang="x-default" href="https://www.aurelisgroup.example/productos/tablero-tc-200.html" />
+    <!--/lang-alternates-->
   </head>
 
   <body>
@@ -189,6 +219,7 @@
         </nav>
 
         <div class="au-header__end">
+          <!--lang-switch--><div class="lang-switch" role="group" aria-label="Idioma · Language"><span class="lang-switch__current" lang="es" aria-current="true">ES</span><a class="lang-switch__link" lang="en" hreflang="en" href="../../../en/demos/aurelis/productos/tablero-tc-200.html" data-lang-pick="en" title="English">EN</a></div><!--/lang-switch-->
           <a class="au-header__contact" href="../contacto.html">Contacto</a>
           <a class="au-btn au-btn--gold au-header__cta" href="../contacto.html#formulario">
             Hablar con un especialista
@@ -355,6 +386,13 @@
             </div>
           </div>
 
+          <!-- The one line on the page written by the studio rather than by the
+               invented company. data-cotizador hands the click to the quote
+               panel; the href is what a visitor without JavaScript follows. -->
+          <p class="au-footer__cta">
+            <a href="../../../index.html#contacto" data-cotizador>Quiero un sitio como este →</a>
+          </p>
+
           <div class="au-footer__bottom">
             <p>&copy; <span data-current-year>2026</span> Aurelis Group, S.A. de C.V.. Empresa ficticia · demostración.</p>
             <nav class="au-footer__legal" aria-label="Legal"><a href="#aviso">Privacidad</a><a href="#aviso">Cookies</a><a href="#aviso">Términos</a><a href="#aviso">Accesibilidad</a></nav>
@@ -366,5 +404,6 @@
       </footer>
 
     <script type="module" src="../../../src/scripts/aurelis/main.js"></script>
+    <script type="module" src="../../../src/scripts/cotizador.js"></script>
   </body>
 </html>
