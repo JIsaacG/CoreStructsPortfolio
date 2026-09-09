@@ -396,11 +396,37 @@ export function translatePage(html, { dictionary, rules = [], page, report, loca
    * around a proper noun it could not place. Nothing is reported from in here:
    * the run as a whole is being counted by the caller.
    */
+  let slotMissed = false;
+
   const translateSlot = (value) => {
     const normalised = key(value);
     const known = dictionary.resolve(normalised, page);
     if (known !== undefined) return known;
-    return applyRules(normalised, rules, translateSlot) ?? value;
+    const ruled = applyRules(normalised, rules, translateSlot);
+    if (ruled !== undefined) return ruled;
+    /* Nothing covers this piece. The rule may still assemble its English shape
+       around it — a proper noun belongs in the sentence either way — but the
+       run as a whole no longer counts as translated, so `ruledOrMissed` below
+       hands it to the report instead. */
+    if (normalised && !IGNORABLE.test(normalised)) slotMissed = true;
+    return value;
+  };
+
+  /**
+   * Apply the rules, but stand aside if any slot came back untranslated.
+   *
+   * A shape rule fills its placeholders from the dictionary. When one of them
+   * is not covered, the rule would otherwise produce a sentence that is English
+   * around a Spanish middle — "Comparison of los nueve programas" — and count
+   * itself as translated, which is precisely the failure the coverage report
+   * exists to catch. Rules that gate themselves with `t.known` are unaffected;
+   * this makes the same guarantee for the ones that do not.
+   */
+  const ruledOrMissed = (normalised) => {
+    slotMissed = false;
+    const ruled = applyRules(normalised, rules, translateSlot);
+    if (ruled === undefined || slotMissed) return undefined;
+    return ruled;
   };
 
   /**
@@ -415,7 +441,15 @@ export function translatePage(html, { dictionary, rules = [], page, report, loca
     const normalised = key(value);
     if (!normalised || IGNORABLE.test(normalised)) return true;
     if (dictionary.resolve(normalised, page) !== undefined) return true;
-    return applyRules(normalised, rules, translateSlot) !== undefined;
+    /* A rule that fires but leaves a slot of its own untranslated does not
+       count as knowing this piece, so the probe is run against a clean flag
+       and the caller's is put back afterwards. */
+    const outer = slotMissed;
+    slotMissed = false;
+    const ruled = applyRules(normalised, rules, translateSlot);
+    const covered = ruled !== undefined && !slotMissed;
+    slotMissed = outer;
+    return covered;
   };
 
   /**
@@ -443,7 +477,7 @@ export function translatePage(html, { dictionary, rules = [], page, report, loca
     if (IGNORABLE.test(normalised)) return undefined;
 
     // A date, a duration, a month: a format rather than a phrase.
-    const ruled = applyRules(normalised, rules, translateSlot);
+    const ruled = ruledOrMissed(normalised);
     if (ruled !== undefined) {
       seen("translated", normalised, kind);
       return ruled;
@@ -466,7 +500,7 @@ export function translatePage(html, { dictionary, rules = [], page, report, loca
     const normalised = key(sentence);
 
     const rejoinedHit =
-      dictionary.resolve(normalised, page) ?? applyRules(normalised, rules, translateSlot);
+      dictionary.resolve(normalised, page) ?? ruledOrMissed(normalised);
     if (rejoinedHit !== undefined) {
       seen("translated", normalised, `<${tag.toLowerCase()}>`);
       const [, lead, , tail] = inner.match(/^(\s*)([\s\S]*?)(\s*)$/);
@@ -492,7 +526,7 @@ export function translatePage(html, { dictionary, rules = [], page, report, loca
     /* The dictionary first, then the rules: a sentence can be a shape as well
        as a phrase — a row of `<span>`s holding a document's type, subject, date
        and size is generated, not written, and belongs to a rule. */
-    const phrase = dictionary.resolve(normalised, page) ?? applyRules(normalised, rules, translateSlot);
+    const phrase = dictionary.resolve(normalised, page) ?? ruledOrMissed(normalised);
     if (phrase !== undefined) {
       seen("translated", normalised, `<${tag.toLowerCase()}>`);
       const english = phrase;

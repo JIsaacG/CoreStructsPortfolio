@@ -85,6 +85,8 @@ export default {
   "Modelos de consumo con datos escasos": "Consumption models with scarce data",
   "Energía solar distribuida en contexto urbano": "Distributed solar power in a city",
   "Gestión y productividad en pymes": "Management and productivity in SMEs",
+  "Sucesión y gobierno en empresas familiares":
+    "Succession and governance in family businesses",
   "Formalización y acceso a financiamiento": "Formalisation and access to funding",
   "Evaluación auténtica en educación media": "Authentic assessment in upper secondary",
   "Transición media–superior": "The upper secondary to university move",
@@ -95,6 +97,8 @@ export default {
   "En qué se trabaja ahora.": "What is being worked on now.",
   "Instrumentación energética del edificio de laboratorios":
     "Energy instrumentation of the laboratory building",
+  "La transición de duodécimo grado al primer período universitario":
+    "The move from twelfth grade to the first university term",
   "Sucesión y gobierno en empresas familiares de la capital":
     "Succession and governance in family businesses in the capital",
   "Corpus de español hondureño para procesamiento de lenguaje":

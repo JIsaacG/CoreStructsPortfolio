@@ -11,6 +11,7 @@
  */
 
 import { departments } from "../../src/data/cede/geography.js";
+import { clamp } from "../lib/text.mjs";
 import { decimal, escape, group, longDate, shortDate, dateParts } from "../../src/data/cede/format.js";
 import {
   contact,
@@ -1212,7 +1213,7 @@ export function consultationPage(ctx, consultation) {
     meta: {
       title: consultation.title,
       canonical: `participacion/${consultation.slug}.html`,
-      description: `Consulta pública demostrativa: ${consultation.summary.slice(0, 180)}`,
+      description: `Consulta pública demostrativa: ${clamp(consultation.summary, 180)}`,
     },
     current: "participacion",
     body,

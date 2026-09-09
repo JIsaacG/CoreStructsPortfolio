@@ -323,6 +323,17 @@ export const rules = [
     pattern: /(.+), (\d{4}) a (\d{4})/,
     replace: (_all, subject, from, to, t) => `${t(subject)}, ${from} to ${to}`,
   },
+  /* "Matrícula, 2019–2026" and "Matrícula, 2026" — a subject over the years it
+     covers. The dash is what the charts print and the word is what the prose
+     says; both mean the same span, and neither end is a phrase of its own. */
+  {
+    pattern: /(.+), (\d{4})\s*[–-]\s*(\d{4})/,
+    replace: (_all, subject, from, to, t) => `${t(subject)}, ${from}–${to}`,
+  },
+  {
+    pattern: /(.+), (\d{4})/,
+    replace: (_all, subject, year, t) => `${t(subject)}, ${year}`,
+  },
   {
     pattern: /Comparación de (.+)/,
     replace: (_all, subject, t) => `Comparison of ${t(subject)}`,
@@ -380,8 +391,20 @@ export const rules = [
     replace: (_all, subject, t) => `Illustrative public consultation: ${t(subject)}`,
   },
   {
-    pattern: /(.+[.:]) Datos demostrativos\./,
-    replace: (_all, subject, t) => `${t(subject)} Illustrative data.`,
+    /* The subject keeps its own full stop in the source but is listed in the
+       dictionary without one — "Matrícula, 2019–2026" is a caption, not a
+       sentence — so the punctuation is set aside before the lookup and put
+       back after it. */
+    pattern: /(.+[.:…]) Datos demostrativos\./,
+    replace: (_all, subject, t) => {
+      /* The subject is listed either with its own punctuation or without it: a
+         clamped description keeps the ellipsis that marks the cut, a caption
+         drops the full stop that only belongs to the sentence around it. Both
+         spellings are tried before the rule gives up. */
+      if (t.known(subject)) return `${t(subject)} Illustrative data.`;
+      const stop = subject.slice(-1);
+      return `${t(subject.slice(0, -1))}${stop} Illustrative data.`;
+    },
   },
   {
     pattern: /Matrícula por (.+)/,
@@ -484,5 +507,16 @@ export const rules = [
     ),
     replace: (_all, from, to, month, year) =>
       `${from}–${to} ${SHORT[lower(month)]} ${year}`,
+  },
+  /* Two covered pieces either side of a separator: "Planificación · Plan
+     Nacional 2026–2035", "Campus virtual · demostración". Both halves are
+     already in the dictionary as headings of their own, so a page title needs
+     no second entry — and because an uncovered slot makes the whole rule stand
+     aside, this cannot smuggle a Spanish half through the middle of an English
+     title. It is last in the file so every more specific shape gets first
+     refusal. */
+  {
+    pattern: /([^·]+) · ([^·]+)/,
+    replace: (_all, left, right, t) => `${t(left.trim())} · ${t(right.trim())}`,
   },
 ];

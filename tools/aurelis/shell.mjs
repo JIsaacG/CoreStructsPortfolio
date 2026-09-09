@@ -17,6 +17,7 @@ import { industries } from "../../src/data/aurelis/industries.js";
 import { products } from "../../src/data/aurelis/products.js";
 import { projects } from "../../src/data/aurelis/projects.js";
 import { asset, escape, figure, page, sub } from "./blocks.mjs";
+import { clamp } from "../lib/text.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 
@@ -37,23 +38,6 @@ export const ORIGIN = "https://www.aurelisgroup.example";
  * structured data for the page, and the pre-paint script that lets the reveal
  * system hide content only when it can be trusted to show it again.
  */
-/**
- * A meta description, cut to length at a word boundary.
- *
- * A hard `slice` lands mid-word about as often as not, and a search result that
- * ends "…lo que mantiene los supuest" reads as a broken page rather than a
- * truncated one. Backing up to the last space and closing with an ellipsis
- * costs a few characters and looks deliberate.
- */
-function clamp(text, limit) {
-  const clean = text.replace(/\s+/g, " ").trim();
-  if (clean.length <= limit) return clean;
-
-  const cut = clean.slice(0, limit - 1);
-  const lastSpace = cut.lastIndexOf(" ");
-  return `${(lastSpace > limit * 0.6 ? cut.slice(0, lastSpace) : cut).replace(/[.,;:]$/, "")}…`;
-}
-
 export function head(ctx, meta) {
   const title = `${meta.title} · ${company.full}`;
   const description = clamp(meta.description, 300);

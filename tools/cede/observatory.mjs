@@ -17,6 +17,7 @@
 import { MAP, byId, departments, regions } from "../../src/data/cede/geography.js";
 import { decimal, group, longDate } from "../../src/data/cede/format.js";
 import { institution, notice } from "../../src/data/cede/institution.js";
+import { clamp } from "../lib/text.mjs";
 import {
   boards,
   indicators,
@@ -1600,7 +1601,7 @@ export function indicatorPage(ctx, indicator) {
     meta: {
       title: indicator.name,
       canonical: `datos/indicadores/${indicator.slug}.html`,
-      description: `${indicator.definition.slice(0, 200)} Datos demostrativos.`,
+      description: `${clamp(indicator.definition, 200)} Datos demostrativos.`,
     },
     current: "datos",
     body,
