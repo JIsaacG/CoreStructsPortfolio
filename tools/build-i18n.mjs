@@ -28,7 +28,7 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, posix } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { loadDictionary, loadRules, newReport, translatePage } from "./lib/i18n.mjs";
+import { key, loadDictionary, loadRules, newReport, translatePage } from "./lib/i18n.mjs";
 import { pages, roundtrip } from "./lib/roundtrip-check.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -248,7 +248,7 @@ writeFileSync(
   `${JSON.stringify(
     {
       ...manifest,
-      description: dictionary.get(manifest.description) ?? manifest.description,
+      description: dictionary.resolve(key(manifest.description)) ?? manifest.description,
       lang: EN.code,
       start_url: `/${MIRROR}/`,
       scope: `/${MIRROR}/`,
@@ -271,12 +271,29 @@ const byCount = (a, b) => b.count - a.count;
 const missing = [...report.missing.values()].sort(byCount);
 const review = [...report.review.values()].sort(byCount);
 
-/** One entry: what it says, how often, and where to find it. */
+/**
+ * One entry: what it says, how often, and where to find it.
+ *
+ * The sample of pages shows one per site rather than the first four in sort
+ * order. A run like "Recursos" appears in four demos' navigation, and a sample
+ * that listed four Aurea pages would hide the other three sites completely —
+ * which is exactly how a shared nav item gets translated in one place and
+ * missed in the rest.
+ */
 const format = (entry) => {
   const where = [...entry.pages];
+  const seen = new Set();
+  const sample = [];
+  for (const page of where) {
+    const site = page.startsWith("demos/") ? page.split("/")[1] : ".";
+    if (seen.has(site)) continue;
+    seen.add(site);
+    sample.push(page);
+  }
+  const rest = where.length - sample.length;
   return (
     `${String(entry.count).padStart(4)}  ${entry.kind.padEnd(10)}  ${JSON.stringify(entry.text)}\n` +
-    `      ${where.slice(0, 4).join(", ")}${where.length > 4 ? `, +${where.length - 4} more` : ""}`
+    `      ${sample.slice(0, 6).join(", ")}${rest > 0 ? `, +${rest} more` : ""}`
   );
 };
 

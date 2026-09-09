@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Operaciones — Rumbo · Demo de CoreStruct</title>
-    <meta name="description" content="Bitácora de pedidos, entregas, pagos y ajustes de Rumbo." />
+    <title>Operations — Rumbo · A CoreStruct demo</title>
+    <meta name="description" content="Rumbo's log of orders, deliveries, payments and adjustments." />
     <!-- An invented company must never turn up in a search result as a real one. -->
     <meta name="robots" content="noindex, follow" />
     <meta name="theme-color" content="#080b12" />
@@ -81,21 +81,21 @@
         <path fill="#253880" d="M1 107L160 195L166 210L176 216L176 252L174 252L42 176L42 294L114 336L154 359L154 297L176 309L176 422L2 321L1 108Z"/>
       </svg>
       <span class="dm-badge__tag">Demo</span>
-      <span class="dm-badge__label">Sitio de ejemplo · CoreStruct</span>
+      <span class="dm-badge__label">Sample site · CoreStruct</span>
     </a>
 
     <header class="dm-header" data-header>
       <div class="dm-header__inner">
         <a class="dm-wordmark" href="index.html">
           <span class="dm-wordmark__name">Rumbo</span>
-          <span class="dm-wordmark__mark">Distribución mayorista</span>
+          <span class="dm-wordmark__mark">Wholesale distribution</span>
         </a>
 
         <nav class="dm-nav" aria-label="Sections">
-            <a class="dm-nav__link" href="index.html">Panel</a>
-            <a class="dm-nav__link" href="expedientes.html">Expedientes</a>
-            <a class="dm-nav__link" href="usuarios.html">Usuarios</a>
-            <a class="dm-nav__link" href="operaciones.html" aria-current="page">Operaciones</a>
+            <a class="dm-nav__link" href="index.html">Dashboard</a>
+            <a class="dm-nav__link" href="expedientes.html">Customers</a>
+            <a class="dm-nav__link" href="usuarios.html">Users</a>
+            <a class="dm-nav__link" href="operaciones.html" aria-current="page">Operations</a>
         </nav>
 
         <div class="dm-header__actions">
@@ -117,177 +117,177 @@
     </header>
 
     <div class="dm-menu" id="dm-menu" data-mobile-nav>
-      <a class="dm-menu__link" href="index.html">Panel</a>
-      <a class="dm-menu__link" href="expedientes.html">Expedientes</a>
-      <a class="dm-menu__link" href="usuarios.html">Usuarios</a>
-      <a class="dm-menu__link" href="operaciones.html">Operaciones</a>
+      <a class="dm-menu__link" href="index.html">Dashboard</a>
+      <a class="dm-menu__link" href="expedientes.html">Customers</a>
+      <a class="dm-menu__link" href="usuarios.html">Users</a>
+      <a class="dm-menu__link" href="operaciones.html">Operations</a>
       <a class="dm-menu__link" href="../../index.html#contacto">Let's talk about your project</a>
     </div>
 
     <main class="dm" id="contenido">
       <div class="dm-page-head dm-shell">
-        <h1 class="dm-page-head__title" data-reveal="fade">Operaciones</h1>
+        <h1 class="dm-page-head__title" data-reveal="fade">Operations</h1>
         <p class="dm-page-head__text" data-reveal="fade">
-          Bitácora de pedidos, entregas, pagos y ajustes — lo que hoy vive repartido entre correo, WhatsApp y una hoja de cálculo.
+          A log of orders, deliveries, payments and adjustments — what today is scattered across email, WhatsApp and a spreadsheet.
         </p>
       </div>
 
       <div class="dm-section dm-shell" data-table>
         <div class="dm-toolbar">
           <div class="dm-filterbar" data-filter-group>
-            <button type="button" class="dm-filter" data-filter="all" aria-pressed="true">Todos</button>
-            <button type="button" class="dm-filter" data-filter="Pedido" aria-pressed="false">Pedidos</button>
-            <button type="button" class="dm-filter" data-filter="Entrega" aria-pressed="false">Entregas</button>
-            <button type="button" class="dm-filter" data-filter="Pago" aria-pressed="false">Pagos</button>
-            <button type="button" class="dm-filter" data-filter="Ajuste" aria-pressed="false">Ajustes</button>
+            <button type="button" class="dm-filter" data-filter="all" aria-pressed="true">All</button>
+            <button type="button" class="dm-filter" data-filter="Pedido" aria-pressed="false">Orders</button>
+            <button type="button" class="dm-filter" data-filter="Entrega" aria-pressed="false">Deliveries</button>
+            <button type="button" class="dm-filter" data-filter="Pago" aria-pressed="false">Payments</button>
+            <button type="button" class="dm-filter" data-filter="Ajuste" aria-pressed="false">Adjustments</button>
           </div>
-          <input class="dm-search" type="search" data-search placeholder="Buscar por cliente o responsable…" aria-label="Buscar operación" />
+          <input class="dm-search" type="search" data-search placeholder="Search by customer or owner…" aria-label="Search operations" />
         </div>
 
         <div class="dm-table-wrap">
           <table class="dm-table">
             <thead>
               <tr>
-                <th scope="col">Fecha</th>
-                <th scope="col">Tipo</th>
-                <th scope="col">Cliente</th>
-                <th scope="col">Responsable</th>
-                <th scope="col" data-numeric>Monto</th>
-                <th scope="col">Estado</th>
+                <th scope="col">Date</th>
+                <th scope="col">Type</th>
+                <th scope="col">Client</th>
+                <th scope="col">Owner</th>
+                <th scope="col" data-numeric>Amount</th>
+                <th scope="col">Status</th>
               </tr>
             </thead>
             <tbody>
             <tr data-row data-filterval="Pedido" data-search="minimarket la terminal óscar reyes">
-              <td>24 ago 2026</td>
-              <td>Pedido</td>
+              <td>24 Aug 2026</td>
+              <td>Order</td>
               <td><a class="dm-table__link" href="expedientes/minimarket-la-terminal.html">Minimarket La Terminal</a></td>
               <td>Óscar Reyes</td>
               <td data-numeric>L 9,800</td>
-              <td><span class="dm-pill dm-pill--ok">Completado</span></td>
+              <td><span class="dm-pill dm-pill--ok">Completed</span></td>
             </tr>
             <tr data-row data-filterval="Pago" data-search="abarrotería puerto wendy paz">
-              <td>24 ago 2026</td>
-              <td>Pago</td>
+              <td>24 Aug 2026</td>
+              <td>Payment</td>
               <td><a class="dm-table__link" href="expedientes/abarroteria-puerto.html">Abarrotería Puerto</a></td>
               <td>Wendy Paz</td>
               <td data-numeric>L 5,000</td>
-              <td><span class="dm-pill dm-pill--warn">Pendiente</span></td>
+              <td><span class="dm-pill dm-pill--warn">Pending</span></td>
             </tr>
             <tr data-row data-filterval="Entrega" data-search="súper la economía julio cálix">
-              <td>24 ago 2026</td>
-              <td>Entrega</td>
+              <td>24 Aug 2026</td>
+              <td>Delivery</td>
               <td><a class="dm-table__link" href="expedientes/super-la-economia.html">Súper La Economía</a></td>
               <td>Julio Cálix</td>
               <td data-numeric>L 22,800</td>
-              <td><span class="dm-pill dm-pill--ok">Completado</span></td>
+              <td><span class="dm-pill dm-pill--ok">Completed</span></td>
             </tr>
             <tr data-row data-filterval="Pedido" data-search="minimarket villanueva katherine suazo">
-              <td>23 ago 2026</td>
-              <td>Pedido</td>
+              <td>23 Aug 2026</td>
+              <td>Order</td>
               <td><a class="dm-table__link" href="expedientes/minimarket-villanueva.html">Minimarket Villanueva</a></td>
               <td>Katherine Suazo</td>
               <td data-numeric>L 6,700</td>
-              <td><span class="dm-pill dm-pill--ok">Completado</span></td>
+              <td><span class="dm-pill dm-pill--ok">Completed</span></td>
             </tr>
             <tr data-row data-filterval="Ajuste" data-search="pulpería el progreso wendy paz">
-              <td>23 ago 2026</td>
-              <td>Ajuste</td>
+              <td>23 Aug 2026</td>
+              <td>Adjustment</td>
               <td><a class="dm-table__link" href="expedientes/pulperia-el-progreso.html">Pulpería El Progreso</a></td>
               <td>Wendy Paz</td>
               <td data-numeric>-L 1,200</td>
-              <td><span class="dm-pill dm-pill--ok">Completado</span></td>
+              <td><span class="dm-pill dm-pill--ok">Completed</span></td>
             </tr>
             <tr data-row data-filterval="Entrega" data-search="minimarket la terminal julio cálix">
-              <td>23 ago 2026</td>
-              <td>Entrega</td>
+              <td>23 Aug 2026</td>
+              <td>Delivery</td>
               <td><a class="dm-table__link" href="expedientes/minimarket-la-terminal.html">Minimarket La Terminal</a></td>
               <td>Julio Cálix</td>
               <td data-numeric>L 9,800</td>
-              <td><span class="dm-pill dm-pill--ok">Completado</span></td>
+              <td><span class="dm-pill dm-pill--ok">Completed</span></td>
             </tr>
             <tr data-row data-filterval="Pedido" data-search="súper la economía óscar reyes">
-              <td>22 ago 2026</td>
-              <td>Pedido</td>
+              <td>22 Aug 2026</td>
+              <td>Order</td>
               <td><a class="dm-table__link" href="expedientes/super-la-economia.html">Súper La Economía</a></td>
               <td>Óscar Reyes</td>
               <td data-numeric>L 22,800</td>
-              <td><span class="dm-pill dm-pill--ok">Completado</span></td>
+              <td><span class="dm-pill dm-pill--ok">Completed</span></td>
             </tr>
             <tr data-row data-filterval="Pago" data-search="pulpería doña chinda wendy paz">
-              <td>22 ago 2026</td>
-              <td>Pago</td>
+              <td>22 Aug 2026</td>
+              <td>Payment</td>
               <td><a class="dm-table__link" href="expedientes/pulperia-dona-chinda.html">Pulpería Doña Chinda</a></td>
               <td>Wendy Paz</td>
               <td data-numeric>L 4,000</td>
-              <td><span class="dm-pill dm-pill--bad">Cancelado</span></td>
+              <td><span class="dm-pill dm-pill--bad">Cancelled</span></td>
             </tr>
             <tr data-row data-filterval="Pedido" data-search="minimarket la terminal óscar reyes">
-              <td>21 ago 2026</td>
-              <td>Pedido</td>
+              <td>21 Aug 2026</td>
+              <td>Order</td>
               <td><a class="dm-table__link" href="expedientes/minimarket-la-terminal.html">Minimarket La Terminal</a></td>
               <td>Óscar Reyes</td>
               <td data-numeric>L 9,800</td>
-              <td><span class="dm-pill dm-pill--ok">Completado</span></td>
+              <td><span class="dm-pill dm-pill--ok">Completed</span></td>
             </tr>
             <tr data-row data-filterval="Entrega" data-search="minimarket villanueva julio cálix">
-              <td>21 ago 2026</td>
-              <td>Entrega</td>
+              <td>21 Aug 2026</td>
+              <td>Delivery</td>
               <td><a class="dm-table__link" href="expedientes/minimarket-villanueva.html">Minimarket Villanueva</a></td>
               <td>Julio Cálix</td>
               <td data-numeric>L 5,900</td>
-              <td><span class="dm-pill dm-pill--ok">Completado</span></td>
+              <td><span class="dm-pill dm-pill--ok">Completed</span></td>
             </tr>
             <tr data-row data-filterval="Pago" data-search="pulpería el progreso wendy paz">
-              <td>20 ago 2026</td>
-              <td>Pago</td>
+              <td>20 Aug 2026</td>
+              <td>Payment</td>
               <td><a class="dm-table__link" href="expedientes/pulperia-el-progreso.html">Pulpería El Progreso</a></td>
               <td>Wendy Paz</td>
               <td data-numeric>L 8,000</td>
-              <td><span class="dm-pill dm-pill--ok">Completado</span></td>
+              <td><span class="dm-pill dm-pill--ok">Completed</span></td>
             </tr>
             <tr data-row data-filterval="Pedido" data-search="abarrotería puerto óscar reyes">
-              <td>19 ago 2026</td>
-              <td>Pedido</td>
+              <td>19 Aug 2026</td>
+              <td>Order</td>
               <td><a class="dm-table__link" href="expedientes/abarroteria-puerto.html">Abarrotería Puerto</a></td>
               <td>Óscar Reyes</td>
               <td data-numeric>L 8,300</td>
-              <td><span class="dm-pill dm-pill--ok">Completado</span></td>
+              <td><span class="dm-pill dm-pill--ok">Completed</span></td>
             </tr>
             <tr data-row data-filterval="Pedido" data-search="minimarket villanueva katherine suazo">
-              <td>19 ago 2026</td>
-              <td>Pedido</td>
+              <td>19 Aug 2026</td>
+              <td>Order</td>
               <td><a class="dm-table__link" href="expedientes/minimarket-villanueva.html">Minimarket Villanueva</a></td>
               <td>Katherine Suazo</td>
               <td data-numeric>L 6,700</td>
-              <td><span class="dm-pill dm-pill--ok">Completado</span></td>
+              <td><span class="dm-pill dm-pill--ok">Completed</span></td>
             </tr>
             <tr data-row data-filterval="Ajuste" data-search="minimarket la terminal fabiola núñez">
-              <td>18 ago 2026</td>
-              <td>Ajuste</td>
+              <td>18 Aug 2026</td>
+              <td>Adjustment</td>
               <td><a class="dm-table__link" href="expedientes/minimarket-la-terminal.html">Minimarket La Terminal</a></td>
               <td>Fabiola Núñez</td>
               <td data-numeric>L 350</td>
-              <td><span class="dm-pill dm-pill--ok">Completado</span></td>
+              <td><span class="dm-pill dm-pill--ok">Completed</span></td>
             </tr>
             <tr data-row data-filterval="Entrega" data-search="súper la economía julio cálix">
-              <td>15 ago 2026</td>
-              <td>Entrega</td>
+              <td>15 Aug 2026</td>
+              <td>Delivery</td>
               <td><a class="dm-table__link" href="expedientes/super-la-economia.html">Súper La Economía</a></td>
               <td>Julio Cálix</td>
               <td data-numeric>L 19,400</td>
-              <td><span class="dm-pill dm-pill--ok">Completado</span></td>
+              <td><span class="dm-pill dm-pill--ok">Completed</span></td>
             </tr>
             <tr data-row data-filterval="Pedido" data-search="súper la economía óscar reyes">
-              <td>15 ago 2026</td>
-              <td>Pedido</td>
+              <td>15 Aug 2026</td>
+              <td>Order</td>
               <td><a class="dm-table__link" href="expedientes/super-la-economia.html">Súper La Economía</a></td>
               <td>Óscar Reyes</td>
               <td data-numeric>L 19,400</td>
-              <td><span class="dm-pill dm-pill--ok">Completado</span></td>
+              <td><span class="dm-pill dm-pill--ok">Completed</span></td>
             </tr>
             </tbody>
           </table>
-          <p class="dm-table-empty" data-table-empty>Ninguna operación coincide con ese filtro.</p>
+          <p class="dm-table-empty" data-table-empty>No operation matches that filter.</p>
         </div>
       </div>
 
@@ -295,16 +295,15 @@
         <div class="dm-shell dm-footer__inner">
           <div class="dm-footer__brand">
             <p class="dm-footer__name">Rumbo</p>
-            <p class="dm-footer__line">Rumbo Distribución, S. de R.L. · Distribuidora de consumo masivo — ficticia</p>
+            <p class="dm-footer__line">Rumbo Distribución, S. de R.L. · FMCG distributor — fictional</p>
             <p class="dm-footer__credit">
-              Marca ficticia. Sitio de ejemplo construido por
-              <a href="../../index.html">CoreStruct</a> &copy; <span data-current-year>2026</span>.
+              Fictional brand. Sample site built by <a href="../../index.html">CoreStruct</a> © <span data-current-year>2026</span>.
             </p>
           </div>
-          <nav class="dm-footer__nav" aria-label="Pie">
-            <a href="index.html">Panel</a>
-            <a href="expedientes.html">Expedientes</a>
-            <a href="operaciones.html">Operaciones</a>
+          <nav class="dm-footer__nav" aria-label="Footer">
+            <a href="index.html">Dashboard</a>
+            <a href="expedientes.html">Customers</a>
+            <a href="operaciones.html">Operations</a>
             <a href="../../index.html#contacto">Contact</a>
           </nav>
         </div>

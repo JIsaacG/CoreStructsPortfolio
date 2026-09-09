@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Panel — Rumbo · Demo de CoreStruct</title>
-    <meta name="description" content="Panel interno de Rumbo Distribución, S. de R.L.: pedidos, cartera por cobrar, clientes activos y entregas del día." />
+    <title>Dashboard — Rumbo · A CoreStruct demo</title>
+    <meta name="description" content="Rumbo Distribución, S. de R.L.'s internal dashboard: orders, receivables, active customers and the day's deliveries." />
     <!-- An invented company must never turn up in a search result as a real one. -->
     <meta name="robots" content="noindex, follow" />
     <meta name="theme-color" content="#080b12" />
@@ -81,21 +81,21 @@
         <path fill="#253880" d="M1 107L160 195L166 210L176 216L176 252L174 252L42 176L42 294L114 336L154 359L154 297L176 309L176 422L2 321L1 108Z"/>
       </svg>
       <span class="dm-badge__tag">Demo</span>
-      <span class="dm-badge__label">Sitio de ejemplo · CoreStruct</span>
+      <span class="dm-badge__label">Sample site · CoreStruct</span>
     </a>
 
     <header class="dm-header" data-header>
       <div class="dm-header__inner">
         <a class="dm-wordmark" href="index.html">
           <span class="dm-wordmark__name">Rumbo</span>
-          <span class="dm-wordmark__mark">Distribución mayorista</span>
+          <span class="dm-wordmark__mark">Wholesale distribution</span>
         </a>
 
         <nav class="dm-nav" aria-label="Sections">
-            <a class="dm-nav__link" href="index.html" aria-current="page">Panel</a>
-            <a class="dm-nav__link" href="expedientes.html">Expedientes</a>
-            <a class="dm-nav__link" href="usuarios.html">Usuarios</a>
-            <a class="dm-nav__link" href="operaciones.html">Operaciones</a>
+            <a class="dm-nav__link" href="index.html" aria-current="page">Dashboard</a>
+            <a class="dm-nav__link" href="expedientes.html">Customers</a>
+            <a class="dm-nav__link" href="usuarios.html">Users</a>
+            <a class="dm-nav__link" href="operaciones.html">Operations</a>
         </nav>
 
         <div class="dm-header__actions">
@@ -117,10 +117,10 @@
     </header>
 
     <div class="dm-menu" id="dm-menu" data-mobile-nav>
-      <a class="dm-menu__link" href="index.html">Panel</a>
-      <a class="dm-menu__link" href="expedientes.html">Expedientes</a>
-      <a class="dm-menu__link" href="usuarios.html">Usuarios</a>
-      <a class="dm-menu__link" href="operaciones.html">Operaciones</a>
+      <a class="dm-menu__link" href="index.html">Dashboard</a>
+      <a class="dm-menu__link" href="expedientes.html">Customers</a>
+      <a class="dm-menu__link" href="usuarios.html">Users</a>
+      <a class="dm-menu__link" href="operaciones.html">Operations</a>
       <a class="dm-menu__link" href="../../index.html#contacto">Let's talk about your project</a>
     </div>
 
@@ -128,9 +128,9 @@
       <div class="dm-page-head dm-shell">
         <div class="dm-page-head__row">
           <div>
-            <h1 class="dm-page-head__title" data-reveal="fade">Panel</h1>
+            <h1 class="dm-page-head__title" data-reveal="fade">Dashboard</h1>
             <p class="dm-page-head__text" data-reveal="fade">
-              Rumbo Distribución, S. de R.L. · hoy es 24 de agosto de 2026
+              Rumbo Distribución, S. de R.L. · today is 24 August 2026
             </p>
           </div>
         </div>
@@ -139,107 +139,107 @@
       <div class="dm-section dm-shell">
         <div class="dm-stats" data-reveal-group="80">
           <div class="dm-stat">
-            <p class="dm-stat__label">Pedidos hoy</p>
+            <p class="dm-stat__label">Orders today</p>
             <p class="dm-stat__value">27</p>
-            <p class="dm-stat__delta dm-stat__delta--up">+4 vs. semana pasada</p>
+            <p class="dm-stat__delta dm-stat__delta--up">+4 vs. last week</p>
           </div>
           <div class="dm-stat">
-            <p class="dm-stat__label">Cartera por cobrar</p>
+            <p class="dm-stat__label">Receivables</p>
             <p class="dm-stat__value">L 486,200</p>
-            <p class="dm-stat__delta dm-stat__delta--down">12 clientes en mora</p>
+            <p class="dm-stat__delta dm-stat__delta--down">12 customers overdue</p>
           </div>
           <div class="dm-stat">
-            <p class="dm-stat__label">Clientes activos</p>
+            <p class="dm-stat__label">Active customers</p>
             <p class="dm-stat__value">184</p>
-            <p class="dm-stat__delta dm-stat__delta--up">+6 este mes</p>
+            <p class="dm-stat__delta dm-stat__delta--up">+6 this month</p>
           </div>
           <div class="dm-stat">
-            <p class="dm-stat__label">Entregas en ruta</p>
+            <p class="dm-stat__label">Deliveries out</p>
             <p class="dm-stat__value">9</p>
-            <p class="dm-stat__delta dm-stat__delta--up">3 rutas, 2 zonas</p>
+            <p class="dm-stat__delta dm-stat__delta--up">3 routes, 2 areas</p>
           </div>
         </div>
 
         <div class="dm-panels dm-panels--split" style="margin-block-start: var(--space-lg)">
           <div class="dm-panel" data-reveal="rise">
-            <h2 class="dm-panel__title">Ventas de las últimas 6 semanas</h2>
+            <h2 class="dm-panel__title">Sales over the last 6 weeks</h2>
           <div class="dm-chart">
-            <div class="dm-chart__bar" title="Sem. 1: L 612,000">
+            <div class="dm-chart__bar" title="Wk 1: L 612,000">
               <div class="dm-chart__fill" style="--bar-height:82%"></div>
-              <span class="dm-chart__label">Sem. 1</span>
+              <span class="dm-chart__label">Wk 1</span>
             </div>
-            <div class="dm-chart__bar" title="Sem. 2: L 588,000">
+            <div class="dm-chart__bar" title="Wk 2: L 588,000">
               <div class="dm-chart__fill" style="--bar-height:79%"></div>
-              <span class="dm-chart__label">Sem. 2</span>
+              <span class="dm-chart__label">Wk 2</span>
             </div>
-            <div class="dm-chart__bar" title="Sem. 3: L 671,000">
+            <div class="dm-chart__bar" title="Wk 3: L 671,000">
               <div class="dm-chart__fill" style="--bar-height:90%"></div>
-              <span class="dm-chart__label">Sem. 3</span>
+              <span class="dm-chart__label">Wk 3</span>
             </div>
-            <div class="dm-chart__bar" title="Sem. 4: L 705,000">
+            <div class="dm-chart__bar" title="Wk 4: L 705,000">
               <div class="dm-chart__fill" style="--bar-height:95%"></div>
-              <span class="dm-chart__label">Sem. 4</span>
+              <span class="dm-chart__label">Wk 4</span>
             </div>
-            <div class="dm-chart__bar" title="Sem. 5: L 664,000">
+            <div class="dm-chart__bar" title="Wk 5: L 664,000">
               <div class="dm-chart__fill" style="--bar-height:89%"></div>
-              <span class="dm-chart__label">Sem. 5</span>
+              <span class="dm-chart__label">Wk 5</span>
             </div>
-            <div class="dm-chart__bar" title="Sem. 6: L 742,000">
+            <div class="dm-chart__bar" title="Wk 6: L 742,000">
               <div class="dm-chart__fill" style="--bar-height:100%"></div>
-              <span class="dm-chart__label">Sem. 6</span>
+              <span class="dm-chart__label">Wk 6</span>
             </div>
           </div>
           </div>
           <div class="dm-panel" data-reveal="rise">
-            <h2 class="dm-panel__title">Actividad reciente</h2>
+            <h2 class="dm-panel__title">Recent activity</h2>
           <ul class="dm-feed">
             <li class="dm-feed__item">
               <span class="dm-feed__dot" aria-hidden="true"></span>
               <span class="dm-feed__body">
-                <span class="dm-feed__text">Pedido — <a class="dm-table__link" href="expedientes/minimarket-la-terminal.html">Minimarket La Terminal</a></span>
+                <span class="dm-feed__text">Order — <a class="dm-table__link" href="expedientes/minimarket-la-terminal.html">Minimarket La Terminal</a></span>
                 <span class="dm-feed__meta">Óscar Reyes · L 9,800</span>
               </span>
-              <span class="dm-feed__when">24 ago 2026</span>
+              <span class="dm-feed__when">24 Aug 2026</span>
             </li>
             <li class="dm-feed__item">
               <span class="dm-feed__dot" aria-hidden="true"></span>
               <span class="dm-feed__body">
-                <span class="dm-feed__text">Pago — <a class="dm-table__link" href="expedientes/abarroteria-puerto.html">Abarrotería Puerto</a></span>
+                <span class="dm-feed__text">Payment — <a class="dm-table__link" href="expedientes/abarroteria-puerto.html">Abarrotería Puerto</a></span>
                 <span class="dm-feed__meta">Wendy Paz · L 5,000</span>
               </span>
-              <span class="dm-feed__when">24 ago 2026</span>
+              <span class="dm-feed__when">24 Aug 2026</span>
             </li>
             <li class="dm-feed__item">
               <span class="dm-feed__dot" aria-hidden="true"></span>
               <span class="dm-feed__body">
-                <span class="dm-feed__text">Entrega — <a class="dm-table__link" href="expedientes/super-la-economia.html">Súper La Economía</a></span>
+                <span class="dm-feed__text">Delivery — <a class="dm-table__link" href="expedientes/super-la-economia.html">Súper La Economía</a></span>
                 <span class="dm-feed__meta">Julio Cálix · L 22,800</span>
               </span>
-              <span class="dm-feed__when">24 ago 2026</span>
+              <span class="dm-feed__when">24 Aug 2026</span>
             </li>
             <li class="dm-feed__item">
               <span class="dm-feed__dot" aria-hidden="true"></span>
               <span class="dm-feed__body">
-                <span class="dm-feed__text">Pedido — <a class="dm-table__link" href="expedientes/minimarket-villanueva.html">Minimarket Villanueva</a></span>
+                <span class="dm-feed__text">Order — <a class="dm-table__link" href="expedientes/minimarket-villanueva.html">Minimarket Villanueva</a></span>
                 <span class="dm-feed__meta">Katherine Suazo · L 6,700</span>
               </span>
-              <span class="dm-feed__when">23 ago 2026</span>
+              <span class="dm-feed__when">23 Aug 2026</span>
             </li>
             <li class="dm-feed__item">
               <span class="dm-feed__dot" aria-hidden="true"></span>
               <span class="dm-feed__body">
-                <span class="dm-feed__text">Ajuste — <a class="dm-table__link" href="expedientes/pulperia-el-progreso.html">Pulpería El Progreso</a></span>
+                <span class="dm-feed__text">Adjustment — <a class="dm-table__link" href="expedientes/pulperia-el-progreso.html">Pulpería El Progreso</a></span>
                 <span class="dm-feed__meta">Wendy Paz · -L 1,200</span>
               </span>
-              <span class="dm-feed__when">23 ago 2026</span>
+              <span class="dm-feed__when">23 Aug 2026</span>
             </li>
             <li class="dm-feed__item">
               <span class="dm-feed__dot" aria-hidden="true"></span>
               <span class="dm-feed__body">
-                <span class="dm-feed__text">Entrega — <a class="dm-table__link" href="expedientes/minimarket-la-terminal.html">Minimarket La Terminal</a></span>
+                <span class="dm-feed__text">Delivery — <a class="dm-table__link" href="expedientes/minimarket-la-terminal.html">Minimarket La Terminal</a></span>
                 <span class="dm-feed__meta">Julio Cálix · L 9,800</span>
               </span>
-              <span class="dm-feed__when">23 ago 2026</span>
+              <span class="dm-feed__when">23 Aug 2026</span>
             </li>
           </ul>
           </div>
@@ -250,16 +250,15 @@
         <div class="dm-shell dm-footer__inner">
           <div class="dm-footer__brand">
             <p class="dm-footer__name">Rumbo</p>
-            <p class="dm-footer__line">Rumbo Distribución, S. de R.L. · Distribuidora de consumo masivo — ficticia</p>
+            <p class="dm-footer__line">Rumbo Distribución, S. de R.L. · FMCG distributor — fictional</p>
             <p class="dm-footer__credit">
-              Marca ficticia. Sitio de ejemplo construido por
-              <a href="../../index.html">CoreStruct</a> &copy; <span data-current-year>2026</span>.
+              Fictional brand. Sample site built by <a href="../../index.html">CoreStruct</a> © <span data-current-year>2026</span>.
             </p>
           </div>
-          <nav class="dm-footer__nav" aria-label="Pie">
-            <a href="index.html">Panel</a>
-            <a href="expedientes.html">Expedientes</a>
-            <a href="operaciones.html">Operaciones</a>
+          <nav class="dm-footer__nav" aria-label="Footer">
+            <a href="index.html">Dashboard</a>
+            <a href="expedientes.html">Customers</a>
+            <a href="operaciones.html">Operations</a>
             <a href="../../index.html#contacto">Contact</a>
           </nav>
         </div>

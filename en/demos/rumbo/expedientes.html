@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Expedientes — Rumbo · Demo de CoreStruct</title>
-    <meta name="description" content="Registro de clientes de Rumbo: saldo, vendedor asignado y estado de cuenta." />
+    <title>Customers — Rumbo · A CoreStruct demo</title>
+    <meta name="description" content="Rumbo's customer register: balance, assigned rep and account status." />
     <!-- An invented company must never turn up in a search result as a real one. -->
     <meta name="robots" content="noindex, follow" />
     <meta name="theme-color" content="#080b12" />
@@ -81,21 +81,21 @@
         <path fill="#253880" d="M1 107L160 195L166 210L176 216L176 252L174 252L42 176L42 294L114 336L154 359L154 297L176 309L176 422L2 321L1 108Z"/>
       </svg>
       <span class="dm-badge__tag">Demo</span>
-      <span class="dm-badge__label">Sitio de ejemplo · CoreStruct</span>
+      <span class="dm-badge__label">Sample site · CoreStruct</span>
     </a>
 
     <header class="dm-header" data-header>
       <div class="dm-header__inner">
         <a class="dm-wordmark" href="index.html">
           <span class="dm-wordmark__name">Rumbo</span>
-          <span class="dm-wordmark__mark">Distribución mayorista</span>
+          <span class="dm-wordmark__mark">Wholesale distribution</span>
         </a>
 
         <nav class="dm-nav" aria-label="Sections">
-            <a class="dm-nav__link" href="index.html">Panel</a>
-            <a class="dm-nav__link" href="expedientes.html" aria-current="page">Expedientes</a>
-            <a class="dm-nav__link" href="usuarios.html">Usuarios</a>
-            <a class="dm-nav__link" href="operaciones.html">Operaciones</a>
+            <a class="dm-nav__link" href="index.html">Dashboard</a>
+            <a class="dm-nav__link" href="expedientes.html" aria-current="page">Customers</a>
+            <a class="dm-nav__link" href="usuarios.html">Users</a>
+            <a class="dm-nav__link" href="operaciones.html">Operations</a>
         </nav>
 
         <div class="dm-header__actions">
@@ -117,100 +117,94 @@
     </header>
 
     <div class="dm-menu" id="dm-menu" data-mobile-nav>
-      <a class="dm-menu__link" href="index.html">Panel</a>
-      <a class="dm-menu__link" href="expedientes.html">Expedientes</a>
-      <a class="dm-menu__link" href="usuarios.html">Usuarios</a>
-      <a class="dm-menu__link" href="operaciones.html">Operaciones</a>
+      <a class="dm-menu__link" href="index.html">Dashboard</a>
+      <a class="dm-menu__link" href="expedientes.html">Customers</a>
+      <a class="dm-menu__link" href="usuarios.html">Users</a>
+      <a class="dm-menu__link" href="operaciones.html">Operations</a>
       <a class="dm-menu__link" href="../../index.html#contacto">Let's talk about your project</a>
     </div>
 
     <main class="dm" id="contenido">
       <div class="dm-page-head dm-shell">
-        <h1 class="dm-page-head__title" data-reveal="fade">Expedientes</h1>
+        <h1 class="dm-page-head__title" data-reveal="fade">Customers</h1>
         <p class="dm-page-head__text" data-reveal="fade">
-          6 clientes de muestra sobre una cartera de 184. Cada fila abre la ficha completa: contacto, historial de pedidos, notas de visita y documentos.
+          Six sample customers out of a book of 184. Every row opens the full record: contact details, order history, visit notes and documents.
         </p>
       </div>
 
       <div class="dm-section dm-shell" data-table>
         <div class="dm-toolbar">
           <div class="dm-filterbar" data-filter-group>
-            <button type="button" class="dm-filter" data-filter="all" aria-pressed="true">Todos</button>
-            <button type="button" class="dm-filter" data-filter="al-dia" aria-pressed="false">Al día</button>
-            <button type="button" class="dm-filter" data-filter="mora" aria-pressed="false">En mora</button>
-            <button type="button" class="dm-filter" data-filter="bloqueado" aria-pressed="false">Bloqueado</button>
+            <button type="button" class="dm-filter" data-filter="all" aria-pressed="true">All</button>
+            <button type="button" class="dm-filter" data-filter="al-dia" aria-pressed="false">Up to date</button>
+            <button type="button" class="dm-filter" data-filter="mora" aria-pressed="false">Overdue</button>
+            <button type="button" class="dm-filter" data-filter="bloqueado" aria-pressed="false">Blocked</button>
           </div>
-          <input class="dm-search" type="search" data-search placeholder="Buscar por cliente o zona…" aria-label="Buscar expediente" />
+          <input class="dm-search" type="search" data-search placeholder="Search by customer or area…" aria-label="Search records" />
         </div>
 
         <div class="dm-table-wrap">
           <table class="dm-table">
             <thead>
               <tr>
-                <th scope="col">Cliente</th>
-                <th scope="col">Vendedor</th>
-                <th scope="col" data-numeric>Saldo</th>
-                <th scope="col">Estado</th>
+                <th scope="col">Client</th>
+                <th scope="col">Sales rep</th>
+                <th scope="col" data-numeric>Balance</th>
+                <th scope="col">Status</th>
               </tr>
             </thead>
             <tbody>
             <tr data-row data-filterval="al-dia" data-search="minimarket la terminal san pedro sula — centro">
               <td>
-                <a class="dm-table__link" href="expedientes/minimarket-la-terminal.html">Minimarket La Terminal</a>
-                <span class="dm-table__sub">San Pedro Sula — Centro</span>
+                <a class="dm-table__link" href="expedientes/minimarket-la-terminal.html">Minimarket La Terminal</a> <span class="dm-table__sub">San Pedro Sula — Centro</span>
               </td>
               <td>Óscar Reyes</td>
               <td data-numeric>L 12,400</td>
-              <td><span class="dm-pill dm-pill--ok">Al día</span></td>
+              <td><span class="dm-pill dm-pill--ok">Up to date</span></td>
             </tr>
             <tr data-row data-filterval="mora" data-search="pulpería el progreso el progreso, yoro">
               <td>
-                <a class="dm-table__link" href="expedientes/pulperia-el-progreso.html">Pulpería El Progreso</a>
-                <span class="dm-table__sub">El Progreso, Yoro</span>
+                <a class="dm-table__link" href="expedientes/pulperia-el-progreso.html">Pulpería El Progreso</a> <span class="dm-table__sub">El Progreso, Yoro</span>
               </td>
               <td>Katherine Suazo</td>
               <td data-numeric>L 28,650</td>
-              <td><span class="dm-pill dm-pill--warn">En mora</span></td>
+              <td><span class="dm-pill dm-pill--warn">Overdue</span></td>
             </tr>
             <tr data-row data-filterval="al-dia" data-search="súper la economía choloma, cortés">
               <td>
-                <a class="dm-table__link" href="expedientes/super-la-economia.html">Súper La Economía</a>
-                <span class="dm-table__sub">Choloma, Cortés</span>
+                <a class="dm-table__link" href="expedientes/super-la-economia.html">Súper La Economía</a> <span class="dm-table__sub">Choloma, Cortés</span>
               </td>
               <td>Óscar Reyes</td>
               <td data-numeric>L 4,200</td>
-              <td><span class="dm-pill dm-pill--ok">Al día</span></td>
+              <td><span class="dm-pill dm-pill--ok">Up to date</span></td>
             </tr>
             <tr data-row data-filterval="al-dia" data-search="minimarket villanueva villanueva, cortés">
               <td>
-                <a class="dm-table__link" href="expedientes/minimarket-villanueva.html">Minimarket Villanueva</a>
-                <span class="dm-table__sub">Villanueva, Cortés</span>
+                <a class="dm-table__link" href="expedientes/minimarket-villanueva.html">Minimarket Villanueva</a> <span class="dm-table__sub">Villanueva, Cortés</span>
               </td>
               <td>Katherine Suazo</td>
               <td data-numeric>L 0</td>
-              <td><span class="dm-pill dm-pill--ok">Al día</span></td>
+              <td><span class="dm-pill dm-pill--ok">Up to date</span></td>
             </tr>
             <tr data-row data-filterval="mora" data-search="abarrotería puerto puerto cortés, cortés">
               <td>
-                <a class="dm-table__link" href="expedientes/abarroteria-puerto.html">Abarrotería Puerto</a>
-                <span class="dm-table__sub">Puerto Cortés, Cortés</span>
+                <a class="dm-table__link" href="expedientes/abarroteria-puerto.html">Abarrotería Puerto</a> <span class="dm-table__sub">Puerto Cortés, Cortés</span>
               </td>
               <td>Óscar Reyes</td>
               <td data-numeric>L 16,900</td>
-              <td><span class="dm-pill dm-pill--warn">En mora</span></td>
+              <td><span class="dm-pill dm-pill--warn">Overdue</span></td>
             </tr>
             <tr data-row data-filterval="bloqueado" data-search="pulpería doña chinda la lima, cortés">
               <td>
-                <a class="dm-table__link" href="expedientes/pulperia-dona-chinda.html">Pulpería Doña Chinda</a>
-                <span class="dm-table__sub">La Lima, Cortés</span>
+                <a class="dm-table__link" href="expedientes/pulperia-dona-chinda.html">Pulpería Doña Chinda</a> <span class="dm-table__sub">La Lima, Cortés</span>
               </td>
               <td>Katherine Suazo</td>
               <td data-numeric>L 34,500</td>
-              <td><span class="dm-pill dm-pill--bad">Bloqueado</span></td>
+              <td><span class="dm-pill dm-pill--bad">Blocked</span></td>
             </tr>
             </tbody>
           </table>
-          <p class="dm-table-empty" data-table-empty>Ningún expediente coincide con ese filtro.</p>
+          <p class="dm-table-empty" data-table-empty>No customer matches that filter.</p>
         </div>
       </div>
 
@@ -218,16 +212,15 @@
         <div class="dm-shell dm-footer__inner">
           <div class="dm-footer__brand">
             <p class="dm-footer__name">Rumbo</p>
-            <p class="dm-footer__line">Rumbo Distribución, S. de R.L. · Distribuidora de consumo masivo — ficticia</p>
+            <p class="dm-footer__line">Rumbo Distribución, S. de R.L. · FMCG distributor — fictional</p>
             <p class="dm-footer__credit">
-              Marca ficticia. Sitio de ejemplo construido por
-              <a href="../../index.html">CoreStruct</a> &copy; <span data-current-year>2026</span>.
+              Fictional brand. Sample site built by <a href="../../index.html">CoreStruct</a> © <span data-current-year>2026</span>.
             </p>
           </div>
-          <nav class="dm-footer__nav" aria-label="Pie">
-            <a href="index.html">Panel</a>
-            <a href="expedientes.html">Expedientes</a>
-            <a href="operaciones.html">Operaciones</a>
+          <nav class="dm-footer__nav" aria-label="Footer">
+            <a href="index.html">Dashboard</a>
+            <a href="expedientes.html">Customers</a>
+            <a href="operaciones.html">Operations</a>
             <a href="../../index.html#contacto">Contact</a>
           </nav>
         </div>

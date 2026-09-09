@@ -53,6 +53,12 @@ export default {
 
   Proyectos: "Work",
   Alianzas: "Partnerships",
+
+  /* Shared across the demos' navigation, so they live with the portfolio's own
+     chrome rather than in any one site's file. */
+  Empresa: "Company",
+  Recursos: "Resources",
+  Servicios: "Services",
   Contacto: "Contact",
   Hablemos: "Let's talk",
   "Iniciar un proyecto": "Start a project",
@@ -209,6 +215,8 @@ export default {
 
   /* ---------------------------------------------------- the studio's mark */
 
+  /* The studio's own name, wherever a demo signs itself. */
+  CoreStruct: "CoreStruct",
   Demo: "Demo",
   "Sitio ficticio · CoreStruct": "Fictional site · CoreStruct",
   "Volver al portafolio": "Back to the portfolio",

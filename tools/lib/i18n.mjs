@@ -58,8 +58,17 @@ const COPY_META = new Set([
   "twitter:image:alt",
 ]);
 
-/** `value` is a label only on the button-shaped inputs. */
-const VALUE_INPUTS = new Set(["button", "submit", "reset"]);
+/**
+ * `value` on an `<input>` is copy in this codebase: a button's label, or the
+ * pre-filled demo content the workflow console reads back out and displays. The
+ * exceptions are the controls whose value is a key rather than a caption —
+ * a radio or a checkbox is selected *by* its value, so translating it would
+ * break the control rather than the sentence.
+ *
+ * `<option value>` is excluded for the same reason, and is not matched here:
+ * an option's caption is its text, which the text pass already visits.
+ */
+const VALUE_KEYS = new Set(["radio", "checkbox"]);
 
 /**
  * Data attributes the client scripts read back out and display. Anything not
@@ -243,8 +252,6 @@ export const key = (text) => decodeEntities(text).replace(/\s+/g, " ").trim();
  */
 export async function loadDictionary(root, locale) {
   const dir = join(root, "src", "i18n", locale);
-  const dictionary = new Map();
-  const origin = new Map();
 
   let files;
   try {
@@ -253,26 +260,60 @@ export async function loadDictionary(root, locale) {
       .filter((f) => f.endsWith(".js") && !f.startsWith("_"))
       .sort();
   } catch {
-    return dictionary;
+    return emptyDictionary();
   }
+
+  /* One map per scope. A module may `export const scope = "demos/cede"`, and
+     its entries then apply only to pages under that path. Without it the same
+     word could only ever have one translation across the whole site, and some
+     genuinely do not: "Permanencia" is continuity for an engineering group and
+     retention for an education ministry, and both are right. */
+  const scopes = new Map([["", new Map()]]);
+  const origin = new Map();
 
   for (const file of files) {
     const module = await import(pathToFileURL(join(dir, file)).href);
-    const entries = module.default ?? {};
-    for (const [spanish, english] of Object.entries(entries)) {
+    const scope = module.scope ?? "";
+    if (!scopes.has(scope)) scopes.set(scope, new Map());
+    const map = scopes.get(scope);
+
+    for (const [spanish, english] of Object.entries(module.default ?? {})) {
       const normalised = key(spanish);
-      if (dictionary.has(normalised) && dictionary.get(normalised) !== english) {
+      const seen = `${scope} ${normalised}`;
+      if (map.has(normalised) && map.get(normalised) !== english) {
         throw new Error(
-          `"${normalised}" is translated differently in ${origin.get(normalised)} and ${file}`,
+          `"${normalised}" is translated differently in ${origin.get(seen)} and ${file}` +
+            (scope ? ` (both scoped to ${scope})` : " (both global)"),
         );
       }
-      dictionary.set(normalised, english);
-      origin.set(normalised, file);
+      map.set(normalised, english);
+      origin.set(seen, file);
     }
   }
 
-  return dictionary;
+  // Longest prefix first, so a narrow scope beats a broad one.
+  const ordered = [...scopes.entries()]
+    .map(([prefix, map]) => ({ prefix, map }))
+    .sort((a, b) => b.prefix.length - a.prefix.length);
+
+  return {
+    /** The translation for `text` on `page`, or undefined. */
+    resolve(text, page = "") {
+      for (const { prefix, map } of ordered) {
+        if (prefix && !page.startsWith(prefix)) continue;
+        const hit = map.get(text);
+        if (hit !== undefined) return hit;
+      }
+      return undefined;
+    },
+    /** How many distinct entries were loaded, for the build's summary line. */
+    get size() {
+      return ordered.reduce((sum, { map }) => sum + map.size, 0);
+    },
+  };
 }
+
+const emptyDictionary = () => ({ resolve: () => undefined, size: 0 });
 
 /**
  * Load the generative rules for a locale, if it has any.
@@ -298,11 +339,19 @@ export async function loadRules(root, locale) {
 }
 
 /** Apply the first rule that matches the whole run. */
-export function applyRules(text, rules) {
+export function applyRules(text, rules, translate = (value) => value) {
   for (const { pattern, replace } of rules) {
     const anchored = new RegExp(`^(?:${pattern.source})$`, pattern.flags.replace("g", ""));
     const match = text.match(anchored);
-    if (match) return typeof replace === "function" ? replace(...match) : text.replace(anchored, replace);
+    if (!match) continue;
+    if (typeof replace !== "function") return text.replace(anchored, replace);
+
+    /* A template rule gets `t` as its last argument, so the pieces it captured
+       can go back through the dictionary. "Renovación de contrato de limpieza.
+       Solicitado por Rodrigo Salgado, Administración." is one sentence shape
+       with three slots, two of which are already translated elsewhere; without
+       this the shape would have to be listed once per request. */
+    return replace(...match, translate);
   }
   return undefined;
 }
@@ -328,11 +377,46 @@ export function translatePage(html, { dictionary, rules = [], page, report, loca
   };
 
   /**
-   * Sentences that came back from the phrase pass untranslated. Their pieces
-   * will reach the text pass as fragments, and reporting those as well would
-   * bury the sentence they belong to under the halves of itself.
+   * Sentences the phrase pass has already dealt with, either way.
+   *
+   * Both lists exist for the same reason: a sentence translated whole is still
+   * a set of text nodes by the time the text pass walks over it, and every one
+   * of them would otherwise be reported — the Spanish halves of a sentence
+   * nobody has translated yet, or the English halves of one already finished.
+   * Neither is a finding, and both would drown the ones that are.
    */
   const unresolvedPhrases = [];
+  const resolvedPhrases = [];
+
+  /**
+   * What a template rule uses on the pieces it captured.
+   *
+   * It consults the dictionary and the rules, and hands back the original when
+   * neither knows the piece — a rule should still produce its English shape
+   * around a proper noun it could not place. Nothing is reported from in here:
+   * the run as a whole is being counted by the caller.
+   */
+  const translateSlot = (value) => {
+    const normalised = key(value);
+    const known = dictionary.resolve(normalised, page);
+    if (known !== undefined) return known;
+    return applyRules(normalised, rules, translateSlot) ?? value;
+  };
+
+  /**
+   * Whether a slot is actually covered, as opposed to handed back unchanged.
+   *
+   * A rule that assembles several slots needs this. Without it, a shape rule
+   * would report itself as translated while quietly passing untranslated
+   * Spanish through its own placeholders — the one failure mode the coverage
+   * report exists to catch.
+   */
+  translateSlot.known = (value) => {
+    const normalised = key(value);
+    if (!normalised || IGNORABLE.test(normalised)) return true;
+    if (dictionary.resolve(normalised, page) !== undefined) return true;
+    return applyRules(normalised, rules, translateSlot) !== undefined;
+  };
 
   /**
    * Look a run up, and account for it either way.
@@ -350,21 +434,23 @@ export function translatePage(html, { dictionary, rules = [], page, report, loca
     const normalised = key(raw);
     if (!normalised) return undefined;
 
-    if (dictionary.has(normalised)) {
+    const known = dictionary.resolve(normalised, page);
+    if (known !== undefined) {
       seen("translated", normalised, kind);
-      return dictionary.get(normalised);
+      return known;
     }
     // Digits, punctuation and symbols carry no language.
     if (IGNORABLE.test(normalised)) return undefined;
 
     // A date, a duration, a month: a format rather than a phrase.
-    const ruled = applyRules(normalised, rules);
+    const ruled = applyRules(normalised, rules, translateSlot);
     if (ruled !== undefined) {
       seen("translated", normalised, kind);
       return ruled;
     }
     // Already accounted for as part of the sentence it was cut out of.
     if (unresolvedPhrases.some((phrase) => phrase.includes(normalised))) return undefined;
+    if (resolvedPhrases.some((phrase) => phrase.includes(normalised))) return undefined;
 
     seen(isSpanish(normalised) ? "missing" : "review", normalised, kind);
     return undefined;
@@ -379,10 +465,14 @@ export function translatePage(html, { dictionary, rules = [], page, report, loca
     const sentence = joinWords(words);
     const normalised = key(sentence);
 
-    if (dictionary.has(normalised)) {
+    const rejoinedHit =
+      dictionary.resolve(normalised, page) ?? applyRules(normalised, rules, translateSlot);
+    if (rejoinedHit !== undefined) {
       seen("translated", normalised, `<${tag.toLowerCase()}>`);
       const [, lead, , tail] = inner.match(/^(\s*)([\s\S]*?)(\s*)$/);
-      return `<${tag}${attrs}>${lead}${splitWords(dictionary.get(normalised))}${tail}</${tag}>`;
+      const english = rejoinedHit;
+      resolvedPhrases.push(english.replace(/\*\*/g, ""));
+      return `<${tag}${attrs}>${lead}${splitWords(english)}${tail}</${tag}>`;
     }
     if (isSpanish(sentence)) {
       seen("missing", normalised, `<${tag.toLowerCase()}>`);
@@ -399,9 +489,15 @@ export function translatePage(html, { dictionary, rules = [], page, report, loca
     const [, lead, core, tail] = inner.match(/^(\s*)([\s\S]*?)(\s*)$/);
     const normalised = key(core);
 
-    if (dictionary.has(normalised)) {
+    /* The dictionary first, then the rules: a sentence can be a shape as well
+       as a phrase — a row of `<span>`s holding a document's type, subject, date
+       and size is generated, not written, and belongs to a rule. */
+    const phrase = dictionary.resolve(normalised, page) ?? applyRules(normalised, rules, translateSlot);
+    if (phrase !== undefined) {
       seen("translated", normalised, `<${tag.toLowerCase()}>`);
-      return `<${tag}${attrs}>${lead}${dictionary.get(normalised)}${tail}</${tag}>`;
+      const english = phrase;
+      resolvedPhrases.push(textOf(english));
+      return `<${tag}${attrs}>${lead}${english}${tail}</${tag}>`;
     }
     if (isSpanish(textOf(core))) {
       seen("missing", normalised, `<${tag.toLowerCase()}>`);
@@ -429,7 +525,7 @@ export function translatePage(html, { dictionary, rules = [], page, report, loca
         (name === "content" &&
           element === "meta" &&
           COPY_META.has(attrs.name ?? attrs.property ?? "")) ||
-        (name === "value" && element === "input" && VALUE_INPUTS.has(attrs.type ?? "text"));
+        (name === "value" && element === "input" && !VALUE_KEYS.has(attrs.type ?? "text"));
 
       if (!translatable) return undefined;
 
@@ -451,7 +547,11 @@ export function translatePage(html, { dictionary, rules = [], page, report, loca
       }
 
       /* Fields that are addresses, identifiers or codes rather than prose. */
-      const VERBATIM = new Set(["url", "logo", "image", "email", "telephone", "sameAs", "@id"]);
+      const VERBATIM = new Set([
+        "url", "logo", "image", "email", "telephone", "sameAs", "@id",
+        // schema.org enumerations: vocabulary the spec fixes, not prose.
+        "applicationCategory", "operatingSystem", "priceCurrency", "currency",
+      ]);
 
       const localise = (node) => {
         if (typeof node === "string") {
@@ -467,7 +567,9 @@ export function translatePage(html, { dictionary, rules = [], page, report, loca
               if (k === "inLanguage") return [k, locale];
               // Each mirror is monolingual, so the list it advertises is one
               // entry long whatever length it started as.
-              if (k === "availableLanguage") return [k, Array.isArray(v) ? [locale] : locale];
+              if (k === "availableLanguage" || k === "knowsLanguage") {
+                return [k, Array.isArray(v) ? [locale] : locale];
+              }
               if (k.startsWith("@") || VERBATIM.has(k)) return [k, v];
               return [k, localise(v)];
             }),

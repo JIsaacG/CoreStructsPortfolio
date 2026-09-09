@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Backoffice demostrativo · CEDE</title>
-    <meta name="description" content="Interfaz de gestión demostrativa del portal: colecciones administrables, actividad reciente y perfiles de usuario. No modifica contenido." />
+    <meta name="description" content="An illustrative management interface for the portal: editable collections, recent activity and user profiles. It changes nothing." />
     <link rel="canonical" href="https://www.cede.example/en/gestion-demo.html" />
 
     <!-- The Consejo Estratégico para el Desarrollo Educativo does not exist. A
@@ -19,11 +19,11 @@
     <meta property="og:site_name" content="Consejo Estratégico para el Desarrollo Educativo" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:title" content="Backoffice demostrativo · CEDE" />
-    <meta property="og:description" content="Interfaz de gestión demostrativa del portal: colecciones administrables, actividad reciente y perfiles de usuario. No modifica contenido." />
+    <meta property="og:description" content="An illustrative management interface for the portal: editable collections, recent activity and user profiles. It changes nothing." />
     <meta property="og:url" content="https://www.cede.example/en/gestion-demo.html" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Backoffice demostrativo · CEDE" />
-    <meta name="twitter:description" content="Interfaz de gestión demostrativa del portal: colecciones administrables, actividad reciente y perfiles de usuario. No modifica contenido." />
+    <meta name="twitter:description" content="An illustrative management interface for the portal: editable collections, recent activity and user profiles. It changes nothing." />
 
     <link rel="icon" href="../../../favicon.ico" sizes="32x32" />
 
@@ -51,12 +51,12 @@
         "name": "Consejo Estratégico para el Desarrollo Educativo",
         "alternateName": "CEDE",
         "url": "https://www.cede.example/",
-        "description": "Entidad ficticia de coordinación educativa creada para esta demostración: articula instituciones, produce información pública y da seguimiento a la política educativa nacional.",
-        "disambiguatingDescription": "Entidad ficticia. Portal de demostración creado por CoreStruct; no representa a ninguna institución gubernamental real.",
+        "description": "A fictional education coordination body created for this demonstration: it brings institutions together, produces public information and tracks national education policy.",
+        "disambiguatingDescription": "A fictional entity. A demonstration portal built by CoreStruct; it does not represent any real government institution.",
         "email": "contacto@cede.example",
         "areaServed": "HN",
         "knowsLanguage": [
-          "es"
+          "en"
         ]
       }
     </script>
@@ -119,83 +119,80 @@
     <div class="cd-admin">
       <div class="cd-admin__bar">
         <p class="cd-admin__brand">
-          CEDE · Gestión de contenidos
-          <span class="cd-admin__tag">Backoffice demostrativo</span>
+          CEDE · Content management <span class="cd-admin__tag">Demonstration back office</span>
         </p>
         <div class="cd-admin__user">
           <!--lang-switch--><div class="lang-switch" role="group" aria-label="Idioma · Language"><span class="lang-switch__current" lang="en" aria-current="true">EN</span><a class="lang-switch__link" lang="es" hreflang="es" href="../../../demos/cede/gestion-demo.html" data-lang-pick="es" title="Español">ES</a></div><!--/lang-switch-->
-          <span>Sesión de demostración · no hay datos reales</span>
+          <span>Demonstration session · no real data</span>
           <span class="cd-admin__avatar" aria-hidden="true">ST</span>
         </div>
       </div>
 
       <div class="cd-admin__body">
-        <nav class="cd-admin__side" aria-label="Secciones de gestión">
+        <nav class="cd-admin__side" aria-label="Management sections">
           <div class="cd-admin__group">
-            <p class="cd-admin__group-title">Contenido</p>
-            <a class="cd-admin__link" href="#panel" aria-current="true">Panel<span>—</span></a>
-            <a class="cd-admin__link" href="#panel">Noticias<span>9</span></a><a class="cd-admin__link" href="#panel">Documentos y biblioteca<span>18</span></a><a class="cd-admin__link" href="#panel">Normativa<span>26</span></a><a class="cd-admin__link" href="#panel">Resoluciones<span>16</span></a><a class="cd-admin__link" href="#panel">Conjuntos de datos<span>8</span></a>
+            <p class="cd-admin__group-title">Content</p>
+            <a class="cd-admin__link" href="#panel" aria-current="true">Dashboard<span>—</span></a>
+            <a class="cd-admin__link" href="#panel">News<span>9</span></a><a class="cd-admin__link" href="#panel">Documents and library<span>18</span></a><a class="cd-admin__link" href="#panel">Regulations<span>26</span></a><a class="cd-admin__link" href="#panel">Resolutions<span>16</span></a><a class="cd-admin__link" href="#panel">Datasets<span>8</span></a>
           </div>
           <div class="cd-admin__group">
-            <p class="cd-admin__group-title">Operación</p>
-            <a class="cd-admin__link" href="#panel">Indicadores<span>10</span></a><a class="cd-admin__link" href="#panel">Consultas públicas<span>5</span></a><a class="cd-admin__link" href="#panel">Eventos de agenda<span>8</span></a><a class="cd-admin__link" href="#panel">Programas<span>8</span></a>
-            <a class="cd-admin__link" href="#usuarios">Usuarios y permisos<span>12</span></a>
-            <a class="cd-admin__link" href="#actividad">Actividad<span>6</span></a>
+            <p class="cd-admin__group-title">Operations</p>
+            <a class="cd-admin__link" href="#panel">Indicators<span>10</span></a><a class="cd-admin__link" href="#panel">Public consultations<span>5</span></a><a class="cd-admin__link" href="#panel">Diary events<span>8</span></a><a class="cd-admin__link" href="#panel">Programmes<span>8</span></a>
+            <a class="cd-admin__link" href="#usuarios">Users and permissions<span>12</span></a>
+            <a class="cd-admin__link" href="#actividad">Activity<span>6</span></a>
           </div>
           <div class="cd-admin__group">
-            <p class="cd-admin__group-title">Portal público</p>
-            <a class="cd-admin__link" href="index.html">Ver el portal<svg class="cd-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 3.2H3.2v9.6h9.6V9.5"/><path d="M9.6 3.2h3.2v3.2M12.8 3.2 7.6 8.4"/></svg></a>
+            <p class="cd-admin__group-title">Public portal</p>
+            <a class="cd-admin__link" href="index.html">View the portal<svg class="cd-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 3.2H3.2v9.6h9.6V9.5"/><path d="M9.6 3.2h3.2v3.2M12.8 3.2 7.6 8.4"/></svg></a>
           </div>
         </nav>
 
         <main class="cd-admin__main" id="panel">
           <div class="cd-admin__head">
             <div>
-              <p class="cd-label"><span>Panel de gestión</span></p>
-              <h1 class="cd-admin__title">Contenido publicado</h1>
+              <p class="cd-label"><span>Management dashboard</span></p>
+              <h1 class="cd-admin__title">Published content</h1>
             </div>
             <div class="cd-actions">
-              <button class="cd-btn cd-btn--ghost cd-btn--small" type="button">Vista previa</button>
-              <button class="cd-btn cd-btn--solid cd-btn--small" type="button">Nueva publicación</button>
+              <button class="cd-btn cd-btn--ghost cd-btn--small" type="button">Preview</button>
+              <button class="cd-btn cd-btn--solid cd-btn--small" type="button">New publication</button>
             </div>
           </div>
 
           <p class="cd-note cd-note--boxed" style="margin-bottom:1.5rem">
-            Backoffice demostrativo. Ninguna acción de esta pantalla modifica contenido: existe para
-            mostrar que el portal público y las herramientas para operarlo son parte del mismo producto.
+            A demonstration back office. Nothing on this screen changes any content: it exists to show that the public portal and the tools for running it are part of the same product.
           </p>
 
           <div class="cd-figures cd-figures--4" style="margin-bottom:1.5rem">
-            <div class="cd-figure"><p class="cd-figure__label">Elementos publicados</p>
+            <div class="cd-figure"><p class="cd-figure__label">Items published</p>
               <p class="cd-figure__value">108</p>
-              <div class="cd-figure__foot"><span class="cd-figure__note">En nueve colecciones</span></div></div>
-            <div class="cd-figure"><p class="cd-figure__label">Pendientes de revisión</p>
+              <div class="cd-figure__foot"><span class="cd-figure__note">Across nine collections</span></div></div>
+            <div class="cd-figure"><p class="cd-figure__label">Awaiting review</p>
               <p class="cd-figure__value">3</p>
-              <div class="cd-figure__foot"><span class="cd-figure__note">Dos noticias, un informe</span></div></div>
-            <div class="cd-figure"><p class="cd-figure__label">Series de datos activas</p>
+              <div class="cd-figure__foot"><span class="cd-figure__note">Two news items, one report</span></div></div>
+            <div class="cd-figure"><p class="cd-figure__label">Active data series</p>
               <p class="cd-figure__value">8</p>
-              <div class="cd-figure__foot"><span class="cd-figure__note">Última carga: 20 ago</span></div></div>
-            <div class="cd-figure"><p class="cd-figure__label">Usuarios con acceso</p>
+              <div class="cd-figure__foot"><span class="cd-figure__note">Last upload: 20 Aug</span></div></div>
+            <div class="cd-figure"><p class="cd-figure__label">Users with access</p>
               <p class="cd-figure__value">12</p>
-              <div class="cd-figure__foot"><span class="cd-figure__note">Cuatro perfiles</span></div></div>
+              <div class="cd-figure__foot"><span class="cd-figure__note">Four profiles</span></div></div>
           </div>
 
           <section class="cd-admin__panel">
-            <h2 class="cd-admin__panel-title">Colecciones administrables
-              <span class="cd-note">Sin tocar código</span></h2>
-            <div class="cd-tablewrap"><table class="cd-table cd-table--stack"><caption>Colecciones de contenido del portal. Datos demostrativos.</caption><thead><tr><th scope="col" aria-sort="none" data-sort="name"><button class="cd-sort" type="button">Colección<svg class="cd-sort__arrow" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 1v8M2 6l3 3 3-3"/></svg></button></th><th scope="col" class="cd-num" aria-sort="none" data-sort="count"><button class="cd-sort" type="button">Elementos<svg class="cd-sort__arrow" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 1v8M2 6l3 3 3-3"/></svg></button></th><th scope="col" aria-sort="none" data-sort="updated"><button class="cd-sort" type="button">Última actualización<svg class="cd-sort__arrow" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 1v8M2 6l3 3 3-3"/></svg></button></th><th scope="col">Estado</th><th scope="col">Acciones</th></tr></thead><tbody><tr><td class="cd-table__name" data-label="Colección">Noticias</td><td class="cd-num" data-label="Elementos">9</td><td data-label="Última actualización">26 ago 2026</td><td data-label="Estado">Publicado</td><td data-label="Acciones"><button class="cd-download" type="button">Editar</button></td></tr><tr><td class="cd-table__name" data-label="Colección">Documentos y biblioteca</td><td class="cd-num" data-label="Elementos">18</td><td data-label="Última actualización">20 ago 2026</td><td data-label="Estado">Publicado</td><td data-label="Acciones"><button class="cd-download" type="button">Editar</button></td></tr><tr><td class="cd-table__name" data-label="Colección">Normativa</td><td class="cd-num" data-label="Elementos">26</td><td data-label="Última actualización">14 ago 2026</td><td data-label="Estado">Publicado</td><td data-label="Acciones"><button class="cd-download" type="button">Editar</button></td></tr><tr><td class="cd-table__name" data-label="Colección">Resoluciones</td><td class="cd-num" data-label="Elementos">16</td><td data-label="Última actualización">20 ago 2026</td><td data-label="Estado">Publicado</td><td data-label="Acciones"><button class="cd-download" type="button">Editar</button></td></tr><tr><td class="cd-table__name" data-label="Colección">Conjuntos de datos</td><td class="cd-num" data-label="Elementos">8</td><td data-label="Última actualización">20 ago 2026</td><td data-label="Estado">Publicado</td><td data-label="Acciones"><button class="cd-download" type="button">Editar</button></td></tr><tr><td class="cd-table__name" data-label="Colección">Indicadores</td><td class="cd-num" data-label="Elementos">10</td><td data-label="Última actualización">20 ago 2026</td><td data-label="Estado">Publicado</td><td data-label="Acciones"><button class="cd-download" type="button">Editar</button></td></tr><tr><td class="cd-table__name" data-label="Colección">Consultas públicas</td><td class="cd-num" data-label="Elementos">5</td><td data-label="Última actualización">6 ago 2026</td><td data-label="Estado">1 abierta</td><td data-label="Acciones"><button class="cd-download" type="button">Editar</button></td></tr><tr><td class="cd-table__name" data-label="Colección">Eventos de agenda</td><td class="cd-num" data-label="Elementos">8</td><td data-label="Última actualización">25 ago 2026</td><td data-label="Estado">Publicado</td><td data-label="Acciones"><button class="cd-download" type="button">Editar</button></td></tr><tr><td class="cd-table__name" data-label="Colección">Programas</td><td class="cd-num" data-label="Elementos">8</td><td data-label="Última actualización">24 jul 2026</td><td data-label="Estado">Publicado</td><td data-label="Acciones"><button class="cd-download" type="button">Editar</button></td></tr></tbody></table></div>
+            <h2 class="cd-admin__panel-title">Editable collections <span class="cd-note">Without touching code</span></h2>
+            <div class="cd-tablewrap"><table class="cd-table cd-table--stack"><caption>Colecciones de contenido del portal. Illustrative data.</caption><thead><tr><th scope="col" aria-sort="none" data-sort="name"><button class="cd-sort" type="button">Collection<svg class="cd-sort__arrow" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 1v8M2 6l3 3 3-3"/></svg></button></th><th scope="col" class="cd-num" aria-sort="none" data-sort="count"><button class="cd-sort" type="button">Items<svg class="cd-sort__arrow" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 1v8M2 6l3 3 3-3"/></svg></button></th><th scope="col" aria-sort="none" data-sort="updated"><button class="cd-sort" type="button">Last updated<svg class="cd-sort__arrow" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 1v8M2 6l3 3 3-3"/></svg></button></th><th scope="col">Status</th><th scope="col">Actions</th></tr></thead><tbody><tr><td class="cd-table__name" data-label="Collection">News</td><td class="cd-num" data-label="Items">9</td><td data-label="Last updated">26 Aug 2026</td><td data-label="Status">Published</td><td data-label="Actions"><button class="cd-download" type="button">Edit</button></td></tr><tr><td class="cd-table__name" data-label="Collection">Documents and library</td><td class="cd-num" data-label="Items">18</td><td data-label="Last updated">20 Aug 2026</td><td data-label="Status">Published</td><td data-label="Actions"><button class="cd-download" type="button">Edit</button></td></tr><tr><td class="cd-table__name" data-label="Collection">Regulations</td><td class="cd-num" data-label="Items">26</td><td data-label="Last updated">14 Aug 2026</td><td data-label="Status">Published</td><td data-label="Actions"><button class="cd-download" type="button">Edit</button></td></tr><tr><td class="cd-table__name" data-label="Collection">Resolutions</td><td class="cd-num" data-label="Items">16</td><td data-label="Last updated">20 Aug 2026</td><td data-label="Status">Published</td><td data-label="Actions"><button class="cd-download" type="button">Edit</button></td></tr><tr><td class="cd-table__name" data-label="Collection">Datasets</td><td class="cd-num" data-label="Items">8</td><td data-label="Last updated">20 Aug 2026</td><td data-label="Status">Published</td><td data-label="Actions"><button class="cd-download" type="button">Edit</button></td></tr><tr><td class="cd-table__name" data-label="Collection">Indicators</td><td class="cd-num" data-label="Items">10</td><td data-label="Last updated">20 Aug 2026</td><td data-label="Status">Published</td><td data-label="Actions"><button class="cd-download" type="button">Edit</button></td></tr><tr><td class="cd-table__name" data-label="Collection">Public consultations</td><td class="cd-num" data-label="Items">5</td><td data-label="Last updated">6 Aug 2026</td><td data-label="Status">1 open</td><td data-label="Actions"><button class="cd-download" type="button">Edit</button></td></tr><tr><td class="cd-table__name" data-label="Collection">Diary events</td><td class="cd-num" data-label="Items">8</td><td data-label="Last updated">25 Aug 2026</td><td data-label="Status">Published</td><td data-label="Actions"><button class="cd-download" type="button">Edit</button></td></tr><tr><td class="cd-table__name" data-label="Collection">Programmes</td><td class="cd-num" data-label="Items">8</td><td data-label="Last updated">24 Jul 2026</td><td data-label="Status">Published</td><td data-label="Actions"><button class="cd-download" type="button">Edit</button></td></tr></tbody></table></div>
           </section>
 
           <section class="cd-admin__panel" id="actividad">
-            <h2 class="cd-admin__panel-title">Actividad reciente</h2>
+            <h2 class="cd-admin__panel-title">Recent activity</h2>
             <ul class="cd-activity">
-              <li><time>26 ago · 09:12</time><span><b>Comunicación</b> publicó la noticia «Instituciones educativas coordinan una nueva agenda nacional de información».</span></li><li><time>20 ago · 16:40</time><span><b>Secretaría Técnica</b> publicó la serie estadística 2026 y actualizó 8 conjuntos de datos.</span></li><li><time>20 ago · 16:05</time><span><b>Secretaría Técnica</b> validó el cruce de matrícula contra el directorio de centros.</span></li><li><time>14 ago · 11:22</time><span><b>Estadística</b> cargó el manual metodológico de indicadores (v1.2).</span></li><li><time>06 ago · 15:03</time><span><b>Secretaría del Consejo</b> registró tres resoluciones de la sesión 08/2026.</span></li><li><time>06 ago · 14:50</time><span><b>Participación</b> amplió el plazo de la consulta CP-2026-04 en veinte días.</span></li>
+              <li><time>26 Aug · 09:12</time><span><b>Communications</b> published the story “Education institutions agree a new national information agenda”.</span></li><li><time>20 Aug · 16:40</time><span><b>Technical Secretariat</b> published the 2026 statistical series and updated 8 datasets.</span></li><li><time>20 Aug · 16:05</time><span><b>Technical Secretariat</b> validated the enrolment cross-check against the school directory.</span></li><li><time>14 Aug · 11:22</time><span><b>Statistics</b> uploaded the methodological manual of indicators (v1.2).</span></li><li><time>06 Aug · 15:03</time><span><b>Council Secretariat</b> recorded three resolutions from session 08/2026.</span></li><li><time>06 Aug · 14:50</time><span><b>Participation</b> extended consultation CP-2026-04 by twenty days.</span></li>
             </ul>
           </section>
 
           <section class="cd-admin__panel" id="usuarios">
-            <h2 class="cd-admin__panel-title">Perfiles de usuario</h2>
-            <div class="cd-tablewrap"><table class="cd-table cd-table--stack"><caption>Perfiles y permisos. Estructura demostrativa.</caption><thead><tr><th scope="col">Perfil</th><th scope="col">Permisos</th><th scope="col" class="cd-num">Usuarios</th></tr></thead><tbody><tr><td class="cd-table__name" data-label="Perfil">Administración</td><td data-label="Permisos">Gestión total del portal y de los usuarios</td><td class="cd-num" data-label="Usuarios">2</td></tr><tr><td class="cd-table__name" data-label="Perfil">Secretaría Técnica</td><td data-label="Permisos">Series estadísticas, indicadores y datos abiertos</td><td class="cd-num" data-label="Usuarios">4</td></tr><tr><td class="cd-table__name" data-label="Perfil">Comunicación</td><td data-label="Permisos">Noticias, agenda y publicaciones</td><td class="cd-num" data-label="Usuarios">3</td></tr><tr><td class="cd-table__name" data-label="Perfil">Consulta</td><td data-label="Permisos">Solo lectura y descarga de informes</td><td class="cd-num" data-label="Usuarios">3</td></tr></tbody></table></div>
+            <h2 class="cd-admin__panel-title">User profiles</h2>
+            <div class="cd-tablewrap"><table class="cd-table cd-table--stack"><caption>Profiles and permissions. Illustrative structure.</caption><thead><tr><th scope="col">Profile</th><th scope="col">Permissions</th><th scope="col" class="cd-num">Users</th></tr></thead><tbody><tr><td class="cd-table__name" data-label="Profile">Administration</td><td data-label="Permissions">Full control of the portal and its users</td><td class="cd-num" data-label="Users">2</td></tr><tr><td class="cd-table__name" data-label="Profile">Technical Secretariat</td><td data-label="Permissions">Statistical series, indicators and open data</td><td class="cd-num" data-label="Users">4</td></tr><tr><td class="cd-table__name" data-label="Profile">Communications</td><td data-label="Permissions">News, diary and publications</td><td class="cd-num" data-label="Users">3</td></tr><tr><td class="cd-table__name" data-label="Profile">Consultation</td><td data-label="Permissions">Read-only, with report downloads</td><td class="cd-num" data-label="Users">3</td></tr></tbody></table></div>
           </section>
         </main>
       </div>

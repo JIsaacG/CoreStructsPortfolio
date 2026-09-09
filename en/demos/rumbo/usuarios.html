@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Usuarios — Rumbo · Demo de CoreStruct</title>
-    <meta name="description" content="Personal de Rumbo con acceso al panel interno, sus roles y permisos." />
+    <title>Users — Rumbo · A CoreStruct demo</title>
+    <meta name="description" content="Rumbo staff with access to the internal dashboard, their roles and their permissions." />
     <!-- An invented company must never turn up in a search result as a real one. -->
     <meta name="robots" content="noindex, follow" />
     <meta name="theme-color" content="#080b12" />
@@ -81,21 +81,21 @@
         <path fill="#253880" d="M1 107L160 195L166 210L176 216L176 252L174 252L42 176L42 294L114 336L154 359L154 297L176 309L176 422L2 321L1 108Z"/>
       </svg>
       <span class="dm-badge__tag">Demo</span>
-      <span class="dm-badge__label">Sitio de ejemplo · CoreStruct</span>
+      <span class="dm-badge__label">Sample site · CoreStruct</span>
     </a>
 
     <header class="dm-header" data-header>
       <div class="dm-header__inner">
         <a class="dm-wordmark" href="index.html">
           <span class="dm-wordmark__name">Rumbo</span>
-          <span class="dm-wordmark__mark">Distribución mayorista</span>
+          <span class="dm-wordmark__mark">Wholesale distribution</span>
         </a>
 
         <nav class="dm-nav" aria-label="Sections">
-            <a class="dm-nav__link" href="index.html">Panel</a>
-            <a class="dm-nav__link" href="expedientes.html">Expedientes</a>
-            <a class="dm-nav__link" href="usuarios.html" aria-current="page">Usuarios</a>
-            <a class="dm-nav__link" href="operaciones.html">Operaciones</a>
+            <a class="dm-nav__link" href="index.html">Dashboard</a>
+            <a class="dm-nav__link" href="expedientes.html">Customers</a>
+            <a class="dm-nav__link" href="usuarios.html" aria-current="page">Users</a>
+            <a class="dm-nav__link" href="operaciones.html">Operations</a>
         </nav>
 
         <div class="dm-header__actions">
@@ -117,28 +117,28 @@
     </header>
 
     <div class="dm-menu" id="dm-menu" data-mobile-nav>
-      <a class="dm-menu__link" href="index.html">Panel</a>
-      <a class="dm-menu__link" href="expedientes.html">Expedientes</a>
-      <a class="dm-menu__link" href="usuarios.html">Usuarios</a>
-      <a class="dm-menu__link" href="operaciones.html">Operaciones</a>
+      <a class="dm-menu__link" href="index.html">Dashboard</a>
+      <a class="dm-menu__link" href="expedientes.html">Customers</a>
+      <a class="dm-menu__link" href="usuarios.html">Users</a>
+      <a class="dm-menu__link" href="operaciones.html">Operations</a>
       <a class="dm-menu__link" href="../../index.html#contacto">Let's talk about your project</a>
     </div>
 
     <main class="dm" id="contenido">
       <div class="dm-page-head dm-shell">
-        <h1 class="dm-page-head__title" data-reveal="fade">Usuarios</h1>
+        <h1 class="dm-page-head__title" data-reveal="fade">Users</h1>
         <p class="dm-page-head__text" data-reveal="fade">
-          Personal con acceso al panel, su rol y su último ingreso.
+          Staff with dashboard access, their role and their last sign-in.
         </p>
       </div>
 
       <div class="dm-section dm-shell" data-table>
         <div class="dm-toolbar">
           <div class="dm-filterbar" data-filter-group>
-            <button type="button" class="dm-filter" data-filter="all" aria-pressed="true">Todos</button>
-            <button type="button" class="dm-filter" data-filter="activo" aria-pressed="false">Activo</button>
-            <button type="button" class="dm-filter" data-filter="invitado" aria-pressed="false">Invitado</button>
-            <button type="button" class="dm-filter" data-filter="suspendido" aria-pressed="false">Suspendido</button>
+            <button type="button" class="dm-filter" data-filter="all" aria-pressed="true">All</button>
+            <button type="button" class="dm-filter" data-filter="activo" aria-pressed="false">Active</button>
+            <button type="button" class="dm-filter" data-filter="invitado" aria-pressed="false">Invited</button>
+            <button type="button" class="dm-filter" data-filter="suspendido" aria-pressed="false">Suspended</button>
           </div>
         </div>
 
@@ -146,92 +146,92 @@
           <table class="dm-table">
             <thead>
               <tr>
-                <th scope="col">Nombre</th>
-                <th scope="col">Rol</th>
-                <th scope="col">Área</th>
-                <th scope="col">Último acceso</th>
-                <th scope="col">Estado</th>
+                <th scope="col">Name</th>
+                <th scope="col">Role</th>
+                <th scope="col">Area</th>
+                <th scope="col">Last sign-in</th>
+                <th scope="col">Status</th>
               </tr>
             </thead>
             <tbody>
             <tr data-row data-filterval="activo" data-search="marlon estrada">
               <td>Marlon Estrada<span class="dm-table__sub">marlon.estrada@rumbo-demo.hn</span></td>
-              <td>Administrador</td>
+              <td>Administrator</td>
               <td>Address</td>
-              <td>24 ago 2026</td>
-              <td><span class="dm-pill dm-pill--ok">Activo</span></td>
+              <td>24 Aug 2026</td>
+              <td><span class="dm-pill dm-pill--ok">Active</span></td>
             </tr>
             <tr data-row data-filterval="activo" data-search="fabiola núñez">
               <td>Fabiola Núñez<span class="dm-table__sub">fabiola.nunez@rumbo-demo.hn</span></td>
-              <td>Supervisor de ventas</td>
+              <td>Sales supervisor</td>
               <td>Valle de Sula</td>
-              <td>24 ago 2026</td>
-              <td><span class="dm-pill dm-pill--ok">Activo</span></td>
+              <td>24 Aug 2026</td>
+              <td><span class="dm-pill dm-pill--ok">Active</span></td>
             </tr>
             <tr data-row data-filterval="activo" data-search="óscar reyes">
               <td>Óscar Reyes<span class="dm-table__sub">oscar.reyes@rumbo-demo.hn</span></td>
-              <td>Vendedor</td>
+              <td>Sales rep</td>
               <td>San Pedro Sula, Choloma, Puerto Cortés</td>
-              <td>23 ago 2026</td>
-              <td><span class="dm-pill dm-pill--ok">Activo</span></td>
+              <td>23 Aug 2026</td>
+              <td><span class="dm-pill dm-pill--ok">Active</span></td>
             </tr>
             <tr data-row data-filterval="activo" data-search="katherine suazo">
               <td>Katherine Suazo<span class="dm-table__sub">katherine.suazo@rumbo-demo.hn</span></td>
-              <td>Vendedor</td>
+              <td>Sales rep</td>
               <td>El Progreso, Villanueva, La Lima</td>
-              <td>24 ago 2026</td>
-              <td><span class="dm-pill dm-pill--ok">Activo</span></td>
+              <td>24 Aug 2026</td>
+              <td><span class="dm-pill dm-pill--ok">Active</span></td>
             </tr>
             <tr data-row data-filterval="activo" data-search="julio cálix">
               <td>Julio Cálix<span class="dm-table__sub">julio.calix@rumbo-demo.hn</span></td>
-              <td>Bodega</td>
-              <td>Centro de distribución</td>
-              <td>22 ago 2026</td>
-              <td><span class="dm-pill dm-pill--ok">Activo</span></td>
+              <td>Warehouse</td>
+              <td>Distribution centre</td>
+              <td>22 Aug 2026</td>
+              <td><span class="dm-pill dm-pill--ok">Active</span></td>
             </tr>
             <tr data-row data-filterval="activo" data-search="wendy paz">
               <td>Wendy Paz<span class="dm-table__sub">wendy.paz@rumbo-demo.hn</span></td>
-              <td>Cobranza</td>
-              <td>Cartera vencida</td>
-              <td>24 ago 2026</td>
-              <td><span class="dm-pill dm-pill--ok">Activo</span></td>
+              <td>Collections</td>
+              <td>Overdue accounts</td>
+              <td>24 Aug 2026</td>
+              <td><span class="dm-pill dm-pill--ok">Active</span></td>
             </tr>
             <tr data-row data-filterval="invitado" data-search="diego handal">
               <td>Diego Handal<span class="dm-table__sub">diego.handal@rumbo-demo.hn</span></td>
-              <td>Vendedor</td>
-              <td>Zona norte — en incorporación</td>
+              <td>Sales rep</td>
+              <td>Northern area — onboarding</td>
               <td>—</td>
-              <td><span class="dm-pill dm-pill--info">Invitado</span></td>
+              <td><span class="dm-pill dm-pill--info">Invited</span></td>
             </tr>
             <tr data-row data-filterval="suspendido" data-search="sandra bustillo">
               <td>Sandra Bustillo<span class="dm-table__sub">sandra.bustillo@rumbo-demo.hn</span></td>
-              <td>Bodega</td>
-              <td>Centro de distribución</td>
-              <td>30 jun 2026</td>
-              <td><span class="dm-pill dm-pill--bad">Suspendido</span></td>
+              <td>Warehouse</td>
+              <td>Distribution centre</td>
+              <td>30 Jun 2026</td>
+              <td><span class="dm-pill dm-pill--bad">Suspended</span></td>
             </tr>
             </tbody>
           </table>
-          <p class="dm-table-empty" data-table-empty>Ningún usuario coincide con ese filtro.</p>
+          <p class="dm-table-empty" data-table-empty>No user matches that filter.</p>
         </div>
 
         <div class="dm-panel" data-reveal="rise" style="margin-block-start: var(--space-lg)">
-          <h2 class="dm-panel__title">Roles y permisos</h2>
+          <h2 class="dm-panel__title">Roles and permissions</h2>
           <div class="dm-table-wrap">
             <table class="dm-roles">
               <thead>
                 <tr>
-                  <th scope="col">Rol</th>
-                <th scope="col">Ver expedientes</th>
-                <th scope="col">Editar expedientes</th>
-                <th scope="col">Aprobar crédito</th>
-                <th scope="col">Gestionar usuarios</th>
-                <th scope="col">Ver reportes</th>
+                  <th scope="col">Role</th>
+                <th scope="col">View customers</th>
+                <th scope="col">Edit customers</th>
+                <th scope="col">Approve credit</th>
+                <th scope="col">Manage users</th>
+                <th scope="col">View reports</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <th scope="row">Administrador</th>
+                  <th scope="row">Administrator</th>
                   <td><span data-yes>✓</span></td>
                   <td><span data-yes>✓</span></td>
                   <td><span data-yes>✓</span></td>
@@ -239,7 +239,7 @@
                   <td><span data-yes>✓</span></td>
                 </tr>
                 <tr>
-                  <th scope="row">Supervisor de ventas</th>
+                  <th scope="row">Sales supervisor</th>
                   <td><span data-yes>✓</span></td>
                   <td><span data-yes>✓</span></td>
                   <td><span data-yes>✓</span></td>
@@ -247,7 +247,7 @@
                   <td><span data-yes>✓</span></td>
                 </tr>
                 <tr>
-                  <th scope="row">Vendedor</th>
+                  <th scope="row">Sales rep</th>
                   <td><span data-yes>✓</span></td>
                   <td><span data-yes>✓</span></td>
                   <td><span data-no>—</span></td>
@@ -255,7 +255,7 @@
                   <td><span data-no>—</span></td>
                 </tr>
                 <tr>
-                  <th scope="row">Cobranza</th>
+                  <th scope="row">Collections</th>
                   <td><span data-yes>✓</span></td>
                   <td><span data-no>—</span></td>
                   <td><span data-no>—</span></td>
@@ -263,7 +263,7 @@
                   <td><span data-yes>✓</span></td>
                 </tr>
                 <tr>
-                  <th scope="row">Bodega</th>
+                  <th scope="row">Warehouse</th>
                   <td><span data-yes>✓</span></td>
                   <td><span data-no>—</span></td>
                   <td><span data-no>—</span></td>
@@ -280,16 +280,15 @@
         <div class="dm-shell dm-footer__inner">
           <div class="dm-footer__brand">
             <p class="dm-footer__name">Rumbo</p>
-            <p class="dm-footer__line">Rumbo Distribución, S. de R.L. · Distribuidora de consumo masivo — ficticia</p>
+            <p class="dm-footer__line">Rumbo Distribución, S. de R.L. · FMCG distributor — fictional</p>
             <p class="dm-footer__credit">
-              Marca ficticia. Sitio de ejemplo construido por
-              <a href="../../index.html">CoreStruct</a> &copy; <span data-current-year>2026</span>.
+              Fictional brand. Sample site built by <a href="../../index.html">CoreStruct</a> © <span data-current-year>2026</span>.
             </p>
           </div>
-          <nav class="dm-footer__nav" aria-label="Pie">
-            <a href="index.html">Panel</a>
-            <a href="expedientes.html">Expedientes</a>
-            <a href="operaciones.html">Operaciones</a>
+          <nav class="dm-footer__nav" aria-label="Footer">
+            <a href="index.html">Dashboard</a>
+            <a href="expedientes.html">Customers</a>
+            <a href="operaciones.html">Operations</a>
             <a href="../../index.html#contacto">Contact</a>
           </nav>
         </div>

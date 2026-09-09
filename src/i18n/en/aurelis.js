@@ -16,10 +16,15 @@
  * "not looked at yet".
  */
 
+/** These entries apply only to this demo's pages. */
+export const scope = "demos/aurelis";
+
 export default {
   /* ------------------------------------------------------- identity, kept */
 
   Aurelis: "Aurelis",
+  /* Lettered into the card artwork on the portfolio home page. */
+  AURELIS: "AURELIS",
   Group: "Group",
   "Aurelis Group": "Aurelis Group",
   "Aurelis Group, S.A. de C.V.": "Aurelis Group, S.A. de C.V.",

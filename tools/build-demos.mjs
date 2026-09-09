@@ -124,9 +124,7 @@ function renderHead(demo) {
  */
 function renderSprite({ defs }) {
   return `    <svg class="sprite" aria-hidden="true" focusable="false" width="0" height="0">
-div>
-
-\$\{renderShop\(demo\)\}defs>${collapse(defs)}</defs>
+      <defs>${collapse(defs)}</defs>
     </svg>`;
 }
 
