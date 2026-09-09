@@ -16,6 +16,26 @@
 export default {
   /* ------------------------------------------------------------- metadata */
 
+  /* The title, description and social copy lead with what a buyer types, not
+     with what the studio calls itself: "desarrollo web" and "software a medida"
+     are the searched terms, and the country qualifies them. The English side
+     swaps Honduras for Latin America — an English-speaking buyer is shopping
+     for a region to nearshore to, and that is the phrase they search. */
+
+  "Desarrollo web y software a medida en Honduras | CoreStruct":
+    "Custom Web & Software Development in Latin America | CoreStruct",
+
+  "Diseñamos y desarrollamos sitios web, plataformas y sistemas empresariales a medida en Honduras y Latinoamérica. Cotiza tu proyecto con CoreStruct.":
+    "We design and build custom websites, platforms and business systems in Honduras " +
+    "and Latin America. Get a quote from CoreStruct.",
+
+  "CoreStruct — Desarrollo web y software a medida en Honduras":
+    "CoreStruct — Custom web and software development in Honduras",
+
+  "Sitios corporativos, plataformas web, sistemas empresariales y automatización a medida. Trabajamos desde Honduras para Latinoamérica.":
+    "Corporate sites, web platforms, business systems and custom automation. " +
+    "We work from Honduras for Latin America and beyond.",
+
   "CoreStruct — Desarrollo de software y experiencias digitales":
     "CoreStruct — Software development and digital experiences",
 
@@ -35,11 +55,22 @@ export default {
 
   /* The `knowsAbout` list in the JSON-LD. */
   "Desarrollo web": "Web development",
+  "Diseño web": "Web design",
   "Plataformas web": "Web platforms",
   "Sistemas empresariales": "Business systems",
   "Portales educativos": "Education portals",
   "Menús digitales para restaurantes": "Digital menus for restaurants",
   "Automatización de procesos": "Process automation",
+
+  /* The rest of the JSON-LD: `areaServed`, the offer catalogue's own name, and
+     the one service name the portfolio's cards do not already cover.
+     `contactType` is schema.org vocabulary rather than prose — it maps to
+     itself so that "unchanged" stays a decision on the record. */
+  Honduras: "Honduras",
+  Latinoamérica: "Latin America",
+  Automatización: "Automation",
+  "Servicios de desarrollo y diseño web": "Web development and design services",
+  sales: "sales",
 
   /* --------------------------------------------------------------- chrome */
 

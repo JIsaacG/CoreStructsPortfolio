@@ -34,7 +34,8 @@ import { pages, roundtrip } from "./lib/roundtrip-check.mjs";
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
 const EN = { code: "en", label: "EN", og: "en_US", name: "English" };
-const ES = { code: "es", label: "ES", og: "es_ES", name: "Español" };
+/* es_HN, not es_ES: the Spanish the site is written in, and sells in. */
+const ES = { code: "es", label: "ES", og: "es_HN", name: "Español" };
 const MIRROR = "en";
 
 /* Everything this build injects is fenced, so the next run can lift it back
@@ -209,6 +210,14 @@ for (const page of pages(ROOT)) {
   english = english
     .replace(/<html([^>]*)\slang="es"/i, '<html$1 lang="en"')
     .replace(/(<meta property="og:locale" content=")es[_-][A-Za-z]{2}(")/i, `$1${EN.og}$2`)
+    /* The pair is symmetric: each version names itself in `og:locale` and its
+       counterpart in `og:locale:alternate`, so the two never both claim the
+       same locale. The closing quote after `og:locale` is what keeps the
+       rule above off this tag. */
+    .replace(
+      /(<meta property="og:locale:alternate" content=")en[_-][A-Za-z]{2}(")/i,
+      `$1${ES.og}$2`,
+    )
     .replace(
       /(<(?:link|meta)\b[^>]*?\b(?:rel="canonical"|property="og:url")[^>]*?\b(?:href|content)=")([^"]+)(")/gi,
       (_m, open, url, close) => `${open}${withLocale(url)}${close}`,
@@ -240,7 +249,7 @@ if (unmarked.length) {
   process.exitCode = 1;
 }
 
-/* ------------------------------------------- the manifest and the sitemaps */
+/* ------------------------------------------------------------- the manifest */
 
 const manifest = JSON.parse(readFileSync(join(ROOT, "site.webmanifest"), "utf8"));
 writeFileSync(
@@ -259,11 +268,11 @@ writeFileSync(
   )}\n`,
 );
 
-const sitemap = readFileSync(join(ROOT, "sitemap.xml"), "utf8");
-writeFileSync(
-  join(ROOT, MIRROR, "sitemap.xml"),
-  sitemap.replace(/<loc>([^<]+)<\/loc>/g, (_m, url) => `<loc>${withLocale(url)}</loc>`),
-);
+/* The mirror used to get a sitemap of its own, derived from the Spanish one by
+   re-pointing every `<loc>`. It no longer does: `build-seo.mjs` writes a single
+   sitemap that lists both languages and links each URL to its counterpart with
+   `xhtml:link`, which is the pair Google wants to read together. Two sitemaps
+   listing one language each cannot express that pairing. */
 
 /* ------------------------------------------------------------------ report */
 

@@ -9,10 +9,18 @@ export const site = {
   url: "https://corestruct.com",
   locale: "es",
 
-  title: "CoreStruct — Desarrollo de software y experiencias digitales",
+  // Kept in step with the `<head>` of index.html by hand: the head is written
+  // there rather than generated from here, because `build-content.mjs` only
+  // fills the `<!-- build:… -->` regions in the body. Change one, change both.
+  title: "Desarrollo web y software a medida en Honduras | CoreStruct",
   description:
-    "Estudio de tecnología y desarrollo de software. Construimos sitios corporativos, " +
-    "plataformas web, sistemas empresariales y automatizaciones a la medida de cada operación.",
+    "Diseñamos y desarrollamos sitios web, plataformas y sistemas empresariales " +
+    "a medida en Honduras y Latinoamérica. Cotiza tu proyecto con CoreStruct.",
+
+  // Where the work is sold, which is not the same as where the studio sits.
+  // `location` below stays null on purpose; this is the reach the JSON-LD
+  // declares through `areaServed`, and it narrows nothing.
+  areaServed: ["Honduras", "Latinoamérica"],
 
   // TODO: replace with the real channels before going live. Anything left null
   // or empty is simply not rendered, so the page never shows a placeholder

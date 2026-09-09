@@ -587,6 +587,9 @@ export function translatePage(html, { dictionary, rules = [], page, report, loca
         "applicationCategory", "operatingSystem", "priceCurrency", "currency",
       ]);
 
+      /* The `@` keywords that hold content instead of describing it. */
+      const CONTAINERS = new Set(["@graph", "@list", "@set"]);
+
       const localise = (node) => {
         if (typeof node === "string") {
           const english = lookup(node, "@ld+json");
@@ -604,6 +607,13 @@ export function translatePage(html, { dictionary, rules = [], page, report, loca
               if (k === "availableLanguage" || k === "knowsLanguage") {
                 return [k, Array.isArray(v) ? [locale] : locale];
               }
+              // JSON-LD's container keywords are the exception to the rule
+              // below: `@graph` holds a list of nodes, and a node inside it is
+              // as translatable as one at the top level. Without this, a page
+              // that groups its entities under `@graph` — as index.html does —
+              // ships its whole schema untranslated, and does it silently,
+              // because nothing was ever looked up to be reported missing.
+              if (CONTAINERS.has(k)) return [k, localise(v)];
               if (k.startsWith("@") || VERBATIM.has(k)) return [k, v];
               return [k, localise(v)];
             }),

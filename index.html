@@ -4,10 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>CoreStruct — Desarrollo de software y experiencias digitales</title>
+    <title>Desarrollo web y software a medida en Honduras | CoreStruct</title>
     <meta
       name="description"
-      content="Estudio de tecnología y desarrollo de software. Construimos sitios corporativos, plataformas web, sistemas empresariales y automatizaciones a la medida de cada operación."
+      content="Diseñamos y desarrollamos sitios web, plataformas y sistemas empresariales a medida en Honduras y Latinoamérica. Cotiza tu proyecto con CoreStruct."
     />
     <link rel="canonical" href="https://corestruct.com/" />
     <meta name="theme-color" content="#080b12" />
@@ -16,22 +16,26 @@
     <!-- Open Graph / Twitter -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="CoreStruct" />
-    <meta property="og:locale" content="es_ES" />
+    <!-- es_HN, not es_ES: the offer is written for Honduras and the region it
+         sells into. `og:locale:alternate` is flipped by build-i18n.mjs, the
+         same way `og:locale` is. -->
+    <meta property="og:locale" content="es_HN" />
+    <meta property="og:locale:alternate" content="en_US" />
     <meta property="og:url" content="https://corestruct.com/" />
-    <meta property="og:title" content="CoreStruct — Desarrollo de software y experiencias digitales" />
+    <meta property="og:title" content="CoreStruct — Desarrollo web y software a medida en Honduras" />
     <meta
       property="og:description"
-      content="Convertimos ideas en sistemas que funcionan: sitios corporativos, plataformas, sistemas empresariales y automatización."
+      content="Sitios corporativos, plataformas web, sistemas empresariales y automatización a medida. Trabajamos desde Honduras para Latinoamérica."
     />
     <meta property="og:image" content="https://corestruct.com/assets/brand/og-card.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="CoreStruct" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="CoreStruct — Desarrollo de software y experiencias digitales" />
+    <meta name="twitter:title" content="CoreStruct — Desarrollo web y software a medida en Honduras" />
     <meta
       name="twitter:description"
-      content="Convertimos ideas en sistemas que funcionan: sitios corporativos, plataformas, sistemas empresariales y automatización."
+      content="Sitios corporativos, plataformas web, sistemas empresariales y automatización a medida. Trabajamos desde Honduras para Latinoamérica."
     />
     <meta name="twitter:image" content="https://corestruct.com/assets/brand/og-card.png" />
 
@@ -82,20 +86,61 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "CoreStruct",
-        "url": "https://corestruct.com/",
-        "logo": "https://corestruct.com/assets/brand/icon-512.png",
-        "image": "https://corestruct.com/assets/brand/og-card.png",
-        "description": "Estudio de tecnología y desarrollo de software: sitios corporativos, plataformas web, sistemas empresariales, portales educativos, cartas digitales para restaurantes y automatización.",
-        "email": "contacto@corestruct.com",
-        "knowsAbout": [
-          "Desarrollo web",
-          "Plataformas web",
-          "Sistemas empresariales",
-          "Portales educativos",
-          "Menús digitales para restaurantes",
-          "Automatización de procesos"
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://corestruct.com/#organization",
+            "name": "CoreStruct",
+            "url": "https://corestruct.com/",
+            "logo": "https://corestruct.com/assets/brand/icon-512.png",
+            "image": "https://corestruct.com/assets/brand/og-card.png",
+            "description": "Estudio de tecnología y desarrollo de software: sitios corporativos, plataformas web, sistemas empresariales, portales educativos, cartas digitales para restaurantes y automatización.",
+            "email": "contacto@corestruct.com",
+            "areaServed": [
+              { "@type": "Country", "name": "Honduras" },
+              { "@type": "Place", "name": "Latinoamérica" }
+            ],
+            "knowsAbout": [
+              "Desarrollo web",
+              "Diseño web",
+              "Software a medida",
+              "Plataformas web",
+              "Sistemas empresariales",
+              "Landing pages",
+              "Sitios gubernamentales",
+              "Portales educativos",
+              "Menús digitales para restaurantes",
+              "Automatización de procesos"
+            ],
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "contactType": "sales",
+              "email": "contacto@corestruct.com",
+              "availableLanguage": ["es", "en"]
+            },
+            "hasOfferCatalog": {
+              "@type": "OfferCatalog",
+              "name": "Servicios de desarrollo y diseño web",
+              "itemListElement": [
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Sitios corporativos" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Sitios gubernamentales" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Sistemas empresariales" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Landing pages" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Portales educativos" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Restaurantes y menús" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Automatización" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Soluciones a medida" } }
+              ]
+            }
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://corestruct.com/#website",
+            "url": "https://corestruct.com/",
+            "name": "CoreStruct",
+            "publisher": { "@id": "https://corestruct.com/#organization" },
+            "inLanguage": "es"
+          }
         ]
       }
     </script>
