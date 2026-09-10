@@ -138,34 +138,6 @@
   }
 }
 
-/* Each face arrives along its own isometric axis, so the cube builds itself. */
-.js .hero__mark-svg .cs-face {
-  opacity: 0;
-  animation: hero-face-in 1s var(--ease-out-expo) forwards;
-}
-
-.js .hero__mark-svg .cs-face--left {
-  transform: translate(-13%, 7%);
-  animation-delay: 0.1s;
-}
-
-.js .hero__mark-svg .cs-face--right {
-  transform: translate(13%, 7%);
-  animation-delay: 0.22s;
-}
-
-.js .hero__mark-svg .cs-face--top {
-  transform: translate(0, -16%);
-  animation-delay: 0.34s;
-}
-
-@keyframes hero-face-in {
-  to {
-    opacity: 1;
-    transform: translate(0, 0);
-  }
-}
-
 /* --- Wordmark -------------------------------------------------------------- */
 
 .hero__wordmark {
@@ -285,12 +257,6 @@
 
   .hero__mark::before {
     opacity: 1;
-    animation: none;
-  }
-
-  .js .hero__mark-svg .cs-face {
-    opacity: 1;
-    transform: none;
     animation: none;
   }
 
