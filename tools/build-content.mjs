@@ -14,6 +14,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { readIsotype, renderHeroMark, renderSprite, token } from "./lib/brand.mjs";
 import { alliances } from "../src/data/alliances.js";
 import { mockups } from "../src/data/mockups.js";
 import { projects } from "../src/data/projects.js";
@@ -21,8 +22,6 @@ import { navigation, site } from "../src/data/site.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const PAGE = join(ROOT, "index.html");
-const ISOTYPE = join(ROOT, "assets", "brand", "isotipo.svg");
-const TOKENS = join(ROOT, "src", "styles", "tokens.css");
 
 /** Where a card points until a real case study exists. */
 const DEFAULT_PROJECT_HREF = "#contacto";
@@ -41,14 +40,6 @@ const escape = (value) =>
 const emphasise = (value) =>
   escape(value).replace(/\*\*(.+?)\*\*/g, '<strong class="alliance__lift">$1</strong>');
 
-/** Read a custom property out of the token sheet, so colours are declared once. */
-function token(name) {
-  const css = readFileSync(TOKENS, "utf8");
-  const value = css.match(new RegExp(`--${name}:\\s*([^;]+);`))?.[1]?.trim();
-  if (!value) throw new Error(`tokens.css does not define --${name}`);
-  return value;
-}
-
 /** Replace the body of a `<!-- build:name -->` region. */
 function fill(html, name, content) {
   const region = new RegExp(
@@ -56,47 +47,6 @@ function fill(html, name, content) {
   );
   if (!region.test(html)) throw new Error(`index.html has no "${name}" build region`);
   return html.replace(region, `$1\n${content.trimEnd()}\n$2`);
-}
-
-/* ------------------------------------------------------------------- brand */
-
-/** Pull the gradient defs and face paths out of the generated isotype. */
-function readIsotype() {
-  const svg = readFileSync(ISOTYPE, "utf8");
-  const defs = svg.match(/<defs>([\s\S]*?)<\/defs>/)?.[1];
-  const paths = svg.match(/<path[\s\S]*?\/>/g)?.join("");
-  if (!defs || !paths) throw new Error("assets/brand/isotipo.svg is not in the expected shape");
-  return { defs, paths };
-}
-
-/**
- * One hidden SVG holds every shared definition. The header and footer reference
- * the symbol with <use>; the hero cannot, because CSS does not cross into a
- * <use> shadow tree and the hero animates each face separately.
- */
-function renderSprite({ defs, paths }) {
-  const primary = token("brand-primary");
-  const secondary = token("brand-secondary");
-  return `    <svg class="sprite" aria-hidden="true" focusable="false" width="0" height="0">
-      <defs>
-        ${defs}
-        <linearGradient id="mk-brand-gradient" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="${primary}" />
-          <stop offset="100%" stop-color="${secondary}" />
-        </linearGradient>
-        <symbol id="cs-isotipo" viewBox="0 0 362 422">${paths}</symbol>
-      </defs>
-    </svg>`;
-}
-
-function renderHeroMark({ paths }) {
-  // Decorative: the wordmark right below it carries the accessible name.
-  return `              <svg
-                class="hero__mark-svg"
-                viewBox="0 0 362 422"
-                aria-hidden="true"
-                focusable="false"
-              >${paths}</svg>`;
 }
 
 /* ---------------------------------------------------------------- projects */
@@ -314,8 +264,12 @@ function renderChannels() {
       value: phone,
       href: `tel:${phone.replace(/[^\d+]/g, "")}`,
     },
-    /* Left unset in `site.js`: the studio takes work from anywhere, and a city
-       in this list reads as the limit of where it will take it. */
+    /* "Cobertura" rather than "Dirección": the value names the base city and
+       the reach in one breath, and labelling it as an address would promise a
+       street number the studio does not publish. It is also the only visible
+       copy that matches the `address` in the JSON-LD — structured data that
+       claims a city the page never mentions is the kind of mismatch Google
+       discounts, so this row is what keeps that claim honest. */
     location && { label: "Cobertura", value: location },
   ].filter(Boolean);
 
@@ -338,7 +292,7 @@ ${channels
 
 function renderFooterMeta() {
   const links = [
-    ...navigation.map((item) => ({ label: item.label, href: `#${item.id}` })),
+    ...navigation.map((item) => ({ label: item.label, href: item.href ?? `#${item.id}` })),
     ...site.social.map((item) => ({ label: item.label, href: item.href, external: true })),
   ];
 

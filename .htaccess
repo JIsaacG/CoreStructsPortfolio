@@ -1,0 +1,52 @@
+# Un sitio, un nombre.
+#
+# Hoy `corestructhn.com` y `www.corestructhn.com` responden 200 los dos, sin
+# redirigir. Para un visitante da igual; para Google son dos sitios con el
+# mismo contenido, y repartir entre ambos los enlaces que apunten al sitio
+# reparte también la autoridad que esos enlaces valen.
+#
+# El `<link rel="canonical">` de cada página ya declara la versión sin `www`,
+# pero un canonical es una sugerencia y un 301 es un hecho. Esto lo vuelve
+# hecho.
+#
+# 301 y no 302: el 302 dice "por ahora", y un buscador no traslada autoridad a
+# una mudanza temporal.
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # www -> raíz, conservando ruta y query.
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+</IfModule>
+
+# El paso de http a https ya lo hace el hosting antes de llegar aquí, así que
+# no se repite: una segunda regla que dependa de %{HTTPS} puede entrar en bucle
+# cuando quien termina el TLS es un proxy y no Apache.
+
+# Compresión. El sitio es HTML, CSS y JS estáticos —texto puro—, y el CSS
+# compilado pasa de 50 KB. Sin esto viaja entero, y la velocidad de carga es
+# uno de los pocos factores de posicionamiento que se pueden medir desde aquí.
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml
+  AddOutputFilterByType DEFLATE application/javascript application/json
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# Caché de lo que no cambia de nombre al cambiar de contenido.
+#
+# Las fuentes y los iconos de marca son inmutables en la práctica: un año.
+# El CSS y el JS no llevan hash en el nombre, así que se les da una semana —
+# lo suficiente para que una segunda visita no los vuelva a bajar, y lo bastante
+# corto para que un cambio llegue solo. El HTML no se cachea nunca: es lo que
+# tiene que reflejar un cambio el día que se publica.
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType font/woff2               "access plus 1 year"
+  ExpiresByType image/svg+xml            "access plus 1 month"
+  ExpiresByType image/png                "access plus 1 month"
+  ExpiresByType image/x-icon             "access plus 1 month"
+  ExpiresByType text/css                 "access plus 1 week"
+  ExpiresByType application/javascript   "access plus 1 week"
+  ExpiresByType text/html                "access plus 0 seconds"
+</IfModule>

@@ -6,7 +6,7 @@
 export const site = {
   name: "CoreStruct",
   legalName: "CoreStruct",
-  url: "https://corestruct.com",
+  url: "https://corestructhn.com",
   locale: "es",
 
   // Kept in step with the `<head>` of index.html by hand: the head is written
@@ -17,10 +17,27 @@ export const site = {
     "Diseñamos y desarrollamos sitios web, plataformas y sistemas empresariales " +
     "a medida en Honduras y Latinoamérica. Cotiza tu proyecto con CoreStruct.",
 
-  // Where the work is sold, which is not the same as where the studio sits.
-  // `location` below stays null on purpose; this is the reach the JSON-LD
-  // declares through `areaServed`, and it narrows nothing.
-  areaServed: ["Honduras", "Latinoamérica"],
+  // Where the work is sold. `location` below names where the studio sits; this
+  // names how far it reaches, and the two are different claims on purpose —
+  // a buyer in San Pedro Sula searching "desarrollo web Honduras" needs to see
+  // the country, not just the capital.
+  //
+  // The cities are listed one by one rather than folded into "Honduras"
+  // because that is what the JSON-LD's `areaServed` turns into: a country
+  // alone answers a national query, and named cities answer the local ones.
+  // Add a city here only when the studio would genuinely take the work.
+  areaServed: [
+    "Honduras",
+    "Tegucigalpa",
+    "San Pedro Sula",
+    "La Ceiba",
+    "Choluteca",
+    "Comayagua",
+    "Danlí",
+    "Puerto Cortés",
+    "Roatán",
+    "Latinoamérica",
+  ],
 
   // The real channels. Anything left null or empty is simply not rendered, so
   // the page never shows a placeholder address — `whatsapp` is what every CTA
@@ -41,11 +58,20 @@ export const site = {
     // ["ventas@corestructhn.com", "soporte@corestructhn.com"]
     emails: [],
 
+    // Left unset because the WhatsApp row above already shows this exact
+    // number, and a "Teléfono" row repeating it would be a second copy of one
+    // fact. The number still reaches Google: it is the `telephone` of the
+    // LocalBusiness node in the JSON-LD of `index.html`, where it has to match
+    // the Google Business Profile digit for digit.
     phone: null,        // e.g. "+52 55 1234 5678"
 
-    // Deliberately unset: the studio works remotely and takes work from
-    // anywhere, so naming a city would narrow the offer rather than qualify it.
-    location: null,
+    // The studio still takes work from anywhere — that is what `areaServed`
+    // above says, and it says it in nine places. But a search engine cannot
+    // place a business that never names a city, and "desarrollo web
+    // Tegucigalpa" is a query no amount of national copy answers. So this
+    // states the base and the reach in one line: where we are, and that being
+    // there does not limit who we work for.
+    location: "Tegucigalpa, Honduras — proyectos en todo el país y Latinoamérica",
 
     /**
      * The server-side endpoint that mails a copy of each quote request to
@@ -116,14 +142,34 @@ export const site = {
   },
 
   // Add entries as they exist; empty means the footer simply omits the list.
+  //
+  // The Google profile is here rather than treated as a social network because
+  // it is the same kind of thing to a reader — a public page about the studio,
+  // somewhere else — and because the footer is where somebody goes looking for
+  // proof. It is also the page that collects reviews, which is the part of
+  // local ranking no amount of markup substitutes for.
+  //
+  // The same URL appears as `sameAs` and `hasMap` in the JSON-LD of
+  // `index.html`. That head is written by hand, so the two are kept in step the
+  // same way the title and description are: change one, change both.
   social: [
+    { label: "Reseñas en Google", href: "https://maps.app.goo.gl/1XTNuYUPWd3Z6GuEA" },
     // { label: "LinkedIn", href: "https://www.linkedin.com/company/…" },
     // { label: "Instagram", href: "https://instagram.com/…" },
   ],
 };
 
-/** Primary navigation. `id` must match a section id in the page. */
+/**
+ * Primary navigation.
+ *
+ * An entry carries either an `id`, which must match a section id on the home
+ * page, or an `href` to a page of its own. Services is the second kind: it is
+ * not a band of the home page, it is three pages that each answer a different
+ * search, and the home page has to link to them or Google has no path to them
+ * but the sitemap.
+ */
 export const navigation = [
+  { href: "servicios/", label: "Servicios" },
   { id: "proyectos", label: "Proyectos" },
   { id: "alianzas", label: "Alianzas" },
   { id: "contacto", label: "Contacto" },

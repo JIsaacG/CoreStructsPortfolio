@@ -9,7 +9,7 @@
       name="description"
       content="We design and build custom websites, platforms and business systems in Honduras and Latin America. Get a quote from CoreStruct."
     />
-    <link rel="canonical" href="https://corestruct.com/en/" />
+    <link rel="canonical" href="https://corestructhn.com/en/" />
     <meta name="theme-color" content="#080b12" />
     <meta name="color-scheme" content="dark" />
 
@@ -21,13 +21,13 @@
          same way `og:locale` is. -->
     <meta property="og:locale" content="en_US" />
     <meta property="og:locale:alternate" content="es_HN" />
-    <meta property="og:url" content="https://corestruct.com/en/" />
+    <meta property="og:url" content="https://corestructhn.com/en/" />
     <meta property="og:title" content="CoreStruct — Custom web and software development in Honduras" />
     <meta
       property="og:description"
       content="Corporate sites, web platforms, business systems and custom automation. We work from Honduras for Latin America and beyond."
     />
-    <meta property="og:image" content="https://corestruct.com/assets/brand/og-card.png" />
+    <meta property="og:image" content="https://corestructhn.com/assets/brand/og-card.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="CoreStruct" />
@@ -37,7 +37,7 @@
       name="twitter:description"
       content="Corporate sites, web platforms, business systems and custom automation. We work from Honduras for Latin America and beyond."
     />
-    <meta name="twitter:image" content="https://corestruct.com/assets/brand/og-card.png" />
+    <meta name="twitter:image" content="https://corestructhn.com/assets/brand/og-card.png" />
 
     <!-- Icons -->
     <link rel="icon" href="../favicon.ico" sizes="32x32" />
@@ -83,23 +83,86 @@
       }, 2500);
     </script>
 
+    <!-- The local-business half of this graph exists to be matched against the
+         Google Business Profile, so every field here is the profile's value and
+         not an approximation of it.
+
+         `sameAs` and `hasMap` are the share link of that profile. They are what
+         says "the company this site describes and the pin on that map are one
+         entity" — without them Google has to infer the pairing from the name and
+         the phone number, and it does not always manage it.
+
+         There is deliberately no `geo`. The profile is registered as a service
+         area with no public street address, and a `GeoCoordinates` block here
+         would publish in machine-readable form the one thing that setting was
+         chosen to keep off the page. `areaServed` says where the work is taken,
+         `hasMap` points at the authoritative location, and neither of them drops
+         a pin the studio did not choose to drop. -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@graph": [
           {
-            "@type": "Organization",
-            "@id": "https://corestruct.com/#organization",
+            "@type": [
+              "Organization",
+              "ProfessionalService"
+            ],
+            "@id": "https://corestructhn.com/#organization",
             "name": "CoreStruct",
-            "url": "https://corestruct.com/",
-            "logo": "https://corestruct.com/assets/brand/icon-512.png",
-            "image": "https://corestruct.com/assets/brand/og-card.png",
+            "alternateName": "CoreStructHN",
+            "url": "https://corestructhn.com/",
+            "logo": "https://corestructhn.com/assets/brand/icon-512.png",
+            "image": "https://corestructhn.com/assets/brand/og-card.png",
             "description": "A technology and software development studio: corporate sites, web platforms, business systems, education portals, digital restaurant menus and automation.",
-            "email": "contacto@corestruct.com",
+            "email": "contacto@corestructhn.com",
+            "telephone": "+504 9230-0861",
+            "priceRange": "$$",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Tegucigalpa",
+              "addressRegion": "Francisco Morazán",
+              "addressCountry": "HN"
+            },
+            "sameAs": [
+              "https://maps.app.goo.gl/1XTNuYUPWd3Z6GuEA"
+            ],
+            "hasMap": "https://maps.app.goo.gl/1XTNuYUPWd3Z6GuEA",
             "areaServed": [
               {
                 "@type": "Country",
                 "name": "Honduras"
+              },
+              {
+                "@type": "City",
+                "name": "Tegucigalpa"
+              },
+              {
+                "@type": "City",
+                "name": "San Pedro Sula"
+              },
+              {
+                "@type": "City",
+                "name": "La Ceiba"
+              },
+              {
+                "@type": "City",
+                "name": "Choluteca"
+              },
+              {
+                "@type": "City",
+                "name": "Comayagua"
+              },
+              {
+                "@type": "City",
+                "name": "Danlí"
+              },
+              {
+                "@type": "City",
+                "name": "Puerto Cortés"
+              },
+              {
+                "@type": "City",
+                "name": "Roatán"
               },
               {
                 "@type": "Place",
@@ -121,7 +184,7 @@
             "contactPoint": {
               "@type": "ContactPoint",
               "contactType": "sales",
-              "email": "contacto@corestruct.com",
+              "email": "contacto@corestructhn.com",
               "availableLanguage": [
                 "en"
               ]
@@ -191,11 +254,11 @@
           },
           {
             "@type": "WebSite",
-            "@id": "https://corestruct.com/#website",
-            "url": "https://corestruct.com/",
+            "@id": "https://corestructhn.com/#website",
+            "url": "https://corestructhn.com/",
             "name": "CoreStruct",
             "publisher": {
-              "@id": "https://corestruct.com/#organization"
+              "@id": "https://corestructhn.com/#organization"
             },
             "inLanguage": "en"
           }
@@ -228,9 +291,9 @@
     </script>
     <!--/lang-memory-->
 <!--lang-alternates-->
-    <link rel="alternate" hreflang="es" href="https://corestruct.com/" />
-    <link rel="alternate" hreflang="en" href="https://corestruct.com/en/" />
-    <link rel="alternate" hreflang="x-default" href="https://corestruct.com/" />
+    <link rel="alternate" hreflang="es" href="https://corestructhn.com/" />
+    <link rel="alternate" hreflang="en" href="https://corestructhn.com/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://corestructhn.com/" />
     <!--/lang-alternates-->
   </head>
 
@@ -272,6 +335,7 @@
 
         <nav class="header__nav" aria-label="Main">
           <ul class="nav__list">
+            <li><a class="nav__link" href="servicios/">Services</a></li>
             <li><a class="nav__link" href="#proyectos" data-nav-link>Work</a></li>
             <li><a class="nav__link" href="#alianzas" data-nav-link>Partnerships</a></li>
             <li><a class="nav__link" href="#contacto" data-nav-link>Contact</a></li>
@@ -304,14 +368,17 @@
       </div>
 
       <nav class="mobile-nav" id="menu-movil" aria-label="Menu" data-mobile-nav>
+        <a class="mobile-nav__link" href="servicios/">
+          <span class="mobile-nav__index">01</span> Services
+        </a>
         <a class="mobile-nav__link" href="#proyectos">
-          <span class="mobile-nav__index">01</span> Work
+          <span class="mobile-nav__index">02</span> Work
         </a>
         <a class="mobile-nav__link" href="#alianzas">
-          <span class="mobile-nav__index">02</span> Partnerships
+          <span class="mobile-nav__index">03</span> Partnerships
         </a>
         <a class="mobile-nav__link" href="#contacto">
-          <span class="mobile-nav__index">03</span> Contact
+          <span class="mobile-nav__index">04</span> Contact
         </a>
         <a class="button button--primary mobile-nav__cta" href="#contacto" data-cotizador>
           Start a project
@@ -772,6 +839,9 @@
               <span class="channel__label">Email</span>
               <a class="channel__value" href="mailto:contacto@corestructhn.com">contacto@corestructhn.com</a>
             </p>
+            <p class="channel">
+              <span class="channel__label">Coverage</span> <span class="channel__value">Tegucigalpa, Honduras — projects across the country and Latin America</span>
+            </p>
           </div>
 <!-- /build:channels -->
         </div>
@@ -789,9 +859,11 @@
 
         <!-- build:footer-meta -->
         <div class="footer__meta">
+          <a class="footer__link" href="servicios/">Services</a>
           <a class="footer__link" href="#proyectos">Work</a>
           <a class="footer__link" href="#alianzas">Partnerships</a>
           <a class="footer__link" href="#contacto">Contact</a>
+          <a class="footer__link" href="https://maps.app.goo.gl/1XTNuYUPWd3Z6GuEA" target="_blank" rel="noopener">Reviews on Google</a>
           <span class="footer__note">
             &copy; <span data-current-year>2026</span>
             CoreStruct

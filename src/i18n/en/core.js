@@ -241,8 +241,37 @@ export default {
 
   Correo: "Email",
   Teléfono: "Phone",
+  /* A brand name, identical in both languages — mapped so the coverage report
+     records that somebody decided it, rather than leaving it unaccounted. */
+  WhatsApp: "WhatsApp",
+
+  /* The name the Google Business Profile is registered under, carried in the
+     JSON-LD as `alternateName`. Same string in both languages: it is a name,
+     and the point of it is that Google can match it against the profile. */
+  CoreStructHN: "CoreStructHN",
+
+  /* The footer link to the Google Business Profile. */
+  "Reseñas en Google": "Reviews on Google",
   Cobertura: "Coverage",
   "Servicio remoto · Latinoamérica": "Remote · Latin America",
+
+  /* The city survives the translation. It is a local-search signal in Spanish —
+     "desarrollo web Tegucigalpa" is a query nobody answers without naming the
+     place — and in English it is the thing a nearshoring buyer is actually
+     evaluating: which timezone the team sits in. Dropping it for a vaguer
+     "Latin America" would cost both. */
+  "Tegucigalpa, Honduras — proyectos en todo el país y Latinoamérica":
+    "Tegucigalpa, Honduras — projects across the country and Latin America",
+
+  /* The same row again, label and value as one run.
+
+     The other two channels put their value in an `<a>`, which ends the run; this
+     one has nothing to link to, so its `<span>` sits flush against the label and
+     the two read as a single sentence. Both halves are covered above and the
+     output is right either way — this entry is what keeps the coverage report
+     from listing a row that is, in fact, translated. */
+  '<span class="channel__label">Cobertura</span> <span class="channel__value">Tegucigalpa, Honduras — proyectos en todo el país y Latinoamérica</span>':
+    '<span class="channel__label">Coverage</span> <span class="channel__value">Tegucigalpa, Honduras — projects across the country and Latin America</span>',
 
   /* ---------------------------------------------------- the studio's mark */
 

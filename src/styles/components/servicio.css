@@ -1,0 +1,342 @@
+/* =============================================================================
+   Service pages — the reading zones of `/servicios/…`
+
+   These pages exist to be read and to be found, which is a different job from
+   the home page's. The home page performs: full-viewport hero, motion, cards
+   that open demos. A page somebody landed on from a Google result has about one
+   screen to answer the question they typed, and then has to stay readable for
+   eight hundred words.
+
+   So this file adds text zones rather than another set of showpieces, and
+   borrows everything it can from what is already in the bundle — `.shell`,
+   `.section`, `.eyebrow`, `.button`, the reveal system. Nothing here restyles
+   a shared primitive; a page-specific override of `.section__title` would
+   follow the visitor back to the home page in the same stylesheet.
+   ========================================================================== */
+
+/* --- Masthead ----------------------------------------------------------------
+   A short hero: the h1 has to be the first thing read, and the first thing read
+   has to contain the words that were searched for.
+   -------------------------------------------------------------------------- */
+
+.svc-hero {
+  position: relative;
+  /* Top clears the fixed header; bottom is deliberately shorter than a normal
+     section's, because the next zone is the answer and the gap before it is
+     dead scroll for somebody who arrived with a question. */
+  padding-block: calc(var(--space-3xl) + 3rem) var(--space-lg);
+}
+
+.svc-hero__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  max-width: 54rem;
+}
+
+.svc-hero__title {
+  font-size: var(--text-4xl);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+  text-wrap: balance;
+}
+
+.svc-hero__lede {
+  max-width: var(--measure);
+  font-size: var(--text-lg);
+  color: var(--text-muted);
+  line-height: var(--leading-relaxed);
+}
+
+.svc-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
+}
+
+/* --- Breadcrumb --------------------------------------------------------------
+   Visible, not only in the JSON-LD. Google shows a breadcrumb trail in place of
+   the raw URL in a result, and it takes the one on the page as corroboration of
+   the structured one.
+   -------------------------------------------------------------------------- */
+
+.svc-crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2xs);
+  margin-bottom: var(--space-md);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.svc-crumbs a {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-out-quart);
+}
+
+.svc-crumbs a:hover,
+.svc-crumbs a:focus-visible {
+  color: var(--brand-secondary);
+}
+
+.svc-crumbs__sep {
+  color: var(--text-faint);
+}
+
+/* --- Prose -------------------------------------------------------------------
+   Capped at `--measure`. A line of text wider than about 65 characters costs
+   the reader the start of the next line, and these pages are asking for real
+   reading time.
+   -------------------------------------------------------------------------- */
+
+.svc-prose {
+  margin-top: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  max-width: var(--measure);
+}
+
+.svc-prose__block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.svc-prose__title {
+  font-size: var(--text-xl);
+  letter-spacing: var(--tracking-snug);
+  line-height: var(--leading-snug);
+}
+
+.svc-prose p {
+  color: var(--text-muted);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+}
+
+/* --- Card grid ---------------------------------------------------------------
+   What a service includes. Two columns on a desktop, one on a phone — most of
+   this traffic is on a phone.
+   -------------------------------------------------------------------------- */
+
+.svc-grid {
+  display: grid;
+  gap: var(--space-sm);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+  margin-top: var(--space-lg);
+}
+
+.svc-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  padding: var(--space-md);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  transition:
+    border-color var(--duration-base) var(--ease-out-quart),
+    background var(--duration-base) var(--ease-out-quart);
+}
+
+.svc-card:hover {
+  border-color: rgb(var(--brand-secondary-rgb) / 0.35);
+  background: var(--surface-raised);
+}
+
+.svc-card__name {
+  font-size: var(--text-base);
+  font-weight: 700;
+  letter-spacing: var(--tracking-snug);
+}
+
+.svc-card__body {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+}
+
+/* --- Steps -------------------------------------------------------------------
+   An ordered list that keeps its numbers. `list-style: none` would drop them
+   from the accessibility tree along with the bullets, and the order is the
+   content here.
+   -------------------------------------------------------------------------- */
+
+.svc-steps {
+  display: grid;
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+  padding: 0;
+  list-style: none;
+  counter-reset: svc-step;
+}
+
+.svc-steps__item {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr;
+  gap: var(--space-sm);
+  align-items: start;
+  counter-increment: svc-step;
+}
+
+.svc-steps__item::before {
+  content: counter(svc-step, decimal-leading-zero);
+  font-family: var(--font-brand);
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-wide);
+  color: var(--brand-secondary);
+  padding-top: 0.15em;
+}
+
+.svc-steps__name {
+  font-size: var(--text-base);
+  font-weight: 700;
+  letter-spacing: var(--tracking-snug);
+}
+
+.svc-steps__body {
+  margin-top: var(--space-3xs);
+  max-width: var(--measure);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+}
+
+/* --- FAQ ---------------------------------------------------------------------
+   Real `<details>`, open by default.
+
+   Collapsed answers are the usual pattern and the wrong one here: the text
+   inside a closed `<details>` is content Google will discount as hidden, and
+   these answers are the part of the page an AI summary is most likely to quote.
+   Open by default keeps them first-class text; the disclosure still works for a
+   reader who wants to collapse one.
+   -------------------------------------------------------------------------- */
+
+.svc-faq {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin-top: var(--space-lg);
+  max-width: 52rem;
+}
+
+.svc-faq__item {
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  padding: var(--space-md);
+}
+
+.svc-faq__q {
+  font-size: var(--text-base);
+  font-weight: 700;
+  letter-spacing: var(--tracking-snug);
+  cursor: pointer;
+  list-style: none;
+}
+
+.svc-faq__q::-webkit-details-marker {
+  display: none;
+}
+
+.svc-faq__q::after {
+  content: "–";
+  float: right;
+  color: var(--brand-secondary);
+  font-family: var(--font-brand);
+}
+
+.svc-faq__item:not([open]) .svc-faq__q::after {
+  content: "+";
+}
+
+.svc-faq__a {
+  margin-top: var(--space-xs);
+  max-width: var(--measure);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+}
+
+/* --- Related -----------------------------------------------------------------
+   The other service pages. Internal links are how the three share whatever
+   authority any one of them earns, and a visitor who landed on the wrong one
+   needs the right one within reach.
+   -------------------------------------------------------------------------- */
+
+.svc-related {
+  display: grid;
+  gap: var(--space-sm);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  margin-top: var(--space-lg);
+}
+
+.svc-related__link {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xs);
+  padding: var(--space-md);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  color: inherit;
+  transition:
+    border-color var(--duration-base) var(--ease-out-quart),
+    transform var(--duration-base) var(--ease-out-quart);
+}
+
+.svc-related__link:hover,
+.svc-related__link:focus-visible {
+  border-color: rgb(var(--brand-secondary-rgb) / 0.4);
+  transform: translateY(-2px);
+}
+
+.svc-related__name {
+  font-size: var(--text-base);
+  font-weight: 700;
+  letter-spacing: var(--tracking-snug);
+}
+
+.svc-related__hint {
+  color: var(--text-faint);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+/* --- Closing call ------------------------------------------------------------ */
+
+.svc-cta {
+  margin-top: var(--space-xl);
+  padding: var(--space-lg);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(
+    135deg,
+    rgb(var(--brand-primary-rgb) / 0.25),
+    rgb(var(--brand-secondary-rgb) / 0.08)
+  );
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  align-items: flex-start;
+}
+
+.svc-cta__title {
+  font-size: var(--text-2xl);
+  letter-spacing: var(--tracking-snug);
+  line-height: var(--leading-snug);
+}
+
+.svc-cta__body {
+  max-width: var(--measure);
+  color: var(--text-muted);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+}

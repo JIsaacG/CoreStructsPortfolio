@@ -106,4 +106,13 @@ export default {
   "San Pedro Sula": "San Pedro Sula",
   "La Ceiba": "La Ceiba",
   Roatán: "Roatán",
+
+  /* The rest of the `areaServed` list in the portfolio's JSON-LD, and the
+     department the address names. Honduran places keep their Spanish spelling
+     in English prose — there is no English exonym for any of them — so these
+     map to themselves, which is how this file records "we looked". */
+  Choluteca: "Choluteca",
+  Danlí: "Danlí",
+  "Puerto Cortés": "Puerto Cortés",
+  "Francisco Morazán": "Francisco Morazán",
 };

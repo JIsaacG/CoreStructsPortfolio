@@ -2,17 +2,73 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://corestruct.com/</loc>
+    <loc>https://corestructhn.com/</loc>
     <lastmod>2026-09-11</lastmod>
-    <xhtml:link rel="alternate" hreflang="es" href="https://corestruct.com/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://corestruct.com/en/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://corestruct.com/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://corestructhn.com/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://corestructhn.com/en/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://corestructhn.com/" />
   </url>
   <url>
-    <loc>https://corestruct.com/en/</loc>
+    <loc>https://corestructhn.com/en/</loc>
     <lastmod>2026-09-11</lastmod>
-    <xhtml:link rel="alternate" hreflang="es" href="https://corestruct.com/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://corestruct.com/en/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://corestruct.com/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://corestructhn.com/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://corestructhn.com/en/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://corestructhn.com/" />
+  </url>
+  <url>
+    <loc>https://corestructhn.com/servicios/desarrollo-de-sistemas-honduras/</loc>
+    <lastmod>2026-09-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://corestructhn.com/servicios/desarrollo-de-sistemas-honduras/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://corestructhn.com/en/servicios/desarrollo-de-sistemas-honduras/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://corestructhn.com/servicios/desarrollo-de-sistemas-honduras/" />
+  </url>
+  <url>
+    <loc>https://corestructhn.com/en/servicios/desarrollo-de-sistemas-honduras/</loc>
+    <lastmod>2026-09-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://corestructhn.com/servicios/desarrollo-de-sistemas-honduras/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://corestructhn.com/en/servicios/desarrollo-de-sistemas-honduras/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://corestructhn.com/servicios/desarrollo-de-sistemas-honduras/" />
+  </url>
+  <url>
+    <loc>https://corestructhn.com/servicios/desarrollo-web-tegucigalpa/</loc>
+    <lastmod>2026-09-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://corestructhn.com/servicios/desarrollo-web-tegucigalpa/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://corestructhn.com/en/servicios/desarrollo-web-tegucigalpa/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://corestructhn.com/servicios/desarrollo-web-tegucigalpa/" />
+  </url>
+  <url>
+    <loc>https://corestructhn.com/en/servicios/desarrollo-web-tegucigalpa/</loc>
+    <lastmod>2026-09-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://corestructhn.com/servicios/desarrollo-web-tegucigalpa/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://corestructhn.com/en/servicios/desarrollo-web-tegucigalpa/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://corestructhn.com/servicios/desarrollo-web-tegucigalpa/" />
+  </url>
+  <url>
+    <loc>https://corestructhn.com/servicios/diseno-de-paginas-web-honduras/</loc>
+    <lastmod>2026-09-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://corestructhn.com/servicios/diseno-de-paginas-web-honduras/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://corestructhn.com/en/servicios/diseno-de-paginas-web-honduras/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://corestructhn.com/servicios/diseno-de-paginas-web-honduras/" />
+  </url>
+  <url>
+    <loc>https://corestructhn.com/en/servicios/diseno-de-paginas-web-honduras/</loc>
+    <lastmod>2026-09-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://corestructhn.com/servicios/diseno-de-paginas-web-honduras/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://corestructhn.com/en/servicios/diseno-de-paginas-web-honduras/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://corestructhn.com/servicios/diseno-de-paginas-web-honduras/" />
+  </url>
+  <url>
+    <loc>https://corestructhn.com/servicios/</loc>
+    <lastmod>2026-09-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://corestructhn.com/servicios/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://corestructhn.com/en/servicios/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://corestructhn.com/servicios/" />
+  </url>
+  <url>
+    <loc>https://corestructhn.com/en/servicios/</loc>
+    <lastmod>2026-09-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://corestructhn.com/servicios/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://corestructhn.com/en/servicios/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://corestructhn.com/servicios/" />
   </url>
 </urlset>

@@ -30,6 +30,12 @@
 @import "./components/manifesto.css";
 @import "./components/contact.css";
 
+/* The reading zones of `/servicios/…`. In this bundle rather than one of its
+   own because those pages carry the same header, footer, buttons and reveal
+   system as the home page, and a second stylesheet would duplicate all of it
+   to add six hundred bytes. */
+@import "./components/servicio.css";
+
 /* The quick-quote panel. CoreStruct furniture rather than this page's, so it
    is imported last: nothing in the bundle above may reach into it. */
 @import "./components/cotizador.css";

@@ -58,6 +58,7 @@ npm run build:aurea    # src/data/aurea/*     ->  demos/aurea/*.html
 npm run build:flujo    # src/data/flujo/*     ->  demos/flujo/*.html
 npm run build:rumbo    # src/data/rumbo/*     ->  demos/rumbo/*.html
 npm run build:landing  # src/data/landings/*  ->  demos/landing/*.html
+npm run build:servicios # src/data/servicios.js -> servicios/**/index.html
 npm run check          # validación previa a publicar
 ```
 
@@ -77,6 +78,13 @@ comprobaciones, más una propia: tienen que ser `noindex`.
 ```
 index.html                 la página (el contenido se inyecta al compilar)
 favicon.ico  robots.txt  sitemap.xml  site.webmanifest
+.htaccess                  301 de www a la raíz, compresión y caché
+
+servicios/                 las páginas que compiten por una búsqueda concreta
+  index.html               el índice que las enlaza
+  diseno-de-paginas-web-honduras/
+  desarrollo-de-sistemas-honduras/
+  desarrollo-web-tegucigalpa/
 
 api/                       lo único que se ejecuta en el servidor (PHP)
   contacto.php             recibe el formulario y lo manda al buzón
@@ -88,6 +96,7 @@ api/                       lo único que se ejecuta en el servidor (PHP)
 src/
   data/                    CONTENIDO — es lo que se edita a diario
     site.js                nombre, textos meta, correo, teléfono, redes
+    servicios.js           el contenido de las páginas de /servicios/
     projects.js            las 8 tarjetas del portfolio
     alliances.js           los paneles de alianzas (logo + relato)
     mockups.js             los visuales SVG de cada tarjeta
@@ -931,7 +940,7 @@ motivo y la dirección exacta a la que llamó.
 2. **Redes sociales** en `src/data/site.js`: `social` está vacío y `phone` en
    `null`, y por eso no aparecen. WhatsApp (`+504 9230-0861`) y el correo
    (`contacto@corestructhn.com`) ya son los reales.
-3. **Dominio definitivo**: `site.url` sigue siendo `https://corestruct.com`
+3. **Dominio definitivo**: `site.url` sigue siendo `https://corestructhn.com`
    mientras que el correo y el SMTP ya son de `corestructhn.com`. Hay que decidir
    cuál es el bueno y sustituirlo en `src/data/site.js`, `index.html`
    (canonical + Open Graph), `robots.txt` y `sitemap.xml`. El endpoint no hay que

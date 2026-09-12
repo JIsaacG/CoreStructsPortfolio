@@ -16,6 +16,15 @@
  * Runs once per session by default — a returning visitor within the same tab
  * has already seen it — and is skipped entirely for reduced motion, where the
  * mark simply appears and the overlay lifts a moment later.
+ *
+ * It also only runs on a page that has a hero, which in practice means the home
+ * page. That is not a restriction bolted on: the intro's whole ending is the
+ * hand-off to the hero mark sitting composed underneath it, and on a page with
+ * no hero there is nothing to hand over to — it would just be a logo animation
+ * playing over an article. The pages that matters for are `/servicios/…`, which
+ * people reach from a search result with a question already in mind. Making
+ * them watch the brand assemble before they can read the answer is the most
+ * expensive second on the site.
  */
 
 const COPY = {
@@ -84,6 +93,9 @@ function readLogo() {
 }
 
 export function initIntro({ once = true } = {}) {
+  /* No hero, no hand-off. See the note at the top of the file. */
+  if (!document.querySelector("[data-hero]")) return;
+
   if (once) {
     try {
       if (sessionStorage.getItem(STORAGE_KEY)) return;

@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Web Development in Tegucigalpa | CoreStruct</title>
+    <meta name="description" content="Web development in Tegucigalpa: sites, platforms and systems for companies in the capital, with in-person meetings and a handover we sit through. Let's talk." />
+    <link rel="canonical" href="https://corestructhn.com/en/servicios/desarrollo-web-tegucigalpa/" />
+    <meta name="theme-color" content="#080b12" />
+    <meta name="color-scheme" content="dark" />
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="CoreStruct" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="es_HN" />
+    <meta property="og:url" content="https://corestructhn.com/en/servicios/desarrollo-web-tegucigalpa/" />
+    <meta property="og:title" content="Web Development in Tegucigalpa | CoreStruct" />
+    <meta property="og:description" content="Web development in Tegucigalpa: sites, platforms and systems for companies in the capital, with in-person meetings and a handover we sit through. Let's talk." />
+    <meta property="og:image" content="https://corestructhn.com/assets/brand/og-card.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="CoreStruct" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Web Development in Tegucigalpa | CoreStruct" />
+    <meta name="twitter:description" content="Web development in Tegucigalpa: sites, platforms and systems for companies in the capital, with in-person meetings and a handover we sit through. Let's talk." />
+    <meta name="twitter:image" content="https://corestructhn.com/assets/brand/og-card.png" />
+
+    <!-- Icons -->
+    <link rel="icon" href="../../../favicon.ico" sizes="32x32" />
+    <link rel="icon" href="../../../assets/brand/isotipo.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="../../../assets/brand/apple-touch-icon.png" />
+    <link rel="manifest" href="../../site.webmanifest" />
+
+    <link
+      rel="preload"
+      href="../../../assets/fonts/manrope-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="../../../assets/fonts/quantify.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="../../../dist/corestruct.css" />
+
+    <!-- Same guard as the home page: mark the document scripted before first
+         paint, and switch the reveal system off if nothing claims it. -->
+    <script>
+      document.documentElement.classList.add("js");
+      setTimeout(function () {
+        if (!document.documentElement.dataset.revealsReady) {
+          document.documentElement.classList.remove("js");
+        }
+      }, 2500);
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://corestructhn.com/#organization",
+            "name": "CoreStruct",
+            "url": "https://corestructhn.com/"
+          },
+          {
+            "@type": "Service",
+            "name": "Web development in Tegucigalpa",
+            "serviceType": "Web development",
+            "description": "Web development in Tegucigalpa: sites, platforms and systems for companies in the capital, with in-person meetings and a handover we sit through. Let's talk.",
+            "url": "https://corestructhn.com/servicios/desarrollo-web-tegucigalpa/",
+            "provider": {
+              "@id": "https://corestructhn.com/#organization"
+            },
+            "areaServed": [
+              {
+                "@type": "AdministrativeArea",
+                "name": "Honduras"
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "Tegucigalpa"
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "San Pedro Sula"
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "La Ceiba"
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "Choluteca"
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "Comayagua"
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "Danlí"
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "Puerto Cortés"
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "Roatán"
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "Latin America"
+              }
+            ],
+            "hasOfferCatalog": {
+              "@type": "OfferCatalog",
+              "name": "What we do",
+              "itemListElement": [
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Corporate and institutional sites",
+                    "description": "The public face of a company, a foundation or an institution, with the structure its kind of visitor needs."
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Campaign landing pages",
+                    "description": "A single page with a single goal, for paid media or a launch, measured from day one."
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Education portals",
+                    "description": "Programmes, admissions, calendar and areas for students and parents, administered by the institution's own staff."
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Government and public portals",
+                    "description": "Transparency, procedures and open data, meeting the accessibility requirements a public site has to satisfy."
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Digital menus for restaurants",
+                    "description": "A menu updated from a phone, opened with a QR code, with nothing for the diner to download."
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Internal systems and automation",
+                    "description": "Inventory, records, approvals and reporting: the repetitive work that consumes somebody's hours today."
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://corestructhn.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Services",
+                "item": "https://corestructhn.com/servicios/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Web development",
+                "item": "https://corestructhn.com/servicios/desarrollo-web-tegucigalpa/"
+              }
+            ]
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Do you only serve Tegucigalpa?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "No. Tegucigalpa is where we are, not the limit of where we work. We have projects with clients in other cities and outside Honduras; what changes is that meetings happen over video instead of in person."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Can we meet in person before hiring you?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes, and it is what we recommend for large projects. The first meeting has no cost and no commitment, and it serves both for you to see how we work and for us to understand whether we are the right team for what you need."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Do you work with small companies?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. A three-person business with a clear process is usually a better project than a large company that has not made its decisions. What we do is fit the scope to the real budget, and say plainly when something does not fit."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What languages do you deliver sites in?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Spanish and English. Everything we build can ship in both, linked correctly so Google understands they are the same site in two languages and shows each visitor the right one. This very site works that way."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+<!--lang-memory-->
+    <script>
+      /* Language preference: written by the ES/EN switch, applied before paint. */
+      (function () {
+        try {
+          var pref = localStorage.getItem("cs-lang");
+          if (pref && pref !== document.documentElement.lang) {
+            if (sessionStorage.getItem("cs-lang-hop") !== location.pathname) {
+              sessionStorage.setItem("cs-lang-hop", location.pathname);
+              location.replace("../../../servicios/desarrollo-web-tegucigalpa/index.html");
+              return;
+            }
+          } else {
+            sessionStorage.removeItem("cs-lang-hop");
+          }
+        } catch (e) {}
+        document.addEventListener("click", function (event) {
+          var pick = event.target.closest && event.target.closest("[data-lang-pick]");
+          if (pick) {
+            try { localStorage.setItem("cs-lang", pick.getAttribute("data-lang-pick")); } catch (e) {}
+          }
+        }, true);
+      })();
+    </script>
+    <!--/lang-memory-->
+<!--lang-alternates-->
+    <link rel="alternate" hreflang="es" href="https://corestructhn.com/servicios/desarrollo-web-tegucigalpa/" />
+    <link rel="alternate" hreflang="en" href="https://corestructhn.com/en/servicios/desarrollo-web-tegucigalpa/" />
+    <link rel="alternate" hreflang="x-default" href="https://corestructhn.com/servicios/desarrollo-web-tegucigalpa/" />
+    <!--/lang-alternates-->
+  </head>
+
+  <body>
+    <a class="skip-link" href="#contenido">Skip to content</a>
+
+    <canvas class="starfield" data-starfield aria-hidden="true"></canvas>
+    <canvas class="spotlight-trail" data-spotlight-trail aria-hidden="true"></canvas>
+    <div class="spotlight" data-spotlight aria-hidden="true"></div>
+
+    <svg class="sprite" aria-hidden="true" focusable="false" width="0" height="0">
+      <defs>
+        <linearGradient id="cs-face-top" gradientUnits="userSpaceOnUse" x1="33.3" y1="8.9" x2="353.6" y2="94.7"><stop offset="0%" stop-color="#140538"/><stop offset="16.7%" stop-color="#191754"/><stop offset="33.3%" stop-color="#223e81"/><stop offset="50%" stop-color="#2c6fb2"/><stop offset="66.7%" stop-color="#359dda"/><stop offset="83.3%" stop-color="#3bbaf1"/><stop offset="100%" stop-color="#3eccfb"/></linearGradient>
+        <linearGradient id="mk-brand-gradient" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#253880" />
+          <stop offset="100%" stop-color="#3898d4" />
+        </linearGradient>
+        <symbol id="cs-isotipo" viewBox="0 0 362 422"><path class="cs-face cs-face--top" fill="url(#cs-face-top)" d="M10 98L17 92L181 1L188 3L354 96L353 99L200 186L185 179L173 181L166 186L11 98Z"/><path class="cs-face cs-face--right" fill="#3898d4" d="M188 421L188 373L190 371L320 295L320 248L318 248L188 324L188 217L198 211L202 203L202 197L358 111L361 109L361 165L233 234L233 275L361 200L361 321L189 421Z"/><path class="cs-face cs-face--left" fill="#253880" d="M1 107L160 195L166 210L176 216L176 252L174 252L42 176L42 294L114 336L154 359L154 297L176 309L176 422L2 321L1 108Z"/></symbol>
+      </defs>
+    </svg>
+
+    <header class="header" data-header>
+      <div class="header__inner">
+        <a class="brand" href="../../index.html" aria-label="CoreStruct — home">
+          <svg class="brand__mark" viewBox="0 0 362 422" aria-hidden="true" focusable="false">
+            <use href="#cs-isotipo" />
+          </svg>
+          <span class="brand__wordmark wordmark">CoreStruct</span>
+        </a>
+
+        <nav class="header__nav" aria-label="Main">
+          <ul class="nav__list">
+            <li><a class="nav__link" href="../../servicios/">Services</a></li>
+            <li><a class="nav__link" href="../../index.html#proyectos">Work</a></li>
+            <li><a class="nav__link" href="../../index.html#contacto">Contact</a></li>
+          </ul>
+        </nav>
+
+        <div class="header__actions">
+          <!--lang-switch--><div class="lang-switch" role="group" aria-label="Idioma · Language"><span class="lang-switch__current" lang="en" aria-current="true">EN</span><a class="lang-switch__link" lang="es" hreflang="es" href="../../../servicios/desarrollo-web-tegucigalpa/index.html" data-lang-pick="es" title="Español">ES</a></div><!--/lang-switch-->
+          <a
+            class="button button--ghost button--compact button--pulse header__cta"
+            href="../../index.html#contacto"
+            data-cotizador
+          >
+            Let's talk
+            <span class="button__arrow" aria-hidden="true">&rarr;</span>
+          </a>
+          <button
+            class="menu-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="menu-movil"
+            aria-label="Open menu"
+            data-menu-toggle
+          >
+            <span class="menu-toggle__bar" aria-hidden="true"></span>
+            <span class="menu-toggle__bar" aria-hidden="true"></span>
+            <span class="menu-toggle__bar" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+
+      <nav class="mobile-nav" id="menu-movil" aria-label="Menu" data-mobile-nav>
+        <a class="mobile-nav__link" href="../../servicios/">
+          <span class="mobile-nav__index">01</span> Services
+        </a>
+        <a class="mobile-nav__link" href="../../index.html#proyectos">
+          <span class="mobile-nav__index">02</span> Work
+        </a>
+        <a class="mobile-nav__link" href="../../index.html#contacto">
+          <span class="mobile-nav__index">03</span> Contact
+        </a>
+        <a class="button button--primary mobile-nav__cta" href="../../index.html#contacto" data-cotizador>
+          Start a project
+          <span class="button__arrow" aria-hidden="true">&rarr;</span>
+        </a>
+      </nav>
+    </header>
+
+    <main id="contenido">
+      <section class="svc-hero">
+        <div class="shell">
+          <nav class="svc-crumbs" aria-label="Breadcrumb">
+            <a href="../../index.html">Home</a>
+            <span class="svc-crumbs__sep" aria-hidden="true">/</span>
+            <a href="../../servicios/">Services</a>
+            <span class="svc-crumbs__sep" aria-hidden="true">/</span>
+            <span aria-current="page">Web development</span>
+          </nav>
+          <div class="svc-hero__inner">
+            <p class="eyebrow" data-reveal="fade">Web development</p>
+            <h1 class="svc-hero__title">Web development in Tegucigalpa</h1>
+            <p class="svc-hero__lede">We are in the capital. For a project worth months of work, being able to sit at the same table still changes the result.</p>
+            <div class="svc-hero__actions">
+            <a
+              class="button button--primary button--large"
+              href="../../index.html#contacto"
+              data-cotizador
+            >
+              Get a quote
+              <span class="button__arrow" aria-hidden="true">&rarr;</span>
+            </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <span class="connector" aria-hidden="true"></span>
+
+      <section class="section section--tight">
+        <div class="shell">
+          <header class="section__head">
+            <p class="eyebrow" data-reveal="fade">Why the city matters</p>
+            <h2 class="section__title" data-reveal="far">Hiring a developer means hiring somebody you are going to argue with.</h2>
+          </header>
+          <p class="section__lede" data-reveal="far">Not in a bad way: a project done well has disagreements, changes of mind and decisions that are better taken face to face. We work with clients across the country over video with no trouble, but when the client is in Tegucigalpa we use what zero distance allows, and it is not a small thing.</p>
+
+          <div class="svc-prose" data-reveal="far">
+            <div class="svc-prose__block">
+              <h3 class="svc-prose__title">Meetings where the work happens</h3>
+              <p>For an informational site a call is enough. For a system that will run your warehouse, your till or your records, somebody should go and see how the work is done today. Half an hour standing where the process happens teaches things no virtual meeting surfaces, and those things are what decide whether the system gets used or abandoned.</p>
+            </div>
+            <div class="svc-prose__block">
+              <h3 class="svc-prose__title">In-person training for the team</h3>
+              <p>We hand the system over sitting with the people who will operate it every day: till, warehouse, reception, administration. It is the part that most decides whether a project is adopted, and the part that works worst over video with ten people crowded around one laptop.</p>
+            </div>
+            <div class="svc-prose__block">
+              <h3 class="svc-prose__title">The same work we do for the whole country</h3>
+              <p>Being in Tegucigalpa does not define what we build, only how we accompany it. The work is the same one we deliver in San Pedro Sula, La Ceiba or outside Honduras: corporate sites, institutional portals, platforms and internal systems, to the same standard of speed, accessibility and search-engine groundwork.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--tight">
+        <div class="shell">
+          <header class="section__head">
+            <h2 class="section__title" data-reveal="far">What we do</h2>
+          </header>
+          <div class="svc-grid">
+            <article class="svc-card" data-reveal="far">
+              <h3 class="svc-card__name">Corporate and institutional sites</h3>
+              <p class="svc-card__body">The public face of a company, a foundation or an institution, with the structure its kind of visitor needs.</p>
+            </article>
+            <article class="svc-card" data-reveal="far">
+              <h3 class="svc-card__name">Campaign landing pages</h3>
+              <p class="svc-card__body">A single page with a single goal, for paid media or a launch, measured from day one.</p>
+            </article>
+            <article class="svc-card" data-reveal="far">
+              <h3 class="svc-card__name">Education portals</h3>
+              <p class="svc-card__body">Programmes, admissions, calendar and areas for students and parents, administered by the institution's own staff.</p>
+            </article>
+            <article class="svc-card" data-reveal="far">
+              <h3 class="svc-card__name">Government and public portals</h3>
+              <p class="svc-card__body">Transparency, procedures and open data, meeting the accessibility requirements a public site has to satisfy.</p>
+            </article>
+            <article class="svc-card" data-reveal="far">
+              <h3 class="svc-card__name">Digital menus for restaurants</h3>
+              <p class="svc-card__body">A menu updated from a phone, opened with a QR code, with nothing for the diner to download.</p>
+            </article>
+            <article class="svc-card" data-reveal="far">
+              <h3 class="svc-card__name">Internal systems and automation</h3>
+              <p class="svc-card__body">Inventory, records, approvals and reporting: the repetitive work that consumes somebody's hours today.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--tight">
+        <div class="shell">
+          <header class="section__head">
+            <h2 class="section__title" data-reveal="far">How it starts</h2>
+          </header>
+          <ol class="svc-steps">
+            <li class="svc-steps__item" data-reveal="far">
+              <div>
+                <h3 class="svc-steps__name">Write to us</h3>
+                <p class="svc-steps__body">By WhatsApp or email, with a general idea of what you need. It does not have to be clear yet.</p>
+              </div>
+            </li>
+            <li class="svc-steps__item" data-reveal="far">
+              <div>
+                <h3 class="svc-steps__name">We meet</h3>
+                <p class="svc-steps__body">At your office, over coffee or on a video call, whichever you prefer. The first meeting is free.</p>
+              </div>
+            </li>
+            <li class="svc-steps__item" data-reveal="far">
+              <div>
+                <h3 class="svc-steps__name">You get a proposal</h3>
+                <p class="svc-steps__body">Scope, timeline and price in writing, usually within three days.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="section section--tight">
+        <div class="shell">
+          <header class="section__head">
+            <h2 class="section__title" data-reveal="far">Frequently asked questions</h2>
+          </header>
+          <div class="svc-faq">
+            <details class="svc-faq__item" open>
+              <summary class="svc-faq__q">Do you only serve Tegucigalpa?</summary>
+              <p class="svc-faq__a">No. Tegucigalpa is where we are, not the limit of where we work. We have projects with clients in other cities and outside Honduras; what changes is that meetings happen over video instead of in person.</p>
+            </details>
+            <details class="svc-faq__item" open>
+              <summary class="svc-faq__q">Can we meet in person before hiring you?</summary>
+              <p class="svc-faq__a">Yes, and it is what we recommend for large projects. The first meeting has no cost and no commitment, and it serves both for you to see how we work and for us to understand whether we are the right team for what you need.</p>
+            </details>
+            <details class="svc-faq__item" open>
+              <summary class="svc-faq__q">Do you work with small companies?</summary>
+              <p class="svc-faq__a">Yes. A three-person business with a clear process is usually a better project than a large company that has not made its decisions. What we do is fit the scope to the real budget, and say plainly when something does not fit.</p>
+            </details>
+            <details class="svc-faq__item" open>
+              <summary class="svc-faq__q">What languages do you deliver sites in?</summary>
+              <p class="svc-faq__a">Spanish and English. Everything we build can ship in both, linked correctly so Google understands they are the same site in two languages and shows each visitor the right one. This very site works that way.</p>
+            </details>
+          </div>
+
+          <div class="svc-cta" data-reveal="far">
+            <h2 class="svc-cta__title">Shall we talk about your project?</h2>
+            <p class="svc-cta__body">
+              Tell us what you need and we come back with scope, timeline and price in writing. The first conversation is free.
+            </p>
+            <a
+              class="button button--primary button--large"
+              href="../../index.html#contacto"
+              data-cotizador
+            >
+              Let's talk
+              <span class="button__arrow" aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+
+          <div class="svc-related">
+            <a class="svc-related__link" href="../../servicios/diseno-de-paginas-web-honduras/">
+              <span class="svc-related__hint">Web design</span>
+              <span class="svc-related__name">Web design in Honduras</span>
+            </a>
+            <a class="svc-related__link" href="../../servicios/desarrollo-de-sistemas-honduras/">
+              <span class="svc-related__hint">Custom software development</span>
+              <span class="svc-related__name">Custom software development in Honduras</span>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer__inner shell">
+        <a class="footer__brand" href="../../index.html" aria-label="CoreStruct — home">
+          <svg class="footer__mark" viewBox="0 0 362 422" aria-hidden="true" focusable="false">
+            <use href="#cs-isotipo" />
+          </svg>
+          <span class="footer__wordmark wordmark">CoreStruct</span>
+        </a>
+
+        <div class="footer__meta">
+          <a class="footer__link" href="../../servicios/">Services</a>
+          <a class="footer__link" href="../../index.html#proyectos">Work</a>
+          <a class="footer__link" href="../../index.html#contacto">Contact</a>
+          <span class="footer__note">
+            &copy; <span data-current-year>2026</span>
+            CoreStruct
+          </span>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="../../../src/scripts/main.js"></script>
+    <script type="module" src="../../../src/scripts/cotizador.js"></script>
+  </body>
+</html>

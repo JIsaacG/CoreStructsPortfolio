@@ -73,6 +73,15 @@ function shift(url, pageDir) {
   const target = posix.normalize(posix.join(pageDir, path));
   if (mirrored.has(target)) return url;
 
+  /* A link to a directory is a link to its `index.html`, and that page moved
+     into the mirror with this one. Without this the URL is treated as a shared
+     asset and re-pointed back at the Spanish tree: `servicios/` on an English
+     page would become `../servicios`, quietly dropping the reader out of the
+     language they chose — and handing Google a cross-language link where the
+     hreflang pair says there should be none. */
+  const asIndex = posix.join(target, "index.html");
+  if (path.endsWith("/") && mirrored.has(asIndex)) return url;
+
   return posix.relative(posix.join(MIRROR, pageDir), target) + suffix;
 }
 
