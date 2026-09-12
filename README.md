@@ -59,6 +59,7 @@ npm run build:flujo    # src/data/flujo/*     ->  demos/flujo/*.html
 npm run build:rumbo    # src/data/rumbo/*     ->  demos/rumbo/*.html
 npm run build:landing  # src/data/landings/*  ->  demos/landing/*.html
 npm run build:servicios # src/data/servicios.js -> servicios/**/index.html
+npm run build:stamp    # pone ?v=<hash> en cada enlace a una hoja de estilo
 npm run check          # validación previa a publicar
 ```
 
@@ -79,6 +80,9 @@ comprobaciones, más una propia: tienen que ser `noindex`.
 index.html                 la página (el contenido se inyecta al compilar)
 favicon.ico  robots.txt  sitemap.xml  site.webmanifest
 .htaccess                  301 de www a la raíz, compresión y caché
+                           (el CSS va cacheado un año porque build:stamp
+                            versiona su URL — si se quita ese paso, hay que
+                            bajar la caché a la vez)
 
 servicios/                 las páginas que compiten por una búsqueda concreta
   index.html               el índice que las enlaza
