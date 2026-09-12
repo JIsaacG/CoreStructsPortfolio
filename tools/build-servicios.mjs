@@ -292,7 +292,15 @@ function buildIndex() {
   const depth = 1;
   const canonical = `${ORIGIN}/servicios/`;
 
-  const body = `      <section class="svc-hero">
+  /* The three cards live inside the hero rather than in a zone below it.
+
+     The hub is a crossroads: everything on it exists to get somebody to one of
+     the three pages. With the cards in their own section the first screen ended
+     with the button and a screen of empty sky, so the page read as finished
+     exactly where the choice should have been. In the hero they close the screen
+     that asks the question, and what follows the seam is what genuinely is a
+     second thought: who we are, and the offer to talk. */
+  const body = `      <section class="svc-hero svc-hero--hub">
         <div class="shell">
 ${crumbs(depth, [
   { label: "Inicio", href: `${up(depth)}index.html` },
@@ -306,6 +314,27 @@ ${crumbs(depth, [
 ${cta(depth, "Cotizar mi proyecto")}
             </div>
           </div>
+
+          <div class="svc-menu" data-reveal-group>
+${servicios
+  .map(
+    (service, index) => `            <a
+              class="svc-menu__link"
+              href="${escape(service.slug)}/"
+              data-reveal="fade"
+              data-pointer-glow
+            >
+              <span class="svc-menu__top">
+                <span class="svc-menu__hint">${escape(service.serviceType)}</span>
+                <span class="svc-menu__index" aria-hidden="true">${String(index + 1).padStart(2, "0")}</span>
+              </span>
+              <span class="svc-menu__name">${escape(service.h1)}</span>
+              <span class="svc-menu__body">${escape(service.lede)}</span>
+              <span class="svc-menu__go" aria-hidden="true">&rarr;</span>
+            </a>`,
+  )
+  .join("\n")}
+          </div>
         </div>
       </section>
 
@@ -313,22 +342,19 @@ ${cta(depth, "Cotizar mi proyecto")}
 
       <section class="section section--tight">
         <div class="shell">
-          <div class="svc-prose">
+          <div class="svc-prose" data-reveal="far">
             <div class="svc-prose__block">
               <p>${escape(serviciosIndex.intro)}</p>
             </div>
           </div>
 
-          <div class="svc-related">
-${servicios
-  .map(
-    (service) => `            <a class="svc-related__link" href="${escape(service.slug)}/">
-              <span class="svc-related__hint">${escape(service.serviceType)}</span>
-              <span class="svc-related__name">${escape(service.h1)}</span>
-              <span class="svc-card__body">${escape(service.lede)}</span>
-            </a>`,
-  )
-  .join("\n")}
+          <div class="svc-cta" data-reveal="far">
+            <h2 class="svc-cta__title">¿Hablamos de tu proyecto?</h2>
+            <p class="svc-cta__body">
+              Cuéntanos qué necesitas y te respondemos con alcance, plazo y precio
+              por escrito. La primera conversación no tiene costo.
+            </p>
+${cta(depth, "Hablemos")}
           </div>
         </div>
       </section>`;

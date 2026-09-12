@@ -47,7 +47,7 @@
       type="font/woff2"
       crossorigin
     />
-    <link rel="stylesheet" href="../../dist/corestruct.css?v=94998868" />
+    <link rel="stylesheet" href="../../dist/corestruct.css?v=574e8523" />
 
     <!-- Same guard as the home page: mark the document scripted before first
          paint, and switch the reveal system off if nothing claims it. -->
@@ -224,7 +224,7 @@
     </header>
 
     <main id="contenido">
-      <section class="svc-hero">
+      <section class="svc-hero svc-hero--hub">
         <div class="shell">
           <nav class="svc-crumbs" aria-label="Breadcrumb">
             <a href="../index.html">Home</a>
@@ -246,6 +246,51 @@
             </a>
             </div>
           </div>
+
+          <div class="svc-menu" data-reveal-group>
+            <a
+              class="svc-menu__link"
+              href="diseno-de-paginas-web-honduras/"
+              data-reveal="fade"
+              data-pointer-glow
+            >
+              <span class="svc-menu__top">
+                <span class="svc-menu__hint">Web design</span>
+                <span class="svc-menu__index" aria-hidden="true">01</span>
+              </span>
+              <span class="svc-menu__name">Web design in Honduras</span>
+              <span class="svc-menu__body">A site that loads fast, makes sense on a phone, and answers what your client wants to know before they message you.</span>
+              <span class="svc-menu__go" aria-hidden="true">&rarr;</span>
+            </a>
+            <a
+              class="svc-menu__link"
+              href="desarrollo-de-sistemas-honduras/"
+              data-reveal="fade"
+              data-pointer-glow
+            >
+              <span class="svc-menu__top">
+                <span class="svc-menu__hint">Custom software development</span>
+                <span class="svc-menu__index" aria-hidden="true">02</span>
+              </span>
+              <span class="svc-menu__name">Custom software development in Honduras</span>
+              <span class="svc-menu__body">Software built around how your company works, instead of a company rearranged to fit inside a piece of software.</span>
+              <span class="svc-menu__go" aria-hidden="true">&rarr;</span>
+            </a>
+            <a
+              class="svc-menu__link"
+              href="desarrollo-web-tegucigalpa/"
+              data-reveal="fade"
+              data-pointer-glow
+            >
+              <span class="svc-menu__top">
+                <span class="svc-menu__hint">Web development</span>
+                <span class="svc-menu__index" aria-hidden="true">03</span>
+              </span>
+              <span class="svc-menu__name">Web development in Tegucigalpa</span>
+              <span class="svc-menu__body">We are in the capital. For a project worth months of work, being able to sit at the same table still changes the result.</span>
+              <span class="svc-menu__go" aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
         </div>
       </section>
 
@@ -253,27 +298,24 @@
 
       <section class="section section--tight">
         <div class="shell">
-          <div class="svc-prose">
+          <div class="svc-prose" data-reveal="far">
             <div class="svc-prose__block">
               <p>CoreStruct is a development studio based in Tegucigalpa, working with companies and institutions across Honduras and Latin America. We do not sell templates: every project is built around how the people who will use it actually work, and that starts with understanding the operation before writing a line of code.</p>
             </div>
           </div>
 
-          <div class="svc-related">
-            <a class="svc-related__link" href="diseno-de-paginas-web-honduras/">
-              <span class="svc-related__hint">Web design</span>
-              <span class="svc-related__name">Web design in Honduras</span>
-              <span class="svc-card__body">A site that loads fast, makes sense on a phone, and answers what your client wants to know before they message you.</span>
-            </a>
-            <a class="svc-related__link" href="desarrollo-de-sistemas-honduras/">
-              <span class="svc-related__hint">Custom software development</span>
-              <span class="svc-related__name">Custom software development in Honduras</span>
-              <span class="svc-card__body">Software built around how your company works, instead of a company rearranged to fit inside a piece of software.</span>
-            </a>
-            <a class="svc-related__link" href="desarrollo-web-tegucigalpa/">
-              <span class="svc-related__hint">Web development</span>
-              <span class="svc-related__name">Web development in Tegucigalpa</span>
-              <span class="svc-card__body">We are in the capital. For a project worth months of work, being able to sit at the same table still changes the result.</span>
+          <div class="svc-cta" data-reveal="far">
+            <h2 class="svc-cta__title">Shall we talk about your project?</h2>
+            <p class="svc-cta__body">
+              Tell us what you need and we come back with scope, timeline and price in writing. The first conversation is free.
+            </p>
+            <a
+              class="button button--primary button--large"
+              href="../index.html#contacto"
+              data-cotizador
+            >
+              Let's talk
+              <span class="button__arrow" aria-hidden="true">&rarr;</span>
             </a>
           </div>
         </div>

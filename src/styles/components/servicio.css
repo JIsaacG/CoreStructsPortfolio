@@ -55,6 +55,132 @@
   margin-top: var(--space-sm);
 }
 
+/* --- Hub menu ----------------------------------------------------------------
+   The three services, inside the hub's own hero.
+
+   The hub has one job: hand the visitor to whichever of the three pages answers
+   what they typed. Its text block ends about two thirds down a laptop screen,
+   and what used to follow was the seam before the next zone -- so the first
+   screen ended in nothing and the choice itself sat below the fold, which reads
+   as the page being over. The cards close that screen instead.
+
+   They borrow the home page's card language on purpose: same surface, same
+   hairline, same cursor light. Arriving here from the portfolio grid should not
+   feel like arriving at a different site.
+   -------------------------------------------------------------------------- */
+
+.svc-hero--hub {
+  /* Slightly tighter than a service page's masthead, because this one carries
+     the cards as well and the whole set has to reach the fold together. */
+  padding-block: calc(var(--space-3xl) + 1rem) var(--space-xl);
+}
+
+.svc-menu {
+  display: grid;
+  gap: var(--space-sm);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  margin-top: var(--space-lg);
+}
+
+.svc-menu__link {
+  --card-border: var(--border);
+  --card-surface: rgb(13 18 32 / 0.55);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xs);
+  overflow: hidden;
+  padding: var(--space-md);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  background: var(--card-surface);
+  color: inherit;
+  text-decoration: none;
+  transition:
+    border-color var(--duration-base) var(--ease-out-quart),
+    background-color var(--duration-base) var(--ease-out-quart),
+    transform var(--duration-base) var(--ease-out-expo);
+}
+
+/* The same cursor light a project card has, painted by the same module: the
+   markup only has to carry `data-pointer-glow`. */
+.svc-menu__link::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    18rem 18rem at var(--pointer-x, 50%) var(--pointer-y, 0%),
+    rgb(var(--brand-secondary-rgb) / 0.14),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity var(--duration-base) var(--ease-out-quart);
+}
+
+.svc-menu__link:hover,
+.svc-menu__link:focus-visible {
+  --card-border: rgb(var(--brand-secondary-rgb) / 0.45);
+  --card-surface: rgb(17 26 46 / 0.72);
+  transform: translateY(-3px);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .svc-menu__link:hover::before {
+    opacity: 1;
+  }
+}
+
+.svc-menu__top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-3xs);
+}
+
+.svc-menu__hint,
+.svc-menu__index {
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.svc-menu__index {
+  font-family: var(--font-brand);
+  color: var(--brand-secondary);
+}
+
+.svc-menu__name {
+  font-size: var(--text-base);
+  font-weight: 700;
+  letter-spacing: var(--tracking-snug);
+  line-height: var(--leading-snug);
+}
+
+.svc-menu__body {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+}
+
+/* On the floor of the card, so three cards of unequal text length still line
+   their affordance up with each other. */
+.svc-menu__go {
+  margin-top: auto;
+  padding-top: var(--space-sm);
+  align-self: flex-start;
+  color: var(--brand-secondary);
+  font-size: var(--text-base);
+  transition: transform var(--duration-base) var(--ease-out-expo);
+}
+
+.svc-menu__link:hover .svc-menu__go,
+.svc-menu__link:focus-visible .svc-menu__go {
+  transform: translateX(4px);
+}
+
 /* --- Breadcrumb --------------------------------------------------------------
    Visible, not only in the JSON-LD. Google shows a breadcrumb trail in place of
    the raw URL in a result, and it takes the one on the page as corroboration of
