@@ -1,0 +1,14 @@
+# Solo `contacto.php` se llama desde fuera. Los otros dos archivos se cargan
+# con `require` desde PHP, así que negarles el acceso por HTTP no les quita
+# nada y cierra la puerta a que una mala configuración del servidor llegue a
+# servir `config.php` como texto plano con la contraseña dentro.
+
+<FilesMatch "^(config|config\.example|smtp)\.php$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</FilesMatch>

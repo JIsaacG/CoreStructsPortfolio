@@ -51,7 +51,8 @@ const COPY = {
     detailPlaceholder: "Cuéntanos qué necesitas resolver…",
     sendWhatsApp: "Enviar por WhatsApp",
     sendMail: "Enviar solicitud",
-    noteWhatsApp: "Se abre WhatsApp con tu mensaje ya escrito. Solo tienes que enviarlo.",
+    noteWhatsApp:
+      "Se abre WhatsApp con tu mensaje ya escrito y, al mismo tiempo, nos llega una copia por correo.",
     noteMail: "Se abre tu correo con el mensaje ya escrito. Solo tienes que enviarlo.",
     whatsappLabel: "WhatsApp directo",
     mailLabel: "Correo",
@@ -61,6 +62,10 @@ const COPY = {
       "Abrimos WhatsApp con la solicitud ya escrita. Si no se abrió, revisa si el navegador bloqueó la ventana.",
     doneMail:
       "Abrimos tu correo con la solicitud ya escrita. Si no se abrió, revisa si el navegador bloqueó la ventana.",
+    copySending: "Enviando una copia a nuestro correo…",
+    copySent: "Copia recibida en nuestro correo. Te respondemos en horario laboral.",
+    copyFailed:
+      "No pudimos dejar la copia por correo. Termina el envío en WhatsApp, o escríbenos a",
     again: "Escribir otra solicitud",
     greeting: "Hola CoreStruct, quiero cotizar un proyecto.",
     fName: "Nombre",
@@ -84,7 +89,8 @@ const COPY = {
     detailPlaceholder: "Tell us what you need to solve…",
     sendWhatsApp: "Send on WhatsApp",
     sendMail: "Send request",
-    noteWhatsApp: "WhatsApp opens with your message already written. Just send it.",
+    noteWhatsApp:
+      "WhatsApp opens with your message already written, and a copy reaches our inbox at the same time.",
     noteMail: "Your mail app opens with the message already written. Just send it.",
     whatsappLabel: "WhatsApp",
     mailLabel: "Email",
@@ -94,6 +100,10 @@ const COPY = {
       "We opened WhatsApp with your request already written. If nothing happened, check whether the browser blocked the window.",
     doneMail:
       "We opened your mail app with the request already written. If nothing happened, check whether the browser blocked the window.",
+    copySending: "Sending a copy to our inbox…",
+    copySent: "The copy reached our inbox. We reply during working hours.",
+    copyFailed:
+      "We could not leave the copy by email. Finish sending on WhatsApp, or write to us at",
     again: "Write another request",
     greeting: "Hello CoreStruct, I would like a quote for a project.",
     fName: "Name",
@@ -122,6 +132,21 @@ const addresses = [...new Set([contact.email, ...(contact.emails ?? [])].filter(
 /* The one place the outgoing channel is decided. Everything else — the button
    label, the icon, the confirmation copy — reads off this. */
 const channel = hasWhatsApp ? "whatsapp" : "email";
+
+/**
+ * Where the copy of each request is mailed from.
+ *
+ * WhatsApp is the channel the visitor sees, and it is the one that can be
+ * abandoned: the browser hands the message to WhatsApp already written, and
+ * whether it is actually sent from there is out of the site's hands. So the
+ * same four fields also go to a small server-side endpoint that mails them to
+ * the studio, and a request that was typed out is never lost because someone
+ * closed the WhatsApp tab without pressing send.
+ *
+ * `null` in `site.js` turns this half off; the panel then behaves exactly as
+ * it did before, handing the request to WhatsApp and nothing else.
+ */
+const endpoint = contact.quoteEndpoint ?? null;
 
 const ICONS = {
   spark:
@@ -244,6 +269,13 @@ function markup() {
             `<textarea class="cs-quote__area" name="detalle" ` +
               `placeholder="${escape(t.detailPlaceholder)}" required></textarea>` +
           `</label>` +
+          /* The bot trap. Hidden in CSS rather than with `type="hidden"`, which
+             a form-filling script skips; this one it fills, and the endpoint
+             drops anything that arrives with it set. `tabindex` and
+             `aria-hidden` keep it off the path of a real visitor. */
+          `<div class="cs-quote__trap" aria-hidden="true">` +
+            `<label>No rellenar<input name="empresa_web" type="text" tabindex="-1" autocomplete="off" /></label>` +
+          `</div>` +
           `<button class="cs-quote__submit" type="submit">${submitIcon}${escape(submitLabel)}</button>` +
           `<p class="cs-quote__note">${escape(note)}</p>` +
         `</form>` +
@@ -253,13 +285,27 @@ function markup() {
   );
 }
 
-/** The view the form is replaced by once the message has been handed off. */
+/**
+ * The view the form is replaced by once the message has been handed off.
+ *
+ * The copy line starts as "sending" and is rewritten by `markCopy` when the
+ * endpoint answers. It is rendered from the start rather than appended later so
+ * the panel does not jump a line taller halfway through reading it.
+ */
 function confirmation() {
+  const copy = endpoint
+    ? `<p class="cs-quote__copy" data-quote-copy data-state="sending">` +
+        `<span class="cs-quote__copy-mark" aria-hidden="true"></span>` +
+        `<span data-quote-copy-text>${escape(t.copySending)}</span>` +
+      `</p>`
+    : "";
+
   return (
     `<div class="cs-quote__done">` +
       `<span class="cs-quote__done-mark">${ICONS.check}</span>` +
       `<h3 class="cs-quote__done-title">${escape(t.doneTitle)}</h3>` +
       `<p class="cs-quote__done-text">${escape(hasWhatsApp ? t.doneWhatsApp : t.doneMail)}</p>` +
+      copy +
       `<button class="cs-quote__again" type="button" data-quote-again>${escape(t.again)}</button>` +
     `</div>`
   );
@@ -433,7 +479,17 @@ export function close() {
   opener = null;
 }
 
-/** Composes the request and hands it to WhatsApp, or to mail as a fallback. */
+/**
+ * Composes the request and sends it down both roads at once: the visitor's, to
+ * WhatsApp with the message already written, and the studio's, to the inbox
+ * through `api/contacto.php`.
+ *
+ * The two are deliberately independent. WhatsApp is what the visitor sees and
+ * it is also the half that can quietly fail — the tab gets closed, the popup is
+ * blocked, the desktop app never opens — so the mailed copy is what guarantees
+ * a request that was typed out actually reaches someone. Neither waits for the
+ * other, and neither can break the other.
+ */
 function send(form) {
   root.dataset.touched = "";
   if (!form.checkValidity()) {
@@ -444,15 +500,25 @@ function send(form) {
   const data = new FormData(form);
   const value = (name) => String(data.get(name) ?? "").trim();
 
+  const request = {
+    nombre: value("nombre"),
+    contacto: value("contacto"),
+    tipo: value("tipo"),
+    detalle: value("detalle"),
+    empresa_web: value("empresa_web"),
+    idioma: lang,
+    origen: window.location.href,
+  };
+
   const lines = [
     t.greeting,
     "",
-    `${t.fName}: ${value("nombre")}`,
-    `${t.fReach}: ${value("contacto")}`,
-    `${t.fKind}: ${value("tipo")}`,
+    `${t.fName}: ${request.nombre}`,
+    `${t.fReach}: ${request.contacto}`,
+    `${t.fKind}: ${request.tipo}`,
     "",
     `${t.fDetail}:`,
-    value("detalle"),
+    request.detalle,
   ];
 
   /* Sent through a link rather than `location.href` so the page the visitor was
@@ -461,12 +527,61 @@ function send(form) {
     channel === "whatsapp"
       ? `https://wa.me/${digits}?text=${encodeURIComponent(lines.join("\n"))}`
       : `mailto:${addresses[0]}?subject=${encodeURIComponent(
-          `${t.subject} — ${value("tipo")}`,
+          `${t.subject} — ${request.tipo}`,
         )}&body=${encodeURIComponent(lines.join("\n"))}`;
 
+  /* Opened first, and never after awaiting anything: a popup blocker only
+     trusts a window opened synchronously inside the gesture that asked for it,
+     and going to the network first would spend that trust. */
   window.open(href, "_blank", "noopener");
 
   root.querySelector("[data-quote-body]").innerHTML = confirmation();
+
+  mailCopy(request);
+}
+
+/** Hands the same four fields to the endpoint that mails them to the studio. */
+async function mailCopy(request) {
+  if (!endpoint) return;
+
+  try {
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(request),
+      /* The visitor is on their way to WhatsApp. `keepalive` is what lets the
+         request finish even if this page is navigated away from or frozen the
+         moment after it goes out. */
+      keepalive: true,
+    });
+
+    const payload = await response.json().catch(() => ({}));
+    markCopy(response.ok && payload?.ok === true ? "sent" : "failed");
+  } catch {
+    /* Offline, blocked, or the endpoint is not deployed yet. The request is
+       still on its way through WhatsApp, so this is a footnote and not an
+       error state for the whole panel. */
+    markCopy("failed");
+  }
+}
+
+/** Rewrites the copy line in the confirmation once the endpoint has answered. */
+function markCopy(state) {
+  const line = root?.querySelector("[data-quote-copy]");
+  const text = line?.querySelector("[data-quote-copy-text]");
+  if (!line || !text) return;
+
+  line.dataset.state = state;
+
+  if (state === "sent") {
+    text.textContent = t.copySent;
+    return;
+  }
+
+  const address = addresses[0];
+  text.innerHTML = address
+    ? `${escape(t.copyFailed)} <a href="mailto:${escape(address)}">${escape(address)}</a>.`
+    : `${escape(t.copyFailed)}.`;
 }
 
 /* ---------------------------------------------------------------- triggers */

@@ -16,3 +16,7 @@ npm-debug.log*
 
 # Inventario de textos sin traducir (lo regenera npm run build:i18n)
 tools/i18n-missing.txt
+
+# Credenciales SMTP del formulario (se sube al hosting a mano, nunca al repo).
+# Plantilla versionada: api/config.example.php
+api/config.php

@@ -22,21 +22,23 @@ export const site = {
   // declares through `areaServed`, and it narrows nothing.
   areaServed: ["Honduras", "Latinoamérica"],
 
-  // TODO: replace with the real channels before going live. Anything left null
-  // or empty is simply not rendered, so the page never shows a placeholder
-  // address — fill `whatsapp` in and every CTA on the site, portfolio and demos
-  // alike, starts routing to it. Nothing else has to change.
+  // The real channels. Anything left null or empty is simply not rendered, so
+  // the page never shows a placeholder address — `whatsapp` is what every CTA
+  // on the site, portfolio and demos alike, routes to. Nothing else has to
+  // change to move the studio's number.
   contact: {
-    // Full international number, digits only, no + and no spaces or dashes:
-    // "50497350903". This one value is the destination of every quote request
-    // the site can produce; until it is set the panel falls back to `email`.
-    whatsapp: null,
+    // Full international number, digits only, no + and no spaces or dashes.
+    // This one value is the destination of every quote request the site can
+    // produce; were it ever unset the panel would fall back to `email`.
+    whatsapp: "50492300861",
 
-    // The address the fallback uses, and the first one shown in the panel.
-    email: "contacto@corestruct.com",
+    // The inbox the quote panel copies every request to, and the first address
+    // shown in the panel. Must be a mailbox the SMTP account in
+    // `api/config.php` is allowed to deliver to.
+    email: "contacto@corestructhn.com",
 
     // Any further addresses to list beneath it, e.g. a sales or support inbox.
-    // ["ventas@corestruct.com", "soporte@corestruct.com"]
+    // ["ventas@corestructhn.com", "soporte@corestructhn.com"]
     emails: [],
 
     phone: null,        // e.g. "+52 55 1234 5678"
@@ -44,6 +46,18 @@ export const site = {
     // Deliberately unset: the studio works remotely and takes work from
     // anywhere, so naming a city would narrow the offer rather than qualify it.
     location: null,
+
+    /**
+     * The server-side endpoint that mails a copy of each quote request to
+     * `email`. A browser cannot speak SMTP, so the panel POSTs the four fields
+     * here and `api/contacto.php` does the delivery.
+     *
+     * Root-relative on purpose: the panel ships on the portfolio, on the `en/`
+     * mirror and inside all six demo families, which sit at three different
+     * depths. Set it to null to turn the mail copy off and leave the panel
+     * handing the request to WhatsApp alone.
+     */
+    quoteEndpoint: "/api/contacto.php",
   },
 
   /**

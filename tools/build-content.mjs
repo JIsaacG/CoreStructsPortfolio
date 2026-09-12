@@ -250,6 +250,21 @@ const renderAlliances = () =>
 const whatsappHref = (number) => `https://wa.me/${String(number).replace(/\D/g, "")}`;
 
 /**
+ * The number as a person reads it, derived from the digits rather than stored
+ * twice — `site.js` holds the one form WhatsApp accepts, and a second, prettier
+ * copy of the same number is exactly the kind of pair that drifts apart.
+ *
+ * Same split as the quote panel: everything past the last eight digits is the
+ * country code, and the eight are the local number.
+ */
+function whatsappShown(number) {
+  const digits = String(number).replace(/\D/g, "");
+  return digits.length > 10
+    ? `+${digits.slice(0, -8)} ${digits.slice(-8, -4)}-${digits.slice(-4)}`
+    : `+${digits}`;
+}
+
+/**
  * The contact CTA.
  *
  * It stays an `<a>` with a real destination rather than becoming a `<button>`,
@@ -281,7 +296,7 @@ function renderChannels() {
   const channels = [
     whatsapp && {
       label: "WhatsApp",
-      value: whatsapp,
+      value: whatsappShown(whatsapp),
       href: whatsappHref(whatsapp),
     },
     email && {

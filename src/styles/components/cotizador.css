@@ -470,6 +470,80 @@
   background: rgb(255 255 255 / 0.07);
 }
 
+/* The line that reports the mailed copy. One element, three states: it is
+   painted as "sending" the moment the confirmation appears and rewritten in
+   place when the endpoint answers, so the panel never grows a line under
+   someone who is already reading it. */
+.cs-quote__copy {
+  display: flex;
+  /* Start, not centre: the failure message runs to three lines, and a dot
+     floating beside the middle one reads as if it pointed at that line. */
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0.1rem 0 0;
+  max-width: 20rem;
+  color: var(--csq-faint);
+  font-family: inherit;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  text-align: center;
+  transition: color 0.3s ease;
+}
+
+.cs-quote__copy-mark {
+  flex: none;
+  /* Half a line box minus half the dot: centres it on the first line rather
+     than on the top edge of the text. */
+  margin-block-start: 0.36rem;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.cs-quote__copy[data-state="sending"] .cs-quote__copy-mark {
+  animation: cs-quote-pulse 1.2s ease-in-out infinite;
+}
+
+.cs-quote__copy[data-state="sent"] {
+  color: #25d366;
+}
+
+/* Amber, not red: the request is already on its way through WhatsApp. Only the
+   backup copy did not go out, and the line says what to do about it. */
+.cs-quote__copy[data-state="failed"] {
+  color: rgb(240 150 90);
+}
+
+.cs-quote__copy a {
+  color: inherit;
+  font-weight: 700;
+}
+
+@keyframes cs-quote-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* The bot trap, hidden off-screen rather than with `display: none`: a form
+   filler that honours visibility skips what is not displayed, and this field
+   is only worth anything if a bot fills it in. */
+.cs-quote__trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 /* ------------------------------------------------------- the mobile sheet */
 
 /* Below this width the side panel becomes the whole screen. That is what was
@@ -531,5 +605,11 @@
 
   .cs-quote__panel {
     transform: none;
+  }
+
+  /* The dot stops beating but stays visible; the state it reports is carried by
+     its colour and by the sentence next to it, not by the movement. */
+  .cs-quote__copy[data-state="sending"] .cs-quote__copy-mark {
+    animation: none;
   }
 }

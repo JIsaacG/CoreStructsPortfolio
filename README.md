@@ -78,6 +78,12 @@ comprobaciones, más una propia: tienen que ser `noindex`.
 index.html                 la página (el contenido se inyecta al compilar)
 favicon.ico  robots.txt  sitemap.xml  site.webmanifest
 
+api/                       lo único que se ejecuta en el servidor (PHP)
+  contacto.php             recibe el formulario y lo manda al buzón
+  smtp.php                 cliente SMTP mínimo, sin dependencias
+  config.example.php       plantilla de credenciales (esta sí se versiona)
+  config.php               credenciales reales — NO está en el repositorio
+
 src/
   data/                    CONTENIDO — es lo que se edita a diario
     site.js                nombre, textos meta, correo, teléfono, redes
@@ -791,6 +797,60 @@ después los iconos y la tarjeta Open Graph, en vez de escalar el PNG.
 
 ---
 
+## El formulario "Hablemos"
+
+Cada "Hablemos", "Quiero un portal como este" y "Crear mi proyecto" del sitio abre
+el mismo panel: `src/scripts/cotizador.js`, cuatro campos, encima de la página que
+se estaba leyendo. Al enviarlo salen **dos** cosas a la vez, y son independientes
+a propósito:
+
+1. **WhatsApp**, con el mensaje ya redactado, hacia `site.contact.whatsapp`. Es lo
+   que la persona ve, y es también la mitad que puede quedarse a medias: basta con
+   que cierre la pestaña sin pulsar enviar.
+2. **Una copia por correo** a `site.contact.email`, vía `api/contacto.php`. Esta es
+   la que garantiza que una solicitud escrita llegue a alguien. Si falla, el panel
+   lo dice y ofrece la dirección; la solicitud sigue viva por WhatsApp.
+
+La ventana de WhatsApp se abre **antes** de tocar la red: un bloqueador de ventanas
+solo confía en la que se abre dentro del clic que la pidió, y esperar a la respuesta
+del servidor gastaría esa confianza.
+
+### Qué hace falta en el servidor
+
+Es lo único del proyecto que no es estático. Necesita **PHP 8** con `openssl`
+(Hostinger lo trae de serie) y el directorio `api/` subido junto al resto.
+
+```
+cp api/config.example.php api/config.php    # y rellenar las credenciales
+```
+
+`api/config.php` **no está en el repositorio** — lleva la contraseña del buzón — así
+que es el único archivo que se sube a mano. Si algún día el despliegue pasa a ser un
+`git pull` en el servidor, hay que crearlo allí.
+
+El remitente (`mail_from`) tiene que ser la misma cuenta que se autentica
+(`smtp_user`): Hostinger rechaza enviar en nombre de otra dirección, y es lo que
+hace que SPF y DKIM cuadren y el correo no caiga en spam.
+
+### Comprobar que funciona
+
+```bash
+curl -X POST https://corestructhn.com/api/contacto.php \
+  -H "Content-Type: application/json" \
+  -d '{"nombre":"Prueba","contacto":"tu@correo.com","detalle":"Probando"}'
+```
+
+`{"ok":true}` es la respuesta buena. Si algo falla, poner `'debug' => true` en
+`config.php` devuelve el diálogo SMTP completo en el JSON — el código numérico del
+servidor es lo único que sirve para depurar entrega de correo. **Volver a `false`
+después**: ese diálogo describe la conversación con el buzón.
+
+Los demás códigos: `422` faltan campos, `429` se superó el tope por IP (cinco cada
+diez minutos), `403` la llamada venía de otro dominio, `502` el servidor de correo
+rechazó el mensaje.
+
+---
+
 ## Accesibilidad y rendimiento
 
 - Un solo `<h1>`, jerarquía de encabezados sin saltos, HTML semántico, skip link.
@@ -818,9 +878,12 @@ después los iconos y la tarjeta Open Graph, en vez de escalar el PNG.
    gratuita de DaFont, válida solo para uso personal, y este sitio es uso comercial.
    Escribir a la fundición (correo en `assets/fonts/Quantify-EULA.txt`) antes de
    publicar, o sustituir el logotipo por el arte del logo.
-2. **Datos de contacto reales** en `src/data/site.js`: el correo actual
-   (`contacto@corestruct.com`) es un marcador; teléfono, WhatsApp y redes están
-   en `null` y por eso no aparecen.
-3. **Dominio definitivo**: sustituir `https://corestruct.com` en `src/data/site.js`,
-   `index.html` (canonical + Open Graph), `robots.txt` y `sitemap.xml`.
+2. **Redes sociales** en `src/data/site.js`: `social` está vacío y `phone` en
+   `null`, y por eso no aparecen. WhatsApp (`+504 9230-0861`) y el correo
+   (`contacto@corestructhn.com`) ya son los reales.
+3. **Dominio definitivo**: `site.url` sigue siendo `https://corestruct.com`
+   mientras que el correo y el SMTP ya son de `corestructhn.com`. Hay que decidir
+   cuál es el bueno y sustituirlo en `src/data/site.js`, `index.html`
+   (canonical + Open Graph), `robots.txt`, `sitemap.xml` y en `allowed_origins`
+   de `api/config.php`.
 4. **Capturas de proyectos reales** para reemplazar los mockups genéricos.
