@@ -28,7 +28,19 @@
  * honest answer to whether CoreStruct does the thing the page is selling.
  */
 
-/** The hub. Exists so the three pages have a parent that links them together. */
+/**
+ * The `#servicios` band of the home page.
+ *
+ * This was a page, `/servicios/`: a hub whose only job was to introduce the
+ * three below it. It is a band of `index.html` now, rendered by
+ * `build-content.mjs`, and the old URL 301s to the anchor in `.htaccess`.
+ * The site is one scroll with anchors, and the hub was the one place a click
+ * left it.
+ *
+ * `title`, `description` and `slug` are what a page needed and the band does
+ * not. They stay because nothing else holds them and because the day one of
+ * these grows past a band again, it needs them back.
+ */
 export const serviciosIndex = {
   slug: "",
   title: "Servicios de desarrollo web y software en Honduras | CoreStruct",

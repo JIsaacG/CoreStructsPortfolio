@@ -29,7 +29,7 @@
       crossorigin
     />
 
-    <link rel="stylesheet" href="../../dist/demo.css?v=3275bbc8" />
+    <link rel="stylesheet" href="../../dist/demo.css?v=90aa71ee" />
 
     <!-- The brand of the day. Everything downstream reads these four values, so
          a demo changes its whole palette from here — and the flavour beat then
@@ -64,7 +64,7 @@
           if (pref && pref !== document.documentElement.lang) {
             if (sessionStorage.getItem("cs-lang-hop") !== location.pathname) {
               sessionStorage.setItem("cs-lang-hop", location.pathname);
-              location.replace("../../demos/verbena.html");
+              location.replace("../../demos/verbena");
               return;
             }
           } else {
@@ -94,7 +94,7 @@
       <defs><linearGradient id="cs-face-top" gradientUnits="userSpaceOnUse" x1="33.3" y1="8.9" x2="353.6" y2="94.7"><stop offset="0%" stop-color="#140538"/><stop offset="16.7%" stop-color="#191754"/><stop offset="33.3%" stop-color="#223e81"/><stop offset="50%" stop-color="#2c6fb2"/><stop offset="66.7%" stop-color="#359dda"/><stop offset="83.3%" stop-color="#3bbaf1"/><stop offset="100%" stop-color="#3eccfb"/></linearGradient></defs>
     </svg>
 
-    <a class="dm-badge" href="../index.html#proyectos">
+    <a class="dm-badge" href="../#proyectos">
       <svg class="dm-badge__mark" viewBox="0 0 362 422" aria-hidden="true" focusable="false"><path class="cs-face cs-face--top" fill="url(#cs-face-top)" d="M10 98L17 92L181 1L188 3L354 96L353 99L200 186L185 179L173 181L166 186L11 98Z"/><path class="cs-face cs-face--right" fill="#3898d4" d="M188 421L188 373L190 371L320 295L320 248L318 248L188 324L188 217L198 211L202 203L202 197L358 111L361 109L361 165L233 234L233 275L361 200L361 321L189 421Z"/><path class="cs-face cs-face--left" fill="#253880" d="M1 107L160 195L166 210L176 216L176 252L174 252L42 176L42 294L114 336L154 359L154 297L176 309L176 422L2 321L1 108Z"/></svg>
       <span class="dm-badge__tag">Demo</span>
       <span class="dm-badge__label">Sample site · CoreStruct</span>
@@ -116,7 +116,7 @@
         </nav>
 
         <div class="dm-header__actions">
-          <!--lang-switch--><div class="lang-switch" role="group" aria-label="Idioma · Language"><span class="lang-switch__current" lang="en" aria-current="true">EN</span><a class="lang-switch__link" lang="es" hreflang="es" href="../../demos/verbena.html" data-lang-pick="es" title="Español">ES</a></div><!--/lang-switch-->
+          <!--lang-switch--><div class="lang-switch" role="group" aria-label="Idioma · Language"><span class="lang-switch__current" lang="en" aria-current="true">EN</span><a class="lang-switch__link" lang="es" hreflang="es" href="../../demos/verbena" data-lang-pick="es" title="Español">ES</a></div><!--/lang-switch-->
           <a class="button button--primary" href="#tienda">Buy</a>
           <button
             class="dm-burger"
@@ -824,8 +824,8 @@
             <h2 class="dm-cta__title">Want a site like this for your brand?</h2>
             <p class="dm-cta__text">Verbena does not exist: it is a demonstration built by CoreStruct to show what a bespoke brand shop looks like. Yours would be designed around your product.</p>
             <div class="dm-cta__actions">
-              <a class="button button--primary" href="../index.html#contacto">Let's talk about your project</a>
-              <a class="button" href="../index.html#proyectos">Back to the portfolio</a>
+              <a class="button button--primary" href="../#contacto">Let's talk about your project</a>
+              <a class="button" href="../#proyectos">Back to the portfolio</a>
             </div>
           </div>
         </div>
@@ -837,14 +837,14 @@
             <p class="dm-footer__name">Verbena</p>
             <p class="dm-footer__line">Signature drinks · since 2014</p>
             <p class="dm-footer__credit">
-              Fictional brand. Sample site built by <a href="../index.html">CoreStruct</a> © <span data-current-year>2026</span>.
+              Fictional brand. Sample site built by <a href="../">CoreStruct</a> © <span data-current-year>2026</span>.
             </p>
           </div>
           <nav class="dm-footer__nav" aria-label="Footer">
             <a href="#inicio">Home</a>
             <a href="#sabores">Flavours</a>
             <a href="#tienda">Shop</a>
-            <a href="../index.html#contacto">Contact</a>
+            <a href="../#contacto">Contact</a>
           </nav>
         </div>
       </footer>

@@ -47,7 +47,24 @@
       type="font/woff2"
       crossorigin
     />
-    <link rel="stylesheet" href="../../dist/corestruct.css?v=a8d6b7f8" />
+    <link rel="stylesheet" href="../../dist/corestruct.css?v=a68bdfce" />
+
+    <!-- Los ocho módulos que main.js importa, anunciados por su nombre.
+         Misma razón que en el home, y aquí importa más: estas tres son las
+         páginas que contestan a una búsqueda, y quien llega a ellas lo hace
+         desde un resultado de Google sin haber visitado nada antes — con la
+         caché vacía, que es el único escenario donde una ida y vuelta de más se
+         nota de verdad. Sin estas líneas el navegador descubre los ocho nombres
+         solo después de descargar y parsear main.js, y paga un viaje entero
+         por enterarse de algo que ya se sabía al generar esta página. -->
+    <link rel="modulepreload" href="../../src/scripts/modules/header.js" />
+    <link rel="modulepreload" href="../../src/scripts/modules/intro.js" />
+    <link rel="modulepreload" href="../../src/scripts/modules/logo-burst.js" />
+    <link rel="modulepreload" href="../../src/scripts/modules/pointer-glow.js" />
+    <link rel="modulepreload" href="../../src/scripts/modules/pointer-spotlight.js" />
+    <link rel="modulepreload" href="../../src/scripts/modules/scroll-metrics.js" />
+    <link rel="modulepreload" href="../../src/scripts/modules/scroll-reveal.js" />
+    <link rel="modulepreload" href="../../src/scripts/modules/starfield.js" />
 
     <!-- Same guard as the home page: mark the document scripted before first
          paint, and switch the reveal system off if nothing claims it. -->
@@ -189,7 +206,7 @@
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Servicios",
-                "item": "https://corestructhn.com/servicios/"
+                "item": "https://corestructhn.com/#servicios"
               },
               {
                 "@type": "ListItem",
@@ -248,7 +265,7 @@
           if (pref && pref !== document.documentElement.lang) {
             if (sessionStorage.getItem("cs-lang-hop") !== location.pathname) {
               sessionStorage.setItem("cs-lang-hop", location.pathname);
-              location.replace("../../en/servicios/desarrollo-web-tegucigalpa/index.html");
+              location.replace("../../en/servicios/desarrollo-web-tegucigalpa/");
               return;
             }
           } else {
@@ -291,7 +308,7 @@
 
     <header class="header" data-header>
       <div class="header__inner">
-        <a class="brand" href="../../index.html" aria-label="CoreStruct — inicio">
+        <a class="brand" href="../../" aria-label="CoreStruct — inicio">
           <svg class="brand__mark" viewBox="0 0 362 422" aria-hidden="true" focusable="false">
             <use href="#cs-isotipo" />
           </svg>
@@ -300,17 +317,17 @@
 
         <nav class="header__nav" aria-label="Principal">
           <ul class="nav__list">
-            <li><a class="nav__link" href="../../servicios/">Servicios</a></li>
-            <li><a class="nav__link" href="../../index.html#proyectos">Proyectos</a></li>
-            <li><a class="nav__link" href="../../index.html#contacto">Contacto</a></li>
+            <li><a class="nav__link" href="../../#servicios">Servicios</a></li>
+            <li><a class="nav__link" href="../../#proyectos">Proyectos</a></li>
+            <li><a class="nav__link" href="../../#contacto">Contacto</a></li>
           </ul>
         </nav>
 
         <div class="header__actions">
-          <!--lang-switch--><div class="lang-switch" role="group" aria-label="Idioma · Language"><span class="lang-switch__current" lang="es" aria-current="true">ES</span><a class="lang-switch__link" lang="en" hreflang="en" href="../../en/servicios/desarrollo-web-tegucigalpa/index.html" data-lang-pick="en" title="English">EN</a></div><!--/lang-switch-->
+          <!--lang-switch--><div class="lang-switch" role="group" aria-label="Idioma · Language"><span class="lang-switch__current" lang="es" aria-current="true">ES</span><a class="lang-switch__link" lang="en" hreflang="en" href="../../en/servicios/desarrollo-web-tegucigalpa/" data-lang-pick="en" title="English">EN</a></div><!--/lang-switch-->
           <a
             class="button button--ghost button--compact button--pulse header__cta"
-            href="../../index.html#contacto"
+            href="../../#contacto"
             data-cotizador
           >
             Hablemos
@@ -332,16 +349,16 @@
       </div>
 
       <nav class="mobile-nav" id="menu-movil" aria-label="Menú" data-mobile-nav>
-        <a class="mobile-nav__link" href="../../servicios/">
+        <a class="mobile-nav__link" href="../../#servicios">
           <span class="mobile-nav__index">01</span> Servicios
         </a>
-        <a class="mobile-nav__link" href="../../index.html#proyectos">
+        <a class="mobile-nav__link" href="../../#proyectos">
           <span class="mobile-nav__index">02</span> Proyectos
         </a>
-        <a class="mobile-nav__link" href="../../index.html#contacto">
+        <a class="mobile-nav__link" href="../../#contacto">
           <span class="mobile-nav__index">03</span> Contacto
         </a>
-        <a class="button button--primary mobile-nav__cta" href="../../index.html#contacto" data-cotizador>
+        <a class="button button--primary mobile-nav__cta" href="../../#contacto" data-cotizador>
           Iniciar un proyecto
           <span class="button__arrow" aria-hidden="true">&rarr;</span>
         </a>
@@ -352,9 +369,9 @@
       <section class="svc-hero">
         <div class="shell">
           <nav class="svc-crumbs" aria-label="Ruta">
-            <a href="../../index.html">Inicio</a>
+            <a href="../../">Inicio</a>
             <span class="svc-crumbs__sep" aria-hidden="true">/</span>
-            <a href="../../servicios/">Servicios</a>
+            <a href="../../#servicios">Servicios</a>
             <span class="svc-crumbs__sep" aria-hidden="true">/</span>
             <span aria-current="page">Desarrollo web</span>
           </nav>
@@ -365,7 +382,7 @@
             <div class="svc-hero__actions">
             <a
               class="button button--primary button--large"
-              href="../../index.html#contacto"
+              href="../../#contacto"
               data-cotizador
             >
               Cotizar mi proyecto
@@ -497,7 +514,7 @@
             </p>
             <a
               class="button button--primary button--large"
-              href="../../index.html#contacto"
+              href="../../#contacto"
               data-cotizador
             >
               Hablemos
@@ -521,7 +538,7 @@
 
     <footer class="footer">
       <div class="footer__inner shell">
-        <a class="footer__brand" href="../../index.html" aria-label="CoreStruct — inicio">
+        <a class="footer__brand" href="../../" aria-label="CoreStruct — inicio">
           <svg class="footer__mark" viewBox="0 0 362 422" aria-hidden="true" focusable="false">
             <use href="#cs-isotipo" />
           </svg>
@@ -529,9 +546,9 @@
         </a>
 
         <div class="footer__meta">
-          <a class="footer__link" href="../../servicios/">Servicios</a>
-          <a class="footer__link" href="../../index.html#proyectos">Proyectos</a>
-          <a class="footer__link" href="../../index.html#contacto">Contacto</a>
+          <a class="footer__link" href="../../#servicios">Servicios</a>
+          <a class="footer__link" href="../../#proyectos">Proyectos</a>
+          <a class="footer__link" href="../../#contacto">Contacto</a>
           <span class="footer__note">
             &copy; <span data-current-year>2026</span>
             CoreStruct

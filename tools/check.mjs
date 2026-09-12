@@ -10,8 +10,21 @@ import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { filesFor } from "./build-urls.mjs";
+
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const PAGE = join(ROOT, "index.html");
+
+/**
+ * Does this link land on something?
+ *
+ * The links ship clean, so `demos/verbena` has to be recognised as the file
+ * `demos/verbena.html` and `demos/aurea/` as `demos/aurea/index.html`. The
+ * candidates come from `build-urls.mjs`, which is the same list the rewrite
+ * rules in `.htaccess` try — a link this accepts is a link the server can
+ * answer, and that equivalence is the only reason this check is worth running.
+ */
+const resolves = (base, ref) => filesFor(ref).some((candidate) => existsSync(resolve(base, candidate)));
 
 const errors = [];
 const warnings = [];
@@ -35,7 +48,7 @@ for (const [, attr, value] of html.matchAll(/\b(href|src)="([^"]+)"/g)) {
   void attr;
 }
 for (const ref of localRefs) {
-  if (!existsSync(join(ROOT, ref))) fail(`missing file referenced from index.html: ${ref}`);
+  if (!resolves(ROOT, ref)) fail(`missing file referenced from index.html: ${ref}`);
 }
 
 /* -------------------------------------------------------------- anchors */
@@ -186,7 +199,7 @@ if (existsSync(DEMO_DIR)) {
     for (const [, , value] of page.matchAll(/\s(href|src)="([^"]+)"/g)) {
       if (/^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(value) || value.startsWith("#")) continue;
       const target = value.split(/[?#]/)[0];
-      if (target && !existsSync(resolve(pageDir, target))) {
+      if (target && !resolves(pageDir, target)) {
         fail(`missing file referenced from ${where}: ${value}`);
       }
     }

@@ -18,6 +18,7 @@ import { readIsotype, renderHeroMark, renderSprite, token } from "./lib/brand.mj
 import { alliances } from "../src/data/alliances.js";
 import { mockups } from "../src/data/mockups.js";
 import { projects } from "../src/data/projects.js";
+import { servicios, serviciosIndex } from "../src/data/servicios.js";
 import { navigation, site } from "../src/data/site.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -195,6 +196,62 @@ ${body.join("\n")}
 const renderAlliances = () =>
   `          <ul class="alliances__list">\n${alliances.map(renderAlliance).join("\n")}\n          </ul>`;
 
+/* ---------------------------------------------------------------- services */
+
+/**
+ * The services band, `#servicios`.
+ *
+ * This is the old `/servicios/` hub, rendered into the home page from the same
+ * `src/data/servicios.js` the three service pages are built from. The hub is
+ * gone and its URL 301s here; the pages below it are not, because each answers
+ * a different search and one anchor cannot rank for three.
+ *
+ * So the cards are the point of the band. They are the only links the three
+ * pages get from anywhere a reader will be, and they are rendered with
+ * `.svc-menu`, unchanged from the hub: same surface, same cursor light, same
+ * three sentences. What changed is where they sit, not what they are.
+ */
+function renderServicios() {
+  const cards = servicios
+    .map(
+      (service, index) => `            <a
+              class="svc-menu__link"
+              href="servicios/${escape(service.slug)}/"
+              data-reveal="fade"
+              data-pointer-glow
+            >
+              <span class="svc-menu__top">
+                <span class="svc-menu__hint">${escape(service.serviceType)}</span>
+                <span class="svc-menu__index" aria-hidden="true">${String(index + 1).padStart(2, "0")}</span>
+              </span>
+              <span class="svc-menu__name">${escape(service.h1)}</span>
+              <span class="svc-menu__body">${escape(service.lede)}</span>
+              <span class="svc-menu__go" aria-hidden="true">&rarr;</span>
+            </a>`,
+    )
+    .join("\n");
+
+  return `          <header class="services__head">
+            <p class="eyebrow" data-reveal="fade">
+              Servicios <span class="eyebrow__index">/ 04</span>
+            </p>
+            <h2 class="services__title" id="services-title" data-reveal="far">
+              ${escape(serviciosIndex.h1)}
+            </h2>
+            <p class="services__lede" data-reveal="far">
+              ${escape(serviciosIndex.lede)}
+            </p>
+          </header>
+
+          <div class="svc-menu" data-reveal-group>
+${cards}
+          </div>
+
+          <p class="services__note" data-reveal="far">
+            ${escape(serviciosIndex.intro)}
+          </p>`;
+}
+
 /* ----------------------------------------------------------------- contact */
 
 const whatsappHref = (number) => `https://wa.me/${String(number).replace(/\D/g, "")}`;
@@ -358,6 +415,7 @@ html = fill(html, "sprite", renderSprite(isotype));
 html = fill(html, "hero-mark", renderHeroMark(isotype));
 html = fill(html, "projects", renderProjects());
 html = fill(html, "alliances", renderAlliances());
+html = fill(html, "servicios", renderServicios());
 html = fill(html, "manifesto", renderManifesto());
 html = fill(html, "cta", renderCta());
 html = fill(html, "channels", renderChannels());
@@ -367,5 +425,5 @@ writeFileSync(PAGE, html);
 
 console.log(
   `index.html  ${projects.length} projects · ${alliances.length} alliances · ` +
-    `${(Buffer.byteLength(html) / 1024).toFixed(1)} KB`,
+    `${servicios.length} services · ${(Buffer.byteLength(html) / 1024).toFixed(1)} KB`,
 );

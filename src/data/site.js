@@ -79,7 +79,7 @@ export const site = {
      * here and `api/contacto.php` does the delivery.
      *
      * Relative to the root of the site, and resolved against the location of
-     * `cotizador.js` itself — not against the page. That is what makes the one
+     * `cotizador-panel.js` itself — not against the page. That is what makes the one
      * value work from the portfolio, from the `en/` mirror and from inside the
      * six demo families (three different depths), and also when the whole site
      * is served from a subdirectory instead of from the root of a domain.
@@ -163,13 +163,17 @@ export const site = {
  * Primary navigation.
  *
  * An entry carries either an `id`, which must match a section id on the home
- * page, or an `href` to a page of its own. Services is the second kind: it is
- * not a band of the home page, it is three pages that each answer a different
- * search, and the home page has to link to them or Google has no path to them
- * but the sitemap.
+ * page, or an `href` to a page of its own. Every entry is now the first kind:
+ * services used to be a hub page of its own, and is a band of the home page at
+ * `#servicios` since the hub was folded into it.
+ *
+ * The three service pages below that hub still exist and still have to be
+ * reachable, because each answers a different search and an anchor on a shared
+ * URL cannot rank for three queries. The `#servicios` band links to all three,
+ * which is the path the sitemap used to be the only source of.
  */
 export const navigation = [
-  { href: "servicios/", label: "Servicios" },
+  { id: "servicios", label: "Servicios" },
   { id: "proyectos", label: "Proyectos" },
   { id: "alianzas", label: "Alianzas" },
   { id: "contacto", label: "Contacto" },

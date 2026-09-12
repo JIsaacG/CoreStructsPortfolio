@@ -223,6 +223,47 @@ export default {
   Alcance: "Scope",
   "Ver la plataforma": "View the platform",
 
+  /* --------------------------------------------------------- services band */
+
+  /* The `#servicios` band, and the three cards in it.
+
+     These live here rather than in `servicios.js` because they are said in two
+     places now: on the home page, and on the service page each card opens. That
+     file is scoped to `servicios/` — deliberately, because "Diseño" and
+     "Reportes" mean different things there than they do in the demos — and a
+     scoped entry cannot answer for a page at the root. Global is the only scope
+     that covers both, and these particular strings are whole phrases rather
+     than the bare words the scoping exists to protect.
+
+     A narrower scope still wins over these, so nothing a demo translates its
+     own way is affected by their being here. */
+
+  "Servicios de desarrollo web y software en Honduras":
+    "Web development and software services in Honduras",
+  "Tres formas de trabajar con nosotros, según lo que necesite tu operación: un sitio que te presente, un sistema que te ordene por dentro, o las dos cosas.":
+    "Three ways to work with us, depending on what your operation needs: a site that " +
+    "introduces you, a system that puts your inside in order, or both.",
+  "CoreStruct es un estudio de desarrollo con base en Tegucigalpa que trabaja para empresas e instituciones de todo Honduras y de Latinoamérica. No vendemos plantillas: cada proyecto se construye sobre cómo opera de verdad quien lo va a usar, y eso empieza por entender la operación antes de escribir una línea de código.":
+    "CoreStruct is a development studio based in Tegucigalpa, working with companies and " +
+    "institutions across Honduras and Latin America. We do not sell templates: every " +
+    "project is built around how the people who will use it actually work, and that " +
+    "starts with understanding the operation before writing a line of code.",
+  "Diseño de páginas web": "Web design",
+  "Diseño de páginas web en Honduras": "Web design in Honduras",
+  "Un sitio que carga rápido, se entiende en el teléfono y le responde a tu cliente lo que quiere saber antes de que te escriba.":
+    "A site that loads fast, makes sense on a phone, and answers what your client wants " +
+    "to know before they message you.",
+  "Desarrollo de software a medida": "Custom software development",
+  "Desarrollo de sistemas a medida en Honduras":
+    "Custom software development in Honduras",
+  "Software construido sobre cómo trabaja tu empresa, en lugar de una empresa reacomodada para caber en un software.":
+    "Software built around how your company works, instead of a company rearranged to fit " +
+    "inside a piece of software.",
+  "Desarrollo web en Tegucigalpa": "Web development in Tegucigalpa",
+  "Estamos en la capital. Para un proyecto que vale meses de trabajo, poder sentarse en la misma mesa sigue cambiando el resultado.":
+    "We are in the capital. For a project worth months of work, being able to sit at the " +
+    "same table still changes the result.",
+
   /* ------------------------------------------------------------ manifesto */
 
   /* Rendered one word per `<span>` so it can be animated word by word, which is

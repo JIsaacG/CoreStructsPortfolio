@@ -53,7 +53,7 @@
           if (pref && pref !== document.documentElement.lang) {
             if (sessionStorage.getItem("cs-lang-hop") !== location.pathname) {
               sessionStorage.setItem("cs-lang-hop", location.pathname);
-              location.replace("../../en/demos/rumbo/index.html");
+              location.replace("../../en/demos/rumbo/");
               return;
             }
           } else {
@@ -74,7 +74,7 @@
   <body>
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
 
-    <a class="dm-badge" href="../../index.html#proyectos">
+    <a class="dm-badge" href="../../#proyectos">
       <svg class="dm-badge__mark" viewBox="0 0 362 422" aria-hidden="true" focusable="false">
         <path fill="#2c6fb2" d="M10 98L17 92L181 1L188 3L354 96L353 99L200 186L185 179L173 181L166 186L11 98Z"/>
         <path fill="#3898d4" d="M188 421L188 373L190 371L320 295L320 248L318 248L188 324L188 217L198 211L202 203L202 197L358 111L361 109L361 165L233 234L233 275L361 200L361 321L189 421Z"/>
@@ -86,21 +86,21 @@
 
     <header class="dm-header" data-header>
       <div class="dm-header__inner">
-        <a class="dm-wordmark" href="index.html">
+        <a class="dm-wordmark" href="./">
           <span class="dm-wordmark__name">Rumbo</span>
           <span class="dm-wordmark__mark">Distribución mayorista</span>
         </a>
 
         <nav class="dm-nav" aria-label="Secciones">
-            <a class="dm-nav__link" href="index.html" aria-current="page">Panel</a>
-            <a class="dm-nav__link" href="expedientes.html">Expedientes</a>
-            <a class="dm-nav__link" href="usuarios.html">Usuarios</a>
-            <a class="dm-nav__link" href="operaciones.html">Operaciones</a>
+            <a class="dm-nav__link" href="./" aria-current="page">Panel</a>
+            <a class="dm-nav__link" href="expedientes">Expedientes</a>
+            <a class="dm-nav__link" href="usuarios">Usuarios</a>
+            <a class="dm-nav__link" href="operaciones">Operaciones</a>
         </nav>
 
         <div class="dm-header__actions">
-          <!--lang-switch--><div class="lang-switch" role="group" aria-label="Idioma · Language"><span class="lang-switch__current" lang="es" aria-current="true">ES</span><a class="lang-switch__link" lang="en" hreflang="en" href="../../en/demos/rumbo/index.html" data-lang-pick="en" title="English">EN</a></div><!--/lang-switch-->
-          <a class="button button--primary" href="../../index.html#contacto">Hablemos de tu proyecto</a>
+          <!--lang-switch--><div class="lang-switch" role="group" aria-label="Idioma · Language"><span class="lang-switch__current" lang="es" aria-current="true">ES</span><a class="lang-switch__link" lang="en" hreflang="en" href="../../en/demos/rumbo/" data-lang-pick="en" title="English">EN</a></div><!--/lang-switch-->
+          <a class="button button--primary" href="../../#contacto">Hablemos de tu proyecto</a>
           <button
             class="dm-burger"
             type="button"
@@ -117,11 +117,11 @@
     </header>
 
     <div class="dm-menu" id="dm-menu" data-mobile-nav>
-      <a class="dm-menu__link" href="index.html">Panel</a>
-      <a class="dm-menu__link" href="expedientes.html">Expedientes</a>
-      <a class="dm-menu__link" href="usuarios.html">Usuarios</a>
-      <a class="dm-menu__link" href="operaciones.html">Operaciones</a>
-      <a class="dm-menu__link" href="../../index.html#contacto">Hablemos de tu proyecto</a>
+      <a class="dm-menu__link" href="./">Panel</a>
+      <a class="dm-menu__link" href="expedientes">Expedientes</a>
+      <a class="dm-menu__link" href="usuarios">Usuarios</a>
+      <a class="dm-menu__link" href="operaciones">Operaciones</a>
+      <a class="dm-menu__link" href="../../#contacto">Hablemos de tu proyecto</a>
     </div>
 
     <main class="dm" id="contenido">
@@ -196,7 +196,7 @@
             <li class="dm-feed__item">
               <span class="dm-feed__dot" aria-hidden="true"></span>
               <span class="dm-feed__body">
-                <span class="dm-feed__text">Pedido — <a class="dm-table__link" href="expedientes/minimarket-la-terminal.html">Minimarket La Terminal</a></span>
+                <span class="dm-feed__text">Pedido — <a class="dm-table__link" href="expedientes/minimarket-la-terminal">Minimarket La Terminal</a></span>
                 <span class="dm-feed__meta">Óscar Reyes · L 9,800</span>
               </span>
               <span class="dm-feed__when">24 ago 2026</span>
@@ -204,7 +204,7 @@
             <li class="dm-feed__item">
               <span class="dm-feed__dot" aria-hidden="true"></span>
               <span class="dm-feed__body">
-                <span class="dm-feed__text">Pago — <a class="dm-table__link" href="expedientes/abarroteria-puerto.html">Abarrotería Puerto</a></span>
+                <span class="dm-feed__text">Pago — <a class="dm-table__link" href="expedientes/abarroteria-puerto">Abarrotería Puerto</a></span>
                 <span class="dm-feed__meta">Wendy Paz · L 5,000</span>
               </span>
               <span class="dm-feed__when">24 ago 2026</span>
@@ -212,7 +212,7 @@
             <li class="dm-feed__item">
               <span class="dm-feed__dot" aria-hidden="true"></span>
               <span class="dm-feed__body">
-                <span class="dm-feed__text">Entrega — <a class="dm-table__link" href="expedientes/super-la-economia.html">Súper La Economía</a></span>
+                <span class="dm-feed__text">Entrega — <a class="dm-table__link" href="expedientes/super-la-economia">Súper La Economía</a></span>
                 <span class="dm-feed__meta">Julio Cálix · L 22,800</span>
               </span>
               <span class="dm-feed__when">24 ago 2026</span>
@@ -220,7 +220,7 @@
             <li class="dm-feed__item">
               <span class="dm-feed__dot" aria-hidden="true"></span>
               <span class="dm-feed__body">
-                <span class="dm-feed__text">Pedido — <a class="dm-table__link" href="expedientes/minimarket-villanueva.html">Minimarket Villanueva</a></span>
+                <span class="dm-feed__text">Pedido — <a class="dm-table__link" href="expedientes/minimarket-villanueva">Minimarket Villanueva</a></span>
                 <span class="dm-feed__meta">Katherine Suazo · L 6,700</span>
               </span>
               <span class="dm-feed__when">23 ago 2026</span>
@@ -228,7 +228,7 @@
             <li class="dm-feed__item">
               <span class="dm-feed__dot" aria-hidden="true"></span>
               <span class="dm-feed__body">
-                <span class="dm-feed__text">Ajuste — <a class="dm-table__link" href="expedientes/pulperia-el-progreso.html">Pulpería El Progreso</a></span>
+                <span class="dm-feed__text">Ajuste — <a class="dm-table__link" href="expedientes/pulperia-el-progreso">Pulpería El Progreso</a></span>
                 <span class="dm-feed__meta">Wendy Paz · -L 1,200</span>
               </span>
               <span class="dm-feed__when">23 ago 2026</span>
@@ -236,7 +236,7 @@
             <li class="dm-feed__item">
               <span class="dm-feed__dot" aria-hidden="true"></span>
               <span class="dm-feed__body">
-                <span class="dm-feed__text">Entrega — <a class="dm-table__link" href="expedientes/minimarket-la-terminal.html">Minimarket La Terminal</a></span>
+                <span class="dm-feed__text">Entrega — <a class="dm-table__link" href="expedientes/minimarket-la-terminal">Minimarket La Terminal</a></span>
                 <span class="dm-feed__meta">Julio Cálix · L 9,800</span>
               </span>
               <span class="dm-feed__when">23 ago 2026</span>
@@ -253,14 +253,14 @@
             <p class="dm-footer__line">Rumbo Distribución, S. de R.L. · Distribuidora de consumo masivo — ficticia</p>
             <p class="dm-footer__credit">
               Marca ficticia. Sitio de ejemplo construido por
-              <a href="../../index.html">CoreStruct</a> &copy; <span data-current-year>2026</span>.
+              <a href="../../">CoreStruct</a> &copy; <span data-current-year>2026</span>.
             </p>
           </div>
           <nav class="dm-footer__nav" aria-label="Pie">
-            <a href="index.html">Panel</a>
-            <a href="expedientes.html">Expedientes</a>
-            <a href="operaciones.html">Operaciones</a>
-            <a href="../../index.html#contacto">Contacto</a>
+            <a href="./">Panel</a>
+            <a href="expedientes">Expedientes</a>
+            <a href="operaciones">Operaciones</a>
+            <a href="../../#contacto">Contacto</a>
           </nav>
         </div>
       </footer>

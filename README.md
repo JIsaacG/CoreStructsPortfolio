@@ -58,10 +58,20 @@ npm run build:aurea    # src/data/aurea/*     ->  demos/aurea/*.html
 npm run build:flujo    # src/data/flujo/*     ->  demos/flujo/*.html
 npm run build:rumbo    # src/data/rumbo/*     ->  demos/rumbo/*.html
 npm run build:landing  # src/data/landings/*  ->  demos/landing/*.html
-npm run build:servicios # src/data/servicios.js -> servicios/**/index.html
+npm run build:servicios # src/data/servicios.js -> servicios/<slug>/index.html
 npm run build:stamp    # pone ?v=<hash> en cada enlace a una hoja de estilo
+npm run build:i18n     # traduce el árbol español  ->  en/*
+npm run build:urls     # quita el .html de cada enlace interno
+npm run build:seo      # lee los canonicals del disco  ->  sitemap.xml, robots.txt
 npm run check          # validación previa a publicar
 ```
+
+El orden de los tres últimos no es casual. `build:urls` va **después** de
+`build:i18n` porque el diccionario de traducción tiene claves que son HTML
+literal, enlaces incluidos: acortar antes dejaría esas claves sin coincidir y
+publicaría los textos sin traducir. Y va **antes** de `build:seo`, que lee los
+canonicals ya escritos para construir el sitemap con las URLs que de verdad se
+publican. Ver la cabecera de `tools/build-urls.mjs`.
 
 `npm run build:map` no forma parte de `npm run build`: reconstruye
 `src/data/cede/geography.js` desde el GeoJSON de límites administrativos y solo
@@ -85,10 +95,12 @@ favicon.ico  robots.txt  sitemap.xml  site.webmanifest
                             bajar la caché a la vez)
 
 servicios/                 las páginas que compiten por una búsqueda concreta
-  index.html               el índice que las enlaza
   diseno-de-paginas-web-honduras/
   desarrollo-de-sistemas-honduras/
   desarrollo-web-tegucigalpa/
+                           (no hay index.html: el hub que las presentaba es
+                            hoy la banda #servicios del home, y /servicios/
+                            hace 301 al ancla desde .htaccess)
 
 api/                       lo único que se ejecuta en el servidor (PHP)
   contacto.php             recibe el formulario y lo manda al buzón
@@ -100,7 +112,8 @@ api/                       lo único que se ejecuta en el servidor (PHP)
 src/
   data/                    CONTENIDO — es lo que se edita a diario
     site.js                nombre, textos meta, correo, teléfono, redes
-    servicios.js           el contenido de las páginas de /servicios/
+    servicios.js           el contenido de las páginas de /servicios/ y de
+                           la banda #servicios del home
     projects.js            las 8 tarjetas del portfolio
     alliances.js           los paneles de alianzas (logo + relato)
     mockups.js             los visuales SVG de cada tarjeta
@@ -122,7 +135,9 @@ src/
     layout.css             ritmo de secciones, conectores, bloque "statement"
     motion.css             sistema de scroll-reveal + prefers-reduced-motion
     components/            header, button, hero, wordmark, spotlight, projects,
-                           mockup, alliances, manifesto, contact
+                           mockup, alliances, manifesto, services, contact
+                           (services.css pone el manifiesto de fondo, en
+                            marca de agua, detrás de la banda #servicios)
     demo/                  shell, header, stage (la botella), hero, sections,
                            shop, footer, dashboard (paneles, tablas, pills de
                            Rumbo) — solo para las páginas de demos/

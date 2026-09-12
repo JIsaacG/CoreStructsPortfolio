@@ -36,6 +36,11 @@
    to add six hundred bytes. */
 @import "./components/servicio.css";
 
+/* The home page's services band. After `servicio.css`, because it layers the
+   manifesto behind the card row that file styles and has to win where the two
+   meet. */
+@import "./components/services.css";
+
 /* The quick-quote panel. CoreStruct furniture rather than this page's, so it
    is imported last: nothing in the bundle above may reach into it. */
 @import "./components/cotizador.css";

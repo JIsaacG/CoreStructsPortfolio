@@ -18,6 +18,149 @@
   # www -> raíz, conservando ruta y query.
   RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
   RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+
+  # El hub de servicios es ahora una banda del home.
+  #
+  # `/servicios/` existió como página: presentaba los tres servicios y mandaba
+  # a la página de cada uno. Ese contenido vive hoy en `#servicios`, dentro del
+  # index, porque el sitio es un solo scroll con anclas y esa era la única
+  # puerta que sacaba al visitante de él.
+  #
+  # La URL no se borra, se muda. Google ya la tiene indexada, y borrarla es
+  # tirar lo que esa dirección haya acumulado; un 301 se lo traslada al home.
+  #
+  # `NE` es obligatorio: sin él Apache escapa el `#` a `%23` y el navegador
+  # pide una página llamada "#servicios" que no existe.
+  #
+  # El destino es `/#servicios` y no `/index.html#servicios`. Esto era un error
+  # real, no un detalle: el canonical del home dice `https://corestructhn.com/`,
+  # así que un 301 que apuntaba a `/index.html` mandaba al rastreador a una URL
+  # que se declara a sí misma como otra. Eso es exactamente lo que reportaba la
+  # auditoría —"el enlace canónico especificado apunta a una URL diferente"— y
+  # una cadena redirección → página no canónica es autoridad que se queda a
+  # medio camino.
+  #
+  # El `$` limita la regla a la carpeta misma. Las tres páginas de abajo
+  # —`/servicios/desarrollo-web-tegucigalpa/` y sus hermanas— siguen vivas y
+  # son las que responden a cada búsqueda; redirigirlas sería borrarlas.
+  RewriteRule ^servicios/?$ /#servicios [R=301,NE,L]
+  RewriteRule ^en/servicios/?$ /en/#servicios [R=301,NE,L]
+
+  # URLs limpias: la dirección pública no lleva `.html`.
+  #
+  # Son dos reglas y se necesitan mutuamente. La primera manda a la forma corta
+  # a quien pida la larga; la segunda encuentra el archivo cuando llega la
+  # corta. Con solo la segunda, cada página seguiría contestando 200 en sus dos
+  # direcciones —que es el duplicado que esto viene a quitar—. Con solo la
+  # primera, no habría nada que servir.
+  #
+  # `THE_REQUEST` y no `REQUEST_URI`, y esto es lo único delicado del bloque.
+  # THE_REQUEST es la línea literal que mandó el navegador —`GET /demos/verbena
+  # .html HTTP/1.1`— y no cambia cuando la tercera regla reescribe la URL por
+  # dentro. Con REQUEST_URI esa reescritura interna a `.html` volvería a
+  # disparar el 301, el 301 pediría otra vez la forma corta, y el navegador
+  # quedaría dando vueltas hasta rendirse.
+
+  # /ruta/index.html -> /ruta/   ·   /index.html -> /
+  #
+  # El grupo exterior siempre participa —el `?` cuelga del interior, que no
+  # captura— para que `%1` sea cadena vacía y no una referencia sin resolver
+  # cuando la petición es `/index.html` a secas.
+  #
+  # El `/` del final del grupo es lo que impide que `misindex.html` se lea como
+  # "mis" + "index.html" y acabe redirigido a `/mis`.
+  RewriteCond %{THE_REQUEST} \s/+((?:[^\s?]*/)?)index\.html[\s?] [NC]
+  RewriteRule ^ /%1 [R=301,NE,L]
+
+  # /ruta.html -> /ruta
+  #
+  # Va después de la anterior a propósito: sobre `/a/index.html` esta también
+  # casa, y daría `/a/index`. La de arriba corta con [L] antes de llegar aquí.
+  RewriteCond %{THE_REQUEST} \s/+([^\s?]+)\.html[\s?] [NC]
+  RewriteRule ^ /%1 [R=301,NE,L]
+
+  # /ruta -> /ruta.html, por dentro y sin que el navegador se entere.
+  #
+  # `!-f` antes que nada: un archivo que ya existe con ese nombre exacto se
+  # sirve tal cual y no lo tapa una reescritura.
+  #
+  # NO lleva `!-d`, y esa ausencia es el detalle que costó encontrar. Dieciséis
+  # páginas de los demos tienen una carpeta hermana con su mismo nombre:
+  # `demos/aurelis/servicios.html` es el índice de servicios, y
+  # `demos/aurelis/servicios/` guarda las fichas de cada uno. Ninguna de esas
+  # carpetas tiene `index.html`.
+  #
+  # Con `!-d`, la regla se saltaba justamente esos casos: al existir la carpeta,
+  # no se reescribía nada, `DirectorySlash` veía un directorio y mandaba un 301
+  # a `/servicios/` —una carpeta sin índice—. El enlace limpio de la página
+  # acababa en una redirección hacia una URL que no muestra la página.
+  #
+  # La condición que decide de verdad es la de abajo: si existe `X.html`, esa
+  # es la página, tenga o no una carpeta `X/` al lado. La carpeta sigue siendo
+  # alcanzable por sus hijos —`/servicios/serie-ax-360`—, que es para lo único
+  # que existe. Una petición con barra final, `/servicios/`, no entra aquí:
+  # daría `servicios/.html`, que no es un archivo, y la condición la descarta.
+  #
+  # Quitar `!-d` no bastaba por sí solo: ver `DirectorySlash Off` más abajo.
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME}.html -f
+  RewriteRule ^(.+)$ $1.html [L]
+
+  # La barra final de una carpeta, ahora que la pone esta regla y no mod_dir.
+  #
+  # Va DESPUÉS de la anterior, y ese orden es el arreglo entero. Las dos reglas
+  # compiten por las mismas dieciséis URLs —`/demos/aurelis/servicios` es a la
+  # vez una página y una carpeta— y la de arriba gana porque va primero. Es la
+  # respuesta correcta: la página es lo que alguien quiso ver, la carpeta solo
+  # guarda sus hijas.
+  #
+  # `-d` más `index.html` y no solo `-d`: una carpeta sin índice no gana nada
+  # con la barra —seguiría sin haber qué mostrar—, así que se queda sin
+  # redirección y cae en el 404 que le corresponde.
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteCond %{REQUEST_FILENAME}/index.html -f
+  RewriteRule ^(.*[^/])$ /$1/ [R=301,L]
+
+  # Y la barra de más, en esas mismas dieciséis: `/demos/aurelis/servicios/`
+  # -> `/demos/aurelis/servicios`.
+  #
+  # Es la carpeta sin índice, que sin esto contesta 403 y deja a la página con
+  # una dirección muerta al lado. La regla la manda a la página que sí existe,
+  # y así las dos formas —con barra y sin ella— terminan en la misma URL. Una
+  # página, una dirección; es lo mismo que persigue todo este archivo.
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+  RewriteRule ^(.+)/$ /$1 [R=301,L]
+</IfModule>
+
+# Quién pone la barra final.
+#
+# mod_dir la pone solo, y la ponía antes de que mod_rewrite llegara a mirar: a
+# `/demos/aurelis/servicios` —que es una carpeta además de una página— contestaba
+# 301 hacia `/demos/aurelis/servicios/`, y ahí no hay `index.html`. El enlace
+# limpio de la página terminaba en una carpeta vacía. Las dos reglas de arriba
+# eran correctas y aun así no se aplicaban, porque no llegaban a tiempo.
+#
+# `DirectorySlash Off` le quita esa decisión a mod_dir y la deja donde sí se
+# puede ordenar: dentro del bloque de reglas, después de la búsqueda de `.html`.
+# La documentación de Apache advierte que apagarlo puede exponer el listado de
+# una carpeta; por eso va junto a `-Indexes`, que es lo que de verdad cierra esa
+# puerta —y que aquí hacía falta de todos modos: esas dieciséis carpetas no
+# tienen índice y el servidor estaba listando su contenido—.
+<IfModule mod_dir.c>
+  DirectorySlash Off
+</IfModule>
+
+Options -Indexes
+
+# MultiViews haría por su cuenta parte de lo de arriba: ante `/contacto` Apache
+# negociaría contenido y serviría `contacto.html` sin pasar por mod_rewrite.
+# El resultado se parece, pero deja la resolución fuera de estas reglas y
+# responde también a nombres que aquí no se quieren —`/contacto.htm`, o la
+# variante de idioma que se le ocurra—. Apagarlo deja una sola autoridad sobre
+# qué URL existe.
+<IfModule mod_negotiation.c>
+  Options -MultiViews
 </IfModule>
 
 # El paso de http a https ya lo hace el hosting antes de llegar aquí, así que
@@ -27,9 +170,18 @@
 # Compresión. El sitio es HTML, CSS y JS estáticos —texto puro—, y el CSS
 # compilado pasa de 50 KB. Sin esto viaja entero, y la velocidad de carga es
 # uno de los pocos factores de posicionamiento que se pueden medir desde aquí.
+#
+# La lista nombra el JavaScript tres veces porque hay tres nombres en juego para
+# el mismo archivo: `text/javascript` es el que declara el `AddType` de más
+# abajo y el único que la especificación reconoce hoy, `application/javascript`
+# es el que se escribió durante veinte años, y `application/x-javascript` es el
+# que este hosting sirve por su cuenta. Una lista que solo nombre uno de los
+# tres deja el JavaScript viajando sin comprimir el día que cambie el tipo, y no
+# avisa: la página sigue funcionando, solo pesa el triple.
 <IfModule mod_deflate.c>
   AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml
-  AddOutputFilterByType DEFLATE application/javascript application/json
+  AddOutputFilterByType DEFLATE text/javascript application/javascript application/x-javascript
+  AddOutputFilterByType DEFLATE application/json
   AddOutputFilterByType DEFLATE image/svg+xml
 </IfModule>
 
@@ -62,6 +214,70 @@
   ExpiresByType text/html                "access plus 0 seconds"
 </IfModule>
 
+# `immutable`, para lo que de verdad no cambia nunca.
+#
+# Un año de caché no evita que el navegador pregunte. En cada recarga manual
+# —F5, o el gesto de tirar hacia abajo en el móvil— vuelve a pedir el archivo
+# con un `If-None-Match`, el servidor contesta 304 y no viaja el cuerpo, pero sí
+# viaja el viaje: una ida y vuelta completa por archivo, que en una conexión
+# móvil hondureña son unos cientos de milisegundos multiplicados por la fuente,
+# la fuente de marca y la hoja de estilos.
+#
+# `immutable` es la promesa que corta esa pregunta: mientras la respuesta siga
+# fresca, ni siquiera se revalida. Solo puede prometerlo quien pueda cumplirlo,
+# y aquí se cumple por construcción: las fuentes son binarios que no se editan,
+# y el CSS llega siempre con el `?v=` que le pone `build:stamp`, así que un
+# cambio de contenido es un cambio de URL. La promesa es sobre la URL, no sobre
+# el nombre del archivo, y esa distinción es justo lo que la hace cierta.
+#
+# Los iconos se quedan fuera: no van sellados, y un favicon equivocado clavado
+# un mes en el navegador de alguien no tiene forma de deshacerse.
+<IfModule mod_headers.c>
+  <FilesMatch "\.(woff2|css)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+</IfModule>
+
+# El HTML: revalidado por el navegador, cacheable por el CDN.
+#
+# Esto es lo que costaba los seis segundos del informe, y no se veía desde
+# Honduras. Medido contra producción, la cabecera de respuesta del home dice:
+#
+#     x-hcdn-cache-status: DYNAMIC
+#     x-hcdn-upstream-rt:  0.030
+#
+# `DYNAMIC` significa que el CDN de Hostinger no guarda el HTML: cada visita, de
+# donde sea, viaja hasta el servidor de origen a buscarlo. El origen contesta en
+# 30 milisegundos —no es lento, nunca lo fue—; lo que se paga es el viaje. Desde
+# aquí ese viaje es corto y el sitio se siente instantáneo. Desde Virginia, que
+# es donde mide la auditoría, el primer byte tardó 3.1 segundos contra los 0.33
+# de una visita ya caliente. Casi todo el "6.3 segundos" es esa espera, con la
+# página entera cargando en los 600 ms siguientes.
+#
+# Las tres directivas dicen tres cosas a tres destinatarios distintos:
+#
+#   max-age=0, must-revalidate  al navegador: pregunta siempre. Una página que
+#                               cambió hoy se ve hoy. Preguntar cuesta un 304.
+#   s-maxage=600               al CDN: tú sí puedes servirlo diez minutos por tu
+#                               cuenta. Es el permiso que ahora mismo no tiene.
+#   stale-while-revalidate     al CDN: pasados esos diez minutos, entrega igual
+#                               la copia vieja y ve a buscar la nueva por detrás.
+#                               Nadie vuelve a esperar el viaje al origen.
+#
+# El precio es que una publicación tarda hasta diez minutos en verse en todo el
+# mundo. Es un precio real y es el correcto: diez minutos de retraso al publicar
+# valen menos que tres segundos de espera en cada visita.
+#
+# `s-maxage` solo lo obedece quien quiera obedecerlo, y hoy hcdn clasifica el
+# HTML como dinámico por política propia. Esta cabecera es la petición formal de
+# que deje de hacerlo —y es exactamente la que Cloudflare necesita el día que se
+# ponga delante, que es la respuesta de fondo a la prueba de CDN del informe.
+<IfModule mod_headers.c>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "public, max-age=0, must-revalidate, s-maxage=600, stale-while-revalidate=86400"
+  </FilesMatch>
+</IfModule>
+
 # Los módulos de JavaScript revalidan en cada visita en lugar de cachearse.
 #
 # Las dos líneas dicen lo mismo a propósito. El hosting añade por su cuenta un
@@ -77,13 +293,40 @@
 #
 # `ExpiresByType … 0 seconds` hace que el `Expires` lo emita esta configuración
 # y no el hosting, y que diga lo mismo que la cabecera de debajo.
+#
+# Y esas dos líneas por sí solas NO bastaban. Medido contra producción, un
+# módulo respondía así:
+#
+#     content-type:  application/x-javascript
+#     cache-control: public, no-cache
+#     expires:       Sat, 19 Sep 2026        <- una semana
+#
+# Es exactamente la contradicción que describe el párrafo de arriba, viva. La
+# causa es el `content-type`: el hosting sirve `.js` como
+# `application/x-javascript`, un nombre heredado que no es ninguno de los dos
+# que la tabla nombra, así que ninguna de las dos reglas casaba y el archivo
+# caía en el `ExpiresDefault` del servidor. La tabla estaba bien escrita y
+# apuntando a un tipo que en este servidor no existe.
+#
+# `AddType` lo arregla en el origen —declara el tipo moderno, que además es el
+# único que la especificación reconoce hoy— y la tercera línea cubre el caso de
+# que algo más adelante vuelva a imponer el nombre viejo.
+<IfModule mod_mime.c>
+  AddType text/javascript .js .mjs
+</IfModule>
+
 <IfModule mod_expires.c>
   ExpiresByType text/javascript          "access plus 0 seconds"
   ExpiresByType application/javascript   "access plus 0 seconds"
+  ExpiresByType application/x-javascript "access plus 0 seconds"
 </IfModule>
 
 <FilesMatch "\.m?js$">
   <IfModule mod_headers.c>
     Header set Cache-Control "public, no-cache"
+    # El cinturón, después de los tirantes: si pese a todo lo anterior alguien
+    # vuelve a colgarle un `Expires` lejano, aquí se cae. `unset` sobre una
+    # cabecera ausente no es un error, así que no hay nada que romper.
+    Header unset Expires
   </IfModule>
 </FilesMatch>

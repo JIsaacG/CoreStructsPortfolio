@@ -12,6 +12,8 @@ import { extname, join, normalize, resolve, sep } from "node:path";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { filesFor } from "./build-urls.mjs";
+
 const ROOT = resolve(join(dirname(fileURLToPath(import.meta.url)), ".."));
 const PORT = Number(process.env.PORT) || 4173;
 
@@ -42,18 +44,28 @@ createServer((request, response) => {
     return;
   }
 
-  let file = target;
-  try {
-    if (statSync(file).isDirectory()) file = join(file, "index.html");
-  } catch {
-    response.writeHead(404, { "content-type": "text/plain; charset=utf-8" }).end("404");
-    return;
+  /* The built pages link without `.html`, so this has to resolve a clean URL
+     the way the `.htaccess` does or local preview would 404 on every link the
+     live site answers. `filesFor` is the same candidate list the rewrite rules
+     try, in the same order, imported rather than restated so the two cannot
+     drift apart. */
+  let file;
+  let size;
+  for (const candidate of filesFor(requested)) {
+    const full = resolve(ROOT, `.${normalize(candidate)}`);
+    if (full !== ROOT && !full.startsWith(ROOT + sep)) continue;
+    try {
+      const stats = statSync(full);
+      if (stats.isDirectory()) continue;
+      file = full;
+      size = stats.size;
+      break;
+    } catch {
+      /* Not this shape; try the next. */
+    }
   }
 
-  let size;
-  try {
-    size = statSync(file).size;
-  } catch {
+  if (file === undefined) {
     response.writeHead(404, { "content-type": "text/plain; charset=utf-8" }).end("404");
     return;
   }

@@ -1,12 +1,20 @@
 /**
  * Renders the service pages into `servicios/`: `npm run build:servicios`.
  *
- *   servicios/index.html                              the hub
  *   servicios/diseno-de-paginas-web-honduras/          "diseño de páginas web en Honduras"
  *   servicios/desarrollo-de-sistemas-honduras/         "desarrollo de sistemas Honduras"
  *   servicios/desarrollo-web-tegucigalpa/              "desarrollo web Tegucigalpa"
  *
- * Why these exist at all: the home page is one URL, and one URL ranks for one
+ * There used to be a fourth, `servicios/index.html`, a hub whose only job was
+ * to introduce the three and hand the visitor to one of them. It is gone: the
+ * site is one scroll with anchors, and that hub was the one place a click left
+ * the page for a different rhythm. Its content is now the `#servicios` band of
+ * the home page, built by `build-content.mjs` from this same data file, and
+ * `/servicios/` 301s there in `.htaccess`. What the hub is not is deleted — a
+ * URL Google has indexed is an asset, and a redirect keeps it.
+ *
+ * These three stay pages. Why they exist at all: the home page is one URL, and
+ * one URL ranks for one
  * idea. Asked to rank for three different searches it competes with itself and
  * Google picks whichever it judges the page is most about — never all three.
  * A page per query is not a trick, it is the honest shape of the answer: each
@@ -34,7 +42,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { readIsotype, renderSprite } from "./lib/brand.mjs";
-import { servicios, serviciosIndex } from "../src/data/servicios.js";
+import { servicios } from "../src/data/servicios.js";
 import { site } from "../src/data/site.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -88,7 +96,7 @@ const header = (depth) => {
 
         <nav class="header__nav" aria-label="Principal">
           <ul class="nav__list">
-            <li><a class="nav__link" href="${up(depth)}servicios/">Servicios</a></li>
+            <li><a class="nav__link" href="${home}#servicios">Servicios</a></li>
             <li><a class="nav__link" href="${home}#proyectos">Proyectos</a></li>
             <li><a class="nav__link" href="${home}#contacto">Contacto</a></li>
           </ul>
@@ -120,7 +128,7 @@ const header = (depth) => {
       </div>
 
       <nav class="mobile-nav" id="menu-movil" aria-label="Menú" data-mobile-nav>
-        <a class="mobile-nav__link" href="${up(depth)}servicios/">
+        <a class="mobile-nav__link" href="${home}#servicios">
           <span class="mobile-nav__index">01</span> Servicios
         </a>
         <a class="mobile-nav__link" href="${home}#proyectos">
@@ -149,7 +157,7 @@ const footer = (depth) => {
         </a>
 
         <div class="footer__meta">
-          <a class="footer__link" href="${up(depth)}servicios/">Servicios</a>
+          <a class="footer__link" href="${home}#servicios">Servicios</a>
           <a class="footer__link" href="${home}#proyectos">Proyectos</a>
           <a class="footer__link" href="${home}#contacto">Contacto</a>
           <span class="footer__note">
@@ -246,6 +254,23 @@ function page({ depth, canonical, title, description, graph, body }) {
     />
     <link rel="stylesheet" href="${root}dist/corestruct.css" />
 
+    <!-- Los ocho módulos que main.js importa, anunciados por su nombre.
+         Misma razón que en el home, y aquí importa más: estas tres son las
+         páginas que contestan a una búsqueda, y quien llega a ellas lo hace
+         desde un resultado de Google sin haber visitado nada antes — con la
+         caché vacía, que es el único escenario donde una ida y vuelta de más se
+         nota de verdad. Sin estas líneas el navegador descubre los ocho nombres
+         solo después de descargar y parsear main.js, y paga un viaje entero
+         por enterarse de algo que ya se sabía al generar esta página. -->
+    <link rel="modulepreload" href="${root}src/scripts/modules/header.js" />
+    <link rel="modulepreload" href="${root}src/scripts/modules/intro.js" />
+    <link rel="modulepreload" href="${root}src/scripts/modules/logo-burst.js" />
+    <link rel="modulepreload" href="${root}src/scripts/modules/pointer-glow.js" />
+    <link rel="modulepreload" href="${root}src/scripts/modules/pointer-spotlight.js" />
+    <link rel="modulepreload" href="${root}src/scripts/modules/scroll-metrics.js" />
+    <link rel="modulepreload" href="${root}src/scripts/modules/scroll-reveal.js" />
+    <link rel="modulepreload" href="${root}src/scripts/modules/starfield.js" />
+
     <!-- Same guard as the home page: mark the document scripted before first
          paint, and switch the reveal system off if nothing claims it. -->
     <script>
@@ -286,113 +311,6 @@ ${footer(depth)}
 `;
 }
 
-/* ----------------------------------------------------------- the hub page */
-
-function buildIndex() {
-  const depth = 1;
-  const canonical = `${ORIGIN}/servicios/`;
-
-  /* The three cards live inside the hero rather than in a zone below it.
-
-     The hub is a crossroads: everything on it exists to get somebody to one of
-     the three pages. With the cards in their own section the first screen ended
-     with the button and a screen of empty sky, so the page read as finished
-     exactly where the choice should have been. In the hero they close the screen
-     that asks the question, and what follows the seam is what genuinely is a
-     second thought: who we are, and the offer to talk. */
-  const body = `      <section class="svc-hero svc-hero--hub">
-        <div class="shell">
-${crumbs(depth, [
-  { label: "Inicio", href: `${up(depth)}index.html` },
-  { label: "Servicios" },
-])}
-          <div class="svc-hero__inner">
-            <p class="eyebrow" data-reveal="fade">Servicios</p>
-            <h1 class="svc-hero__title">${escape(serviciosIndex.h1)}</h1>
-            <p class="svc-hero__lede">${escape(serviciosIndex.lede)}</p>
-            <div class="svc-hero__actions">
-${cta(depth, "Cotizar mi proyecto")}
-            </div>
-          </div>
-
-          <div class="svc-menu" data-reveal-group>
-${servicios
-  .map(
-    (service, index) => `            <a
-              class="svc-menu__link"
-              href="${escape(service.slug)}/"
-              data-reveal="fade"
-              data-pointer-glow
-            >
-              <span class="svc-menu__top">
-                <span class="svc-menu__hint">${escape(service.serviceType)}</span>
-                <span class="svc-menu__index" aria-hidden="true">${String(index + 1).padStart(2, "0")}</span>
-              </span>
-              <span class="svc-menu__name">${escape(service.h1)}</span>
-              <span class="svc-menu__body">${escape(service.lede)}</span>
-              <span class="svc-menu__go" aria-hidden="true">&rarr;</span>
-            </a>`,
-  )
-  .join("\n")}
-          </div>
-        </div>
-      </section>
-
-      <span class="connector" aria-hidden="true"></span>
-
-      <section class="section section--tight">
-        <div class="shell">
-          <div class="svc-prose" data-reveal="far">
-            <div class="svc-prose__block">
-              <p>${escape(serviciosIndex.intro)}</p>
-            </div>
-          </div>
-
-          <div class="svc-cta" data-reveal="far">
-            <h2 class="svc-cta__title">¿Hablamos de tu proyecto?</h2>
-            <p class="svc-cta__body">
-              Cuéntanos qué necesitas y te respondemos con alcance, plazo y precio
-              por escrito. La primera conversación no tiene costo.
-            </p>
-${cta(depth, "Hablemos")}
-          </div>
-        </div>
-      </section>`;
-
-  const graph = [
-    { "@type": "Organization", "@id": ORG, name: site.name, url: `${ORIGIN}/` },
-    {
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Inicio", item: `${ORIGIN}/` },
-        { "@type": "ListItem", position: 2, name: "Servicios", item: canonical },
-      ],
-    },
-    {
-      "@type": "ItemList",
-      name: serviciosIndex.h1,
-      itemListElement: servicios.map((service, index) => ({
-        "@type": "ListItem",
-        position: index + 1,
-        name: service.h1,
-        url: `${ORIGIN}/servicios/${service.slug}/`,
-      })),
-    },
-  ];
-
-  return {
-    file: join("servicios", "index.html"),
-    html: page({
-      depth,
-      canonical,
-      title: serviciosIndex.title,
-      description: serviciosIndex.description,
-      graph,
-      body,
-    }),
-  };
-}
-
 /* -------------------------------------------------------- a service page */
 
 function buildService(service) {
@@ -404,7 +322,7 @@ function buildService(service) {
         <div class="shell">
 ${crumbs(depth, [
   { label: "Inicio", href: `${up(depth)}index.html` },
-  { label: "Servicios", href: `${up(depth)}servicios/` },
+  { label: "Servicios", href: `${up(depth)}index.html#servicios` },
   { label: service.serviceType },
 ])}
           <div class="svc-hero__inner">
@@ -542,7 +460,9 @@ ${others
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "Inicio", item: `${ORIGIN}/` },
-        { "@type": "ListItem", position: 2, name: "Servicios", item: `${ORIGIN}/servicios/` },
+        /* The band on the home page, not `/servicios/`: that URL is now a 301
+           and a breadcrumb step should name where the trail actually goes. */
+        { "@type": "ListItem", position: 2, name: "Servicios", item: `${ORIGIN}/#servicios` },
         { "@type": "ListItem", position: 3, name: service.serviceType, item: canonical },
       ],
     },
@@ -572,7 +492,7 @@ ${others
 /* ------------------------------------------------------------------ output */
 
 const written = [];
-for (const { file, html } of [buildIndex(), ...servicios.map(buildService)]) {
+for (const { file, html } of servicios.map(buildService)) {
   const out = join(ROOT, file);
   mkdirSync(dirname(out), { recursive: true });
   writeFileSync(out, html);

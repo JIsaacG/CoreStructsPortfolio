@@ -28,6 +28,7 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, posix } from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { cleanUrl } from "./build-urls.mjs";
 import { key, loadDictionary, loadRules, newReport, translatePage } from "./lib/i18n.mjs";
 import { pages, roundtrip } from "./lib/roundtrip-check.mjs";
 
@@ -81,6 +82,14 @@ function shift(url, pageDir) {
      hreflang pair says there should be none. */
   const asIndex = posix.join(target, "index.html");
   if (path.endsWith("/") && mirrored.has(asIndex)) return url;
+
+  /* The same reasoning for the other clean shape. `build-urls.mjs` shortens
+     `demos/verbena.html` to `demos/verbena` on the finished pages, and this
+     step re-reads those pages on the next build. Without this, a link whose
+     `.html` had already been dropped would not be found in `mirrored`, would
+     be taken for a shared asset, and would be re-pointed at the Spanish tree —
+     dropping an English reader out of English on a link that used to work. */
+  if (mirrored.has(`${target}.html`)) return url;
 
   return posix.relative(posix.join(MIRROR, pageDir), target) + suffix;
 }
@@ -203,8 +212,15 @@ for (const page of pages(ROOT)) {
     continue;
   }
 
-  const enHref = posix.relative(dir, posix.join(MIRROR, page));
-  const esHref = posix.relative(posix.join(MIRROR, dir), page);
+  /* Clean from the start, and not left to `build-urls.mjs` to shorten later.
+     These two feed the language switch *and* the `location.replace()` in the
+     memory script, and that call is a string inside a `<script>` — the link
+     pass walks attributes, so it would never reach it. A visitor arriving at
+     `/` with English remembered would be sent to `en/index.html`, land on the
+     301, and pay a second round trip to end up where this could have pointed
+     in the first place. */
+  const enHref = cleanUrl(posix.relative(dir, posix.join(MIRROR, page)));
+  const esHref = cleanUrl(posix.relative(posix.join(MIRROR, dir), page));
   const canonical = clean.match(/<link rel="canonical" href="([^"]+)"/i)?.[1];
 
   /* --- the Spanish page keeps its shape and gains the switch --- */

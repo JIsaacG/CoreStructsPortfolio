@@ -64,7 +64,38 @@
       type="font/woff2"
       crossorigin
     />
-    <link rel="stylesheet" href="../dist/corestruct.css?v=574e8523" />
+    <link rel="stylesheet" href="../dist/corestruct.css?v=a68bdfce" />
+
+    <!-- The second round trip that nobody asked for.
+
+         `main.js` is a module that imports eight others, and the browser cannot
+         know that until it has downloaded and parsed `main.js` itself. Measured
+         against production, the shape of it is unmistakable: `main.js` starts at
+         3164 ms, and every module it imports starts at 3557 ms — not one of them
+         earlier. A whole round trip spent discovering filenames that were known
+         when this page was written.
+
+         These lines say them out loud. The browser opens the nine requests at
+         once, in parallel with the stylesheet, and by the time `main.js` is
+         parsed its imports are already in the cache.
+
+         `modulepreload` and not `preload`: it fetches the file, parses it as a
+         module and puts it in the module map, which is what makes the import
+         resolve instantly instead of merely warm.
+
+         This list is checked, not trusted — `npm run check` resolves every local
+         `href` on this page, so a module that gets renamed or deleted stops the
+         build instead of quietly becoming a 404 preload. A module *added* to
+         `main.js` and not listed here is the harmless direction: it costs the
+         round trip this block exists to avoid, and nothing else. -->
+    <link rel="modulepreload" href="../src/scripts/modules/header.js" />
+    <link rel="modulepreload" href="../src/scripts/modules/intro.js" />
+    <link rel="modulepreload" href="../src/scripts/modules/logo-burst.js" />
+    <link rel="modulepreload" href="../src/scripts/modules/pointer-glow.js" />
+    <link rel="modulepreload" href="../src/scripts/modules/pointer-spotlight.js" />
+    <link rel="modulepreload" href="../src/scripts/modules/scroll-metrics.js" />
+    <link rel="modulepreload" href="../src/scripts/modules/scroll-reveal.js" />
+    <link rel="modulepreload" href="../src/scripts/modules/starfield.js" />
 
     <!-- Marks the document as scripted before first paint, so the reveal system
          never hides content from a browser that will not un-hide it.
@@ -274,7 +305,7 @@
           if (pref && pref !== document.documentElement.lang) {
             if (sessionStorage.getItem("cs-lang-hop") !== location.pathname) {
               sessionStorage.setItem("cs-lang-hop", location.pathname);
-              location.replace("../index.html");
+              location.replace("../");
               return;
             }
           } else {
@@ -335,7 +366,7 @@
 
         <nav class="header__nav" aria-label="Main">
           <ul class="nav__list">
-            <li><a class="nav__link" href="servicios/">Services</a></li>
+            <li><a class="nav__link" href="#servicios" data-nav-link>Services</a></li>
             <li><a class="nav__link" href="#proyectos" data-nav-link>Work</a></li>
             <li><a class="nav__link" href="#alianzas" data-nav-link>Partnerships</a></li>
             <li><a class="nav__link" href="#contacto" data-nav-link>Contact</a></li>
@@ -343,7 +374,7 @@
         </nav>
 
         <div class="header__actions">
-          <!--lang-switch--><div class="lang-switch" role="group" aria-label="Idioma · Language"><span class="lang-switch__current" lang="en" aria-current="true">EN</span><a class="lang-switch__link" lang="es" hreflang="es" href="../index.html" data-lang-pick="es" title="Español">ES</a></div><!--/lang-switch-->
+          <!--lang-switch--><div class="lang-switch" role="group" aria-label="Idioma · Language"><span class="lang-switch__current" lang="en" aria-current="true">EN</span><a class="lang-switch__link" lang="es" hreflang="es" href="../" data-lang-pick="es" title="Español">ES</a></div><!--/lang-switch-->
           <a
             class="button button--ghost button--compact button--pulse header__cta"
             href="#contacto"
@@ -368,7 +399,7 @@
       </div>
 
       <nav class="mobile-nav" id="menu-movil" aria-label="Menu" data-mobile-nav>
-        <a class="mobile-nav__link" href="servicios/">
+        <a class="mobile-nav__link" href="#servicios">
           <span class="mobile-nav__index">01</span> Services
         </a>
         <a class="mobile-nav__link" href="#proyectos">
@@ -473,7 +504,7 @@
             <article class="project-card project-card--major project-card--corporate" data-reveal="far">
               <a
                 class="project-card__link"
-                href="demos/aurelis/index.html"
+                href="demos/aurelis/"
                 aria-label="Corporate sites — let's talk about your project"
                 data-pointer-glow
               >
@@ -504,7 +535,7 @@
             <article class="project-card project-card--minor project-card--offset" data-reveal="rise">
               <a
                 class="project-card__link"
-                href="demos/cede/index.html"
+                href="demos/cede/"
                 aria-label="Government sites — let's talk about your project"
                 data-pointer-glow
               >
@@ -535,7 +566,7 @@
             <article class="project-card project-card--minor project-card--systems" data-reveal="rise">
               <a
                 class="project-card__link"
-                href="demos/rumbo/index.html"
+                href="demos/rumbo/"
                 aria-label="Business systems — let's talk about your project"
                 data-pointer-glow
               >
@@ -566,7 +597,7 @@
             <article class="project-card project-card--major project-card--landing" data-reveal="far">
               <a
                 class="project-card__link"
-                href="demos/landing/index.html"
+                href="demos/landing/"
                 aria-label="Landing pages — let's talk about your project"
                 data-pointer-glow
               >
@@ -597,7 +628,7 @@
             <article class="project-card project-card--wide" data-reveal="scale">
               <a
                 class="project-card__link"
-                href="demos/aurea/index.html"
+                href="demos/aurea/"
                 aria-label="Education portals — let's talk about your project"
                 data-pointer-glow
               >
@@ -628,7 +659,7 @@
             <article class="project-card project-card--half project-card--brand" data-reveal="far">
               <a
                 class="project-card__link"
-                href="demos/verbena.html"
+                href="demos/verbena"
                 aria-label="Restaurants and menus — let's talk about your project"
                 data-pointer-glow
               >
@@ -659,7 +690,7 @@
             <article class="project-card project-card--half project-card--offset" data-reveal="rise">
               <a
                 class="project-card__link"
-                href="demos/flujo/index.html"
+                href="demos/flujo/"
                 aria-label="Automation — let's talk about your project"
                 data-pointer-glow
               >
@@ -786,10 +817,25 @@
         </div>
       </section>
 
-      <!-- ================================================ 05 · Manifesto -->
-      <section class="manifesto" aria-labelledby="manifesto-quote">
-        <div class="manifesto__inner shell">
-          <!-- build:manifesto -->
+      <span class="connector" aria-hidden="true"></span>
+
+      <!-- ================================================= 05 · Services -->
+      <!--
+        The old `/servicios/` hub, folded into the page it always pointed back
+        at. The three service pages it introduced still exist — each one answers
+        a search of its own — and these cards are now the only place a reader is
+        handed to them.
+
+        The manifesto is behind this band rather than in front of it. It keeps
+        its own markup, its own build region and its word-by-word reveal; what
+        `services.css` does is set it large and faint and put it on a layer
+        underneath, so the statement is still read without competing with the
+        copy that sits on top of it.
+      -->
+      <section class="section services" id="servicios" aria-labelledby="services-title">
+        <div class="services__backdrop">
+          <div class="manifesto__inner shell">
+            <!-- build:manifesto -->
           <h2 class="manifesto__quote reveal-words" id="manifesto-quote">
             <span>Technology</span> <span>should</span> <span>adapt</span> <span>to</span> <span>your</span> <span>company,</span> <span><em>not</em></span> <span><em>your</em></span> <span><em>company</em></span> <span><em>to</em></span> <span><em>the</em></span> <span><em>technology.</em></span>
           </h2>
@@ -797,6 +843,72 @@
             CoreStruct · A working principle
           </p>
 <!-- /build:manifesto -->
+          </div>
+        </div>
+
+        <div class="shell services__inner">
+          <!-- build:servicios -->
+          <header class="services__head">
+            <p class="eyebrow" data-reveal="fade">
+              Services <span class="eyebrow__index">/ 04</span>
+            </p>
+            <h2 class="services__title" id="services-title" data-reveal="far">
+              Web development and software services in Honduras
+            </h2>
+            <p class="services__lede" data-reveal="far">
+              Three ways to work with us, depending on what your operation needs: a site that introduces you, a system that puts your inside in order, or both.
+            </p>
+          </header>
+
+          <div class="svc-menu" data-reveal-group>
+            <a
+              class="svc-menu__link"
+              href="servicios/diseno-de-paginas-web-honduras/"
+              data-reveal="fade"
+              data-pointer-glow
+            >
+              <span class="svc-menu__top">
+                <span class="svc-menu__hint">Web design</span>
+                <span class="svc-menu__index" aria-hidden="true">01</span>
+              </span>
+              <span class="svc-menu__name">Web design in Honduras</span>
+              <span class="svc-menu__body">A site that loads fast, makes sense on a phone, and answers what your client wants to know before they message you.</span>
+              <span class="svc-menu__go" aria-hidden="true">&rarr;</span>
+            </a>
+            <a
+              class="svc-menu__link"
+              href="servicios/desarrollo-de-sistemas-honduras/"
+              data-reveal="fade"
+              data-pointer-glow
+            >
+              <span class="svc-menu__top">
+                <span class="svc-menu__hint">Custom software development</span>
+                <span class="svc-menu__index" aria-hidden="true">02</span>
+              </span>
+              <span class="svc-menu__name">Custom software development in Honduras</span>
+              <span class="svc-menu__body">Software built around how your company works, instead of a company rearranged to fit inside a piece of software.</span>
+              <span class="svc-menu__go" aria-hidden="true">&rarr;</span>
+            </a>
+            <a
+              class="svc-menu__link"
+              href="servicios/desarrollo-web-tegucigalpa/"
+              data-reveal="fade"
+              data-pointer-glow
+            >
+              <span class="svc-menu__top">
+                <span class="svc-menu__hint">Web development</span>
+                <span class="svc-menu__index" aria-hidden="true">03</span>
+              </span>
+              <span class="svc-menu__name">Web development in Tegucigalpa</span>
+              <span class="svc-menu__body">We are in the capital. For a project worth months of work, being able to sit at the same table still changes the result.</span>
+              <span class="svc-menu__go" aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+
+          <p class="services__note" data-reveal="far">
+            CoreStruct is a development studio based in Tegucigalpa, working with companies and institutions across Honduras and Latin America. We do not sell templates: every project is built around how the people who will use it actually work, and that starts with understanding the operation before writing a line of code.
+          </p>
+<!-- /build:servicios -->
         </div>
       </section>
 
@@ -804,7 +916,7 @@
       <section class="contact" id="contacto" aria-labelledby="contact-title">
         <div class="contact__inner shell">
           <p class="eyebrow" data-reveal="fade">
-            Contact <span class="eyebrow__index">/ 04</span>
+            Contact <span class="eyebrow__index">/ 05</span>
           </p>
 
           <h2 class="contact__title" id="contact-title" data-reveal="far">
@@ -859,7 +971,7 @@
 
         <!-- build:footer-meta -->
         <div class="footer__meta">
-          <a class="footer__link" href="servicios/">Services</a>
+          <a class="footer__link" href="#servicios">Services</a>
           <a class="footer__link" href="#proyectos">Work</a>
           <a class="footer__link" href="#alianzas">Partnerships</a>
           <a class="footer__link" href="#contacto">Contact</a>

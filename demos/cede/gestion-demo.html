@@ -6,7 +6,7 @@
 
     <title>Backoffice demostrativo · CEDE</title>
     <meta name="description" content="Interfaz de gestión demostrativa del portal: colecciones administrables, actividad reciente y perfiles de usuario. No modifica contenido." />
-    <link rel="canonical" href="https://www.cede.example/gestion-demo.html" />
+    <link rel="canonical" href="https://www.cede.example/gestion-demo" />
 
     <!-- The Consejo Estratégico para el Desarrollo Educativo does not exist. A
          demonstration of a public institution must never reach a search result
@@ -20,7 +20,7 @@
     <meta property="og:locale" content="es_HN" />
     <meta property="og:title" content="Backoffice demostrativo · CEDE" />
     <meta property="og:description" content="Interfaz de gestión demostrativa del portal: colecciones administrables, actividad reciente y perfiles de usuario. No modifica contenido." />
-    <meta property="og:url" content="https://www.cede.example/gestion-demo.html" />
+    <meta property="og:url" content="https://www.cede.example/gestion-demo" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Backoffice demostrativo · CEDE" />
     <meta name="twitter:description" content="Interfaz de gestión demostrativa del portal: colecciones administrables, actividad reciente y perfiles de usuario. No modifica contenido." />
@@ -92,7 +92,7 @@
           if (pref && pref !== document.documentElement.lang) {
             if (sessionStorage.getItem("cs-lang-hop") !== location.pathname) {
               sessionStorage.setItem("cs-lang-hop", location.pathname);
-              location.replace("../../en/demos/cede/gestion-demo.html");
+              location.replace("../../en/demos/cede/gestion-demo");
               return;
             }
           } else {
@@ -109,9 +109,9 @@
     </script>
     <!--/lang-memory-->
 <!--lang-alternates-->
-    <link rel="alternate" hreflang="es" href="https://www.cede.example/gestion-demo.html" />
-    <link rel="alternate" hreflang="en" href="https://www.cede.example/en/gestion-demo.html" />
-    <link rel="alternate" hreflang="x-default" href="https://www.cede.example/gestion-demo.html" />
+    <link rel="alternate" hreflang="es" href="https://www.cede.example/gestion-demo" />
+    <link rel="alternate" hreflang="en" href="https://www.cede.example/en/gestion-demo" />
+    <link rel="alternate" hreflang="x-default" href="https://www.cede.example/gestion-demo" />
     <!--/lang-alternates-->
   </head>
 
@@ -123,7 +123,7 @@
           <span class="cd-admin__tag">Backoffice demostrativo</span>
         </p>
         <div class="cd-admin__user">
-          <!--lang-switch--><div class="lang-switch" role="group" aria-label="Idioma · Language"><span class="lang-switch__current" lang="es" aria-current="true">ES</span><a class="lang-switch__link" lang="en" hreflang="en" href="../../en/demos/cede/gestion-demo.html" data-lang-pick="en" title="English">EN</a></div><!--/lang-switch-->
+          <!--lang-switch--><div class="lang-switch" role="group" aria-label="Idioma · Language"><span class="lang-switch__current" lang="es" aria-current="true">ES</span><a class="lang-switch__link" lang="en" hreflang="en" href="../../en/demos/cede/gestion-demo" data-lang-pick="en" title="English">EN</a></div><!--/lang-switch-->
           <span>Sesión de demostración · no hay datos reales</span>
           <span class="cd-admin__avatar" aria-hidden="true">ST</span>
         </div>
@@ -144,7 +144,7 @@
           </div>
           <div class="cd-admin__group">
             <p class="cd-admin__group-title">Portal público</p>
-            <a class="cd-admin__link" href="index.html">Ver el portal<svg class="cd-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 3.2H3.2v9.6h9.6V9.5"/><path d="M9.6 3.2h3.2v3.2M12.8 3.2 7.6 8.4"/></svg></a>
+            <a class="cd-admin__link" href="./">Ver el portal<svg class="cd-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 3.2H3.2v9.6h9.6V9.5"/><path d="M9.6 3.2h3.2v3.2M12.8 3.2 7.6 8.4"/></svg></a>
           </div>
         </nav>
 

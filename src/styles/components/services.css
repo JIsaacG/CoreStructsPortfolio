@@ -1,0 +1,151 @@
+/* =============================================================================
+   Services — the three service pages, brought onto the home page
+
+   `/servicios/` used to be a hub: a page whose only job was to hand the visitor
+   to one of the three pages below it. On a site that is otherwise one scroll
+   with anchors, that hub was the single place a click left the page and came
+   back to a different rhythm — a short masthead, a breadcrumb, no hero. So the
+   hub became this band, and `/servicios/` now 301s to `#servicios`. The three
+   pages underneath it stay where they are: each one answers a different search,
+   and that is a job an anchor on a shared URL cannot do.
+
+   The manifesto did not move out of the way for it. It is behind this band as a
+   watermark — still read, still animated word by word, just no longer given a
+   screen of its own. That is the whole reason this file exists rather than the
+   section reusing `.svc-menu` on its own: the layering, and keeping the type
+   underneath faint enough that the copy on top stays the thing being read.
+   ========================================================================== */
+
+.services {
+  position: relative;
+}
+
+/* The same soft brand wash the manifesto had when it was a section of its own,
+   moved onto the band that replaced it. Not inside `__backdrop`, because that
+   layer clips and a clipped glow draws a straight edge across the page. */
+.services::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    75% 60% at 50% 45%,
+    rgb(var(--brand-primary-rgb) / 0.22),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+/* --- The watermark -----------------------------------------------------------
+   The manifesto, behind the band.
+
+   It is anchored to the floor of the section rather than centred in it, and
+   that is the whole trick to keeping both readable. Centred, the statement runs
+   straight through the heading — two pieces of display type in the same place,
+   and neither wins. Pushed down, it fills the room under the cards that the
+   section's own bottom padding leaves empty, and the only copy it passes behind
+   is the cards, which carry a surface of their own that mutes it further.
+
+   `overflow: hidden` is on this layer and not on the section: the quote is set
+   far larger than the copy in front of it and a long word may reach past the
+   shell, and clipping here keeps that from adding a horizontal scrollbar to the
+   page without also cutting the glow above.
+   -------------------------------------------------------------------------- */
+
+.services__backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: grid;
+  align-content: end;
+  /* Short of the section's own bottom padding, not level with it. Level, the
+     attribution landed on the exact baseline of the last line of the paragraph
+     in front of it and disappeared into it; this drops the block into the room
+     the section leaves empty below that paragraph, where the signature has a
+     line of its own and the largest line of the quote stops crossing the
+     smallest copy on the band. */
+  padding-bottom: var(--space-xl);
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Faint enough to read as a texture rather than as a second column of text.
+   Everything in front of it either sits on a card surface or is set at full
+   strength, so the contrast the copy needs comes from the copy, not from
+   dimming the page behind it.
+
+   Fainter on a phone, and that is not timidity. The band is a single column
+   there, the cards stack, and the closing paragraph ends a few lines from the
+   floor — so the statement has nowhere to sit but directly under running text,
+   with none of the empty room the desktop layout leaves it. Same statement,
+   less of it, where there is less space to be quiet in. */
+.services__backdrop .manifesto__inner {
+  gap: var(--space-md);
+  opacity: 0.1;
+}
+
+.services__backdrop .manifesto__quote {
+  max-width: 16ch;
+  font-size: clamp(2.5rem, 7.5vw, 6.5rem);
+}
+
+/* The attribution is 11px against the quote's 100, and `--text-faint` under the
+   layer's own opacity took it below the threshold where it is text at all. Full
+   white here is what the group opacity then brings down to the same apparent
+   weight the quote has — without it the statement reads as an unsigned slogan
+   rather than as the studio's working principle, which is the half of it worth
+   keeping behind the band. */
+.services__backdrop .manifesto__attribution {
+  color: #fff;
+}
+
+@media (min-width: 64rem) {
+  .services__backdrop .manifesto__inner {
+    opacity: 0.16;
+  }
+
+  .services__backdrop .manifesto__quote {
+    max-width: 20ch;
+  }
+}
+
+/* --- The band itself -------------------------------------------------------- */
+
+.services__inner {
+  position: relative;
+  z-index: 1;
+}
+
+.services__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  max-width: 46rem;
+}
+
+/* The band's own title is an `h2` like every other section's, so it is styled
+   like every other section's. `.svc-menu` below it is the hub's card row,
+   unchanged: a visitor who saw it on `/servicios/` sees the same three cards. */
+.services__title {
+  font-size: var(--text-3xl);
+  text-transform: uppercase;
+}
+
+.services__lede {
+  max-width: var(--measure);
+  font-size: var(--text-lg);
+  color: var(--text-muted);
+  line-height: var(--leading-relaxed);
+  letter-spacing: var(--tracking-snug);
+}
+
+/* The studio paragraph that closed the hub. It sits under the cards rather than
+   above them, because the cards are what somebody came to this anchor for and
+   prose in front of them is prose in the way. */
+.services__note {
+  max-width: var(--measure);
+  margin-top: var(--space-lg);
+  color: var(--text-muted);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+}
