@@ -73,9 +73,14 @@ $allowed = $config['allowed_origins'] ?? [];
  * de `config.php` filtra es lo otro: otro dominio usando esto como relé.
  */
 if ($origin !== '') {
-    $originHost = parse_url($origin, PHP_URL_HOST) ?? '';
-    $selfHost = preg_replace('/:\d+$/', '', $_SERVER['HTTP_HOST'] ?? '');
-    $sameSite = $originHost !== '' && strcasecmp($originHost, (string) $selfHost) === 0;
+    /* `www.` no es otro sitio. El visitante llega por donde llega, y con el
+       dominio desnudo y el `www` sirviendo ambos —que es lo normal— comparar
+       las cadenas tal cual rechazaba la mitad de las visitas. */
+    $bare = static fn(string $host): string => preg_replace('/^www\./i', '', preg_replace('/:\d+$/', '', $host) ?? '') ?? '';
+
+    $originHost = $bare(parse_url($origin, PHP_URL_HOST) ?? '');
+    $selfHost = $bare($_SERVER['HTTP_HOST'] ?? '');
+    $sameSite = $originHost !== '' && strcasecmp($originHost, $selfHost) === 0;
 
     if (!$sameSite && ($allowed === [] || !in_array($origin, $allowed, true))) {
         reply(403, ['ok' => false, 'error' => 'origin_not_allowed']);
@@ -99,9 +104,40 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
 /* ------------------------------------------------------------------ límites */
 
 /**
- * Tope por IP. El endpoint solo puede escribirle al buzón del estudio, así que
- * el peor abuso posible es inundar ese buzón — y esto lo corta sin necesidad de
- * base de datos: un archivo por IP en el temporal del sistema.
+ * La IP del visitante, no la del proxy.
+ *
+ * En hosting compartido el PHP casi nunca ve al cliente directamente: delante
+ * hay un balanceador, y `REMOTE_ADDR` es el mismo para todo el mundo. Contar
+ * por ese valor convertía el tope por visitante en un tope para el sitio
+ * entero — cinco solicitudes cada diez minutos entre todos, y el sexto
+ * visitante legítimo rebotaba.
+ *
+ * Las cabeceras las pone el proxy y un cliente podría falsificarlas, pero aquí
+ * lo único que se decide con esto es un límite de cortesía; el daño de creerlas
+ * es mucho menor que el de bloquear a visitantes reales.
+ */
+function clientIp(): string
+{
+    foreach (['HTTP_CF_CONNECTING_IP', 'HTTP_X_REAL_IP', 'HTTP_X_FORWARDED_FOR'] as $header) {
+        $value = $_SERVER[$header] ?? '';
+        if ($value === '') {
+            continue;
+        }
+
+        // X-Forwarded-For encadena saltos; el primero es el cliente.
+        $candidate = trim(explode(',', $value)[0]);
+        if (filter_var($candidate, FILTER_VALIDATE_IP) !== false) {
+            return $candidate;
+        }
+    }
+
+    return $_SERVER['REMOTE_ADDR'] ?? 'desconocida';
+}
+
+/**
+ * Tope por visitante. El endpoint solo puede escribirle al buzón del estudio,
+ * así que el peor abuso posible es inundar ese buzón — y esto lo corta sin
+ * necesidad de base de datos: un archivo por IP en el temporal del sistema.
  */
 function withinRateLimit(int $limit, int $window): bool
 {
@@ -109,8 +145,7 @@ function withinRateLimit(int $limit, int $window): bool
         return true;
     }
 
-    $ip = $_SERVER['REMOTE_ADDR'] ?? 'desconocida';
-    $file = sys_get_temp_dir() . '/cs-quote-' . hash('sha256', $ip) . '.json';
+    $file = sys_get_temp_dir() . '/cs-quote-' . hash('sha256', clientIp()) . '.json';
 
     $handle = @fopen($file, 'c+');
     if ($handle === false) {
@@ -273,11 +308,22 @@ $html =
     '<tr><td style="padding:24px 28px 8px">' .
     '<table role="presentation" cellpadding="0" cellspacing="0" style="width:100%">' . $celdas . '</table>' .
     '</td></tr>' .
-    '<tr><td style="padding:8px 28px 28px">' .
+    '<tr><td style="padding:8px 28px 20px">' .
     '<p style="margin:0 0 6px;color:#6b7280;font-size:13px">Descripción</p>' .
     '<div style="padding:14px 16px;background:#f4f6fb;border-radius:10px;border-left:3px solid #2f6fe0;' .
     'color:#111827;font-size:14px;line-height:1.6;white-space:pre-wrap">' . $e($detalle) . '</div>' .
     '</td></tr>' .
+
+    /* El botón hace el trabajo que hacía el `Reply-To`: responder al aviso
+       escribe al buzón del sistema, pero esto abre un correo nuevo dirigido a
+       la persona, con el asunto ya puesto. */
+    ($esEmail
+        ? '<tr><td style="padding:0 28px 24px">' .
+          '<a href="mailto:' . $e($contacto) . '?subject=' . rawurlencode('Re: tu solicitud en CoreStruct') . '" ' .
+          'style="display:inline-block;padding:11px 20px;border-radius:8px;background:#2f6fe0;color:#ffffff;' .
+          'font-size:14px;font-weight:700;text-decoration:none">Responder a ' . $e($nombre) . '</a>' .
+          '</td></tr>'
+        : '') .
     '<tr><td style="padding:0 28px 24px;color:#9ca3af;font-size:12px;border-top:1px solid #eef1f6;padding-top:16px">' .
     'Enviado automáticamente por el formulario de corestructhn.com' .
     '</td></tr>' .
@@ -300,10 +346,20 @@ $headers = [
     'Content-Type: multipart/alternative; boundary="' . $boundary . '"',
 ];
 
-// Responder al correo lleva directo a la persona, no al buzón del sistema.
-if ($esEmail) {
-    $headers[] = 'Reply-To: ' . encodeHeader($nombre) . ' <' . $contacto . '>';
-}
+/*
+ * Aquí iba un `Reply-To` con el correo del visitante, para que responder al
+ * aviso escribiera directamente a la persona. Hubo que quitarlo: el filtro de
+ * salida de Hostinger acepta el mensaje con un 250 y luego lo descarta sin
+ * rebote ni aviso. Se comprobó mandando cuatro mensajes idénticos salvo por una
+ * cabecera cada uno — texto plano, base64, multipart con HTML y multipart con
+ * `Reply-To` —: llegaron los tres primeros y solo se perdió el que la llevaba.
+ *
+ * Un `From` del dominio con un `Reply-To` de otro es el patrón de una
+ * suplantación, y sin DKIM firmando el dominio no hay nada que lo desmienta.
+ * Si algún día se activa DKIM en hPanel (Correos → DNS / Registros), merece la
+ * pena reintentarlo: el correo del visitante sigue estando en el cuerpo, como
+ * enlace `mailto:`, así que responderle es un clic de todos modos.
+ */
 
 // base64 en ambas partes: evita que una línea larga o una que empiece por punto
 // rompa la transmisión, sin tener que implementar el escapado de SMTP.

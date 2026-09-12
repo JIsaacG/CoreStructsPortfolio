@@ -844,6 +844,30 @@ Para desarrollo, `cp api/.env.example api/.env` y rellenarlo. Ese archivo está 
 `.gitignore`, y el entorno real siempre le gana — un `.env` olvidado en el servidor
 no puede pisar lo que esté configurado en el panel.
 
+### El aviso no lleva `Reply-To`, y es a propósito
+
+Lo llevaba —con el correo del visitante, para poder responderle de un tirón— y era
+la razón de que **ningún** aviso llegara al buzón. El filtro de salida de Hostinger
+contesta `250 Ok: queued` y después descarta el mensaje: sin rebote, sin nada en
+Spam, sin rastro.
+
+Se aisló mandando cuatro mensajes idénticos salvo por una cabecera cada uno:
+
+| | Formato | ¿Llegó? |
+| --- | --- | --- |
+| A | texto plano, 8bit | sí |
+| B | texto plano, base64 | sí |
+| C | multipart texto + HTML | sí |
+| D | igual que C **+ `Reply-To` externo** | **no** |
+
+Un `From` del dominio con un `Reply-To` de otro es exactamente el patrón de una
+suplantación, y el dominio **no tiene DKIM** (no existen los `hostingermailN._domainkey`;
+sí hay SPF, y DMARC está en `p=none`), así que no hay firma que lo desmienta.
+
+En su lugar, el correo lleva un botón **"Responder a …"** que abre un mensaje nuevo
+dirigido a la persona. Si algún día se activa DKIM en hPanel, merece la pena
+reintentar el `Reply-To`.
+
 ### Comprobar que funciona
 
 Abrir `https://corestructhn.com/api/contacto.php` en el navegador. Lo que responda
