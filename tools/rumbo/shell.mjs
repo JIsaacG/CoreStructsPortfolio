@@ -27,6 +27,17 @@ function renderHead({ ctx, title, description }) {
   return `    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0GVPE9SJWD"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-0GVPE9SJWD');
+    </script>
+    <!-- End Google tag -->
+
     <title>${escape(title)} · Demo de CoreStruct</title>
     <meta name="description" content="${escape(description)}" />
     <!-- An invented company must never turn up in a search result as a real one. -->

@@ -55,6 +55,17 @@ export function documentHead(ctx, meta) {
   return `    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0GVPE9SJWD"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-0GVPE9SJWD');
+    </script>
+    <!-- End Google tag -->
+
     <title>${escape(title)}</title>
     <meta name="description" content="${escape(description)}" />
     <link rel="canonical" href="${escape(canonical)}" />
