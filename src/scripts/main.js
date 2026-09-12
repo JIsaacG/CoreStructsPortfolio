@@ -7,6 +7,7 @@
  */
 
 import { initHeader } from "./modules/header.js";
+import { initIntro } from "./modules/intro.js";
 import { initLogoBurst } from "./modules/logo-burst.js";
 import { initPointerGlow } from "./modules/pointer-glow.js";
 import { initPointerSpotlight } from "./modules/pointer-spotlight.js";
@@ -14,6 +15,7 @@ import { initScrollMetrics } from "./modules/scroll-metrics.js";
 import { initScrollReveal } from "./modules/scroll-reveal.js";
 import { initStarfield } from "./modules/starfield.js";
 
+initIntro();
 initHeader();
 initStarfield();
 initScrollMetrics();

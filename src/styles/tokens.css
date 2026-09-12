@@ -147,6 +147,8 @@
   --layer-spotlight: 5;
   --layer-header: 50;
   --layer-skip: 100;
+  /* The boot intro sits above literally everything else the page can show. */
+  --layer-intro: 200;
 
   /* --- Runtime values written by JS -------------------------------------- */
   /* Fallbacks keep every layout correct with JavaScript disabled. */

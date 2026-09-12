@@ -1,0 +1,98 @@
+/* =============================================================================
+   Intro — the isotype rains into place before the page is handed over
+   ========================================================================== */
+
+/* Replaces the mark's old per-face build-in (see `hero.css`, `.cs-face` used to
+   animate on load): instead of the hero assembling itself quietly, the whole
+   page opens on this — the isotype sampled into a field of cubes that fall,
+   bounce into their spot and lock the shape, then dissolve to reveal the page
+   already composed underneath. Built entirely by `intro.js`; without
+   JavaScript this element never exists, so nothing here is ever seen. */
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: var(--layer-intro);
+  background:
+    radial-gradient(1200px 720px at 50% 32%, rgb(var(--brand-primary-rgb) / 0.34) 0%, transparent 62%),
+    radial-gradient(900px 520px at 50% 118%, rgb(var(--brand-secondary-rgb) / 0.22) 0%, transparent 60%),
+    var(--background);
+  opacity: 1;
+  transition: opacity var(--duration-slow) var(--ease-out-quart);
+}
+
+.intro.is-leaving {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.intro__stage {
+  position: absolute;
+  inset: 0;
+  transition: transform var(--duration-slow) var(--ease-out-expo);
+}
+
+.intro.is-leaving .intro__stage {
+  transform: scale(0.94);
+}
+
+.intro__canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  transition: opacity var(--duration-base) var(--ease-out-quart);
+}
+
+.intro__logo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-base) var(--ease-out-quart);
+  will-change: opacity;
+}
+
+.intro__wordmark {
+  position: absolute;
+  inset-inline: 0;
+  text-align: center;
+  color: var(--text);
+  font-family: var(--font-brand);
+  font-size: clamp(1.375rem, 3.4vw, 2.375rem);
+  opacity: 0;
+  letter-spacing: 0.5em;
+  transform: translateY(0.9rem);
+  transition:
+    opacity var(--duration-slow) var(--ease-out-quart),
+    letter-spacing var(--duration-slow) var(--ease-out-quart),
+    transform var(--duration-slow) var(--ease-out-quart);
+}
+
+.intro__wordmark.is-visible {
+  opacity: 1;
+  letter-spacing: var(--tracking-wide);
+  transform: none;
+}
+
+/* The chrome (border, wash, hover) comes from `.button.button--ghost`; this
+   only places it and fades it in once the fall has had time to land. */
+.intro__skip {
+  position: absolute;
+  inset-inline-end: var(--space-md);
+  inset-block-end: var(--space-md);
+  opacity: 0;
+  transition: opacity var(--duration-base) var(--ease-out-quart) 0.6s;
+}
+
+.intro__skip.is-visible {
+  opacity: 1;
+}
+
+/* Locks the page behind the intro, the same way the mobile menu locks it
+   behind itself (see `header.css`, `body.has-open-menu`). */
+body.has-intro {
+  overflow: hidden;
+}
