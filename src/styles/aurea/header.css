@@ -213,6 +213,55 @@
   }
 }
 
+/* Dropping the word off the search button bought 40px, and that was not
+   enough. The row is three fixed things in a shell that is not: at 320px the
+   logo wants 215px, the two buttons want 116px and the gap between them 12px,
+   which is 344px of a 285px shell. Nothing in it could shrink — `.au-logo` is
+   `flex: none` — so the overflow went where an overflow goes in a row that
+   cannot give, out the end: the menu button sat 41px past the right edge with
+   only its first letter on screen, on every one of the 39 pages of this demo.
+   `overflow-x: clip` on the root meant there was not even a scrollbar to drag
+   it back into view.
+
+   The 170px of "INSTITUTO & UNIVERSIDAD" is the whole difference. It is the
+   one part of the header that repeats something the page says elsewhere — the
+   title, the footer and the first line of the hero all name the institution —
+   so below 26rem it goes, and the mark plus the wordmark identify the site on
+   their own. That leaves about 60px of slack at 320px, which is room enough
+   that a fallback font rendering wider than the real one cannot bring the
+   clipping back. */
+@media (max-width: 26rem) {
+  .au-logo__sub {
+    display: none;
+  }
+}
+
+/* And a floor under all of it, for any width and any string: the buttons are
+   the part that has to stay reachable, so they are the part that never gives.
+   Anything the row still cannot fit comes out of the wordmark instead, which
+   ends in an ellipsis rather than off the edge of the screen. */
+@media (max-width: 64rem) {
+  .au-logo {
+    flex: 0 1 auto;
+    min-width: 0;
+  }
+
+  .au-logo__type {
+    min-width: 0;
+  }
+
+  .au-logo__name,
+  .au-logo__sub {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .au-identity__end {
+    flex: none;
+  }
+}
+
 /* ------------------------------------------------------------------- band 3 */
 
 .au-navband {

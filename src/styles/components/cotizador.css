@@ -176,6 +176,18 @@
   height: 1rem;
 }
 
+/* The way out of a full-screen sheet should not be the smallest target on it.
+   36px is the right weight beside the eyebrow on a desktop panel; on a phone,
+   where the sheet is the whole screen and the only other way out is a drag,
+   it goes to the 44px a thumb needs. The cross inside keeps its size, so the
+   button reads as the same control with more room around it. */
+@media (pointer: coarse) {
+  .cs-quote__close {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+}
+
 /* The mobile grab handle. Hidden on the desktop panel, where there is nothing
    to drag and a handle would just be a stray line. */
 .cs-quote__grip {
@@ -224,13 +236,35 @@
   background: var(--csq-field);
   color: var(--csq-text);
   font: inherit;
-  /* 15px. iOS zooms the page when a focused control is under 16px and the
-     component pins its own font-size, so this is as small as it may go. */
+  /* 15px on a pointer that cannot trigger the zoom described below. */
   font-size: 0.9375rem;
   transition:
     border-color 0.2s ease,
     background 0.2s ease,
     box-shadow 0.2s ease;
+}
+
+/**
+ * 16px on touch, and the unit is a literal `px` rather than `1rem`.
+ *
+ * iOS Safari zooms the page in whenever focus lands on a form control whose
+ * font is under 16px, and it does not zoom back out afterwards: the visitor is
+ * left on a page a third wider than the screen, panning sideways to read the
+ * label of the field they are typing in. On the panel that is the only contact
+ * form the site has, that happens on the first tap.
+ *
+ * The threshold Safari checks is 16 CSS pixels, not 1rem. The panel ships on
+ * seven bundles that set their own root font size, so `1rem` here is 16px on
+ * some of them and less on others — and the ones where it came out smaller
+ * would zoom exactly as before, which is the kind of fix that looks applied
+ * and is not.
+ */
+@media (pointer: coarse) {
+  .cs-quote__input,
+  .cs-quote__select,
+  .cs-quote__area {
+    font-size: 16px;
+  }
 }
 
 .cs-quote__area {

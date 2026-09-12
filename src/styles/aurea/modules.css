@@ -802,6 +802,19 @@
   .au-event {
     grid-template-columns: 4rem minmax(0, 1fr);
   }
+
+  /* The third column is what the category tag lived in, and dropping the column
+     did not drop the tag: it wrapped onto the next row and landed in the date
+     column instead — 4rem of space for a chip reading "Admisiones", with
+     `justify-self: end` holding its right edge in place and pushing everything
+     that did not fit out through the left edge of the screen. It belongs under
+     the title, in the column wide enough to hold it, reading left to right like
+     everything else in that column. */
+  .au-event .au-row__end {
+    grid-column: 2;
+    justify-self: start;
+    text-align: left;
+  }
 }
 
 /** The export menu. A real .ics, built in the browser. */

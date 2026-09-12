@@ -63,6 +63,25 @@
 </IfModule>
 
 # Los módulos de JavaScript revalidan en cada visita en lugar de cachearse.
+#
+# Las dos líneas dicen lo mismo a propósito. El hosting añade por su cuenta un
+# `Expires` a una semana vista a todo lo que no esté en la tabla de arriba, y
+# un `Expires` lejano junto a un `Cache-Control: no-cache` es una contradicción:
+# la norma dice que gana el `Cache-Control`, pero quien sirve la página no
+# siempre es el navegador —hay proxys y cachés de operador móvil de por medio—,
+# y el que resuelve mal la contradicción se queda con el JS de la semana pasada.
+# El síntoma no es una página en blanco, que se notaría: es un módulo viejo
+# ejecutándose contra el CSS nuevo, con las reglas de sus clases ya borradas.
+# Así se vio el panel de cotización en un teléfono, con los iconos a pantalla
+# completa, cuando en el servidor ya estaba corregido.
+#
+# `ExpiresByType … 0 seconds` hace que el `Expires` lo emita esta configuración
+# y no el hosting, y que diga lo mismo que la cabecera de debajo.
+<IfModule mod_expires.c>
+  ExpiresByType text/javascript          "access plus 0 seconds"
+  ExpiresByType application/javascript   "access plus 0 seconds"
+</IfModule>
+
 <FilesMatch "\.m?js$">
   <IfModule mod_headers.c>
     Header set Cache-Control "public, no-cache"

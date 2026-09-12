@@ -67,6 +67,29 @@
   background: color-mix(in srgb, var(--lang-switch-ink) 12%, transparent);
 }
 
+/* The pill is drawn 20px tall, which is the right size for it: it sits in ten
+   headers next to a wordmark and a menu button, and a control big enough for a
+   thumb would be the loudest thing in every one of them. So on touch it keeps
+   the size it is drawn and grows an invisible one instead — a hit area the
+   full 44px a finger needs, centred on the label.
+
+   Vertical only. `ES` and `EN` are touching siblings, so widening either would
+   put the two targets on top of each other and make the overlap the new bug. */
+@media (pointer: coarse) {
+  .lang-switch__link {
+    position: relative;
+  }
+
+  .lang-switch__link::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: 50%;
+    block-size: 44px;
+    translate: 0 -50%;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .lang-switch__link {
     transition: none;

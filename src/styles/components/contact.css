@@ -160,6 +160,11 @@ a.channel__value {
   display: flex;
   align-items: center;
   gap: 0.6rem;
+  /* The mark is 1.6rem tall and the link is exactly as tall as the mark, so on
+     a phone the way back to the top of the page is a 26px target. The height
+     comes from the link rather than from the logo inside it: the mark keeps the
+     size it is drawn at either way. */
+  min-height: 44px;
 }
 
 .footer__mark {
@@ -188,6 +193,31 @@ a.channel__value {
   min-height: 24px;
   color: var(--text-muted);
   transition: color var(--duration-base) var(--ease-out-quart);
+}
+
+/* On a phone the footer row is the densest cluster of links on the site, and
+   at its drawn size each one is a 24px-tall target with a 4px gap above and
+   below it — under half of the 44px a thumb needs, so the neighbouring link is
+   as likely to be hit as the intended one. The padding goes on at coarse
+   pointers only: it is worth the extra height there and nothing on a desktop
+   footer gains from it. The underline stays where it was drawn, pinned to the
+   text rather than to the padded box. */
+@media (pointer: coarse) {
+  .footer__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    /* Half of `--space-md`, the row's own column gap: the targets meet without
+       overlapping, which is what stops a near miss landing on a neighbour. */
+    padding-inline: calc(var(--space-md) / 2);
+    margin-inline: calc(var(--space-md) / -2);
+  }
+
+  .footer__link::after {
+    inset-inline: calc(var(--space-md) / 2);
+    inset-block-end: calc(50% - 0.75em);
+    width: auto;
+  }
 }
 
 .footer__note {

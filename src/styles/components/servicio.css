@@ -210,6 +210,25 @@
   color: var(--brand-secondary);
 }
 
+/* "Inicio" is 36px wide and 17px tall as drawn — the smallest target on the
+   page, and the one a visitor who arrived from a search result is most likely
+   to reach for. On touch it gets the height a thumb needs without the trail
+   changing size: the padding is vertical, so the row keeps its line and the
+   two links keep the separator between them. */
+@media (pointer: coarse) {
+  .svc-crumbs a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .svc-crumbs {
+    /* The links now carry their own height; without this the row would gain
+       the difference twice over. */
+    margin-block: calc(var(--space-2xs) * -1) var(--space-sm);
+  }
+}
+
 .svc-crumbs__sep {
   color: var(--text-faint);
 }

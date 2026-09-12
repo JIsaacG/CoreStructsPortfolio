@@ -28,6 +28,25 @@
   gap: clamp(1rem, 0.6rem + 1.4vw, 1.75rem);
 }
 
+/* A grid item starts at `min-width: auto`, which means it refuses to be sized
+   below the widest thing inside it that cannot wrap — and a track that cannot
+   shrink drags the grid out with it, however narrow the grid was told to be.
+   The console is 288px wide on a 320px screen and it was laying its panels out
+   at 333, hanging every one of them 29px off the right edge.
+
+   The 333 came from `.gw-tabs`. A `width: fit-content` box hands its *max*
+   content up as the intrinsic width of everything above it, so the three tabs
+   of the third panel — "Aprobaciones", "Documento", "Bitácora", 299px of them
+   plus the padding of the pane they sit in — were deciding the width of the
+   whole console. The strip already knows what to do when it does not fit: it
+   carries `overflow-x: auto`. This is the line that lets it, by telling the
+   items above it that they are allowed to be narrower than their contents. */
+.gw-console > *,
+.gw-deck > *,
+.gw-side > * {
+  min-width: 0;
+}
+
 /* --- The one piece of prose --------------------------------------------------
    Four short lines and two buttons. The old hero was a headline, a lead, three
    calls to action, a disclaimer and a four-column metadata strip; this is what
