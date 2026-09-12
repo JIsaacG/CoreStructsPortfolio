@@ -1,9 +1,22 @@
-# Solo `contacto.php` se llama desde fuera. Los otros dos archivos se cargan
-# con `require` desde PHP, así que negarles el acceso por HTTP no les quita
-# nada y cierra la puerta a que una mala configuración del servidor llegue a
-# servir `config.php` como texto plano con la contraseña dentro.
+# Solo `contacto.php` se llama desde fuera. Los demás archivos se cargan con
+# `require` desde PHP, así que negarles el acceso por HTTP no les quita nada.
+#
+# Lo que de verdad importa aquí es `.env`: si el servidor dejara de ejecutar
+# PHP por cualquier razón, `config.php` se serviría como texto plano —pero ya
+# no lleva secretos, los lee del entorno—. `.env` sí los lleva cuando existe,
+# y un archivo de texto se sirve tal cual siempre.
 
-<FilesMatch "^(config|config\.example|smtp)\.php$">
+<FilesMatch "^(config|smtp)\.php$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</FilesMatch>
+
+<FilesMatch "^\.env">
   <IfModule mod_authz_core.c>
     Require all denied
   </IfModule>

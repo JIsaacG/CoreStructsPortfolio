@@ -81,8 +81,9 @@ favicon.ico  robots.txt  sitemap.xml  site.webmanifest
 api/                       lo único que se ejecuta en el servidor (PHP)
   contacto.php             recibe el formulario y lo manda al buzón
   smtp.php                 cliente SMTP mínimo, sin dependencias
-  config.example.php       plantilla de credenciales (esta sí se versiona)
-  config.php               credenciales reales — NO está en el repositorio
+  config.php               lee la configuración del entorno — sin secretos
+  .env.example             qué variables hacen falta (plantilla versionada)
+  .env                     credenciales solo para local — NO está en el repo
 
 src/
   data/                    CONTENIDO — es lo que se edita a diario
@@ -820,19 +821,41 @@ del servidor gastaría esa confianza.
 Es lo único del proyecto que no es estático. Necesita **PHP 8** con `openssl`
 (Hostinger lo trae de serie) y el directorio `api/` subido junto al resto.
 
-```
-cp api/config.example.php api/config.php    # y rellenar las credenciales
-```
+**Ningún archivo del repositorio lleva credenciales.** Las cuatro que hacen falta se
+cargan en hPanel → tu sitio → *Variables de entorno*:
 
-`api/config.php` **no está en el repositorio** — lleva la contraseña del buzón — así
-que es el único archivo que se sube a mano. Si algún día el despliegue pasa a ser un
-`git pull` en el servidor, hay que crearlo allí.
+| Clave | Valor |
+| --- | --- |
+| `SMTP_USER` | el buzón que se autentica |
+| `SMTP_PASS` | su contraseña |
+| `MAIL_FROM` | el mismo buzón que `SMTP_USER` |
+| `MAIL_TO` | a dónde llegan las solicitudes |
 
-El remitente (`mail_from`) tiene que ser la misma cuenta que se autentica
-(`smtp_user`): Hostinger rechaza enviar en nombre de otra dirección, y es lo que
-hace que SPF y DKIM cuadren y el correo no caiga en spam.
+`api/.env.example` lista esas y las opcionales (`SMTP_HOST`, `SMTP_PORT`,
+`SMTP_SECURE`, `MAIL_FROM_NAME`, `ALLOWED_ORIGINS`, `RATE_LIMIT`, `RATE_WINDOW`,
+`MAIL_DEBUG`), con sus valores por defecto. El botón *Importar .env* del panel
+acepta ese formato tal cual.
+
+`MAIL_FROM` tiene que ser la misma cuenta que se autentica: Hostinger rechaza
+enviar en nombre de otra dirección, y es lo que hace que SPF y DKIM cuadren y el
+correo no caiga en spam.
+
+Para desarrollo, `cp api/.env.example api/.env` y rellenarlo. Ese archivo está en
+`.gitignore`, y el entorno real siempre le gana — un `.env` olvidado en el servidor
+no puede pisar lo que esté configurado en el panel.
 
 ### Comprobar que funciona
+
+Abrir `https://corestructhn.com/api/contacto.php` en el navegador. Lo que responda
+dice exactamente en qué punto está:
+
+| Respuesta | Significado |
+| --- | --- |
+| `{"ok":false,"error":"method_not_allowed"}` | todo correcto: PHP corre, archivos subidos, variables leídas |
+| `{"ok":false,"error":"server_misconfigured","missing":[…]}` | falta lo que nombra `missing` en Variables de entorno |
+| el código PHP en pantalla, o un 404 | el servidor no ejecuta PHP, o `api/` no se subió |
+
+Y un envío de verdad:
 
 ```bash
 curl -X POST https://corestructhn.com/api/contacto.php \
@@ -840,14 +863,17 @@ curl -X POST https://corestructhn.com/api/contacto.php \
   -d '{"nombre":"Prueba","contacto":"tu@correo.com","detalle":"Probando"}'
 ```
 
-`{"ok":true}` es la respuesta buena. Si algo falla, poner `'debug' => true` en
-`config.php` devuelve el diálogo SMTP completo en el JSON — el código numérico del
-servidor es lo único que sirve para depurar entrega de correo. **Volver a `false`
-después**: ese diálogo describe la conversación con el buzón.
+`{"ok":true}` es la respuesta buena. Si falla, `MAIL_DEBUG=true` devuelve el diálogo
+SMTP completo en el JSON — el código numérico del servidor es lo único que sirve para
+depurar entrega de correo. **Quitarlo después**: ese diálogo describe la conversación
+con el buzón.
 
 Los demás códigos: `422` faltan campos, `429` se superó el tope por IP (cinco cada
 diez minutos), `403` la llamada venía de otro dominio, `502` el servidor de correo
 rechazó el mensaje.
+
+Desde el propio sitio, si la copia no sale, la consola del navegador imprime el
+motivo y la dirección exacta a la que llamó.
 
 ---
 
@@ -884,6 +910,6 @@ rechazó el mensaje.
 3. **Dominio definitivo**: `site.url` sigue siendo `https://corestruct.com`
    mientras que el correo y el SMTP ya son de `corestructhn.com`. Hay que decidir
    cuál es el bueno y sustituirlo en `src/data/site.js`, `index.html`
-   (canonical + Open Graph), `robots.txt`, `sitemap.xml` y en `allowed_origins`
-   de `api/config.php`.
+   (canonical + Open Graph), `robots.txt` y `sitemap.xml`. El endpoint no hay que
+   tocarlo: acepta siempre al dominio desde el que se sirve.
 4. **Capturas de proyectos reales** para reemplazar los mockups genéricos.

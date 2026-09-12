@@ -34,11 +34,32 @@ function reply(int $status, array $payload): never
 $configFile = __DIR__ . '/config.php';
 
 if (!is_file($configFile)) {
-    error_log('contacto.php: falta api/config.php (cópialo de config.example.php).');
+    error_log('contacto.php: falta api/config.php.');
     reply(500, ['ok' => false, 'error' => 'server_misconfigured']);
 }
 
 $config = require $configFile;
+
+/**
+ * Sin credenciales no hay nada que hacer, y el motivo tiene que poder verse
+ * desde fuera: el fallo típico al desplegar es que las variables de entorno no
+ * llegan al PHP, y desde el navegador eso es indistinguible de cualquier otro
+ * 500. Se devuelven los NOMBRES de lo que falta, nunca ningún valor.
+ */
+$missing = [];
+foreach (['SMTP_USER' => 'smtp_user', 'SMTP_PASS' => 'smtp_pass', 'MAIL_FROM' => 'mail_from'] as $variable => $key) {
+    if (($config[$key] ?? null) === null || $config[$key] === '') {
+        $missing[] = $variable;
+    }
+}
+if (($config['mail_to'] ?? []) === []) {
+    $missing[] = 'MAIL_TO';
+}
+
+if ($missing !== []) {
+    error_log('contacto.php: faltan variables de entorno: ' . implode(', ', $missing));
+    reply(500, ['ok' => false, 'error' => 'server_misconfigured', 'missing' => $missing]);
+}
 
 $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
 $allowed = $config['allowed_origins'] ?? [];
@@ -161,12 +182,6 @@ function field(array $input, string $name, int $max): string
 function headerSafe(string $value): string
 {
     return trim(str_replace(["\r", "\n"], ' ', $value));
-}
-
-// Trampa para bots: un campo que el CSS esconde y una persona nunca rellena.
-// Se responde 200 a propósito, para que el bot no aprenda que fue detectado.
-if (field($input, 'empresa_web', 200) !== '') {
-    reply(200, ['ok' => true]);
 }
 
 $nombre  = headerSafe(field($input, 'nombre', 120));

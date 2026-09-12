@@ -52,12 +52,17 @@ export const site = {
      * `email`. A browser cannot speak SMTP, so the panel POSTs the four fields
      * here and `api/contacto.php` does the delivery.
      *
-     * Root-relative on purpose: the panel ships on the portfolio, on the `en/`
-     * mirror and inside all six demo families, which sit at three different
-     * depths. Set it to null to turn the mail copy off and leave the panel
-     * handing the request to WhatsApp alone.
+     * Relative to the root of the site, and resolved against the location of
+     * `cotizador.js` itself — not against the page. That is what makes the one
+     * value work from the portfolio, from the `en/` mirror and from inside the
+     * six demo families (three different depths), and also when the whole site
+     * is served from a subdirectory instead of from the root of a domain.
+     *
+     * An absolute URL works too, if the endpoint ever moves to another host.
+     * Set it to null to turn the mail copy off and leave the panel handing the
+     * request to WhatsApp alone.
      */
-    quoteEndpoint: "/api/contacto.php",
+    quoteEndpoint: "api/contacto.php",
   },
 
   /**

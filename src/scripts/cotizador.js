@@ -39,7 +39,6 @@ const COPY = {
   es: {
     eyebrow: "Cotización rápida",
     title: "Hablemos de tu próximo proyecto.",
-    lead: "Cuatro campos y listo. Te respondemos de inmediato en horario laboral.",
     close: "Cerrar el formulario",
     dismiss: "Cerrar",
     name: "Nombre completo",
@@ -49,14 +48,7 @@ const COPY = {
     kind: "Tipo de solución",
     detail: "Breve descripción",
     detailPlaceholder: "Cuéntanos qué necesitas resolver…",
-    sendWhatsApp: "Enviar por WhatsApp",
-    sendMail: "Enviar solicitud",
-    noteWhatsApp:
-      "Se abre WhatsApp con tu mensaje ya escrito y, al mismo tiempo, nos llega una copia por correo.",
-    noteMail: "Se abre tu correo con el mensaje ya escrito. Solo tienes que enviarlo.",
-    whatsappLabel: "WhatsApp directo",
-    mailLabel: "Correo",
-    mailLabelMore: "Otro correo",
+    send: "Enviar",
     doneTitle: "Tu mensaje está listo",
     doneWhatsApp:
       "Abrimos WhatsApp con la solicitud ya escrita. Si no se abrió, revisa si el navegador bloqueó la ventana.",
@@ -77,7 +69,6 @@ const COPY = {
   en: {
     eyebrow: "Quick quote",
     title: "Let us talk about your next project.",
-    lead: "Four fields and you are done. We reply straight away during working hours.",
     close: "Close the form",
     dismiss: "Close",
     name: "Full name",
@@ -87,14 +78,7 @@ const COPY = {
     kind: "Type of solution",
     detail: "Short description",
     detailPlaceholder: "Tell us what you need to solve…",
-    sendWhatsApp: "Send on WhatsApp",
-    sendMail: "Send request",
-    noteWhatsApp:
-      "WhatsApp opens with your message already written, and a copy reaches our inbox at the same time.",
-    noteMail: "Your mail app opens with the message already written. Just send it.",
-    whatsappLabel: "WhatsApp",
-    mailLabel: "Email",
-    mailLabelMore: "Other email",
+    send: "Send",
     doneTitle: "Your message is ready",
     doneWhatsApp:
       "We opened WhatsApp with your request already written. If nothing happened, check whether the browser blocked the window.",
@@ -145,8 +129,19 @@ const channel = hasWhatsApp ? "whatsapp" : "email";
  *
  * `null` in `site.js` turns this half off; the panel then behaves exactly as
  * it did before, handing the request to WhatsApp and nothing else.
+ *
+ * The address is resolved against this module's own URL rather than against
+ * the page. This file always sits at `<root>/src/scripts/cotizador.js`, so two
+ * levels up is the root of the site wherever it is deployed — which is the one
+ * thing a page cannot work out for itself: the panel runs on pages at three
+ * different depths, and a root-relative `/api/…` would also break the moment
+ * the site were served from a subdirectory rather than from a domain root.
  */
-const endpoint = contact.quoteEndpoint ?? null;
+const SITE_ROOT = new URL("../../", import.meta.url);
+
+const endpoint = contact.quoteEndpoint
+  ? new URL(contact.quoteEndpoint, SITE_ROOT).href
+  : null;
 
 const ICONS = {
   spark:
@@ -160,22 +155,6 @@ const ICONS = {
   send:
     `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">` +
     `<path d="M2.2 11.1 20.6 3.3c.8-.3 1.6.5 1.3 1.3l-7.8 18.4c-.3.8-1.5.8-1.8-.1l-2.4-6.8-6.8-2.4c-.9-.3-.9-1.5.1-1.6Z"/></svg>`,
-  whatsapp:
-    `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">` +
-    `<path d="M12.04 2c-5.5 0-9.96 4.46-9.96 9.96 0 1.76.46 3.48 1.34 5L2 22l5.2-1.36a9.9 9.9 0 0 0 ` +
-    `4.84 1.24h.01c5.5 0 9.96-4.46 9.96-9.96 0-2.66-1.04-5.16-2.92-7.04A9.88 9.88 0 0 0 12.04 2Zm0 ` +
-    `1.82c2.18 0 4.23.85 5.77 2.39a8.1 8.1 0 0 1 2.39 5.77c0 4.5-3.66 8.15-8.16 8.15a8.2 8.2 0 0 ` +
-    `1-4.16-1.14l-.3-.18-3.09.81.82-3.01-.2-.31a8.1 8.1 0 0 1-1.26-4.33c0-4.5 3.66-8.15 ` +
-    `8.19-8.15Zm-2.5 4.36c-.19 0-.5.07-.76.35-.26.28-1 .98-1 2.38s1.02 2.76 1.17 2.95c.14.19 2 ` +
-    `3.06 4.85 4.17 2.37.92 2.85.74 3.37.69.52-.05 1.67-.68 1.9-1.34.24-.66.24-1.22.17-1.34-.07-.12` +
-    `-.26-.19-.54-.33-.28-.14-1.67-.82-1.93-.92-.26-.09-.45-.14-.64.14-.19.28-.73.92-.9 1.11-.16.19` +
-    `-.33.21-.61.07-.28-.14-1.19-.44-2.27-1.4-.84-.75-1.4-1.67-1.57-1.95-.16-.28-.02-.43.12-.57.13` +
-    `-.13.28-.33.42-.5.14-.16.19-.28.28-.47.09-.19.05-.35-.02-.49-.07-.14-.63-1.52-.86-2.08-.23-.55` +
-    `-.46-.47-.63-.48h-.55Z"/></svg>`,
-  mail:
-    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" ` +
-    `stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">` +
-    `<rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="m3 7 9 6 9-6"/></svg>`,
   check:
     `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" ` +
     `stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">` +
@@ -191,50 +170,10 @@ const escape = (value) =>
 
 /* ------------------------------------------------------------------ markup */
 
-function channelRow(kind, label, value, href) {
-  return (
-    `<a class="cs-quote__channel" href="${escape(href)}"${
-      kind === "wa" ? ' target="_blank" rel="noopener"' : ""
-    }>` +
-    `<span class="cs-quote__icon${kind === "wa" ? " cs-quote__icon--wa" : ""}">` +
-    `${kind === "wa" ? ICONS.whatsapp : ICONS.mail}</span>` +
-    `<span><span class="cs-quote__channel-label">${escape(label)}</span>` +
-    `<span class="cs-quote__channel-value">${escape(value)}</span></span></a>`
-  );
-}
-
-/**
- * The channel list under the form. Only what actually exists is rendered, so
- * before the real number lands the panel shows the addresses and no gap where
- * a WhatsApp row would have been.
- */
-function channels() {
-  const rows = [];
-
-  if (hasWhatsApp) {
-    /* Pretty-printed from the digits rather than stored twice, so filling in
-       one value in `site.js` cannot leave a stale display string behind. */
-    const shown = digits.length > 10 ? `+${digits.slice(0, digits.length - 8)} ${digits.slice(-8, -4)}-${digits.slice(-4)}` : `+${digits}`;
-    rows.push(channelRow("wa", t.whatsappLabel, shown, `https://wa.me/${digits}`));
-  }
-
-  addresses.forEach((address, index) => {
-    rows.push(
-      channelRow("mail", index === 0 ? t.mailLabel : t.mailLabelMore, address, `mailto:${address}`),
-    );
-  });
-
-  return rows.length ? `<div class="cs-quote__channels">${rows.join("")}</div>` : "";
-}
-
 function markup() {
   const options = types
     .map((type) => `<option value="${escape(type)}">${escape(type)}</option>`)
     .join("");
-
-  const submitLabel = hasWhatsApp ? t.sendWhatsApp : t.sendMail;
-  const submitIcon = hasWhatsApp ? ICONS.whatsapp : ICONS.send;
-  const note = hasWhatsApp ? t.noteWhatsApp : t.noteMail;
 
   return (
     `<button class="cs-quote__veil" type="button" data-quote-veil aria-label="${escape(t.dismiss)}"></button>` +
@@ -246,7 +185,6 @@ function markup() {
       `<header class="cs-quote__head" data-quote-head>` +
         `<p class="cs-quote__eyebrow">${ICONS.spark} ${escape(t.eyebrow)}</p>` +
         `<h2 class="cs-quote__title" id="cs-quote-title">${escape(t.title)}</h2>` +
-        `<p class="cs-quote__lead">${escape(t.lead)}</p>` +
       `</header>` +
       `<div class="cs-quote__body" data-quote-body>` +
         `<form data-quote-form novalidate>` +
@@ -269,18 +207,9 @@ function markup() {
             `<textarea class="cs-quote__area" name="detalle" ` +
               `placeholder="${escape(t.detailPlaceholder)}" required></textarea>` +
           `</label>` +
-          /* The bot trap. Hidden in CSS rather than with `type="hidden"`, which
-             a form-filling script skips; this one it fills, and the endpoint
-             drops anything that arrives with it set. `tabindex` and
-             `aria-hidden` keep it off the path of a real visitor. */
-          `<div class="cs-quote__trap" aria-hidden="true">` +
-            `<label>No rellenar<input name="empresa_web" type="text" tabindex="-1" autocomplete="off" /></label>` +
-          `</div>` +
-          `<button class="cs-quote__submit" type="submit">${submitIcon}${escape(submitLabel)}</button>` +
-          `<p class="cs-quote__note">${escape(note)}</p>` +
+          `<button class="cs-quote__submit" type="submit">${ICONS.send}${escape(t.send)}</button>` +
         `</form>` +
       `</div>` +
-      channels() +
     `</div>`
   );
 }
@@ -505,7 +434,6 @@ function send(form) {
     contacto: value("contacto"),
     tipo: value("tipo"),
     detalle: value("detalle"),
-    empresa_web: value("empresa_web"),
     idioma: lang,
     origen: window.location.href,
   };
@@ -556,13 +484,36 @@ async function mailCopy(request) {
     });
 
     const payload = await response.json().catch(() => ({}));
-    markCopy(response.ok && payload?.ok === true ? "sent" : "failed");
-  } catch {
-    /* Offline, blocked, or the endpoint is not deployed yet. The request is
-       still on its way through WhatsApp, so this is a footnote and not an
+
+    if (response.ok && payload?.ok === true) {
+      markCopy("sent");
+      return;
+    }
+
+    /* Loud in the console, quiet in the panel. Whoever is looking at the page
+       gets one line that says which half failed and why — the endpoint's own
+       error code, or the HTTP status when the answer was not even JSON, which
+       is what a missing `api/` or a server without PHP looks like from here. */
+    warn(`el endpoint respondió ${response.status}`, payload);
+    markCopy("failed");
+  } catch (error) {
+    /* Offline, blocked, or `api/contacto.php` was never uploaded. The request
+       is still on its way through WhatsApp, so this is a footnote and not an
        error state for the whole panel. */
+    warn("no se pudo llamar al endpoint", error);
     markCopy("failed");
   }
+}
+
+/** One console line, with the address actually used — that is the usual bug. */
+function warn(reason, detail) {
+  console.warn(
+    `[cotizador] La copia por correo no salió: ${reason}.\n` +
+      `  Endpoint: ${endpoint}\n` +
+      `  Comprueba que api/contacto.php esté subido, que el servidor ejecute PHP\n` +
+      `  y que api/config.php exista junto a él.`,
+    detail ?? "",
+  );
 }
 
 /** Rewrites the copy line in the confirmation once the endpoint has answered. */
