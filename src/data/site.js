@@ -137,7 +137,7 @@ export const site = {
    */
   manifesto: {
     quote:
-      "La tecnología debe adaptarse a tu empresa, **no tu empresa a la tecnología.**",
+      "**",
     attribution: "CoreStruct · Principio de trabajo",
   },
 
