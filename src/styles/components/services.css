@@ -82,6 +82,12 @@
 .services__backdrop .manifesto__inner {
   gap: var(--space-md);
   opacity: 0.1;
+  /* Centred on the same axis as the band in front of it. Ragged against a
+     centred heading, a left-set watermark reads as a second column that starts
+     somewhere else, and the eye finds the seam between the two instead of the
+     copy. One axis, and the statement goes back to being texture. */
+  align-items: center;
+  text-align: center;
 }
 
 .services__backdrop .manifesto__quote {
@@ -116,27 +122,66 @@
   z-index: 1;
 }
 
+/* Centred, unlike the heads of the sections above it, and for the same reason
+   the contact band is: what follows it is a symmetric row of three, not a piece
+   of asymmetric furniture the copy has to line up against. Left-set over a
+   centred row of cards, the heading left a wide empty field on the right that
+   read as an unfinished column. The column itself is still the same width — it
+   is the page that centres it, so the lines keep the rag they were set for. */
 .services__head {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: var(--space-md);
   max-width: 46rem;
+  margin-inline: auto;
+  text-align: center;
 }
 
 /* The band's own title is an `h2` like every other section's, so it is styled
-   like every other section's. `.svc-menu` below it is the hub's card row,
-   unchanged: a visitor who saw it on `/servicios/` sees the same three cards. */
+   like every other section's. `.svc-menu` below it is the hub's card row: same
+   three cards a visitor saw on `/servicios/`, down to the copy — only how many
+   of them share a row is decided here. */
 .services__title {
   font-size: var(--text-3xl);
   text-transform: uppercase;
+  /* Centred type shows every uneven line, and this title breaks into two on
+     most widths. Balanced, the two lines come out near the same length instead
+     of a long one over a short one. */
+  text-wrap: balance;
 }
 
+/* Short of the full measure. 62ch is set for a paragraph that starts at a
+   margin; centred, the same three lines read as a wedge, and pulling the column
+   in evens them out without costing a line. */
 .services__lede {
-  max-width: var(--measure);
+  max-width: 54ch;
+  margin-inline: auto;
   font-size: var(--text-lg);
   color: var(--text-muted);
   line-height: var(--leading-relaxed);
   letter-spacing: var(--tracking-snug);
+  /* Balanced rather than pretty: this is two or three lines of display-weight
+     copy under a centred title, and `pretty` only rescues the last line. The
+     lede was ending on two words alone under two full ones. */
+  text-wrap: balance;
+}
+
+/* Three across, or one under the other — never two and a stray.
+   `.svc-menu` sizes itself with `auto-fit`, which is right on a page that does
+   not know how many cards it will be handed. Here it is always three, and
+   `auto-fit` spent a wide stretch of tablet widths putting two on the first row
+   and leaving the third alone in the corner of the second. Under a centred head
+   that reads as a layout that broke rather than one that responded. So the row
+   is explicit: one column until there is room for all three, then three. */
+.services .svc-menu {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 60rem) {
+  .services .svc-menu {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 /* The studio paragraph that closed the hub. It sits under the cards rather than
@@ -145,7 +190,20 @@
 .services__note {
   max-width: var(--measure);
   margin-top: var(--space-lg);
+  margin-inline: auto;
   color: var(--text-muted);
   font-size: var(--text-base);
   line-height: var(--leading-relaxed);
+  text-wrap: pretty;
+}
+
+/* The block is centred at every width; the text inside it only from the point
+   where the paragraph stops being tall. On a phone this is five or six lines,
+   and five centred lines of running prose give the eye a different starting
+   point on each one — which is exactly the thing that makes a paragraph slow to
+   read. Wide, it settles into three and centring it closes the composition. */
+@media (min-width: 48rem) {
+  .services__note {
+    text-align: center;
+  }
 }
