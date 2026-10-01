@@ -1,0 +1,715 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Para Kathryn</title>
+  <!-- Página personal: fuera de buscadores y fuera del sitio comercial. -->
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Un poema para ti.">
+  <meta property="og:title" content="Para Kathryn Flores">
+  <meta property="og:description" content="Un poema y un jardín, solo para ti.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#0b0620">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 7 6' shape-rendering='crispEdges'%3E%3Cpath fill='%23ff3d7f' d='M1 0h2v1H1zM4 0h2v1H4zM0 1h7v2H0zM1 3h5v1H1zM2 4h3v1H2zM3 5h1v1H3z'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0b0620;
+      --night: #1a0d38;
+      --plum: #3b145c;
+      --pink: #ff6fae;
+      --rose: #ff3d7f;
+      --blush: #ffc2d9;
+      --cream: #fff4e6;
+      --gold: #ffd166;
+      --muted: #c9b6e4;
+      --px: 4px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { background: var(--ink); }
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      color: var(--cream);
+      font-family: "VT323", ui-monospace, monospace;
+      background: linear-gradient(180deg, #0b0620 0%, #1a0d38 45%, #3b145c 85%, #4d1a63 100%) fixed;
+      overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    #sky { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+
+    .px { image-rendering: pixelated; image-rendering: crisp-edges; display: inline-block; }
+
+    /* ---------- Escena principal ---------- */
+    .stage {
+      position: relative; z-index: 1;
+      min-height: 100vh; min-height: 100dvh;
+      display: grid; place-items: center;
+      padding: 72px 16px 150px;
+    }
+
+    .card {
+      position: relative;
+      width: min(600px, 100%);
+      padding: 36px clamp(20px, 6vw, 48px) 32px;
+      background: rgba(15, 8, 36, 0.86);
+      /* Borde de 8 bits: esquinas escalonadas en lugar de redondeadas. */
+      box-shadow:
+        0 calc(var(--px) * -1) 0 0 var(--pink),
+        0 var(--px) 0 0 var(--pink),
+        calc(var(--px) * -1) 0 0 0 var(--pink),
+        var(--px) 0 0 0 var(--pink),
+        0 0 0 var(--px) var(--ink),
+        0 calc(var(--px) * -2) 0 0 var(--ink),
+        0 calc(var(--px) * 2) 0 0 var(--ink),
+        calc(var(--px) * -2) 0 0 0 var(--ink),
+        calc(var(--px) * 2) 0 0 0 var(--ink),
+        0 18px 60px rgba(255, 61, 127, 0.25);
+      text-align: center;
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    .started .card { animation: rise 1.2s steps(8) 0.3s forwards; }
+    @keyframes rise { to { opacity: 1; transform: none; } }
+
+    .kicker {
+      font-family: "Press Start 2P", monospace;
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--gold);
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .title {
+      font-family: "Press Start 2P", monospace;
+      font-weight: 400;
+      font-size: clamp(15px, 4.2vw, 20px);
+      line-height: 1.5;
+      color: var(--pink);
+      margin: 18px 0 6px;
+      text-shadow: 3px 3px 0 var(--ink);
+    }
+    .divider { display: flex; justify-content: center; gap: 8px; margin: 14px 0 22px; }
+
+    .poem { font-size: clamp(21px, 5.2vw, 27px); line-height: 1.18; }
+    .stanza { margin-bottom: 0.85em; }
+    .ln {
+      display: block;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.6s steps(4), transform 0.6s steps(4), color 1.2s steps(4);
+      color: var(--blush);
+    }
+    .ln.on { opacity: 1; transform: none; color: var(--cream); }
+
+    .cite {
+      margin-top: 6px;
+      font-size: 20px;
+      color: var(--muted);
+      opacity: 0;
+      transition: opacity 0.8s steps(4);
+    }
+    .cite span { font-size: 17px; font-style: italic; }
+    .cite.on { opacity: 1; }
+
+    /* ---------- Dedicatoria ---------- */
+    .ded {
+      max-height: 0; overflow: hidden; opacity: 0;
+      transition: opacity 1.2s steps(6), max-height 1.4s steps(10);
+    }
+    .ded.on { max-height: 900px; opacity: 1; }
+    .ded-inner {
+      margin-top: 28px; padding-top: 26px;
+      border-top: 4px dashed rgba(255, 111, 174, 0.45);
+    }
+    .ded h2 {
+      font-family: "Press Start 2P", monospace;
+      font-weight: 400;
+      font-size: clamp(14px, 4vw, 19px);
+      line-height: 1.6;
+      color: var(--rose);
+      text-shadow: 3px 3px 0 var(--ink);
+      margin-top: 14px;
+    }
+    .ded-sub { font-size: 26px; color: var(--gold); margin-top: 6px; }
+    .ded-body { font-size: clamp(21px, 5vw, 25px); line-height: 1.2; margin: 18px auto 0; max-width: 30ch; }
+    .sig { font-size: 23px; color: var(--pink); margin-top: 18px; }
+
+    .hint {
+      position: fixed; left: 0; right: 0; bottom: 18px; z-index: 2;
+      text-align: center;
+      font-family: "Press Start 2P", monospace;
+      font-size: 9px; letter-spacing: 1px;
+      color: var(--muted);
+      opacity: 0; pointer-events: none;
+      transition: opacity 1s steps(4);
+      text-shadow: 2px 2px 0 var(--ink);
+    }
+    .hint.on { opacity: 0.85; }
+
+    /* ---------- Botón de música ---------- */
+    .music {
+      position: fixed; top: 14px; right: 14px; z-index: 5;
+      font-family: "Press Start 2P", monospace; font-size: 10px;
+      color: var(--ink); background: var(--gold);
+      border: 0; padding: 9px 11px; cursor: pointer;
+      box-shadow: 0 -3px 0 0 var(--ink), 0 3px 0 0 var(--ink), -3px 0 0 0 var(--ink), 3px 0 0 0 var(--ink), inset -3px -3px 0 0 #e0a800;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.6s steps(3);
+    }
+    .started .music { opacity: 1; pointer-events: auto; }
+    .music[aria-pressed="false"] { background: var(--muted); box-shadow: 0 -3px 0 0 var(--ink), 0 3px 0 0 var(--ink), -3px 0 0 0 var(--ink), 3px 0 0 0 var(--ink), inset -3px -3px 0 0 #9b87b8; }
+
+    /* ---------- Pantalla de inicio ---------- */
+    .intro {
+      position: fixed; inset: 0; z-index: 10;
+      display: grid; place-items: center;
+      padding: 24px 16px;
+      background: radial-gradient(ellipse at 50% 40%, rgba(59, 20, 92, 0.55), rgba(11, 6, 32, 0.92) 70%);
+      text-align: center;
+    }
+    .intro.out { animation: introOut 0.9s steps(6) forwards; }
+    @keyframes introOut { to { opacity: 0; visibility: hidden; } }
+    .intro.out .big-heart { animation: heartOut 0.9s steps(6) forwards; }
+    @keyframes heartOut { to { transform: scale(3.2); } }
+
+    .big-heart { width: 112px; height: auto; animation: beat 1.1s steps(2) infinite; }
+    @keyframes beat { 50% { transform: scale(1.12); } }
+    .intro-to, .intro-from {
+      font-family: "Press Start 2P", monospace; font-size: 12px; line-height: 1.8;
+      color: var(--cream); letter-spacing: 1px;
+    }
+    .intro-to { margin-top: 30px; }
+    .intro-from { color: var(--muted); font-size: 10px; }
+    .start {
+      margin-top: 34px;
+      font-family: "Press Start 2P", monospace; font-size: 13px; letter-spacing: 1px;
+      color: var(--ink); background: var(--pink);
+      border: 0; padding: 16px 20px; cursor: pointer;
+      box-shadow: 0 -4px 0 0 var(--cream), 0 4px 0 0 var(--cream), -4px 0 0 0 var(--cream), 4px 0 0 0 var(--cream), inset -4px -4px 0 0 var(--rose);
+      animation: blink 1.2s steps(1) infinite;
+    }
+    .start:hover, .start:focus-visible { background: var(--blush); outline: none; animation: none; }
+    @keyframes blink { 50% { opacity: 0.35; } }
+    .intro-tip { margin-top: 22px; font-size: 20px; color: var(--muted); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .big-heart, .start { animation: none; }
+      .started .card { animation-duration: 0.01s; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="sky" aria-hidden="true"></canvas>
+
+  <main class="stage">
+    <article class="card" id="card">
+      <p class="kicker"><canvas class="px" data-sprite="heart" data-size="14"></canvas> PARA KATHRYN <canvas class="px" data-sprite="heart" data-size="14"></canvas></p>
+      <h1 class="title">Me gustas cuando callas</h1>
+      <div class="divider" aria-hidden="true">
+        <canvas class="px" data-sprite="blossom" data-pal="pink" data-size="15"></canvas>
+        <canvas class="px" data-sprite="blossom" data-pal="gold" data-size="15"></canvas>
+        <canvas class="px" data-sprite="blossom" data-pal="lilac" data-size="15"></canvas>
+      </div>
+
+      <div class="poem" id="poem"></div>
+
+      <p class="cite" id="cite">— Pablo Neruda<br><span>Poema 15 · Veinte poemas de amor y una canción desesperada (1924)</span></p>
+
+      <section class="ded" id="ded" aria-live="polite">
+        <div class="ded-inner">
+          <canvas class="px" data-sprite="heart" data-size="42"></canvas>
+          <h2>Para Kathryn Flores</h2>
+          <p class="ded-sub">mi amada esposa</p>
+          <p class="ded-body">De todas las flores del mundo, la más bonita lleva tu apellido. Eres mi silencio claro como una lámpara y la sonrisa que basta. Te amo hoy y todos los días que vienen.</p>
+          <p class="sig">— Tu esposo, Isaac</p>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <p class="hint" id="hint">toca la pantalla</p>
+  <button class="music" id="music" aria-pressed="true" aria-label="Música">♪ ON</button>
+
+  <div class="intro" id="intro">
+    <div>
+      <canvas class="px big-heart" data-sprite="heart" data-size="112"></canvas>
+      <p class="intro-to">PARA: KATHRYN FLORES</p>
+      <p class="intro-from">DE: ISAAC</p>
+      <button class="start" id="start">PRESIONA START</button>
+      <p class="intro-tip">sube el volumen ♪</p>
+    </div>
+  </div>
+
+  <script>
+  (() => {
+    "use strict";
+
+    /* ================= Poema ================= */
+    const POEM = [
+      ["Me gustas cuando callas porque estás como ausente,",
+       "y me oyes desde lejos, y mi voz no te toca.",
+       "Parece que los ojos se te hubieran volado",
+       "y parece que un beso te cerrara la boca."],
+      ["Como todas las cosas están llenas de mi alma",
+       "emerges de las cosas, llena del alma mía.",
+       "Mariposa de sueño, te pareces a mi alma,",
+       "y te pareces a la palabra melancolía."],
+      ["Me gustas cuando callas y estás como distante.",
+       "Y estás como quejándote, mariposa en arrullo.",
+       "Y me oyes desde lejos, y mi voz no te alcanza:",
+       "déjame que me calle con el silencio tuyo."],
+      ["Déjame que te hable también con tu silencio",
+       "claro como una lámpara, simple como un anillo.",
+       "Eres como la noche, callada y constelada.",
+       "Tu silencio es de estrella, tan lejano y sencillo."],
+      ["Me gustas cuando callas porque estás como ausente.",
+       "Distante y dolorosa como si hubieras muerto.",
+       "Una palabra entonces, una sonrisa bastan.",
+       "Y estoy alegre, alegre de que no sea cierto."]
+    ];
+
+    /* ================= Sprites de 8 bits ================= */
+    const MAPS = {
+      tulip: [
+        ".p.p.p.",
+        ".ppppp.",
+        ".phppp.",
+        ".phppp.",
+        ".ppppp.",
+        "..ppp..",
+        "...g...",
+        "...g...",
+        ".g.g...",
+        ".ggg...",
+        "..gg.g.",
+        "...ggg.",
+        "...gg..",
+        "...g..."
+      ],
+      rose: [
+        "..ooooo..",
+        ".ophppoo.",
+        "oppoopppo",
+        "oppopoppo",
+        "opppoppo.",
+        ".oppppoo.",
+        "..ooooo..",
+        "....g....",
+        ".gg.g....",
+        "..ggg.gg.",
+        "....ggg..",
+        "....g....",
+        "....g....",
+        "....g...."
+      ],
+      daisy: [
+        "..w.w..",
+        ".wwwww.",
+        "wwcccww",
+        ".wcccw.",
+        "wwcccww",
+        ".wwwww.",
+        "..wgw..",
+        "...g...",
+        "...g.g.",
+        ".g.ggg.",
+        ".ggg...",
+        "...g...",
+        "...g..."
+      ],
+      blossom: [
+        ".p.p.",
+        "ppppp",
+        ".pcp.",
+        "ppppp",
+        ".p.p."
+      ],
+      heart: [
+        ".pp.pp.",
+        "phppppp",
+        "ppppppp",
+        ".ppppp.",
+        "..ppp..",
+        "...p..."
+      ],
+      spark: [
+        ".w.",
+        "www",
+        ".w."
+      ]
+    };
+
+    const GREEN = { g: "#38c172", d: "#1f7a46" };
+    const PALS = {
+      red:   { p: "#ff3d5a", h: "#ffb3c1", o: "#a3122e", c: "#ffd166", ...GREEN },
+      pink:  { p: "#ff6fae", h: "#ffe0ee", o: "#c2185b", c: "#ffd166", ...GREEN },
+      gold:  { p: "#ffd166", h: "#fff6cf", o: "#d99a00", c: "#ff8c42", ...GREEN },
+      lilac: { p: "#b98cff", h: "#efe2ff", o: "#6c3fc2", c: "#ffd166", ...GREEN },
+      coral: { p: "#ff8a65", h: "#ffd8c9", o: "#c4472b", c: "#ffd166", ...GREEN },
+      white: { w: "#fff8f0", c: "#ffd166", p: "#fff8f0", h: "#ffffff", ...GREEN },
+      heart: { p: "#ff3d7f", h: "#ffd1e3" }
+    };
+
+    const cache = new Map();
+    function sprite(name, palName, rows) {
+      const key = `${name}|${palName}|${rows || "all"}`;
+      if (cache.has(key)) return cache.get(key);
+      const map = rows ? MAPS[name].slice(0, rows) : MAPS[name];
+      const pal = PALS[palName];
+      const c = document.createElement("canvas");
+      c.width = map[0].length; c.height = map.length;
+      const x = c.getContext("2d");
+      map.forEach((row, j) => [...row].forEach((ch, i) => {
+        if (ch !== "." && pal[ch]) { x.fillStyle = pal[ch]; x.fillRect(i, j, 1, 1); }
+      }));
+      cache.set(key, c);
+      return c;
+    }
+
+    // Sprites incrustados en el HTML (corazones, flores del divisor).
+    document.querySelectorAll("canvas[data-sprite]").forEach((el) => {
+      const name = el.dataset.sprite;
+      const src = sprite(name, el.dataset.pal || (name === "heart" ? "heart" : "pink"));
+      el.width = src.width; el.height = src.height;
+      el.getContext("2d").drawImage(src, 0, 0);
+      const size = +el.dataset.size || 16;
+      el.style.width = size + "px";
+      el.style.height = Math.round(size * src.height / src.width) + "px";
+    });
+
+    // Luna creciente pixelada, generada.
+    function makeMoon() {
+      const n = 18, c = document.createElement("canvas");
+      c.width = c.height = n;
+      const x = c.getContext("2d");
+      for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) {
+        const dx = i - 8.5, dy = j - 8.5;
+        const inMoon = dx * dx + dy * dy <= 72;
+        const cut = (i - 13) ** 2 + (j - 5.5) ** 2 <= 58;
+        if (inMoon && !cut) {
+          const crater = (i === 5 && j === 9) || (i === 6 && j === 12) || (i === 4 && j === 6);
+          x.fillStyle = crater ? "#e9d48f" : "#fff2b8";
+          x.fillRect(i, j, 1, 1);
+        }
+      }
+      return c;
+    }
+    const MOON = makeMoon();
+
+    /* ================= Cielo animado ================= */
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const cv = document.getElementById("sky");
+    const ctx = cv.getContext("2d");
+    let W = 0, H = 0, DPR = 1, P = 4;
+    let stars = [], garden = [], flakes = [], bursts = [];
+    let started = false, startTime = 0, bloom = 0;
+
+    const rand = (a, b) => a + Math.random() * (b - a);
+    const pick = (arr) => arr[(Math.random() * arr.length) | 0];
+
+    const FALLING = [
+      ["tulip", 7], ["rose", 8], ["daisy", 7], ["blossom"], ["blossom"], ["heart"]
+    ];
+    const FLOWER_PALS = ["red", "pink", "gold", "lilac", "coral", "pink", "red"];
+
+    function makeStars() {
+      const count = Math.round((W * H) / 9000);
+      stars = Array.from({ length: count }, () => ({
+        fx: Math.random(), fy: Math.random() * 0.75,
+        s: Math.random() < 0.15 ? 3 : 2,
+        ph: Math.random() * 6.28, sp: rand(0.6, 1.8)
+      }));
+    }
+
+    function makeGarden() {
+      garden = [];
+      const kinds = ["tulip", "rose", "daisy", "tulip", "rose"];
+      let x = -P * 2;
+      while (x < W) {
+        const kind = pick(kinds);
+        const pal = kind === "daisy" ? "white" : pick(FLOWER_PALS);
+        const s = Math.random() < 0.35 ? P + 1 : P;
+        const img = sprite(kind, pal);
+        garden.push({ img, x: Math.round(x), s, delay: rand(0.2, 3.2), dur: rand(1.2, 2.2), bob: Math.random() * 6.28 });
+        x += img.width * s + rand(P * 1, P * 5);
+      }
+      // Los de adelante, más grandes, al final para dibujarse encima.
+      garden.sort((a, b) => a.s - b.s);
+    }
+
+    let lastW = 0;
+    function resize() {
+      DPR = Math.min(window.devicePixelRatio || 1, 2);
+      W = window.innerWidth; H = window.innerHeight;
+      P = W < 600 ? 3 : 4;
+      cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR);
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      ctx.imageSmoothingEnabled = false;
+      if (W !== lastW) { makeStars(); makeGarden(); lastW = W; }
+    }
+    window.addEventListener("resize", resize);
+    resize();
+
+    function spawnFlake(y) {
+      const [name, rows] = pick(FALLING);
+      const pal = name === "heart" ? "heart" : name === "daisy" ? "white" : pick(FLOWER_PALS);
+      const img = sprite(name, pal, rows);
+      const depth = pick([0, 0, 1, 1, 1, 2, 2, 3]);
+      const s = Math.max(2, P - 1 + depth);
+      flakes.push({
+        img, s, x: rand(-20, W + 20), y: y ?? -img.height * s - rand(0, 40),
+        vy: rand(22, 40) * (0.7 + depth * 0.25),
+        amp: rand(8, 26), fr: rand(0.4, 1.1), ph: Math.random() * 6.28,
+        alpha: [0.5, 0.75, 0.95, 1][depth]
+      });
+    }
+
+    function burst(x, y, n = 14) {
+      for (let i = 0; i < n; i++) {
+        const a = rand(0, Math.PI * 2), v = rand(90, 260);
+        const kind = Math.random() < 0.55 ? ["heart"] : Math.random() < 0.5 ? ["spark"] : ["blossom"];
+        const pal = kind[0] === "heart" ? "heart" : kind[0] === "spark" ? "white" : pick(FLOWER_PALS);
+        bursts.push({
+          img: sprite(kind[0], pal), s: kind[0] === "spark" ? P : P - 1 + ((Math.random() * 2) | 0),
+          x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 120, life: 1, decay: rand(0.55, 0.9)
+        });
+      }
+    }
+
+    function drawGrass() {
+      const base = H;
+      ctx.fillStyle = "#1f7a46";
+      ctx.fillRect(0, base - P * 3, W, P * 3);
+      ctx.fillStyle = "#38c172";
+      for (let x = 0, i = 0; x < W; x += P, i++) {
+        const h = ((i * 7919) % 5 === 0) ? 3 : ((i * 31) % 3 === 0 ? 2 : 1);
+        ctx.fillRect(x, base - P * 3 - P * h + P, P, P * h);
+      }
+    }
+
+    let last = performance.now();
+    function frame(now) {
+      const dt = Math.min((now - last) / 1000, 0.05);
+      last = now;
+      const t = now / 1000;
+      ctx.clearRect(0, 0, W, H);
+
+      // Estrellas que titilan en 3 niveles, como en una consola vieja.
+      for (const st of stars) {
+        const lv = Math.sin(t * st.sp + st.ph);
+        ctx.globalAlpha = lv > 0.5 ? 1 : lv > -0.3 ? 0.6 : 0.25;
+        ctx.fillStyle = st.s === 3 ? "#fff2b8" : "#e8ddff";
+        const x = Math.round(st.fx * W / 2) * 2, y = Math.round(st.fy * H / 2) * 2;
+        ctx.fillRect(x, y, st.s, st.s);
+      }
+      ctx.globalAlpha = 1;
+
+      // Luna.
+      const ms = W < 600 ? 4 : 5;
+      ctx.drawImage(MOON, Math.round(W - MOON.width * ms - (W < 600 ? 22 : 70)), W < 600 ? 64 : 48, MOON.width * ms, MOON.height * ms);
+
+      if (started) {
+        const el = t - startTime;
+
+        // Flores que caen.
+        const target = Math.min(70, Math.round(W / 16)) + bloom * 25;
+        if (!reduce && flakes.length < target && Math.random() < 0.18 + bloom * 0.2) spawnFlake();
+        for (let i = flakes.length - 1; i >= 0; i--) {
+          const f = flakes[i];
+          f.y += f.vy * dt;
+          const x = f.x + Math.sin(t * f.fr + f.ph) * f.amp;
+          ctx.globalAlpha = f.alpha;
+          ctx.drawImage(f.img, Math.round(x), Math.round(f.y), f.img.width * f.s, f.img.height * f.s);
+          if (f.y > H + 10) flakes.splice(i, 1);
+        }
+        ctx.globalAlpha = 1;
+
+        // Jardín que crece desde el suelo, fila por fila.
+        for (const g of garden) {
+          const p = reduce ? 1 : Math.max(0, Math.min(1, (el - g.delay) / g.dur));
+          if (p <= 0) continue;
+          const rows = Math.max(1, Math.ceil(g.img.height * p));
+          const sway = p === 1 && !reduce ? Math.round(Math.sin(t * 1.4 + g.bob) * 0.6) * (g.s / 2) : 0;
+          const base = H - P * 2;
+          ctx.drawImage(g.img, 0, g.img.height - rows, g.img.width, rows,
+            g.x + sway, base - rows * g.s, g.img.width * g.s, rows * g.s);
+        }
+        drawGrass();
+
+        // Explosiones de corazones.
+        for (let i = bursts.length - 1; i >= 0; i--) {
+          const b = bursts[i];
+          b.vy += 380 * dt; b.x += b.vx * dt; b.y += b.vy * dt;
+          b.life -= b.decay * dt;
+          if (b.life <= 0) { bursts.splice(i, 1); continue; }
+          ctx.globalAlpha = b.life > 0.6 ? 1 : b.life > 0.3 ? 0.6 : 0.3;
+          ctx.drawImage(b.img, Math.round(b.x), Math.round(b.y), b.img.width * b.s, b.img.height * b.s);
+        }
+        ctx.globalAlpha = 1;
+      }
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+
+    /* ================= Música chiptune ================= */
+    let audio = null, master = null, musicOn = true, loopTimer = 0;
+    const SEMI = { C: 0, "C#": 1, D: 2, "D#": 3, E: 4, F: 5, "F#": 6, G: 7, "G#": 8, A: 9, "A#": 10, B: 11 };
+    const hz = (n) => { const m = n.match(/^([A-G]#?)(\d)$/); return 440 * 2 ** (((+m[2] + 1) * 12 + SEMI[m[1]] - 69) / 12); };
+    const BEAT = 60 / 84;
+    const CHORDS = [["C4", "E4", "G4"], ["A3", "C4", "E4"], ["F3", "A3", "C4"], ["G3", "B3", "D4"]];
+    const MELODY = [
+      ["E5", 1.5], ["G5", 0.5], ["E5", 2],
+      ["C5", 1.5], ["E5", 0.5], ["D5", 2],
+      ["C5", 1], ["A4", 1], ["C5", 1], ["F5", 1],
+      ["E5", 2], ["D5", 2],
+      ["E5", 1], ["G5", 1], ["C6", 1.5], ["B5", 0.5],
+      ["A5", 2], ["G5", 1], ["E5", 1],
+      ["F5", 1], ["E5", 1], ["D5", 1], ["C5", 1],
+      ["D5", 2], ["B4", 2]
+    ];
+    const LOOP_BEATS = 32;
+
+    function tone(type, freq, t, dur, vol, filter) {
+      const o = audio.createOscillator(), g = audio.createGain();
+      o.type = type; o.frequency.value = freq;
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(vol, t + 0.015);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + dur * 0.95);
+      o.connect(g);
+      if (filter) { g.connect(filter); } else { g.connect(master); }
+      o.start(t); o.stop(t + dur);
+    }
+
+    function scheduleLoop(t0) {
+      const lp = audio.createBiquadFilter();
+      lp.type = "lowpass"; lp.frequency.value = 2200; lp.connect(master);
+      // Arpegios y bajo: dos vueltas de C – Am – F – G.
+      for (let bar = 0; bar < 8; bar++) {
+        const ch = CHORDS[bar % 4];
+        const order = [0, 1, 2, 1, 0, 1, 2, 1];
+        order.forEach((k, i) => tone("triangle", hz(ch[k]) * 2, t0 + (bar * 4 + i * 0.5) * BEAT, BEAT * 0.5, 0.18));
+        const root = ch[0].replace(/\d/, (d) => d - 1);
+        tone("triangle", hz(root), t0 + bar * 4 * BEAT, BEAT * 1.9, 0.32);
+        tone("triangle", hz(root), t0 + (bar * 4 + 2) * BEAT, BEAT * 1.9, 0.26);
+      }
+      let b = 0;
+      for (const [n, d] of MELODY) { tone("square", hz(n), t0 + b * BEAT, d * BEAT, 0.13, lp); b += d; }
+      const next = t0 + LOOP_BEATS * BEAT;
+      loopTimer = setTimeout(() => scheduleLoop(next), (next - audio.currentTime - 0.5) * 1000);
+    }
+
+    function startMusic() {
+      try {
+        audio = new (window.AudioContext || window.webkitAudioContext)();
+        master = audio.createGain();
+        master.gain.value = 0.22;
+        master.connect(audio.destination);
+        scheduleLoop(audio.currentTime + 0.25);
+      } catch (e) { audio = null; }
+    }
+
+    const musicBtn = document.getElementById("music");
+    musicBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      musicOn = !musicOn;
+      musicBtn.setAttribute("aria-pressed", String(musicOn));
+      musicBtn.textContent = musicOn ? "♪ ON" : "♪ OFF";
+      if (!audio) return;
+      if (musicOn) audio.resume(); else audio.suspend();
+    });
+    document.addEventListener("visibilitychange", () => {
+      if (!audio) return;
+      if (document.hidden) audio.suspend(); else if (musicOn) audio.resume();
+    });
+
+    /* ================= Revelado del poema ================= */
+    const poemEl = document.getElementById("poem");
+    const lines = [];
+    POEM.forEach((stanza) => {
+      const s = document.createElement("p");
+      s.className = "stanza";
+      stanza.forEach((text) => {
+        const span = document.createElement("span");
+        span.className = "ln"; span.textContent = text;
+        s.appendChild(span); lines.push(span);
+      });
+      poemEl.appendChild(s);
+    });
+
+    const card = document.getElementById("card");
+    const cite = document.getElementById("cite");
+    const ded = document.getElementById("ded");
+    const hint = document.getElementById("hint");
+    let timers = [], finished = false, userScrolled = false;
+    window.addEventListener("touchmove", () => { userScrolled = true; }, { passive: true });
+    window.addEventListener("wheel", () => { userScrolled = true; }, { passive: true });
+
+    function keepInView(el) {
+      if (userScrolled) return;
+      const r = el.getBoundingClientRect();
+      if (r.bottom > window.innerHeight - 110) window.scrollBy({ top: r.bottom - window.innerHeight + 150, behavior: "smooth" });
+    }
+
+    function finish() {
+      if (finished) return;
+      finished = true;
+      timers.forEach(clearTimeout);
+      lines.forEach((l) => l.classList.add("on"));
+      cite.classList.add("on");
+      setTimeout(() => {
+        ded.classList.add("on");
+        bloom = 1;
+        const r = card.getBoundingClientRect();
+        burst(r.left + r.width / 2, Math.min(r.bottom - 80, window.innerHeight * 0.6), 40);
+        setTimeout(() => { if (!userScrolled) ded.scrollIntoView({ behavior: "smooth", block: "center" }); }, 700);
+        setTimeout(() => { hint.textContent = "toca la pantalla"; hint.classList.add("on"); }, 2500);
+      }, 900);
+    }
+
+    function revealPoem() {
+      if (reduce) { finish(); return; }
+      let delay = 1600, i = 0;
+      POEM.forEach((stanza, si) => {
+        stanza.forEach(() => {
+          const el = lines[i++];
+          timers.push(setTimeout(() => { el.classList.add("on"); keepInView(el); }, delay));
+          delay += 1150;
+        });
+        delay += 900;
+      });
+      timers.push(setTimeout(finish, delay));
+    }
+
+    /* ================= Inicio ================= */
+    const intro = document.getElementById("intro");
+    function begin() {
+      if (started) return;
+      started = true;
+      startTime = performance.now() / 1000;
+      document.body.classList.add("started");
+      intro.classList.add("out");
+      setTimeout(() => intro.remove(), 1000);
+      startMusic();
+      burst(W / 2, H / 2, 36);
+      if (!reduce) for (let i = 0; i < 18; i++) spawnFlake(rand(-H * 0.6, H * 0.2));
+      revealPoem();
+      hint.textContent = "toca el poema para verlo completo";
+      setTimeout(() => hint.classList.add("on"), 3000);
+      setTimeout(() => { if (!finished) hint.classList.remove("on"); }, 9000);
+    }
+    document.getElementById("start").addEventListener("click", (e) => { e.stopPropagation(); begin(); });
+    intro.addEventListener("click", begin);
+
+    document.addEventListener("pointerdown", (e) => {
+      if (!started || e.target.closest("button")) return;
+      burst(e.clientX, e.clientY, 12);
+      if (!finished && card.contains(e.target)) finish();
+    });
+  })();
+  </script>
+</body>
+</html>
