@@ -600,15 +600,55 @@
       loopTimer = setTimeout(() => scheduleLoop(next), (next - audio.currentTime - 0.5) * 1000);
     }
 
-    function startMusic() {
+    // Un WAV de silencio. Reproducirlo con <audio> dentro del toque hace que
+    // iOS trate la página como "reproducción de medios": así el audio suena
+    // aunque el iPhone tenga activado el interruptor de silencio.
+    function silentWavUrl() {
+      const rate = 8000, n = 800, buf = new ArrayBuffer(44 + n), v = new DataView(buf);
+      const str = (o, s) => [...s].forEach((c, i) => v.setUint8(o + i, c.charCodeAt(0)));
+      str(0, "RIFF"); v.setUint32(4, 36 + n, true); str(8, "WAVE"); str(12, "fmt ");
+      v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
+      v.setUint32(24, rate, true); v.setUint32(28, rate, true); v.setUint16(32, 1, true);
+      v.setUint16(34, 8, true); str(36, "data"); v.setUint32(40, n, true);
+      for (let i = 0; i < n; i++) v.setUint8(44 + i, 128);
+      return URL.createObjectURL(new Blob([buf], { type: "audio/wav" }));
+    }
+    let unlockEl = null;
+    function unlockMedia() {
+      try { if (navigator.audioSession) navigator.audioSession.type = "playback"; } catch (e) {}
       try {
-        audio = new (window.AudioContext || window.webkitAudioContext)();
-        master = audio.createGain();
-        master.gain.value = 0.22;
-        master.connect(audio.destination);
-        scheduleLoop(audio.currentTime + 0.25);
+        if (!unlockEl) {
+          unlockEl = new Audio(silentWavUrl());
+          unlockEl.loop = true;
+          unlockEl.setAttribute("playsinline", "");
+        }
+        const p = unlockEl.play();
+        if (p && p.catch) p.catch(() => {});
+      } catch (e) {}
+    }
+
+    function startMusic() {
+      unlockMedia();
+      try {
+        if (!audio) {
+          audio = new (window.AudioContext || window.webkitAudioContext)();
+          master = audio.createGain();
+          master.gain.value = 0.5;
+          master.connect(audio.destination);
+          scheduleLoop(audio.currentTime + 0.3);
+        }
+        if (audio.state !== "running" && musicOn) audio.resume();
       } catch (e) { audio = null; }
     }
+
+    // Respaldo: si el navegador dejó el audio en pausa, cualquier toque lo
+    // despierta.
+    document.addEventListener("pointerdown", () => {
+      if (started && musicOn && audio && audio.state !== "running") { unlockMedia(); audio.resume(); }
+    });
+    document.addEventListener("touchend", () => {
+      if (started && musicOn && audio && audio.state !== "running") { unlockMedia(); audio.resume(); }
+    }, { passive: true });
 
     const musicBtn = document.getElementById("music");
     musicBtn.addEventListener("click", (e) => {
@@ -616,8 +656,8 @@
       musicOn = !musicOn;
       musicBtn.setAttribute("aria-pressed", String(musicOn));
       musicBtn.textContent = musicOn ? "♪ ON" : "♪ OFF";
-      if (!audio) return;
-      if (musicOn) audio.resume(); else audio.suspend();
+      if (musicOn) { startMusic(); return; }
+      if (audio) audio.suspend();
     });
     document.addEventListener("visibilitychange", () => {
       if (!audio) return;
