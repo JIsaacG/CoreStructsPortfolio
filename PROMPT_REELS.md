@@ -168,7 +168,7 @@ Por cada guion aprobado:
 
 # GUARDADO DE VIDEOS EN EL REPO (por ahora no se publica nada automáticamente)
 - Los videos terminados se guardan en el repositorio, en `content/reels/out/<ID>/`, junto con su portada y su `<ID>_copy.md`. Yo los descargo y los subo a mano a Instagram y TikTok.
-- Rama: haz commit y push SIEMPRE en la rama `contenido/reels`, nunca en `main`. El sitio se publica tal cual desde el repo; si los videos llegan a `main`, quedarían subidos al hosting de corestructhn.com.
+- Rama: haz commit y push SIEMPRE en la rama `contenido/reels`, nunca en `main`. El sitio se publica tal cual desde el repo; si los videos llegan a `main`, quedarían subidos al hosting de corestructhn.com. Si la rama no existe, créala a partir de `contenido/prompt-reels` (donde vive este archivo): `git switch -c contenido/reels origin/contenido/prompt-reels`.
 - Peso: cada MP4 debe pesar 30 MB o menos (sube el CRF o baja el bitrate con FFmpeg hasta lograrlo sin perder nitidez en el texto). GitHub rechaza archivos de más de 100 MB y avisa desde 50 MB.
 - No subas al repo: grabaciones crudas de Playwright, audios intermedios ni archivos temporales. Agrega a `.gitignore`: `content/reels/raw/`, `content/reels/tmp/`, `content/reels/**/*.webm`, `content/reels/**/*.wav`. Las voces finales sí se pueden guardar en MP3 junto al video si pesan poco.
 - Un commit por tanda, con mensaje claro, por ejemplo: "Reels semana 1: R01, R02, R03".
