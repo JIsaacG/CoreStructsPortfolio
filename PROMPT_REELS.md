@@ -90,7 +90,7 @@ TikTok:
 ---
 
 # FASE 1 — SISTEMA REUTILIZABLE (solo la primera vez)
-Crea la carpeta `content/reels/` (fuera de lo que se publica en el sitio; agrega los MP4 a .gitignore) con:
+Crea la carpeta `content/reels/` con:
 - `brand-kit.html`: aplica el MANUAL DE MARCA; colores, Manrope, versiones de logo, lower-thirds, tarjeta final con WhatsApp y URL, barra de progreso, estilos de subtítulo.
 - `templates/`: 5 plantillas HyperFrames reutilizables (ver FORMATOS).
 - `scripts/record-demos.mjs`: graba cada demo en vertical y guarda clips de 3-8 s por sección (hero, formulario, buscador, gráficas, menú móvil).
@@ -162,15 +162,25 @@ Por cada guion aprobado:
 1. Graba o reutiliza los clips de la demo necesaria.
 2. Genera la voz con ElevenLabs y obtén tiempos por palabra.
 3. Compón en HyperFrames con la plantilla del formato, previsualiza y revisa frame por frame los segundos 0, 1.5 y 3.
-4. Renderiza: `out/<ID>_ig.mp4`, `out/<ID>_tiktok.mp4` (el de TikTok puede llevar texto de hook más grande y 1-2 s menos), `out/<ID>_cover.png`, `out/<ID>_copy.md` (captions, hashtags, comentario fijado, hora sugerida).
+4. Renderiza en `content/reels/out/<ID>/`: `<ID>_ig.mp4`, `<ID>_tiktok.mp4` (el de TikTok puede llevar texto de hook más grande y 1-2 s menos), `<ID>_cover.png`, `<ID>_copy.md` (captions, hashtags, comentario fijado, hora sugerida).
+6. Guarda en el repo (ver GUARDADO DE VIDEOS EN EL REPO).
 5. Control de calidad automático: duración, resolución, peso, loudness, que ningún texto invada la zona segura, ortografía, que se cumpla el MANUAL DE MARCA (Manrope en todo el texto, Quantify solo en el logo, versión de logo correcta según el fondo), y que no aparezca ningún precio, plazo ni cifra.
+
+# GUARDADO DE VIDEOS EN EL REPO (por ahora no se publica nada automáticamente)
+- Los videos terminados se guardan en el repositorio, en `content/reels/out/<ID>/`, junto con su portada y su `<ID>_copy.md`. Yo los descargo y los subo a mano a Instagram y TikTok.
+- Rama: haz commit y push SIEMPRE en la rama `contenido/reels`, nunca en `main`. El sitio se publica tal cual desde el repo; si los videos llegan a `main`, quedarían subidos al hosting de corestructhn.com.
+- Peso: cada MP4 debe pesar 30 MB o menos (sube el CRF o baja el bitrate con FFmpeg hasta lograrlo sin perder nitidez en el texto). GitHub rechaza archivos de más de 100 MB y avisa desde 50 MB.
+- No subas al repo: grabaciones crudas de Playwright, audios intermedios ni archivos temporales. Agrega a `.gitignore`: `content/reels/raw/`, `content/reels/tmp/`, `content/reels/**/*.webm`, `content/reels/**/*.wav`. Las voces finales sí se pueden guardar en MP3 junto al video si pesan poco.
+- Un commit por tanda, con mensaje claro, por ejemplo: "Reels semana 1: R01, R02, R03".
+- Mantén `content/reels/out/INDEX.md` con una fila por video: ID, título, formato, duración, estado (pendiente de subir / subido a IG / subido a TikTok), fecha de subida y enlace a la publicación cuando yo te lo pase.
 
 # FASE 4 — CALENDARIO Y MEDICIÓN
 - 3-4 Reels por semana; horario sugerido de prueba en hora de Honduras: 7-9 a.m., 11 a.m.-1 p.m. o 5-7 p.m. Prueba horarios durante 4-6 semanas con las estadísticas de Instagram.
 - Publica primero 1 de cada 3 como Trial Reel para probar el hook con no seguidores.
 - Crea `content/reels/metrics.csv` con: ID, plataforma, retención a 3 s, % visto, compartidos, guardados, comentarios, mensajes de WhatsApp. Cada semana, cuando te pase los números, propone qué hook y formato repetir y cuál descartar, y actualiza `hooks.md`.
 
-# FASE 5 — PUBLICACIÓN AUTOMÁTICA (solo cuando yo lo pida)
+# FASE 5 — PUBLICACIÓN AUTOMÁTICA (DESACTIVADA POR AHORA)
+No publiques nada en Instagram ni en TikTok, ni con vidIQ ni con ninguna API. Esta sección queda solo como referencia para cuando yo te diga que la activemos.
 - Instagram: la publicación por API exige cuenta Business (no Creator) y permisos `instagram_business_basic` + `instagram_business_content_publish` aprobados por Meta (2-4 semanas). Flujo: crear contenedor en `/{ig-user-id}/media` con `media_type=REELS`, `video_url` público, `caption`, `cover_url` (1080x1920) y opcional `trial_params` para Trial Reels; consultar `status_code` hasta `FINISHED`; publicar con `/{ig-user-id}/media_publish`. Límite: 100 publicaciones por 24 h. Specs: MP4/MOV, H.264, AAC hasta 48 kHz, 23-60 fps, 9:16, 5-90 s, máximo 100 MB.
 - TikTok: una app sin auditar publica todo en privado y la auditoría tarda semanas. Usa el modo Upload (`video.upload`), que deja el video como borrador en mi bandeja de TikTok para que yo lo publique desde el teléfono con un sonido en tendencia.
 - vidIQ también tiene herramienta para publicar Reels en cuentas de Instagram conectadas; antes de usarla, pídeme confirmación por cada video.
@@ -181,8 +191,9 @@ Por cada guion aprobado:
 # MODO MÁQUINA (después de la primera vez)
 Cuando ya exista `content/reels/`, estos pedidos cortos disparan el flujo completo:
 - "Nueva tanda": revisa `metrics.csv` y `hooks.md`, haz una investigación rápida con vidIQ, propone 3 guiones nuevos necesidad → solución sin repetir los últimos 12, y espera mi aprobación.
-- "Produce <ID>": graba, genera voz, compone, renderiza y pasa el control de calidad de ese guion.
-- "Semana completa": las dos anteriores para 3-4 videos, con calendario y captions listos.
+- "Produce <ID>": graba, genera voz, compone, renderiza, pasa el control de calidad y guarda el video en la rama `contenido/reels`.
+- "Semana completa": las dos anteriores para 3-4 videos, con calendario y captions listos, todo guardado en la rama `contenido/reels`.
+- "Subido <ID> <plataforma> <enlace>": marca ese video como subido en `INDEX.md`.
 - "Resultados": te paso números, actualizas `metrics.csv`, decides qué repetir y qué descartar.
 - "Variante de hook <ID>": re-renderiza solo los primeros 3 s con otra variante para Trial Reel.
 
