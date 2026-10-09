@@ -16,12 +16,12 @@ Propuesta para los 12 guiones de `guiones.md` (pendientes de aprobación). Arran
 | 2 | Lun | 19 oct | R04 | D | Admisiones sin papeles ni filas | 7-9 a. m. | no |
 | 2 | Mié | 21 oct | R05 | C | Tus procesos viven en Excel y correos | 11 a. m.-1 p. m. | **sí** |
 | 2 | Vie | 23 oct | R06 | A | Un menú que se pide solo | 5-7 p. m. | no |
-| 3 | Lun | 26 oct | R07 | A | Así se ve un portal de gobierno moderno | 11 a. m.-1 p. m. | no |
-| 3 | Mié | 28 oct | R08 | B | Tu inventario vive en la cabeza de alguien | 7-9 a. m. | **sí** |
+| 3 | Lun | 26 oct | R07 | A | Así luce un portal de gobierno moderno | 11 a. m.-1 p. m. | no |
+| 3 | Mié | 28 oct | R08 | B | Tu inventario vive en una sola cabeza | 7-9 a. m. | **sí** |
 | 3 | Vie | 30 oct | R09 | E | No vendemos plantillas | 5-7 p. m. | no |
 | 4 | Lun | 2 nov | R10 | A | Tu sitio habla antes que tú | 5-7 p. m. | no |
 | 4 | Mié | 4 nov | R11 | C | Así abre tu página en el teléfono | 7-9 a. m. | **sí** |
-| 4 | Vie | 6 nov | R12 | B | Tu operación no cabe en un sistema enlatado | 11 a. m.-1 p. m. | no |
+| 4 | Vie | 6 nov | R12 | B | Tu operación no cabe en software enlatado | 11 a. m.-1 p. m. | no |
 
 R00 (video de prueba de AUREA) no entra en el calendario: sirve para aprobar el estilo. Si se aprueba tal cual, puede publicarse en lugar de R01 mientras llega la voz.
 
