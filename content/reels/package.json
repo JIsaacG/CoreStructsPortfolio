@@ -1,0 +1,9 @@
+{
+  "name": "corestruct-reels",
+  "private": true,
+  "type": "module",
+  "description": "Máquina de Reels y TikToks de CoreStruct: grabación de demos, composición HyperFrames y exportación.",
+  "devDependencies": {
+    "playwright": "1.64.0"
+  }
+}

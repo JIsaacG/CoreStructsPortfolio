@@ -22,3 +22,9 @@ tools/i18n-missing.txt
 # Plantilla versionada: api/.env.example
 api/.env
 .env
+
+# Máquina de Reels: crudos, temporales e intermedios no se suben (ver PROMPT_REELS.md)
+content/reels/raw/
+content/reels/tmp/
+content/reels/**/*.webm
+content/reels/**/*.wav
