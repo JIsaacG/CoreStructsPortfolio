@@ -1,0 +1,331 @@
+/* =============================================================================
+   CoreStruct · Reels — estilos compartidos por las 5 plantillas.
+   Lienzo 1080x1920. Zona segura combinada IG + TikTok:
+     220 px arriba · 480 px abajo · 120 px a los lados  →  caja útil 120..960 × 220..1440
+   Manual de marca: Azul Marino #253880, Cyan #3898D4, Manrope para TODO el texto.
+   Quantify es exclusiva del logo (que va como imagen): aquí no se declara.
+   ========================================================================== */
+
+/* Las @font-face de Manrope van inline en el HTML (skeleton.html): el lint
+   de HyperFrames exige declararlas en el archivo de la composición. */
+
+:root {
+  --navy: #253880;
+  --cyan: #3898d4;
+  --bg: #080b12;
+  --surface: #0d1220;
+  --surface-raised: #111a2e;
+  --text: #ffffff;
+  --muted: rgba(255, 255, 255, 0.72);
+  --safe-top: 220px;
+  --safe-bottom: 480px;
+  --safe-side: 120px;
+  --hook-scale: 1;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body {
+  width: 1080px;
+  height: 1920px;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Manrope", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+#root {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  font-family: "Manrope", sans-serif;
+}
+
+/* ---------------------------------------------------------------- Fondo */
+.layer { position: absolute; inset: 0; pointer-events: none; }
+#bg-glow {
+  background:
+    radial-gradient(900px 700px at 50% 38%, rgba(37, 56, 128, 0.55), transparent 70%),
+    radial-gradient(700px 500px at 80% 85%, rgba(56, 152, 212, 0.16), transparent 70%),
+    linear-gradient(180deg, #080b12 0%, #0d1220 55%, #080b12 100%);
+}
+#stars { width: 1080px; height: 1920px; display: block; }
+
+/* ------------------------------------------------------------- Teléfono */
+#phone-wrap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 340px;
+  height: 1310px;
+  display: flex;
+  justify-content: center;
+}
+#phone {
+  position: relative;
+  width: 620px;
+  height: 1310px;
+  border-radius: 78px;
+  padding: 16px;
+  background: linear-gradient(160deg, #1a2238, #0b0f1a 40%, #0b0f1a 70%, #1a2238);
+  box-shadow:
+    0 0 0 2px rgba(255, 255, 255, 0.10),
+    0 0 0 9px #05070c,
+    0 0 0 10px rgba(56, 152, 212, 0.25),
+    0 60px 120px rgba(0, 0, 0, 0.65),
+    0 0 160px rgba(56, 152, 212, 0.22);
+}
+#screen {
+  position: relative;
+  width: 588px;
+  height: 1278px;
+  border-radius: 62px;
+  overflow: hidden;
+  background: #05070c;
+}
+#screen-zoom {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 30%;
+}
+.scr {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 0%;
+}
+.wipe-after { position: absolute; inset: 0; opacity: 0; }
+#screen-shine {
+  background: linear-gradient(115deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 28%);
+  border-radius: 62px;
+}
+
+/* Sitio "antes" genérico, creado aquí (formato C). Sin marcas reales. */
+.before-mock {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background: #e9e6df;
+  color: #3a3a3a;
+  font-family: "Manrope", sans-serif;
+  overflow: hidden;
+}
+.before-mock .bm-top { height: 96px; background: #8a8f99; display: flex; align-items: center; padding: 0 26px; gap: 14px; }
+.before-mock .bm-logo { width: 120px; height: 34px; background: #b9bcc2; border-radius: 4px; }
+.before-mock .bm-nav { flex: 1; height: 12px; background: repeating-linear-gradient(90deg, #c8cbd0 0 60px, transparent 60px 74px); }
+.before-mock .bm-banner { height: 330px; margin: 18px; background: repeating-linear-gradient(45deg, #cfccc4 0 22px, #d9d6cf 22px 44px); display: grid; place-items: center; }
+.before-mock .bm-spinner { width: 92px; height: 92px; border-radius: 50%; border: 12px solid #b4b1aa; border-top-color: #6f6c66; }
+.before-mock .bm-title { font-size: 30px; font-weight: 500; padding: 4px 26px 10px; color: #5a5a5a; }
+.before-mock .bm-line { height: 11px; margin: 12px 26px; background: #cdcac3; border-radius: 3px; }
+.before-mock .bm-pop {
+  position: absolute; left: 34px; right: 34px; bottom: 120px;
+  background: #fff; border: 2px solid #b5b5b5; padding: 22px; font-size: 22px; color: #555;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+.before-mock .bm-pop b { display: block; font-size: 24px; margin-bottom: 8px; color: #333; }
+
+/* ---------------------------------------------- Rótulo superior (chip) */
+#label {
+  position: absolute;
+  top: 246px;
+  left: var(--safe-side);
+  right: var(--safe-side);
+  height: 72px;
+  display: flex;
+  justify-content: center;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  height: 72px;
+  padding: 0 30px;
+  border-radius: 999px;
+  background: rgba(13, 18, 32, 0.92);
+  border: 2px solid rgba(56, 152, 212, 0.55);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  opacity: 0;
+}
+.chip svg { width: 32px; height: 32px; flex: none; }
+.chip--key { background: #ffffff; color: #0d1220; border-color: #ffffff; }
+
+/* ------------------------------------------------------------- Gancho */
+#scrim {
+  background: linear-gradient(180deg, rgba(8, 11, 18, 0.2) 0%, rgba(8, 11, 18, 0.86) 30%, rgba(8, 11, 18, 0.86) 62%, rgba(8, 11, 18, 0.15) 100%);
+  opacity: 0;
+}
+#hook {
+  position: absolute;
+  left: var(--safe-side);
+  right: var(--safe-side);
+  top: 470px;
+  height: 640px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.big {
+  width: 100%;
+  text-align: center;
+  font-weight: 800;
+  font-size: calc(112px * var(--hook-scale));
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+.big .w { display: inline-block; opacity: 0; }
+.em { color: var(--cyan); }
+
+/* ------------------------------------------------- Texto cinético (B, D, E) */
+#stage {
+  position: absolute;
+  left: var(--safe-side);
+  right: var(--safe-side);
+  top: 360px;
+  height: 900px;
+}
+.stage-scene {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 36px;
+  opacity: 0;
+}
+.stage-scene .kicker {
+  display: block;
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  text-align: center;
+}
+.stage-scene .line {
+  display: block;
+  text-align: center;
+  font-size: 92px;
+  font-weight: 800;
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+.stage-scene .line .w { display: inline-block; }
+.cards { display: flex; flex-wrap: wrap; justify-content: center; gap: 22px; }
+.card {
+  display: block;
+  padding: 26px 34px;
+  border-radius: 28px;
+  background: rgba(17, 26, 46, 0.95);
+  border: 2px solid rgba(56, 152, 212, 0.45);
+  font-size: 44px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* ------------------------------------------------- Cara a cámara (formato E) */
+#face { position: absolute; inset: 0; opacity: 0; }
+#face .scr { object-position: 50% 30%; }
+#face-shade { background: linear-gradient(180deg, rgba(8,11,18,0.35), rgba(8,11,18,0) 30%, rgba(8,11,18,0) 55%, rgba(8,11,18,0.75)); }
+
+/* ---------------------------------------------------------- Subtítulos */
+#captions {
+  position: absolute;
+  left: var(--safe-side);
+  right: var(--safe-side);
+  top: 1150px;
+  height: 250px;
+}
+.cap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  opacity: 0;
+}
+.cap-box {
+  display: block;
+  max-width: 840px;
+  padding: 18px 30px 22px;
+  border-radius: 26px;
+  background: rgba(8, 11, 18, 0.88);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  font-size: 72px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.cap-box .w { color: #ffffff; }
+
+/* --------------------------------------------------------------- Cierre */
+#cta {
+  position: absolute;
+  left: var(--safe-side);
+  right: var(--safe-side);
+  top: 420px;
+  height: 560px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#cta .big { font-size: 96px; }
+
+/* Barra de progreso: fina, justo encima de la zona segura inferior. */
+#progress {
+  position: absolute;
+  left: var(--safe-side);
+  right: var(--safe-side);
+  top: 1424px;
+  height: 8px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.16);
+  overflow: hidden;
+}
+#progress-fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--navy), var(--cyan));
+  transform-origin: 0 50%;
+}
+
+/* Tarjeta final 1.5 s */
+#endcard {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background: radial-gradient(800px 600px at 50% 42%, rgba(37, 56, 128, 0.55), rgba(8, 11, 18, 0.97) 70%);
+}
+#endcard-inner {
+  position: absolute;
+  left: var(--safe-side);
+  right: var(--safe-side);
+  top: 470px;
+  height: 860px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 34px;
+  text-align: center;
+}
+#endcard-logo { display: block; width: 600px; height: auto; }
+.ec-line { display: block; font-size: 54px; font-weight: 700; letter-spacing: -0.01em; }
+.ec-line--wa { font-size: 58px; }
+.ec-line--wa b { color: var(--cyan); font-weight: 800; }
+.ec-line--muted { font-size: 44px; font-weight: 500; color: var(--muted); }
+.ec-rule { display: block; width: 120px; height: 4px; border-radius: 4px; background: var(--cyan); }
+
+/* Variante TikTok: texto del gancho más grande. */
+.v-tiktok { --hook-scale: 1.14; }

@@ -1,0 +1,37 @@
+{
+  "_formato": "B · Problema → solución (25-40 s). Primero el dolor en texto cinético (escenas type text: kicker + lines; *palabra* va en cyan), luego corte a la demo que lo resuelve (escenas type demo). Una sola idea por video.",
+  "id": "RXX",
+  "title": "Tu página no pierde clientes por fea",
+  "format": "B",
+  "platform": "Instagram Reels + TikTok",
+  "keyword": "página web Honduras",
+  "hook": {
+    "text": "Tu página no pierde clientes por *fea*",
+    "dur": 1.8,
+    "variants": [
+      "Tu página no pierde clientes por *fea*",
+      "¿Tu página tarda en *abrir*?",
+      "Tu página te está costando *clientes*"
+    ]
+  },
+  "rehook": "Los pierde por estas tres cosas",
+  "scenes": [
+    { "id": "p1", "type": "text", "dur": 3.4, "kicker": "El problema", "lines": ["Los pierde porque *tarda* en abrir"], "caption": "" },
+    { "id": "p2", "type": "text", "dur": 2.8, "lines": ["En el teléfono hay que hacer *zoom*"] },
+    { "id": "p3", "type": "text", "dur": 2.8, "lines": ["Y nadie encuentra el *WhatsApp*"] },
+    { "id": "s1", "type": "demo", "dur": 3.4, "clip": "velora/hero", "from": 0.2, "label": "La solución", "caption": "Abre rápido y se entiende en el teléfono", "zoom": [1, 1.06] },
+    { "id": "s2", "type": "demo", "dur": 4.0, "clip": "velora/recorrido", "from": 0.6, "label": "Contacto a un toque", "caption": "Y el contacto siempre a mano", "zoom": [1, 1.08] }
+  ],
+  "cta": { "text": "¿Tu negocio necesita esto? *Escríbenos*", "dur": 2.0, "clip": "velora/recorrido", "from": 5.0 },
+  "music": null,
+  "variants": { "tiktok": { "trim": { "p2": 2.2, "p3": 2.2 } } },
+  "copy": {
+    "cover": "Página web *Honduras*",
+    "instagram": "Escribe aquí 125-150 caracteres: la necesidad y lo que resuelve la demo, sin precios ni plazos, con una invitación suave a escribir.",
+    "instagramHashtags": ["#paginaweb", "#negocioshonduras", "#tegucigalpa"],
+    "tiktok": "Página web Honduras: la palabra clave va dentro de los primeros 80 caracteres y el texto completo mide entre 100 y 150 caracteres.",
+    "tiktokHashtags": ["#paginawebhonduras", "#negocioshonduras", "#diseñoweb"],
+    "pinned": "Comentario fijado con palabras clave secundarias.",
+    "time": "Martes o jueves, 11:00 a. m.-1:00 p. m. hora de Honduras"
+  }
+}

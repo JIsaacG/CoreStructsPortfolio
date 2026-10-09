@@ -1,0 +1,36 @@
+{
+  "_formato": "A · Demo scroll (15-25 s). La demo grabada dentro del teléfono; una escena por toma, cambio visual cada 1.5-3 s, zoom suave al detalle. Escenas tipo demo: clip = <demo>/<toma> de `npm run record -- --list`, from = segundo de la toma donde empieza, zoom = [inicio, fin] (1.0 → 1.08), origin = punto del zoom.",
+  "id": "RXX",
+  "title": "Si diriges un colegio, mira esto",
+  "format": "A",
+  "platform": "Instagram Reels (principal) + TikTok",
+  "keyword": "página web para colegio",
+  "hook": {
+    "text": "Si diriges un *colegio*, mira esto",
+    "dur": 1.8,
+    "variants": [
+      "Si diriges un *colegio*, mira esto",
+      "¿Las familias encuentran tu *colegio* en el teléfono?",
+      "Tu *colegio*, completo en el teléfono"
+    ]
+  },
+  "rehook": "Así lo vive una familia desde el teléfono",
+  "scenes": [
+    { "id": "s1", "type": "demo", "dur": 3.4, "clip": "aurea/hero", "from": 1.4, "label": "Portal educativo", "caption": "Así lo vive una familia", "zoom": [1, 1.05] },
+    { "id": "s2", "type": "demo", "dur": 2.8, "clip": "aurea/accesos", "from": 0.4, "label": "Accesos rápidos", "caption": "Lo que buscan, a un toque", "zoom": [1.04, 1.1], "origin": "50% 20%" },
+    { "id": "s3", "type": "demo", "dur": 3.4, "clip": "aurea/buscador", "from": 0.6, "label": "Buscador académico", "caption": "Escriben “sistemas” y el portal responde", "zoom": [1.02, 1.14], "origin": "50% 28%" },
+    { "id": "s4", "type": "demo", "dur": 3.0, "clip": "aurea/admisiones", "from": 1.0, "label": "Admisiones en línea", "caption": "Admisiones claras, paso a paso", "zoom": [1, 1.06] }
+  ],
+  "cta": { "text": "¿Tu colegio necesita esto? *Escríbenos*", "dur": 2.0, "clip": "aurea/cta", "from": 0.5 },
+  "music": null,
+  "variants": { "tiktok": { "trim": { "s2": 2.2, "s4": 2.4 } } },
+  "copy": {
+    "cover": "Página web para *colegio*",
+    "instagram": "Escribe aquí 125-150 caracteres: la necesidad y lo que resuelve la demo, sin precios ni plazos, con una invitación suave a escribir.",
+    "instagramHashtags": ["#colegioshonduras", "#educacionhonduras", "#paginaweb"],
+    "tiktok": "Página web para colegio: la palabra clave va dentro de los primeros 80 caracteres y el texto completo mide 100-150 caracteres.",
+    "tiktokHashtags": ["#paginawebparacolegio", "#colegioshonduras", "#educacionhonduras"],
+    "pinned": "Comentario fijado con palabras clave secundarias.",
+    "time": "Martes o jueves, 7:00-9:00 a. m. hora de Honduras"
+  }
+}

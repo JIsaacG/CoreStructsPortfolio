@@ -1,0 +1,44 @@
+{
+  "_formato": "C · Antes / después (10-20 s). Escena type wipe: dentro del teléfono arranca un sitio genérico lento (creado por la plantilla, sin marcas reales; textos en before) y en wipeAt (segundos desde el inicio de la escena) un barrido revela la demo. Los rótulos Antes / Después salen solos (labelBefore / labelAfter para cambiarlos).",
+  "id": "RXX",
+  "title": "Tus procesos viven en Excel y correos",
+  "format": "C",
+  "platform": "TikTok (principal) + Instagram Reels",
+  "keyword": "automatización de procesos",
+  "hook": {
+    "text": "Tus procesos viven en *Excel* y correos",
+    "dur": 1.8,
+    "variants": [
+      "Tus procesos viven en *Excel* y correos",
+      "¿Quién aprobó esto y *cuándo*?",
+      "Así se ve un proceso *ordenado*"
+    ]
+  },
+  "rehook": "Mira la diferencia",
+  "scenes": [
+    {
+      "id": "w1",
+      "type": "wipe",
+      "dur": 6.0,
+      "wipeAt": 2.6,
+      "clip": "flujo/hero",
+      "from": 0,
+      "before": { "title": "Solicitudes (versión final 3)", "popTitle": "Aviso", "popText": "Revise su correo para ver el estado de su solicitud." },
+      "caption": "De correos y hojas sueltas a un flujo con estados",
+      "zoom": [1, 1.05]
+    },
+    { "id": "s2", "type": "demo", "dur": 3.6, "clip": "flujo/recorrido", "from": 0.5, "label": "Cada solicitud con su estado", "caption": "Cada paso tiene responsable y queda registrado", "zoom": [1, 1.08] }
+  ],
+  "cta": { "text": "¿Tu equipo necesita esto? *Escríbenos*", "dur": 2.0, "clip": "flujo/recorrido", "from": 5.0 },
+  "music": null,
+  "variants": { "tiktok": { "trim": { "w1": 5.2 } } },
+  "copy": {
+    "cover": "Automatización de *procesos*",
+    "instagram": "Escribe aquí 125-150 caracteres: la necesidad y lo que resuelve la demo, sin precios ni plazos, con una invitación suave a escribir.",
+    "instagramHashtags": ["#automatizacion", "#empresashonduras", "#procesos"],
+    "tiktok": "Automatización de procesos: la palabra clave va dentro de los primeros 80 caracteres y el texto completo mide 100-150 caracteres.",
+    "tiktokHashtags": ["#automatizaciondeprocesos", "#empresashonduras", "#pymeshonduras"],
+    "pinned": "Comentario fijado con palabras clave secundarias.",
+    "time": "Miércoles, 5:00-7:00 p. m. hora de Honduras"
+  }
+}

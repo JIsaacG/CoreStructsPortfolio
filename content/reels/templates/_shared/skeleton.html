@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>{{TITLE}}</title>
+    <!-- Plantilla {{FORMAT_NAME}} · CoreStruct Reels. Archivo GENERADO por
+         scripts/build.mjs desde reel.json: edita reel.json, no este HTML. -->
+    <script src="assets/gsap.min.js"></script>
+    <style>
+{{FONTS_CSS}}
+    </style>
+    <link rel="stylesheet" href="assets/reel.css" />
+    <style>
+/* ---- Ajustes propios del formato {{FORMAT}} ---- */
+{{FORMAT_CSS}}
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      class="f-{{FORMAT}} v-{{VARIANT}}"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="{{DURATION}}"
+      data-fps="30"
+      data-width="1080"
+      data-height="1920"
+    >
+      <div id="bg-glow" class="layer"></div>
+      <div class="layer"><canvas id="stars"></canvas></div>
+
+      <div id="face" class="layer">
+{{MEDIA_FACE}}
+        <div id="face-shade" class="layer"></div>
+      </div>
+
+      <div id="phone-wrap" data-layout-allow-overflow>
+        <div id="phone">
+          <div id="screen">
+            <div id="screen-zoom">
+{{MEDIA_SCREEN}}
+            </div>
+            <div id="screen-shine" class="layer"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="stage"></div>
+      <div id="scrim" class="layer"></div>
+      <div id="hook"></div>
+      <div id="cta"></div>
+      <div id="label"></div>
+      <div id="captions"></div>
+      <div id="progress"><span id="progress-fill"></span></div>
+
+      <div id="endcard">
+        <div id="endcard-inner">
+          <img id="endcard-logo" src="assets/brand/LOGO_HORIZONTAL_BLANCO.png" width="600" height="232" alt="CoreStruct" />
+          <span class="ec-rule ec-anim"></span>
+          <span id="ec-wa" class="ec-line ec-line--wa ec-anim"></span>
+          <span id="ec-url" class="ec-line ec-anim"></span>
+          <span id="ec-handle" class="ec-line ec-line--muted ec-anim"></span>
+        </div>
+      </div>
+{{AUDIO}}
+    </div>
+    <script type="application/json" id="reel-data">{{DATA}}</script>
+    <script src="assets/reel.js"></script>
+    <script>
+      const tl = window.CoreStructReel.build();
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

@@ -28,3 +28,11 @@ content/reels/raw/
 content/reels/tmp/
 content/reels/**/*.webm
 content/reels/**/*.wav
+# Proyectos de video: assets/ (clips grabados, fuentes, GSAP, logo) lo regenera
+# `npm run build`; capturas y renders de HyperFrames son intermedios.
+# Solo se suben reel.json, index.html y los MP4 finales de out/<ID>/.
+content/reels/videos/*/assets/
+content/reels/videos/*/snapshots/
+content/reels/videos/*/renders/
+content/reels/videos/*/.thumbnails/
+content/reels/node_modules/

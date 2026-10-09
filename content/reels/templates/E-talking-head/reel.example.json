@@ -1,0 +1,36 @@
+{
+  "_formato": "E · Talking head + B-roll (20-40 s). Con clips de cara a cámara en content/reels/raw/ (3-5 s cada uno), agrega escenas { \"type\": \"face\", \"clip\": \"raw:cara-01.mp4\", \"caption\": \"…\" }. Sin clips propios, esta versión faceless usa texto cinético y B-roll de las demos y del portafolio.",
+  "id": "RXX",
+  "title": "No vendemos plantillas",
+  "format": "E",
+  "platform": "Instagram Reels + TikTok",
+  "keyword": "desarrollo web Tegucigalpa",
+  "hook": {
+    "text": "No vendemos *plantillas*",
+    "dur": 1.6,
+    "variants": [
+      "No vendemos *plantillas*",
+      "No necesitas *WordPress*",
+      "Tu operación no cabe en una *plantilla*"
+    ]
+  },
+  "rehook": "Cada sistema se construye sobre cómo trabajas",
+  "scenes": [
+    { "id": "t1", "type": "text", "dur": 3.4, "lines": ["Cada proyecto empieza por *entender* tu operación"] },
+    { "id": "b1", "type": "demo", "dur": 3.0, "clip": "rumbo/hero", "from": 0.3, "label": "Sistemas empresariales", "caption": "Pantallas con las palabras de tu equipo", "zoom": [1, 1.06] },
+    { "id": "b2", "type": "demo", "dur": 3.0, "clip": "cede/hero", "from": 0.3, "label": "Portales institucionales", "caption": "Portales hechos para su público", "zoom": [1, 1.06] },
+    { "id": "b3", "type": "demo", "dur": 3.0, "clip": "verbena/hero", "from": 0.3, "label": "Menús digitales", "caption": "Y menús que se piden solos", "zoom": [1, 1.06] }
+  ],
+  "cta": { "text": "¿Tienes un proceso que no encaja? *Escríbenos*", "dur": 2.2 },
+  "music": null,
+  "variants": { "tiktok": { "skip": ["b3"] } },
+  "copy": {
+    "cover": "Desarrollo web *Tegucigalpa*",
+    "instagram": "Escribe aquí 125-150 caracteres: la necesidad y lo que resuelve la demo, sin precios ni plazos, con una invitación suave a escribir.",
+    "instagramHashtags": ["#desarrolloweb", "#tegucigalpa", "#softwareamedida"],
+    "tiktok": "Desarrollo web Tegucigalpa: la palabra clave va dentro de los primeros 80 caracteres y el texto completo mide 100-150 caracteres.",
+    "tiktokHashtags": ["#desarrollowebtegucigalpa", "#softwareamedida", "#hondurastech"],
+    "pinned": "Comentario fijado con palabras clave secundarias.",
+    "time": "Viernes, 11:00 a. m.-1:00 p. m. hora de Honduras"
+  }
+}

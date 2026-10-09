@@ -1,0 +1,36 @@
+{
+  "_formato": "D · Caso real (30-45 s). La necesidad del cliente en texto, el alcance de lo construido en tarjetas (type cards: items) y, solo con permiso escrito del cliente, tomas de su plataforma (type demo con clip raw:<archivo>.mp4 puesto en content/reels/raw/). Sin cifras ni métricas: todo sale de src/data/alliances.js.",
+  "id": "RXX",
+  "title": "Una plataforma educativa que va más allá de una página",
+  "format": "D",
+  "platform": "Instagram Reels (principal) + TikTok",
+  "keyword": "plataforma educativa",
+  "hook": {
+    "text": "Admisiones sin *papeles* ni filas",
+    "dur": 1.8,
+    "variants": [
+      "Admisiones sin *papeles* ni filas",
+      "Más que una *página web*",
+      "Así trabaja un colegio que se *ordenó*"
+    ]
+  },
+  "rehook": "Esto construimos para una institución educativa real",
+  "scenes": [
+    { "id": "n1", "type": "text", "dur": 4.0, "kicker": "Caso real · Virginia Sapp", "lines": ["Necesitaban más que una *página web*"] },
+    { "id": "n2", "type": "text", "dur": 4.0, "lines": ["Información, admisiones y recursos en *un solo lugar*"] },
+    { "id": "c1", "type": "cards", "dur": 6.0, "kicker": "Lo que construimos", "lines": ["Una plataforma educativa digital"], "items": ["Presencia institucional", "Admisiones", "Contenidos y recursos", "Herramientas interactivas"] },
+    { "id": "n3", "type": "text", "dur": 4.0, "lines": ["Moderna, *administrable* y lista para crecer"] }
+  ],
+  "cta": { "text": "¿Tu institución necesita esto? *Escríbenos*", "dur": 2.4 },
+  "music": null,
+  "variants": { "tiktok": { "trim": { "n2": 3.2 } } },
+  "copy": {
+    "cover": "Plataforma *educativa* real",
+    "instagram": "Escribe aquí 125-150 caracteres: la necesidad y lo que resuelve la plataforma, sin precios ni plazos, con una invitación suave a escribir.",
+    "instagramHashtags": ["#educacionhonduras", "#plataformaeducativa", "#colegioshonduras"],
+    "tiktok": "Plataforma educativa: la palabra clave va dentro de los primeros 80 caracteres y el texto completo mide entre 100 y 150 caracteres.",
+    "tiktokHashtags": ["#plataformaeducativa", "#educacionhonduras", "#colegioshonduras"],
+    "pinned": "Comentario fijado con palabras clave secundarias.",
+    "time": "Jueves, 7:00-9:00 a. m. hora de Honduras"
+  }
+}

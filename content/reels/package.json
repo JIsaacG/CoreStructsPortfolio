@@ -3,7 +3,22 @@
   "private": true,
   "type": "module",
   "description": "Máquina de Reels y TikToks de CoreStruct: grabación de demos, composición HyperFrames y exportación.",
+  "scripts": {
+    "setup": "npm install && npx playwright install chromium",
+    "record": "node scripts/record-demos.mjs",
+    "new": "node scripts/new-reel.mjs",
+    "build": "node scripts/build.mjs",
+    "preview": "node scripts/preview.mjs",
+    "produce": "node scripts/produce.mjs",
+    "qa": "node scripts/qa.mjs",
+    "frames": "node scripts/frames.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
   "devDependencies": {
+    "gsap": "3.14.2",
+    "hyperframes": "0.8.143",
     "playwright": "1.64.0"
   }
 }
