@@ -8,7 +8,14 @@ Cuentas donde se publica: Instagram @corestructhn (https://www.instagram.com/cor
 - src/data/servicios.js: problemas del cliente y FAQ reales (las preguntas que llegan por WhatsApp). Esta es tu mina principal de necesidades y hooks.
 - src/data/alliances.js: caso real Virginia Sapp (plataforma educativa).
 - Demos navegables (sirve el sitio con `npm run serve` en http://localhost:4173/): demos/aurelis (corporativo), demos/cede (gobierno/observatorio), demos/rumbo (sistema empresarial), demos/landing (landings), demos/aurea (portal educativo), demos/verbena.html (restaurante/menú), demos/flujo (automatización), index.html (portafolio).
-- Marca: assets/brand (isotipo.svg, logo-horizontal-white.png, wordmark-white.png), assets/fonts (Manrope, IBM Plex Sans, Source Serif 4, Quantify), tokens en src/styles: fondo #080b12, superficie #0d1220, azul marca #253880, cian #3898d4, más los acentos de cada demo.
+- Marca: assets/brand del repo (isotipo.svg, logo-horizontal-white.png, wordmark-white.png) + `content/reels/brand/` con los archivos oficiales de Drive (carpetas FORMATOS_PNG, MANUAL y FAVICON): LOGO_PRINCIPAL_AZUL, LOGO_HORIZONTAL_AZUL, ISOTIPO_PRINCIPAL, ISOTIPO_AZUL, ISOTIPO_BLANCO, ISOTIPO_NEGRO, LOGO_EDITABLE.pdf y CORE_STRUC_MANUAL.pdf. Fondos de video: #080b12 y superficie #0d1220 (los del sitio).
+
+# MANUAL DE MARCA (obligatorio, viene de CORE_STRUC_MANUAL.pdf)
+- Colores corporativos: Azul Marino #253880 (solidez, confianza, profesionalismo) y Azul Cielo / Cyan #3898D4 (innovación, claridad, cercanía). El marino da peso y fondo; el cyan es el acento y lo que resalta. Los acentos de color de cada demo solo aparecen dentro de la grabación de esa demo.
+- Tipografía: Manrope (Bold, Medium, Regular) para TODO el texto del video: hooks, subtítulos, títulos, datos y tarjeta final.
+- Quantify es exclusiva del logotipo. PROHIBIDO usarla en titulares, subtítulos o cualquier texto; el nombre CoreStruct solo aparece como imagen del logo, nunca escrito en Quantify.
+- No uses Source Serif 4 ni IBM Plex Sans en los videos aunque existan en el sitio.
+- Logo: sobre fondo oscuro usa las versiones blancas (ISOTIPO_BLANCO, logo-horizontal-white); sobre fondo claro, las azules; ISOTIPO_NEGRO solo sobre fondos muy claros si el azul no contrasta. Nunca deformes, recolores, rotes ni agregues efectos al logo; respeta su área de protección.
 Regla: todo lo que diga el video debe salir de estos archivos.
 
 # ENFOQUE ÚNICO: NECESIDAD → SOLUCIÓN
@@ -26,7 +33,7 @@ Cada video muestra una sola necesidad real de un tipo de cliente y cómo uno de 
 
 # FASE 1 — SISTEMA REUTILIZABLE (solo la primera vez)
 Crea la carpeta `content/reels/` (fuera de lo que se publica en el sitio; agrega los MP4 a .gitignore) con:
-- `brand-kit.html`: tipografías, colores, logo, lower-thirds, tarjeta final con WhatsApp y URL, barra de progreso, estilos de subtítulo.
+- `brand-kit.html`: aplica el MANUAL DE MARCA; colores, Manrope, versiones de logo, lower-thirds, tarjeta final con WhatsApp y URL, barra de progreso, estilos de subtítulo.
 - `templates/`: 5 plantillas HyperFrames reutilizables (ver FORMATOS).
 - `scripts/record-demos.mjs`: graba cada demo en vertical y guarda clips de 3-8 s por sección (hero, formulario, buscador, gráficas, menú móvil).
 - `calendar.md`: calendario de 4 semanas.
@@ -73,7 +80,7 @@ E) Talking head + B-roll (20-40 s): usa mis clips de cara a cámara si existen e
 - Barra de progreso fina arriba de la zona segura inferior.
 - Corte o cambio visual cada 1.5-3 s; zoom-ins suaves (1.0→1.08) en clips estáticos.
 - Música: no incluyas música con derechos dentro del MP4 de TikTok/IG. Deja la pista de voz limpia y una versión con música libre de regalías baja (-20 dB); yo agrego el sonido en tendencia desde la app.
-- Tarjeta final 1.5 s: isotipo, "Escríbenos al +504 9230-0861", corestructhn.com y @corestructhn.
+- Tarjeta final 1.5 s: logo horizontal en blanco, "Escríbenos al +504 9230-0861", corestructhn.com y @corestructhn.
 - Sin marcas de agua de otras plataformas. Nada de logos ni marcas de terceros en las demos.
 - Exporta también la portada 1080x1920 en PNG.
 
