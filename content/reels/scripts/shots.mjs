@@ -37,7 +37,7 @@ export const ALWAYS_HIDE = [".au-badge", ".cd-badge", ".dm-badge", ".fx-badge", 
  * grabación (el elemento más pequeño que los contiene: enlace, botón, ítem o
  * párrafo), porque los videos no muestran ni mencionan precios.
  */
-export const HIDE_TEXT = String.raw`\b(costos?|aranceles?|cuesta|precios?|tarifas?|descuentos?|promoci[oó]n|cotiza|calculadora de matr[ií]cula|plazos?|d[ií]as h[aá]biles|L\.\s?\d|\$\s?\d|\d+\s?%)`;
+export const HIDE_TEXT = String.raw`\b(costos?|aranceles?|cuesta|precios?|tarifas?|descuentos?|promoci[oó]n|cotiza|calculadora de matr[ií]cula|plazos?|d[ií]as h[aá]biles|desde L|\bL\.?\s?\d|\$\s?\d|\d+\s?%|m[aá]s de \d)`;
 
 export const demos = {
   /* ------------------------------------------------------------ AUREA */

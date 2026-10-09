@@ -169,6 +169,10 @@ window.CoreStructReel = { build: function () {
   function buildWipe(s) {
     var mock = el("div", "before-mock", zoom);
     mock.id = "bm-" + s.id;
+    // Es un sitio de mentira, feo a propósito (bajo contraste, aviso encima):
+    // se excluye de las auditorías de layout y contraste.
+    mock.setAttribute("data-layout-ignore", "");
+    mock.setAttribute("aria-hidden", "true");
     var top = el("div", "bm-top", mock); el("div", "bm-logo", top); el("div", "bm-nav", top);
     var banner = el("div", "bm-banner", mock);
     var spin = el("div", "bm-spinner", banner);

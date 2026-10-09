@@ -19,25 +19,63 @@
     {
       "id": "w1",
       "type": "wipe",
-      "dur": 6.0,
-      "wipeAt": 2.6,
-      "clip": "flujo/hero",
+      "dur": 6.6,
+      "wipeAt": 3.4,
+      "clip": "flujo/recorrido",
       "from": 0,
-      "before": { "title": "Solicitudes (versión final 3)", "popTitle": "Aviso", "popText": "Revise su correo para ver el estado de su solicitud." },
+      "before": {
+        "title": "Solicitudes (versión final 3)",
+        "popTitle": "Aviso",
+        "popText": "Revise su correo para ver el estado de su solicitud."
+      },
       "caption": "De correos y hojas sueltas a un flujo con estados",
-      "zoom": [1, 1.05]
+      "zoom": [
+        1,
+        1.05
+      ]
     },
-    { "id": "s2", "type": "demo", "dur": 3.6, "clip": "flujo/recorrido", "from": 0.5, "label": "Cada solicitud con su estado", "caption": "Cada paso tiene responsable y queda registrado", "zoom": [1, 1.08] }
+    {
+      "id": "s2",
+      "type": "demo",
+      "dur": 3.6,
+      "clip": "flujo/hero",
+      "from": 0.5,
+      "label": "Cada solicitud con su estado",
+      "caption": "Cada paso tiene responsable y queda registrado",
+      "zoom": [
+        1,
+        1.08
+      ]
+    }
   ],
-  "cta": { "text": "¿Tu equipo necesita esto? *Escríbenos*", "dur": 2.0, "clip": "flujo/recorrido", "from": 5.0 },
+  "cta": {
+    "text": "¿Tu equipo necesita esto? *Escríbenos*",
+    "dur": 2.0,
+    "clip": "flujo/recorrido",
+    "from": 5.0
+  },
   "music": null,
-  "variants": { "tiktok": { "trim": { "w1": 5.2 } } },
+  "variants": {
+    "tiktok": {
+      "trim": {
+        "w1": 6.0
+      }
+    }
+  },
   "copy": {
     "cover": "Automatización de *procesos*",
     "instagram": "Escribe aquí 125-150 caracteres: la necesidad y lo que resuelve la demo, sin precios ni plazos, con una invitación suave a escribir.",
-    "instagramHashtags": ["#automatizacion", "#empresashonduras", "#procesos"],
+    "instagramHashtags": [
+      "#automatizacion",
+      "#empresashonduras",
+      "#procesos"
+    ],
     "tiktok": "Automatización de procesos: la palabra clave va dentro de los primeros 80 caracteres y el texto completo mide 100-150 caracteres.",
-    "tiktokHashtags": ["#automatizaciondeprocesos", "#empresashonduras", "#pymeshonduras"],
+    "tiktokHashtags": [
+      "#automatizaciondeprocesos",
+      "#empresashonduras",
+      "#pymeshonduras"
+    ],
     "pinned": "Comentario fijado con palabras clave secundarias.",
     "time": "Miércoles, 5:00-7:00 p. m. hora de Honduras"
   }

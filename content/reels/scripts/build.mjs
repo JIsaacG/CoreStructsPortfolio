@@ -125,7 +125,9 @@ export function plan(reel, variant = "ig") {
 
   // Rótulos: la palabra clave entra en el segundo 0.15 (antes del 3, regla de
   // TikTok) y luego cada escena muestra el suyo.
-  const keyEnd = r2(Math.max(hook.end + 1.4, 3.2));
+  // Si el video abre con un antes/después, la palabra clave cede el chip
+  // antes para que se lean "Antes" y "Después".
+  const keyEnd = scenes[0]?.type === "wipe" ? r2(hook.end + 0.6) : r2(Math.max(hook.end + 1.4, 3.2));
   const labels = [];
   if (reel.keyword) labels.push({ text: reel.keyword, start: 0.15, end: variant === "cover" ? duration : keyEnd, key: true });
   if (variant !== "cover") {

@@ -41,6 +41,7 @@ Sin `--record` usa los clips ya grabados en `raw/clips/`. El sitio tiene que est
 | `npm run produce -- <ID> [--record]` | Todo el flujo: build → check → render → FFmpeg → portada → copy → QA → INDEX |
 | `npm run qa -- <ID>` | Repite solo el control de calidad |
 | `npm run frames -- <video.mp4> [t1,t2,…]` | Hoja de fotogramas de cualquier video |
+| `npm run test:templates` | Arma el ejemplo de cada plantilla, corre `hyperframes check` y saca fotogramas a `tmp/plantillas/` |
 
 ## Cómo está armado
 

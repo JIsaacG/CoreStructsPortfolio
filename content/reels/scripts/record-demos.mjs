@@ -126,10 +126,10 @@ async function recordShot(browser, url, key, demo, shot) {
   await page.addInitScript((source) => {
     const re = new RegExp(source, "i");
     const sweep = () => {
-      for (const node of document.querySelectorAll("a, button, li, p, dt, dd, h3, h4, tr, figcaption, small")) {
+      for (const node of document.querySelectorAll("a, button, li, p, dt, dd, h3, h4, tr, td, figcaption, small, label, span, strong, b, div")) {
         if (node.dataset.reelsHidden || !re.test(node.textContent || "")) continue;
         // El más pequeño: si un hijo de la lista también coincide, se oculta el hijo.
-        const inner = node.querySelectorAll("a, button, li, p, dt, dd, h3, h4, tr, figcaption, small");
+        const inner = node.querySelectorAll("a, button, li, p, dt, dd, h3, h4, tr, td, figcaption, small, label, span, strong, b, div");
         if ([...inner].some((n) => re.test(n.textContent || ""))) continue;
         node.dataset.reelsHidden = "1";
         node.style.setProperty("display", "none", "important");

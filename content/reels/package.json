@@ -11,7 +11,8 @@
     "preview": "node scripts/preview.mjs",
     "produce": "node scripts/produce.mjs",
     "qa": "node scripts/qa.mjs",
-    "frames": "node scripts/frames.mjs"
+    "frames": "node scripts/frames.mjs",
+    "test:templates": "node scripts/test-templates.mjs"
   },
   "engines": {
     "node": ">=22"
