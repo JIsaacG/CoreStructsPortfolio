@@ -49,10 +49,19 @@ function captionChunks(text, start, end, explicit) {
     ? explicit.map((c) => c.split(/\s+/).filter(Boolean))
     : (() => {
         const words = text.split(/\s+/).filter(Boolean);
+        // Bloques de hasta 3 palabras y ~20 caracteres: a 72 px caben en una línea.
         const out = [];
-        for (let i = 0; i < words.length; i += 3) out.push(words.slice(i, i + 3));
+        let cur = [];
+        for (const w of words) {
+          const len = [...cur, w].join(" ").length;
+          if (cur.length && (cur.length >= 3 || len > 20)) { out.push(cur); cur = []; }
+          cur.push(w);
+        }
+        if (cur.length) out.push(cur);
         // Un bloque final de una sola palabra se ve cortado: se une al anterior.
-        if (out.length > 1 && out[out.length - 1].length === 1) out[out.length - 2].push(out.pop()[0]);
+        if (out.length > 1 && out[out.length - 1].length === 1 && [...out[out.length - 2], out[out.length - 1][0]].join(" ").length <= 22) {
+          out[out.length - 2].push(out.pop()[0]);
+        }
         return out;
       })();
   const weight = (w) => w.replace(/[^\p{L}\p{N}]/gu, "").length + 3;

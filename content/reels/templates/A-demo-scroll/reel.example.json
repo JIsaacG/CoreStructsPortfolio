@@ -19,7 +19,7 @@
     { "id": "s1", "type": "demo", "dur": 3.4, "clip": "aurea/hero", "from": 1.4, "label": "Portal educativo", "caption": "Así lo vive una familia", "zoom": [1, 1.05] },
     { "id": "s2", "type": "demo", "dur": 2.8, "clip": "aurea/accesos", "from": 0.4, "label": "Accesos rápidos", "caption": "Lo que buscan, a un toque", "zoom": [1.04, 1.1], "origin": "50% 20%" },
     { "id": "s3", "type": "demo", "dur": 3.4, "clip": "aurea/buscador", "from": 0.6, "label": "Buscador académico", "caption": "Escriben “sistemas” y el portal responde", "zoom": [1.02, 1.14], "origin": "50% 28%" },
-    { "id": "s4", "type": "demo", "dur": 3.0, "clip": "aurea/admisiones", "from": 1.0, "label": "Admisiones en línea", "caption": "Admisiones claras, paso a paso", "zoom": [1, 1.06] }
+    { "id": "s4", "type": "demo", "dur": 2.6, "clip": "aurea/admisiones", "from": 0.3, "label": "Admisiones en línea", "caption": "Admisiones claras, paso a paso", "zoom": [1, 1.06] }
   ],
   "cta": { "text": "¿Tu colegio necesita esto? *Escríbenos*", "dur": 2.0, "clip": "aurea/cta", "from": 0.5 },
   "music": null,

@@ -32,12 +32,12 @@
 export const ALWAYS_HIDE = [".au-badge", ".cd-badge", ".dm-badge", ".fx-badge", ".lp-badge"];
 
 /**
- * Textos que mencionan precios o costos. Las demos tienen enlaces como
+ * Textos que mencionan precios, costos o plazos. Las demos tienen enlaces como
  * "Costos y aranceles" o "Calculadora de matrícula": se ocultan en la
  * grabación (el elemento más pequeño que los contiene: enlace, botón, ítem o
  * párrafo), porque los videos no muestran ni mencionan precios.
  */
-export const HIDE_TEXT = String.raw`\b(costos?|aranceles?|cuesta|precios?|tarifas?|descuentos?|promoci[oó]n|cotiza|calculadora de matr[ií]cula|L\.\s?\d|\$\s?\d|\d+\s?%)`;
+export const HIDE_TEXT = String.raw`\b(costos?|aranceles?|cuesta|precios?|tarifas?|descuentos?|promoci[oó]n|cotiza|calculadora de matr[ií]cula|plazos?|d[ií]as h[aá]biles|L\.\s?\d|\$\s?\d|\d+\s?%)`;
 
 export const demos = {
   /* ------------------------------------------------------------ AUREA */
@@ -95,7 +95,7 @@ export const demos = {
         start: "#admisiones",
         offset: 0,
         preroll: 0.8,
-        steps: [{ at: 0.5, scroll: { to: "+1050", dur: 5.2, ease: "inOutSine" } }],
+        steps: [{ at: 0.5, scroll: { to: "+760", dur: 5.2, ease: "inOutSine" } }],
       },
       {
         name: "menu",

@@ -122,7 +122,11 @@ window.CoreStructReel = { build: function () {
     var first = P.scenes[0];
     if (first.phone) {
       // Movimiento desde el fotograma 0: el teléfono ya está entrando.
-      tl.fromTo(phoneWrap, { y: 240, scale: 0.9, opacity: 1 }, { y: 0, scale: 1, opacity: 1, duration: 1.2, ease: "power3.out" }, 0);
+      // Mientras dura el gancho el teléfono queda atenuado para que el texto se lea limpio.
+      // En la portada (variante cover) el teléfono queda de fondo, más tenue.
+      var dimmed = P.variant === "cover" ? 0.22 : P.hook ? 0.3 : 1;
+      tl.fromTo(phoneWrap, { y: 240, scale: 0.9, opacity: dimmed }, { y: 0, scale: 1, opacity: dimmed, duration: 1.2, ease: "power3.out" }, 0);
+      if (dimmed < 1 && P.variant !== "cover") tl.to(phoneWrap, { opacity: 1, duration: 0.35, ease: "power1.out" }, P.hook.end - 0.25);
     } else {
       tl.set(phoneWrap, { opacity: 0, y: 160 }, 0);
     }
@@ -233,8 +237,8 @@ window.CoreStructReel = { build: function () {
   if (P.hook) {
     var hookBig = el("div", "big", $("#hook"));
     var hw = writeWords(hookBig, P.hook.text);
-    tl.fromTo("#scrim", { opacity: 0.55 }, { opacity: 1, duration: 0.25, ease: "none" }, 0);
-    tl.fromTo(hw, { opacity: 0.25, y: 60, scale: 0.86 }, { opacity: 1, y: 0, scale: 1, duration: 0.32, ease: "back.out(1.7)", stagger: Math.min(0.1, 0.9 / hw.length) }, 0);
+    tl.fromTo("#scrim", { opacity: 0.85 }, { opacity: 1, duration: 0.2, ease: "none" }, 0);
+    tl.fromTo(hw, { opacity: 0.6, y: 60, scale: 0.86 }, { opacity: 1, y: 0, scale: 1, duration: 0.32, ease: "back.out(1.7)", stagger: Math.min(0.1, 0.9 / hw.length) }, 0);
     if (!P.hook.hold) {
       tl.to(hookBig, { opacity: 0, y: -50, duration: 0.25, ease: "power2.in" }, P.hook.end - 0.25);
       tl.to("#scrim", { opacity: 0, duration: 0.3, ease: "power1.in" }, P.hook.end - 0.25);
@@ -269,6 +273,7 @@ window.CoreStructReel = { build: function () {
   }
 
   /* --------------------------------------------- Barra de progreso */
+  if (P.variant === "cover") tl.set("#progress", { opacity: 0 }, 0);
   tl.fromTo("#progress-fill", { scaleX: 0 }, { scaleX: 1, duration: P.endcard.start, ease: "none" }, 0);
 
   /* --------------------------------------------- Tarjeta final 1.5 s */

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>R00 · Si diriges un colegio, mira esto</title>
+    <!-- Plantilla A-demo-scroll · CoreStruct Reels. Archivo GENERADO por
+         scripts/build.mjs desde reel.json: edita reel.json, no este HTML. -->
+    <script src="assets/gsap.min.js"></script>
+    <style>
+@font-face {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: block;
+  src: url("assets/fonts/manrope-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: block;
+  src: url("assets/fonts/manrope-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0,
+    U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+    </style>
+    <link rel="stylesheet" href="assets/reel.css" />
+    <style>
+/* ---- Ajustes propios del formato A ---- */
+/* A · Demo scroll (15-25 s): la demo dentro del teléfono flotante sobre el
+   fondo #080b12 con estrellas, zooms al detalle y subtítulos.
+   Es el diseño base: no necesita ajustes. */
+
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      class="f-A v-ig"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="21.3"
+      data-fps="30"
+      data-width="1080"
+      data-height="1920"
+    >
+      <div id="bg-glow" class="layer"></div>
+      <div class="layer"><canvas id="stars"></canvas></div>
+
+      <div id="face" class="layer">
+
+        <div id="face-shade" class="layer"></div>
+      </div>
+
+      <div id="phone-wrap" data-layout-allow-overflow>
+        <div id="phone">
+          <div id="screen">
+            <div id="screen-zoom">
+              <video id="v-s1" class="scr" src="assets/clips/aurea-hero.mp4" data-start="0" data-duration="3.4" data-media-start="1.4" data-track-index="1" muted playsinline></video>
+              <video id="v-s2" class="scr" src="assets/clips/aurea-accesos.mp4" data-start="3.4" data-duration="2.8" data-media-start="0.4" data-track-index="1" muted playsinline></video>
+              <video id="v-s3" class="scr" src="assets/clips/aurea-soy.mp4" data-start="6.2" data-duration="3" data-media-start="0.5" data-track-index="1" muted playsinline></video>
+              <video id="v-s4" class="scr" src="assets/clips/aurea-buscador.mp4" data-start="9.2" data-duration="3.4" data-media-start="0.6" data-track-index="1" muted playsinline></video>
+              <video id="v-s5" class="scr" src="assets/clips/aurea-admisiones.mp4" data-start="12.6" data-duration="2.6" data-media-start="0.3" data-track-index="1" muted playsinline></video>
+              <video id="v-s6" class="scr" src="assets/clips/aurea-menu.mp4" data-start="15.2" data-duration="2.6" data-media-start="0.4" data-track-index="1" muted playsinline></video>
+              <video id="v-cta" class="scr" src="assets/clips/aurea-cta.mp4" data-start="17.8" data-duration="2" data-media-start="0.5" data-track-index="1" muted playsinline></video>
+            </div>
+            <div id="screen-shine" class="layer"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="stage"></div>
+      <div id="scrim" class="layer"></div>
+      <div id="hook"></div>
+      <div id="cta"></div>
+      <div id="label"></div>
+      <div id="captions"></div>
+      <div id="progress"><span id="progress-fill"></span></div>
+
+      <div id="endcard">
+        <div id="endcard-inner">
+          <img id="endcard-logo" src="assets/brand/LOGO_HORIZONTAL_BLANCO.png" width="600" height="232" alt="CoreStruct" />
+          <span class="ec-rule ec-anim"></span>
+          <span id="ec-wa" class="ec-line ec-line--wa ec-anim"></span>
+          <span id="ec-url" class="ec-line ec-anim"></span>
+          <span id="ec-handle" class="ec-line ec-line--muted ec-anim"></span>
+        </div>
+      </div>
+
+    </div>
+    <script type="application/json" id="reel-data">{"id":"R00","format":"A","variant":"ig","duration":21.3,"seed":2026,"hook":{"text":"Si diriges un *colegio*, mira esto","start":0,"end":1.8,"hold":false},"scenes":[{"id":"s1","type":"demo","start":0,"end":3.4,"phone":true,"zoom":[1,1.05]},{"id":"s2","type":"demo","start":3.4,"end":6.2,"phone":true,"zoom":[1.04,1.1],"origin":"50% 20%"},{"id":"s3","type":"demo","start":6.2,"end":9.2,"phone":true,"zoom":[1,1.06]},{"id":"s4","type":"demo","start":9.2,"end":12.6,"phone":true,"zoom":[1.02,1.14],"origin":"50% 28%"},{"id":"s5","type":"demo","start":12.6,"end":15.2,"phone":true,"zoom":[1,1.06]},{"id":"s6","type":"demo","start":15.2,"end":17.8,"phone":true,"zoom":[1,1.05],"origin":"50% 10%"},{"id":"cta","type":"cta","start":17.8,"end":19.8,"phone":true}],"labels":[{"text":"página web para colegio","start":0.15,"end":3.2,"key":true},{"text":"Accesos rápidos","start":3.45,"end":6.2},{"text":"Una entrada por público","start":6.25,"end":9.2},{"text":"Buscador académico","start":9.25,"end":12.6},{"text":"Admisiones en línea","start":12.65,"end":15.2},{"text":"Menú pensado para el teléfono","start":15.25,"end":17.8}],"captions":[{"start":1.9,"end":2.662,"words":[{"text":"Así","start":1.9,"end":2.154},{"text":"lo","start":2.154,"end":2.366},{"text":"vive","start":2.366,"end":2.662}]},{"start":2.662,"end":3.34,"words":[{"text":"una","start":2.662,"end":2.916},{"text":"familia","start":2.916,"end":3.34}]},{"start":3.45,"end":4.904,"words":[{"text":"Lo","start":3.45,"end":3.814},{"text":"que","start":3.814,"end":4.25},{"text":"buscan,","start":4.25,"end":4.904}]},{"start":4.904,"end":6.14,"words":[{"text":"a","start":4.904,"end":5.195},{"text":"un","start":5.195,"end":5.558},{"text":"toque","start":5.558,"end":6.14}]},{"start":6.25,"end":6.739,"words":[{"text":"Familias,","start":6.25,"end":6.739}]},{"start":6.739,"end":7.539,"words":[{"text":"estudiantes","start":6.739,"end":7.362},{"text":"y","start":7.362,"end":7.539}]},{"start":7.539,"end":8.606,"words":[{"text":"docentes","start":7.539,"end":8.028},{"text":"encuentran","start":8.028,"end":8.606}]},{"start":8.606,"end":9.14,"words":[{"text":"lo","start":8.606,"end":8.829},{"text":"suyo","start":8.829,"end":9.14}]},{"start":9.25,"end":10.669,"words":[{"text":"Escriben","start":9.25,"end":9.96},{"text":"“sistemas”","start":9.96,"end":10.669}]},{"start":10.669,"end":12.54,"words":[{"text":"y","start":10.669,"end":10.927},{"text":"el","start":10.927,"end":11.25},{"text":"portal","start":11.25,"end":11.83},{"text":"responde","start":11.83,"end":12.54}]},{"start":12.65,"end":13.664,"words":[{"text":"Admisiones","start":12.65,"end":13.249},{"text":"claras,","start":13.249,"end":13.664}]},{"start":13.664,"end":14.494,"words":[{"text":"paso","start":13.664,"end":13.987},{"text":"a","start":13.987,"end":14.172},{"text":"paso,","start":14.172,"end":14.494}]},{"start":14.494,"end":15.14,"words":[{"text":"sin","start":14.494,"end":14.771},{"text":"filas","start":14.771,"end":15.14}]},{"start":15.25,"end":16.728,"words":[{"text":"Todo","start":15.25,"end":15.795},{"text":"cabe","start":15.795,"end":16.339},{"text":"en","start":16.339,"end":16.728}]},{"start":16.728,"end":17.74,"words":[{"text":"una","start":16.728,"end":17.195},{"text":"mano","start":17.195,"end":17.74}]}],"cta":{"text":"¿Tu colegio necesita esto? *Escríbenos*","start":17.8,"end":19.8},"endcard":{"start":19.8,"whatsapp":"+504 9230-0861","url":"corestructhn.com","handle":"@corestructhn"}}</script>
+    <script src="assets/reel.js"></script>
+    <script>
+      const tl = window.CoreStructReel.build();
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

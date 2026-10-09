@@ -1,0 +1,103 @@
+{
+  "id": "R00",
+  "title": "Si diriges un colegio, mira esto",
+  "format": "A",
+  "platform": "Instagram Reels (principal) + TikTok",
+  "status": "video de prueba",
+  "keyword": "página web para colegio",
+  "hook": {
+    "text": "Si diriges un *colegio*, mira esto",
+    "dur": 1.8,
+    "variants": [
+      "Si diriges un *colegio*, mira esto",
+      "¿Las familias encuentran tu *colegio* en el teléfono?",
+      "Tu *colegio*, completo en el teléfono"
+    ]
+  },
+  "rehook": "Así lo vive una familia desde el teléfono",
+  "scenes": [
+    {
+      "id": "s1",
+      "type": "demo",
+      "dur": 3.4,
+      "clip": "aurea/hero",
+      "from": 1.4,
+      "label": "Portal educativo",
+      "caption": "Así lo vive una familia",
+      "zoom": [1, 1.05]
+    },
+    {
+      "id": "s2",
+      "type": "demo",
+      "dur": 2.8,
+      "clip": "aurea/accesos",
+      "from": 0.4,
+      "label": "Accesos rápidos",
+      "caption": "Lo que buscan, a un toque",
+      "zoom": [1.04, 1.1],
+      "origin": "50% 20%"
+    },
+    {
+      "id": "s3",
+      "type": "demo",
+      "dur": 3.0,
+      "clip": "aurea/soy",
+      "from": 0.5,
+      "label": "Una entrada por público",
+      "caption": "Familias, estudiantes y docentes encuentran lo suyo",
+      "zoom": [1, 1.06]
+    },
+    {
+      "id": "s4",
+      "type": "demo",
+      "dur": 3.4,
+      "clip": "aurea/buscador",
+      "from": 0.6,
+      "label": "Buscador académico",
+      "caption": "Escriben “sistemas” y el portal responde",
+      "zoom": [1.02, 1.14],
+      "origin": "50% 28%"
+    },
+    {
+      "id": "s5",
+      "type": "demo",
+      "dur": 2.6,
+      "clip": "aurea/admisiones",
+      "from": 0.3,
+      "label": "Admisiones en línea",
+      "caption": "Admisiones claras, paso a paso, sin filas",
+      "zoom": [1, 1.06]
+    },
+    {
+      "id": "s6",
+      "type": "demo",
+      "dur": 2.6,
+      "clip": "aurea/menu",
+      "from": 0.4,
+      "label": "Menú pensado para el teléfono",
+      "caption": "Todo cabe en una mano",
+      "zoom": [1, 1.05],
+      "origin": "50% 10%"
+    }
+  ],
+  "cta": {
+    "text": "¿Tu colegio necesita esto? *Escríbenos*",
+    "dur": 2.0,
+    "clip": "aurea/cta",
+    "from": 0.5
+  },
+  "music": null,
+  "variants": {
+    "tiktok": { "trim": { "s2": 2.2, "s5": 2.4, "s6": 2.2 } }
+  },
+  "copy": {
+    "cover": "Página web para *colegio*",
+    "instagram": "Si diriges un colegio, así puede verse su portal en el teléfono: admisiones claras, buscador de carreras y una entrada para cada familia.",
+    "instagramHashtags": ["#colegioshonduras", "#educacionhonduras", "#paginaweb", "#tegucigalpa", "#portaleducativo"],
+    "tiktok": "Página web para colegio: así encuentran admisiones, carreras y todo lo demás las familias desde el teléfono. ¿Tu colegio lo necesita?",
+    "tiktokHashtags": ["#paginawebparacolegio", "#colegioshonduras", "#educacionhonduras", "#diseñoweb"],
+    "pinned": "Portal educativo con admisiones en línea, buscador de carreras y accesos para familias, estudiantes y docentes. Diseño web para colegios en Honduras.",
+    "time": "Martes o jueves, 7:00-9:00 a. m. hora de Honduras (prueba de horario; ver calendar.md)",
+    "trial": "Publicar como Trial Reel la variante de gancho 2 en una segunda ronda."
+  }
+}
