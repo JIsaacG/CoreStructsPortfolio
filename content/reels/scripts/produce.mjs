@@ -129,6 +129,7 @@ const copyMd = [
   `# ${id} · ${reel.title}`,
   "",
   `- Formato: ${reel.format} · ${reel.platform || ""}`,
+  `- Pilar: ${reel.pillar || "sin pilar (agregar \"pillar\" en reel.json)"}`,
   `- Duración: Instagram ${igPlan.duration} s · TikTok ${ttPlan.duration} s`,
   `- Palabra clave: **${reel.keyword}** (en pantalla desde el segundo 0.15)`,
   `- Gancho usado: "${reel.hook.text.replace(/\*/g, "")}"`,
@@ -194,14 +195,15 @@ const header = [
   "| --- | --- | --- | --- | --- | --- | --- |",
 ].join("\n");
 let index = existsSync(indexFile) ? readFileSync(indexFile, "utf8") : header + "\n";
-const row = `| ${id} | ${reel.title} | ${reel.format} | IG ${igPlan.duration} s · TikTok ${ttPlan.duration} s | pendiente de subir | — | — |`;
+const fmt = reel.pillar ? `${reel.format} · ${reel.pillar}` : reel.format;
+const row = `| ${id} | ${reel.title} | ${fmt} | IG ${igPlan.duration} s · TikTok ${ttPlan.duration} s | pendiente de subir | — | — |`;
 const re = new RegExp(`^\\| ${id} \\|.*$`, "m");
 if (re.test(index)) {
   // Conserva estado, fecha y enlace si ya se había subido.
   index = index.replace(re, (old) => {
     const cells = old.split("|").map((x) => x.trim());
     const keep = cells[5] && cells[5] !== "pendiente de subir" ? cells.slice(5, 8) : ["pendiente de subir", "—", "—"];
-    return `| ${id} | ${reel.title} | ${reel.format} | IG ${igPlan.duration} s · TikTok ${ttPlan.duration} s | ${keep.join(" | ")} |`;
+    return `| ${id} | ${reel.title} | ${fmt} | IG ${igPlan.duration} s · TikTok ${ttPlan.duration} s | ${keep.join(" | ")} |`;
   });
 } else {
   index = index.trimEnd() + "\n" + row + "\n";

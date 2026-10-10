@@ -1,5 +1,7 @@
 # Máquina de Reels y TikToks · CoreStruct
 
+> **Para conseguir contratos:** cada video es de un pilar (Problema, Solución o Demostración) y sale de un problema típico de las empresas. Todo en [`pilares.md`](pilares.md).
+
 Produce Reels de Instagram y videos de TikTok de 1080x1920 a partir de las demos reales del sitio, con HyperFrames (video desde HTML + CSS + GSAP). El manual completo, las reglas y el enfoque necesidad → solución están en `PROMPT_REELS.md` (raíz de esta rama).
 
 > Todo esto vive en la rama `contenido/reels`. **Nunca en `main`**: el sitio se publica desde `main` y los videos acabarían en el hosting.
@@ -9,7 +11,8 @@ Produce Reels de Instagram y videos de TikTok de 1080x1920 a partir de las demos
 ```bash
 cd content/reels
 npm run setup                   # solo la primera vez: dependencias + Chromium de Playwright
-npm run new -- R01 A            # crea videos/R01/reel.json desde la plantilla A
+npm run new -- R16 problema      # crea videos/R16/reel.json con su pilar (problema · solucion · demostracion)
+                                # o con formato explícito: npm run new -- R16 B problema
 # … editar videos/R01/reel.json (gancho, palabra clave, escenas, copy) …
 npm run produce -- R01 --record # graba las demos que usa, renderiza, exporta y revisa
 ```
@@ -35,7 +38,7 @@ Sin `--record` usa los clips ya grabados en `raw/clips/`. El sitio tiene que est
 | --- | --- |
 | `npm run record -- --list` | Lista las demos y sus tomas |
 | `npm run record -- aurea` | Graba todas las tomas de una demo (`aurea:hero,soy` para tomas concretas) |
-| `npm run new -- <ID> <A-E>` | Crea `videos/<ID>/reel.json` desde una plantilla |
+| `npm run new -- <ID> [A-E] [pilar]` | Crea `videos/<ID>/reel.json` desde una plantilla, con su pilar (`problema`, `solucion`, `demostracion`); sin formato usa el del pilar (B, A, C) |
 | `npm run build -- <ID> [ig\|tiktok\|cover]` | Genera `videos/<ID>/index.html` (proyecto HyperFrames) |
 | `npm run preview -- <ID>` | Abre el video en HyperFrames Studio |
 | `npm run produce -- <ID> [--record]` | Todo el flujo: build → check → render → FFmpeg → portada → copy → QA → INDEX |
@@ -66,6 +69,7 @@ content/reels/
   out/<ID>/              entregables finales (sí se suben) + INDEX.md
   raw/                   grabaciones crudas y clips de cara a cámara (no se suben)
   tmp/                   temporales (no se suben)
+  pilares.md             los tres pilares (Problema, Solución, Demostración) + banco de problemas típicos
   hooks.md · research.md · calendar.md · guiones.md · metrics.csv
 ```
 
@@ -73,6 +77,7 @@ content/reels/
 
 Lo único que se edita a mano. Campos principales:
 
+- `pillar`: `problema`, `solucion` o `demostracion` (ver `pilares.md`). Sale en `<ID>_copy.md` y en `out/INDEX.md`, y se usa en `metrics.csv` para comparar qué pilar trae más mensajes.
 - `keyword`: palabra clave. Sale como chip blanco con lupa desde el segundo 0.15.
 - `hook.text`: gancho (máx. 7 palabras); `*palabra*` la pinta en cyan. `hook.variants`: las 3 variantes para A/B.
 - `scenes`: en orden; la duración total es la suma de escenas + cierre + 1.5 s de tarjeta final. Tipos:

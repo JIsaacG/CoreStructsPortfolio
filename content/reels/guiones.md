@@ -13,20 +13,20 @@ Reglas que cumplen los 12:
 - Cierre: tarjeta final de 1.5 s con el logo horizontal blanco, "Escríbenos al +504 9230-0861", corestructhn.com y @corestructhn.
 - Las líneas de producto de `projects.js` quedan cubiertas: sitios corporativos (R10), gubernamentales (R07), sistemas empresariales (R08), landing pages (R03, R11), portales educativos (R01), restaurantes y menús (R06), automatización (R05), soluciones a medida (R09, R12), contacto por WhatsApp (R02) y el caso real Virginia Sapp (R04).
 
-| ID | Semana | Formato | Hook elegido | Palabra clave | Duración |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 1 | A | Si diriges un colegio, mira esto | página web para colegio | 20-22 s |
-| R02 | 1 | A | ¿Tus clientes no saben cómo contactarte? | página web con WhatsApp | 18-22 s |
-| R03 | 1 | B | Tu página no pierde clientes por fea | página web Honduras | 28-32 s |
-| R04 | 2 | D | Admisiones sin papeles ni filas | plataforma educativa | 32-38 s |
-| R05 | 2 | C | Tus procesos viven en Excel y correos | automatización de procesos | 15-18 s |
-| R06 | 2 | A | Un menú que se pide solo | menú digital restaurante | 16-20 s |
-| R07 | 3 | A | Así luce un portal de gobierno moderno | portal gubernamental | 18-22 s |
-| R08 | 3 | B | Tu inventario vive en una sola cabeza | sistema para empresa Honduras | 28-34 s |
-| R09 | 3 | E | No vendemos plantillas | desarrollo web Tegucigalpa | 24-30 s |
-| R10 | 4 | A | Tu sitio habla antes que tú | sitio web corporativo | 18-22 s |
-| R11 | 4 | C | Así abre tu página en el teléfono | landing page Honduras | 14-18 s |
-| R12 | 4 | B | Tu operación no cabe en software enlatado | software a medida Honduras | 28-34 s |
+| ID | Semana | Formato | Pilar | Hook elegido | Palabra clave | Duración |
+| --- | --- | --- | --- | --- | --- | --- |
+| R01 | 1 | A | Solución | Si diriges un colegio, mira esto | página web para colegio | 20-22 s |
+| R02 | 1 | A | Solución | ¿Tus clientes no saben cómo contactarte? | página web con WhatsApp | 18-22 s |
+| R03 | 1 | B | Problema | Tu página no pierde clientes por fea | página web Honduras | 28-32 s |
+| R04 | 2 | D | Demostración | Admisiones sin papeles ni filas | plataforma educativa | 32-38 s |
+| R05 | 2 | C | Demostración | Tus procesos viven en Excel y correos | automatización de procesos | 15-18 s |
+| R06 | 2 | A | Solución | Un menú que se pide solo | menú digital restaurante | 16-20 s |
+| R07 | 3 | A | Solución | Así luce un portal de gobierno moderno | portal gubernamental | 18-22 s |
+| R08 | 3 | B | Problema | Tu inventario vive en una sola cabeza | sistema para empresa Honduras | 28-34 s |
+| R09 | 3 | E | Problema | No vendemos plantillas | desarrollo web Tegucigalpa | 24-30 s |
+| R10 | 4 | A | Solución | Tu sitio habla antes que tú | sitio web corporativo | 18-22 s |
+| R11 | 4 | C | Demostración | Así abre tu página en el teléfono | landing page Honduras | 14-18 s |
+| R12 | 4 | B | Problema | Tu operación no cabe en software enlatado | software a medida Honduras | 28-34 s |
 
 ---
 
@@ -518,3 +518,149 @@ Reglas que cumplen los 12:
 **Comentario fijado:** Desarrollo de software a medida en Honduras: pantallas, permisos y reportes hechos para tu proceso real, con el código a nombre del cliente.
 
 **Texto de portada:** Software a medida Honduras
+
+---
+
+# Prueba de pilares (R13-R15)
+
+> **Estado: pendientes de aprobación.** Un video modelo por pilar de `pilares.md` (Problema, Solución, Demostración), escritos sobre problemas del banco de problemas típicos. Van en los sábados de las semanas 1-3 del calendario para que la prueba arranque desde la primera semana.
+
+| ID | Pilar | Formato | Hook elegido | Problemas del banco | Palabra clave | Duración |
+| --- | --- | --- | --- | --- | --- | --- |
+| R13 | Problema | B | Cinco señales de que necesitas un sistema | P1, P2, P3, P4, P13 | software a medida Honduras | 28-34 s |
+| R14 | Solución | A | Tareas que te roban horas cada semana | P4, P5, P6 | automatización de procesos | 22-28 s |
+| R15 | Demostración | C | Antes y después de digitalizar un proceso | P1, P7, P9 | digitalizar procesos empresa | 16-20 s |
+
+---
+
+## R13 · Cinco señales de que necesitas un sistema
+
+- **ID:** R13 · **Pilar:** Problema · **Formato:** B · Problema → solución · **Plataforma principal:** Instagram Reels (también TikTok) · **Duración objetivo:** 28-34 s
+- **Concepto:** «Cinco señales de que tu empresa necesita un software a medida».
+- **Demo:** Rumbo (`demos/rumbo/`): tomas nuevas de expedientes, operaciones y usuarios por rol (agregar a `shots.mjs`).
+- `npm run new -- R13 B problema`
+
+**HOOK (0-1.5 s)**
+- Texto en pantalla: **Cinco señales de que necesitas un sistema** ← elegida (el número va con letras: el control de calidad no admite dígitos en pantalla)
+- Primera frase hablada: "Cinco señales de que tu empresa necesita software a medida."
+- Primer frame: una hoja de cálculo genérica (creada por nosotros) que se desborda de pestañas y celdas en rojo; "sistema" entra en cyan; el chip "software a medida Honduras" desde 0.15 s.
+- Variantes para Trial Reels: "¿Tu empresa ya necesita su propio sistema?" (pregunta de dolor) · "Tu empresa corre sobre Excel y memoria" (error caro).
+
+**RE-HOOK (3-5 s):** "Si te pasan dos, ya es hora." (tensión: el espectador se queda contando cuántas le pasan)
+
+**NECESIDAD (texto cinético, una señal por escena, 3 s cada una, contador "una de cinco" en el chip superior):**
+1. "Todo vive en Excel y en la memoria de alguien." (P1 · servicios.js)
+2. "Si esa persona falta, nadie encuentra nada." (P2)
+3. "El reporte del mes se arma a mano." (P3)
+4. "Las aprobaciones se pierden entre correos y WhatsApp." (P4)
+5. "Compraste un sistema y volvió el Excel paralelo." (P13 · servicios.js)
+
+**SOLUCIÓN (corte a la demo, 6-8 s):**
+1. Expedientes en un solo lugar, con buscador.
+2. Cada usuario ve lo que le toca según su rol.
+3. Operaciones con estado visible.
+
+**PAYOFF:** "Un sistema hecho sobre cómo trabajas de verdad." (projects.js 08)
+
+**CIERRE:** "¿Te pasa alguna? Escríbenos." + tarjeta final.
+
+**Voz en off (≈ 75 palabras):** "Cinco señales de que tu empresa necesita software a medida. Si te pasan dos, ya es hora. Uno: todo vive en Excel y en la memoria de alguien. Dos: si esa persona falta, nadie encuentra nada. Tres: el reporte del mes se arma a mano. Cuatro: las aprobaciones se pierden entre correos y WhatsApp. Y cinco: compraste un sistema y volvió el Excel paralelo. La salida es un sistema hecho sobre cómo trabajas de verdad. ¿Te pasa alguna? Escríbenos."
+
+**Palabra clave:** "software a medida Honduras" (en la primera frase y en pantalla desde 0.15 s).
+
+**Caption Instagram (139):** Excel, memoria, reportes a mano y aprobaciones perdidas: si tu empresa vive alguna de estas señales, necesita un sistema hecho a su medida.
+#softwareamedida #empresashonduras #pymeshonduras #tegucigalpa #transformaciondigital
+
+**Caption TikTok (136):** Software a medida Honduras: las señales de que tu empresa ya no cabe en Excel. ¿Cuántas te pasan? Guárdalo para revisarlo con tu equipo.
+#softwareamedida #empresashonduras #pymes #sistemaparaempresas
+
+**Comentario fijado:** Sistema para empresa en Honduras: expedientes, reportes, aprobaciones y permisos por rol, hecho sobre tu proceso real. Desarrollo de software a medida.
+
+**Texto de portada:** Señales: necesitas software a medida
+
+---
+
+## R14 · Tareas que te roban horas cada semana
+
+- **ID:** R14 · **Pilar:** Solución · **Formato:** A · Demo scroll (con escenas de texto de B al inicio) · **Plataforma principal:** TikTok (también Instagram Reels) · **Duración objetivo:** 22-28 s
+- **Concepto:** «Así puedes automatizar las tareas que te quitan horas cada semana».
+- **Demo:** Flujo (`demos/flujo/` y `demos/flujo/solicitudes`): tomas nuevas de una solicitud que se llena, cambia de estado, se aprueba y genera su documento (las mismas que pide R05).
+- `npm run new -- R14 A solucion`
+
+**HOOK (0-1.5 s)**
+- Texto en pantalla: **Tareas que te roban horas cada semana** ← elegida
+- Primera frase hablada: "Así puedes automatizar las tareas que te quitan horas cada semana."
+- Primer frame: el teléfono ya muestra el formulario de Flujo llenándose solo; "horas" entra en cyan; chip "automatización de procesos" desde 0.15 s.
+- Variantes para Trial Reels: "Deja de copiar y pegar a mano" (error caro) · "Lo repetitivo no debería hacerlo una persona" (objeción).
+
+**RE-HOOK (3-5 s):** "Tres que puedes dejar de hacer a mano." (promesa con lista corta)
+
+**NECESIDAD:** Copiar los mismos datos de un correo a una hoja, perseguir firmas por WhatsApp y llenar la misma constancia una y otra vez (P4, P5, P6 · servicios.js: "el trabajo repetitivo que hoy consume horas de alguien").
+
+**SOLUCIÓN (una tarea por escena, cambio visual cada 2-3 s):**
+1. **Capturar una vez:** la solicitud se llena en un formulario y los datos ya quedan donde se necesitan (chip: "Adiós al copiar y pegar").
+2. **Aprobar sin perseguir a nadie:** la solicitud pasa sola al responsable; se ve el estado y quién la tiene (chip: "Aprobaciones con responsable").
+3. **El documento se genera solo:** al aprobarse, sale el documento listo (chip: "Documentos automáticos").
+
+**PAYOFF:** La solicitud recorre todo el camino sin que nadie la copie, la reenvíe ni la vuelva a escribir.
+
+**CIERRE:** "¿Qué tarea te gustaría quitarte de encima? Escríbenos." + tarjeta final.
+
+**Voz en off (≈ 65 palabras):** "Así puedes automatizar las tareas que te quitan horas cada semana. Tres que puedes dejar de hacer a mano. Uno: copiar y pegar. Capturas una vez y los datos quedan donde se necesitan. Dos: perseguir firmas. Cada solicitud llega sola a quien la aprueba. Tres: llenar documentos. Al aprobarse, se generan solos. ¿Qué tarea te gustaría quitarte de encima? Escríbenos."
+
+**Palabra clave:** "automatización de procesos" (dicha en la primera frase, en pantalla desde 0.15 s).
+
+**Caption Instagram (146):** Copiar y pegar, perseguir firmas y llenar la misma constancia otra vez: así se automatizan las tareas repetitivas que le quitan horas a tu equipo.
+#automatizacion #procesos #empresashonduras #pymeshonduras #tegucigalpa
+
+**Caption TikTok (132):** Automatización de procesos: tres tareas que tu equipo puede dejar de hacer a mano. ¿Cuál te quita más tiempo? Te leo en comentarios.
+#automatizaciondeprocesos #pymes #empresashonduras #productividad
+
+**Comentario fijado:** Automatización de procesos para empresas en Honduras: formularios, flujo de aprobaciones con responsable visible y documentos que se generan solos.
+
+**Texto de portada:** Automatiza tus tareas repetitivas
+
+---
+
+## R15 · Antes y después de digitalizar un proceso
+
+- **ID:** R15 · **Pilar:** Demostración · **Formato:** C · Antes / después · **Plataforma principal:** Instagram Reels (también TikTok) · **Duración objetivo:** 16-20 s
+- **Concepto:** «Antes y después de digitalizar un proceso empresarial».
+- **Demo:** Rumbo (`demos/rumbo/expedientes`) para el "después". El "antes" es una pantalla genérica creada por nosotros dentro del teléfono: carpeta con archivos tipo "expediente_final_v3_ahora_si", una hoja de cálculo con colores a mano y una cadena de correos "RE: RE: RV:". Sin marcas reales ni logos de programas.
+- `npm run new -- R15 C demostracion`
+
+**HOOK (0-1.5 s)**
+- Texto en pantalla: **Antes y después de digitalizar un proceso** ← elegida
+- Primera frase hablada: "Así cambia un proceso cuando lo digitalizas."
+- Primer frame: el teléfono ya está partido por el barrido: a la izquierda el caos de carpetas, a la derecha Rumbo; la línea del barrido se mueve desde el segundo 0. Chip "digitalizar procesos empresa" desde 0.15 s.
+- Variantes para Trial Reels: "Del Excel compartido a un sistema" (contraste) · "Buscar un expediente: antes y después" (curiosidad visual).
+
+**RE-HOOK (3-5 s):** "Mismo proceso. Mira la diferencia."
+
+**NECESIDAD (el antes, 3 escenas cortas con el mismo encuadre):**
+1. Buscar el expediente de un cliente: carpetas con nombres repetidos (P9).
+2. Saber en qué va: una cadena de correos sin respuesta (P7).
+3. Actualizar el dato: otra versión más del archivo (P1).
+
+**SOLUCIÓN (el después, `wipe` en cada escena, mismo orden):**
+1. Buscador de expedientes: se escribe el nombre y aparece.
+2. El estado visible en la ficha del expediente.
+3. Un solo registro que todos ven actualizado.
+
+**PAYOFF:** Pantalla completa del "después" con el chip "Mismo proceso, en orden".
+
+**CIERRE:** "¿Qué proceso tuyo quieres ver así? Escríbenos." + tarjeta final.
+
+**Voz en off (≈ 50 palabras):** "Así cambia un proceso cuando lo digitalizas. Mismo proceso, mira la diferencia. Antes: buscar entre carpetas. Después: lo escribes y aparece. Antes: preguntar por correo en qué va. Después: el estado está a la vista. Antes: otra versión del archivo. Después: un solo registro para todos. ¿Qué proceso tuyo quieres ver así? Escríbenos."
+
+**Palabra clave:** "digitalizar procesos empresa" (dicha en la primera frase como "digitalizas un proceso", en pantalla desde 0.15 s).
+
+**Caption Instagram (136):** El mismo proceso antes y después de digitalizarlo: de carpetas, correos y versiones del archivo a un solo lugar donde todo se encuentra.
+#digitalizacion #procesos #empresashonduras #tegucigalpa #transformaciondigital
+
+**Caption TikTok (122):** Digitalizar procesos en tu empresa: el antes y el después del mismo trámite. ¿Tu proceso se parece más al de la izquierda?
+#digitalizacion #transformaciondigital #empresashonduras #pymes
+
+**Comentario fijado:** Digitalización de procesos para empresas en Honduras: expedientes digitales, estado de cada solicitud a la vista y un solo registro para todo el equipo.
+
+**Texto de portada:** Antes y después: digitalizar procesos

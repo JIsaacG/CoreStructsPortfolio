@@ -26,5 +26,17 @@ export const FORMATS = {
   E: "E-talking-head",
 };
 
+/**
+ * Pilares de contenido para conseguir contratos (ver pilares.md).
+ * Cada video pertenece a uno; se rotan y se miden por separado.
+ */
+export const PILLARS = {
+  problema: "Problema · nombra el dolor y las señales (patrón: «Cinco señales de que…»)",
+  solucion: "Solución · enseña cómo se resuelve (patrón: «Así puedes…»)",
+  demostracion: "Demostración · antes y después del proceso digitalizado",
+};
+/** Formato sugerido por pilar cuando no se indica uno. */
+export const PILLAR_FORMAT = { problema: "B", solucion: "A", demostracion: "C" };
+
 /** El sitio se sirve con `npm run serve` (raíz del repo). */
 export const BASE_URL = process.env.REELS_BASE_URL || "http://localhost:4173";

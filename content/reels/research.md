@@ -1,5 +1,7 @@
 # Investigación de temas, hooks y palabras clave
 
+> **Actualización 10 oct 2026:** primera búsqueda de outliers con vidIQ hecha para los problemas típicos de las empresas (procesos, Excel, automatización, dependencia del dueño). Los hallazgos y cómo se usan están en `pilares.md` → "Lo que encontró vidIQ". Siguen pendientes las búsquedas por tema de abajo (colegios, restaurantes, sector público, páginas web) y el volumen de palabras clave.
+
 > **Pendiente: validar con vidIQ (conector no disponible en esta sesión).**
 > Este archivo se escribió solo con lo que dice el repositorio (`servicios.js`, `projects.js`, `alliances.js`, `site.js`) y los patrones de hook de `PROMPT_REELS.md`. **No contiene métricas, volúmenes de búsqueda ni outliers**: ninguno se inventó. Cuando vidIQ esté conectado, se completa cada tema con los 5 mejores hooks encontrados en Instagram y TikTok (texto en pantalla, primera frase, formato, duración y por qué funcionan) y con las palabras clave de más búsqueda y menos competencia en Honduras y Latinoamérica.
 

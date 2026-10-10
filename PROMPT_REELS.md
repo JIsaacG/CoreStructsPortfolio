@@ -35,6 +35,15 @@ Cada video muestra una sola necesidad real de un tipo de cliente y cómo uno de 
 - Nada de "oferta", "cotiza ya" ni lenguaje de venta agresiva.
 - La necesidad sale de los problemas descritos en servicios.js y projects.js; la solución es la demo correspondiente.
 
+# PILARES PARA CONSEGUIR CONTRATOS (obligatorio en cada video nuevo)
+Todo video pertenece a uno de tres pilares y sale de un problema típico de las empresas. Detalle, reglas y banco de problemas en `content/reels/pilares.md`.
+- **Problema** (formato B): nombra el dolor con señales concretas. Modelo: «Cinco señales de que tu empresa necesita un software a medida». Números de lista con letras, nunca dígitos ni cifras de resultados.
+- **Solución** (formato A o B): enseña cómo se resuelve con la demo funcionando. Modelo: «Así puedes automatizar las tareas que te quitan horas cada semana». Se nombra el trabajo que desaparece, nunca cuánto tiempo o dinero ahorra.
+- **Demostración** (formato C o D): el mismo proceso antes (Excel, correos, papel, WhatsApp; genérico y creado por nosotros) y después (la demo real). Modelo: «Antes y después de digitalizar un proceso empresarial».
+- El tema sale del **banco de problemas típicos** de `pilares.md` (Excel y memoria, una sola persona sabe todo, reportes a mano, aprobaciones perdidas, datos repetidos, documentos a mano, solicitudes sin estado, el negocio se detiene si el dueño falta, expedientes regados, mismas preguntas por WhatsApp, pedidos perdidos, software enlatado con Excel paralelo…). Cada problema ya trae un hook por pilar.
+- En `reel.json` va `"pillar": "problema" | "solucion" | "demostracion"`; `metrics.csv` lleva la columna `pilar` para medir cuál trae más mensajes de WhatsApp.
+- Si una frase de concepto pasa de 7 palabras, el hook en pantalla se reescribe a 7 o menos y la frase completa va como primera frase hablada.
+
 ---
 
 # FASE 0 — INSTALACIÓN Y VERIFICACIÓN (antes de todo)
@@ -190,11 +199,11 @@ No publiques nada en Instagram ni en TikTok, ni con vidIQ ni con ninguna API. Es
 
 # MODO MÁQUINA (después de la primera vez)
 Cuando ya exista `content/reels/`, estos pedidos cortos disparan el flujo completo:
-- "Nueva tanda": revisa `metrics.csv` y `hooks.md`, haz una investigación rápida con vidIQ, propone 3 guiones nuevos necesidad → solución sin repetir los últimos 12, y espera mi aprobación.
+- "Nueva tanda": revisa `metrics.csv`, `hooks.md` y `pilares.md`; busca con vidIQ outliers de problemas típicos de las empresas (procesos, Excel, WhatsApp, reportes, aprobaciones, dependencia del dueño) y agrega al banco de problemas los que alguna demo resuelva; propone 3 guiones nuevos, **uno por pilar** (Problema, Solución, Demostración), cada uno sobre un problema del banco, sin repetir los últimos 12; cuando haya datos, da más peso al pilar que más mensajes de WhatsApp trajo. Espera mi aprobación.
 - "Produce <ID>": graba, genera voz, compone, renderiza, pasa el control de calidad y guarda el video en la rama `contenido/reels`.
 - "Semana completa": las dos anteriores para 3-4 videos, con calendario y captions listos, todo guardado en la rama `contenido/reels`.
 - "Subido <ID> <plataforma> <enlace>": marca ese video como subido en `INDEX.md`.
-- "Resultados": te paso números, actualizas `metrics.csv`, decides qué repetir y qué descartar.
+- "Resultados": te paso números, actualizas `metrics.csv` (con su pilar), decides qué hook, formato y pilar repetir y cuál descartar, y lo anotas en `hooks.md` y en la tabla de medición de `pilares.md`.
 - "Variante de hook <ID>": re-renderiza solo los primeros 3 s con otra variante para Trial Reel.
 
 # PENDIENTES DE MI LADO (pregúntame por ellos cuando hagan falta)
