@@ -59,6 +59,7 @@ const pastilla = 'rounded-full bg-bg/40 px-3 py-1 ring-1 ring-crema/20 backdrop-
     <div aria-hidden="true" class="absolute inset-x-0 top-0 h-40 bg-linear-to-b from-bg/60 to-transparent"></div>
     <div
       aria-hidden="true"
+      data-velo
       class="absolute inset-0 bg-linear-to-t from-bg from-15% via-bg/50 via-50% to-transparent to-80% lg:bg-linear-to-r lg:from-bg/90 lg:via-bg/60 lg:via-35% lg:to-transparent lg:to-65%"
     >
     </div>
@@ -223,6 +224,13 @@ const pastilla = 'rounded-full bg-bg/40 px-3 py-1 ring-1 ring-crema/20 backdrop-
 
   .clip:global(.es-visible) {
     visibility: visible;
+  }
+
+  /* En móvil el velo solo acompaña al texto de la primera vista. */
+  @media (width < 64rem) {
+    [data-velo] {
+      opacity: calc(1 - var(--avance, 0));
+    }
   }
 
   .riel-etiqueta {

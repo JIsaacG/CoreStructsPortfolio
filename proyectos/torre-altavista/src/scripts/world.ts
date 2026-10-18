@@ -76,13 +76,24 @@ export function iniciarRecorrido(seccion: HTMLElement, movimientoReducido: boole
     }),
   );
 
+  // Encuadre horizontal en pantallas estrechas, donde solo se ve la franja central del video.
+  // En cada parada mira hacia el punto al que se acerca la cámara; a mitad del clip, cuando la
+  // cámara ya lo centró, vuelve al centro; y llega a la siguiente parada con su propio encuadre.
+  const clavesFoco = (fin: number) =>
+    marcas.flatMap((m, i) => {
+      const siguiente = i < ultima ? marcas[i + 1].start : fin;
+      const clave = { y: m.start, v: focos[i] };
+      return i < clips.length ? [clave, { y: m.start + (siguiente - m.start) * 0.55, v: 50 }] : [clave];
+    });
+
   const pintar = (self: ScrollTrigger) => {
     const y = self.scroll();
     w = porTramos(y, [...marcas.map((m, i) => ({ y: m.start, v: i })), { y: self.end, v: paradas.length }]);
     const en = Math.min(w, ultima);
 
     marcarActual(Math.round(en));
-    escenario.style.setProperty('--foco-x', `${porTramos(y, marcas.map((m, i) => ({ y: m.start, v: focos[i] })))}%`);
+    escenario.style.setProperty('--foco-x', `${porTramos(y, clavesFoco(self.end))}%`);
+    escenario.style.setProperty('--avance', String(limitar(w * 1.5)));
     if (relleno) relleno.style.transform = `scaleY(${en / ultima})`;
     if (pista) pista.style.opacity = String(limitar(1 - w * 4));
 

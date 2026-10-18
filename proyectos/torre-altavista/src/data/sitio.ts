@@ -31,16 +31,17 @@ export const proyecto = {
 
 // Recorrido: cada parada tiene su póster y, salvo la última, el clip que la lleva a la siguiente.
 // El póster es el primer fotograma de su clip, así el video entra encima sin saltos.
-// `focus` es la posición horizontal (%) del encuadre en pantallas estrechas.
+// `focus` es la posición horizontal (%) del encuadre en pantallas estrechas: el punto hacia el que
+// se acerca la cámara en el clip de esa parada (rampa del parking, pasillo de la cocina, puerta del baño).
 export const paseo = {
   paradas: [
-    { id: 'inicio', lugar: 'Entrada', poster: entrada, clip: `${import.meta.env.BASE_URL}video/clip-1-entrada-parking.mp4`, focus: 50 },
+    { id: 'inicio', lugar: 'Entrada', poster: entrada, clip: `${import.meta.env.BASE_URL}video/clip-1-entrada-parking.mp4`, focus: 58 },
     { id: 'parking', lugar: 'Parking', poster: parking, clip: `${import.meta.env.BASE_URL}video/clip-2-parking-living.mp4`, focus: 50 },
     { id: 'living', lugar: 'Living', poster: living, clip: `${import.meta.env.BASE_URL}video/clip-3-living-amenidades.mp4`, focus: 50 },
-    { id: 'amenidades', lugar: 'Áreas recreativas', poster: amenidades, clip: `${import.meta.env.BASE_URL}video/clip-4-amenidades-apartamento.mp4`, focus: 40 },
+    { id: 'amenidades', lugar: 'Áreas recreativas', poster: amenidades, clip: `${import.meta.env.BASE_URL}video/clip-4-amenidades-apartamento.mp4`, focus: 50 },
     { id: 'apartamento', lugar: 'Apartamento', poster: apartamento, clip: `${import.meta.env.BASE_URL}video/clip-5-apartamento-cocina.mp4`, focus: 50 },
-    { id: 'cocina', lugar: 'Cocina', poster: cocina, clip: `${import.meta.env.BASE_URL}video/clip-6-cocina-bano.mp4`, focus: 55 },
-    { id: 'bano', lugar: 'Baño', poster: bano, clip: `${import.meta.env.BASE_URL}video/clip-7-bano-sala.mp4`, focus: 45 },
+    { id: 'cocina', lugar: 'Cocina', poster: cocina, clip: `${import.meta.env.BASE_URL}video/clip-6-cocina-bano.mp4`, focus: 69 },
+    { id: 'bano', lugar: 'Baño', poster: bano, clip: `${import.meta.env.BASE_URL}video/clip-7-bano-sala.mp4`, focus: 13 },
     { id: 'sala', lugar: 'Sala de estar', poster: sala, clip: `${import.meta.env.BASE_URL}video/clip-8-sala-terraza.mp4`, focus: 50 },
     { id: 'terraza', lugar: 'Terraza', poster: terraza, clip: null, focus: 55 },
   ],
