@@ -72,7 +72,7 @@ content/reels/
   music/                 música de fondo libre de regalías (generada con vidIQ): bgm-pulso, bgm-marimba
   voz/                   voz en off (<ID>.mp3) y sus tiempos por palabra (<ID>.words.json)
   videos/<ID>/           reel.json (se edita) + index.html (generado) + assets/ (generado, no se sube)
-  out/<ID>/              entregables finales (sí se suben) + INDEX.md
+  out/<ID>/              entregables: los MP4 se quedan en local (están en .gitignore); portada, copy, QA e INDEX.md sí se suben
   raw/                   grabaciones crudas y clips de cara a cámara (no se suben)
   tmp/                   temporales (no se suben)
   pilares.md             los tres pilares (Problema, Solución, Demostración) + banco de problemas típicos
