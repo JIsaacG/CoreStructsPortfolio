@@ -126,6 +126,13 @@ export function cleanPage(source) {
       const isOgUrl = name === "content" && element === "meta" && attrs.property === "og:url";
       if (!URL_ATTRS.has(name) && !isOgUrl) return undefined;
 
+      /* An absolute URL is only ever one of this site's pages when it names a
+         page: the canonical and hreflang `<link>`s, and og:url. Anywhere else
+         it points at someone else's server, whose files keep their own names —
+         Google Tag Manager's no-script fallback is `ns.html`, and shortening it
+         to `ns` turns the tag into a 404 for every visitor without JavaScript. */
+      if (/^[a-z][a-z0-9+.-]*:\/\//i.test(value) && !isOgUrl && element !== "link") return undefined;
+
       const cleaned = cleanUrl(value);
       if (cleaned === value) return undefined;
       links++;
