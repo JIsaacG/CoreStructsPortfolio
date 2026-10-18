@@ -204,6 +204,7 @@ assets/
                            Quantify (marca) + sus licencias
 demos/                     los sitios de ejemplo generados (marcas ficticias)
 proyectos/torre-altavista/ fuente Astro de demos/torre-altavista/ (ver más abajo)
+proyectos/maison-verde/    fuente Astro de demos/maison-verde/ (ver más abajo)
 dist/corestruct.css        hoja de estilos compilada del portfolio
 dist/demo.css              hoja de estilos compilada de los sitios de ejemplo
 dist/aurelis.css           la del portal corporativo
@@ -751,6 +752,30 @@ Wan2.2), se reemplazan con el mismo nombre en `public/video/` y en
 `src/assets/paseo/` (el póster de cada parada es el primer fotograma de su
 clip) y se vuelve a ejecutar `npm run publicar`. `public/video/` no se versiona:
 los clips publicados viven en `demos/torre-altavista/video/`.
+
+### Maison Verde — el recorrido de restaurante (solo enlace)
+
+`demos/maison-verde/` es la landing de un restaurante ficticio cuyo recorrido en
+video (nueve paradas: la casa, terraza, desayunos, barra, café, salón, platos
+fuertes, postres y jardín de noche) hace también de carta. Se preparó como
+propuesta para un restaurante real y **no tiene tarjeta** en el portafolio: se
+comparte solo por enlace (corestructhn.com/demos/maison-verde/). No se añade a
+`src/data/projects.js`, `mockups.js` ni a las traducciones.
+
+Mismo motor y mismo flujo que Torre Altavista (Astro + GSAP + Lenis), fuente en
+`proyectos/maison-verde/`:
+
+```bash
+cd proyectos/maison-verde
+npm install
+npm run publicar   # astro build -> demos/maison-verde/ con rutas relativas
+```
+
+Las fotos son de Unsplash (créditos en el pie de la página) y los 16 clips
+(8 tramos en 16:9 y 9:16) se generaron con Wan2.2 en local; prompts, seeds y
+registro de generación están en el repo `LandingPageAnimadas`
+(`proyectos/maison-verde/`). Los clips publicados viven en
+`demos/maison-verde/video/`. También queda fuera del espejo `en/`.
 
 ---
 

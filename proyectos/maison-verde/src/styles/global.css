@@ -1,0 +1,192 @@
+@import "tailwindcss";
+@import "lenis/dist/lenis.css";
+
+@theme inline {
+  --font-sans: var(--font-outfit), system-ui, sans-serif;
+}
+
+@theme {
+  --color-bg: #0d1510;
+  --color-superficie: #16211a;
+  --color-crema: #f4eee2;
+  --color-teja: #e0915f;
+  --color-hoja: #8fbf7a;
+  --ease-fluid: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    interpolate-size: allow-keywords;
+  }
+
+  html {
+    background-color: var(--color-bg);
+    color: var(--color-crema);
+    font-synthesis: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-bg);
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-weight: 500;
+    text-wrap: balance;
+  }
+
+  p,
+  li,
+  dd {
+    text-wrap: pretty;
+  }
+
+  em,
+  i {
+    font-style: normal;
+  }
+
+  ::selection {
+    background-color: var(--color-teja);
+    color: var(--color-bg);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-teja);
+    outline-offset: 4px;
+  }
+}
+
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 8px 16px;
+    border-radius: 9999px;
+    font-size: var(--text-base);
+    line-height: var(--text-base--line-height);
+    font-weight: 600;
+    transition:
+      background-color 700ms var(--ease-fluid),
+      color 700ms var(--ease-fluid),
+      transform 700ms var(--ease-fluid);
+  }
+
+  .btn-sm {
+    min-height: 36px;
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+  }
+
+  .btn-primary {
+    background-color: var(--color-teja);
+    color: var(--color-bg);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-crema);
+    transform: scale(1.02);
+  }
+
+  .btn-ghost {
+    color: var(--color-crema);
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--color-crema) 30%, transparent);
+  }
+
+  .btn-ghost:hover {
+    background-color: var(--color-crema);
+    color: var(--color-bg);
+    transform: scale(1.02);
+  }
+
+  .btn:active {
+    transform: scale(0.98);
+  }
+
+  .link {
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    text-decoration-color: color-mix(in oklab, var(--color-crema) 35%, transparent);
+    transition:
+      color 700ms var(--ease-fluid),
+      text-decoration-color 700ms var(--ease-fluid);
+  }
+
+  .link:hover {
+    color: var(--color-teja);
+    text-decoration-color: var(--color-teja);
+  }
+
+  /* Titular principal: degradado solo en el texto, nunca en el fondo. */
+  .titulo-hero {
+    background-image: linear-gradient(90deg, #ffffff, #c9d6bf);
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Entrada al hacer scroll: sube, enfoca y aparece. */
+  .js [data-reveal] {
+    opacity: 0;
+    transform: translateY(4rem);
+    filter: blur(12px);
+    transition:
+      opacity 1000ms var(--ease-fluid),
+      transform 1000ms var(--ease-fluid),
+      filter 1000ms var(--ease-fluid);
+    transition-delay: var(--d, 0ms);
+  }
+
+  .js [data-reveal].is-in {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  /* Acordeón de preguntas. */
+  .faq::details-content {
+    block-size: 0;
+    overflow-y: clip;
+    transition:
+      block-size 700ms var(--ease-fluid),
+      content-visibility 700ms allow-discrete;
+  }
+
+  .faq[open]::details-content {
+    block-size: auto;
+  }
+
+  .faq summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq .faq-icono {
+    transition: transform 700ms var(--ease-fluid);
+  }
+
+  .faq[open] .faq-icono {
+    transform: rotate(45deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal] {
+    transform: none;
+    filter: none;
+    transition: opacity 400ms var(--ease-fluid);
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+  }
+}
