@@ -122,8 +122,8 @@ export default {
   /* ------------------------------------------------------------- projects */
 
   "Lo que podemos construir": "What we can build",
-  "Ocho formas de resolver el mismo problema: que la tecnología acompañe la operación real de tu empresa, en lugar de imponerle una forma de trabajar.":
-    "Eight ways of solving the same problem: technology that follows how your company actually " +
+  "Nueve formas de resolver el mismo problema: que la tecnología acompañe la operación real de tu empresa, en lugar de imponerle una forma de trabajar.":
+    "Nine ways of solving the same problem: technology that follows how your company actually " +
     "operates, instead of imposing a way of working on it.",
 
   Explorar: "Explore",
@@ -141,6 +141,8 @@ export default {
   "Restaurantes y menús — hablemos de tu proyecto":
     "Restaurants and menus — let's talk about your project",
   "Automatización — hablemos de tu proyecto": "Automation — let's talk about your project",
+  "Recorridos inmobiliarios — hablemos de tu proyecto":
+    "Real-estate tours — let's talk about your project",
   "Soluciones a medida — hablemos de tu proyecto":
     "Bespoke solutions — let's talk about your project",
 
@@ -188,7 +190,15 @@ export default {
     "Requests, approval rules, generated documents and an audit trail: the internal processes that " +
     "currently live in email threads and spreadsheets.",
 
-  /* 08 — Bespoke solutions */
+  /* 08 — Real-estate tours */
+  "Bienes raíces": "Real estate",
+  "Recorridos inmobiliarios": "Real-estate tours",
+  "Torre Altavista: un recorrido en video que avanza con el scroll, de la entrada del edificio a la terraza del apartamento, con modelos, precios y agenda de visitas.":
+    "Torre Altavista: a video tour that moves as you scroll, from the building's entrance to the " +
+    "apartment terrace, with floor plans, prices and viewing bookings.",
+  "Recorrer el edificio": "Tour the building",
+
+  /* 09 — Bespoke solutions */
   Ingeniería: "Engineering",
   "Soluciones a medida": "Bespoke solutions",
   "Cuando nada estándar encaja, diseñamos el software alrededor de la operación del cliente — no al revés.":

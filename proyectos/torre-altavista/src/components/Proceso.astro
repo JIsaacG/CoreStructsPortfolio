@@ -1,0 +1,21 @@
+---
+import { pasos } from '../data/sitio';
+---
+
+<section id="proceso" data-spy="#proceso" aria-labelledby="proceso-titulo" class="px-4 py-24 md:px-12 xl:px-24">
+  <div class="mx-auto max-w-6xl">
+    <p data-reveal class="text-sm text-oro">Cómo funciona</p>
+    <h2 id="proceso-titulo" data-reveal style="--d:100ms" class="mt-4 text-3xl lg:text-5xl">De este recorrido a tu visita</h2>
+    <ol class="mt-12 grid gap-6 md:grid-cols-3">
+      {
+        pasos.map((paso, i) => (
+          <li data-reveal style={`--d:${150 + i * 100}ms`} class="flex flex-col gap-3 rounded-3xl bg-superficie p-8 ring-1 ring-crema/10">
+            <span class="text-4xl text-oro tabular-nums">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="text-xl">{paso.titulo}</h3>
+            <p class="text-base text-crema/70">{paso.detalle}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

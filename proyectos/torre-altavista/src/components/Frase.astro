@@ -1,0 +1,35 @@
+---
+// Frase principal partida por donde se parte la idea.
+const lineas = ['Un hogar no se elige por fotos,', 'se elige recorriéndolo.', 'Empieza en la entrada', 'y termina en tu terraza.'];
+const texto = lineas.join(' ');
+---
+
+<section aria-label="Nuestra forma de vender" class="px-4 py-24 md:px-12 xl:px-24">
+  <div class="mx-auto flex min-h-[70svh] max-w-[680px] items-center justify-center">
+    <p class="sr-only">{texto}</p>
+    <p data-palabras aria-hidden="true" class="text-4xl font-medium lg:text-6xl">
+      {
+        lineas.map((linea) => (
+          <span class="block">
+            {linea.split(' ').map((palabra) => (
+              <>
+                <span data-palabra class="palabra">{palabra}</span>{' '}
+              </>
+            ))}
+          </span>
+        ))
+      }
+    </p>
+  </div>
+</section>
+
+<style>
+  .palabra {
+    color: color-mix(in oklab, var(--color-crema) 30%, transparent);
+    transition: color 700ms var(--ease-fluid);
+  }
+
+  .palabra:global(.is-lit) {
+    color: var(--color-crema);
+  }
+</style>

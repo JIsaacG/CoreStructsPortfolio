@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+
+# Los clips se generan con scripts/generar_demo.py (o son los de Wan) y se
+# publican en demos/torre-altavista/video/: versionarlos aquí los duplicaría.
+public/video/

@@ -102,12 +102,26 @@ export const projects = [
   },
   {
     number: "08",
+    category: "Bienes raíces",
+    title: "Recorridos inmobiliarios",
+    description:
+      "Torre Altavista: un recorrido en video que avanza con el scroll, de la entrada del edificio " +
+      "a la terraza del apartamento, con modelos, precios y agenda de visitas.",
+    mockup: "realestate",
+    href: "demos/torre-altavista/index.html",
+    cta: "Recorrer el edificio",
+    size: "major",
+    reveal: "far",
+  },
+  {
+    number: "09",
     category: "Ingeniería",
     title: "Soluciones a medida",
     description:
       "Cuando nada estándar encaja, diseñamos el software alrededor de la operación del cliente — no al revés.",
     mockup: "custom",
-    size: "wide",
-    reveal: "scale",
+    size: "minor",
+    offset: true,
+    reveal: "rise",
   },
 ];

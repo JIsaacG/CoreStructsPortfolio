@@ -114,7 +114,7 @@ src/
     site.js                nombre, textos meta, correo, teléfono, redes
     servicios.js           el contenido de las páginas de /servicios/ y de
                            la banda #servicios del home
-    projects.js            las 8 tarjetas del portfolio
+    projects.js            las 9 tarjetas del portfolio
     alliances.js           los paneles de alianzas (logo + relato)
     mockups.js             los visuales SVG de cada tarjeta
     demos.js               el contenido de cada sitio de ejemplo
@@ -203,6 +203,7 @@ assets/
   fonts/                   Manrope, IBM Plex Sans y Source Serif 4 (OFL),
                            Quantify (marca) + sus licencias
 demos/                     los sitios de ejemplo generados (marcas ficticias)
+proyectos/torre-altavista/ fuente Astro de demos/torre-altavista/ (ver más abajo)
 dist/corestruct.css        hoja de estilos compilada del portfolio
 dist/demo.css              hoja de estilos compilada de los sitios de ejemplo
 dist/aurelis.css           la del portal corporativo
@@ -722,6 +723,34 @@ inventados. Las tres páginas son `noindex`, y cada una lo declara en la esquina
 ```bash
 npm run build:landing  # regenera demos/landing/*.html
 ```
+
+### Torre Altavista — el recorrido inmobiliario
+
+La tarjeta **08 · Recorridos inmobiliarios** abre `demos/torre-altavista/`: la
+landing de un edificio de apartamentos donde el scroll mueve un recorrido en
+video por nueve paradas (entrada, parking, living, áreas recreativas,
+apartamento, cocina, baño, sala de estar y terraza), seguido de modelos con
+precio, preguntas y agenda de visitas.
+
+Es la única demo que no sale de `tools/`. Se construye con Astro, Tailwind,
+GSAP ScrollTrigger y Lenis desde `proyectos/torre-altavista/`, que tiene su
+propio `package.json`, y lo que se publica es el resultado compilado:
+
+```bash
+cd proyectos/torre-altavista
+npm install
+npm run medios     # pósters y clips de muestra (Python + Pillow + numpy + ffmpeg)
+npm run publicar   # astro build -> demos/torre-altavista/ con rutas relativas
+```
+
+`npm run build` del portafolio no la regenera, y `build:i18n` la deja fuera
+del espejo `en/` (ver `tools/lib/roundtrip-check.mjs`): la versión en inglés
+de la tarjeta enlaza a la demo en español. Los clips actuales son ilustraciones
+animadas de muestra a 60 fps. Para usar clips reales (por ejemplo, generados con
+Wan2.2), se reemplazan con el mismo nombre en `public/video/` y en
+`src/assets/paseo/` (el póster de cada parada es el primer fotograma de su
+clip) y se vuelve a ejecutar `npm run publicar`. `public/video/` no se versiona:
+los clips publicados viven en `demos/torre-altavista/video/`.
 
 ---
 

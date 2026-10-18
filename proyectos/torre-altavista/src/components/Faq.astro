@@ -1,0 +1,30 @@
+---
+import Icon from './Icon.astro';
+import { faqs } from '../data/sitio';
+---
+
+<section id="preguntas" data-spy="#preguntas" aria-labelledby="faq-titulo" class="px-4 py-24 md:px-12 xl:px-24">
+  <div class="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[1fr_1.6fr]">
+    <div>
+      <p data-reveal class="text-sm text-oro">Preguntas frecuentes</p>
+      <h2 id="faq-titulo" data-reveal style="--d:100ms" class="mt-4 text-3xl lg:text-5xl">Antes de tu visita</h2>
+      <p data-reveal style="--d:200ms" class="mt-6 max-w-sm text-base text-crema/70">
+        ¿Tienes otra duda? Escríbenos en el <a href="#contacto" class="link">formulario de contacto</a>.
+      </p>
+    </div>
+
+    <div class="divide-y divide-crema/10">
+      {
+        faqs.map((faq) => (
+          <details data-reveal class="faq">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-6 rounded-xl py-6 text-left transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] hover:text-oro">
+              <h3 class="text-lg">{faq.pregunta}</h3>
+              <Icon name="plus" class="faq-icono size-6 shrink-0 text-oro" />
+            </summary>
+            <p class="max-w-2xl pb-6 text-base text-crema/70">{faq.respuesta}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>

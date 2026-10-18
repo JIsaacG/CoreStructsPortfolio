@@ -1,0 +1,19 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Recorrido from '../components/Recorrido.astro';
+import Frase from '../components/Frase.astro';
+import Propiedad from '../components/Propiedad.astro';
+import Proceso from '../components/Proceso.astro';
+import Faq from '../components/Faq.astro';
+import Contacto from '../components/Contacto.astro';
+import { seo } from '../data/sitio';
+---
+
+<Layout title={seo.title} description={seo.description}>
+  <Recorrido />
+  <Frase />
+  <Propiedad />
+  <Proceso />
+  <Faq />
+  <Contacto />
+</Layout>

@@ -1,0 +1,276 @@
+---
+import { Picture } from 'astro:assets';
+import Parada from './Parada.astro';
+import { paseo, proyecto } from '../data/sitio';
+
+const { paradas } = paseo;
+const cuerpo = 'mt-4 max-w-md text-base text-crema/80 lg:text-lg';
+const titulo = 'mt-4 max-w-xl text-4xl lg:text-5xl xl:text-6xl';
+const pastilla = 'rounded-full bg-bg/40 px-3 py-1 ring-1 ring-crema/20 backdrop-blur-md';
+---
+
+<section id="recorrido" data-recorrido aria-label="Recorrido por Torre Altavista" class="relative">
+  <!-- Escenario fijo: los clips ocupan toda la pantalla. Debajo, el primer fotograma de cada clip con el mismo
+       encuadre, para que el video entre sin que se note el cambio. -->
+  <div data-escenario class="sticky top-0 h-lvh overflow-hidden bg-bg" style="--foco-x: 50%">
+    <div aria-hidden="true" class="absolute inset-0">
+      {
+        paradas.map((parada, i) => (
+          <div data-foto class="foto absolute inset-0" style={i === 0 ? undefined : 'opacity: 0'}>
+            <Picture
+              src={parada.poster}
+              alt=""
+              formats={['avif', 'webp']}
+              fallbackFormat="webp"
+              widths={[828, 1280, 1600]}
+              sizes="(min-aspect-ratio: 16/9) 100vw, 178vh"
+              loading={i === 0 ? 'eager' : 'lazy'}
+              fetchpriority={i === 0 ? 'high' : 'low'}
+              decoding="async"
+              pictureAttributes={{ class: 'block size-full' }}
+              class="size-full object-cover"
+              style="object-position: var(--foco-x) 50%"
+            />
+          </div>
+        ))
+      }
+      <div class="clips absolute inset-0">
+        {
+          paradas
+            .filter((parada) => parada.clip)
+            .map((parada) => (
+              <video
+                data-clip
+                data-src={parada.clip}
+                muted
+                playsinline
+                preload="none"
+                disablepictureinpicture
+                disableremoteplayback
+                tabindex="-1"
+                class="clip absolute inset-0 size-full object-cover"
+              />
+            ))
+        }
+      </div>
+    </div>
+
+    <!-- Velos para leer el texto sobre el video. -->
+    <div aria-hidden="true" class="absolute inset-x-0 top-0 h-40 bg-linear-to-b from-bg/60 to-transparent"></div>
+    <div
+      aria-hidden="true"
+      class="absolute inset-0 bg-linear-to-t from-bg from-15% via-bg/50 via-50% to-transparent to-80% lg:bg-linear-to-r lg:from-bg/90 lg:via-bg/60 lg:via-35% lg:to-transparent lg:to-65%"
+    >
+    </div>
+
+    <!-- Riel de paradas. -->
+    <nav aria-label="Paradas del recorrido" class="absolute top-1/2 right-6 hidden -translate-y-1/2 lg:block xl:right-8">
+      <ol class="relative flex flex-col items-end gap-4">
+        <span aria-hidden="true" class="absolute top-3 right-1 bottom-3 w-px translate-x-1/2 bg-crema/20">
+          <span data-riel class="absolute inset-0 origin-top scale-y-0 bg-oro"></span>
+        </span>
+        {
+          paradas.map((parada, i) => (
+            <li>
+              <a href={`#${parada.id}`} data-ir aria-current={i === 0 ? 'true' : 'false'} class="riel-enlace flex h-6 items-center gap-3">
+                <span class="riel-etiqueta rounded-full bg-bg/60 px-3 py-1 text-xs whitespace-nowrap text-crema ring-1 ring-crema/10 backdrop-blur-xl">
+                  {parada.lugar}
+                </span>
+                <span class="relative grid size-2 place-items-center">
+                  <span class="riel-punto size-2 rounded-full bg-crema/50" />
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
+
+    <p data-pista aria-hidden="true" class="absolute right-8 bottom-8 hidden items-center gap-3 text-xs tracking-widest text-crema/70 uppercase lg:flex">
+      Desliza para recorrer el edificio
+      <span class="pista-linea relative block h-8 w-px overflow-hidden bg-crema/20"></span>
+    </p>
+  </div>
+
+  <!-- Paradas: cada una deja su texto abajo a la izquierda mientras el recorrido avanza. -->
+  <div class="relative z-10 -mt-[100lvh]">
+    <Parada index={0}>
+      <h1 class="mt-4">
+        <span class="block text-xs font-medium tracking-widest text-oro uppercase">
+          {proyecto.nombre} · {proyecto.zona}
+        </span>
+        <span class="titulo-hero mt-4 block max-w-[680px] pb-2 text-4xl lg:text-6xl">
+          Vive en lo alto,<br /> con todo a tu alcance
+        </span>
+      </h1>
+      <p class={cuerpo}>
+        Apartamentos de 2 y 3 habitaciones con amenidades, seguridad 24 horas y vista a la ciudad. Recorre el edificio
+        desde la entrada hasta tu terraza.
+      </p>
+      <div class="mt-6 flex flex-wrap items-center gap-4">
+        <a href="#contacto" class="btn btn-primary">Agendar visita</a>
+        <p class="text-base text-crema/80">Desde <span class="text-2xl font-medium text-crema">{proyecto.desde}</span></p>
+      </div>
+      <ul class="mt-6 flex flex-wrap gap-2 text-xs text-crema/80" aria-label="Resumen del proyecto">
+        <li class={pastilla}>{proyecto.pisos} pisos</li>
+        <li class={pastilla}>{proyecto.unidades} apartamentos</li>
+        <li class={pastilla}>Seguridad 24/7</li>
+      </ul>
+    </Parada>
+
+    <Parada index={1} eyebrow="Parking">
+      <h2 class={titulo}>Llegas, estacionas y subes</h2>
+      <p class={cuerpo}>
+        Dos sótanos techados con acceso controlado. Del parking subes directo al lobby o a tu piso en ascensor.
+      </p>
+      <dl class="mt-6 grid w-full max-w-md grid-cols-3 gap-4">
+        {
+          [
+            ['Espacios', '168'],
+            ['Ascensores', '3'],
+            ['Visitas', '14'],
+          ].map(([dt, dd]) => (
+            <div class="flex flex-col-reverse gap-1">
+              <dt class="text-xs text-crema/60">{dt}</dt>
+              <dd class="text-2xl lg:text-3xl">{dd}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </Parada>
+
+    <Parada index={2} eyebrow="Living">
+      <h2 class={titulo}>Un living para recibir a tus visitas</h2>
+      <p class={cuerpo}>
+        Lobby de doble altura con recepción las 24 horas, sala de espera y vista directa a la piscina.
+      </p>
+    </Parada>
+
+    <Parada index={3} eyebrow="Áreas recreativas">
+      <h2 class={titulo}>Vacaciones sin salir de casa</h2>
+      <p class={cuerpo}>Piscina, gimnasio equipado y espacios para que tu familia disfrute cada fin de semana.</p>
+      <ul class="mt-6 flex max-w-md flex-wrap gap-2 text-xs text-crema/80" aria-label="Amenidades">
+        {['Piscina', 'Gimnasio', 'Área de juegos', 'Salón social', 'Zona de parrillas'].map((a) => <li class={pastilla}>{a}</li>)}
+      </ul>
+    </Parada>
+
+    <Parada index={4} eyebrow="Apartamento tipo B">
+      <h2 class={titulo}>118 m² pensados para tu familia</h2>
+      <p class={cuerpo}>Un recibidor amplio que conecta con la cocina, el área social y las habitaciones.</p>
+      <dl class="mt-6 grid w-full max-w-md grid-cols-3 gap-4">
+        {
+          [
+            ['Habitaciones', '3'],
+            ['Baños', '2.5'],
+            ['Parqueos', '2'],
+          ].map(([dt, dd]) => (
+            <div class="flex flex-col-reverse gap-1">
+              <dt class="text-xs text-crema/60">{dt}</dt>
+              <dd class="text-2xl lg:text-3xl">{dd}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </Parada>
+
+    <Parada index={5} eyebrow="Cocina">
+      <h2 class={titulo}>Una cocina abierta con isla</h2>
+      <p class={cuerpo}>
+        Cubiertas de cuarzo, gabinetes hasta el techo y espacio para refrigeradora de doble puerta.
+      </p>
+    </Parada>
+
+    <Parada index={6} eyebrow="Baño principal">
+      <h2 class={titulo}>Un baño que se siente como un spa</h2>
+      <p class={cuerpo}>Ducha con cancel de vidrio, mueble flotante de madera y porcelanato de gran formato.</p>
+    </Parada>
+
+    <Parada index={7} eyebrow="Sala de estar">
+      <h2 class={titulo}>Luz natural y vista a la ciudad</h2>
+      <p class={cuerpo}>Puertas corredizas de piso a techo conectan la sala con tu terraza privada.</p>
+    </Parada>
+
+    <Parada index={8} eyebrow="Terraza">
+      <h2 class={titulo}>Tu terraza sobre la ciudad</h2>
+      <p class={cuerpo}>El lugar para terminar el día con las luces de Tegucigalpa a tus pies.</p>
+      <div class="mt-6 flex flex-wrap gap-4">
+        <a href="#contacto" class="btn btn-primary">Agendar visita</a>
+        <a href="#modelos" class="btn btn-ghost">Ver modelos y precios</a>
+      </div>
+    </Parada>
+  </div>
+</section>
+
+<style>
+  .foto {
+    will-change: opacity, transform;
+  }
+
+  .clips {
+    opacity: 0;
+    transition: opacity 1200ms var(--ease-fluid);
+  }
+
+  [data-modo='video'] .clips {
+    opacity: 1;
+  }
+
+  /* Solo se ve el clip del tramo actual; el cambio entre clips es inmediato porque comparten fotograma. */
+  .clip {
+    object-position: var(--foco-x) 50%;
+    visibility: hidden;
+  }
+
+  .clip:global(.es-visible) {
+    visibility: visible;
+  }
+
+  .riel-etiqueta {
+    opacity: 0;
+    transform: translateX(0.5rem);
+    transition:
+      opacity 700ms var(--ease-fluid),
+      transform 700ms var(--ease-fluid);
+  }
+
+  .riel-punto {
+    transition:
+      background-color 700ms var(--ease-fluid),
+      transform 700ms var(--ease-fluid);
+  }
+
+  .riel-enlace:hover .riel-etiqueta,
+  .riel-enlace:focus-visible .riel-etiqueta,
+  .riel-enlace[aria-current='true'] .riel-etiqueta {
+    opacity: 1;
+    transform: none;
+  }
+
+  .riel-enlace:hover .riel-punto {
+    background-color: var(--color-crema);
+  }
+
+  .riel-enlace[aria-current='true'] .riel-punto {
+    background-color: var(--color-oro);
+    transform: scale(1.5);
+  }
+
+  .pista-linea::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--color-crema);
+    animation: pista 2400ms var(--ease-fluid) infinite;
+  }
+
+  @keyframes pista {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(100%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pista-linea::after {
+      animation: none;
+    }
+  }
+</style>

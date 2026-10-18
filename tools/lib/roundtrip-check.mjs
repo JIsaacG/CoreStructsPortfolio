@@ -19,8 +19,13 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 export function pages(root = ROOT) {
   const found = [];
   // `KathMolina.html` es una página personal y oculta: ni se traduce ni lleva
-  // selector de idioma, así que se queda fuera del espejo `en/`.
-  const skip = new Set([".git", "node_modules", "assets", "dist", "src", "tools", "en", "KathMolina.html"]);
+  // selector de idioma, así que se queda fuera del espejo `en/`. El demo
+  // `torre-altavista` tampoco: es un build de Astro (proyectos/torre-altavista/)
+  // que se publica tal cual en español, y `proyectos/` es su código fuente.
+  const skip = new Set([
+    ".git", "node_modules", "assets", "dist", "src", "tools", "en", "proyectos",
+    "KathMolina.html", "torre-altavista",
+  ]);
 
   const walkDir = (dir) => {
     for (const entry of readdirSync(dir)) {

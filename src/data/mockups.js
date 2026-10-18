@@ -386,6 +386,43 @@ export const mockups = {
   `,
 
   /* 08 — Bespoke build: the isotype's own geometry, taken apart. */
+  /* 08 — Real-estate tour: the Torre Altavista demo. A tower elevation at dusk
+     with a few lit floors, the stop rail the tour scrolls through, and the
+     progress bar that fills as the visitor walks from the lobby to the terrace. */
+  realestate: `
+    <g class="mk-float">
+      ${window_(60, 18, 280, 214, `
+        <clipPath id="mk-tour-clip">
+          <rect x="60" y="42" width="280" height="190" rx="9"/>
+        </clipPath>
+        <g clip-path="url(#mk-tour-clip)">
+          <rect class="mk-surface" x="60" y="42" width="280" height="190"/>
+          ${curtain(128, 124, 36, 96, 3, 6)}
+          ${curtain(176, 70, 56, 150, 4, 10)}
+          ${curtain(240, 112, 38, 108, 3, 7)}
+          <g class="mk-accent-soft">
+            <rect x="178" y="86" width="12" height="13"/>
+            <rect x="204" y="101" width="12" height="13"/>
+            <rect x="190" y="131" width="12" height="13"/>
+            <rect x="218" y="161" width="12" height="13"/>
+            <rect x="242" y="128" width="11" height="14"/>
+            <rect x="130" y="140" width="10" height="15"/>
+          </g>
+          <rect class="mk-accent" x="196" y="196" width="16" height="24" rx="1"/>
+          <path class="mk-line" d="M60 220h280"/>
+          ${textLines(78, 172, [44, 30], { gap: 12, height: 6, className: "mk-text-strong" })}
+          <rect class="mk-accent" x="78" y="198" width="34" height="11" rx="5.5"/>
+          <rect class="mk-surface-strong" x="60" y="226" width="280" height="6"/>
+          <rect class="mk-accent" x="60" y="226" width="118" height="6"/>
+        </g>
+      `)}
+      <path class="mk-line-soft" d="M356 54v152"/>
+      ${Array.from({ length: 9 }, (_, i) => `
+        <circle class="${i < 4 ? "mk-accent" : "mk-text"}" cx="356" cy="${54 + i * 19}" r="${i === 3 ? 4.5 : 3}"/>
+      `).join("")}
+    </g>
+  `,
+
   custom: `
     <g class="mk-float">
       <path class="mk-line-soft" d="M200 62v26M138 152l-18 10M262 152l18 10"/>
