@@ -9,7 +9,8 @@ Reglas que todo hook cumple:
 - Nunca empieza con "Hola", con el logo ni con "En CoreStruct…". El logo va solo al final.
 - Sin precios, plazos, cifras ni "oferta" / "cotiza ya".
 - Cada guion lleva **3 variantes**; el video usa la más fuerte y las otras dos se guardan para A/B con Trial Reels.
-- Alternar patrones: error caro, pregunta de dolor, contraste antes/después, curiosidad visual, llamado a la identidad, objeción.
+- Cada video pertenece a un **pilar** (Problema, Solución o Demostración, ver `pilares.md`) y sale de un problema del **banco de problemas típicos** de ese archivo, que ya trae un hook por pilar para cada problema.
+- Alternar patrones: lista de señales («Cinco señales de que…», con el número en letras), error caro, pregunta de dolor, contraste antes/después, curiosidad visual, llamado a la identidad, objeción.
 
 ## Biblioteca base
 
@@ -26,6 +27,16 @@ Reglas que todo hook cumple:
 
 Para el lanzamiento: primero el **3** (nicho educativo, con un caso real detrás) y el **2** (un dolor que todo negocio hondureño reconoce).
 
+## Hooks de la prueba de pilares
+
+| # | Hook en pantalla (0-1.5 s) | Pilar · formato | Palabra clave | Patrón | De dónde sale |
+| --- | --- | --- | --- | --- | --- |
+| 9 | Cinco señales de que necesitas un sistema | Problema · B, Rumbo | software a medida Honduras | lista de señales | servicios.js (Excel y memoria, Excel paralelo) + outlier vidIQ de lista de errores |
+| 10 | Tareas que te roban horas cada semana | Solución · A, Flujo | automatización de procesos | error caro | servicios.js: "el trabajo repetitivo que hoy consume horas de alguien" |
+| 11 | Antes y después de digitalizar un proceso | Demostración · C, Rumbo | digitalizar procesos empresa | contraste | projects.js 07 + outlier vidIQ "por fin dejas el Excel" |
+
+Hooks de reserva para los tres pilares: columna por pilar del banco de problemas en `pilares.md` (P1-P15).
+
 ## Variantes ya escritas
 
 Las 3 variantes de cada guion viven en `guiones.md`; las del video de prueba, en `videos/R00/reel.json`.
@@ -38,6 +49,6 @@ Las 3 variantes de cada guion viven en `guiones.md`; las del video de prueba, en
 
 Se llena con los números de `metrics.csv` ("Resultados"). Repetir lo que retenga a 3 s por encima del promedio de la cuenta; descartar lo que quede por debajo dos veces seguidas.
 
-| Hook | Videos | Retención a 3 s (prom.) | Compartidos | Guardados | WhatsApp | Decisión |
-| --- | --- | --- | --- | --- | --- | --- |
-| — | — | — | — | — | — | pendiente de datos |
+| Hook | Pilar | Videos | Retención a 3 s (prom.) | Compartidos | Guardados | WhatsApp | Decisión |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| — | — | — | — | — | — | — | pendiente de datos |
