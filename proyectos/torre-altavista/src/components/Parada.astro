@@ -18,13 +18,16 @@ const dos = (n: number) => String(n).padStart(2, '0');
   data-parada
   data-focus={parada.focus}
   data-spy="#inicio"
+  data-compacta={index > 0 ? '' : undefined}
   class="parada pointer-events-none flex min-h-[160svh] flex-col justify-end"
 >
   <div
     class:list={[
       "parada-cuerpo pointer-events-auto sticky bottom-0 flex w-full max-w-2xl flex-col items-start px-4 pt-8 pb-16 md:px-12 lg:pt-24 xl:px-20",
-      // En móvil el texto taparía el recorrido: solo la primera vista lo muestra.
-      index > 0 && "max-lg:sr-only",
+      // En móvil, salvo la portada, el texto va en una tarjeta translúcida y compacta sobre el
+      // fondo, a 64px del borde inferior, y solo se ve con la cámara detenida en la parada.
+      index > 0 &&
+        "max-lg:bottom-16 max-lg:mx-4 max-lg:w-auto max-lg:rounded-2xl max-lg:bg-bg/55 max-lg:p-4 max-lg:ring-1 max-lg:ring-crema/10 max-lg:backdrop-blur-md",
     ]}
   >
     <p class="flex items-center gap-2 text-xs tracking-widest text-crema/60 uppercase">
@@ -32,7 +35,7 @@ const dos = (n: number) => String(n).padStart(2, '0');
       <span aria-hidden="true" class="size-1 rounded-full bg-oro"></span>
       <span>{parada.lugar}</span>
     </p>
-    {eyebrow && <p class="mt-4 text-xs font-medium tracking-widest text-oro uppercase">{eyebrow}</p>}
+    {eyebrow && <p class="mt-4 text-xs font-medium tracking-widest text-oro uppercase max-lg:hidden">{eyebrow}</p>}
     <slot />
   </div>
 </article>
@@ -61,6 +64,23 @@ const dos = (n: number) => String(n).padStart(2, '0');
 
   :global(.js) .parada:not(.es-actual) .parada-cuerpo:not(:focus-within) {
     pointer-events: none;
+  }
+
+  /* Móvil: la tarjeta aparece al llegar a la parada y se va al empezar la transición, para que
+     el movimiento de cámara se vea sin nada encima. */
+  @media (width < 64rem) {
+    :global(.js) .parada[data-compacta] .parada-cuerpo {
+      opacity: 0;
+      transform: translateY(1rem);
+      transition:
+        opacity 500ms var(--ease-fluid),
+        transform 500ms var(--ease-fluid);
+    }
+
+    :global(.js) .parada[data-compacta]:global(.es-actual.es-quieta) .parada-cuerpo {
+      opacity: 1;
+      transform: none;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
