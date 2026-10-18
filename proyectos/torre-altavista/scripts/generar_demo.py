@@ -14,6 +14,7 @@ Requiere: Pillow, numpy y ffmpeg en el PATH.
 
 import math
 import subprocess
+import sys
 from pathlib import Path
 
 import numpy as np
@@ -25,7 +26,8 @@ DIR_VIDEO = RAIZ / "public" / "video"
 
 W, H = 1920, 1080          # lienzo base de las escenas
 S = 2                      # supermuestreo para suavizar bordes
-OUT_W, OUT_H = 1600, 900   # tamaño de pósters y video
+ESCRITORIO = (1600, 900)   # pósters y clips horizontales
+MOVIL = (720, 1280)        # pósters y clips verticales (9:16)
 FPS = 60                   # más fotogramas por tramo de scroll = recorrido más fluido
 
 CALIDA = (255, 214, 156)   # vidrio iluminado
@@ -91,7 +93,8 @@ def resplandor(img, formas, color, radio):
 
 
 def finalizar(img):
-    return img.resize((W, H), Image.LANCZOS)
+    """Cada escena se entrega supermuestreada; main() saca de ella la fuente de cada formato."""
+    return img
 
 
 def lineas_perspectiva(d, vp, y_ini, y_fin, x_ini, x_fin, n, color, ancho=1):
@@ -606,15 +609,24 @@ def escena_terraza():
 
 # ---------------------------------------------------------------- clips
 
-def camara(img, zoom, cx, cy):
-    """Recorta una vista con zoom subpixel suave (sin saltos de enteros)."""
-    mitad_w = W / (2 * zoom)
-    mitad_h = H / (2 * zoom)
-    cx = min(max(cx, mitad_w), W - mitad_w)
-    cy = min(max(cy, mitad_h), H - mitad_h)
-    a = (W / OUT_W) / zoom
-    return img.transform((OUT_W, OUT_H), Image.AFFINE,
-                         (a, 0, cx - mitad_w, 0, a, cy - mitad_h), resample=Image.BICUBIC)
+def camara(img, zoom, cx, cy, tam):
+    """Recorta una vista de la escena con zoom subpixel suave (sin saltos de enteros).
+
+    `cx`, `cy` y el zoom van en coordenadas del lienzo base (1920x1080) aunque la
+    fuente tenga más resolución; zoom 1 es el alto completo de la escena. El
+    ancho de la vista sale de la proporción de la salida, así que la misma
+    escena sirve para el formato horizontal y para el vertical.
+    """
+    sal_w, sal_h = tam
+    alto = H / zoom
+    ancho = alto * sal_w / sal_h
+    cx = min(max(cx, ancho / 2), W - ancho / 2)
+    cy = min(max(cy, alto / 2), H - alto / 2)
+    escala = img.width / W
+    a = alto * escala / sal_h
+    return img.transform(tam, Image.AFFINE,
+                         (a, 0, (cx - ancho / 2) * escala, 0, a, (cy - alto / 2) * escala),
+                         resample=Image.BICUBIC)
 
 
 def lerp(a, b, t):
@@ -625,13 +637,14 @@ def ease_in_out(t):
     return 0.5 - 0.5 * math.cos(math.pi * min(max(t, 0), 1))
 
 
-def clip(origen, destino, objetivo, zoom_max, salida, segundos=4):
-    """Acercamiento hacia `objetivo` en la escena origen y fundido a la escena destino."""
+def clip(origen, destino, desde_x, objetivo, zoom_max, hasta_x, tam, salida, segundos=4):
+    """La cámara parte del encuadre de la parada (`desde_x`), se acerca a `objetivo` y funde
+    con la escena siguiente, que llega a su propio encuadre (`hasta_x`)."""
     n = int(segundos * FPS)
     ox, oy = objetivo
     proc = subprocess.Popen([
         "ffmpeg", "-y", "-loglevel", "error",
-        "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{OUT_W}x{OUT_H}", "-r", str(FPS), "-i", "-",
+        "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{tam[0]}x{tam[1]}", "-r", str(FPS), "-i", "-",
         "-an", "-c:v", "libx264", "-preset", "slow", "-crf", "24",
         "-g", "6", "-keyint_min", "6", "-sc_threshold", "0",
         "-pix_fmt", "yuv420p", "-colorspace", "bt709", "-color_primaries", "bt709",
@@ -641,13 +654,13 @@ def clip(origen, destino, objetivo, zoom_max, salida, segundos=4):
     for i in range(n):
         t = i / (n - 1)
         u = ease_in_out(t / 0.72)
-        vista_a = camara(origen, lerp(1, zoom_max, u), lerp(W / 2, ox, u), lerp(H / 2, oy, u))
+        vista_a = camara(origen, lerp(1, zoom_max, u), lerp(desde_x, ox, u), lerp(H / 2, oy, u), tam)
         alpha = ease_in_out((t - 0.42) / 0.3)
         if alpha <= 0:
             frame = np.asarray(vista_a, dtype=np.float32)
         else:
             v = ease_in_out((t - 0.42) / 0.58)
-            vista_b = camara(destino, lerp(1.35, 1, v), W / 2, lerp(H / 2 + 30, H / 2, v))
+            vista_b = camara(destino, lerp(1.35, 1, v), hasta_x, lerp(H / 2 + 30, H / 2, v), tam)
             frame = (np.asarray(vista_a, dtype=np.float32) * (1 - alpha)
                      + np.asarray(vista_b, dtype=np.float32) * alpha)
         proc.stdin.write(frame.round().astype(np.uint8).tobytes())
@@ -657,35 +670,57 @@ def clip(origen, destino, objetivo, zoom_max, salida, segundos=4):
         raise RuntimeError(f"ffmpeg falló al crear {salida}")
 
 
-# Orden del recorrido: (nombre, función de la escena, punto al que se acerca la cámara, zoom).
+# Orden del recorrido: (nombre, función de la escena, punto al que se acerca la cámara, zoom,
+# encuadre vertical). El encuadre vertical es la x (en el lienzo base) donde se centra la
+# vista 9:16 en la parada: muestra lo que importa de la escena y deja que la cámara se
+# desplace hacia el objetivo dentro del cuadro, en lugar de recortar el video horizontal.
 RECORRIDO = [
-    ("entrada", escena_entrada, (1260, 760), 2.6),
-    ("parking", escena_parking, (960, 590), 2.6),
-    ("living", escena_living, (960, 560), 2.4),
-    ("amenidades", escena_amenidades, (960, 630), 2.6),
-    ("apartamento", escena_apartamento, (960, 515), 3.0),
-    ("cocina", escena_cocina, (1330, 570), 2.6),
-    ("bano", escena_bano, (255, 640), 2.4),
-    ("sala", escena_sala, (960, 500), 2.4),
-    ("terraza", escena_terraza, None, None),
+    ("entrada", escena_entrada, (1260, 760), 2.6, 960),
+    ("parking", escena_parking, (960, 590), 2.6, 960),
+    ("living", escena_living, (960, 560), 2.4, 960),
+    ("amenidades", escena_amenidades, (960, 630), 2.6, 960),
+    ("apartamento", escena_apartamento, (960, 515), 3.0, 960),
+    ("cocina", escena_cocina, (1330, 570), 2.6, 960),
+    ("bano", escena_bano, (255, 640), 2.4, 760),
+    ("sala", escena_sala, (960, 500), 2.4, 960),
+    ("terraza", escena_terraza, None, None, 1150),
 ]
+
+# En vertical la vista ya es estrecha: un zoom algo menor evita ampliar de más.
+ZOOM_MOVIL = 0.8
 
 
 def main():
+    """`python scripts/generar_demo.py [escritorio|movil]` (sin argumento, los dos formatos)."""
+    formatos = sys.argv[1:] or ["escritorio", "movil"]
     DIR_IMG.mkdir(parents=True, exist_ok=True)
     DIR_VIDEO.mkdir(parents=True, exist_ok=True)
 
-    escenas = []
-    for i, (nombre, dibujar, _, _) in enumerate(RECORRIDO, start=1):
+    fuentes = {"escritorio": [], "movil": []}
+    for i, (nombre, dibujar, _, _, foco) in enumerate(RECORRIDO, start=1):
         img = dibujar()
-        img.resize((OUT_W, OUT_H), Image.LANCZOS).save(DIR_IMG / f"escena-{i}-{nombre}.webp", quality=90)
-        escenas.append(img)
-        print("póster", i, nombre)
+        # Escritorio: el lienzo base, como siempre. Móvil: 1.5x, para que el recorte
+        # vertical siga nítido aun con la cámara acercándose.
+        escritorio = img.resize((W, H), Image.LANCZOS)
+        movil = img.resize((W * 3 // 2, H * 3 // 2), Image.LANCZOS)
+        fuentes["escritorio"].append(escritorio)
+        fuentes["movil"].append(movil)
+        if "escritorio" in formatos:
+            escritorio.resize(ESCRITORIO, Image.LANCZOS).save(DIR_IMG / f"escena-{i}-{nombre}.webp", quality=90)
+        if "movil" in formatos:
+            camara(movil, 1, foco, H / 2, MOVIL).save(DIR_IMG / f"escena-{i}-{nombre}-movil.webp", quality=90)
+        print("poster", i, nombre)
 
     for i in range(len(RECORRIDO) - 1):
-        nombre, _, objetivo, zoom = RECORRIDO[i]
-        siguiente = RECORRIDO[i + 1][0]
-        clip(escenas[i], escenas[i + 1], objetivo, zoom, DIR_VIDEO / f"clip-{i + 1}-{nombre}-{siguiente}.mp4")
+        nombre, _, objetivo, zoom, foco = RECORRIDO[i]
+        siguiente, foco_siguiente = RECORRIDO[i + 1][0], RECORRIDO[i + 1][4]
+        base = f"clip-{i + 1}-{nombre}-{siguiente}"
+        if "escritorio" in formatos:
+            clip(fuentes["escritorio"][i], fuentes["escritorio"][i + 1], W / 2, objetivo, zoom, W / 2,
+                 ESCRITORIO, DIR_VIDEO / f"{base}.mp4")
+        if "movil" in formatos:
+            clip(fuentes["movil"][i], fuentes["movil"][i + 1], foco, objetivo, zoom * ZOOM_MOVIL, foco_siguiente,
+                 MOVIL, DIR_VIDEO / f"{base}-movil.mp4")
         print("clip", i + 1, nombre, "->", siguiente)
 
 

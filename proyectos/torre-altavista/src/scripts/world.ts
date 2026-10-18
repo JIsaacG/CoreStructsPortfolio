@@ -30,6 +30,8 @@ export function iniciarRecorrido(seccion: HTMLElement, movimientoReducido: boole
   const clips = [...escenario.querySelectorAll<HTMLVideoElement>('[data-clip]')];
   const ultima = paradas.length - 1;
   const focos = paradas.map((p) => Number(p.dataset.focus ?? 50));
+  // En vertical se usan los pósters y clips 9:16, que ya vienen encuadrados para el teléfono.
+  const vertical = window.matchMedia('(orientation: portrait)');
 
   // Cada parada llega cuando su artículo toca el borde superior.
   const marcas = paradas.map((parada) => ScrollTrigger.create({ trigger: parada, start: 'top top' }));
@@ -92,7 +94,8 @@ export function iniciarRecorrido(seccion: HTMLElement, movimientoReducido: boole
     const en = Math.min(w, ultima);
 
     marcarActual(Math.round(en));
-    escenario.style.setProperty('--foco-x', `${porTramos(y, clavesFoco(self.end))}%`);
+    const foco = vertical.matches ? 50 : porTramos(y, clavesFoco(self.end));
+    escenario.style.setProperty('--foco-x', `${foco}%`);
     escenario.style.setProperty('--avance', String(limitar(w * 1.5)));
     if (relleno) relleno.style.transform = `scaleY(${en / ultima})`;
     if (pista) pista.style.opacity = String(limitar(1 - w * 4));
@@ -130,13 +133,18 @@ export function iniciarRecorrido(seccion: HTMLElement, movimientoReducido: boole
     return w - (i + 1) + 0.5;
   };
   const cola = clips.map((_, i) => i);
+  const rutaDe = (clip: HTMLVideoElement) =>
+    (vertical.matches ? clip.dataset.srcMovil : undefined) ?? clip.dataset.src ?? '';
+  // Cada cambio de orientación abre una ronda nueva: lo que siga cargando de la anterior se descarta.
+  let ronda = 0;
 
   const cargarSiguiente = async () => {
+    const miRonda = ronda;
     cola.sort((a, b) => distancia(a) - distancia(b));
     const i = cola.shift();
     if (i === undefined) return;
     const clip = clips[i];
-    const ruta = clip.dataset.src ?? '';
+    const ruta = rutaDe(clip);
     clip.preload = 'auto';
 
     const cargado = new Promise<boolean>((resolve) => {
@@ -148,12 +156,17 @@ export function iniciarRecorrido(seccion: HTMLElement, movimientoReducido: boole
     try {
       const respuesta = await fetch(ruta);
       if (!respuesta.ok) throw new Error(respuesta.statusText);
-      clip.src = URL.createObjectURL(await respuesta.blob());
+      const blob = await respuesta.blob();
+      if (miRonda !== ronda) return;
+      clip.src = URL.createObjectURL(blob);
     } catch {
+      if (miRonda !== ronda) return;
       clip.src = ruta;
     }
 
-    if (await cargado) {
+    const ok = await cargado;
+    if (miRonda !== ronda) return;
+    if (ok) {
       // iOS no pinta los fotogramas buscados hasta que el video se reprodujo una vez.
       await clip.play().catch(() => {});
       clip.pause();
@@ -162,6 +175,20 @@ export function iniciarRecorrido(seccion: HTMLElement, movimientoReducido: boole
     }
     cargarSiguiente();
   };
+
+  // Al girar el teléfono cambia el formato: se vuelven a cargar los clips del formato nuevo.
+  vertical.addEventListener('change', () => {
+    ronda++;
+    clips.forEach((clip, i) => {
+      if (clip.src.startsWith('blob:')) URL.revokeObjectURL(clip.src);
+      clip.classList.remove('es-visible');
+      listo[i] = false;
+    });
+    mostrado = -1;
+    cola.splice(0, cola.length, ...clips.map((_, i) => i));
+    pintar(tramo);
+    cargarSiguiente();
+  });
 
   if (document.readyState === 'complete') cargarSiguiente();
   else window.addEventListener('load', cargarSiguiente, { once: true });

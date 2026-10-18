@@ -1,9 +1,26 @@
 ---
-import { Picture } from 'astro:assets';
+import { getImage } from 'astro:assets';
 import Parada from './Parada.astro';
 import { paseo, proyecto } from '../data/sitio';
 
 const { paradas } = paseo;
+
+// Dirección de arte: en vertical, el póster 9:16 (encuadrado para el teléfono); en horizontal, el 16:9.
+// Es un <picture> escrito a mano porque <Picture> de Astro no cambia de imagen según la orientación.
+const VERTICAL = '(orientation: portrait)';
+const fotos = await Promise.all(
+  paradas.map(async (parada) => {
+    const variante = (src: typeof parada.poster, format: 'avif' | 'webp', widths: number[]) =>
+      getImage({ src, format, widths });
+    const [movilAvif, movilWebp, avif, webp] = await Promise.all([
+      variante(parada.posterMovil, 'avif', [540, 720]),
+      variante(parada.posterMovil, 'webp', [540, 720]),
+      variante(parada.poster, 'avif', [828, 1280, 1600]),
+      variante(parada.poster, 'webp', [828, 1280, 1600]),
+    ]);
+    return { movilAvif, movilWebp, avif, webp };
+  }),
+);
 const cuerpo = 'mt-4 max-w-md text-base text-crema/80 lg:text-lg';
 const titulo = 'mt-4 max-w-xl text-4xl lg:text-5xl xl:text-6xl';
 const pastilla = 'rounded-full bg-bg/40 px-3 py-1 ring-1 ring-crema/20 backdrop-blur-md';
@@ -17,20 +34,23 @@ const pastilla = 'rounded-full bg-bg/40 px-3 py-1 ring-1 ring-crema/20 backdrop-
       {
         paradas.map((parada, i) => (
           <div data-foto class="foto absolute inset-0" style={i === 0 ? undefined : 'opacity: 0'}>
-            <Picture
-              src={parada.poster}
-              alt=""
-              formats={['avif', 'webp']}
-              fallbackFormat="webp"
-              widths={[828, 1280, 1600]}
-              sizes="(min-aspect-ratio: 16/9) 100vw, 178vh"
-              loading={i === 0 ? 'eager' : 'lazy'}
-              fetchpriority={i === 0 ? 'high' : 'low'}
-              decoding="async"
-              pictureAttributes={{ class: 'block size-full' }}
-              class="size-full object-cover"
-              style="object-position: var(--foco-x) 50%"
-            />
+            <picture class="block size-full">
+              <source media={VERTICAL} type="image/avif" srcset={fotos[i].movilAvif.srcSet.attribute} sizes="max(100vw, 56.25vh)" />
+              <source media={VERTICAL} type="image/webp" srcset={fotos[i].movilWebp.srcSet.attribute} sizes="max(100vw, 56.25vh)" />
+              <source type="image/avif" srcset={fotos[i].avif.srcSet.attribute} sizes="(min-aspect-ratio: 16/9) 100vw, 178vh" />
+              <source type="image/webp" srcset={fotos[i].webp.srcSet.attribute} sizes="(min-aspect-ratio: 16/9) 100vw, 178vh" />
+              <img
+                src={fotos[i].webp.src}
+                alt=""
+                width="1600"
+                height="900"
+                loading={i === 0 ? 'eager' : 'lazy'}
+                fetchpriority={i === 0 ? 'high' : 'low'}
+                decoding="async"
+                class="size-full object-cover"
+                style="object-position: var(--foco-x) 50%"
+              />
+            </picture>
           </div>
         ))
       }
@@ -42,6 +62,7 @@ const pastilla = 'rounded-full bg-bg/40 px-3 py-1 ring-1 ring-crema/20 backdrop-
               <video
                 data-clip
                 data-src={parada.clip}
+                data-src-movil={parada.clipMovil}
                 muted
                 playsinline
                 preload="none"
@@ -60,7 +81,7 @@ const pastilla = 'rounded-full bg-bg/40 px-3 py-1 ring-1 ring-crema/20 backdrop-
     <div
       aria-hidden="true"
       data-velo
-      class="absolute inset-0 bg-linear-to-t from-bg from-15% via-bg/50 via-50% to-transparent to-80% lg:bg-linear-to-r lg:from-bg/90 lg:via-bg/60 lg:via-35% lg:to-transparent lg:to-65%"
+      class="absolute inset-0 bg-linear-to-t from-bg from-25% via-bg/75 via-55% to-transparent to-90% lg:bg-linear-to-r lg:from-bg/90 lg:via-bg/60 lg:via-35% lg:to-transparent lg:to-65%"
     >
     </div>
 
@@ -104,7 +125,7 @@ const pastilla = 'rounded-full bg-bg/40 px-3 py-1 ring-1 ring-crema/20 backdrop-
           Vive en lo alto,<br /> con todo a tu alcance
         </span>
       </h1>
-      <p class={cuerpo}>
+      <p class={`${cuerpo} max-lg:[@media(max-height:620px)]:hidden`}>
         Apartamentos de 2 y 3 habitaciones con amenidades, seguridad 24 horas y vista a la ciudad. Recorre el edificio
         desde la entrada hasta tu terraza.
       </p>
@@ -112,7 +133,7 @@ const pastilla = 'rounded-full bg-bg/40 px-3 py-1 ring-1 ring-crema/20 backdrop-
         <a href="#contacto" class="btn btn-primary">Agendar visita</a>
         <p class="text-base text-crema/80">Desde <span class="text-2xl font-medium text-crema">{proyecto.desde}</span></p>
       </div>
-      <ul class="mt-6 flex flex-wrap gap-2 text-xs text-crema/80" aria-label="Resumen del proyecto">
+      <ul class="mt-6 flex flex-wrap gap-2 text-xs text-crema/80 max-lg:[@media(max-height:740px)]:hidden" aria-label="Resumen del proyecto">
         <li class={pastilla}>{proyecto.pisos} pisos</li>
         <li class={pastilla}>{proyecto.unidades} apartamentos</li>
         <li class={pastilla}>Seguridad 24/7</li>
