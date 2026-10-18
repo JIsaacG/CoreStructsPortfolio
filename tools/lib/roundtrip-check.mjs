@@ -20,10 +20,15 @@ export function pages(root = ROOT) {
   const found = [];
   // `KathMolina.html` es una página personal y oculta: ni se traduce ni lleva
   // selector de idioma, así que se queda fuera del espejo `en/`. El demo
-  // `torre-altavista` tampoco: es un build de Astro (proyectos/torre-altavista/)
-  // que se publica tal cual en español, y `proyectos/` es su código fuente.
+  // `torre-altavista` tampoco: es un build de Astro (fuente en
+  // proyectos/torre-altavista/) que se publica tal cual, en español.
+  //
+  // Las entradas se comparan por NOMBRE en cualquier nivel del árbol, así que
+  // aquí no puede ir "proyectos": también es demos/aurelis/proyectos/, y esas
+  // páginas se quedarían sin su versión en inglés. La fuente de Astro no tiene
+  // HTML fuera de src/, dist/ y node_modules/, que ya se saltan.
   const skip = new Set([
-    ".git", "node_modules", "assets", "dist", "src", "tools", "en", "proyectos",
+    ".git", "node_modules", "assets", "dist", "src", "tools", "en",
     "KathMolina.html", "torre-altavista",
   ]);
 
