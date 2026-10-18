@@ -36,6 +36,10 @@ export function iniciarRecorrido(seccion: HTMLElement, movimientoReducido: boole
   // Cada parada llega cuando su artículo toca el borde superior.
   const marcas = paradas.map((parada) => ScrollTrigger.create({ trigger: parada, start: 'top top' }));
   const listo = clips.map(() => false);
+  // Último tiempo pedido a cada clip (NaN: ninguno todavía).
+  const pedidos = clips.map(() => NaN);
+  let inicioBusqueda = 0;
+  let vigilante = 0;
   let actual = -1;
   let w = 0;
   let activo = 0;
@@ -65,9 +69,20 @@ export function iniciarRecorrido(seccion: HTMLElement, movimientoReducido: boole
       delete escenario.dataset.modo;
       return;
     }
-    if (clip.seeking) return;
-    if (Math.abs(clip.currentTime - tiempo) > 0.01) clip.currentTime = tiempo;
-    else mostrar();
+    if (clip.seeking) {
+      // WebKit a veces deja una búsqueda colgada varios segundos: pasados 400 ms se vuelve a pedir
+      // (aunque sea el mismo tiempo), y una búsqueda nueva reemplaza a la anterior.
+      if (performance.now() - inicioBusqueda < 400) return;
+    } else if (Math.abs(pedidos[activo] - tiempo) < 0.01) {
+      mostrar();
+      return;
+    }
+    pedidos[activo] = tiempo;
+    inicioBusqueda = performance.now();
+    clip.currentTime = tiempo;
+    // Si nadie vuelve a llamar (el usuario dejó de hacer scroll), el vigilante se revisa solo.
+    clearTimeout(vigilante);
+    vigilante = window.setTimeout(sincronizar, 450);
   };
 
   clips.forEach((clip, i) =>
@@ -151,24 +166,32 @@ export function iniciarRecorrido(seccion: HTMLElement, movimientoReducido: boole
     const ruta = rutaDe(clip);
     clip.preload = 'auto';
 
-    const cargado = new Promise<boolean>((resolve) => {
-      clip.addEventListener('loadeddata', () => resolve(true), { once: true });
-      clip.addEventListener('error', () => resolve(false), { once: true });
-    });
+    // Espera a que el video pueda pintar un fotograma (true) o falle (false).
+    const cargar = (src: string) =>
+      new Promise<boolean>((resolve) => {
+        clip.addEventListener('loadeddata', () => resolve(true), { once: true });
+        clip.addEventListener('error', () => resolve(false), { once: true });
+        clip.src = src;
+      });
 
-    // El clip se descarga entero (blob) para que buscar fotogramas no dependa de la red.
+    // Primero se descarga entero (blob) para que buscar fotogramas no dependa de la red. WebKit
+    // (Safari) puede rechazar un video servido desde blob: con error 4 aunque el tipo sea
+    // video/mp4; en ese caso, o si la descarga falla, se usa la URL directa (el servidor acepta
+    // peticiones por rangos, que es lo que Safari necesita para buscar).
+    let ok = false;
     try {
       const respuesta = await fetch(ruta);
       if (!respuesta.ok) throw new Error(respuesta.statusText);
       const blob = await respuesta.blob();
       if (miRonda !== ronda) return;
-      clip.src = URL.createObjectURL(blob);
+      const url = URL.createObjectURL(blob);
+      ok = await cargar(url);
+      if (!ok) URL.revokeObjectURL(url);
     } catch {
-      if (miRonda !== ronda) return;
-      clip.src = ruta;
+      // Sin blob: se prueba la URL directa.
     }
-
-    const ok = await cargado;
+    if (miRonda !== ronda) return;
+    if (!ok) ok = await cargar(ruta);
     if (miRonda !== ronda) return;
     if (ok) {
       // iOS no pinta los fotogramas buscados hasta que el video se reprodujo una vez.
@@ -187,6 +210,7 @@ export function iniciarRecorrido(seccion: HTMLElement, movimientoReducido: boole
       if (clip.src.startsWith('blob:')) URL.revokeObjectURL(clip.src);
       clip.classList.remove('es-visible');
       listo[i] = false;
+      pedidos[i] = NaN;
     });
     mostrado = -1;
     cola.splice(0, cola.length, ...clips.map((_, i) => i));

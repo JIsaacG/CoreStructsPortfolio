@@ -637,7 +637,7 @@ def ease_in_out(t):
     return 0.5 - 0.5 * math.cos(math.pi * min(max(t, 0), 1))
 
 
-def clip(origen, destino, desde_x, objetivo, zoom_max, hasta_x, tam, salida, segundos=4):
+def clip(origen, destino, desde_x, objetivo, zoom_max, hasta_x, tam, salida, segundos=4, gop=6):
     """La cámara parte del encuadre de la parada (`desde_x`), se acerca a `objetivo` y funde
     con la escena siguiente, que llega a su propio encuadre (`hasta_x`)."""
     n = int(segundos * FPS)
@@ -646,7 +646,7 @@ def clip(origen, destino, desde_x, objetivo, zoom_max, hasta_x, tam, salida, seg
         "ffmpeg", "-y", "-loglevel", "error",
         "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{tam[0]}x{tam[1]}", "-r", str(FPS), "-i", "-",
         "-an", "-c:v", "libx264", "-preset", "slow", "-crf", "24",
-        "-g", "6", "-keyint_min", "6", "-sc_threshold", "0",
+        "-g", str(gop), "-keyint_min", str(gop), "-sc_threshold", "0",
         "-pix_fmt", "yuv420p", "-colorspace", "bt709", "-color_primaries", "bt709",
         "-color_trc", "bt709", "-movflags", "+faststart", str(salida),
     ], stdin=subprocess.PIPE)
@@ -689,6 +689,10 @@ RECORRIDO = [
 # En vertical la vista ya es estrecha: un zoom algo menor evita ampliar de más.
 ZOOM_MOVIL = 0.8
 
+# Fotograma clave cada 2 fotogramas en móvil: en WebKit (Safari) bajó el p90 de cada búsqueda de
+# 179 a 75 ms frente a GOP 6, a cambio de ~1.7x de peso (~1 MB por clip).
+GOP_MOVIL = 2
+
 
 def main():
     """`python scripts/generar_demo.py [escritorio|movil]` (sin argumento, los dos formatos)."""
@@ -720,7 +724,7 @@ def main():
                  ESCRITORIO, DIR_VIDEO / f"{base}.mp4")
         if "movil" in formatos:
             clip(fuentes["movil"][i], fuentes["movil"][i + 1], foco, objetivo, zoom * ZOOM_MOVIL, foco_siguiente,
-                 MOVIL, DIR_VIDEO / f"{base}-movil.mp4")
+                 MOVIL, DIR_VIDEO / f"{base}-movil.mp4", gop=GOP_MOVIL)
         print("clip", i + 1, nombre, "->", siguiente)
 
 
