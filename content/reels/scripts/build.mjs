@@ -79,10 +79,60 @@ function captionChunks(text, start, end, explicit) {
   });
 }
 
+/** Tiempos por palabra de la voz en off (voz/<ID>.words.json), o null si el reel no tiene voz. */
+export function loadVoice(reel) {
+  if (!reel.voice?.src) return null;
+  const file = join(REELS, reel.voice.words || reel.voice.src.replace(/\.\w+$/, ".words.json"));
+  if (!existsSync(file)) throw new Error(`Falta ${file}: los subtítulos de un reel con voz salen de sus tiempos por palabra.`);
+  return JSON.parse(readFileSync(file, "utf8"));
+}
+
+/** Bloques de 2-3 palabras con los tiempos reales de la voz; corta también en fin de frase. */
+function voiceChunks(words, limit) {
+  // Primero por frase y por coma; luego cada frase en bloques parejos de 2-3
+  // palabras que quepan en una línea (~22 caracteres a 72 px).
+  const clauses = [];
+  let cur = [];
+  for (const w of words) {
+    cur.push(w);
+    if (/[.?!:,;]["”»]?$/.test(w.text)) { clauses.push(cur); cur = []; }
+  }
+  if (cur.length) clauses.push(cur);
+  const fits = (ws) => ws.map((x) => x.text).join(" ").length <= 22;
+  const out = [];
+  for (const c of clauses) {
+    for (let n = Math.ceil(c.length / 3); n <= c.length; n++) {
+      const parts = [];
+      for (let k = 0, i = 0; k < n; k++) {
+        const size = Math.floor(c.length / n) + (k < c.length % n ? 1 : 0);
+        parts.push(c.slice(i, i + size));
+        i += size;
+      }
+      if (parts.every(fits) || n === c.length) { out.push(...parts); break; }
+    }
+  }
+  // Una palabra suelta tras una coma se une al bloque anterior si cabe.
+  for (let i = out.length - 1; i > 0; i--) {
+    if (out[i].length === 1 && !/[.?!:]["”»]?$/.test(out[i - 1].at(-1).text) && fits([...out[i - 1], ...out[i]])) {
+      out[i - 1].push(...out.splice(i, 1)[0]);
+    }
+  }
+  return out.map((ws, i) => {
+    const next = out[i + 1]?.[0].start ?? Infinity;
+    const end = Math.min(next, ws[ws.length - 1].end + 0.5, limit);
+    return { start: ws[0].start, end: r2(end), words: ws.map((w) => ({ text: w.text, start: w.start, end: w.end })) };
+  });
+}
+
 export function plan(reel, variant = "ig") {
+  const voice = loadVoice(reel);
   const skip = new Set(variant === "tiktok" ? reel.variants?.tiktok?.skip || [] : []);
   // TikTok puede ir 1-2 s más corto: `variants.tiktok.trim` acorta escenas
-  // concretas ({"s2": 2.2}) y `skip` las quita.
+  // concretas ({"s2": 2.2}) y `skip` las quita. Con voz no se recorta: se
+  // desincronizaría la narración.
+  if (voice && variant === "tiktok" && (reel.variants?.tiktok?.trim || reel.variants?.tiktok?.skip)) {
+    throw new Error("Un reel con voz no admite variants.tiktok.trim ni skip: la narración dicta los tiempos.");
+  }
   const trim = variant === "tiktok" ? reel.variants?.tiktok?.trim || {} : {};
   const scenesIn = reel.scenes.map((s) => (trim[s.id] ? { ...s, dur: trim[s.id] } : s));
   if (reel.cta) scenesIn.push({ id: "cta", type: "cta", dur: reel.cta.dur || 2, clip: reel.cta.clip, from: reel.cta.from, zoom: reel.cta.zoom });
@@ -147,8 +197,18 @@ export function plan(reel, variant = "ig") {
   }
 
   // Subtítulos: el video se lee sin audio, así que cada escena trae su frase.
+  // Con voz, los subtítulos son las palabras dichas, con sus tiempos reales;
+  // `voice.captionsFrom` salta lo que ya dice el gancho en pantalla.
   const captions = [];
-  if (variant !== "cover") {
+  if (variant !== "cover" && voice) {
+    const from = Math.max(hook.end, reel.voice.captionsFrom ?? 0);
+    for (const s of scenes) {
+      // El texto cinético ya es el subtítulo de su escena.
+      if (["cta", "text", "cards"].includes(s.type)) continue;
+      const ws = voice.words.filter((w) => w.start >= Math.max(s.start, from) && w.start < s.end);
+      if (ws.length) captions.push(...voiceChunks(ws, s.end - 0.06));
+    }
+  } else if (variant !== "cover") {
     for (const s of scenes) {
       if (!s.caption && !s.captions) continue;
       const a = Math.max(s.start, s.start < hook.end ? hook.end + 0.05 : s.start) + 0.05;
@@ -224,13 +284,16 @@ export function build(id, variant = "ig") {
   if (missing.length) {
     throw new Error(`Faltan clips grabados: ${[...new Set(missing)].join(", ")}.\n  Grábalos con: npm run record -- ${[...new Set(missing.map((m) => m.split("/")[0]))].join(" ")}`);
   }
+  // La música no entra aquí: produce.mjs la mezcla con FFmpeg y la agacha bajo la voz.
   let audio = "";
-  if (reel.music?.src) {
-    const src = join(REELS, reel.music.src);
+  if (reel.voice?.src && variant !== "cover") {
+    const src = join(REELS, reel.voice.src);
     const name = basename(src);
-    copyIfNewer(src, join(dir, "assets", "music", name));
-    const vol = Math.pow(10, (reel.music.db ?? -20) / 20).toFixed(3);
-    audio = `      <audio id="music" src="assets/music/${name}" data-start="0" data-duration="${duration}" data-volume="${vol}" data-track-index="5"></audio>`;
+    copyIfNewer(src, join(dir, "assets", "voice", name));
+    const vol = Math.pow(10, (reel.voice.db ?? 0) / 20).toFixed(3);
+    const len = r2(Math.min(duration, loadVoice(reel).duration || duration));
+    audio += (audio ? "\n" : "") +
+      `      <audio id="voice" src="assets/voice/${name}" data-start="0" data-duration="${len}" data-volume="${vol}" data-track-index="6"></audio>`;
   }
 
   const fill = (tpl, map) => tpl.replace(/\{\{(\w+)\}\}/g, (_, k) => (k in map ? map[k] : `{{${k}}}`));

@@ -1,0 +1,251 @@
+{
+ "source": "Tiempos estimados con scripts/align-voice.mjs (silencios de FFmpeg + reparto por sílabas)",
+ "duration": 22.88,
+ "words": [
+  {
+   "text": "Admisiones",
+   "start": 0,
+   "end": 0.83
+  },
+  {
+   "text": "sin",
+   "start": 0.83,
+   "end": 1.04
+  },
+  {
+   "text": "papeles",
+   "start": 1.04,
+   "end": 1.66
+  },
+  {
+   "text": "ni",
+   "start": 1.66,
+   "end": 1.85
+  },
+  {
+   "text": "filas.",
+   "start": 1.85,
+   "end": 2.27
+  },
+  {
+   "text": "Esto",
+   "start": 2.75,
+   "end": 3.03
+  },
+  {
+   "text": "lo",
+   "start": 3.03,
+   "end": 3.17
+  },
+  {
+   "text": "construimos",
+   "start": 3.17,
+   "end": 3.64
+  },
+  {
+   "text": "para",
+   "start": 3.64,
+   "end": 3.92
+  },
+  {
+   "text": "una",
+   "start": 3.92,
+   "end": 4.19
+  },
+  {
+   "text": "institución",
+   "start": 4.19,
+   "end": 4.78
+  },
+  {
+   "text": "educativa",
+   "start": 4.78,
+   "end": 5.48
+  },
+  {
+   "text": "real:",
+   "start": 5.48,
+   "end": 5.64
+  },
+  {
+   "text": "Virginia",
+   "start": 6.01,
+   "end": 6.7
+  },
+  {
+   "text": "Sapp.",
+   "start": 6.7,
+   "end": 6.96
+  },
+  {
+   "text": "Necesitaban",
+   "start": 7.38,
+   "end": 8.16
+  },
+  {
+   "text": "más",
+   "start": 8.16,
+   "end": 8.32
+  },
+  {
+   "text": "que",
+   "start": 8.32,
+   "end": 8.49
+  },
+  {
+   "text": "una",
+   "start": 8.49,
+   "end": 8.78
+  },
+  {
+   "text": "página",
+   "start": 8.78,
+   "end": 9.24
+  },
+  {
+   "text": "web.",
+   "start": 9.24,
+   "end": 9.41
+  },
+  {
+   "text": "Hoy",
+   "start": 9.89,
+   "end": 10.07
+  },
+  {
+   "text": "su",
+   "start": 10.07,
+   "end": 10.24
+  },
+  {
+   "text": "presencia",
+   "start": 10.24,
+   "end": 10.77
+  },
+  {
+   "text": "institucional,",
+   "start": 10.77,
+   "end": 11.63
+  },
+  {
+   "text": "sus",
+   "start": 11.84,
+   "end": 12.02
+  },
+  {
+   "text": "admisiones,",
+   "start": 12.02,
+   "end": 12.71
+  },
+  {
+   "text": "sus",
+   "start": 12.71,
+   "end": 12.89
+  },
+  {
+   "text": "contenidos",
+   "start": 12.89,
+   "end": 13.58
+  },
+  {
+   "text": "y",
+   "start": 13.58,
+   "end": 13.73
+  },
+  {
+   "text": "sus",
+   "start": 13.73,
+   "end": 13.91
+  },
+  {
+   "text": "herramientas",
+   "start": 13.91,
+   "end": 14.63
+  },
+  {
+   "text": "interactivas",
+   "start": 14.63,
+   "end": 15.49
+  },
+  {
+   "text": "viven",
+   "start": 15.49,
+   "end": 15.83
+  },
+  {
+   "text": "en",
+   "start": 15.83,
+   "end": 16
+  },
+  {
+   "text": "una",
+   "start": 16,
+   "end": 16.32
+  },
+  {
+   "text": "sola",
+   "start": 16.32,
+   "end": 16.65
+  },
+  {
+   "text": "plataforma,",
+   "start": 16.65,
+   "end": 17.35
+  },
+  {
+   "text": "moderna",
+   "start": 17.73,
+   "end": 18.18
+  },
+  {
+   "text": "y",
+   "start": 18.18,
+   "end": 18.31
+  },
+  {
+   "text": "que",
+   "start": 18.31,
+   "end": 18.47
+  },
+  {
+   "text": "su",
+   "start": 18.47,
+   "end": 18.62
+  },
+  {
+   "text": "equipo",
+   "start": 18.62,
+   "end": 19.06
+  },
+  {
+   "text": "administra.",
+   "start": 19.06,
+   "end": 19.66
+  },
+  {
+   "text": "¿Tu",
+   "start": 20.14,
+   "end": 20.27
+  },
+  {
+   "text": "institución",
+   "start": 20.27,
+   "end": 20.82
+  },
+  {
+   "text": "necesita",
+   "start": 20.82,
+   "end": 21.35
+  },
+  {
+   "text": "esto?",
+   "start": 21.35,
+   "end": 21.61
+  },
+  {
+   "text": "Escríbenos.",
+   "start": 22.05,
+   "end": 22.69
+  }
+ ]
+}

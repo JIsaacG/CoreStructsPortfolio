@@ -1,0 +1,117 @@
+{
+  "id": "R03",
+  "title": "Tu página no pierde clientes por fea",
+  "format": "B",
+  "platform": "TikTok (principal) + Instagram Reels · Trial Reel",
+  "status": "listo con voz",
+  "keyword": "página web Honduras",
+  "hook": {
+    "text": "Tu página no pierde clientes por *fea*",
+    "dur": 1.8,
+    "variants": [
+      "Tu página no pierde clientes por *fea*",
+      "¿Tu página tarda en *abrir*?",
+      "Tu página te está costando *clientes*"
+    ]
+  },
+  "rehook": "Los pierde por tres cosas que sí se arreglan",
+  "voice": {
+    "src": "voz/R03.mp3",
+    "words": "voz/R03.words.json",
+    "captionsFrom": 2.9,
+    "db": 0,
+    "note": "ElevenLabs eleven_v4, voz Horacio - Seguro & Confiable (57D8YIbQSuE3REDPO6Vm). Tiempos por palabra de scripts/align-voice.mjs."
+  },
+  "scenes": [
+    {
+      "id": "p1",
+      "type": "text",
+      "dur": 6,
+      "kicker": "El problema",
+      "lines": [
+        "Los pierde por tres cosas que *sí* se arreglan"
+      ]
+    },
+    {
+      "id": "p2",
+      "type": "text",
+      "dur": 2.2,
+      "lines": [
+        "*Tarda* en abrir con datos móviles"
+      ]
+    },
+    {
+      "id": "p3",
+      "type": "text",
+      "dur": 2.1,
+      "lines": [
+        "En el teléfono hay que hacer *zoom*"
+      ]
+    },
+    {
+      "id": "p4",
+      "type": "text",
+      "dur": 2.2,
+      "lines": [
+        "Y nadie encuentra el *WhatsApp*"
+      ]
+    },
+    {
+      "id": "s1",
+      "type": "demo",
+      "dur": 3,
+      "clip": "velora/hero",
+      "from": 0.2,
+      "label": "La solución",
+      "caption": "Así se ve cuando está bien hecha: abre rápido",
+      "zoom": [
+        1,
+        1.06
+      ]
+    },
+    {
+      "id": "s2",
+      "type": "demo",
+      "dur": 3.6,
+      "clip": "velora/whatsapp",
+      "from": 0.6,
+      "label": "Contacto a un toque",
+      "caption": "Se lee sin zoom y el contacto siempre está a mano",
+      "zoom": [
+        1,
+        1.08
+      ],
+      "origin": "50% 45%"
+    }
+  ],
+  "cta": {
+    "text": "¿Tu negocio necesita esto? *Escríbenos*",
+    "dur": 2.9,
+    "clip": "velora/hero",
+    "from": 2
+  },
+  "music": {
+    "src": "music/bgm-pulso.mp3",
+    "db": -12
+  },
+  "copy": {
+    "cover": "Página web *Honduras*: el error",
+    "instagram": "La mayoría de las páginas no pierden clientes por feas, sino por lentas, por difíciles de leer en el teléfono o por esconder el WhatsApp.",
+    "instagramHashtags": [
+      "#paginaweb",
+      "#negocioshonduras",
+      "#diseñoweb",
+      "#tegucigalpa"
+    ],
+    "tiktok": "Página web Honduras: tres razones por las que tu sitio pierde clientes en el teléfono, y cómo se ve cuando están resueltas.",
+    "tiktokHashtags": [
+      "#paginawebhonduras",
+      "#diseñoweb",
+      "#negocioshonduras",
+      "#emprendedoreshonduras"
+    ],
+    "pinned": "Velocidad de carga, lectura en el teléfono y contacto directo por WhatsApp. Diseño de páginas web en Honduras para negocios y empresas.",
+    "time": "Viernes 16 de octubre, 5:00-7:00 p. m. hora de Honduras",
+    "trial": "Publicar primero como Trial Reel (solo no seguidores) y compartir con seguidores si funciona en 24 h."
+  }
+}

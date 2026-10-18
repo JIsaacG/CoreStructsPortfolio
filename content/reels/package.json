@@ -12,7 +12,8 @@
     "produce": "node scripts/produce.mjs",
     "qa": "node scripts/qa.mjs",
     "frames": "node scripts/frames.mjs",
-    "test:templates": "node scripts/test-templates.mjs"
+    "test:templates": "node scripts/test-templates.mjs",
+    "align": "node scripts/align-voice.mjs"
   },
   "engines": {
     "node": ">=22"

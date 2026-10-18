@@ -243,7 +243,7 @@ if (resolve(process.argv[1] || "") === resolve(new URL(import.meta.url).pathname
   for (const variant of ["ig", "tiktok"]) {
     const file = join(OUT, id, `${id}_${variant}.mp4`);
     const { duration } = plan(reel, variant);
-    sections.push([`Archivo ${variant}`, qaVideo(file, duration, Boolean(reel.music?.src))]);
+    sections.push([`Archivo ${variant}`, qaVideo(file, duration, Boolean(reel.music?.src || reel.voice?.src))]);
   }
   const comp = await qaComposition(id, "tiktok");
   sections.push(["Composición TikTok", comp.checks]);

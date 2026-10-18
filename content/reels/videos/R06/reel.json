@@ -1,0 +1,95 @@
+{
+  "id": "R06",
+  "title": "Un menú que se pide solo",
+  "format": "A",
+  "platform": "Instagram Reels (principal) + TikTok",
+  "status": "listo con voz",
+  "keyword": "menú digital restaurante",
+  "hook": {
+    "text": "Un menú que se pide *solo*",
+    "dur": 1.8,
+    "variants": [
+      "Un menú que se pide *solo*",
+      "Tu carta ya no es un *PDF*",
+      "¿Tus clientes todavía piden el menú *impreso*?"
+    ]
+  },
+  "rehook": "Sin descargar nada",
+  "voice": {
+    "src": "voz/R06.mp3",
+    "words": "voz/R06.words.json",
+    "captionsFrom": 2,
+    "db": 0,
+    "note": "ElevenLabs eleven_v4, voz Horacio - Seguro & Confiable (57D8YIbQSuE3REDPO6Vm). Tiempos por palabra de scripts/align-voice.mjs."
+  },
+  "scenes": [
+    {
+      "id": "s1",
+      "type": "demo",
+      "dur": 5,
+      "clip": "verbena/hero",
+      "from": 0,
+      "label": "Sin descargar nada",
+      "caption": "Se abre con un código QR, sin descargar nada",
+      "zoom": [
+        1,
+        1.05
+      ]
+    },
+    {
+      "id": "s2",
+      "type": "demo",
+      "dur": 2.3,
+      "clip": "verbena/sabores",
+      "from": 0.4,
+      "label": "La carta con fotos",
+      "caption": "Tus clientes ven la carta con fotos",
+      "zoom": [
+        1,
+        1.06
+      ]
+    },
+    {
+      "id": "s3",
+      "type": "demo",
+      "dur": 4.5,
+      "clip": "verbena/tienda",
+      "from": 1.5,
+      "label": "Eligen y piden",
+      "caption": "Eligen y piden. Y tú la actualizas desde tu teléfono",
+      "zoom": [
+        1,
+        1.06
+      ]
+    }
+  ],
+  "cta": {
+    "text": "¿Tu restaurante necesita esto? *Escríbenos*",
+    "dur": 3.1,
+    "clip": "verbena/hero",
+    "from": 1.5
+  },
+  "music": {
+    "src": "music/bgm-marimba.mp3",
+    "db": -12
+  },
+  "copy": {
+    "cover": "Menú digital *restaurante*",
+    "instagram": "Una carta digital que se abre con QR, muestra tus productos con foto y recibe pedidos, sin que tu cliente tenga que descargar nada.",
+    "instagramHashtags": [
+      "#restauranteshonduras",
+      "#menudigital",
+      "#gastronomiahonduras",
+      "#tegucigalpa"
+    ],
+    "tiktok": "Menú digital restaurante: se abre con QR, se actualiza desde el teléfono y recibe pedidos sin descargar ninguna app.",
+    "tiktokHashtags": [
+      "#menudigital",
+      "#restauranteshonduras",
+      "#menuqr",
+      "#emprendedoreshonduras"
+    ],
+    "pinned": "Carta digital con código QR, catálogo de productos y pedidos en línea para restaurantes, cafeterías y marcas de bebidas en Honduras.",
+    "time": "Viernes 23 de octubre, 5:00-7:00 p. m. hora de Honduras"
+  }
+}

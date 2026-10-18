@@ -287,6 +287,9 @@ window.CoreStructReel = { build: function () {
   $("#ec-handle").textContent = E.handle;
   if (P.cta) tl.to("#cta", { opacity: 0, duration: 0.2, ease: "power1.in" }, E.start);
   tl.fromTo("#endcard", { opacity: 0 }, { opacity: 1, duration: 0.22, ease: "power1.out", immediateRender: false }, E.start);
+  // El cierre se apaga mientras entra la tarjeta, para no quedar debajo de ella.
+  // (Se apagan las palabras, no el contenedor: `hyperframes check` mide cada una.)
+  if (P.cta) tl.to("#cta span", { opacity: 0, duration: 0.08, ease: "none" }, E.start);
   tl.fromTo("#endcard-logo", { opacity: 0, scale: 0.94 }, { opacity: 1, scale: 1, duration: 0.4, ease: "power3.out", immediateRender: false }, E.start + 0.05);
   tl.fromTo(".ec-anim", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out", stagger: 0.08, immediateRender: false }, E.start + 0.18);
 

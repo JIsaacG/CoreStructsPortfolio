@@ -1,7 +1,7 @@
 # R00 · Si diriges un colegio, mira esto
 
 - Formato: A · Instagram Reels (principal) + TikTok
-- Duración: Instagram 21.3 s · TikTok 20.1 s
+- Duración: Instagram 20.4 s · TikTok 20.4 s
 - Palabra clave: **página web para colegio** (en pantalla desde el segundo 0.15)
 - Gancho usado: "Si diriges un colegio, mira esto"
 - Variantes para A/B con Trial Reels: "¿Las familias encuentran tu colegio en el teléfono?" · "Tu colegio, completo en el teléfono"

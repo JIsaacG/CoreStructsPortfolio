@@ -150,6 +150,14 @@ async function recordShot(browser, url, key, demo, shot) {
   if (!shot.preroll) await cdp.send("Animation.setPlaybackRate", { playbackRate: RATE });
   await page.evaluate(() => document.fonts.ready);
 
+  // Preparación fuera de cámara: llevar la demo a un estado (enviar un
+  // formulario, abrir un panel) antes del primer fotograma.
+  for (const s of shot.setup || []) {
+    if (s.tap) await page.locator(s.tap).first().tap({ force: true, timeout: 5000 }).catch((e) => console.warn(`  ! setup tap ${s.tap}: ${e.message.split("\n")[0]}`));
+    if (s.scrollTo) await page.evaluate((y) => window.scrollTo({ top: y, behavior: "instant" }), await resolveY(page, s.scrollTo, 0));
+    if (s.wait) await runRealtime(page, cdp, s.wait * 1000);
+  }
+
   // Posición inicial de la cámara.
   let y = 0;
   if (shot.start) {

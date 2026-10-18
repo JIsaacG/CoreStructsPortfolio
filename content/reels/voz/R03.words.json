@@ -1,0 +1,306 @@
+{
+ "source": "Tiempos estimados con scripts/align-voice.mjs (silencios de FFmpeg + reparto por sílabas)",
+ "duration": 21.84,
+ "words": [
+  {
+   "text": "Tu",
+   "start": 0,
+   "end": 0.2
+  },
+  {
+   "text": "página",
+   "start": 0.2,
+   "end": 0.79
+  },
+  {
+   "text": "web",
+   "start": 0.79,
+   "end": 1
+  },
+  {
+   "text": "no",
+   "start": 1,
+   "end": 1.2
+  },
+  {
+   "text": "pierde",
+   "start": 1.2,
+   "end": 1.62
+  },
+  {
+   "text": "clientes",
+   "start": 1.62,
+   "end": 2.07
+  },
+  {
+   "text": "por",
+   "start": 2.07,
+   "end": 2.28
+  },
+  {
+   "text": "fea.",
+   "start": 2.28,
+   "end": 2.49
+  },
+  {
+   "text": "Los",
+   "start": 2.94,
+   "end": 3.13
+  },
+  {
+   "text": "pierde",
+   "start": 3.13,
+   "end": 3.52
+  },
+  {
+   "text": "por",
+   "start": 3.52,
+   "end": 3.71
+  },
+  {
+   "text": "tres",
+   "start": 3.87,
+   "end": 4.08
+  },
+  {
+   "text": "cosas",
+   "start": 4.08,
+   "end": 4.47
+  },
+  {
+   "text": "que",
+   "start": 4.47,
+   "end": 4.66
+  },
+  {
+   "text": "sí",
+   "start": 4.66,
+   "end": 4.85
+  },
+  {
+   "text": "se",
+   "start": 4.85,
+   "end": 5.04
+  },
+  {
+   "text": "arreglan.",
+   "start": 5.04,
+   "end": 5.62
+  },
+  {
+   "text": "Tarda",
+   "start": 6.21,
+   "end": 6.54
+  },
+  {
+   "text": "en",
+   "start": 6.54,
+   "end": 6.69
+  },
+  {
+   "text": "abrir",
+   "start": 6.69,
+   "end": 7.02
+  },
+  {
+   "text": "con",
+   "start": 7.02,
+   "end": 7.19
+  },
+  {
+   "text": "datos",
+   "start": 7.19,
+   "end": 7.51
+  },
+  {
+   "text": "móviles.",
+   "start": 7.51,
+   "end": 7.99
+  },
+  {
+   "text": "En",
+   "start": 8.4,
+   "end": 8.54
+  },
+  {
+   "text": "el",
+   "start": 8.54,
+   "end": 8.69
+  },
+  {
+   "text": "teléfono",
+   "start": 8.69,
+   "end": 9.27
+  },
+  {
+   "text": "hay",
+   "start": 9.27,
+   "end": 9.43
+  },
+  {
+   "text": "que",
+   "start": 9.43,
+   "end": 9.59
+  },
+  {
+   "text": "hacer",
+   "start": 9.59,
+   "end": 9.89
+  },
+  {
+   "text": "zoom.",
+   "start": 9.89,
+   "end": 10.05
+  },
+  {
+   "text": "Y",
+   "start": 10.46,
+   "end": 10.62
+  },
+  {
+   "text": "nadie",
+   "start": 10.62,
+   "end": 10.98
+  },
+  {
+   "text": "encuentra",
+   "start": 10.98,
+   "end": 11.54
+  },
+  {
+   "text": "el",
+   "start": 11.54,
+   "end": 11.71
+  },
+  {
+   "text": "WhatsApp.",
+   "start": 11.71,
+   "end": 12.11
+  },
+  {
+   "text": "Así",
+   "start": 12.68,
+   "end": 12.96
+  },
+  {
+   "text": "se",
+   "start": 12.96,
+   "end": 13.11
+  },
+  {
+   "text": "ve",
+   "start": 13.11,
+   "end": 13.26
+  },
+  {
+   "text": "cuando",
+   "start": 13.26,
+   "end": 13.57
+  },
+  {
+   "text": "está",
+   "start": 13.57,
+   "end": 13.86
+  },
+  {
+   "text": "bien",
+   "start": 13.86,
+   "end": 14.03
+  },
+  {
+   "text": "hecha:",
+   "start": 14.03,
+   "end": 14.33
+  },
+  {
+   "text": "abre",
+   "start": 14.73,
+   "end": 15.11
+  },
+  {
+   "text": "rápido,",
+   "start": 15.11,
+   "end": 15.68
+  },
+  {
+   "text": "se",
+   "start": 15.68,
+   "end": 15.86
+  },
+  {
+   "text": "lee",
+   "start": 15.86,
+   "end": 16.07
+  },
+  {
+   "text": "sin",
+   "start": 16.07,
+   "end": 16.27
+  },
+  {
+   "text": "zoom",
+   "start": 16.27,
+   "end": 16.48
+  },
+  {
+   "text": "y",
+   "start": 16.48,
+   "end": 16.66
+  },
+  {
+   "text": "el",
+   "start": 16.66,
+   "end": 16.85
+  },
+  {
+   "text": "contacto",
+   "start": 16.85,
+   "end": 17.44
+  },
+  {
+   "text": "siempre",
+   "start": 17.44,
+   "end": 17.85
+  },
+  {
+   "text": "está",
+   "start": 17.85,
+   "end": 18.23
+  },
+  {
+   "text": "a",
+   "start": 18.23,
+   "end": 18.41
+  },
+  {
+   "text": "mano.",
+   "start": 18.41,
+   "end": 18.78
+  },
+  {
+   "text": "¿Tu",
+   "start": 19.3,
+   "end": 19.43
+  },
+  {
+   "text": "negocio",
+   "start": 19.43,
+   "end": 19.84
+  },
+  {
+   "text": "necesita",
+   "start": 19.84,
+   "end": 20.37
+  },
+  {
+   "text": "esto?",
+   "start": 20.37,
+   "end": 20.63
+  },
+  {
+   "text": "Escríbenos.",
+   "start": 21.09,
+   "end": 21.84
+  }
+ ]
+}

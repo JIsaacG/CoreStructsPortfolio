@@ -4,13 +4,14 @@
  *
  *   npm run produce -- R00
  *   npm run produce -- R00 --record     # además vuelve a grabar las demos que usa
+ *   npm run produce -- R00 --remix      # solo rehace la mezcla de audio sobre el último render
  *
  * Pasos:
  *   1. (opcional) graba los clips de las demos que pide reel.json;
  *   2. por variante (TikTok e Instagram): build → `hyperframes check` sin
  *      hallazgos → render 1080x1920 a 30 fps;
- *   3. posproducción con FFmpeg: H.264 + AAC 48 kHz, -14 LUFS si hay audio
- *      (si no, pista AAC en silencio), faststart, ≤ 30 MB;
+ *   3. posproducción con FFmpeg: mezcla voz + música (la música se agacha
+ *      bajo la voz), H.264 + AAC 48 kHz, -14 LUFS, faststart, ≤ 30 MB;
  *   4. portada 1080x1920 en PNG con el texto de portada;
  *   5. <ID>_copy.md, hoja de fotogramas y control de calidad (<ID>_qa.md);
  *   6. actualiza out/INDEX.md.
@@ -63,16 +64,51 @@ function hasAudioStream(file) {
   return r.stdout.trim().length > 0;
 }
 
-function finish(src, dst, withMusic) {
+/** Loudness integrada (LUFS) de un archivo, para dejar la música a una distancia fija de la voz. */
+function lufs(file) {
+  const r = spawnSync("ffmpeg", ["-hide_banner", "-nostats", "-i", file, "-af", "ebur128", "-f", "null", "-"], { encoding: "utf8" });
+  const m = [...r.stderr.matchAll(/I:\s+(-?[\d.]+)\s+LUFS/g)].pop();
+  return m ? Number(m[1]) : null;
+}
+
+/**
+ * Cadena de audio. La música no va en la composición: se mezcla aquí.
+ * - Con voz: la música queda `music.db` dB por debajo de la voz (-12 por
+ *   defecto) y además se agacha mientras la voz habla (sidechain), con
+ *   entrada y salida suaves. Luego todo a -14 LUFS.
+ * - Sin voz: la música es el audio; se normaliza a -14 LUFS.
+ * - Sin nada: pista AAC en silencio para cumplir el formato de entrega.
+ */
+function audioArgs(src, duration) {
+  const voice = hasAudioStream(src) && Boolean(reel.voice?.src);
+  const music = reel.music?.src ? join(REELS, reel.music.src) : null;
+  if (music && !existsSync(music)) fail(`Falta la música ${music}`);
+  const norm = "loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000";
+  const fade = `afade=t=in:d=0.4,afade=t=out:st=${Math.max(0, duration - 0.9).toFixed(2)}:d=0.9`;
+  if (music && voice) {
+    const voiceL = lufs(join(REELS, reel.voice.src)) ?? -18;
+    const musicL = lufs(music) ?? -14;
+    const gain = (voiceL + (reel.music.db ?? -12) - musicL).toFixed(1);
+    return ["-stream_loop", "-1", "-i", music, "-filter_complex",
+      `[1:a]aresample=48000,atrim=0:${duration},volume=${gain}dB,${fade}[m];` +
+      `[0:a]aresample=48000,asplit=2[v][sc];` +
+      `[m][sc]sidechaincompress=threshold=0.02:ratio=4:attack=20:release=300:makeup=1[md];` +
+      `[v][md]amix=inputs=2:normalize=0:duration=first,${norm}[a]`,
+      "-map", "0:v:0", "-map", "[a]"];
+  }
+  if (music) {
+    return ["-stream_loop", "-1", "-i", music, "-filter_complex",
+      `[1:a]aresample=48000,atrim=0:${duration},${fade},${norm}[a]`, "-map", "0:v:0", "-map", "[a]"];
+  }
+  if (voice) return ["-map", "0:v:0", "-map", "0:a:0", "-af", norm];
+  return ["-f", "lavfi", "-i", "anullsrc=r=48000:cl=stereo", "-map", "0:v:0", "-map", "1:a:0", "-shortest"];
+}
+
+function finish(src, dst, duration) {
   for (let crf = 18; crf <= 30; crf += 2) {
-    const a = ["-y", "-loglevel", "error", "-i", src];
-    if (withMusic && hasAudioStream(src)) {
-      a.push("-map", "0:v:0", "-map", "0:a:0", "-af", "loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000");
-    } else {
-      // Sin voz ni música: pista AAC en silencio para cumplir el formato de entrega.
-      a.push("-f", "lavfi", "-i", "anullsrc=r=48000:cl=stereo", "-map", "0:v:0", "-map", "1:a:0", "-shortest");
-    }
+    const a = ["-y", "-loglevel", "error", "-i", src, ...audioArgs(src, duration)];
     a.push(
+      "-t", String(duration),
       "-c:v", "libx264", "-preset", "slow", "-crf", String(crf), "-profile:v", "high", "-pix_fmt", "yuv420p",
       "-r", "30", "-g", "60", "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-movflags", "+faststart", dst,
     );
@@ -86,8 +122,19 @@ function finish(src, dst, withMusic) {
 }
 
 /* 2 ------------------------------------------------- build, check, render */
-const withMusic = Boolean(reel.music?.src);
+const withAudio = Boolean(reel.music?.src || reel.voice?.src);
+// --remix: reutiliza el render de tmp/render y solo rehace audio, exportación y QA
+// (para ajustar la mezcla sin volver a capturar fotogramas).
+const remix = args.includes("--remix");
 for (const variant of ["tiktok", "ig"]) {
+  const raw = join(TMP, "render", `${id}_${variant}.mp4`);
+  if (remix && existsSync(raw)) {
+    const { duration } = plan(reel, variant);
+    step(`${id} · ${variant}: remezcla (render reutilizado)`);
+    const res = finish(raw, join(outDir, `${id}_${variant}.mp4`), duration);
+    console.log(`  · ${id}_${variant}.mp4: ${res.mb.toFixed(2)} MB (CRF ${res.crf})`);
+    continue;
+  }
   step(`${id} · ${variant}: build`);
   const { dir, duration } = build(id, variant);
   step(`${id} · ${variant}: hyperframes check`);
@@ -98,11 +145,10 @@ for (const variant of ["tiktok", "ig"]) {
   }
   console.log("  · check limpio: 0 hallazgos");
   step(`${id} · ${variant}: render (${duration} s)`);
-  const raw = join(TMP, "render", `${id}_${variant}.mp4`);
   const r = hf(["render", dir, "--output", raw, "--fps", "30", "--quality", "delivery", "--video-frame-format", "png"]);
   if (r.status !== 0 || !existsSync(raw)) fail(`El render de ${variant} falló (código ${r.status}).`);
   step(`${id} · ${variant}: posproducción`);
-  const res = finish(raw, join(outDir, `${id}_${variant}.mp4`), withMusic);
+  const res = finish(raw, join(outDir, `${id}_${variant}.mp4`), duration);
   console.log(`  · ${id}_${variant}.mp4: ${res.mb.toFixed(2)} MB (CRF ${res.crf})`);
 }
 
@@ -170,8 +216,8 @@ writeFileSync(join(outDir, `${id}_copy.md`), copyMd);
 contactSheet(join(outDir, `${id}_ig.mp4`), null, join(outDir, `${id}_frames.png`), 300);
 
 const sections = [];
-sections.push(["Archivo Instagram", qaVideo(join(outDir, `${id}_ig.mp4`), igPlan.duration, withMusic)]);
-sections.push(["Archivo TikTok", qaVideo(join(outDir, `${id}_tiktok.mp4`), ttPlan.duration, withMusic)]);
+sections.push(["Archivo Instagram", qaVideo(join(outDir, `${id}_ig.mp4`), igPlan.duration, withAudio)]);
+sections.push(["Archivo TikTok", qaVideo(join(outDir, `${id}_tiktok.mp4`), ttPlan.duration, withAudio)]);
 const compTt = await qaComposition(id, "tiktok");
 sections.push(["Composición TikTok", compTt.checks]);
 const compIg = await qaComposition(id, "ig");

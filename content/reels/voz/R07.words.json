@@ -1,0 +1,176 @@
+{
+ "source": "Tiempos estimados con scripts/align-voice.mjs (silencios de FFmpeg + reparto por sílabas)",
+ "duration": 15.04,
+ "words": [
+  {
+   "text": "Así",
+   "start": 0,
+   "end": 0.3
+  },
+  {
+   "text": "luce",
+   "start": 0.3,
+   "end": 0.61
+  },
+  {
+   "text": "un",
+   "start": 0.61,
+   "end": 0.77
+  },
+  {
+   "text": "portal",
+   "start": 0.77,
+   "end": 1.1
+  },
+  {
+   "text": "de",
+   "start": 1.1,
+   "end": 1.25
+  },
+  {
+   "text": "gobierno",
+   "start": 1.25,
+   "end": 1.74
+  },
+  {
+   "text": "moderno.",
+   "start": 1.74,
+   "end": 2.22
+  },
+  {
+   "text": "Todo",
+   "start": 2.72,
+   "end": 3
+  },
+  {
+   "text": "lo",
+   "start": 3,
+   "end": 3.14
+  },
+  {
+   "text": "que",
+   "start": 3.14,
+   "end": 3.29
+  },
+  {
+   "text": "un",
+   "start": 3.29,
+   "end": 3.43
+  },
+  {
+   "text": "ciudadano",
+   "start": 3.43,
+   "end": 3.99
+  },
+  {
+   "text": "busca,",
+   "start": 3.99,
+   "end": 4.28
+  },
+  {
+   "text": "a",
+   "start": 4.47,
+   "end": 4.61
+  },
+  {
+   "text": "un",
+   "start": 4.61,
+   "end": 4.77
+  },
+  {
+   "text": "toque:",
+   "start": 4.77,
+   "end": 5.08
+  },
+  {
+   "text": "normativa,",
+   "start": 5.47,
+   "end": 6.17
+  },
+  {
+   "text": "transparencia",
+   "start": 6.17,
+   "end": 6.93
+  },
+  {
+   "text": "y",
+   "start": 6.93,
+   "end": 7.09
+  },
+  {
+   "text": "participación",
+   "start": 7.09,
+   "end": 7.99
+  },
+  {
+   "text": "ciudadana,",
+   "start": 7.99,
+   "end": 8.69
+  },
+  {
+   "text": "en",
+   "start": 8.99,
+   "end": 9.14
+  },
+  {
+   "text": "secciones",
+   "start": 9.14,
+   "end": 9.62
+  },
+  {
+   "text": "claras",
+   "start": 9.62,
+   "end": 9.94
+  },
+  {
+   "text": "y",
+   "start": 9.94,
+   "end": 10.08
+  },
+  {
+   "text": "accesibles",
+   "start": 10.08,
+   "end": 10.7
+  },
+  {
+   "text": "desde",
+   "start": 10.7,
+   "end": 11.01
+  },
+  {
+   "text": "el",
+   "start": 11.01,
+   "end": 11.16
+  },
+  {
+   "text": "teléfono.",
+   "start": 11.16,
+   "end": 11.76
+  },
+  {
+   "text": "¿Tu",
+   "start": 12.26,
+   "end": 12.39
+  },
+  {
+   "text": "institución",
+   "start": 12.39,
+   "end": 12.94
+  },
+  {
+   "text": "necesita",
+   "start": 12.94,
+   "end": 13.47
+  },
+  {
+   "text": "esto?",
+   "start": 13.47,
+   "end": 13.73
+  },
+  {
+   "text": "Escríbenos.",
+   "start": 14.21,
+   "end": 15.04
+  }
+ ]
+}

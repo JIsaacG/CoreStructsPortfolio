@@ -1,0 +1,101 @@
+{
+  "id": "R05",
+  "title": "Tus procesos viven en Excel y correos",
+  "format": "C",
+  "platform": "TikTok (principal) + Instagram Reels · Trial Reel",
+  "status": "listo con voz",
+  "keyword": "automatización de procesos",
+  "hook": {
+    "text": "Tus procesos viven en *Excel* y correos",
+    "dur": 1.8,
+    "variants": [
+      "Tus procesos viven en *Excel* y correos",
+      "¿Quién aprobó esto y *cuándo*?",
+      "Así se ve un proceso *ordenado*"
+    ]
+  },
+  "rehook": "Mira el mismo proceso, ordenado",
+  "voice": {
+    "src": "voz/R05.mp3",
+    "words": "voz/R05.words.json",
+    "captionsFrom": 3.4,
+    "db": 0,
+    "note": "ElevenLabs eleven_v4, voz Horacio - Seguro & Confiable (57D8YIbQSuE3REDPO6Vm). Tiempos por palabra de scripts/align-voice.mjs."
+  },
+  "scenes": [
+    {
+      "id": "w1",
+      "type": "wipe",
+      "dur": 5.9,
+      "wipeAt": 4.5,
+      "clip": "flujo/ejecutar",
+      "from": 0,
+      "before": {
+        "title": "Solicitudes (versión final 3)",
+        "popTitle": "Aviso",
+        "popText": "Revise su correo para ver el estado de su solicitud."
+      },
+      "caption": "Mira el mismo proceso, ordenado",
+      "zoom": [
+        1,
+        1.05
+      ]
+    },
+    {
+      "id": "s2",
+      "type": "demo",
+      "dur": 3.7,
+      "clip": "flujo/aprobar",
+      "from": 0,
+      "label": "Aprobación a quien le toca",
+      "caption": "Cada solicitud con su estado, la aprobación llega a quien le toca",
+      "zoom": [
+        1,
+        1.06
+      ]
+    },
+    {
+      "id": "s3",
+      "type": "demo",
+      "dur": 3.6,
+      "clip": "flujo/documento",
+      "from": 0.4,
+      "label": "Documento generado",
+      "caption": "El documento se genera solo y todo queda registrado",
+      "zoom": [
+        1,
+        1.06
+      ]
+    }
+  ],
+  "cta": {
+    "text": "¿Tu equipo necesita esto? *Escríbenos*",
+    "dur": 2.8,
+    "clip": "flujo/hero",
+    "from": 0.5
+  },
+  "music": {
+    "src": "music/bgm-pulso.mp3",
+    "db": -12
+  },
+  "copy": {
+    "cover": "Automatización de *procesos*",
+    "instagram": "Solicitudes, aprobaciones y documentos que hoy viven en correos y hojas de cálculo, ordenados en un flujo con estados y responsables.",
+    "instagramHashtags": [
+      "#automatizacion",
+      "#empresashonduras",
+      "#procesos",
+      "#transformaciondigital"
+    ],
+    "tiktok": "Automatización de procesos: de correos y hojas de Excel sueltas a solicitudes con estado, aprobación y trazabilidad.",
+    "tiktokHashtags": [
+      "#automatizaciondeprocesos",
+      "#empresashonduras",
+      "#pymeshonduras",
+      "#productividad"
+    ],
+    "pinned": "Flujos de aprobación, documentos generados y trazabilidad de cada solicitud. Automatización de procesos internos para empresas en Honduras.",
+    "time": "Miércoles 21 de octubre, 11:00 a. m.-1:00 p. m. hora de Honduras",
+    "trial": "Publicar primero como Trial Reel (solo no seguidores) y compartir con seguidores si funciona en 24 h."
+  }
+}

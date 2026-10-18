@@ -1,0 +1,271 @@
+{
+ "source": "Tiempos estimados con scripts/align-voice.mjs (silencios de FFmpeg + reparto por sílabas)",
+ "duration": 19.12,
+ "words": [
+  {
+   "text": "¿Tus",
+   "start": 0,
+   "end": 0.19
+  },
+  {
+   "text": "clientes",
+   "start": 0.19,
+   "end": 0.58
+  },
+  {
+   "text": "entran",
+   "start": 0.58,
+   "end": 0.96
+  },
+  {
+   "text": "a",
+   "start": 0.96,
+   "end": 1.12
+  },
+  {
+   "text": "tu",
+   "start": 1.12,
+   "end": 1.29
+  },
+  {
+   "text": "página",
+   "start": 1.29,
+   "end": 1.82
+  },
+  {
+   "text": "web",
+   "start": 1.82,
+   "end": 2
+  },
+  {
+   "text": "y",
+   "start": 2,
+   "end": 2.17
+  },
+  {
+   "text": "no",
+   "start": 2.17,
+   "end": 2.34
+  },
+  {
+   "text": "saben",
+   "start": 2.34,
+   "end": 2.7
+  },
+  {
+   "text": "cómo",
+   "start": 2.7,
+   "end": 3.05
+  },
+  {
+   "text": "contactarte?",
+   "start": 3.05,
+   "end": 3.79
+  },
+  {
+   "text": "En",
+   "start": 4.44,
+   "end": 4.6
+  },
+  {
+   "text": "Honduras",
+   "start": 4.6,
+   "end": 5.12
+  },
+  {
+   "text": "el",
+   "start": 5.12,
+   "end": 5.29
+  },
+  {
+   "text": "primer",
+   "start": 5.29,
+   "end": 5.65
+  },
+  {
+   "text": "contacto",
+   "start": 5.65,
+   "end": 6.17
+  },
+  {
+   "text": "no",
+   "start": 6.17,
+   "end": 6.34
+  },
+  {
+   "text": "es",
+   "start": 6.34,
+   "end": 6.5
+  },
+  {
+   "text": "un",
+   "start": 6.5,
+   "end": 6.67
+  },
+  {
+   "text": "formulario:",
+   "start": 6.67,
+   "end": 7.36
+  },
+  {
+   "text": "es",
+   "start": 7.73,
+   "end": 7.89
+  },
+  {
+   "text": "un",
+   "start": 7.89,
+   "end": 8.06
+  },
+  {
+   "text": "mensaje",
+   "start": 8.06,
+   "end": 8.57
+  },
+  {
+   "text": "de",
+   "start": 8.57,
+   "end": 8.74
+  },
+  {
+   "text": "WhatsApp.",
+   "start": 8.74,
+   "end": 9.12
+  },
+  {
+   "text": "Por",
+   "start": 9.69,
+   "end": 9.84
+  },
+  {
+   "text": "eso",
+   "start": 9.84,
+   "end": 10.12
+  },
+  {
+   "text": "el",
+   "start": 10.12,
+   "end": 10.26
+  },
+  {
+   "text": "camino",
+   "start": 10.26,
+   "end": 10.69
+  },
+  {
+   "text": "a",
+   "start": 10.69,
+   "end": 10.82
+  },
+  {
+   "text": "una",
+   "start": 10.82,
+   "end": 11.1
+  },
+  {
+   "text": "conversación",
+   "start": 11.1,
+   "end": 11.72
+  },
+  {
+   "text": "se",
+   "start": 11.72,
+   "end": 11.86
+  },
+  {
+   "text": "diseña",
+   "start": 11.86,
+   "end": 12.29
+  },
+  {
+   "text": "primero.",
+   "start": 12.29,
+   "end": 12.73
+  },
+  {
+   "text": "Un",
+   "start": 13.16,
+   "end": 13.32
+  },
+  {
+   "text": "toque,",
+   "start": 13.32,
+   "end": 13.65
+  },
+  {
+   "text": "y",
+   "start": 13.91,
+   "end": 14.04
+  },
+  {
+   "text": "ya",
+   "start": 14.04,
+   "end": 14.17
+  },
+  {
+   "text": "estás",
+   "start": 14.17,
+   "end": 14.45
+  },
+  {
+   "text": "hablando",
+   "start": 14.45,
+   "end": 14.88
+  },
+  {
+   "text": "con",
+   "start": 14.88,
+   "end": 15.03
+  },
+  {
+   "text": "quien",
+   "start": 15.03,
+   "end": 15.19
+  },
+  {
+   "text": "te",
+   "start": 15.19,
+   "end": 15.33
+  },
+  {
+   "text": "va",
+   "start": 15.33,
+   "end": 15.46
+  },
+  {
+   "text": "a",
+   "start": 15.46,
+   "end": 15.59
+  },
+  {
+   "text": "atender.",
+   "start": 15.59,
+   "end": 16.01
+  },
+  {
+   "text": "¿Tu",
+   "start": 16.5,
+   "end": 16.63
+  },
+  {
+   "text": "negocio",
+   "start": 16.63,
+   "end": 17.04
+  },
+  {
+   "text": "necesita",
+   "start": 17.04,
+   "end": 17.56
+  },
+  {
+   "text": "esto?",
+   "start": 17.56,
+   "end": 17.82
+  },
+  {
+   "text": "Escríbenos.",
+   "start": 18.29,
+   "end": 18.97
+  }
+ ]
+}

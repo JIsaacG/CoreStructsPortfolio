@@ -1,0 +1,94 @@
+{
+  "id": "R04",
+  "title": "Admisiones sin papeles ni filas (caso real)",
+  "format": "D",
+  "platform": "Instagram Reels (principal) + TikTok",
+  "status": "listo con voz · sin tomas de la plataforma hasta tener permiso de Virginia Sapp",
+  "keyword": "plataforma educativa",
+  "hook": {
+    "text": "Admisiones sin *papeles* ni filas",
+    "dur": 1.8,
+    "variants": [
+      "Admisiones sin *papeles* ni filas",
+      "Más que una *página web*",
+      "Así se ordenó una institución *educativa*"
+    ]
+  },
+  "rehook": "Caso real: una institución que necesitaba más que una página web",
+  "scenes": [
+    {
+      "id": "n1",
+      "type": "text",
+      "dur": 7.2,
+      "kicker": "Caso real · Virginia Sapp",
+      "lines": [
+        "Esto lo construimos para una institución *real*"
+      ]
+    },
+    {
+      "id": "n2",
+      "type": "text",
+      "dur": 2.5,
+      "lines": [
+        "Necesitaban más que una *página web*"
+      ]
+    },
+    {
+      "id": "c1",
+      "type": "cards",
+      "dur": 7.8,
+      "kicker": "Hoy, en una sola plataforma",
+      "lines": [
+        "Una plataforma educativa digital"
+      ],
+      "items": [
+        "Presencia institucional",
+        "Admisiones",
+        "Contenidos y recursos",
+        "Herramientas interactivas"
+      ]
+    },
+    {
+      "id": "n3",
+      "type": "text",
+      "dur": 2.5,
+      "lines": [
+        "Moderna y *administrable* por su equipo"
+      ]
+    }
+  ],
+  "cta": {
+    "text": "¿Tu institución necesita esto? *Escríbenos*",
+    "dur": 3.2
+  },
+  "music": {
+    "src": "music/bgm-marimba.mp3",
+    "db": -12
+  },
+  "copy": {
+    "cover": "Plataforma *educativa* real",
+    "instagram": "Para Virginia Sapp construimos una plataforma educativa que va más allá de una página web: institución, admisiones y recursos en un solo lugar.",
+    "instagramHashtags": [
+      "#educacionhonduras",
+      "#plataformaeducativa",
+      "#colegioshonduras",
+      "#transformaciondigital"
+    ],
+    "tiktok": "Plataforma educativa real: admisiones, contenidos y herramientas interactivas en un solo lugar para una institución de Honduras.",
+    "tiktokHashtags": [
+      "#plataformaeducativa",
+      "#educacionhonduras",
+      "#colegioshonduras",
+      "#edtech"
+    ],
+    "pinned": "Caso real Virginia Sapp: presencia institucional, admisiones en línea, contenidos y recursos académicos y herramientas interactivas, administrable por la institución.",
+    "time": "Lunes 19 de octubre, 7:00-9:00 a. m. hora de Honduras"
+  },
+  "voice": {
+    "src": "voz/R04.mp3",
+    "words": "voz/R04.words.json",
+    "captionsFrom": 2,
+    "db": 0,
+    "note": "ElevenLabs eleven_v4, voz Horacio - Seguro & Confiable (57D8YIbQSuE3REDPO6Vm). Tiempos por palabra de scripts/align-voice.mjs."
+  }
+}

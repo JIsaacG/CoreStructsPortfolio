@@ -2,6 +2,8 @@
 
 Produce Reels de Instagram y videos de TikTok de 1080x1920 a partir de las demos reales del sitio, con HyperFrames (video desde HTML + CSS + GSAP). El manual completo, las reglas y el enfoque necesidad → solución están en `PROMPT_REELS.md` (raíz de esta rama).
 
+**Antes de producir o publicar, lee [`MEJORA.md`](MEJORA.md):** reglas aprendidas, lista de verificación, rúbrica de 20 puntos y ciclo de mejora semanal.
+
 > Todo esto vive en la rama `contenido/reels`. **Nunca en `main`**: el sitio se publica desde `main` y los videos acabarían en el hosting.
 
 ## Un video nuevo, con un solo comando
@@ -39,8 +41,10 @@ Sin `--record` usa los clips ya grabados en `raw/clips/`. El sitio tiene que est
 | `npm run build -- <ID> [ig\|tiktok\|cover]` | Genera `videos/<ID>/index.html` (proyecto HyperFrames) |
 | `npm run preview -- <ID>` | Abre el video en HyperFrames Studio |
 | `npm run produce -- <ID> [--record]` | Todo el flujo: build → check → render → FFmpeg → portada → copy → QA → INDEX |
+| `npm run produce -- <ID> --remix` | Rehace solo la mezcla de audio (voz + música) sobre el último render, en ~1 min |
 | `npm run qa -- <ID>` | Repite solo el control de calidad |
 | `npm run frames -- <video.mp4> [t1,t2,…]` | Hoja de fotogramas de cualquier video |
+| `npm run align -- <ID> "texto"` | Tiempos por palabra de `voz/<ID>.mp3` (`--check` lo compara con el JSON existente) |
 | `npm run test:templates` | Arma el ejemplo de cada plantilla, corre `hyperframes check` y saca fotogramas a `tmp/plantillas/` |
 
 ## Cómo está armado
@@ -62,6 +66,8 @@ content/reels/
     build.mjs            reel.json → proyecto HyperFrames
     produce.mjs          el comando único
     qa.mjs               control de calidad
+  music/                 música de fondo libre de regalías (generada con vidIQ): bgm-pulso, bgm-marimba
+  voz/                   voz en off (<ID>.mp3) y sus tiempos por palabra (<ID>.words.json)
   videos/<ID>/           reel.json (se edita) + index.html (generado) + assets/ (generado, no se sube)
   out/<ID>/              entregables finales (sí se suben) + INDEX.md
   raw/                   grabaciones crudas y clips de cara a cámara (no se suben)
@@ -83,8 +89,19 @@ Lo único que se edita a mano. Campos principales:
   - `face`: clip propio de cara a cámara, `clip: "raw:cara-01.mp4"` (formato E).
 - `cta`: invitación suave final (`¿Tu negocio necesita esto? *Escríbenos*`), con o sin `clip`.
 - `variants.tiktok`: `trim` (acortar escenas) y `skip` (quitarlas).
-- `music`: `null`, o `{ "src": "music/archivo.mp3", "db": -20 }` con licencia clara.
+- `music`: `{ "src": "music/bgm-pulso.mp3", "db": -12 }` (o `bgm-marimba.mp3`, alternando). `db` es cuánto queda la música por debajo de la voz; `produce` la mezcla con FFmpeg y la agacha mientras la voz habla. No entra en la composición, así que el preview de Studio no la reproduce.
+- `voice`: voz en off, `{ "src": "voz/R00.mp3", "words": "voz/R00.words.json", "captionsFrom": 3.0, "db": 0 }`. Con voz, los subtítulos salen de los tiempos reales por palabra (la `caption` de cada escena queda solo como referencia), `captionsFrom` evita repetir lo que ya dice el gancho y la escena de cierre no lleva subtítulo. Las escenas se cortan en las pausas de la voz, y `variants.tiktok.trim`/`skip` no se admiten porque desincronizarían la narración.
 - `copy`: textos de portada, captions, hashtags, comentario fijado, hora.
+
+### Voz en off
+
+Desde una sesión de Claude Code con el conector de ElevenLabs:
+
+1. Generar la voz del guion (`guiones.md`) con `creative_generate_speech` (eleven_v4, 1 toma; ~210-340 créditos según el largo) y descargarla a `voz/<ID>.mp3`.
+2. Sacar los tiempos por palabra: `npm run align -- <ID> "texto exacto del guion"` escribe `voz/<ID>.words.json` a partir de las pausas reales del audio (FFmpeg) y el reparto por sílabas, sin gastar créditos; frente a la transcripción de ElevenLabs en R00 se desvía 69 ms en promedio (`npm run align -- R00 --check`). Generar **una voz a la vez**: seis en paralelo hicieron que ElevenLabs bloqueara la cuenta gratis.
+3. Cortar las escenas en las pausas de la voz y agregar `voice` a `reel.json`.
+
+`produce` normaliza la mezcla a -14 LUFS y `qa` la mide.
 
 ### Grabación de demos
 
@@ -108,7 +125,6 @@ Para agregar tomas (formularios, gráficas, menú móvil de otra demo) se edita 
 
 ## Pendiente (lado del usuario)
 
-- Voz: ElevenLabs no estaba conectado en la sesión que montó esto. Elegir voz (ElevenLabs o clonar la propia) y conectar el MCP; entonces se agrega la pista de voz y los subtítulos se sincronizan con sus tiempos por palabra.
-- vidIQ: validar `research.md` en una sesión donde el conector esté disponible.
+- Voz: los 7 videos (R00, R02-R07) usan Horacio de ElevenLabs (`57D8YIbQSuE3REDPO6Vm`, eleven_v4). Generar siempre de una en una: en paralelo, ElevenLabs bloqueó la cuenta gratis.
 - Clips de cara a cámara (3-5 s) en `raw/` para el formato E.
 - Permiso de Virginia Sapp para mostrar su logo y su plataforma (formato D usa solo texto hasta entonces).

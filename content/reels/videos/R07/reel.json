@@ -1,0 +1,123 @@
+{
+  "id": "R07",
+  "title": "Así luce un portal de gobierno moderno",
+  "format": "A",
+  "platform": "Instagram Reels (principal) + TikTok",
+  "status": "listo con voz",
+  "keyword": "portal de gobierno",
+  "hook": {
+    "text": "Así luce un portal de gobierno *moderno*",
+    "dur": 1.8,
+    "variants": [
+      "Así luce un portal de gobierno *moderno*",
+      "¿Tu institución pública se entiende en el *teléfono*?",
+      "Transparencia que se encuentra en un *toque*"
+    ]
+  },
+  "rehook": "Todo lo que un ciudadano busca, a un toque",
+  "scenes": [
+    {
+      "id": "s1",
+      "type": "demo",
+      "dur": 2.7,
+      "clip": "cede/hero",
+      "from": 0.3,
+      "label": "Portal institucional",
+      "caption": "Así luce un portal de gobierno moderno",
+      "zoom": [
+        1,
+        1.05
+      ]
+    },
+    {
+      "id": "s2",
+      "type": "demo",
+      "dur": 2.5,
+      "clip": "cede/menu",
+      "from": 0.4,
+      "label": "Navegación clara",
+      "caption": "Todo lo que un ciudadano busca, a un toque",
+      "zoom": [
+        1,
+        1.06
+      ],
+      "origin": "50% 15%"
+    },
+    {
+      "id": "s3",
+      "type": "demo",
+      "dur": 0.9,
+      "clip": "cede/normativa",
+      "from": 3.2,
+      "label": "Normativa",
+      "caption": "Normativa",
+      "zoom": [
+        1.04,
+        1.08
+      ],
+      "origin": "50% 30%"
+    },
+    {
+      "id": "s4",
+      "type": "demo",
+      "dur": 0.9,
+      "clip": "cede/transparencia",
+      "from": 2.2,
+      "label": "Transparencia",
+      "caption": "Transparencia",
+      "zoom": [
+        1,
+        1.04
+      ]
+    },
+    {
+      "id": "s5",
+      "type": "demo",
+      "dur": 5.1,
+      "clip": "cede/participacion",
+      "from": 0.8,
+      "label": "Participación ciudadana",
+      "caption": "Participación ciudadana, clara desde el teléfono",
+      "zoom": [
+        1,
+        1.07
+      ]
+    }
+  ],
+  "cta": {
+    "text": "¿Tu institución necesita esto? *Escríbenos*",
+    "dur": 3.2,
+    "clip": "cede/hero",
+    "from": 1.5
+  },
+  "music": {
+    "src": "music/bgm-pulso.mp3",
+    "db": -12
+  },
+  "copy": {
+    "cover": "Portal de *gobierno* moderno",
+    "instagram": "Un portal institucional con normativa, transparencia y participación ciudadana que se entiende desde el teléfono y cumple con accesibilidad.",
+    "instagramHashtags": [
+      "#gobiernodigital",
+      "#transparencia",
+      "#honduras",
+      "#portalinstitucional"
+    ],
+    "tiktok": "Portal de gobierno moderno: normativa, transparencia y participación ciudadana en secciones claras, accesibles desde el teléfono.",
+    "tiktokHashtags": [
+      "#portalgubernamental",
+      "#gobiernodigital",
+      "#transparencia",
+      "#honduras"
+    ],
+    "pinned": "Portales institucionales y gubernamentales con normativa, transparencia, observatorio y participación ciudadana, con requisitos de accesibilidad.",
+    "time": "Lunes 26 de octubre, 11:00 a. m.-1:00 p. m. hora de Honduras"
+  },
+  "voice": {
+    "src": "voz/R07.mp3",
+    "words": "voz/R07.words.json",
+    "captionsFrom": 2,
+    "db": 0,
+    "note": "ElevenLabs eleven_v4, voz Horacio - Seguro & Confiable (57D8YIbQSuE3REDPO6Vm). Tiempos por palabra de scripts/align-voice.mjs."
+  }
+}

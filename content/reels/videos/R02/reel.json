@@ -1,0 +1,110 @@
+{
+  "id": "R02",
+  "title": "¿Tus clientes no saben cómo contactarte?",
+  "format": "A",
+  "platform": "Instagram Reels (principal) + TikTok",
+  "status": "listo con voz",
+  "keyword": "página web con WhatsApp",
+  "hook": {
+    "text": "¿Tus clientes no saben cómo *contactarte*?",
+    "dur": 1.8,
+    "variants": [
+      "¿Tus clientes no saben cómo *contactarte*?",
+      "En Honduras se vende por *WhatsApp*",
+      "Tu número no debería ser un *secreto*"
+    ]
+  },
+  "rehook": "En Honduras el primer contacto no es un formulario",
+  "scenes": [
+    {
+      "id": "s1",
+      "type": "demo",
+      "dur": 4.4,
+      "clip": "aurelis/hero",
+      "from": 0.4,
+      "label": "Sitio corporativo",
+      "caption": "¿Tus clientes no saben cómo contactarte?",
+      "zoom": [
+        1,
+        1.05
+      ]
+    },
+    {
+      "id": "s2",
+      "type": "demo",
+      "dur": 5,
+      "clip": "velora/hero",
+      "from": 0,
+      "label": "WhatsApp siempre a la vista",
+      "caption": "En Honduras el primer contacto es un WhatsApp",
+      "zoom": [
+        1,
+        1.12
+      ],
+      "origin": "80% 92%"
+    },
+    {
+      "id": "s3",
+      "type": "demo",
+      "dur": 3.6,
+      "clip": "aurelis/contacto",
+      "from": 2,
+      "label": "El camino a una conversación",
+      "caption": "El camino a una conversación se diseña primero",
+      "zoom": [
+        1,
+        1.05
+      ]
+    },
+    {
+      "id": "s4",
+      "type": "demo",
+      "dur": 3.3,
+      "clip": "velora/whatsapp",
+      "from": 0.5,
+      "label": "WhatsApp a un toque",
+      "caption": "Un toque y ya hablas con quien te atiende",
+      "zoom": [
+        1.02,
+        1.1
+      ],
+      "origin": "50% 70%"
+    }
+  ],
+  "cta": {
+    "text": "¿Tu negocio necesita esto? *Escríbenos*",
+    "dur": 3.1,
+    "clip": "aurelis/hero",
+    "from": 1.5
+  },
+  "music": {
+    "src": "music/bgm-marimba.mp3",
+    "db": -12
+  },
+  "copy": {
+    "cover": "Página web con *WhatsApp*",
+    "instagram": "En Honduras el primer contacto casi nunca es un formulario: es un WhatsApp. Así se diseña una página para que te escriban sin buscar.",
+    "instagramHashtags": [
+      "#paginaweb",
+      "#negocioshonduras",
+      "#whatsappbusiness",
+      "#tegucigalpa"
+    ],
+    "tiktok": "Página web con WhatsApp: el botón que tus clientes buscan, siempre a un toque. Así se diseña el camino a una conversación real.",
+    "tiktokHashtags": [
+      "#paginawebconwhatsapp",
+      "#negocioshonduras",
+      "#diseñoweb",
+      "#emprendedoreshonduras"
+    ],
+    "pinned": "Botón de WhatsApp siempre visible, panel de contacto rápido y formulario con copia a tu correo. Diseño de páginas web en Honduras.",
+    "time": "Miércoles 14 de octubre, 11:00 a. m.-1:00 p. m. hora de Honduras"
+  },
+  "voice": {
+    "src": "voz/R02.mp3",
+    "words": "voz/R02.words.json",
+    "captionsFrom": 3.3,
+    "db": 0,
+    "note": "ElevenLabs eleven_v4, voz Horacio - Seguro & Confiable (57D8YIbQSuE3REDPO6Vm). Tiempos por palabra de scripts/align-voice.mjs."
+  }
+}
