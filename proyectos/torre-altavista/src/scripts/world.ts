@@ -94,6 +94,10 @@ export function iniciarRecorrido(seccion: HTMLElement, movimientoReducido: boole
     const en = Math.min(w, ultima);
 
     marcarActual(Math.round(en));
+    // Cerca de la parada (o en el tramo final, que no tiene clip) la cámara está detenida.
+    const quieta = Math.abs(w - Math.round(en)) < 0.22 || w >= ultima;
+    paradas[actual]?.classList.toggle('es-quieta', quieta);
+    paradas.forEach((p, i) => { if (i !== actual) p.classList.remove('es-quieta'); });
     const foco = vertical.matches ? 50 : porTramos(y, clavesFoco(self.end));
     escenario.style.setProperty('--foco-x', `${foco}%`);
     escenario.style.setProperty('--avance', String(limitar(w * 1.5)));

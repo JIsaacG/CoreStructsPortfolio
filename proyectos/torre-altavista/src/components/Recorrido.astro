@@ -22,7 +22,9 @@ const fotos = await Promise.all(
   }),
 );
 const cuerpo = 'mt-4 max-w-md text-base text-crema/80 lg:text-lg';
-const titulo = 'mt-4 max-w-xl text-4xl lg:text-5xl xl:text-6xl';
+const titulo = 'mt-2 max-w-xl text-2xl sm:text-3xl lg:mt-4 lg:text-5xl xl:text-6xl';
+// En móvil, una línea de contexto bajo el título; en escritorio, el párrafo completo.
+const cuerpoParada = 'mt-2 max-w-md text-sm text-crema/80 sm:text-base lg:mt-4 lg:text-lg';
 const pastilla = 'rounded-full bg-bg/40 px-3 py-1 ring-1 ring-crema/20 backdrop-blur-md';
 ---
 
@@ -142,10 +144,10 @@ const pastilla = 'rounded-full bg-bg/40 px-3 py-1 ring-1 ring-crema/20 backdrop-
 
     <Parada index={1} eyebrow="Parking">
       <h2 class={titulo}>Llegas, estacionas y subes</h2>
-      <p class={cuerpo}>
+      <p class={cuerpoParada}>
         Dos sótanos techados con acceso controlado. Del parking subes directo al lobby o a tu piso en ascensor.
       </p>
-      <dl class="mt-6 grid w-full max-w-md grid-cols-3 gap-4">
+      <dl class="mt-6 grid w-full max-w-md grid-cols-3 gap-4 max-lg:hidden">
         {
           [
             ['Espacios', '168'],
@@ -163,23 +165,23 @@ const pastilla = 'rounded-full bg-bg/40 px-3 py-1 ring-1 ring-crema/20 backdrop-
 
     <Parada index={2} eyebrow="Living">
       <h2 class={titulo}>Un living para recibir a tus visitas</h2>
-      <p class={cuerpo}>
+      <p class={cuerpoParada}>
         Lobby de doble altura con recepción las 24 horas, sala de espera y vista directa a la piscina.
       </p>
     </Parada>
 
     <Parada index={3} eyebrow="Áreas recreativas">
       <h2 class={titulo}>Vacaciones sin salir de casa</h2>
-      <p class={cuerpo}>Piscina, gimnasio equipado y espacios para que tu familia disfrute cada fin de semana.</p>
-      <ul class="mt-6 flex max-w-md flex-wrap gap-2 text-xs text-crema/80" aria-label="Amenidades">
+      <p class={cuerpoParada}>Piscina, gimnasio equipado y espacios para que tu familia disfrute cada fin de semana.</p>
+      <ul class="mt-6 flex max-w-md flex-wrap gap-2 text-xs text-crema/80 max-lg:hidden" aria-label="Amenidades">
         {['Piscina', 'Gimnasio', 'Área de juegos', 'Salón social', 'Zona de parrillas'].map((a) => <li class={pastilla}>{a}</li>)}
       </ul>
     </Parada>
 
     <Parada index={4} eyebrow="Apartamento tipo B">
       <h2 class={titulo}>118 m² pensados para tu familia</h2>
-      <p class={cuerpo}>Un recibidor amplio que conecta con la cocina, el área social y las habitaciones.</p>
-      <dl class="mt-6 grid w-full max-w-md grid-cols-3 gap-4">
+      <p class={cuerpoParada}>Un recibidor amplio que conecta con la cocina, el área social y las habitaciones.</p>
+      <dl class="mt-6 grid w-full max-w-md grid-cols-3 gap-4 max-lg:hidden">
         {
           [
             ['Habitaciones', '3'],
@@ -197,25 +199,25 @@ const pastilla = 'rounded-full bg-bg/40 px-3 py-1 ring-1 ring-crema/20 backdrop-
 
     <Parada index={5} eyebrow="Cocina">
       <h2 class={titulo}>Una cocina abierta con isla</h2>
-      <p class={cuerpo}>
+      <p class={cuerpoParada}>
         Cubiertas de cuarzo, gabinetes hasta el techo y espacio para refrigeradora de doble puerta.
       </p>
     </Parada>
 
     <Parada index={6} eyebrow="Baño principal">
       <h2 class={titulo}>Un baño que se siente como un spa</h2>
-      <p class={cuerpo}>Ducha con cancel de vidrio, mueble flotante de madera y porcelanato de gran formato.</p>
+      <p class={cuerpoParada}>Ducha con cancel de vidrio, mueble flotante de madera y porcelanato de gran formato.</p>
     </Parada>
 
     <Parada index={7} eyebrow="Sala de estar">
       <h2 class={titulo}>Luz natural y vista a la ciudad</h2>
-      <p class={cuerpo}>Puertas corredizas de piso a techo conectan la sala con tu terraza privada.</p>
+      <p class={cuerpoParada}>Puertas corredizas de piso a techo conectan la sala con tu terraza privada.</p>
     </Parada>
 
     <Parada index={8} eyebrow="Terraza">
       <h2 class={titulo}>Tu terraza sobre la ciudad</h2>
-      <p class={cuerpo}>El lugar para terminar el día con las luces de Tegucigalpa a tus pies.</p>
-      <div class="mt-6 flex flex-wrap gap-4">
+      <p class={cuerpoParada}>El lugar para terminar el día con las luces de Tegucigalpa a tus pies.</p>
+      <div class="mt-6 flex flex-wrap gap-4 max-lg:hidden">
         <a href="#contacto" class="btn btn-primary">Agendar visita</a>
         <a href="#modelos" class="btn btn-ghost">Ver modelos y precios</a>
       </div>
