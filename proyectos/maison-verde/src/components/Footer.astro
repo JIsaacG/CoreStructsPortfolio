@@ -1,0 +1,33 @@
+---
+import Logo from './Logo.astro';
+import { creditos, marca } from '../data/sitio';
+---
+
+<footer class="px-4 py-12 md:px-12 xl:px-24">
+  <div class="mx-auto flex max-w-6xl flex-col gap-6 border-t border-crema/10 pt-8 md:flex-row md:items-start md:justify-between">
+    <div class="flex flex-col gap-2">
+      <Logo />
+      <p class="text-sm text-crema/60">
+        © 2026 {marca.nombre}. Sitio creado por <a href="../../" class="link">CoreStruct</a>.
+      </p>
+    </div>
+    <div class="flex max-w-md flex-col gap-4 text-sm text-crema/60 md:text-right">
+      <p>
+        Este restaurante no existe: es una demostración de CoreStruct. El recorrido en video, la carta y el formulario
+        sí funcionan, y así funcionarían con las fotos y la carta de tu restaurante.
+      </p>
+      <p>
+        Fotos de Unsplash:
+        {
+          creditos.map((c, i) => (
+            <>
+              <a href={c.url} class="link" rel="noopener">{c.autor}</a>
+              {i < creditos.length - 1 ? ', ' : '. '}
+            </>
+          ))
+        }
+        Video generado con Wan2.2 a partir de esas fotos.
+      </p>
+    </div>
+  </div>
+</footer>

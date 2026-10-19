@@ -1,0 +1,24 @@
+---
+import calendar from '@phosphor-icons/core/assets/light/calendar-check-light.svg?raw';
+import car from '@phosphor-icons/core/assets/light/car-profile-light.svg?raw';
+import check from '@phosphor-icons/core/assets/light/check-circle-light.svg?raw';
+import leaf from '@phosphor-icons/core/assets/light/leaf-light.svg?raw';
+import mapPin from '@phosphor-icons/core/assets/light/map-pin-light.svg?raw';
+import plus from '@phosphor-icons/core/assets/light/plus-light.svg?raw';
+import tree from '@phosphor-icons/core/assets/light/tree-light.svg?raw';
+import users from '@phosphor-icons/core/assets/light/users-three-light.svg?raw';
+import whatsapp from '@phosphor-icons/core/assets/light/whatsapp-logo-light.svg?raw';
+
+const icons = { calendar, car, check, leaf, mapPin, plus, tree, users, whatsapp };
+export type IconName = keyof typeof icons;
+
+interface Props {
+  name: IconName;
+  class?: string;
+}
+
+const { name, class: className = 'size-4' } = Astro.props;
+const svg = icons[name].replace('<svg ', `<svg aria-hidden="true" focusable="false" class="${className}" `);
+---
+
+<Fragment set:html={svg} />

@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+
+# Los clips se generan con Wan2.2 en el repo LandingPageAnimadas (proyectos/maison-verde/)
+# y se publican en demos/maison-verde/video/: versionarlos aquí los duplicaría.
+public/video/

@@ -1,0 +1,13 @@
+---
+import { marca } from '../data/sitio';
+---
+
+<span class="flex items-center gap-2 text-crema">
+  <svg aria-hidden="true" viewBox="0 0 24 24" class="size-6 text-teja" fill="none" stroke="currentColor" stroke-width="1.5">
+    <circle cx="12" cy="12" r="9.25" />
+    <path d="M12 17.5V9" stroke-linecap="round" />
+    <path d="M12 12.5c-2.6 0-4.25-1.7-4.25-4.25 2.6 0 4.25 1.7 4.25 4.25Z" stroke-linejoin="round" />
+    <path d="M12 10.5c2.6 0 4.25-1.7 4.25-4.25-2.6 0-4.25 1.7-4.25 4.25Z" stroke-linejoin="round" />
+  </svg>
+  <span class="text-base font-semibold tracking-wide whitespace-nowrap max-[379px]:text-sm">{marca.nombre}</span>
+</span>

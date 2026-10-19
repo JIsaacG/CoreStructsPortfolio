@@ -41,6 +41,7 @@ export function iniciarRecorrido(seccion: HTMLElement, movimientoReducido: boole
   let activo = 0;
   let mostrado = -1;
   let tiempo = 0;
+  let pedidoEn = 0;
 
   const marcarActual = (indice: number) => {
     if (indice === actual) return;
@@ -59,14 +60,22 @@ export function iniciarRecorrido(seccion: HTMLElement, movimientoReducido: boole
   };
 
   // Una sola búsqueda en curso por video: la siguiente usa el tiempo más reciente.
+  // WebKit a veces deja una búsqueda colgada varios segundos: pasados 400 ms se vuelve a pedir.
+  const buscar = (clip: HTMLVideoElement) => {
+    pedidoEn = performance.now();
+    clip.currentTime = tiempo;
+  };
   const sincronizar = () => {
     const clip = clips[activo];
     if (!clip || !listo[activo]) {
       delete escenario.dataset.modo;
       return;
     }
-    if (clip.seeking) return;
-    if (Math.abs(clip.currentTime - tiempo) > 0.01) clip.currentTime = tiempo;
+    if (clip.seeking) {
+      if (performance.now() - pedidoEn > 400) buscar(clip);
+      return;
+    }
+    if (Math.abs(clip.currentTime - tiempo) > 0.01) buscar(clip);
     else mostrar();
   };
 
@@ -151,24 +160,40 @@ export function iniciarRecorrido(seccion: HTMLElement, movimientoReducido: boole
     const ruta = rutaDe(clip);
     clip.preload = 'auto';
 
-    const cargado = new Promise<boolean>((resolve) => {
-      clip.addEventListener('loadeddata', () => resolve(true), { once: true });
-      clip.addEventListener('error', () => resolve(false), { once: true });
-    });
+    const cargar = (src: string) =>
+      new Promise<boolean>((resolve) => {
+        const bien = () => {
+          clip.removeEventListener('error', mal);
+          resolve(true);
+        };
+        const mal = () => {
+          clip.removeEventListener('loadeddata', bien);
+          resolve(false);
+        };
+        clip.addEventListener('loadeddata', bien, { once: true });
+        clip.addEventListener('error', mal, { once: true });
+        clip.src = src;
+      });
 
     // El clip se descarga entero (blob) para que buscar fotogramas no dependa de la red.
+    let origen = ruta;
     try {
       const respuesta = await fetch(ruta);
       if (!respuesta.ok) throw new Error(respuesta.statusText);
       const blob = await respuesta.blob();
-      if (miRonda !== ronda) return;
-      clip.src = URL.createObjectURL(blob);
+      origen = URL.createObjectURL(new Blob([blob], { type: 'video/mp4' }));
     } catch {
-      if (miRonda !== ronda) return;
-      clip.src = ruta;
+      origen = ruta;
     }
+    if (miRonda !== ronda) return;
 
-    const ok = await cargado;
+    let ok = await cargar(origen);
+    // Safari puede rechazar el video servido desde blob: (error 4) aunque sea video/mp4: se usa la
+    // URL directa, que el servidor entrega con Content-Type video/mp4 y peticiones por rangos.
+    if (!ok && origen.startsWith('blob:') && miRonda === ronda) {
+      URL.revokeObjectURL(origen);
+      ok = await cargar(ruta);
+    }
     if (miRonda !== ronda) return;
     if (ok) {
       // iOS no pinta los fotogramas buscados hasta que el video se reprodujo una vez.
@@ -193,6 +218,11 @@ export function iniciarRecorrido(seccion: HTMLElement, movimientoReducido: boole
     pintar(tramo);
     cargarSiguiente();
   });
+
+  // Revisión periódica: termina las búsquedas pendientes aunque el usuario ya no haga scroll.
+  window.setInterval(() => {
+    if (listo[activo] && !document.hidden) sincronizar();
+  }, 250);
 
   if (document.readyState === 'complete') cargarSiguiente();
   else window.addEventListener('load', cargarSiguiente, { once: true });

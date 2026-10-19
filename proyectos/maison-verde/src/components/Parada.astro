@@ -1,0 +1,91 @@
+---
+import { paseo } from '../data/sitio';
+
+// Una parada del recorrido. El artículo marca la distancia de scroll; su texto queda abajo a la izquierda
+// mientras la cámara avanza y sale cuando llega la parada siguiente.
+interface Props {
+  index: number;
+  eyebrow?: string;
+}
+
+const { index, eyebrow } = Astro.props;
+const parada = paseo.paradas[index];
+const dos = (n: number) => String(n).padStart(2, '0');
+---
+
+<article
+  id={parada.id}
+  data-parada
+  data-focus={parada.focus}
+  data-spy="#inicio"
+  data-compacta={index > 0 ? '' : undefined}
+  class="parada pointer-events-none flex min-h-[160svh] flex-col justify-end"
+>
+  <div
+    class:list={[
+      "parada-cuerpo pointer-events-auto sticky bottom-0 flex w-full max-w-2xl flex-col items-start px-4 pt-8 pb-16 md:px-12 lg:pt-24 xl:px-20",
+      // En móvil, salvo la portada, el texto va en una tarjeta translúcida y compacta sobre el
+      // fondo, a 64px del borde inferior, y solo se ve con la cámara detenida en la parada.
+      index > 0 &&
+        "max-lg:bottom-16 max-lg:mx-4 max-lg:w-auto max-lg:rounded-2xl max-lg:bg-bg/55 max-lg:p-4 max-lg:ring-1 max-lg:ring-crema/10 max-lg:backdrop-blur-md",
+    ]}
+  >
+    <p class="flex items-center gap-2 text-xs tracking-widest text-crema/60 uppercase">
+      <span class="tabular-nums">{dos(index + 1)} / {dos(paseo.paradas.length)}</span>
+      <span aria-hidden="true" class="size-1 rounded-full bg-teja"></span>
+      <span>{parada.lugar}</span>
+    </p>
+    {eyebrow && <p class="mt-4 text-xs font-medium tracking-widest text-teja uppercase max-lg:hidden">{eyebrow}</p>}
+    <slot />
+  </div>
+</article>
+
+<style>
+  :global(.js) .parada-cuerpo > :global(*) {
+    opacity: 0;
+    transform: translateY(2rem);
+    transition:
+      opacity 700ms var(--ease-fluid),
+      transform 700ms var(--ease-fluid);
+  }
+
+  :global(.js) .parada.es-actual .parada-cuerpo > :global(*),
+  :global(.js) .parada-cuerpo:focus-within > :global(*) {
+    opacity: 1;
+    transform: none;
+    transition-duration: 1000ms;
+  }
+
+  .parada.es-actual .parada-cuerpo > :global(:nth-child(2)) { transition-delay: 60ms; }
+  .parada.es-actual .parada-cuerpo > :global(:nth-child(3)) { transition-delay: 120ms; }
+  .parada.es-actual .parada-cuerpo > :global(:nth-child(4)) { transition-delay: 180ms; }
+  .parada.es-actual .parada-cuerpo > :global(:nth-child(5)) { transition-delay: 240ms; }
+  .parada.es-actual .parada-cuerpo > :global(:nth-child(6)) { transition-delay: 300ms; }
+
+  :global(.js) .parada:not(.es-actual) .parada-cuerpo:not(:focus-within) {
+    pointer-events: none;
+  }
+
+  /* Móvil: la tarjeta aparece al llegar a la parada y se va al empezar la transición, para que
+     el movimiento de cámara se vea sin nada encima. */
+  @media (width < 64rem) {
+    :global(.js) .parada[data-compacta] .parada-cuerpo {
+      opacity: 0;
+      transform: translateY(1rem);
+      transition:
+        opacity 500ms var(--ease-fluid),
+        transform 500ms var(--ease-fluid);
+    }
+
+    :global(.js) .parada[data-compacta]:global(.es-actual.es-quieta) .parada-cuerpo {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(.js) .parada-cuerpo > :global(*) {
+      transform: none;
+    }
+  }
+</style>

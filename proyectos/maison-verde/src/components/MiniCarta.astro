@@ -1,0 +1,22 @@
+---
+import type { Seccion } from '../data/sitio';
+
+// Tres platos de la sección, con precio, junto a la parada del recorrido. Solo en escritorio:
+// en el móvil la tarjeta de la parada se queda en una línea y la carta completa está más abajo.
+interface Props {
+  seccion: Seccion;
+}
+
+const { seccion } = Astro.props;
+---
+
+<ul class="mt-6 w-full max-w-md divide-y divide-crema/10 rounded-2xl bg-bg/45 px-4 ring-1 ring-crema/10 backdrop-blur-md max-lg:hidden" aria-label={`${seccion.titulo}: algunos platos`}>
+  {
+    seccion.platos.slice(0, 3).map((plato) => (
+      <li class="flex items-baseline justify-between gap-4 py-3">
+        <span class="text-base">{plato.nombre}</span>
+        <span class="text-base text-teja tabular-nums">{plato.precio}</span>
+      </li>
+    ))
+  }
+</ul>

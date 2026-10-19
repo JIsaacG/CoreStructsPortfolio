@@ -1,0 +1,63 @@
+---
+import Icon, { type IconName } from './Icon.astro';
+import { beneficios, carta } from '../data/sitio';
+
+const secciones = Object.values(carta);
+---
+
+<section id="carta" data-spy="#carta" aria-labelledby="carta-titulo" class="px-4 py-24 md:px-12 xl:px-24">
+  <div class="mx-auto max-w-6xl">
+    <p data-reveal class="text-sm text-teja">La carta</p>
+    <h2 id="carta-titulo" data-reveal style="--d:100ms" class="mt-4 max-w-xl text-3xl lg:text-5xl">
+      Lo que viste en el recorrido, con precio
+    </h2>
+    <p data-reveal style="--d:200ms" class="mt-6 max-w-md text-base text-crema/70">
+      Desayunos hasta mediodía, café todo el día y cocina de autor desde las 12:00. Precios en lempiras, con impuesto
+      incluido.
+    </p>
+
+    <div class="mt-12 grid gap-6 md:grid-cols-2">
+      {
+        secciones.map((seccion, i) => (
+          <article data-reveal style={`--d:${150 + i * 100}ms`} class="flex flex-col rounded-3xl bg-superficie p-6 ring-1 ring-crema/10 lg:p-8">
+            <header class="flex items-baseline justify-between gap-4">
+              <h3 class="text-2xl">{seccion.titulo}</h3>
+              <p class="text-sm text-crema/60">{seccion.horario}</p>
+            </header>
+            <ul class="mt-6 divide-y divide-crema/10">
+              {seccion.platos.map((plato) => (
+                <li class="flex flex-col gap-1 py-4">
+                  <div class="flex items-baseline justify-between gap-4">
+                    <h4 class="text-lg">{plato.nombre}</h4>
+                    <span class="text-lg text-teja tabular-nums">{plato.precio}</span>
+                  </div>
+                  <p class="max-w-md text-sm text-crema/70">{plato.detalle}</p>
+                  {plato.etiqueta && (
+                    <span class="mt-1 w-max rounded-full bg-crema/5 px-3 py-1 text-xs text-crema/80 ring-1 ring-crema/10">
+                      {plato.etiqueta}
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+    <p data-reveal class="mt-6 text-sm text-crema/60">Carta y precios de demostración.</p>
+
+    <ul class="mt-24 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        beneficios.map((b, i) => (
+          <li data-reveal style={`--d:${100 + i * 80}ms`} class="flex flex-col gap-3">
+            <span class="grid size-10 place-items-center rounded-full bg-crema/5 ring-1 ring-crema/10">
+              <Icon name={b.icono as IconName} class="size-6 text-teja" />
+            </span>
+            <h3 class="text-lg">{b.titulo}</h3>
+            <p class="text-base text-crema/70">{b.detalle}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

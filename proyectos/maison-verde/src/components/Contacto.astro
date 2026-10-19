@@ -1,0 +1,138 @@
+---
+import Icon from './Icon.astro';
+import { reservas, restaurante } from '../data/sitio';
+
+const campo =
+  'w-full rounded-xl bg-crema/5 px-4 py-3 text-base text-crema ring-1 ring-crema/15 transition-shadow duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] placeholder:text-crema/40 focus:ring-teja focus:outline-none aria-[invalid=true]:ring-red-400';
+const horas = ['7:30', '9:00', '12:30', '14:00', '19:00', '20:30'];
+---
+
+<section id="contacto" data-spy="#contacto" aria-labelledby="contacto-titulo" class="px-4 py-24 md:px-12 xl:px-24">
+  <div class="mx-auto grid max-w-6xl gap-12 lg:grid-cols-2 lg:items-center">
+    <div>
+      <p data-reveal class="text-sm text-teja">Reservar mesa</p>
+      <h2 id="contacto-titulo" data-reveal style="--d:100ms" class="mt-4 max-w-[680px] text-4xl lg:text-6xl">
+        Tu mesa,<br /> lista cuando llegues
+      </h2>
+      <p data-reveal style="--d:200ms" class="mt-6 max-w-md text-base text-crema/70 lg:text-lg">
+        Dinos cuándo vienes y cuántos son. Te confirmamos por WhatsApp en menos de una hora.
+      </p>
+      <div data-reveal style="--d:300ms" class="mt-8 flex items-center gap-4">
+        <span aria-hidden="true" class="grid size-12 place-items-center rounded-full bg-teja text-base font-semibold text-bg">
+          {reservas.iniciales}
+        </span>
+        <div>
+          <p class="font-medium">{reservas.responsable}</p>
+          <p class="text-sm text-crema/60">{reservas.detalle}</p>
+        </div>
+      </div>
+      <p data-reveal style="--d:400ms" class="mt-6 flex items-center gap-2 text-sm text-crema/70">
+        <Icon name="mapPin" class="size-6 shrink-0 text-teja" />
+        {restaurante.direccion} · {restaurante.horario}
+      </p>
+    </div>
+
+    <form data-reveal data-formulario novalidate style="--d:200ms" class="flex flex-col gap-4 rounded-3xl bg-superficie p-6 ring-1 ring-crema/10 lg:p-8">
+      <div class="flex flex-col gap-2">
+        <label for="nombre" class="text-sm text-crema/80">Nombre</label>
+        <input id="nombre" name="nombre" autocomplete="name" required aria-describedby="nombre-error" class={campo} />
+        <p id="nombre-error" class="hidden text-sm text-red-300" data-error>Escribe tu nombre.</p>
+      </div>
+      <div class="flex flex-col gap-2">
+        <label for="telefono" class="text-sm text-crema/80">WhatsApp</label>
+        <input
+          id="telefono"
+          name="telefono"
+          type="tel"
+          autocomplete="tel"
+          inputmode="tel"
+          placeholder="9876 5432"
+          required
+          pattern="[\d\s+]{8,15}"
+          aria-describedby="telefono-error"
+          class={campo}
+        />
+        <p id="telefono-error" class="hidden text-sm text-red-300" data-error>Escribe un número de al menos 8 dígitos.</p>
+      </div>
+      <div class="grid gap-4 sm:grid-cols-3">
+        <div class="flex flex-col gap-2">
+          <label for="fecha" class="text-sm text-crema/80">Día</label>
+          <input id="fecha" name="fecha" type="date" required aria-describedby="fecha-error" class={campo} />
+          <p id="fecha-error" class="hidden text-sm text-red-300" data-error>Elige un día desde hoy.</p>
+        </div>
+        <div class="flex flex-col gap-2">
+          <label for="hora" class="text-sm text-crema/80">Hora</label>
+          <select id="hora" name="hora" class={campo}>
+            {horas.map((h) => <option class="bg-superficie">{h}</option>)}
+          </select>
+        </div>
+        <div class="flex flex-col gap-2">
+          <label for="personas" class="text-sm text-crema/80">Personas</label>
+          <input
+            id="personas"
+            name="personas"
+            type="number"
+            inputmode="numeric"
+            min="1"
+            max="14"
+            value="2"
+            required
+            aria-describedby="personas-error"
+            class={campo}
+          />
+          <p id="personas-error" class="hidden text-sm text-red-300" data-error>De 1 a 14 personas.</p>
+        </div>
+      </div>
+      <div class="flex flex-col gap-2">
+        <label for="mensaje" class="text-sm text-crema/80">¿Algo que debamos saber?</label>
+        <textarea id="mensaje" name="mensaje" rows="3" placeholder="Cumpleaños, alergias, mesa en el jardín…" class={campo}></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary mt-2 w-full">
+        <Icon name="calendar" class="size-6" />
+        Reservar mesa
+      </button>
+      <p data-aviso role="status" class="hidden items-start gap-2 rounded-xl bg-crema/5 p-4 text-sm text-crema/80">
+        <Icon name="check" class="size-6 shrink-0 text-teja" />
+        <span>Reserva lista. Esta demo todavía no envía datos: falta conectarla al WhatsApp del restaurante.</span>
+      </p>
+    </form>
+  </div>
+</section>
+
+<script>
+  const formulario = document.querySelector<HTMLFormElement>('[data-formulario]');
+  const fecha = formulario?.querySelector<HTMLInputElement>('#fecha');
+  // No se reserva para días pasados (fecha local, no UTC).
+  if (fecha) {
+    const hoy = new Date();
+    fecha.min = new Date(hoy.getTime() - hoy.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+  }
+
+  const validar = (campo: HTMLInputElement) => {
+    const valido = campo.checkValidity();
+    campo.setAttribute('aria-invalid', String(!valido));
+    const error = document.getElementById(campo.getAttribute('aria-describedby') ?? '');
+    error?.classList.toggle('hidden', valido);
+    return valido;
+  };
+
+  formulario?.addEventListener('submit', (evento) => {
+    evento.preventDefault();
+    const campos = [...formulario.querySelectorAll<HTMLInputElement>('input[required]')];
+    const validos = campos.map(validar).every(Boolean);
+    const aviso = formulario.querySelector<HTMLElement>('[data-aviso]');
+    if (!validos) {
+      campos.find((c) => c.getAttribute('aria-invalid') === 'true')?.focus();
+      aviso?.classList.add('hidden');
+      return;
+    }
+    aviso?.classList.remove('hidden');
+    aviso?.classList.add('flex');
+  });
+
+  formulario?.querySelectorAll<HTMLInputElement>('input[required]').forEach((campo) => {
+    campo.addEventListener('blur', () => {
+      if (campo.value) validar(campo);
+    });
+  });
+</script>

@@ -1,0 +1,278 @@
+---
+import { getImage } from 'astro:assets';
+import Parada from './Parada.astro';
+import MiniCarta from './MiniCarta.astro';
+import { carta, paseo, restaurante } from '../data/sitio';
+
+const { paradas } = paseo;
+
+// Dirección de arte: en vertical, el póster 9:16 (encuadrado para el teléfono); en horizontal, el 16:9.
+// Es un <picture> escrito a mano porque <Picture> de Astro no cambia de imagen según la orientación.
+const VERTICAL = '(orientation: portrait)';
+const fotos = await Promise.all(
+  paradas.map(async (parada) => {
+    const variante = (src: typeof parada.poster, format: 'avif' | 'webp', widths: number[]) =>
+      getImage({ src, format, widths });
+    const [movilAvif, movilWebp, avif, webp] = await Promise.all([
+      variante(parada.posterMovil, 'avif', [540, 720]),
+      variante(parada.posterMovil, 'webp', [540, 720]),
+      variante(parada.poster, 'avif', [828, 1280, 1600]),
+      variante(parada.poster, 'webp', [828, 1280, 1600]),
+    ]);
+    return { movilAvif, movilWebp, avif, webp };
+  }),
+);
+const cuerpo = 'mt-4 max-w-md text-base text-crema/80 lg:text-lg';
+const titulo = 'mt-2 max-w-xl text-2xl sm:text-3xl lg:mt-4 lg:text-5xl xl:text-6xl';
+// En móvil, una línea de contexto bajo el título; en escritorio, el párrafo completo.
+const cuerpoParada = 'mt-2 max-w-md text-sm text-crema/80 sm:text-base lg:mt-4 lg:text-lg';
+const pastilla = 'rounded-full bg-bg/40 px-3 py-1 ring-1 ring-crema/20 backdrop-blur-md';
+---
+
+<section id="recorrido" data-recorrido aria-label="Recorrido por Maison Verde" class="relative">
+  <!-- Escenario fijo: los clips ocupan toda la pantalla. Debajo, el primer fotograma de cada clip con el mismo
+       encuadre, para que el video entre sin que se note el cambio. -->
+  <div data-escenario class="sticky top-0 h-lvh overflow-hidden bg-bg" style="--foco-x: 50%">
+    <div aria-hidden="true" class="absolute inset-0">
+      {
+        paradas.map((parada, i) => (
+          <div data-foto class="foto absolute inset-0" style={i === 0 ? undefined : 'opacity: 0'}>
+            <picture class="block size-full">
+              <source media={VERTICAL} type="image/avif" srcset={fotos[i].movilAvif.srcSet.attribute} sizes="max(100vw, 56.25vh)" />
+              <source media={VERTICAL} type="image/webp" srcset={fotos[i].movilWebp.srcSet.attribute} sizes="max(100vw, 56.25vh)" />
+              <source type="image/avif" srcset={fotos[i].avif.srcSet.attribute} sizes="(min-aspect-ratio: 16/9) 100vw, 178vh" />
+              <source type="image/webp" srcset={fotos[i].webp.srcSet.attribute} sizes="(min-aspect-ratio: 16/9) 100vw, 178vh" />
+              <img
+                src={fotos[i].webp.src}
+                alt=""
+                width="1600"
+                height="900"
+                loading={i === 0 ? 'eager' : 'lazy'}
+                fetchpriority={i === 0 ? 'high' : 'low'}
+                decoding="async"
+                class="size-full object-cover"
+                style="object-position: var(--foco-x) 50%"
+              />
+            </picture>
+          </div>
+        ))
+      }
+      <div class="clips absolute inset-0">
+        {
+          paradas
+            .filter((parada) => parada.clip)
+            .map((parada) => (
+              <video
+                data-clip
+                data-src={parada.clip}
+                data-src-movil={parada.clipMovil}
+                muted
+                playsinline
+                preload="none"
+                disablepictureinpicture
+                disableremoteplayback
+                tabindex="-1"
+                class="clip absolute inset-0 size-full object-cover"
+              />
+            ))
+        }
+      </div>
+    </div>
+
+    <!-- Velos para leer el texto sobre el video. -->
+    <div aria-hidden="true" class="absolute inset-x-0 top-0 h-40 bg-linear-to-b from-bg/60 to-transparent"></div>
+    <div
+      aria-hidden="true"
+      data-velo
+      class="absolute inset-0 bg-linear-to-t from-bg from-25% via-bg/75 via-55% to-transparent to-90% lg:bg-linear-to-r lg:from-bg/90 lg:via-bg/60 lg:via-35% lg:to-transparent lg:to-65%"
+    >
+    </div>
+
+    <!-- Riel de paradas. -->
+    <nav aria-label="Paradas del recorrido" class="absolute top-1/2 right-6 hidden -translate-y-1/2 lg:block xl:right-8">
+      <ol class="relative flex flex-col items-end gap-4">
+        <span aria-hidden="true" class="absolute top-3 right-1 bottom-3 w-px translate-x-1/2 bg-crema/20">
+          <span data-riel class="absolute inset-0 origin-top scale-y-0 bg-teja"></span>
+        </span>
+        {
+          paradas.map((parada, i) => (
+            <li>
+              <a href={`#${parada.id}`} data-ir aria-current={i === 0 ? 'true' : 'false'} class="riel-enlace flex h-6 items-center gap-3">
+                <span class="riel-etiqueta rounded-full bg-bg/60 px-3 py-1 text-xs whitespace-nowrap text-crema ring-1 ring-crema/10 backdrop-blur-xl">
+                  {parada.lugar}
+                </span>
+                <span class="relative grid size-2 place-items-center">
+                  <span class="riel-punto size-2 rounded-full bg-crema/50" />
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
+
+    <p data-pista aria-hidden="true" class="absolute right-8 bottom-8 hidden items-center gap-3 text-xs tracking-widest text-crema/70 uppercase lg:flex">
+      Desliza para entrar
+      <span class="pista-linea relative block h-8 w-px overflow-hidden bg-crema/20"></span>
+    </p>
+  </div>
+
+  <!-- Paradas: cada una deja su texto abajo a la izquierda mientras el recorrido avanza. -->
+  <div class="relative z-10 -mt-[100lvh]">
+    <Parada index={0}>
+      <h1 class="mt-4">
+        <span class="block text-xs font-medium tracking-widest text-teja uppercase">
+          Maison Verde · {restaurante.zona}
+        </span>
+        <span class="titulo-hero mt-4 block max-w-[680px] pb-2 text-4xl lg:text-6xl">
+          Antes de reservar,<br /> ya estás sentado
+        </span>
+      </h1>
+      <p class={`${cuerpo} max-lg:[@media(max-height:620px)]:hidden`}>
+        Una casa entre el jardín con desayunos hasta mediodía, café de altura y cocina de autor. Desliza y recórrela
+        de la terraza al postre.
+      </p>
+      <div class="mt-6 flex flex-wrap items-center gap-4">
+        <a href="#contacto" class="btn btn-primary">Reservar mesa</a>
+        <p class="flex items-center gap-2 text-sm text-crema/80">
+          <span aria-hidden="true" class="size-2 rounded-full bg-hoja"></span>
+          {restaurante.horario.replace(', ', ' · ')}
+        </p>
+      </div>
+      <ul class="mt-6 flex flex-wrap gap-2 text-xs text-crema/80 max-lg:[@media(max-height:740px)]:hidden" aria-label="Lo que encontrarás">
+        <li class={pastilla}>Terraza y jardín</li>
+        <li class={pastilla}>Desayunos hasta las 12:00</li>
+        <li class={pastilla}>Parqueo con valet</li>
+      </ul>
+    </Parada>
+
+    <Parada index={1} eyebrow="La terraza">
+      <h2 class={titulo}>Desayunar entre palmeras</h2>
+      <p class={cuerpoParada}>Sombrillas, sillones y sombra todo el día. La terraza abre a las 7:00.</p>
+    </Parada>
+
+    <Parada index={2} eyebrow={`Desayunos y repostería · ${carta.desayunos.horario}`}>
+      <h2 class={titulo}>Una mesa al sol para el café</h2>
+      <p class={cuerpoParada}>Pastel de zanahoria de la casa, café de altura y bebidas frías.</p>
+      <MiniCarta seccion={carta.desayunos} />
+    </Parada>
+
+    <Parada index={3} eyebrow="La barra">
+      <h2 class={titulo}>Una barra para quedarse</h2>
+      <p class={cuerpoParada}>Café de especialidad desde temprano y coctelería de autor al caer la tarde.</p>
+    </Parada>
+
+    <Parada index={4} eyebrow={`Café · ${carta.cafe.horario}`}>
+      <h2 class={titulo}>Espresso de altura</h2>
+      <p class={cuerpoParada}>Granos de Marcala, tostados cada semana para nuestra barra.</p>
+      <MiniCarta seccion={carta.cafe} />
+    </Parada>
+
+    <Parada index={5} eyebrow="El salón">
+      <h2 class={titulo}>Un salón para almuerzos largos</h2>
+      <p class={cuerpoParada}>Luz natural, plantas por todas partes y mesas para 2 a 14 personas.</p>
+    </Parada>
+
+    <Parada index={6} eyebrow={`Platos fuertes · ${carta.fuertes.horario}`}>
+      <h2 class={titulo}>Cocina de autor, sin ceremonia</h2>
+      <p class={cuerpoParada}>Lomo asado, pescado del día y risotto, con producto hondureño de temporada.</p>
+      <MiniCarta seccion={carta.fuertes} />
+    </Parada>
+
+    <Parada index={7} eyebrow="Postres">
+      <h2 class={titulo}>Guarda espacio para el volcán</h2>
+      <p class={cuerpoParada}>Chocolate al 70 %, centro líquido y helado de vainilla.</p>
+      <MiniCarta seccion={carta.postres} />
+    </Parada>
+
+    <Parada index={8} eyebrow="El jardín de noche">
+      <h2 class={titulo}>Cenas bajo las luces</h2>
+      <p class={cuerpoParada}>De jueves a sábado el jardín se queda encendido hasta las 22:00.</p>
+      <div class="mt-6 flex flex-wrap gap-4 max-lg:hidden">
+        <a href="#contacto" class="btn btn-primary">Reservar mesa</a>
+        <a href="#carta" class="btn btn-ghost">Ver la carta completa</a>
+      </div>
+    </Parada>
+  </div>
+</section>
+
+<style>
+  .foto {
+    will-change: opacity, transform;
+  }
+
+  .clips {
+    opacity: 0;
+    transition: opacity 1200ms var(--ease-fluid);
+  }
+
+  [data-modo='video'] .clips {
+    opacity: 1;
+  }
+
+  /* Solo se ve el clip del tramo actual; el cambio entre clips es inmediato porque comparten fotograma. */
+  .clip {
+    object-position: var(--foco-x) 50%;
+    visibility: hidden;
+  }
+
+  .clip:global(.es-visible) {
+    visibility: visible;
+  }
+
+  /* En móvil el velo solo acompaña al texto de la primera vista. */
+  @media (width < 64rem) {
+    [data-velo] {
+      opacity: calc(1 - var(--avance, 0));
+    }
+  }
+
+  .riel-etiqueta {
+    opacity: 0;
+    transform: translateX(0.5rem);
+    transition:
+      opacity 700ms var(--ease-fluid),
+      transform 700ms var(--ease-fluid);
+  }
+
+  .riel-punto {
+    transition:
+      background-color 700ms var(--ease-fluid),
+      transform 700ms var(--ease-fluid);
+  }
+
+  .riel-enlace:hover .riel-etiqueta,
+  .riel-enlace:focus-visible .riel-etiqueta,
+  .riel-enlace[aria-current='true'] .riel-etiqueta {
+    opacity: 1;
+    transform: none;
+  }
+
+  .riel-enlace:hover .riel-punto {
+    background-color: var(--color-crema);
+  }
+
+  .riel-enlace[aria-current='true'] .riel-punto {
+    background-color: var(--color-teja);
+    transform: scale(1.5);
+  }
+
+  .pista-linea::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--color-crema);
+    animation: pista 2400ms var(--ease-fluid) infinite;
+  }
+
+  @keyframes pista {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(100%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pista-linea::after {
+      animation: none;
+    }
+  }
+</style>

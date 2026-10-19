@@ -20,8 +20,8 @@ export function pages(root = ROOT) {
   const found = [];
   // `KathMolina.html` es una página personal y oculta: ni se traduce ni lleva
   // selector de idioma, así que se queda fuera del espejo `en/`. El demo
-  // `torre-altavista` tampoco: es un build de Astro (fuente en
-  // proyectos/torre-altavista/) que se publica tal cual, en español.
+  // `torre-altavista` y `maison-verde` tampoco: son builds de Astro (fuente en
+  // proyectos/<nombre>/) que se publican tal cual, en español.
   //
   // Las entradas se comparan por NOMBRE en cualquier nivel del árbol, así que
   // aquí no puede ir "proyectos": también es demos/aurelis/proyectos/, y esas
@@ -29,7 +29,7 @@ export function pages(root = ROOT) {
   // HTML fuera de src/, dist/ y node_modules/, que ya se saltan.
   const skip = new Set([
     ".git", "node_modules", "assets", "dist", "src", "tools", "en",
-    "KathMolina.html", "torre-altavista",
+    "KathMolina.html", "torre-altavista", "maison-verde",
   ]);
 
   const walkDir = (dir) => {
