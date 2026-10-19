@@ -3,7 +3,7 @@
 // generaron con Wan2.2 en local a partir de ellas.
 import inicio from '../assets/paseo/parada-1-inicio.webp';
 import terraza from '../assets/paseo/parada-2-terraza.webp';
-import desayuno from '../assets/paseo/parada-3-desayuno.webp';
+import mesa from '../assets/paseo/parada-3-mesa.webp';
 import barra from '../assets/paseo/parada-4-barra.webp';
 import cafe from '../assets/paseo/parada-5-cafe.webp';
 import salon from '../assets/paseo/parada-6-salon.webp';
@@ -12,7 +12,7 @@ import postres from '../assets/paseo/parada-8-postres.webp';
 import jardin from '../assets/paseo/parada-9-jardin.webp';
 import inicioMovil from '../assets/paseo/parada-1-inicio-movil.webp';
 import terrazaMovil from '../assets/paseo/parada-2-terraza-movil.webp';
-import desayunoMovil from '../assets/paseo/parada-3-desayuno-movil.webp';
+import mesaMovil from '../assets/paseo/parada-3-mesa-movil.webp';
 import barraMovil from '../assets/paseo/parada-4-barra-movil.webp';
 import cafeMovil from '../assets/paseo/parada-5-cafe-movil.webp';
 import salonMovil from '../assets/paseo/parada-6-salon-movil.webp';
@@ -47,8 +47,8 @@ const video = (nombre: string) => `${import.meta.env.BASE_URL}video/${nombre}.mp
 export const paseo = {
   paradas: [
     { id: 'inicio', lugar: 'La casa', poster: inicio, posterMovil: inicioMovil, clip: video('clip-1-casa-terraza'), clipMovil: video('clip-1-casa-terraza-movil'), focus: 45 },
-    { id: 'terraza', lugar: 'Terraza', poster: terraza, posterMovil: terrazaMovil, clip: video('clip-2-terraza-desayuno'), clipMovil: video('clip-2-terraza-desayuno-movil'), focus: 50 },
-    { id: 'desayunos', lugar: 'Desayunos', poster: desayuno, posterMovil: desayunoMovil, clip: video('clip-3-desayuno-barra'), clipMovil: video('clip-3-desayuno-barra-movil'), focus: 52 },
+    { id: 'terraza', lugar: 'Terraza', poster: terraza, posterMovil: terrazaMovil, clip: video('clip-2-terraza-mesa'), clipMovil: video('clip-2-terraza-mesa-movil'), focus: 50 },
+    { id: 'desayunos', lugar: 'Café y repostería', poster: mesa, posterMovil: mesaMovil, clip: video('clip-3-mesa-barra'), clipMovil: video('clip-3-mesa-barra-movil'), focus: 55 },
     { id: 'barra', lugar: 'La barra', poster: barra, posterMovil: barraMovil, clip: video('clip-4-barra-cafe'), clipMovil: video('clip-4-barra-cafe-movil'), focus: 40 },
     { id: 'cafe', lugar: 'Café', poster: cafe, posterMovil: cafeMovil, clip: video('clip-5-cafe-salon'), clipMovil: video('clip-5-cafe-salon-movil'), focus: 60 },
     { id: 'salon', lugar: 'El salón', poster: salon, posterMovil: salonMovil, clip: video('clip-6-salon-fuertes'), clipMovil: video('clip-6-salon-fuertes-movil'), focus: 50 },
@@ -70,9 +70,10 @@ export type Plato = { nombre: string; detalle: string; precio: string; etiqueta?
 export type Seccion = { titulo: string; horario: string; platos: Plato[] };
 export const carta: Record<'desayunos' | 'cafe' | 'fuertes' | 'postres', Seccion> = {
   desayunos: {
-    titulo: 'Desayunos',
+    titulo: 'Desayunos y repostería',
     horario: '7:00 a 12:00',
     platos: [
+      { nombre: 'Pastel de zanahoria', detalle: 'Bizcocho especiado con nueces y frosting de queso crema, horneado en casa', precio: 'L 135', etiqueta: 'De la casa' },
       { nombre: 'Tostada de aguacate', detalle: 'Pan de masa madre, aguacate, tocino crujiente y huevo a la plancha', precio: 'L 245' },
       { nombre: 'Catracho de la casa', detalle: 'Frijoles colados, plátano maduro, queso seco, mantequilla y huevos al gusto', precio: 'L 225', etiqueta: 'El más pedido' },
       { nombre: 'Cesta de cruasanes', detalle: 'Tres cruasanes de mantequilla horneados cada mañana, con mermelada de la casa', precio: 'L 160' },
@@ -93,6 +94,7 @@ export const carta: Record<'desayunos' | 'cafe' | 'fuertes' | 'postres', Seccion
     titulo: 'Platos fuertes',
     horario: '12:00 a 22:00',
     platos: [
+      { nombre: 'Lomo asado con cuscús', detalle: 'Lomo de cerdo asado, cuscús de hierbas, zanahorias glaseadas y salsa de naranja', precio: 'L 495', etiqueta: 'El más pedido' },
       { nombre: 'Wellington de lomito', detalle: 'Lomito en hojaldre con duxelles de hongos, puré de papa y demi-glace', precio: 'L 690', etiqueta: 'Para compartir' },
       { nombre: 'Pescado en costra de hierbas', detalle: 'Filete del día, vegetales asados y salsa de mantequilla blanca', precio: 'L 520' },
       { nombre: 'Risotto de hongos', detalle: 'Arroz arborio, hongos salteados, parmesano y aceite de trufa', precio: 'L 410', etiqueta: 'Vegetariano' },
@@ -164,11 +166,11 @@ export const reservas = {
 export const creditos = [
   { autor: 'Candes J', url: 'https://unsplash.com/@candesjaramillo' },
   { autor: 'Tim Wing', url: 'https://unsplash.com/@timwing78' },
-  { autor: 'Rick Davis', url: 'https://unsplash.com/@rick1188' },
+  { autor: 'Haberdoedas', url: 'https://unsplash.com/@haberdoedas' },
   { autor: 'Nguyễn Hiệp', url: 'https://unsplash.com/@hieptltb97' },
   { autor: 'Drew Gilliam', url: 'https://unsplash.com/@drewgilliam' },
   { autor: 'D5 Render', url: 'https://unsplash.com/@d5render' },
-  { autor: 'Robby McCullough', url: 'https://unsplash.com/@mybbor' },
+  { autor: 'Louis Hansel', url: 'https://unsplash.com/@louishansel' },
   { autor: 'American Heritage Chocolate', url: 'https://unsplash.com/@americanheritagechocolate' },
   { autor: 'avansear', url: 'https://unsplash.com/@avansear' },
 ];
