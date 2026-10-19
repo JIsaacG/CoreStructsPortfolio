@@ -160,19 +160,31 @@ export function iniciarRecorrido(seccion: HTMLElement, movimientoReducido: boole
     const ruta = rutaDe(clip);
     clip.preload = 'auto';
 
+    // iOS (Safari y Chrome, que usa WebKit) no descarga los datos de un video hasta que se intenta
+    // reproducir, así que `loadeddata` puede no llegar nunca solo con `preload`: se pide `load()` y un
+    // `play()` silenciado que se pausa enseguida. El clip vale con `loadeddata` o `canplay`, y un tiempo
+    // máximo evita que la cola de descarga se quede atascada en un clip.
     const cargar = (src: string) =>
       new Promise<boolean>((resolve) => {
-        const bien = () => {
-          clip.removeEventListener('error', mal);
-          resolve(true);
-        };
-        const mal = () => {
+        let hecho = false;
+        const terminar = (ok: boolean) => {
+          if (hecho) return;
+          hecho = true;
+          window.clearTimeout(limite);
           clip.removeEventListener('loadeddata', bien);
-          resolve(false);
+          clip.removeEventListener('canplay', bien);
+          clip.removeEventListener('error', mal);
+          resolve(ok);
         };
-        clip.addEventListener('loadeddata', bien, { once: true });
-        clip.addEventListener('error', mal, { once: true });
+        const bien = () => terminar(true);
+        const mal = () => terminar(false);
+        const limite = window.setTimeout(() => terminar(clip.readyState >= 2), 15000);
+        clip.addEventListener('loadeddata', bien);
+        clip.addEventListener('canplay', bien);
+        clip.addEventListener('error', mal);
         clip.src = src;
+        clip.load();
+        clip.play().then(() => clip.pause(), () => {});
       });
 
     // El clip se descarga entero (blob) para que buscar fotogramas no dependa de la red.
@@ -218,6 +230,25 @@ export function iniciarRecorrido(seccion: HTMLElement, movimientoReducido: boole
     pintar(tramo);
     cargarSiguiente();
   });
+
+  // En modo de bajo consumo iOS bloquea la reproducción automática incluso sin sonido y no pinta los
+  // fotogramas. Un gesto del usuario la permite: en cada toque se reproducen y pausan los clips ya
+  // descargados (el paseo se hace con el dedo, así que hay toques de sobra).
+  const desbloquear = () => {
+    clips.forEach((clip) => {
+      if (!clip.src || clip.dataset.desbloqueado) return;
+      clip.play().then(
+        () => {
+          clip.pause();
+          clip.dataset.desbloqueado = '';
+          sincronizar();
+        },
+        () => {},
+      );
+    });
+  };
+  window.addEventListener('touchend', desbloquear, { passive: true });
+  window.addEventListener('click', desbloquear, { passive: true });
 
   // Revisión periódica: termina las búsquedas pendientes aunque el usuario ya no haga scroll.
   window.setInterval(() => {
