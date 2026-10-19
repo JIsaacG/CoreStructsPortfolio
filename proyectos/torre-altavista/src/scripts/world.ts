@@ -164,6 +164,9 @@ export function iniciarRecorrido(seccion: HTMLElement, movimientoReducido: boole
     // reproducir, así que `loadeddata` puede no llegar nunca solo con `preload`: se pide `load()` y un
     // `play()` silenciado que se pausa enseguida. El clip vale con `loadeddata` o `canplay`, y un tiempo
     // máximo evita que la cola de descarga se quede atascada en un clip.
+    // Si iOS rechaza play() (modo de bajo consumo) no hay datos hasta que el usuario toque: la cola
+    // sigue con el siguiente clip y `desbloquear` deja este listo con el próximo toque.
+    let rechazado = false;
     const cargar = (src: string) =>
       new Promise<boolean>((resolve) => {
         let hecho = false;
@@ -184,7 +187,17 @@ export function iniciarRecorrido(seccion: HTMLElement, movimientoReducido: boole
         clip.addEventListener('error', mal);
         clip.src = src;
         clip.load();
-        clip.play().then(() => clip.pause(), () => {});
+        clip.play().then(
+          () => clip.pause(),
+          (error: DOMException) => {
+            // Solo NotAllowedError es el bloqueo de iOS; otro rechazo (el blob que Safari no acepta)
+            // lo resuelve el evento `error` y el reintento con la URL directa. Algunos navegadores
+            // rechazan play() pero entregan los datos igual: se espera un poco antes de seguir.
+            if (error?.name !== 'NotAllowedError') return;
+            rechazado = true;
+            window.setTimeout(() => terminar(clip.readyState >= 2), 4000);
+          },
+        );
       });
 
     // El clip se descarga entero (blob) para que buscar fotogramas no dependa de la red.
@@ -202,7 +215,7 @@ export function iniciarRecorrido(seccion: HTMLElement, movimientoReducido: boole
     let ok = await cargar(origen);
     // Safari puede rechazar el video servido desde blob: (error 4) aunque sea video/mp4: se usa la
     // URL directa, que el servidor entrega con Content-Type video/mp4 y peticiones por rangos.
-    if (!ok && origen.startsWith('blob:') && miRonda === ronda) {
+    if (!ok && !rechazado && origen.startsWith('blob:') && miRonda === ronda) {
       URL.revokeObjectURL(origen);
       ok = await cargar(ruta);
     }
@@ -234,14 +247,20 @@ export function iniciarRecorrido(seccion: HTMLElement, movimientoReducido: boole
   // En modo de bajo consumo iOS bloquea la reproducción automática incluso sin sonido y no pinta los
   // fotogramas. Un gesto del usuario la permite: en cada toque se reproducen y pausan los clips ya
   // descargados (el paseo se hace con el dedo, así que hay toques de sobra).
+  // Si la carga automática no llegó a dar datos (play() rechazado), el clip queda listo aquí.
   const desbloquear = () => {
-    clips.forEach((clip) => {
+    clips.forEach((clip, i) => {
       if (!clip.src || clip.dataset.desbloqueado) return;
       clip.play().then(
         () => {
           clip.pause();
           clip.dataset.desbloqueado = '';
-          sincronizar();
+          const marcar = () => {
+            listo[i] = true;
+            pintar(tramo);
+          };
+          if (clip.readyState >= 2) marcar();
+          else clip.addEventListener('loadeddata', marcar, { once: true });
         },
         () => {},
       );
